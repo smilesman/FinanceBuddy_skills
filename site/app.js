@@ -103,7 +103,7 @@ function render() {
       const tags = [];
       if (it.category) tags.push(`<span class="tag">${esc(it.category)}</span>`);
       if (it.source === "community") tags.push('<span class="tag community">社区</span>');
-      if (it.package_url) tags.push('<span class="tag pkg">可下载</span>');
+      if (it.package_url || it.details_url) tags.push('<span class="tag pkg">可下载</span>');
       return `<div class="card" data-idx="${start + idx}">
         <div class="card-head"><span class="card-icon">${icon}</span><span class="card-name">${esc(it.name)}</span></div>
         <div class="card-desc">${esc(it.description || "暂无描述")}</div>
@@ -129,8 +129,14 @@ async function openDetail(idx) {
   $("modalMd5").textContent = it.md5 ? `MD5 指纹：${it.md5}` : "";
   $("modalReadme").textContent = "加载中…";
   const dl = $("modalDownload");
-  if (it.package_url) {
-    dl.href = it.package_url.replace(/^\//, "../");
+  // 下载：优先现成安装包；无包时走仓库动态打包（/build/<kind>/<id>.zip）
+  const dlHref = it.package_url
+    ? it.package_url.replace(/^\//, "../")
+    : it.details_url
+      ? it.details_url.replace(/^\/details\//, "../build/").replace(/\.json$/, ".zip")
+      : "";
+  if (dlHref) {
+    dl.href = dlHref;
     dl.classList.remove("hidden");
   } else {
     dl.classList.add("hidden");
