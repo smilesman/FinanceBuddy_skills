@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>技能库 — FinanceBuddy</title>
+  <meta name="description" content="浏览与发现可安装的 Skill、数字员工与工具资源。FinanceBuddy 资源仓库。" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <span class="brand-logo">🧭</span>
+        <span class="brand-name">FinanceBuddy <span class="brand-sub">Skills</span></span>
+      </div>
+      <nav class="nav">
+        <a class="nav-link" href="https://github.com/smilesman/FinanceBuddy_skills" target="_blank">GitHub 仓库</a>
+        <a class="nav-link" href="../api/manifest.json" target="_blank">仓库清单</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1 id="pageTitle">技能库</h1>
+      <p id="pageDesc" class="hero-desc">浏览与发现可安装的 Skill 资源。</p>
+    </section>
+
+    <div class="tabs" id="kindTabs">
+      <button class="tab active" data-kind="skill">技能</button>
+      <button class="tab" data-kind="employee">数字员工</button>
+      <button class="tab" data-kind="mcp">工具</button>
+    </div>
+
+    <div class="toolbar">
+      <input id="searchInput" class="search" type="search" placeholder="搜索名称 / 描述 / 标签…" />
+      <select id="categorySelect" class="category"></select>
+      <span id="countLabel" class="count-label"></span>
+    </div>
+
+    <div id="cardGrid" class="card-grid"></div>
+
+    <div class="pager">
+      <button id="prevBtn" class="pager-btn">上一页</button>
+      <span id="pageLabel"></span>
+      <button id="nextBtn" class="pager-btn">下一页</button>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>FinanceBuddy Skills Warehouse · 数据源：<a href="https://www.openocta.com/skills" target="_blank">OpenOcta 资源市场</a> + 社区补充</p>
+      <p>正式站点：https://www.financebuddyskills.com/skills（规划中）</p>
+    </div>
+  </footer>
+
+  <!-- 详情弹窗 -->
+  <div id="modalMask" class="modal-mask hidden">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-title">
+          <span id="modalIcon"></span>
+          <span id="modalName"></span>
+          <span id="modalStatus" class="status-tag"></span>
+        </div>
+        <button id="modalClose" class="modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="modalMeta" class="modal-meta"></div>
+        <div id="modalReadme" class="readme"></div>
+      </div>
+      <div class="modal-foot">
+        <a id="modalDownload" class="btn primary hidden" download>⬇ 下载安装包（zip）</a>
+        <span id="modalMd5" class="md5"></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
