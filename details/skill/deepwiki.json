@@ -1,0 +1,12 @@
+{
+ "id": "deepwiki",
+ "kind": "skill",
+ "name": "deepwiki",
+ "fingerprint_md5": "147a6cc7ba664ffb2c0dda5297ca6553",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# DeepWiki\r\n\r\n使用本技能通过 DeepWiki MCP server 访问公共 GitHub 仓库的文档。你可以搜索仓库 wiki、获取结构，并提出基于仓库文档的复杂问题。\r\n\r\n## 命令\r\n\r\n### Ask Question\r\n提出关于 GitHub 仓库的任何问题，并获得 AI 驱动的、基于上下文的回答。\r\n```bash\r\nnode ./scripts/deepwiki.js ask <owner/repo> \"your question\"\r\n```\r\n\r\n### Read Wiki Structure\r\n获取 GitHub 仓库的文档主题列表。\r\n```bash\r\nnode ./scripts/deepwiki.js structure <owner/repo>\r\n```\r\n\r\n### Read Wiki Contents\r\n查看 GitHub 仓库 wiki 中特定路径的文档。\r\n```bash\r\nnode ./scripts/deepwiki.js contents <owner/repo> <path>\r\n```\r\n\r\n## 示例\r\n\r\n**询问 Devin 的 MCP 用法：**\r\n```bash\r\nnode ./scripts/deepwiki.js ask cognitionlabs/devin \"How do I use MCP?\"\r\n```\r\n\r\n**获取 React 文档的结构：**\r\n```bash\r\nnode ./scripts/deepwiki.js structure facebook/react\r\n```\r\n\r\n## 注意事项\r\n- Base Server: `https://mcp.deepwiki.com/mcp`\r\n- 仅适用于公共仓库。\r\n- 无需认证。",
+ "config": {}
+}

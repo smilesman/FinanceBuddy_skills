@@ -1,0 +1,26 @@
+{
+ "id": "239",
+ "kind": "mcp",
+ "name": "home_assistant",
+ "fingerprint_md5": "cd7e344017060aa4494e9f9453696985",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 家庭助理MCP\r\n\r\n[](https://smithery.ai/server/@hpohlmann/home-assistant-mcp)\r\n\r\n用于使用AI助手控制家庭助理设备的模型上下文协议（MCP）集成。\r\n\r\n[](https://glama.ai/mcp/servers/@hpohlmann/home-assistant-mcp)\r\n\r\n## 概述\r\n\r\n此MCP允许AI助手控制您的家庭助理设备。它提供了以下工具：\r\n\r\n1. 在Home Assistant实例中搜索实体\r\n1. 控制设备（打开/关闭）\r\n1. 控制灯光颜色和亮度\r\n\r\n## 先决条件\r\n\r\n- Python 3.11或更高版本\r\n- Home Assistant实例正在运行并可通过API访问\r\n- 家庭助理长期访问令牌\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的家庭助理集成 [史密瑟里](https://smithery.ai/server/@hpohlmann/home-assistant-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @hpohlmann/home-assistant-mcp --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n1. 克隆此存储库\r\n1. 设置Python环境：\r\n\r\n```bash\r\ncd home-assistant\r\npython -m venv .venv\r\nsource .venv/bin/activate  # On Windows: .venv\\Scripts\\activate\r\npip install -U pip\r\npip install uv\r\nuv pip install -e .\r\n```\r\n\r\n## 配置\r\n\r\n### 获取家庭助理长期访问令牌\r\n\r\n1. 转到您的家庭助理实例\r\n1. 导航到您的个人资料（单击侧栏中的用户名）\r\n1. 向下滚动到“长期访问令牌”\r\n1. 创建一个具有描述性名称的新令牌，如“MCP Integration”\r\n1. 复制令牌（您只会看到一次）\r\n\r\n### 在Cursor AI中设置\r\n\r\n将以下配置添加到Cursor中的MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"home_assistant\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/your/home-assistant-mcp\",\r\n        \"run\",\r\n        \"main.py\"\r\n      ],\r\n      \"env\": {\r\n        \"HOME_ASSISTANT_TOKEN\": \"your_home_assistant_token_here\"\r\n      },\r\n      \"inheritEnv\": true\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换：\r\n\r\n- `/path/to/your/home-assistant` 此目录的实际路径\r\n- `your_home_assistant_token_here` 使用您的家庭助理长期访问令牌\r\n\r\n### 家庭助理URL配置\r\n\r\n默认情况下，MCP尝试在以下位置连接到家庭助理 `http://homeassistant.local:8123`.\r\n\r\n如果您的家庭助理位于其他URL，您可以修改 `HA_URL` 变量in `app/config.py`.\r\n\r\n## 用法\r\n\r\n配置后，您可以使用Cursor AI来控制您的家庭助理设备：\r\n\r\n- 搜索设备：“查找我的客厅灯”\r\n- 控制装置：“打开厨房灯”\r\n- 控制灯光颜色：“将客厅灯设置为红色”\r\n- 调整亮度：“将我的餐厅灯设置为50%亮度的蓝色”\r\n\r\n### 灯光控制功能\r\n\r\nMCP现在支持先进的灯光控制功能：\r\n\r\n1. **颜色控制**：为兼容的灯光设置任何RGB颜色\r\n\r\n   - 使用RGB值指定颜色（每个组件为0-255）\r\n   - 例子： `set_device_color(\"light.living_room\", 255, 0, 0)` 为了红色\r\n\r\n1. **亮度控制**：调整灯光亮度\r\n\r\n   - 可选亮度参数（0-255）\r\n   - 可以与颜色变化相结合\r\n   - 例子： `set_device_color(\"light.dining_room\", 0, 0, 255, brightness=128)` 适用于中等亮蓝色\r\n\r\n## 故障排除\r\n\r\n- 如果您遇到身份验证错误，请验证您的令牌是否正确且未过期\r\n- 检查您的家庭助理实例是否可以通过配置的URL访问\r\n- 对于颜色控制问题：\r\n  - 验证您的灯光实体是否支持RGB颜色控制\r\n  - 在尝试更改颜色之前，请检查灯是否打开\r\n\r\n## 未来能力\r\n\r\n### 动态实体曝光\r\n\r\n当前的实施需要一个两步过程来控制设备：\r\n\r\n1. 使用自然语言搜索实体\r\n1. 使用实体的特定entity_id控制实体\r\n\r\n计划中的增强功能是创建一种更动态的方式，将实体暴露给控制设备工具，使人工智能能够：\r\n\r\n- 通过更自然的命令直接控制设备（例如，“关闭厨房灯”）\r\n- 缓存常用实体以实现更快的访问\r\n- 支持更复杂的操作，如调整亮度、温度或其他属性\r\n- 更直观地处理实体组和场景\r\n\r\n这将大大缩短行动时间，并在通过人工智能助手控制家庭助理设备时创造更无缝的用户体验。\r\n",
+ "config": {
+  "home_assistant": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/your/home-assistant-mcp",
+    "run",
+    "main.py"
+   ],
+   "env": {
+    "HOME_ASSISTANT_TOKEN": "your_home_assistant_token_here"
+   }
+  }
+ }
+}

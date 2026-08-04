@@ -1,0 +1,12 @@
+{
+ "id": "schema-exploration",
+ "kind": "skill",
+ "name": "schema-exploration",
+ "fingerprint_md5": "e85a17872b58758a91a7e38bfeb7cc4e",
+ "download_count": 0,
+ "category": "数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# 模式探索技能\r\n\r\n## 工作流程\r\n\r\n### 1. 列出所有表\r\n使用 `sql_db_list_tables` 工具查看数据库中的所有可用表。\r\n\r\n这将返回您可以查询的完整表列表。\r\n\r\n### 2. 获取特定表的模式\r\n使用 `sql_db_schema` 工具和表名来检查：\r\n- **列名** - 有哪些字段可用\r\n- **数据类型** - INTEGER、TEXT、DATETIME 等\r\n- **示例数据** - 3 行示例以了解内容\r\n- **主键** - 行的唯一标识符\r\n- **外键** - 与其他表的关系\r\n\r\n### 3. 映射关系\r\n识别表的连接方式：\r\n- 查找以 \"Id\" 结尾的列（例如 CustomerId、ArtistId）\r\n- 外键链接到其他表的主键\r\n- 记录父子关系\r\n\r\n### 4. 回答问题\r\n提供关于以下内容的清晰信息：\r\n- 可用的表及其用途\r\n- 列名及其包含的内容\r\n- 表之间的关联方式\r\n- 示例数据以说明内容\r\n\r\n## 示例：\"有哪些表可用？\"\r\n\r\n**步骤 1：** 使用 `sql_db_list_tables`\r\n\r\n**响应：**\r\n```\r\nChinook 数据库有 11 个表：\r\n1. Artist - 音乐艺术家\r\n2. Album - 音乐专辑\r\n3. Track - 单曲\r\n4. Genre - 音乐流派\r\n5. MediaType - 文件格式（MP3、AAC 等）\r\n6. Playlist - 用户创建的播放列表\r\n7. PlaylistTrack - 播放列表中的曲目\r\n8. Customer - 商店客户\r\n9. Employee - 商店员工\r\n10. Invoice - 客户购买\r\n11. InvoiceLine - 发票中的单个项目\r\n```\r\n\r\n## 示例：\"Customer 表有哪些列？\"\r\n\r\n**步骤 1：** 使用 `sql_db_schema` 工具和表名 \"Customer\"\r\n\r\n**响应：**\r\n```\r\nCustomer 表有以下列：\r\n\r\n- CustomerId (INTEGER) - 主键，唯一客户 ID\r\n- FirstName (NVARCHAR) - 客户名字\r\n- LastName (NVARCHAR) - 客户姓氏\r\n- Company (NVARCHAR) - 公司名称（可选）\r\n- Address, City, State, Country, PostalCode - 位置字段\r\n- Phone (NVARCHAR) - 电话号码\r\n- Fax (NVARCHAR) - 传真号码\r\n- Email (NVARCHAR) - 电子邮件地址\r\n- SupportRepId (INTEGER) - 指向 Employee 表的外键\r\n\r\n示例数据显示客户如：\r\n- Luís Gonçalves 来自巴西\r\n- Leonie Köhler 来自德国\r\n- François Tremblay 来自加拿大\r\n```\r\n\r\n## 示例：\"如何按艺术家查找收入？\"\r\n\r\n**步骤 1：** 识别需要的表\r\n- Artist（有艺术家名称）\r\n- Album（将艺术家链接到曲目）\r\n- Track（将专辑链接到销售）\r\n- InvoiceLine（有销售数据）\r\n- Invoice（有收入总计）\r\n\r\n**步骤 2：** 映射关系\r\n```\r\nArtist (ArtistId)\r\n  ↓ 1:多\r\nAlbum (ArtistId, AlbumId)\r\n  ↓ 1:多\r\nTrack (AlbumId, TrackId)\r\n  ↓ 1:多\r\nInvoiceLine (TrackId, UnitPrice, Quantity)\r\n```\r\n\r\n**响应：**\r\n```\r\n要按艺术家查找收入，您需要：\r\n1. 从 Artist 表开始\r\n2. 在 ArtistId 上 JOIN 到 Album\r\n3. 在 AlbumId 上 JOIN 到 Track\r\n4. 在 TrackId 上 JOIN 到 InvoiceLine\r\n5. SUM 收入（UnitPrice * Quantity）\r\n6. 按艺术家名称 GROUP BY\r\n\r\n这需要查询编写技能来执行。\r\n```\r\n\r\n## 质量指南\r\n\r\n**对于\"列出表\"问题：**\r\n- 显示所有表名\r\n- 添加每个表包含内容的简要描述\r\n- 将相关表分组（例如，音乐目录、交易、人员）\r\n\r\n**对于\"描述表\"问题：**\r\n- 列出所有列及其数据类型\r\n- 解释每个列包含的内容\r\n- 显示示例数据以提供上下文\r\n- 注意主键和外键\r\n- 解释与其他表的关系\r\n\r\n**对于\"如何查询 X\"问题：**\r\n- 识别所需的表\r\n- 映射 JOIN 路径\r\n- 解释关系链\r\n- 建议下一步（使用查询编写技能）",
+ "config": {}
+}

@@ -1,0 +1,12 @@
+{
+ "id": "workspace-cleaner",
+ "kind": "skill",
+ "name": "workspace-cleaner",
+ "fingerprint_md5": "7e892924f3f1f4968761280c2f101018",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# SKILL.md\r\n\r\n<skill>\r\n  <name>workspace-cleaner</name>\r\n  <description>Automated workspace hygiene tool. Cleans up old temp files and logs to prevent disk clutter.</description>\r\n  <location>skills/workspace-cleaner/index.js</location>\r\n</skill>",
+ "config": {}
+}

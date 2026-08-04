@@ -1,0 +1,18 @@
+{
+ "id": "1011",
+ "kind": "mcp",
+ "name": "coremodels",
+ "fingerprint_md5": "91f2949d3a0a7db010d0eb2069abdad7",
+ "download_count": 0,
+ "category": "数据迁移",
+ "tags": "",
+ "version": "",
+ "readme": "# CoreModels MCP服务器\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io) （MCP）服务器，用于管理基于图的数据模型、模式和本体 [核心模型](https://coremodels.io).\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"coremodels\": {\r\n      \"url\": \"https://go.coremodels.io/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标/VS代码\r\n\r\n添加 `.cursor/mcp.json` 或 `.vscode/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"coremodels\": {\r\n      \"type\": \"streamable-http\",\r\n      \"url\": \"https://go.coremodels.io/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 认证\r\n\r\n所有工具都需要 `token` 参数。从CoreModels项目设置生成API密钥。\r\n\r\n## 可用工具\r\n\r\n### 只读\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `core_models_fetch_nodes` |通过过滤和分页获取节点|\r\n| `core_models_project_content_summary` |获取所有类型、元素和分类|\r\n| `core_models_get_mixins_info` |获取混入定义|\r\n| `core_models_get_relation_groups_info` |获取可用的关系组|\r\n\r\n### 写\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `core_models_create_node` |创建新节点|\r\n| `core_models_update_node` |更新节点标签或空格|\r\n| `core_models_restore_node` |恢复软删除的节点|\r\n| `core_models_bulk_create` |批量创建节点、关系和混入|\r\n| `core_models_create_relation` |在节点之间创建关系|\r\n| `core_models_create_mixin_type` |创建新的混入类型|\r\n| `core_models_create_mixin_value` |将混入值附加到节点|\r\n| `core_models_import_jsonschema` |将JSON模式导入空间|\r\n\r\n### 破坏性（小心使用）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `core_models_remove_node` |软删除节点（可通过以下方式恢复 `restore_node`) |\r\n| `core_models_remove_relation` |永久删除关系|\r\n| `core_models_remove_mixin_value` |从节点中删除混入值|\r\n| `core_models_remove_mixin_type` | **永久地** 删除混入类型及其所有列|\r\n\r\n## 使用示例\r\n\r\n**探索一个项目：**\r\n\r\n> “列出项目abc123中的所有类型和元素…”\r\n\r\n**构建数据模型：**\r\n\r\n> 创建名为“Patient”的Type节点和名为“Name”的Element节点，然后在它们之间创建继承关系\r\n\r\n**添加元数据：**\r\n\r\n> “创建一个名为'GetLMapping'的混合类型，其中包含'resourceType'和'path'列，然后将其附加到Patient节点。”\r\n\r\n## 链接\r\n\r\n- [核心模型](https://www.aramai.net/products/coremodels)\r\n- [阿拉米](https://www.aramai.net/)\r\n",
+ "config": {
+  "coremodels": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://go.coremodels.io/mcp"
+  }
+ }
+}

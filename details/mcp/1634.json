@@ -1,0 +1,30 @@
+{
+ "id": "1634",
+ "kind": "mcp",
+ "name": "my-apple-remembers",
+ "fingerprint_md5": "2baf0f3f00e574eaf93812cf81de3b14",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP服务器-我的苹果记得\r\n\r\n**一个简单的MCP服务器，可以在Apple Notes之间调用和保存内存。**\r\n\r\n[](https://hub.docker.com/r/buryhuang/mcp-my-apple-remembers)\r\n[](https://opensource.org/licenses/MIT)\r\n\r\n\r\n## 特性\r\n\r\n- **回忆记忆**：从Mac访问笔记、日历事件、消息、文件和其他信息\r\n- **内存持久性**：将重要信息保存到Apple Notes中以供将来参考\r\n- **最小设置**：只需在目标Mac上启用远程登录\r\n- **通用兼容性**：适用于所有macOS版本\r\n\r\n## 控制在你手中\r\n\r\n您可以使用提示来指示如何保存内存。例如：\r\n\r\n```\r\nYou should always use Folder \"baryhuang\" on recall and save memory.\r\n```\r\n\r\n## 安装\r\n\r\n- [在macOS上启用SSH](https://support.apple.com/guide/mac-help/allow-a-remote-computer-to-access-your-mac-mchlp1066/mac)\r\n- [为本地Mac安装Docker桌面](https://docs.docker.com/desktop/setup/install/mac-install/)\r\n- [将此MCP服务器添加到Claude Desktop](https://modelcontextprotocol.io/quickstart/user)\r\n\r\n您可以通过在Claude配置中添加以下内容来配置Claude Desktop以使用Docker镜像：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"my-apple-remembers\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"-e\",\r\n        \"MACOS_USERNAME=your_macos_username\",\r\n        \"-e\",\r\n        \"MACOS_PASSWORD=your_macos_password\",\r\n        \"-e\",\r\n        \"MACOS_HOST=localhost\",\r\n        \"--rm\",\r\n        \"buryhuang/mcp-my-apple-remembers:latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 开发人员说明\r\n\r\n### 克隆仓库\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/baryhuang/mcp-my-apple-remembers.git\r\ncd mcp-my-apple-remembers\r\n```\r\n\r\n### 构建Docker镜像\r\n\r\n```bash\r\n# Build the Docker image\r\ndocker build -t mcp-my-apple-remembers .\r\n```\r\n\r\n### 发布多平台Docker镜像\r\n\r\n```bash\r\n# Set up Docker buildx for multi-platform builds\r\ndocker buildx create --use\r\n\r\n# Build and push the multi-platform image\r\ndocker buildx build --platform linux/amd64,linux/arm64 -t buryhuang/mcp-my-apple-remembers:latest --push .\r\n```\r\n\r\n### 工具规格\r\n\r\n#### my_apple_recall_memory\r\n\r\n在远程macOS系统上运行AppleScript命令以回忆记忆。此工具可帮助访问Mac上的Apple Notes、日历事件、iMessages、聊天记录、文件和其他信息。\r\n\r\n#### my_apple_save_memory\r\n\r\n在远程macOS系统上运行AppleScript命令以保存重要信息。此工具允许AI将相关信息保存到Apple Notes中以供将来参考。\r\n\r\n所有工具都需要macOS SSH访问权限，包括主机和密码。\r\n\r\n## 安全说明\r\n\r\n访问远程macOS计算机时，始终使用安全、经过身份验证的连接。此工具只能用于您信任并有权访问的服务器。\r\n\r\n## 许可证\r\n\r\n有关详细信息，请参阅LICENSE文件。\r\n",
+ "config": {
+  "my-apple-remembers": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "-e",
+    "MACOS_USERNAME=your_macos_username",
+    "-e",
+    "MACOS_PASSWORD=your_macos_password",
+    "-e",
+    "MACOS_HOST=localhost",
+    "--rm",
+    "buryhuang/mcp-my-apple-remembers:latest"
+   ],
+   "env": {}
+  }
+ }
+}

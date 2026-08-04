@@ -1,0 +1,12 @@
+{
+ "id": "bobagent-clawlist",
+ "kind": "skill",
+ "name": "bobagent-clawlist",
+ "fingerprint_md5": "4f51de9a0879f5489bc4f7ed9c057ebe",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# Clawlist - 任务掌控\r\n\r\n用于计划、执行和跟踪任何任务的系统化工作流——从一次性项目到无限监控循环。\r\n\r\n## 何时使用本技能\r\n\r\n**在以下情况下始终使用 clawlist：**\r\n- 启动任何新项目或 initiative\r\n- 设置长期运行监控\r\n- 拆解复杂目标\r\n- 你需要跨 sessions 跟踪进度\r\n- 管理无限任务（research、monitoring、engagement）\r\n\r\n## 长期运行和无限任务示例\r\n\r\n### 示例：Moltbook Engagement（无限）\r\n- **Type:** Infinite loop\r\n- **Schedule:** 每 30 分钟\r\n- **Goal:** 与社区互动，建立存在感\r\n- **Checkpoints:** Check feed、check DMs、create content\r\n\r\n### 示例：GitHub Monitoring（长期运行）\r\n- **Type:** Continuous\r\n- **Schedule:** 每 4 小时\r\n- **Goal:** 监控 repos、triage issues、implement\r\n- **Checkpoints:** Inbox zero、PR review、implementation\r\n\r\n## Clawlist 工作流\r\n\r\n按顺序使用独立 skills：\r\n\r\n1. **brainstorming** → 明确意图，探索方法\r\n2. **write-plan** → 创建带 checkpoints 的详细计划\r\n3. **doing-tasks** → 以 skill discipline 执行\r\n4. **verify-task** → 确认完成\r\n\r\n对于并行工作，在 write-plan 和 doing-tasks 之间插入 **dispatch-multiple-agents**。\r\n\r\n## 持续任务文件\r\n\r\n**位置：** `memory/tasks/ongoing-tasks.md`\r\n\r\n跟踪所有长期运行和无限任务。由 heartbeat 更新以：\r\n- 检查任务健康度\r\n- 检测 blockers\r\n- 执行到期任务\r\n- 汇总状态\r\n\r\n## 任务类型\r\n\r\n| 类型 | 持续时间 | 跟踪方式 | 示例 |\r\n|------|----------|----------|---------|\r\n| **One-off** | 分钟-小时 | 仅 Context | Fix a bug |\r\n| **Project** | 天-周 | Context + completion doc | Build feature |\r\n| **Long-running** | 持续 | `ongoing-tasks.md` | GitHub monitoring |\r\n| **Infinite** | 永久 | `ongoing-tasks.md` | Moltbook engagement |\r\n\r\n## 与 Heartbeat 集成\r\n\r\nHeartbeat 每次检查时读取 `ongoing-tasks.md` 以：\r\n- 执行到期的无限任务\r\n- 检测并报告 blockers\r\n- 更新健康状态（🟢🟡🔴）\r\n- 如需干预则 ping 用户\r\n\r\n## 快速参考\r\n\r\n```\r\nNew Task\r\n   ↓\r\nbrainstorming → write-plan → doing-tasks → verify-task\r\n                      ↓\r\n            dispatch-multiple-agents（如果并行）\r\n                      ↓\r\n            update ongoing-tasks.md（如果长期运行）\r\n```\r\n\r\n## 子技能\r\n\r\n- **brainstorming** - Phase 1: Clarify\r\n- **write-plan** - Phase 2: Plan\r\n- **doing-tasks** - Phase 3: Execute\r\n- **dispatch-multiple-agents** - 并行执行\r\n- **verify-task** - Phase 4: Verify",
+ "config": {}
+}

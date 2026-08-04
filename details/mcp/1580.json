@@ -1,0 +1,25 @@
+{
+ "id": "1580",
+ "kind": "mcp",
+ "name": "mcp-neovim-server",
+ "fingerprint_md5": "23c97a1dc35fc91f68dc5134a5230e9b",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "# Neovim MCP服务器\r\n\r\n使用MCP和官方的Neovim/node客户端JavaScript库将Claude Desktop（或任何模型上下文协议客户端）连接到Neovim。该服务器利用Vim的原生文本编辑命令和工作流（Claude已经理解）来创建轻量级代码或通用AI文本辅助层。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/s0fywdwp87\"></a>\r\n\r\n## 特性\r\n\r\n- 例如，如果您公开了一个套接字文件，则连接到您的nvim实例 `--listen /tmp/nvim`，启动nvim时\r\n- 查看当前缓冲区并管理缓冲区切换\r\n- 获取光标位置、模式、文件名、标记、寄存器和视觉选择\r\n- 通过vim运行vim命令和可选的shell命令\r\n- 可以使用插入、替换或replaceAll模式进行编辑\r\n- 使用正则表达式支持搜索和替换功能\r\n- 具有quickfix集成的项目范围grep搜索\r\n- 全面的窗口管理\r\n- 健康监测和连接诊断\r\n\r\n## API\r\n\r\n### 资源\r\n\r\n- `nvim://session`：当前neovim文本编辑器会话\r\n- `nvim://buffers`：当前Neovim会话中所有打开的缓冲区列表，元数据包括修改后的状态、语法和窗口ID\r\n\r\n### 工具\r\n\r\n#### 核心工具\r\n\r\n- **vim_buffer**\r\n  - 使用行号获取缓冲区内容（支持文件名参数）\r\n  - 输入 `filename` （字符串，可选）-按文件名获取特定缓冲区\r\n  - 返回带有缓冲区内容的编号行\r\n- **vim_命令**\r\n  - 向VIM发送导航、点编辑和行删除命令\r\n  - 输入 `command` （字符串）\r\n  - 使用以下命令运行vim命令 `nvim.replaceTermcodes`.多个命令可用于换行\r\n  - 支持的Shell命令 `!` 前缀当 `ALLOW_SHELL_COMMANDS=true`\r\n  - 在出错时， `'nvim:errmsg'` 返回内容\r\n- **vim_status**\r\n  - 获取全面的Neovim状态\r\n  - 返回光标位置、模式、文件名、增强检测的视觉选择、窗口布局、当前选项卡、标记、寄存器、工作目录、LSP客户端信息和插件检测\r\n  - 增强的视觉选择报告：检测视觉模式类型（字符/行/块），提供准确的选择文本、开始/结束位置和最后一个视觉选择标记\r\n- **vim_edit**\r\n  - 使用插入、替换或replaceAll模式编辑行\r\n  - 输入 `startLine` （数字）， `mode` (`\"insert\"` | `\"replace\"` | `\"replaceAll\"`), `lines` （字符串）\r\n  - 插入：在startLine处插入线条\r\n  - replace：替换从startLine开始的行\r\n  - replaceAll：替换整个缓冲区内容\r\n- **vim_indow**\r\n  - 操纵Neovim窗口（拆分、vsplit、关闭、导航）\r\n  - 输入 `command` （字符串：“split”、“vsplit”、“only”、“close”、“wincmd h/j/k/l”）\r\n- **vim_mark**\r\n  - 在特定位置设置命名标记\r\n  - 输入 `mark` （字符串：a-z）， `line` （数字）， `column` （编号）\r\n- **vim_register**\r\n  - 设置寄存器内容\r\n  - 输入 `register` （字符串：a-z或“”）， `content` （字符串）\r\n- **vim_视觉**\r\n  - 创建视觉模式选择\r\n  - 输入 `startLine` （数字）， `startColumn` （数字）， `endLine` （数字）， `endColumn` （编号）\r\n\r\n#### 增强的缓冲区管理\r\n\r\n- **vim_buffer_开关**\r\n  - 按名称或编号在缓冲区之间切换\r\n  - 输入 `identifier` （string | number）-缓冲区名称或编号\r\n- **vim_buffer_save**\r\n  - 保存当前缓冲区或保存到特定文件名\r\n  - 输入 `filename` （字符串，可选）-保存到特定文件\r\n- **vim_file_open**\r\n  - 将文件打开到新缓冲区\r\n  - 输入 `filename` （string）-要打开的文件\r\n\r\n#### 搜索和替换\r\n\r\n- **vim_search**\r\n  - 使用正则表达式支持在当前缓冲区中搜索\r\n  - 输入 `pattern` （字符串）， `ignoreCase` （布尔值，可选）， `wholeWord` （布尔值，可选）\r\n- **vim_search_replace**\r\n  - 查找并替换为高级选项\r\n  - 输入 `pattern` （字符串）， `replacement` （字符串）， `global` （布尔值，可选）， `ignoreCase` （布尔值，可选）， `confirm` （布尔值，可选）\r\n- **vim_grep**\r\n  - 使用vimgrep和快速修复列表进行项目范围内的搜索\r\n  - 输入 `pattern` （字符串）， `filePattern` （字符串，可选）-要搜索的文件模式\r\n\r\n#### 高级工作流工具\r\n\r\n- **vim_macro**\r\n  - 录制、停止和播放Vim宏\r\n  - 输入 `action` （“录制”|“停止”|“播放”）， `register` （字符串a-z）， `count` （数字，可选）\r\n- **vim_tab**\r\n  - 完成标签管理\r\n  - 输入 `action` （“新建”|“关闭”|“下一页”|“上一页”|“第一页”|《最后一页》|“列表”）， `filename` （字符串，可选）\r\n- **vim_fold**\r\n  - 代码折叠操作\r\n  - 输入 `action` （“创建”|“打开”|“关闭”|“切换”|“开”|“关”|“删除”）， `startLine`/`endLine` （数字，用于创建）\r\n- **vim_jump**\r\n  - 跳转列表导航\r\n  - 输入 `direction` （“后退”|“前进”|“列表”）\r\n\r\n#### 系统工具\r\n\r\n- **维姆健康**\r\n  - 检查Neovim连接健康状况和套接字状态\r\n\r\n使用这套全面的 **19工具**，Claude可以查看您的neovim会话，导航缓冲区，执行搜索，进行编辑，录制宏，管理标签和折叠，并使用标准的neovim功能处理您的完整开发工作流程。\r\n\r\n### 鼓励\r\n\r\n- **neovim工作流**：获取常见Neovim工作流的上下文帮助和指导，包括编辑、导航、搜索、缓冲区管理、窗口操作和宏使用。提供使用可用MCP工具完成任务的分步说明。\r\n\r\n## 错误处理\r\n\r\n服务器通过自定义错误类和一致的错误响应实现了全面的错误处理：\r\n\r\n- **Neovim连接错误**：套接字连接失败，并显示详细消息\r\n- **NeovimCommandError**：命令上下文中的命令执行失败\r\n- **NeovimValidation错误**：输入验证失败\r\n\r\n**v0.5.2中的新功能**：所有工具现在都包含强大的try-catch错误处理，以正确的MCP格式返回有意义的错误消息。功能包括连接健康监控、优雅的错误传播和可操作的错误消息，以帮助诊断问题。\r\n\r\n## 局限性\r\n\r\n- 可能无法与复杂的neovim配置或插件良好交互\r\n- 出于安全考虑，默认情况下禁用Shell命令执行\r\n- 需要套接字连接-不适用于标准vim\r\n\r\n## 配置\r\n\r\n### 环境变量\r\n\r\n- `ALLOW_SHELL_COMMANDS`：设置为“true”以启用shell命令执行（例如。 `!ls`).为了安全起见，默认为false。\r\n- `NVIM_SOCKET_PATH`：设置为Neovim套接字的路径。如果未指定，则默认为“/tmp/nvim”。\r\n\r\n## 安装\r\n\r\n### 选项1:DXT包（推荐）\r\n\r\n1. 下载最新 `.dxt` 文件来自 [发布](https://github.com/bigcodegen/mcp-neovim-server/releases)\r\n1. 将文件拖动到Claude Desktop\r\n\r\n### 选项2：手动安装\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"MCP Neovim Server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"mcp-neovim-server\"\r\n      ],\r\n      \"env\": {\r\n        \"ALLOW_SHELL_COMMANDS\": \"true\",\r\n        \"NVIM_SOCKET_PATH\": \"/tmp/nvim\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "mcp-neovim-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-neovim-server"
+   ],
+   "env": {
+    "ALLOW_SHELL_COMMANDS": "true",
+    "NVIM_SOCKET_PATH": "/tmp/nvim"
+   }
+  }
+ }
+}

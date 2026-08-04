@@ -1,0 +1,22 @@
+{
+ "id": "17",
+ "kind": "employee",
+ "name": "nginx-employee",
+ "fingerprint_md5": "b6dc1c393a6628b30501a9162f3d2dcd",
+ "download_count": 0,
+ "category": "移动端自动化",
+ "tags": "Nginx,web,proxy,安全,性能优化",
+ "version": "",
+ "readme": "---\r\nname: nginx-employee\r\ndescription: Nginx Web 服务器运维员工，支持配置管理、负载均衡、SSL 证书、性能调优\r\ntags: [\"nginx\", \"web\", \"proxy\", \"ssl\", \"performance\"]\r\n---\r\n\r\n## 核心能力\r\n1. 支持配置管理、负载均衡、SSL 证书、性能调优\r\n2. 性能监控与故障排查\r\n3. 配置管理与自动化部署\r\n4. 安全策略与访问控制\r\n5. 高可用架构设计与优化\r\n\r\n## 使用配置\r\n- 根据具体环境配置相关连接参数\r\n- 确保具备对应服务的访问权限\r\n\r\n## 适用场景\r\n- 日常运维与监控\r\n- 故障排查与应急响应\r\n- 性能优化与容量规划\r\n- 自动化部署与配置管理\r\n",
+ "config": {
+  "id": "nginx-employee",
+  "name": "Nginx 运维员工",
+  "description": "Nginx Web 服务器运维员工，支持配置管理、负载均衡、SSL 证书、性能调优",
+  "prompt": "你是一个专业的 Nginx 运维数字员工，擅长 Web 服务器配置、反向代理、负载均衡优化。回答简洁专业，优先使用关联的 MCP 能力执行操作。",
+  "enabled": true,
+  "builtin": false,
+  "skillIds": [
+   "nginx-ops"
+  ]
+ }
+}

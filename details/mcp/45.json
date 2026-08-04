@@ -1,0 +1,22 @@
+{
+ "id": "45",
+ "kind": "mcp",
+ "name": "applescript-mcp",
+ "fingerprint_md5": "7a8909225f3ae0b6e5ee28248f7d50e9",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 🍎 AppleScript MCP服务器\r\n\r\n让克劳德控制你的Mac。这个MCP服务器允许Claude通过AppleScript自动化应用程序、管理文件、控制音乐、发送消息等等。\r\n\r\n## 你能用它做什么？\r\n\r\n安装后，只需问Claude以下问题：\r\n\r\n- **“现在在玩什么？”** -Claude查看Music.app，告诉你\r\n- **“创建一个提醒，明天下午3点给妈妈打电话”** --在提醒中创建它\r\n- **“添加一个名为“会议笔记”的新笔记，其中包含今天的日期”** --在Notes中创建它\r\n- **“打开我的下载文件夹”** --在Finder中打开它\r\n- **“正在运行哪些应用程序？”** --列出您的活动应用程序\r\n- **“播放我的Chill播放列表”** --开始在音乐中播放\r\n- **“获取我当前Safari选项卡的URL”** --返回URL\r\n- **“为周五下午2点创建新的日历活动”** --将其添加到日历\r\n- **“显示剪贴板上的内容”** --显示剪贴板内容\r\n- **“给约翰发个信息，说我快迟到了”** --通过消息发送\r\n\r\n克劳德发现什么是可能的，学习什么是有效的，并优雅地处理错误。\r\n\r\n## 需求\r\n\r\n- **macOS** （AppleScript仅适用于macOS）\r\n- **Node.js 18+** — [点击此处下载](https://nodejs.org/)\r\n- **Xcode** --从App Store安装（AppleScript字典需要）\r\n\r\n安装Xcode后，运行以下命令以验证其设置是否正确：\r\n\r\n```bash\r\nsdef /System/Applications/Notes.app | head -5\r\n```\r\n\r\n如果您看到XML输出，则很好。如果您遇到错误，请运行：\r\n\r\n```bash\r\nsudo xcode-select -s /Applications/Xcode.app/Contents/Developer\r\n```\r\n\r\n## 安装\r\n\r\n### 克劳德代码\r\n\r\n通过插件市场安装：\r\n\r\n```\r\n/plugin marketplace add adamrdrew@marketplace\r\n/plugin install applescript-mcp@adamrdrew\r\n```\r\n\r\n重新启动Claude Code或运行 `/mcp` 以验证它是否已连接。\r\n\r\n### 克劳德桌面\r\n\r\n将其添加到您的配置文件中 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"applescript-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"applescript-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动克劳德桌面。\r\n\r\n## Claude代码权限\r\n\r\nClaude Code每次第一次使用MCP服务器命令时都会问你，这意味着当你开始使用MCP服务器时，你会得到很多“你确定要这样做吗？”的提示，这是一种非常糟糕的体验。安装插件后，您可以通过将其添加到您的 `.claude/settings.json`\r\n\r\n```json\r\n{\r\n  \"permissions\": {\r\n    \"allow\": [\r\n      \"mcp__plugin_applescript-mcp_applescript-mcp-server__*\"\r\n    ]\r\n  }\r\n}\r\n```\r\n\r\n## 系统权限\r\n\r\nClaude第一次尝试控制应用程序时，macOS会请求许可。授予这些 **系统设置→ 隐私和安全**:\r\n\r\n|许可|需要时|\r\n|------------|------------------|\r\n| **自动化** |控制任何应用程序（Finder、音乐、Safari等）|\r\n| **无障碍** |键盘模拟、UI自动化|\r\n| **全磁盘访问** |一些文件操作|\r\n\r\n出现提示时，允许您的终端应用程序（terminal、iTerm、Warp等）或Claude Desktop控制所请求的应用程序。\r\n\r\n## 哪些应用程序有效？\r\n\r\nClaude可以控制任何“可脚本化”的macOS应用程序。大多数内置应用程序都是可脚本化的：\r\n\r\n- **访达** --文件和文件夹操作\r\n- **音乐** --播放、播放列表、库访问\r\n- **游猎** --标签、URL、阅读列表\r\n- **邮件** --发送、阅读、整理电子邮件\r\n- **日历** --事件和提醒\r\n- **备注** --创建和管理笔记\r\n- **提醒事项** --任务和列表\r\n- **消息** --发送消息\r\n- **照片** --专辑和组织\r\n- **联系人** --通讯簿访问\r\n- **主题演讲/页数/数字** --文档自动化\r\n- **终端** --脚本执行\r\n\r\n许多第三方应用程序也是可脚本化的（Adobe应用程序、BBEdit、OmniFocus等）。\r\n\r\n## 安全特性\r\n\r\n服务器保护您免受意外损坏：\r\n\r\n|风险等级|发生了什么|示例|\r\n|------------|--------------|----------|\r\n| **低** |正常运行|获取信息，读取数据|\r\n| **中等** |显示警告|发送电子邮件、按键|\r\n| **高** |在您确认|Shell命令之前被阻止，退出所有应用程序|\r\n| **关键的** |在您确认之前被阻止|删除所有文件，清空垃圾箱|\r\n\r\n如果克劳德尝试了一些有风险的事情，你会看到一个警告，可以决定是否继续。\r\n\r\n## 学习系统\r\n\r\n随着时间的推移，服务器变得越来越智能：\r\n\r\n- **记住什么有效** --成功的脚本将被保存以备将来参考\r\n- **建议修复** --当某件事失败时，它会提供具体的解决方案\r\n- **技能档案** --流行应用程序的精选示例 `~/.applescript-mcp/skills/`\r\n\r\n## 有用的错误消息\r\n\r\n当出现问题时，您会得到可操作的修复：\r\n\r\n```\r\n❌ Automation permission denied for Safari.\r\n\r\nHOW TO FIX:\r\n1. Open System Settings\r\n2. Go to Privacy & Security → Automation\r\n3. Find your terminal app\r\n4. Enable the toggle for \"Safari\"\r\n5. Restart your terminal\r\n```\r\n\r\n## 故障排除\r\n\r\n**“未安装Xcode”**\r\n从App Store安装Xcode，然后运行：\r\n\r\n```bash\r\nsudo xcode-select -s /Applications/Xcode.app/Contents/Developer\r\n```\r\n\r\n**“权限被拒绝”错误**\r\n打开系统设置→ 隐私和安全→ 自动化并启用应用程序。\r\n\r\n**命令在应用程序上不起作用**\r\n并非所有应用程序都是可脚本化的。让克劳德跑 `list_scriptable_apps` 看看有什么可用的。\r\n\r\n**服务器未连接**\r\n\r\n- 克劳德代码：运行 `/mcp` 检查状态\r\n- 对于Claude Desktop：编辑配置后重新启动应用程序\r\n\r\n## 贡献\r\n\r\n想要贡献、从源代码运行或理解代码库吗？看 [贡献.md](./CONTRIBUTING.md).\r\n\r\n想要更深入的记录吗？看 [项目文件](.ushabti/docs/index.md)\r\n\r\n## 许可证\r\n\r\n该项目根据 [GNU通用公共许可证v3.0](./LICENSE).\r\n",
+ "config": {
+  "applescript-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "applescript-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

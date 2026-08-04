@@ -1,0 +1,24 @@
+{
+ "id": "2868",
+ "kind": "mcp",
+ "name": "japan-bi",
+ "fingerprint_md5": "e1d93ddfe294ba18b89f00824dc8bc8d",
+ "download_count": 0,
+ "category": "商业工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 日本商业智能MCP服务器\r\n\r\n> 通过模型上下文协议访问日本政府统计数据、经济指标、假期和工作日计算。\r\n\r\n\r\n## 特性\r\n\r\n- **11工具** 日本商业情报\r\n- **电子统计API** --搜索700多个政府统计表\r\n- **统计仪表板** --访问6000多个指标（不需要API密钥！）\r\n- **日本节假日** --包含工作日计算的完整假期日历\r\n- **双语** --日语和英语支持\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面/克劳德代码\r\n\r\n添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"japan-bi\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@makemoney/japan-business-intelligence-mcp\"],\r\n      \"env\": {\r\n        \"ESTAT_APP_ID\": \"your-estat-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 获取e-Stat API密钥（免费）\r\n\r\n1. 访问https://www.e-stat.go.jp/api/\r\n1. 创建账户\r\n1. 从仪表板生成appId\r\n\r\n> **注：** 统计仪表板和假日工具在没有任何API键的情况下工作！\r\n\r\n## 工具\r\n\r\n### 日本假日（不需要API密钥）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_holidays` |获取一年内的所有假期（1949-2150）|\r\n| `is_holiday` |检查日期是否为假日|\r\n| `is_business_day` |检查日期是否为工作日|\r\n| `next_business_day` |获取下一个工作日|\r\n| `count_business_days` |计算日期之间的工作日数|\r\n\r\n### 统计仪表板（不需要API键）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_indicators` |搜索约6000个统计指标|\r\n| `get_indicator_data` |获取指标的时间序列数据|\r\n| `get_regions` |列出日本所有地区/县|\r\n\r\n### e-Stat API（需要免费的API密钥）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_statistics` |搜索政府统计表|\r\n| `get_stats_data` |从统计表中获取数据|\r\n| `get_meta_info` |获取统计表的元数据|\r\n\r\n## 例子\r\n\r\n### 检查明天是否为工作日\r\n\r\n```\r\n\"Is 2026-04-29 a business day in Japan?\"\r\n-> No, it's Showa Day (昭和の日)\r\n```\r\n\r\n### 查找人口统计数据\r\n\r\n```\r\n\"Search for population statistics on e-Stat\"\r\n-> Returns matching statistical tables with IDs\r\n```\r\n\r\n### 获取GDP指标\r\n\r\n```\r\n\"Search for GDP indicators on the statistics dashboard\"\r\n-> Returns indicator codes for GDP-related data\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `ESTAT_APP_ID` |对于e-Stat工具|来自e-Stat.go.jp的免费API密钥|\r\n\r\n## 数据源\r\n\r\n- [电子统计](https://www.e-stat.go.jp/) --日本官方统计门户\r\n- [统计仪表板](https://dashboard.e-stat.go.jp/) --预先汇总的统计指标\r\n- 根据《国定假日法》计算日本假期\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "japan-bi": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@makemoney/japan-business-intelligence-mcp"
+   ],
+   "env": {
+    "ESTAT_APP_ID": "your-estat-api-key"
+   }
+  }
+ }
+}

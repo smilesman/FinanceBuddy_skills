@@ -1,0 +1,26 @@
+{
+ "id": "2389",
+ "kind": "mcp",
+ "name": "whoop",
+ "fingerprint_md5": "bd5c4d4e2a3887ad7a91494dc503f8c7",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# WHOOP MCP服务器\r\n\r\nMCP（模型上下文协议）服务器，为Claude Desktop提供访问您的WHOOP健身追踪器数据的权限，包括恢复评分、睡眠指标和压力数据。\r\n\r\n## 特性\r\n\r\n- **恢复数据**：获取您的每日恢复评分、心率变异性、静息心率和血氧饱和度\r\n- **睡眠分析**：查看睡眠持续时间、阶段（浅/深/REM）、效率和性能\r\n- **复苏趋势**：跟踪过去7-14天的恢复情况\r\n- **应变指标**：监测每日压力、卡路里和心率数据\r\n- **锻炼历史记录**：查看最近的锻炼，包括运动类型、压力、卡路里和HR区域\r\n\r\n## 先决条件\r\n\r\n- Python 3.11+\r\n- [紫外线](https://docs.astral.sh/uv/) 包管理器\r\n- WHOOP会员资格和设备\r\n- WHOOP开发者帐户（免费）\r\n\r\n## 设置\r\n\r\n### 1.克隆和安装\r\n\r\n```bash\r\ngit clone https://github.com/JasonBates/whoop-mcp-server.git\r\ncd whoop-mcp-server\r\nuv sync\r\n```\r\n\r\n### 2.创建WHOOP开发者应用程序\r\n\r\n1. 首选 [developer.hop.com](https://developer.whoop.com)\r\n1. 使用您的WHOOP帐户登录\r\n1. 创建新应用程序：\r\n   - **应用程序名称**：“WHOOP MCP”（或您的偏好）\r\n   - **重定向URI**: `http://localhost:8080/callback`\r\n1. 记下你的 **客户端ID** 和 **客户端密钥**\r\n\r\n### 3.配置凭据\r\n\r\n创建一个 `.env` 示例中的文件：\r\n\r\n```bash\r\ncp .env.example .env\r\n```\r\n\r\n编辑 `.env` 并添加您的凭据：\r\n\r\n```\r\nWHOOP_CLIENT_ID=your_client_id_here\r\nWHOOP_CLIENT_SECRET=your_client_secret_here\r\n```\r\n\r\n### 4.向世界卫生组织授权\r\n\r\n运行令牌获取脚本：\r\n\r\n```bash\r\nuv run python scripts/get_tokens.py\r\n```\r\n\r\n这将：\r\n\r\n- 打开浏览器登录WHOOP\r\n- 请求对应用程序的授权\r\n- 将您的访问权限和刷新令牌保存到 `.env`\r\n- 测试API连接\r\n\r\n### 5.配置克劳德桌面\r\n\r\n将服务器添加到您的Claude Desktop配置中：\r\n`~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"whoop\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/whoop-mcp-server\",\r\n        \"run\",\r\n        \"python\",\r\n        \"-m\",\r\n        \"whoop_mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/path/to/whoop-mcp-server` 包含克隆存储库的完整路径。\r\n\r\n### 6.重新启动克劳德桌面\r\n\r\n退出并重新打开Claude Desktop。您应该在MCP服务器列表中看到“哇”。\r\n\r\n## 用法\r\n\r\n配置后，您可以向Claude询问以下问题：\r\n\r\n- “我今天的WHOOP状态如何？”（使用合并摘要）\r\n- “我昨晚睡得怎么样？”\r\n- “显示我过去一周的恢复趋势”\r\n- “我目前的压力是什么？”\r\n- “显示我最近的锻炼”\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_today_summary` |今天的恢复、睡眠和压力在一个电话里|\r\n| `get_sleep_trend` |睡眠历史记录（默认7天，无限制）|\r\n| `get_recovery_trend` |恢复历史记录（默认7天，无限制）|\r\n| `get_workouts` |锻炼历史记录（默认5，无限制）|\r\n\r\n## 故障排除\r\n\r\n### “身份验证错误：找不到访问令牌”\r\n\r\n运行令牌脚本： `uv run python scripts/get_tokens.py`\r\n\r\n### 令牌已过期\r\n\r\n服务器会自动刷新令牌，但如果遇到持续的身份验证错误，请重新运行令牌脚本。\r\n\r\n### 多台机器\r\n\r\n每台机器必须单独向WHOOP授权。您无法复制 `.env` 机器之间的令牌，因为每个会话上的第一个API调用刷新令牌，这会使其他机器上的令牌无效。跑 `uv run python scripts/get_tokens.py` 在您要使用的每台机器上。\r\n\r\n### 速率限制\r\n\r\nWHOOP API允许100个请求/分钟和10000个请求/天。正常使用不太可能达到这些限制。\r\n\r\n## 发展\r\n\r\n```bash\r\n# Test with MCP Inspector\r\nnpx @modelcontextprotocol/inspector uv run python -m whoop_mcp\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "whoop": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/whoop-mcp-server",
+    "run",
+    "python",
+    "-m",
+    "whoop_mcp"
+   ],
+   "env": {}
+  }
+ }
+}

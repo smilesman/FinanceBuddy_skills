@@ -1,0 +1,18 @@
+{
+ "id": "3207",
+ "kind": "mcp",
+ "name": "resy",
+ "fingerprint_md5": "bfcf8c9712aa700c01ac8d09c438191f",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 恢复MCP服务器\r\n\r\n一种MCP（模型上下文协议）服务器，与Resy的API集成，用于搜索餐馆并查找可用的预订位。返回结构化JSON数据和样式化HTML轮播。\r\n\r\n## 特性\r\n\r\n- **搜索餐厅**：按餐厅名称/位置和可用性搜索餐厅\r\n- **查找可用地块**：查找特定餐厅的可用预订时间\r\n- 带有Resy品牌的HTML轮播输出\r\n- 双传输支持：stdio（用于MCP检查器/本地）和HTTP/SSE（用于远程访问）\r\n\r\n## 设置\r\n\r\n### 1.安装依赖项\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n### 2.获取Resy凭据\r\n\r\n您需要从浏览器中提取凭据：\r\n\r\n1. 登录 [Resy.com](https://resy.com)\r\n1. 打开浏览器开发工具（F12）\r\n1. 转到“网络”选项卡\r\n1. 搜索餐厅并查看API请求\r\n1. 找到这些值：\r\n   - `RESY_API_KEY`：从 `Authorization: ResyAPI api_key=\"...\"` 头球\r\n   - `RESY_AUTH_TOKEN`：从 `X-Resy-Auth-Token` 标题或Cookie\r\n\r\n### 3.配置环境\r\n\r\n复制 `.env.example` 到 `.env` 并填写您的凭据：\r\n\r\n```bash\r\ncp .env.example .env\r\n```\r\n\r\n编辑 `.env`:\r\n\r\n```\r\nRESY_API_KEY=your_api_key_here\r\nRESY_AUTH_TOKEN=your_auth_token_here\r\nPORT=3000\r\n```\r\n\r\n### 4.构建和运行\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n**HTTP/SSE模式** （用于远程访问、ChatGPT等）：\r\n\r\n```bash\r\nnpm start\r\n```\r\n\r\n服务器将于启动 `http://localhost:3000`.\r\n\r\n**标准模式** （适用于MCP检查员、Claude Desktop等）：\r\n\r\n```bash\r\nnpm run start:stdio\r\n```\r\n\r\n您还可以使用 `--stdio` 标志或集合 `MCP_TRANSPORT=stdio` 环境变量。\r\n\r\n## 运输方式\r\n\r\n### HTTP/SSE模式（默认）\r\n\r\n用于远程访问。使用SSE终结点启动Express服务器。\r\n\r\n**终点：**\r\n\r\n- `GET /health` -健康检查\r\n- `GET /sse` -MCP通信的SSE端点\r\n- `POST /messages` -消息处理端点\r\n\r\n### 标准模式\r\n\r\n用于本地MCP客户端，如MCP Inspector或Claude Desktop。通过stdin/stdout进行通信。没有启动HTTP服务器。\r\n\r\n## MCP客户端配置\r\n\r\n**对于Claude Desktop/stdio客户端：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"resy\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/resy-mcp/build/index.js\", \"--stdio\"],\r\n      \"env\": {\r\n        \"RESY_API_KEY\": \"your_key\",\r\n        \"RESY_AUTH_TOKEN\": \"your_token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**对于HTTP/SSE客户端：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"resy\": {\r\n      \"url\": \"http://localhost:3000/sse\",\r\n      \"transport\": \"sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### 搜索餐厅\r\n\r\n搜索有空房的餐厅。\r\n\r\n**参数：**\r\n\r\n- `location` （必填）：城市或社区（例如，“纽约”、“SoHo”）\r\n- `date` （必填）：YYYY-MM-DD格式的日期\r\n- `party_size` （必填）：客人人数（1-20）\r\n- `query` （可选）：搜索餐厅名称或菜肴\r\n- `time_preference` （可选）：首选时间（例如，“晚上7点”、“晚餐”）\r\n- `limit` （可选）：最大结果（默认值：9）\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"location\": \"New York\",\r\n  \"date\": \"2026-02-14\",\r\n  \"party_size\": 2,\r\n  \"time_preference\": \"7pm\"\r\n}\r\n```\r\n\r\n### 查找可用地块\r\n\r\n查找特定餐厅的可用时间。\r\n\r\n**参数：**\r\n\r\n- `venue_id` （必填）：重新设置会场ID\r\n- `date` （必填）：YYYY-MM-DD格式的日期\r\n- `party_size` （必填）：客人人数（1-20）\r\n- `time_preference` （可选）：首选时间\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"venue_id\": 12345,\r\n  \"date\": \"2026-02-14\",\r\n  \"party_size\": 2\r\n}\r\n```\r\n\r\n## 部署\r\n\r\n### 渲染\r\n\r\n创建 `render.yaml`:\r\n\r\n```yaml\r\nservices:\r\n  - type: web\r\n    name: resy-mcp\r\n    env: node\r\n    buildCommand: npm install && npm run build\r\n    startCommand: node build/index.js\r\n    envVars:\r\n      - key: RESY_API_KEY\r\n        sync: false\r\n      - key: RESY_AUTH_TOKEN\r\n        sync: false\r\n```\r\n\r\n### 码头工人\r\n\r\n```bash\r\nnpm run build\r\ndocker build -t resy-mcp .\r\ndocker run -p 3000:3000 \\\r\n  -e RESY_API_KEY=your_key \\\r\n  -e RESY_AUTH_TOKEN=your_token \\\r\n  resy-mcp\r\n```\r\n\r\n### 本地与ngrok\r\n\r\n```bash\r\nnpm start\r\nngrok http 3000\r\n```\r\n\r\n使用ngrok URL进行远程访问。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "resy": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:3000/sse"
+  }
+ }
+}

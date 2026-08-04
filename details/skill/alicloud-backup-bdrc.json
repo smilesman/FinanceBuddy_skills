@@ -1,0 +1,12 @@
+{
+ "id": "alicloud-backup-bdrc",
+ "kind": "skill",
+ "name": "alicloud-backup-bdrc",
+ "fingerprint_md5": "7805cf2819b9f58cd7a8b32b0ddbb654",
+ "download_count": 0,
+ "category": "基础设施",
+ "tags": "",
+ "version": "",
+ "readme": "Category: service\r\n\r\n# 备份与灾备中心\r\n\r\n使用阿里云 OpenAPI (RPC) 配合官方 SDK 或 OpenAPI Explorer 管理备份与灾备中心的资源。\r\n\r\n## 工作流\r\n\r\n1) 确认地域、资源标识符和所需操作。\r\n2) 发现 API 列表和所需参数 (参见参考资料)。\r\n3) 使用 SDK 或 OpenAPI Explorer 调用 API。\r\n4) 使用 describe/list API 验证结果。\r\n\r\n## AccessKey 优先级 (必须遵守)\r\n\r\n1) 环境变量: `ALICLOUD_ACCESS_KEY_ID` / `ALICLOUD_ACCESS_KEY_SECRET` / `ALICLOUD_REGION_ID`\r\n地域策略: `ALICLOUD_REGION_ID` 为可选默认值。如果未设置，请为任务选择最合理的地域；如果不确定，请询问用户。\r\n2) 共享配置文件: `~/.alibabacloud/credentials`\r\n\r\n## API 发现\r\n\r\n- 产品代码: `BDRC`\r\n- 默认 API 版本: `2023-08-08`\r\n- 使用 OpenAPI 元数据端点列出 API 和获取模式定义 (参见参考资料)。\r\n\r\n## 高频操作模式\r\n\r\n1) 清单/列表: 优先使用 `List*` / `Describe*` API 获取当前资源。\r\n2) 变更/配置: 优先使用 `Create*` / `Update*` / `Modify*` / `Set*` API 进行修改。\r\n3) 状态/故障排查: 优先使用 `Get*` / `Query*` / `Describe*Status` API 进行诊断。\r\n\r\n## 最小可执行快速入门\r\n\r\n在调用业务 API 之前，先使用元数据优先发现：\r\n\r\n```bash\r\npython scripts/list_openapi_meta_apis.py\r\n```\r\n\r\n可选覆盖参数:\r\n\r\n```bash\r\npython scripts/list_openapi_meta_apis.py --product-code <ProductCode> --version <Version>\r\n```\r\n\r\n该脚本将 API 清单产物写入 skill 输出目录下。\r\n\r\n## 输出策略\r\n\r\n如果需要保存响应或生成的产物，请写入：\r\n`output/alicloud-backup-bdrc/`\r\n\r\n## 参考资料\r\n\r\n- 来源: `references/sources.md`",
+ "config": {}
+}

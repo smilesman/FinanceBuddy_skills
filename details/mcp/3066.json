@@ -1,0 +1,25 @@
+{
+ "id": "3066",
+ "kind": "mcp",
+ "name": "dexcom",
+ "fingerprint_md5": "f3f80acbd6941c9b75f765cbf6a5ede6",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp服务器dexcom运行状况\r\n\r\n用于Dexcom CGM葡萄糖数据的MCP服务器。使AI代理能够访问和分析健康智能应用程序的连续葡萄糖监测数据。\r\n\r\n## 特性\r\n\r\n- **实时血糖监测** -当前读数与趋势分析\r\n- **历史数据访问** -长达24小时的葡萄糖病史\r\n- **时间窗口查询** -查询特定时间范围（例如，“4-3小时前”）\r\n- **临床分析** -范围内时间、GMI、CV%、AGP报告\r\n- **事件检测** -具有详细上下文的自动低/高事件识别\r\n- **时间块分析** -按时间识别模式\r\n- **持久层支持** -传递外部数据进行长期分析\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_current_glucose` |当前葡萄糖读数趋势|\r\n| `get_glucose_readings` |具有可选时间窗口的历史读数|\r\n| `get_statistics` |TIR、CV%、GMI和其他指标|\r\n| `get_status_summary` |完成“我过得怎么样？”总结|\r\n| `detect_episodes` |查找低/高发作|\r\n| `get_episode_details` |对每一集进行深入分析|\r\n| `analyze_time_blocks` |按时间划分的模式|\r\n| `check_alerts` |实时阈值警报|\r\n| `export_data` |导出以供外部存储|\r\n| `get_agp_report` |临床AGP报告|\r\n\r\n## 安装\r\n\r\n```bash\r\n# Using uvx (recommended)\r\nuvx mcp-server-dexcom-health\r\n\r\n# Using pip\r\npip install mcp-server-dexcom-health\r\n```\r\n\r\n## 配置\r\n\r\n设置环境变量：\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `DEXCOM_USERNAME` |是| Dexcom用户名、电子邮件或电话（+1234567890）|\r\n| `DEXCOM_PASSWORD` |是| Dexcom密码|\r\n| `DEXCOM_REGION` |没有| `us` （默认）， `ous` （美国境外），或 `jp` （日本）|\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dexcom\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-server-dexcom-health\"],\r\n      \"env\": {\r\n        \"DEXCOM_USERNAME\": \"your_username\",\r\n        \"DEXCOM_PASSWORD\": \"your_password\",\r\n        \"DEXCOM_REGION\": \"us\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用示例\r\n\r\n### Claude的基本用法\r\n\r\n> “我现在的血糖是多少？”\r\n\r\n> “我一夜之间的控制力怎么样？”\r\n\r\n> “我今天情绪低落吗？”\r\n\r\n> “给我过去12小时的统计数据”\r\n\r\n> “那之前的一个小时呢？”（后续查询有效！）\r\n\r\n### 时间窗口查询\r\n\r\n使用查询特定时间范围 `start_minutes` 和 `end_minutes`:\r\n\r\n```python\r\n# Last 3 hours (standard)\r\nget_glucose_readings(minutes=180)\r\n\r\n# Specific window: 4 hours ago to 3 hours ago\r\nget_glucose_readings(start_minutes=240, end_minutes=180)\r\n\r\n# Stats for 6-5 hours ago\r\nget_statistics(start_minutes=360, end_minutes=300)\r\n\r\n# Episodes between 8-4 hours ago\r\ndetect_episodes(start_minutes=480, end_minutes=240)\r\n```\r\n\r\n**支持的工具：** `get_glucose_readings`, `get_statistics`, `detect_episodes`, `export_data`\r\n\r\n### 持久层集成\r\n\r\n分析数据的工具接受可选 `data` 外部数据源的参数：\r\n\r\n```python\r\n# Pass your own historical data\r\nresult = get_statistics(\r\n    data=[\r\n        {\"glucose_mg_dl\": 120, \"timestamp\": \"2024-01-15T08:00:00Z\"},\r\n        {\"glucose_mg_dl\": 135, \"timestamp\": \"2024-01-15T08:05:00Z\"},\r\n        # ... more readings\r\n    ]\r\n)\r\n```\r\n\r\n这使得通过在外部存储数据并将其传递回进行分析来构建长期分析成为可能。\r\n\r\n## 需求\r\n\r\n- Python 3.10+\r\n- 活动Dexcom共享会话（需要启用共享的Dexcom移动应用程序）\r\n- Dexcom Share中至少配置了一个关注者\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "dexcom": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-server-dexcom-health"
+   ],
+   "env": {
+    "DEXCOM_USERNAME": "your_username",
+    "DEXCOM_PASSWORD": "your_password",
+    "DEXCOM_REGION": "us"
+   }
+  }
+ }
+}

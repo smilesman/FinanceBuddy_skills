@@ -1,0 +1,34 @@
+{
+ "id": "1684",
+ "kind": "mcp",
+ "name": "rabbitmq",
+ "fingerprint_md5": "02648f2cc453e0815b1a4923e91ca4f6",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# RabbitMQ MCP服务器\r\n\r\n[](https://smithery.ai/server/@kenliao94/mcp-server-rabbitmq)\r\n\r\nA. [模型上下文协议](https://www.anthropic.com/news/model-context-protocol) RabbitMQ操作的服务器实现。\r\n\r\n## 特性\r\n\r\n### 使用AI代理管理您的RabbitMQ消息代理\r\n\r\n此MCP服务器将RabbitMQ代理的管理API封装为MCP工具。它还使用Pika与RabbitMQ交互，在消息级别进行操作。您还可以指定一个不同的RabbitMQ代理，以便在对话过程中连接到该代理（默认值在服务器初始化期间配置）。\r\n\r\n### 通过FastMCP支持流式HTTP `BearerAuthProvider`\r\n\r\n您可以通过配置自己的IdP和第三方授权提供程序来启动远程RabbitMQ MCP服务器。\r\n\r\n### 与MCP客户端无缝集成\r\n\r\n该包在PyPI上可用，您可以使用uvx，而无需先在本地分叉和构建MCP服务器。\r\n\r\n## 安装\r\n\r\n### 史密瑟里\r\n\r\n通过以下方式自动安装Claude Desktop的RabbitMQ MCP服务器 [史密瑟里](https://smithery.ai/server/@kenliao94/mcp-server-rabbitmq):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @kenliao94/mcp-server-rabbitmq --client claude\r\n```\r\n\r\n### 在线试用\r\n\r\nhttps://smithery.ai/server/@kenliao94/mcp服务器rabbitmq\r\n\r\n### PyPI\r\n\r\nhttps://pypi.org/project/mcp-server-rabbitmq/\r\n\r\n直接在MCP客户端配置中使用uvx\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n      \"rabbitmq\": {\r\n        \"command\": \"uvx\",\r\n        \"args\": [\r\n            \"mcp-server-rabbitmq@latest\",\r\n            \"--rabbitmq-host\",\r\n            \"<hostname ex. test.rabbit.com, localhost>\",\r\n            \"--port\",\r\n            \"<port number ex. 5672>\",\r\n            \"--username\",\r\n            \"<rabbitmq username>\",\r\n            \"--password\",\r\n            \"<rabbitmq password>\",\r\n            \"--api-port\",\r\n            \"<port number for the admin API, default to 15671>\"\r\n            \"--use-tls\",\r\n            \"<true if uses amqps, false otherwise>\"\r\n        ]\r\n      }\r\n    }\r\n}\r\n```\r\n\r\n### 来源\r\n\r\n1. 克隆此存储库。\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n      \"rabbitmq\": {\r\n        \"command\": \"uv\",\r\n        \"args\": [\r\n            \"--directory\",\r\n            \"/path/to/repo/mcp-server-rabbitmq\",\r\n            \"run\",\r\n            \"mcp-server-rabbitmq\",\r\n            \"--rabbitmq-host\",\r\n            \"<hostname ex. test.rabbit.com, localhost>\",\r\n            \"--port\",\r\n            \"<port number ex. 5672>\",\r\n            \"--username\",\r\n            \"<rabbitmq username>\",\r\n            \"--password\",\r\n            \"<rabbitmq password>\",\r\n            \"--use-tls\",\r\n            \"<true if uses amqps, false otherwise>\"\r\n        ]\r\n      }\r\n    }\r\n}\r\n```\r\n\r\n## 路线图\r\n\r\n1. 全功能与 `rabbitmqadmin`\r\n1. 支持RabbitMQ OAuth而不是基本身份验证\r\n\r\n## 发展\r\n\r\n### 设置开发环境\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/kenliao94/mcp-server-rabbitmq.git\r\ncd mcp-server-rabbitmq\r\n\r\n# Install pre-commit hooks\r\npre-commit install\r\n```\r\n\r\n### 运行测试\r\n\r\n```bash\r\npytest\r\n```\r\n\r\n### 代码质量\r\n\r\n此项目使用ruff进行linting和格式化：\r\n\r\n```bash\r\n# Run linter\r\nruff check .\r\n\r\n# Run formatter\r\nruff format .\r\n```\r\n\r\n## 许可证\r\n\r\n此项目在Apache License 2.0下获得许可-有关详细信息，请参阅License文件。\r\n",
+ "config": {
+  "rabbitmq": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/repo/mcp-server-rabbitmq",
+    "run",
+    "mcp-server-rabbitmq",
+    "--rabbitmq-host",
+    "<hostname ex. test.rabbit.com, localhost>",
+    "--port",
+    "<port number ex. 5672>",
+    "--username",
+    "<rabbitmq username>",
+    "--password",
+    "<rabbitmq password>",
+    "--use-tls",
+    "<true if uses amqps, false otherwise>"
+   ],
+   "env": {}
+  }
+ }
+}

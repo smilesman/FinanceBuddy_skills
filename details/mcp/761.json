@@ -1,0 +1,18 @@
+{
+ "id": "761",
+ "kind": "mcp",
+ "name": "musicdb",
+ "fingerprint_md5": "b8040cb76239e2ae9f12c6bd81cdcbf5",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# 音乐DB\r\n\r\n遥控器 [主控程序](https://modelcontextprotocol.io/) 暴露的服务器 [MusicBrainz API](https://musicbrainz.org/doc/MusicBrainz_API) 作为人工智能助手的工具。在Cloudflare Workers上运行。\r\n\r\n## 实时端点\r\n\r\n```\r\nhttps://musicdb-mcp.musicdb.workers.dev/mcp\r\n```\r\n\r\n## 添加到您的AI助手\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"musicdb\": {\r\n      \"url\": \"https://musicdb-mcp.musicdb.workers.dev/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Claude.ai\r\n\r\n首选 **设置>集成>添加自定义集成** 并输入：\r\n\r\n```\r\nhttps://musicdb-mcp.musicdb.workers.dev/mcp\r\n```\r\n\r\n### 任何MCP客户端\r\n\r\n使用以下命令将MCP客户端指向上面的URL **流式HTTP** 运输。\r\n\r\n## 工具\r\n\r\n### 核心工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `musicbrainz_lookup` |通过MusicBrainz ID（MBID）查找任何实体|\r\n| `musicbrainz_browse` |浏览链接到另一个实体的实体（例如艺术家的所有版本）|\r\n| `musicbrainz_search` |使用Lucene查询语法进行搜索（例如。 `artist:radiohead`) |\r\n| `musicbrainz_lookup_by_resource` |按ISRC、ISWC或光盘ID查找|\r\n\r\n### 便利工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `musicbrainz_get_tracklist` |带有持续时间和学分的发布格式化曲目列表|\r\n| `musicbrainz_get_genres` |实体的类型和社区标签|\r\n| `musicbrainz_get_release_events` |全球发布日期和国家|\r\n| `musicbrainz_url_lookup` |从Spotify、维基百科、Discogs链接查找MusicBrainz实体|\r\n| `musicbrainz_get_discography` |按类型组织的完整艺术家唱片|\r\n| `musicbrainz_get_credits` |录制或发行的制作学分和关系|\r\n| `musicbrainz_get_artist_relationships` |乐队成员、合作者和外部链接|\r\n| `musicbrainz_find_covers` |音乐作品的所有录音（封面、现场版本）|\r\n| `musicbrainz_compare_releases` |两个版本的并排比较|\r\n\r\n## 示例提示\r\n\r\n- “Radiohead的成员是谁？”\r\n- “查找Abbey Road的曲目列表”\r\n- “肯德里克·拉马尔属于哪些流派？”\r\n- “比较这张专辑的美国和英国版本”\r\n- “寻找哈利路亚的封面版本”\r\n- “此Spotify链接指向哪个MusicBrainz条目？”\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm install\r\nnpm run dev              # Start local dev server on port 8787\r\nnpm run deploy           # Deploy to Cloudflare Workers\r\n```\r\n\r\n**使用MCP检查员进行本地测试：**\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector\r\n# Enter http://localhost:8787/mcp as the server URL\r\n```\r\n\r\n## 技术栈\r\n\r\n- **运行时**：Cloudflare员工\r\n- **MCP-SDK**: `@modelcontextprotocol/sdk` + `agents` （Cloudflare传输）\r\n- **验证**：佐德\r\n- **缓存**：Cloudflare Cache API（24小时查找、6小时浏览、1小时搜索）\r\n- **速率限制**：上游请求之间的最小间隔为1.05s+在503/429上重试\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "musicdb": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://musicdb-mcp.musicdb.workers.dev/mcp"
+  }
+ }
+}

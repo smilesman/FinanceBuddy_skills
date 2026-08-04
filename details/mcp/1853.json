@@ -1,0 +1,28 @@
+{
+ "id": "1853",
+ "kind": "mcp",
+ "name": "billcom",
+ "fingerprint_md5": "2485f56e4e369e96e6a7feec85640bd2",
+ "download_count": 0,
+ "category": "支付服务",
+ "tags": "",
+ "version": "",
+ "readme": "# billcom mcp服务器\r\n\r\n一个MCP（模型上下文协议）服务器，将Claude连接到您的 [Bill.com](https://bill.com) 账户通过自然语言管理供应商、账单和付款。\r\n\r\n## 特性\r\n\r\n**应付账款**\r\n\r\n- **供应商** --列出、查看和创建供应商\r\n- **账单** --列出、查看、创建和批准账单\r\n- **支付** --列出并查看付款历史记录\r\n\r\n## 快速开始\r\n\r\n### 1.获取Bill.com API证书\r\n\r\n您需要一个Bill.com开发者帐户和API证书。注册地址： [developer.bill.com](https://developer.bill.com).\r\n\r\n### 2.在Claude Desktop中配置\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"billcom\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"billcom-mcp-server\"],\r\n      \"env\": {\r\n        \"BILLCOM_DEV_KEY\": \"your-dev-key\",\r\n        \"BILLCOM_USERNAME\": \"your-email@example.com\",\r\n        \"BILLCOM_PASSWORD\": \"your-password\",\r\n        \"BILLCOM_ORG_ID\": \"your-org-id\",\r\n        \"BILLCOM_ENV\": \"sandbox\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.在Claude代码中配置\r\n\r\n```bash\r\nclaude mcp add --transport stdio billcom \\\r\n  --env BILLCOM_DEV_KEY=your-dev-key \\\r\n  --env BILLCOM_USERNAME=your-email@example.com \\\r\n  --env BILLCOM_PASSWORD=your-password \\\r\n  --env BILLCOM_ORG_ID=your-org-id \\\r\n  --env BILLCOM_ENV=sandbox \\\r\n  -- npx -y billcom-mcp-server\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|---|---|---|\r\n| `BILLCOM_DEV_KEY` |是| Bill.com开发者API密钥|\r\n| `BILLCOM_USERNAME` |是|Bill.com帐户电子邮件|\r\n| `BILLCOM_PASSWORD` |是|Bill.com帐户密码|\r\n| `BILLCOM_ORG_ID` |是|Bill.com组织ID（以“008”开头）|\r\n| `BILLCOM_ENV` |没有| `sandbox` （默认）或 `production` |\r\n\r\n## 可用工具\r\n\r\n### 供应商\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `list_vendors` |按页码列出所有供应商|\r\n| `get_vendor` |按ID获取供应商详细信息|\r\n| `create_vendor` |创建新供应商|\r\n\r\n### 账单\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `list_bills` |按页码列出账单|\r\n| `get_bill` |按ID获取账单详细信息|\r\n| `create_bill` |使用行项目创建新账单|\r\n| `approve_bill` |批准付款账单|\r\n\r\n### 支付\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `list_payments` |按页码列出付款历史记录|\r\n| `get_payment` |按ID获取付款详细信息|\r\n\r\n## 示例提示\r\n\r\n配置后，您可以向Claude询问以下问题：\r\n\r\n- “显示所有未付账单”\r\n- “谁是我的顶级供应商？”\r\n- “创建Acme Corp的500美元账单，3月15日到期”\r\n- “批准付款账单\\[ID\\]”\r\n- “显示最近的付款”\r\n\r\n## 运作原理\r\n\r\n此服务器使用 [Bill.com v3 REST API](https://developer.bill.com/reference/api-reference-overview)身份验证是基于会话的——服务器会自动登录并根据需要刷新会话。速率限制强制执行Bill.com的3次并发请求限制。\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/Christian-Sidak/billcom-mcp-server.git\r\ncd billcom-mcp-server\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "billcom": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "billcom-mcp-server"
+   ],
+   "env": {
+    "BILLCOM_DEV_KEY": "your-dev-key",
+    "BILLCOM_USERNAME": "your-email@example.com",
+    "BILLCOM_PASSWORD": "your-password",
+    "BILLCOM_ORG_ID": "your-org-id",
+    "BILLCOM_ENV": "sandbox"
+   }
+  }
+ }
+}

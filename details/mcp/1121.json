@@ -1,0 +1,26 @@
+{
+ "id": "1121",
+ "kind": "mcp",
+ "name": "momento",
+ "fingerprint_md5": "2519d7854bd147733e5a4d331f8ff1d2",
+ "download_count": 0,
+ "category": "缓存",
+ "tags": "",
+ "version": "",
+ "readme": "# Momento MCP服务器\r\n\r\nMomento Cache的简单模型上下文协议（MCP）服务器实现。\r\n\r\n在npmjs上可用 [`@gomomento/mcp-momento`](https://www.npmjs.com/package/@gomomento/mcp-momento)\r\n\r\n## 工具\r\n\r\n- `get`\r\n  - 获取为给定键存储的缓存值。\r\n  - 输入：\r\n    - `key` string——在缓存中查找的键。\r\n    - `cacheName` string--密钥所在的名称缓存(*可选的*)\r\n  - 退货：\r\n    - `Hit` 如果找到了密钥，则使用找到的值。\r\n    - `Miss` 如果找不到密钥。\r\n    - `Error` 如果请求失败。\r\n- `set`\r\n  - 使用给定的生存时间（TTL）秒设置缓存中的值。如果此键的值已经存在，则无论前一个值的数据类型如何，它都将被新值替换。\r\n  - 输入：\r\n    - `key`：string--要在缓存中设置的键\r\n    - `value`：string--为给定键设置的值\r\n    - `ttl`：integer--将此值保留在缓存中的秒数(*可选的*)\r\n    - `cacheName`：string--用于存储密钥的缓存的名称(*可选的*)\r\n  - 退货：\r\n    - `Success` 如果密钥已成功写入缓存。\r\n    - `Error` 如果请求失败。\r\n- `list-caches`\r\n  - 列出您Momento帐户中所有缓存的名称。\r\n  - 输入：\r\n    - （无）\r\n  - 退货：\r\n    - `Success` 以逗号分隔的缓存名称列表\r\n    - `Error` 如果请求失败\r\n- `create-cache`\r\n  - 在您的Momento帐户中创建新缓存\r\n  - 输入：\r\n    - `name`：string-要创建的缓存的名称\r\n  - 退货：\r\n    - `Success` 如果缓存已成功创建\r\n    - `Error` 如果请求失败\r\n- `delete-cache`\r\n  - 从您的Momento帐户中删除缓存\r\n  - 输入：\r\n    - `name`：string-要删除的缓存的名称\r\n  - 退货：\r\n    - `Success` 如果缓存已成功删除\r\n    - `Error` 如果请求失败\r\n\r\n## 快速启动\r\n\r\n1. 从获取Momento API密钥 [Momento控制台](https://console.gomomento.com/). *注意-运行控制平面工具(`list-caches`, `create-cache`, `delete-cache`)，您必须使用 **超级用户API密钥**.*\r\n\r\n1. 设置环境变量以配置缓存中项目的缓存名称和生存时间（TTL）。\r\n\r\n   ```bash\r\n   # required\r\n   export MOMENTO_API_KEY=\"your-api-key\"\r\n\r\n   # optional\r\n   export MOMENTO_CACHE_NAME=\"your-cache-name\"\r\n   export DEFAULT_TTL_SECONDS=60\r\n   ```\r\n\r\n如果不设置这些值，它将使用 `mcp-momento` 作为缓存名称和 `60 seconds` 默认生存时间。\r\n\r\n### 使用MCP检查器\r\n\r\n```bash\r\nnpx -y @modelcontextprotocol/inspector npx @gomomento/mcp-momento@latest\r\n```\r\n\r\n### 在Claude Desktop上使用NPX\r\n\r\n注意：如果您正在使用 `nodenv`，替换普通 `npx` 使用npx二进制文件的路径（例如。 `/Users/username/.nodenv/shims/npx`).\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"momento\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@gomomento/mcp-momento\"\r\n      ],\r\n      \"env\": {\r\n        \"MOMENTO_API_KEY\": \"your-api-key\",\r\n        \"MOMENTO_CACHE_NAME\": \"your-cache-name\",\r\n        \"DEFAULT_TTL_SECONDS\": 60\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 地方发展设置\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   npm install\r\n   ```\r\n\r\n1. 构建服务器：\r\n\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n1. 使用MCP检查器运行\r\n\r\n   ```bash\r\n   export MOMENTO_API_KEY=\"your-api-key\"\r\n   npx @modelcontextprotocol/inspector node dist/index.js\r\n   ```\r\n",
+ "config": {
+  "momento": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@gomomento/mcp-momento"
+   ],
+   "env": {
+    "MOMENTO_API_KEY": "your-api-key",
+    "MOMENTO_CACHE_NAME": "your-cache-name",
+    "DEFAULT_TTL_SECONDS": "60"
+   }
+  }
+ }
+}

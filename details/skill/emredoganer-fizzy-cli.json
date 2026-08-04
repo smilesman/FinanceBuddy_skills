@@ -1,0 +1,12 @@
+{
+ "id": "emredoganer-fizzy-cli",
+ "kind": "skill",
+ "name": "emredoganer-fizzy-cli",
+ "fingerprint_md5": "9722bdb8b8051d3751f995ebe08e9383",
+ "download_count": 0,
+ "category": "效率工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Fizzy CLI\r\n\r\n此仓库包含一个独立的 CLI。\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm i -g @emredoganer/fizzy-cli\r\n```\r\n\r\n## 认证\r\n\r\n在 Fizzy 中生成个人访问令牌：\r\n\r\n```bash\r\nfizzy auth login\r\n```\r\n\r\n（你将被提示输入你的令牌。）",
+ "config": {}
+}

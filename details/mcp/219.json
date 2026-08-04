@@ -1,0 +1,22 @@
+{
+ "id": "219",
+ "kind": "mcp",
+ "name": "garmin-workouts-mcp",
+ "fingerprint_md5": "740f91fbd5734e213309ec20ecd40dbf",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Garmin锻炼MCP\r\n\r\n使用自然语言描述创建Garmin Connect训练。作为MCP（模型上下文协议）服务器构建。\r\n\r\n## 安装\r\n\r\n### 克劳德代码（推荐）\r\n\r\n```bash\r\nclaude mcp add garmin-workouts-mcp npx garmin-workouts-mcp\r\n```\r\n\r\n### 克劳德桌面\r\n\r\n添加到配置文件中：\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"garmin-workouts-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"garmin-workouts-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后重新启动Claude Desktop。\r\n\r\n## 用法\r\n\r\n⚠️ **重要**：Garmin的身份验证令牌将在约5分钟后过期。计划多项训练，并在一次训练中全部创建。\r\n\r\n### 快速开始\r\n\r\n1. **请求锻炼** -只需描述一下你想要什么：“创建一个10分钟的预热，5x1km的阈值间隔，休息2分钟，然后冷却10分钟”\r\n\r\n1. **需要时进行身份验证** -浏览器窗口将打开Garmin Connect供您登录（代币过期时发生，大约每5分钟一次）\r\n\r\n1. **您的训练出现** -该工具直接在您的Garmin Connect帐户中创建它，并提供查看它的链接\r\n\r\n1. **设备上可用** -训练将在Garmin Connect中提供，并可以从那里发送到您的设备\r\n\r\n**您的登录信息已临时保存** -令牌安全地存储在您的机器上，但会在大约5分钟后过期，因此您可能需要在会话之间重新进行身份验证。\r\n\r\n**在一次训练中创建多个训练：**\r\n\r\n```\r\n\"Create these 3 workouts:\r\n1. Easy 30 min run in zone 2\r\n2. 5x1km threshold intervals with 2 min rest\r\n3. 10x30 second sprints with 90 second recovery\"\r\n```\r\n\r\n### 运作原理\r\n\r\n1. **请求锻炼** -描述你想创建什么\r\n1. **自动身份验证** -令牌过期时打开浏览器进行登录\r\n1. **批量创建** -在同一训练中创建多个训练\r\n\r\n## 训练示例\r\n\r\n- **放松跑**：“在2区轻松跑30分钟”\r\n- **间隔**：“以5公里的速度跑5x400公里，休息60秒”\r\n- **阈值**：“10分钟热身，20分钟第4区节奏，10分钟冷却”\r\n- **短跑**：“热身10分钟，然后8x15秒冲刺，恢复3分钟”\r\n- **复杂**：“金字塔训练：1-2-3-4-3-2-1分钟用力，恢复力相同”\r\n\r\n## 特性\r\n\r\n- 🧠 **自然语言处理** -用简单的英语描述锻炼\r\n- 🔐 **安全认证** -基于令牌的身份验证，具有自动续订功能\r\n- 🏃 **多运动支持** -跑步、骑自行车和游泳锻炼\r\n- ⚡ **Garmin直接集成** -在Garmin Connect中即时创建训练\r\n- 💾 **智能令牌处理** -令牌过期时自动重新身份验证\r\n\r\n## 当前限制\r\n\r\n⚠️ **仅心率/区域目标** -该工具目前支持心率区域（区域1-5）和特定的BPM目标，但尚不支持基于速度的目标（例如4:00/km）。\r\n\r\n## 运作原理\r\n\r\n1. 将自然语言训练描述转换为结构化数据\r\n1. 转换为Garmin的训练API格式，具有适当的区域和目标\r\n1. 直接在您的Garmin Connect帐户中创建训练\r\n1. 自动同步到您的Garmin设备\r\n\r\n专为克劳德代码和克劳德桌面设计。\r\n\r\n## 法律免责声明\r\n\r\n该项目是一个与Garmin Connect的web界面交互的非官方第三方工具。其不隶属于、不由有限公司或其任何附属公司背书或赞助。\r\n\r\n- **使用风险自负** -如果Garmin更改其API或服务条款，此工具可能会停止工作\r\n- **非商业用途** -这是一个仅供个人使用的个人项目\r\n- **无担保** -软件按“原样”提供，不提供任何保证\r\n- **尊重Garmin的条款** -用户有责任遵守Garmin Connect的服务条款\r\n- **数据责任** -您对创建的训练和与Garmin共享的任何数据负责\r\n\r\n如果您代表Garmin并对此项目有疑问，请通过GitHub issues联系。\r\n\r\n## 发展\r\n\r\n### 令牌存储\r\n\r\n身份验证令牌安全地存储在：\r\n\r\n- **位置**: `~/.config/garmin-workouts-mcp/auth.json`\r\n- **权限**：600（仅限用户读/写）\r\n- **到期**：登录后约5分钟\r\n- **内容**：Garmin Connect API的JWT代币和Cookie\r\n\r\n### 地方发展\r\n\r\n```bash\r\n# Clone and install\r\ngit clone https://github.com/charlesfrisbee/garmin-workouts-mcp.git\r\ncd garmin-workouts-mcp\r\npnpm install\r\n\r\n# Build and test locally\r\npnpm run build\r\npnpm run pack\r\n\r\n# Add to Claude Code for testing\r\nclaude mcp add garmin-workouts-mcp ./garmin-workouts-mcp-local.tgz\r\n```\r\n\r\n### 需求\r\n\r\n- **Node.js** 16+\r\n- **pnpm**\r\n- **克劳德代码** （用于本地测试）\r\n- **Garmin Connect帐户**\r\n",
+ "config": {
+  "garmin-workouts-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "garmin-workouts-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

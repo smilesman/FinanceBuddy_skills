@@ -1,0 +1,12 @@
+{
+ "id": "vapi-calls",
+ "kind": "skill",
+ "name": "vapi-calls",
+ "fingerprint_md5": "101495e1e5d026ae4f0eeae885baa413",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# Vapi Calls - Agent 指令\r\n\r\n使用此技能来执行任何需要通过电话进行语音交互的任务。\r\n\r\n## 配置与网络要求\r\n\r\n⚠️ **重要：** 此技能要求您的机器能够从互联网访问，以接收实时呼叫更新。\r\n\r\n### 1. 环境变量\r\n在您的 OpenClaw `config.json`（或 Gateway 环境）中配置以下内容：\r\n\r\n- `VAPI_API_KEY`: 您的 Vapi 私有 API 密钥。\r\n- `VAPI_ASSISTANT_ID`: 用作基础的 Vapi Assistant 的 ID。\r\n- `VAPI_PHONE_NUMBER_ID`: Vapi 电话号码的 ID。\r\n- `WEBHOOK_BASE_URL`: **关键。** 此 agent 可从公共网络访问的 HTTPS URL（例如 `https://my-claw.com` 或 `https://xyz.ngrok-free.app`）。**不要包含尾部斜杠。**\r\n- `WEBHOOK_PORT` (可选): 要监听的本地端口（默认：`4430`）。\r\n- `VAPI_LLM_PROVIDER`: (可选) 自定义模式使用的提供商（默认：`openai`）。\r\n- `VAPI_LLM_MODEL`: (可选) 自定义模式使用的模型（默认：`gpt-4o-mini`）。\r\n\r\n### 2. 连接设置\r\n您必须将 `WEBHOOK_PORT`（默认 4430）暴露到互联网。\r\n\r\n**选项 A: Cloudflare Tunnel（推荐）**\r\n`cloudflared tunnel --url http://localhost:4430`\r\n\r\n**选项 B: Ngrok**\r\n`ngrok http 4430`\r\n\r\n将 `WEBHOOK_BASE_URL` 设置为生成的 URL（例如 `https://random-name.trycloudflare.com`）。\r\n\r\n## 用法\r\n\r\n### 自定义任务（动态）\r\n提供一个特定的 `system_prompt`。系统将自动使用 **GPT-4o Mini** 并启用 **endCall** 工具。AI 将能够自主挂断电话。\r\n\r\n### 原生 Agent（静态）\r\n为 `first_message`、`system_prompt` 和 `end_message` 传入 `\"DEFAULT\"`。系统将使用在 Vapi Dashboard 中定义的精确配置（模型、语音、提示词）。\r\n\r\n## 故障排除\r\n\r\n- **呼叫挂起 / 无报告：** 检查 `WEBHOOK_BASE_URL` 是否可从互联网访问。Python 脚本仅在呼叫期间在 `WEBHOOK_PORT` 上启动临时服务器。\r\n- **API 400 错误：** 检查您的 `VAPI_PHONE_NUMBER_ID` 和 `VAPI_ASSISTANT_ID`。",
+ "config": {}
+}

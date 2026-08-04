@@ -1,0 +1,18 @@
+{
+ "id": "699",
+ "kind": "mcp",
+ "name": "immostage",
+ "fingerprint_md5": "0f7369b7a3b418ef4d3bf95eb9c552c1",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# ImmoStage虚拟暂存MCP服务器\r\n\r\n\r\n面向房地产专业人士的人工智能虚拟登台MCP服务器。通过模型上下文协议，用逼真的家具装饰空房间，将平面图美化为3D渲染，对房间图像进行分类，生成德国房产描述，并获得舞台风格建议。专为DACH市场的Immobilienmakler、PropTech平台和房地产摄影师打造。\r\n\r\n## 快速开始\r\n\r\n将您的MCP客户端连接到ImmoStage服务器：\r\n\r\n**服务器URL:** `https://mcp.immostage.ai/api/mcp`\r\n\r\n### Claude桌面配置\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"immostage\": {\r\n      \"url\": \"https://mcp.immostage.ai/api/mcp\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer YOUR_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n联系 [goerz@immostage.ai](mailto:goerz@immostage.ai) 用于API访问。\r\n\r\n## 工具\r\n\r\n|工具|描述|成本|延迟|\r\n|------|-------------|------|---------|\r\n| `stage_room` |人工智能虚拟舞台——将空房间的照片转化为装饰精美的空间|使用学分|~20-40s|\r\n| `beautify_floor_plan` |将2D平面图转换为3D等轴测建筑渲染|使用学分|~20-40s|\r\n| `classify_room` |对房间图像进行分类：类型、空置/装修、质量评分、风格建议|免费|~2s|\r\n| `optimize_listing` |从基本房源数据生成专业的德国房产描述|免费|~3s|\r\n| `suggest_style` |根据房间类型和目标受众获取舞台风格推荐|免费|即时|\r\n\r\n## 使用示例\r\n\r\n### 搭建一个空荡荡的客厅\r\n\r\n```\r\nStage this room in modern style: https://example.com/empty-living-room.jpg\r\n```\r\n\r\n这 `stage_room` 工具接受：\r\n\r\n- `image_url` --房间图像的公共URL（JPEG/PNG）\r\n- `style` --分期方式： `modern`, `skandinavisch`, `luxus`, `minimalistisch`, `boho`, `landhausstil`\r\n- `room_type` --房间类型： `wohnzimmer`, `schlafzimmer`, `kueche`, `bad`, `buero`, `kinderzimmer`, `flur`\r\n- `quality` --输出质量： `draft` （快速）或 `high` （详细）\r\n\r\n返回已准备好下载或嵌入的分阶段图像URL。\r\n\r\n### 然后进行阶段分类\r\n\r\n```\r\nFirst classify this room image, then stage it with the recommended style:\r\nhttps://example.com/room-photo.jpg\r\n```\r\n\r\n代理人将：\r\n\r\n1. 呼叫 `classify_room` 检测房间类型并建议风格\r\n1. 呼叫 `stage_room` 根据检测到的房间类型和建议的风格\r\n\r\n### 优化房产列表\r\n\r\n```\r\nWrite a listing description for a 3-room apartment in Berlin-Mitte,\r\n85m2, balcony, built 1998, renovated 2023, asking price 420,000 EUR.\r\n```\r\n\r\n这 `optimize_listing` 工具生成：\r\n\r\n- 专业的德国房产描述（Exposé-就绪）\r\n- TLDR摘要\r\n- 主要功能亮点\r\n- SEO优化文本\r\n\r\n## 认证\r\n\r\n所有请求都需要在Authorization标头中包含Bearer令牌：\r\n\r\n```\r\nAuthorization: Bearer YOUR_API_KEY\r\n```\r\n\r\n联系 [goerz@immostage.ai](mailto:goerz@immostage.ai) 用于API访问。免费等级包括10个测试学分。\r\n\r\n## 速率限制\r\n\r\n- **100个请求/分钟** 每个API密钥\r\n- 响应中包含的速率限制标头(`X-RateLimit-Remaining`)\r\n- 分期和平面图工具会根据您的计划消耗积分\r\n\r\n## 链接\r\n\r\n- [ImmoStage主页](https://immostage.ai) --AI虚拟中转平台\r\n- [GitHub](https://github.com/LarryWalkerDEV/mcp-immostage) --源代码\r\n\r\n## 许可证\r\n\r\n[MIT](./LICENSE) --版权所有2026 [不动产](https://immostage.ai)\r\n",
+ "config": {
+  "immostage": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.immostage.ai/api/mcp"
+  }
+ }
+}

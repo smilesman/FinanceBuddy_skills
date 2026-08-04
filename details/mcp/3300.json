@@ -1,0 +1,26 @@
+{
+ "id": "3300",
+ "kind": "mcp",
+ "name": "wikitree",
+ "fingerprint_md5": "0196cc3ebea220fd137a5e60482e834f",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 维基树mcp\r\n\r\nMCP服务器暴露 [维基树](https://www.wikitree.com/) 谱系API通过代码模式架构。仅限公共配置文件，无需身份验证。\r\n\r\n**注：** GitHub是一个只读镜像。发展发生在 [GitLab](https://gitlab.com/genealogy-mcp/wikitree-mcp).\r\n\r\n## 建筑\r\n\r\n此服务器使用2个元工具(`search` + `execute`)服务器端注册表中有10个操作。LLM通过以下方式发现操作 `search` 并通过以下方式运行它们 `execute`.\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `search` |发现可用的操作及其参数|\r\n| `execute` |对WikiTree API运行命名操作|\r\n\r\n### 运营\r\n\r\n|操作|类别|描述|\r\n|---|---|---|\r\n| `get_profile` |read |检索人员或可用空间配置文件|\r\n| `get_person` |read |检索个人资料（仅限个人资料）|\r\n| `get_people` |read |按键或关系获取多个配置文件|\r\n| `search_person` |搜索|按姓名、日期、地点、性别搜索个人资料|\r\n| `get_ancestors` |分析|获取祖先树（父母、祖父母等）|\r\n| `get_descendants` |分析|获取后代树（子、孙等）|\r\n| `get_relatives` |阅读|找到父母、孩子、兄弟姐妹、配偶|\r\n| `get_bio` |内容|检索传记文本|\r\n| `get_photos` |内容|获取链接到个人资料的照片|\r\n| `get_categories` |content |检索关联的类别|\r\n\r\n## 配置\r\n\r\n|环境变量|必填|默认|描述|\r\n|---|---|---|---|\r\n| `WIKITREE_APP_ID` |没有| `Genealogy-MCP_wikitree-mcp` |您的WikiTree API应用程序标识符|\r\n| `WIKITREE_API_BASE_URL` |没有| `https://api.wikitree.com/api.php` |WikiTree API端点|\r\n| `WIKITREE_HTTP_TIMEOUT` |没有| `10.0` |HTTP请求超时（秒）|\r\n| `WIKITREE_MAX_RETRIES` |没有| `3` |瞬时故障的最大重试次数|\r\n\r\n## 设置：克劳德桌面\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n### 使用紫外线（局部）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"wikitree\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"/path/to/wikitree-mcp\", \"run\", \"wikitree-mcp\"],\r\n      \"env\": {\r\n        \"WIKITREE_APP_ID\": \"your-app-id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用Docker\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"wikitree\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"-e\", \"WIKITREE_APP_ID=your-app-id\", \"wikitree-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 设置：克劳德代码\r\n\r\n### 使用紫外线（局部）\r\n\r\n```bash\r\nclaude mcp add wikitree -- uv --directory /path/to/wikitree-mcp run wikitree-mcp\r\n```\r\n\r\n设置环境变量：\r\n\r\n```bash\r\nexport WIKITREE_APP_ID=your-app-id\r\n```\r\n\r\n### 使用Docker\r\n\r\n```bash\r\nclaude mcp add wikitree -- docker run -i --rm -e WIKITREE_APP_ID=your-app-id wikitree-mcp\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\nmake install       # Install dependencies\r\nmake test          # Run tests with coverage (mocked, no network)\r\nmake test-live     # Run live tests against real WikiTree API\r\nmake ci            # Full CI pipeline (lint + typecheck + test + audit)\r\nmake format        # Auto-format code\r\nmake build         # Build wheel\r\nmake run           # Run with streamable-http on port 8000\r\nmake run-stdio     # Run with stdio transport\r\n```\r\n\r\n## 许可证\r\n\r\n仅限AGPL-3.0\r\n",
+ "config": {
+  "wikitree": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/wikitree-mcp",
+    "run",
+    "wikitree-mcp"
+   ],
+   "env": {
+    "WIKITREE_APP_ID": "your-app-id"
+   }
+  }
+ }
+}

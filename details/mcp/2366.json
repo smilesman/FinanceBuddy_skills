@@ -1,0 +1,24 @@
+{
+ "id": "2366",
+ "kind": "mcp",
+ "name": "weather-26",
+ "fingerprint_md5": "d91f3afe189026ead295475e029a29b6",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP气象服务器\r\n\r\n模型上下文协议（MCP）服务器，使用 [wttr.in](https://wttr.in) API\r\n\r\n## 特性\r\n\r\n- **get_weather**：获取任何城市的当前天气状况和温度\r\n\r\n## 需求\r\n\r\n- Python 3.10+\r\n\r\n## 安装\r\n\r\n```bash\r\n# Using uv\r\nuv sync\r\n\r\n# Or using pip\r\npip install -e .\r\n```\r\n\r\n## 用法\r\n\r\n### 运行服务器\r\n\r\n```bash\r\n# Using uv\r\nuv run main.py\r\n\r\n# Or directly with Python\r\npython main.py\r\n```\r\n\r\n### 使用Claude Desktop进行配置\r\n\r\n将以下内容添加到您的Claude Desktop配置文件中：\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"/path/to/mcp-server-weather\", \"run\", \"main.py\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 可用工具\r\n\r\n#### `get_weather`\r\n\r\n获取一个城市的当前天气。\r\n\r\n**参数：**\r\n\r\n- `city` （string，必填）：城市名称\r\n\r\n**示例响应：**\r\n\r\n```\r\nWeather in London: Partly cloudy +15°C\r\n```\r\n\r\n## 依赖项\r\n\r\n- [httpx](https://www.python-httpx.org/) -异步HTTP客户端\r\n- [主控程序](https://github.com/modelcontextprotocol/python-sdk) -模型上下文协议SDK\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n原始来源\r\n\r\nLinkedin学习\r\n\r\nhttps://www.linkedin.com/learning/model-context-protocol-mcp-hands-on-with-agentic-ai/articles/creating-an-mcp-server-using-python?resume=false&u=2164418\r\n\r\nmacOS通过Homebrew：\r\n\r\nbrew安装uv\r\n\r\nWindows通过WinGet：\r\n\r\n机翼安装--id=astral-sh.uv-e\r\n\r\n设置项目\r\n要设置项目，请打开要添加项目的文件夹中的代码编辑器。然后按照以下步骤设置您的项目：\r\n\r\n使用编辑器工具或终端创建一个名为mcp server weather的新文件夹：\r\nmkdir mcp服务器天气\r\n导航到终端中的文件夹：\r\ncd-mcp服务器天气\r\n启动一个新的紫外线项目：\r\n紫外线初始化\r\n使用uv创建虚拟环境：\r\n紫外线真空\r\n启动虚拟环境：\r\nsource.ven/bin/activate\r\n注意：要停止虚拟环境，请在终端中运行deactivate。\r\n在虚拟环境中安装带有CLI扩展和其他Python依赖项的Python MCP SDK：\r\nuv添加“mcp\\[cli\\]”httpx\r\n\r\n构建气象MCP服务器\r\n\r\n测试和运行MCP服务器\r\nMCP服务器现在功能齐全，可以使用MCP检查器进行测试。您将在下一个视频中了解有关检查员的更多信息，但这里有一个预览：\r\n\r\n在终端中，通过运行以下命令以开发人员模式启动MCP服务器：\r\nmcp-dev-main.py\r\n\r\nMCP检查员现在可以在http://localhost:5173；在浏览器中打开URL\r\n选择“连接”按钮\r\n选择“工具”选项卡\r\n选择“列出工具”按钮\r\n选择get_current_weather工具\r\n在get_current_weather面板中，输入纬度和经度，例如63.4463991、10.8127596\r\n在“工具结果”下，您将看到一个包含天气数据的JSON对象\r\n在终端中按Ctrl+C可退出MCP检查器。\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/mcp-server-weather",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

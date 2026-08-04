@@ -1,0 +1,24 @@
+{
+ "id": "274",
+ "kind": "mcp",
+ "name": "macinput",
+ "fingerprint_md5": "a26c05a4c5c78e239a57e2ca94b5ef2e",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# macinput\r\n\r\n语言： [英语](README.md) | [中文](README.zh-CN.md)\r\n\r\n`macinput` 是用于AI代理的macOS键盘、鼠标和屏幕截图控制工具。此存储库现在被构造为可安装的Python项目和MCP服务器，因此桌面代理可以通过标准的MCP工具调用来控制macOS GUI。\r\n\r\n该项目有两个目标：\r\n\r\n- 提供稳定的低级macOS输入和屏幕截图原语。\r\n- 为MCP服务器提供实用的工具界面、运行时安全限制和部署指南。\r\n\r\n## 特性\r\n\r\n- 鼠标移动、左键单击、右键单击和双击\r\n- 当前鼠标位置查找\r\n- 按键、向下键、向上键和修饰符组合\r\n- Unicode文本输入\r\n- 剪贴板支持粘贴输入\r\n- 带有自动清理功能的全屏截图\r\n- MCP资源和代理指导提示模板\r\n\r\n## 用例\r\n\r\n- 控制macOS应用程序的桌面AI代理\r\n- UI自动化原型\r\n- 人机交互桌面工作流程\r\n- 屏幕截图观察加键盘/鼠标动作代理循环\r\n\r\n## 需求\r\n\r\n- macOS\r\n- Python 3.10+\r\n- 启动主机应用程序必须具有：\r\n  - 无障碍权限\r\n  - 屏幕录制权限\r\n\r\n重要提示：权限适用于启动MCP服务器的程序，而不仅仅是Python。如果您通过Claude Desktop、Terminal、iTerm2、Cursor或VS Code启动，则必须授予该主机应用程序权限。\r\n\r\n## 安装\r\n\r\n### `uv`\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n### `pip`\r\n\r\n```bash\r\npython -m pip install -e .\r\n```\r\n\r\n## 运行MCP服务器\r\n\r\n`stdio` 是桌面AI客户端的推荐默认值：\r\n\r\n```bash\r\nmacinput-mcp\r\n```\r\n\r\n如果您的MCP主机需要HTTP传输：\r\n\r\n```bash\r\nmacinput-mcp --transport streamable-http --host 127.0.0.1 --port 8000 --path /mcp\r\n```\r\n\r\n## MCP客户端配置示例\r\n\r\n通用的 `stdio` 配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"macinput\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/macinput\",\r\n        \"run\",\r\n        \"macinput-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果软件包已安装到当前环境中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"macinput\": {\r\n      \"command\": \"macinput-mcp\",\r\n      \"args\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n- `get_server_settings`\r\n- `get_mouse_position`\r\n- `move_mouse`\r\n- `click_mouse`\r\n- `scroll_mouse`\r\n- `press_keyboard_key`\r\n- `keyboard_key_down`\r\n- `keyboard_key_up`\r\n- `type_text_input`\r\n- `paste_text_input`\r\n- `capture_screenshot`\r\n- `cleanup_screenshot_file`\r\n\r\n## 可用资源和提示\r\n\r\n资源：\r\n\r\n- `macinput://overview`\r\n- `macinput://best-practices`\r\n- `macinput://permissions`\r\n\r\n提示：\r\n\r\n- `ui_action_protocol(goal, current_context=\"\")`\r\n\r\n这些是产品表面的一部分，不是装饰。它们允许主机将使用指南与服务器一起发送，而不是在每个系统提示中重写。\r\n\r\n## 推荐用法\r\n\r\n对于用户：\r\n\r\n1. 更喜欢 `stdio` 用于桌面代理集成。\r\n1. 在首次实际运行之前验证macOS权限。\r\n1. 更喜欢专用的macOS帐户、测试机或VM进行自动化。\r\n1. 保持截图TTL简短，以减少数据残留。\r\n\r\n对于代理商：\r\n\r\n1. 行动前截取屏幕截图。\r\n1. 一次执行一个状态更改操作。\r\n1. 在点击、快捷方式或文本提交后捕获新的屏幕截图。\r\n1. UI更改后，不要重复使用旧坐标。\r\n1. 保持键入的文本简短且针对特定任务。\r\n1. 当不再需要时，清理屏幕截图。\r\n\r\n## 环境变量\r\n\r\n- `MACINPUT_DEFAULT_SCREENSHOT_TTL`\r\n  - 默认屏幕截图清理超时（秒）。违约： `30`\r\n- `MACINPUT_MAX_SCREENSHOT_TTL`\r\n  - 允许的最大屏幕截图保留时间（秒）。违约： `300`\r\n- `MACINPUT_MAX_TYPING_LENGTH`\r\n  - 每次键入操作的最大字符数。违约： `2000`\r\n- `MACINPUT_MIN_ACTION_DELAY`\r\n  - 每次工具操作后的最小延迟。违约： `0.05`\r\n- `MACINPUT_DEFAULT_TYPING_INTERVAL`\r\n  - 默认每字符键入间隔。违约： `0.02`\r\n\r\n## 用作Python库\r\n\r\n```python\r\nfrom macinput import click, move_to, press_key, type_text, capture_screen\r\n\r\nmove_to(400, 300)\r\nclick()\r\ntype_text(\"hello macOS\")\r\npress_key(\"a\", modifiers=[\"command\"])\r\npath = capture_screen(cleanup_after=10)\r\nprint(path)\r\n```\r\n\r\n## 发展\r\n\r\n### 项目布局\r\n\r\n```text\r\nsrc/macinput/\r\n  __init__.py\r\n  __main__.py\r\n  cli.py\r\n  keyboard.py\r\n  mouse.py\r\n  screenshot.py\r\n  server.py\r\n  settings.py\r\ndocs/\r\n  mcp-engineering.md\r\ntests/\r\n```\r\n\r\n### 本地工作流\r\n\r\n```bash\r\nuv sync --extra dev\r\nuv run pytest\r\nuv run ruff check .\r\n```\r\n\r\n### GitHub操作\r\n\r\n- CI工作流程： [`.github/workflows/ci.yml`](.github/workflows/ci.yml)\r\n- 发布工作流程： [`.github/workflows/release.yml`](.github/workflows/release.yml)\r\n\r\nCI工作流在以下对象上运行lint和测试 `push` 和 `pull_request`发布工作流程基于以下内容构建发行版 `workflow_dispatch` 以及版本标签，例如 `v0.1.0`，然后上传工件并发布到PyPI（如果您的存储库配置为可信发布）。\r\n\r\n### 项目规则\r\n\r\n- 将低级自动化与MCP服务器层分开。\r\n- 保持MCP工具小巧稳定。\r\n- 更喜欢 `stdio` 默认情况下。\r\n- 保持状态更改操作的可解释性和可组合性。\r\n- 记录用户集成和开发人员维护工作流程。\r\n\r\n## 文档\r\n\r\n- 工程注意事项： [docs/mcp-engineering.md](docs/mcp-engineering.md)\r\n- 用户指南： [docs/user-guide.md](docs/user-guide.md)\r\n- 代理商最佳实践： [docs/agent-best-practices.md](docs/agent-best-practices.md)\r\n- 开发者指南： [docs/developer-guide.md](docs/developer-guide.md)\r\n\r\n## 局限性\r\n\r\n- 仅限macOS\r\n- 需要真正的GUI会话\r\n- CI可以验证导入和配置，但UI注入仍然需要进行真实的机器验证\r\n- `paste_text_input` 使用系统剪贴板，当前仅保留/恢复纯文本剪贴板内容\r\n- `press_keyboard_key`, `keyboard_key_down`，以及 `keyboard_key_up` 接受以下任一字符串键 `\"3\"` 或数字输入，如 `3`\r\n- 不包括OCR、UI元素检测或语义窗口理解\r\n\r\n## 建议的后续工作\r\n\r\n1. 添加 `LICENSE`.\r\n1. 添加发布自动化。\r\n1. 在真正的macOS运行器上添加烟雾测试。\r\n1. 添加一个 `examples/` 常见MCP主机的目录。\r\n1. 添加可选区域屏幕截图、输出目录和审计日志。\r\n",
+ "config": {
+  "macinput": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/macinput",
+    "run",
+    "macinput-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

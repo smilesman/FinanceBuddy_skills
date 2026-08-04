@@ -1,0 +1,24 @@
+{
+ "id": "723",
+ "kind": "mcp",
+ "name": "mcp-perplexity-search",
+ "fingerprint_md5": "af59de9c383f517f5604e785bdffa6c7",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp困惑度搜索\r\n\r\n______________________________________________________________________\r\n\r\n## ⚠️ 通知\r\n\r\n**此存储库不再维护。**\r\n\r\n此工具的功能现在可在 [mcp全搜索](https://github.com/spences10/mcp-omnisearch)，它将多个MCP工具组合在一个统一的包中。\r\n\r\n请使用 [mcp全搜索](https://github.com/spences10/mcp-omnisearch) 相反。\r\n\r\n______________________________________________________________________\r\n\r\n用于集成困惑人工智能的模型上下文协议（MCP）服务器\r\nAPI和LLM。此服务器提供高级聊天完成功能\r\n具有针对各种用例的专门提示模板的功能。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/zlqdizpsr9\">\r\n</a>\r\n\r\n## 特性\r\n\r\n- 🤖 使用Perplexity的人工智能模型进行高级聊天完成\r\n- 📝 常见场景的预定义提示模板：\r\n  - 技术文档生成\r\n  - 安全最佳实践分析\r\n  - 代码审查和改进\r\n  - 结构化格式的API文档\r\n- 🎯 针对特定用例的自定义模板支持\r\n- 📊 多种输出格式（文本、markdown、JSON）\r\n- 🔍 响应中包含可选的源URL\r\n- ⚙️ 可配置的模型参数（温度、最大标记）\r\n- 🚀 支持各种困惑模型，包括声纳和LLaMA\r\n\r\n## 配置\r\n\r\n此服务器需要通过MCP客户端进行配置。这是\r\n不同环境的示例：\r\n\r\n### 临床配置\r\n\r\n将此添加到您的Cline MCP设置中：\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"mcp-perplexity-search\": {\r\n\t\t\t\"command\": \"npx\",\r\n\t\t\t\"args\": [\"-y\", \"mcp-perplexity-search\"],\r\n\t\t\t\"env\": {\r\n\t\t\t\t\"PERPLEXITY_API_KEY\": \"your-perplexity-api-key\"\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\n### 带WSL配置的Claude桌面\r\n\r\n对于WSL环境，请将以下内容添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"mcp-perplexity-search\": {\r\n\t\t\t\"command\": \"wsl.exe\",\r\n\t\t\t\"args\": [\r\n\t\t\t\t\"bash\",\r\n\t\t\t\t\"-c\",\r\n\t\t\t\t\"source ~/.nvm/nvm.sh && PERPLEXITY_API_KEY=your-perplexity-api-key /home/username/.nvm/versions/node/v20.12.1/bin/npx mcp-perplexity-search\"\r\n\t\t\t]\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\n### 环境变量\r\n\r\n服务器需要以下环境变量：\r\n\r\n- `PERPLEXITY_API_KEY`：您的困惑API密钥（必需）\r\n\r\n## API\r\n\r\n服务器实现了一个具有可配置参数的MCP工具：\r\n\r\n### 聊天完成\r\n\r\n使用困惑API生成聊天完成，并支持\r\n专门的提示模板。\r\n\r\n参数：\r\n\r\n- `messages` （array，必填）：消息对象数组，包含：\r\n  - `role` （string）：“系统”、“用户”或“助手”\r\n  - `content` （string）：消息内容\r\n- `prompt_template` （字符串，可选）：要使用的预定义模板：\r\n  - `technical_docs`：带代码示例的技术文档\r\n  - `security_practices`安全实施指南\r\n  - `code_review`：代码分析和改进\r\n  - `api_docs`：JSON格式的API文档\r\n- `custom_template` （对象，可选）：自定义提示模板，包括：\r\n  - `system` （string）：助手行为的系统消息\r\n  - `format` （string）：输出格式首选项\r\n  - `include_sources` （boolean）：是否包含源\r\n- `format` （字符串，可选）：'text'、'markdown'或'json（默认值：\r\n  “文本”）\r\n- `include_sources` （布尔值，可选）：包括源URL（默认值：\r\n  错误的\r\n- `model` （字符串，可选）：要使用的困惑模型（默认值：\r\n  “声纳”）\r\n- `temperature` （数字，可选）：输出随机性（0-1，默认值：\r\n  0.7)\r\n- `max_tokens` （数字，可选）：最大响应长度\r\n  （默认值：1024）\r\n\r\n## 发展\r\n\r\n### 设置\r\n\r\n1. 克隆存储库\r\n1. 安装依赖项：\r\n\r\n```bash\r\npnpm install\r\n```\r\n\r\n3. 构建项目：\r\n\r\n```bash\r\npnpm build\r\n```\r\n\r\n4. 在开发模式下运行：\r\n\r\n```bash\r\npnpm dev\r\n```\r\n\r\n### 出版\r\n\r\n该项目使用变更集进行版本管理。要发布，请执行以下操作：\r\n\r\n1. 创建变更集：\r\n\r\n```bash\r\npnpm changeset\r\n```\r\n\r\n2. 版本包：\r\n\r\n```bash\r\npnpm changeset version\r\n```\r\n\r\n3. 发布到npm：\r\n\r\n```bash\r\npnpm release\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 致谢\r\n\r\n- 建立在\r\n  [模型上下文协议](https://github.com/modelcontextprotocol)\r\n- 由...驱动\r\n  [困惑声纳](https://docs.perplexity.ai/api-reference/chat-completions)\r\n",
+ "config": {
+  "mcp-perplexity-search": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-perplexity-search"
+   ],
+   "env": {
+    "PERPLEXITY_API_KEY": "your-perplexity-api-key"
+   }
+  }
+ }
+}

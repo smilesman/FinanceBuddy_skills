@@ -1,0 +1,28 @@
+{
+ "id": "981",
+ "kind": "mcp",
+ "name": "awslabs.rds-management-mcp-server",
+ "fingerprint_md5": "69aa920b7d739b9ebadec5714e8268d2",
+ "download_count": 0,
+ "category": "数据迁移",
+ "tags": "",
+ "version": "",
+ "readme": "# AWS实验室RDS管理MCP服务器\r\n\r\n用于管理AWS RDS数据库资源的官方MCP服务器。此服务器为创建、修改、删除和管理Amazon RDS数据库实例和集群提供了全面的工具。\r\n\r\n## 可用资源模板\r\n\r\n### DB群集资源\r\n\r\n- `aws-rds://db-cluster` -列出您帐户中所有可用的Amazon RDS群集\r\n- `aws-rds://db-cluster/{db_cluster_identifier}` -获取特定RDS群集的详细信息\r\n\r\n### DB实例资源\r\n\r\n- `aws-rds://db-instance` -列出您帐户中所有可用的Amazon RDS实例\r\n- `aws-rds://db-instance/{db_instance_identifier}` -获取特定RDS实例的详细信息\r\n\r\n## 可用工具\r\n\r\n### 数据库集群管理工具\r\n\r\n- `CreateDBCluster` -创建新的Amazon RDS数据库集群\r\n- `ModifyDBCluster` -修改现有RDS数据库群集配置\r\n- `DeleteDBCluster` -删除RDS数据库群集\r\n- `ChangeDBClusterStatus` -启动、停止或重新启动数据库集群\r\n- `FailoverDBCluster` -强制RDS数据库群集进行故障转移\r\n- `CreateDBClusterSnapshot` -创建数据库集群的快照\r\n- `DeleteDBClusterSnapshot` -删除数据库群集快照\r\n- `RestoreDBClusterFromSnapshot` -从快照还原数据库集群\r\n- `RestoreDBClusterToPointInTime` -将数据库集群还原到某个时间点\r\n- `DescribeDBClusters` -检索有关RDS数据库群集的信息\r\n\r\n### 数据库实例管理工具\r\n\r\n- `CreateDBInstance` -创建新的Amazon RDS数据库实例\r\n- `ModifyDBInstance` -修改现有RDS数据库实例\r\n- `DeleteDBInstance` -删除RDS数据库实例\r\n- `ManageDBInstanceStatus` -启动、停止或重新启动数据库实例\r\n- `DescribeDBInstances` -检索RDS数据库实例信息\r\n\r\n### 参数组管理工具\r\n\r\n- `CreateDBClusterParameterGroup` -创建新的自定义数据库集群参数组\r\n- `CreateDBInstanceParamGroup` -创建新的自定义数据库实例参数组\r\n- `ModifyDBClusterParameterGroup` -修改数据库集群参数组中的参数\r\n- `ModifyDBInstanceParamGroup` -修改数据库实例参数组中的参数\r\n- `ResetDBClusterParameterGroup` -重置数据库集群参数组中的参数\r\n- `ResetDBInstanceParameterGroup` -重置数据库实例参数组中的参数\r\n- `DescribeDBClusterParamGroups` -列出数据库集群参数组描述\r\n- `DescribeDBInstanceParamGroups` -列出数据库实例参数组说明\r\n\r\n## 说明\r\n\r\nAWS RDS管理MCP服务器为管理您的Amazon RDS数据库资源提供了全面的工具。每个工具都提供了使用RDS集群和实例的特定功能，允许您创建、修改、删除和控制数据库资源。\r\n\r\n要使用这些工具，请确保您配置了正确的AWS凭据，并具有RDS操作的适当权限。服务器将自动使用来自环境变量（AWS_ACCESS_KEY_ID、AWS_SECRET_ACCESS_KEY、AWS_SESSION_TOKEN）或其他标准AWS凭据源的凭据。\r\n\r\n所有工具都支持可选 `region_name` 参数指定要在哪个AWS区域中操作。如果没有提供，它将使用AWS_region环境变量。\r\n\r\n## 先决条件\r\n\r\n1. 安装 `uv` 从 [星体](https://docs.astral.sh/uv/getting-started/installation/) 或 [GitHub自述](https://github.com/astral-sh/uv#installation)\r\n1. 使用以下命令安装Python `uv python install 3.10`\r\n1. 设置AWS凭据以访问RDS服务\r\n   - 如果不希望LLM修改任何资源，请考虑设置只读权限\r\n\r\n## 安装\r\n\r\n将MCP添加到您最喜欢的代理工具中。（例如，对于Amazon Q Developer CLI MCP， `~/.aws/amazonq/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"awslabs.rds-management-mcp-server\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/rds-management\",\r\n        \"run\",\r\n        \"main.py\"\r\n      ],\r\n      \"env\": {\r\n        \"AWS_PROFILE\": \"default\",\r\n        \"AWS_REGION\": \"us-west-2\",\r\n        \"FASTMCP_LOG_LEVEL\": \"ERROR\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果你想阻止MCP采取任何变异操作（即创建/更新/删除资源），你可以指定只读标志，如下所示：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"awslabs.rds-management-mcp-server\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/rds-management\",\r\n        \"run\",\r\n        \"main.py\",\r\n        \"--readonly\"\r\n      ],\r\n      \"env\": {\r\n        \"AWS_PROFILE\": \"default\",\r\n        \"AWS_REGION\": \"us-west-2\",\r\n        \"FASTMCP_LOG_LEVEL\": \"ERROR\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 配置\r\n\r\n### AWS配置\r\n\r\n配置AWS凭据和区域：\r\n\r\n```bash\r\n# AWS settings\r\nAWS_PROFILE=default              # AWS credential profile to use\r\nAWS_REGION=us-east-1             # AWS region to connect to\r\n```\r\n\r\n服务器自动处理：\r\n\r\n- AWS身份验证和凭据管理\r\n- 连接建立和管理\r\n\r\n### 服务器设置\r\n\r\n运行服务器时可以传递以下CLI参数：\r\n\r\n```bash\r\n# Server CLI arguments\r\n--max-items 100                # Maximum number of items returned from API responses\r\n--port 8888                    # Port to run the server on\r\n--readonly                     # Whether to run in readonly mode (prevents mutating operations)\r\n--no-readonly                  # Whether to turn off readonly mode (allow mutating operations)\r\n--region us-east-1             # AWS region for RDS operations\r\n--profile default              # AWS profile to use for credentials\r\n```\r\n\r\n## 发展\r\n\r\n### 运行测试\r\n\r\n```bash\r\nuv venv\r\nsource .venv/bin/activate\r\nuv sync\r\nuv run --frozen pytest\r\n```\r\n\r\n### 运行服务器\r\n\r\n```bash\r\nuv --directory /path/to/rds-management run main.py\r\n```\r\n\r\n### 以只读模式运行\r\n\r\n```bash\r\nuv --directory /path/to/rds-management run main.py --readonly\r\n```\r\n",
+ "config": {
+  "awslabs.rds-management-mcp-server": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/rds-management",
+    "run",
+    "main.py"
+   ],
+   "env": {
+    "AWS_PROFILE": "default",
+    "AWS_REGION": "us-west-2",
+    "FASTMCP_LOG_LEVEL": "ERROR"
+   }
+  }
+ }
+}

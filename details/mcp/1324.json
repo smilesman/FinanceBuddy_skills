@@ -1,0 +1,22 @@
+{
+ "id": "1324",
+ "kind": "mcp",
+ "name": "actor-critic-thinking",
+ "fingerprint_md5": "746182cdc1c92c1be17b21495da4cc8e",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 演员批判性思维MCP服务器\r\n\r\n基于模型上下文协议（MCP）的双视角思维分析服务器，通过Actor Critic方法提供全面的性能评估。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@aquarius-wing/actor-critic-thinking-mcp\">\r\n  \r\n</a>\r\n\r\n## 展示\r\n\r\n\r\n### 没有演员批判思维\r\n\r\n\r\n## 特性\r\n\r\n- **双重视角分析**：演员（创作者/表演者）和评论家（分析者/评估者）观点之间的交替\r\n- **圆形跟踪**：跟踪多轮双视角分析\r\n- **平衡评估**：将移情理解与客观分析相结合\r\n- **多维评价**：生成细致、多维的评估\r\n- **可操作的反馈**：提供建设性的改进建议\r\n\r\n## 用例\r\n\r\n- 评估艺术表演、创意作品或战略决策\r\n- 分析意图和执行之间的差距\r\n- 提供建设性的反馈，同时考虑创造性愿景和技术执行\r\n- 审查需要同理心和客观性的复杂场景\r\n- 需要平衡评估主观和客观标准的情况\r\n- 需要自我反思和外部评估的绩效评估\r\n- 受益于迭代改进的创造性过程\r\n\r\n## 参数\r\n\r\n### 所需参数\r\n\r\n- `content` （string）：从指定角色角度的当前分析内容\r\n- `role` （string）：透视角色，选项：\r\n  - `\"actor\"`：演员视角（移情/创造性视角）\r\n  - `\"critic\"`：批评视角（分析/评价视角）\r\n- `nextRoundNeeded` （boolean）：是否需要另一轮演员-评论家对话\r\n- `thoughtNumber` （整数）：序列中的当前思想数（最小值：1）\r\n- `totalThoughts` （整数）：计划的想法总数（必须是奇数且>=3）\r\n\r\n### 角色视角指南\r\n\r\n**演员视角应包括：**\r\n\r\n- 理解意图、创造性选择、情感背景、面临的挑战\r\n- 对绩效和决策过程的自我反思\r\n- 解释创意愿景和目标\r\n\r\n**批评观点应包括：**\r\n\r\n- 技术执行分析、有效性评估\r\n- 受众影响评估、比较分析\r\n- 客观反馈和改进建议\r\n\r\n## 如何使用\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"actor-critic-thinking\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-server-actor-critic-thinking\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 安装和运行\r\n\r\n```bash\r\n# Build the project\r\nnpm run build\r\n\r\n# Run the server\r\nnode dist/index.js\r\n```\r\n\r\n## 示例用法\r\n\r\n系统提示：\r\n\r\n> 你的任务是根据提供的描述和关键字生成有创意、令人难忘和适销对路的产品名称。产品名称应简洁（2-4个单词），令人回味，易于目标受众理解。避免通用或过于字面的名称。相反，我们的目标是创造一个突出的名字，抓住产品的精髓，并留下持久的印象。\r\n\r\n用户提示：\r\n\r\n> 描述：一款降噪、无线、耳挂式耳机，电池寿命为20小时，配备触控功能。专为发烧友和经常旅行的人设计。关键词：沉浸式、舒适、高保真、持久、便捷\r\n\r\n## 最佳实践\r\n\r\n1. 从演员或评论家的角度开始\r\n1. 在观点之间交替以保持平衡\r\n1. 继续进行轮次，直到完成全面分析\r\n1. 关注相关绩效方面\r\n1. 生成兼顾两种观点的平衡评估\r\n1. 提供建设性、可操作的反馈\r\n1. 仅设置 `nextRoundNeeded` 分析完成时为false\r\n",
+ "config": {
+  "actor-critic-thinking": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-server-actor-critic-thinking"
+   ],
+   "env": {}
+  }
+ }
+}

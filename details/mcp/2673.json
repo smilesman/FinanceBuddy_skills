@@ -1,0 +1,24 @@
+{
+ "id": "2673",
+ "kind": "mcp",
+ "name": "pubmedmcp",
+ "fingerprint_md5": "3bc6d4f0b6d93d10dedc34e50b11ca8a",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# PubMed MCP\r\n\r\n允许从PubMed搜索和获取文章的MCP服务器。\r\n\r\nPubMed是一个数据库，收录了来自MEDLINE、生命科学期刊和在线书籍的3500多万条生物医学文献引文。\r\n\r\n此MCP服务器依赖于 [pubmedclient](https://github.com/grll/pubmedclient) Python包来执行搜索和获取操作。\r\n\r\n## 用法\r\n\r\n将以下内容添加到您的 `claude_desktop_config.json` 文件：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"pubmedmcp\": {\r\n            \"command\": \"uvx\",\r\n            \"args\": [\"pubmedmcp@latest\"],\r\n            \"env\": {\r\n                \"UV_PRERELEASE\": \"allow\",\r\n                \"UV_PYTHON\": \"3.12\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n确保您的系统上安装了uv，并且“uvx”在您的PATH中可用（claude PATH有时与您的系统PATH不同）。\r\n您可以在您的 `claude_desktop_config.json` 文件，以确保uv在claude PATH中可用。\r\n",
+ "config": {
+  "pubmedmcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "pubmedmcp@latest"
+   ],
+   "env": {
+    "UV_PRERELEASE": "allow",
+    "UV_PYTHON": "3.12"
+   }
+  }
+ }
+}

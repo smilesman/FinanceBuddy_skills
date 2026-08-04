@@ -1,0 +1,24 @@
+{
+ "id": "3471",
+ "kind": "mcp",
+ "name": "gsc",
+ "fingerprint_md5": "1857f9df4da3cf9cf75a5dad1456abc0",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 谷歌搜索控制台MCP服务器\r\n\r\n模型上下文协议（MCP）服务器，提供对Google Search Console数据的全面访问，并具有增强的分析功能。\r\n\r\n## 特性\r\n\r\n- **增强搜索分析**：检索多达25000行性能数据\r\n- **高级过滤**：支持正则表达式模式和多个过滤运算符\r\n- **速赢检测**：自动识别优化机会\r\n- **丰富的维度**：查询、页面、国家、设备和搜索外观分析\r\n- **灵活的日期范围**：可定制的报告期，可访问历史数据\r\n\r\n### 赞助\r\n\r\n[https://macuse.app?ref=mcp-server-gsc](https://macuse.app?ref=mcp-server-gsc)\r\n\r\n[macuse.app](https://macuse.app) 是一个原生macOS应用程序，通过将AI助手与macOS应用程序（如日历、邮件和笔记）集成，以及任何应用程序的通用UI控制，为您的AI提供超能力。一键设置支持Claude Desktop、Cursor和Raycast。隐私第一，在本地运行。\r\n\r\n## 先决条件\r\n\r\n- Node.js 18或更高版本\r\n- 启用搜索控制台API的谷歌云项目\r\n- 具有搜索控制台访问权限的服务帐户凭据\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install mcp-server-gsc\r\n```\r\n\r\n## 身份验证设置\r\n\r\n要获取Google Search Console API凭据：\r\n\r\n1. 访问 [谷歌云控制台](https://console.cloud.google.com/)\r\n1. 创建新项目或选择现有项目\r\n1. 启用API：\r\n\r\n- 转到“API和服务”>“库”\r\n- 搜索并启用 [“搜索控制台API”](https://console.cloud.google.com/marketplace/product/google/searchconsole.googleapis.com)\r\n\r\n4. 创建凭据：\r\n\r\n- 引导到 [“API和服务”>“凭据”](https://console.cloud.google.com/apis/credentials)\r\n- 点击“创建凭据”>“服务帐户”\r\n- 填写服务帐户详细信息\r\n- 以JSON格式创建新密钥\r\n- 凭据文件（.json）将自动下载\r\n\r\n5. 授予访问权限：\r\n\r\n- 打开搜索控制台\r\n- 添加服务帐户电子邮件（格式：name@project.iam.gserviceaccount.com)作为物业管理人\r\n\r\n## 用法\r\n\r\n### Claude桌面配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gsc\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-server-gsc\"],\r\n      \"env\": {\r\n        \"GOOGLE_APPLICATION_CREDENTIALS\": \"/path/to/credentials.json\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 搜索分析\r\n\r\n通过增强的分析功能从Google search Console获取全面的搜索性能数据。\r\n\r\n**所需参数：**\r\n\r\n- `siteUrl`：网站URL（格式： `http://www.example.com/` 或 `sc-domain:example.com`)\r\n- `startDate`：开始日期（YYYY-MM-DD）\r\n- `endDate`：结束日期（YYYY-MM-DD）\r\n\r\n**可选参数：**\r\n\r\n- `dimensions`：逗号分隔列表(`query`, `page`, `country`, `device`, `searchAppearance`, `date`)\r\n- `type`：搜索类型(`web`, `image`, `video`, `news`, `discover`, `googleNews`)\r\n- `aggregationType`：聚合方法(`auto`, `byNewsShowcasePanel`, `byProperty`, `byPage`)\r\n- `rowLimit`：要返回的最大行数（默认值：1000，最大值：25000）\r\n- `dataState`：数据新鲜度(`all` 或 `final`，默认值： `final`)\r\n\r\n**过滤器参数：**\r\n\r\n- `pageFilter`：按页面URL筛选（支持正则表达式 `regex:` 前缀）\r\n- `queryFilter`：按搜索查询筛选（支持正则表达式 `regex:` 前缀）\r\n- `countryFilter`：按国家ISO 3166-1 alpha-3代码过滤（例如。， `USA`, `CHN`)\r\n- `deviceFilter`：按设备类型筛选(`DESKTOP`, `MOBILE`, `TABLET`)\r\n- `searchAppearanceFilter`：按搜索特征过滤（例如。， `AMP_BLUE_LINK`, `AMP_TOP_STORIES`)\r\n- `filterOperator`：过滤器操作员(`equals`, `contains`, `notEquals`, `notContains`, `includingRegex`, `excludingRegex`)\r\n\r\n**速赢检测：**\r\n\r\n- `detectQuickWins`：启用优化机会的自动检测（默认值： `false`)\r\n- `quickWinsConfig`：速赢检测配置：\r\n  - `positionRange`：要考虑的位置范围（默认值： `[4, 20]`)\r\n  - `minImpressions`：最小展示阈值（默认值： `100`)\r\n  - `minCtr`：最小CTR百分比（默认值： `1`)\r\n\r\n**示例-基本查询：**\r\n\r\n```json\r\n{\r\n  \"siteUrl\": \"https://example.com\",\r\n  \"startDate\": \"2024-01-01\",\r\n  \"endDate\": \"2024-01-31\",\r\n  \"dimensions\": \"query,page\",\r\n  \"rowLimit\": 5000\r\n}\r\n```\r\n\r\n**示例-使用Regex进行高级过滤：**\r\n\r\n```json\r\n{\r\n  \"siteUrl\": \"https://example.com\",\r\n  \"startDate\": \"2024-01-01\",\r\n  \"endDate\": \"2024-01-31\",\r\n  \"dimensions\": \"page,query\",\r\n  \"queryFilter\": \"regex:(AI|machine learning|ML)\",\r\n  \"filterOperator\": \"includingRegex\",\r\n  \"deviceFilter\": \"MOBILE\",\r\n  \"rowLimit\": 10000\r\n}\r\n```\r\n\r\n**示例-速赢检测：**\r\n\r\n```json\r\n{\r\n  \"siteUrl\": \"https://example.com\",\r\n  \"startDate\": \"2024-01-01\",\r\n  \"endDate\": \"2024-01-31\",\r\n  \"dimensions\": \"query,page\",\r\n  \"detectQuickWins\": true,\r\n  \"quickWinsConfig\": {\r\n    \"positionRange\": [4, 15],\r\n    \"minImpressions\": 500,\r\n    \"minCtr\": 2\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 贡献\r\n\r\n欢迎投稿！在提交pull请求之前，请阅读我们的贡献指南。\r\n",
+ "config": {
+  "gsc": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-server-gsc"
+   ],
+   "env": {
+    "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/credentials.json"
+   }
+  }
+ }
+}

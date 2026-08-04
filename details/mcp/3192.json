@@ -1,0 +1,23 @@
+{
+ "id": "3192",
+ "kind": "mcp",
+ "name": "oura",
+ "fingerprint_md5": "28676fb886718a24f112797919aeebf4",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# Oura MCP服务器\r\n\r\n将您的Oura Ring连接到Claude、Cursor或任何兼容MCP的应用程序！使用自然语言询问有关您的睡眠、活动、准备情况、心率和其他健康指标的问题。\r\n\r\n## 你能做什么？\r\n\r\n安装后，您可以询问您的AI助手：\r\n\r\n- “我昨晚的睡眠分数是多少？”\r\n- “显示我过去一周的活动数据”\r\n- “我这个月的准备情况如何？”\r\n- “昨天锻炼时我的心率是多少？”\r\n- “显示我的最大摄氧量进展”\r\n\r\n您的AI助手将可以访问您的所有Oura Ring数据，并可以分析趋势、比较时期并为您提供见解。\r\n\r\n## 快速设置\r\n\r\n> **备注**：本指南涵盖 **个人使用** 使用个人访问令牌。对于 **生产部署** 使用OAuth2配置环境变量(`OURA_CLIENT_ID`, `OURA_CLIENT_SECRET`, `DEPLOYED_URL`)在您的FastMCP Cloud仪表板中进行部署。\r\n\r\n### 第一步：获取Oura代币\r\n\r\n1. 首选https://cloud.ouraring.com/personal-access-tokens\r\n1. 使用您的Oura帐户登录\r\n1. 点击 **“创建新的个人访问令牌”**\r\n1. 给它起个名字（比如“克劳德”）\r\n1. **复制令牌** -你不会再看到它了！\r\n\r\n### 步骤2：配置MCP客户端\r\n\r\n**对于Claude Desktop：**\r\n\r\n查找您的Claude Desktop配置文件：\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- **Linux**: `~/.config/Claude/claude_desktop_config.json`\r\n\r\n在文本编辑器中打开它并添加此内容（替换 `YOUR_TOKEN_HERE` 使用步骤1中的令牌）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"oura\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"oura-mcp\"],\r\n      \"env\": {\r\n        \"OURA_ACCESS_TOKEN\": \"YOUR_TOKEN_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**如果您已经有其他MCP服务器**，只需添加 `\"oura\"` 内部部分 `\"mcpServers\"`.\r\n\r\n**对于其他MCP客户端** （光标等）：有关MCP服务器配置，请参阅客户的文档。使用相同 `uvx oura-mcp` 命令与 `OURA_ACCESS_TOKEN` 环境变量。\r\n\r\n### 步骤3：重新启动MCP客户端\r\n\r\n关闭并重新打开您的应用程序（Claude Desktop、Cursor等）。查找MCP服务器/工具指示器-您应该看到“oura”列为已连接。\r\n\r\n### 第四步：开始使用它！\r\n\r\n试着问：“给我看看上周的睡眠数据”\r\n\r\n## 可用数据\r\n\r\n服务器提供对以下内容的访问：\r\n\r\n**每日总结**\r\n\r\n- 睡眠评分和分析（深度睡眠、REM、效率等）\r\n- 活动分数、步数、卡路里和活动时间\r\n- HRV、温度和恢复指标的准备度得分\r\n- 压力和恢复数据\r\n\r\n**详细指标**\r\n\r\n- 心率、心率变异性和呼吸模式的睡眠会话\r\n- 有强度、卡路里和距离的锻炼\r\n- 5分钟间隔的心率数据\r\n- VO2最大估计值\r\n- 血氧水平（Gen 3环）\r\n- 恢复力和心血管年龄\r\n\r\n**个人资料**\r\n\r\n- 响铃信息和设置\r\n- 个人资料数据\r\n- 标签和注释\r\n\r\n## 故障排除\r\n\r\n### “没有可用的访问令牌”或连接错误\r\n\r\n1. 仔细检查配置文件中的令牌是否正确\r\n1. 确保没有多余的空格或引号\r\n1. 更改后重新启动应用程序\r\n1. 如果需要，创建新令牌：https://cloud.ouraring.com/personal-access-tokens\r\n\r\n### 没有数据显示\r\n\r\n- 确保您的Oura Ring最近已同步（打开Oura移动应用程序）\r\n- 睡眠数据需要通过应用程序手动同步\r\n- 你只能访问戴戒指的日期\r\n\r\n### MCP客户端看不到Oura服务器\r\n\r\n1. 检查客户的MCP服务器/工具列表-是否列出了“oura”？\r\n1. 验证您的配置文件是否包含有效的JSON（在线使用JSON验证器）\r\n1. 确保在编辑配置后重新启动应用程序\r\n\r\n### 还有问题吗？\r\n\r\n检查Oura API状态：https://api.ouraring.com\r\n\r\n## 对于开发者\r\n\r\n### 本地开发\r\n\r\n```bash\r\ngit clone https://github.com/pokidyshev/oura-mcp.git\r\ncd oura-mcp\r\n\r\n# Create .env file with your token\r\ncp .env.example .env\r\n# Edit .env and add: OURA_ACCESS_TOKEN=your_token\r\n\r\n# Install and test\r\nuv sync\r\nuv run mcp dev src/oura_mcp/server.py\r\n```\r\n\r\n### 生产部署（OAuth2）\r\n\r\n对于FastMCP Cloud的生产部署：\r\n\r\n1. **在Oura开发者门户中配置OAuth**:\r\n\r\n   - 首选https://cloud.ouraring.com/oauth/applications\r\n   - 添加重定向URI: `https://your-app.fastmcp.app/mcp/auth/callback`\r\n\r\n1. **生成JWT签名密钥**:\r\n\r\n   ```bash\r\n   python -c \"import secrets; print(secrets.token_urlsafe(32))\"\r\n   ```\r\n\r\n   复制输出-下一步您将需要它。\r\n\r\n1. **在FastMCP Cloud仪表板中设置环境变量**:\r\n\r\n   ```bash\r\n   OURA_CLIENT_ID=your_client_id\r\n   OURA_CLIENT_SECRET=your_client_secret\r\n   DEPLOYED_URL=https://your-app.fastmcp.app\r\n   JWT_SIGNING_KEY=\r\n   ```\r\n\r\n   ⚠️ **重要说明**:\r\n\r\n   - `DEPLOYED_URL` 是基本域（FastMCP Cloud处理 `/mcp` 自动安装）\r\n   - 保持 `JWT_SIGNING_KEY` 稳定！如果更改它，所有用户令牌都将无效。\r\n\r\n1. **部署**：推送到连接的GitHub仓库或使用FastMCP CLI\r\n\r\n1. **在Claude桌面中使用**：添加到配置：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"oura\": {\r\n         \"url\": \"https://your-app.fastmcp.app\"\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n## 技术细节\r\n\r\n- **速率限制**：每5分钟窗口5000个请求（自动处理）\r\n- **数据格式**：所有响应均为JSON格式\r\n- **日期格式**：支持自然语言（“今天”、“昨天”、“上周”）和YYYY-MM-DD\r\n- **安全**：所有API调用都使用HTTPS。仅存储在环境变量中的令牌。\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅许可证文件\r\n\r\n## 链接\r\n\r\n- **Oura API文档**: https://cloud.ouraring.com/docs\r\n- **MCP文件**: https://modelcontextprotocol.io\r\n- **内置于**: [FastMCP](https://github.com/jlowin/fastmcp)\r\n",
+ "config": {
+  "oura": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "oura-mcp"
+   ],
+   "env": {
+    "OURA_ACCESS_TOKEN": "YOUR_TOKEN_HERE"
+   }
+  }
+ }
+}

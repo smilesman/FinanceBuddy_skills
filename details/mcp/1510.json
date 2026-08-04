@@ -1,0 +1,22 @@
+{
+ "id": "1510",
+ "kind": "mcp",
+ "name": "jetbrains",
+ "fingerprint_md5": "9daaea9dbd7692de0f53a9c487cb3dcf",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://github.com/JetBrains#jetbrains-on-github)\r\n\r\n# ⚠️ 已弃用\r\n\r\n**此存储库不再维护。** 自2025.2版本以来，核心功能已集成到所有基于IntelliJ的IDE中。\r\n内置功能适用于SSE和基于JVM的代理（用于STDIO），因此不再需要此NPM包。\r\n\r\n**迁移：** 请参阅 [官方文档](https://www.jetbrains.com/help/idea/mcp-server.html) 有关使用内置功能的详细信息。\r\n\r\n**问题与支持：** 对于与内置MCP功能相关的错误或功能请求，请使用 [JetBrains YouTrack](<https://youtrack.jetbrains.com/issues?q=project:%20IJPL%20Subsystem:%20%7BMCP%20(Model%20Context%20Protocol)%7D%20>).\r\n\r\n# JetBrains MCP代理服务器\r\n\r\n服务器将客户端的请求代理到JetBrains IDE。\r\n\r\n## 安装MCP服务器插件\r\n\r\nhttps://plugins.jetbrains.com/plugin/26071-mcp-server\r\n\r\n## VS代码安装\r\n\r\n对于一键安装，请单击下面的安装按钮之一：\r\n\r\n[](https://insiders.vscode.dev/redirect/mcp/install?name=jetbrains&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40jetbrains%2Fmcp-proxy%22%5D%7D) [](https://insiders.vscode.dev/redirect/mcp/install?name=jetbrains&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40jetbrains%2Fmcp-proxy%22%5D%7D&quality=insiders)\r\n\r\n### 手动安装\r\n\r\n将以下JSON块添加到VS Code中的用户设置（JSON）文件中。您可以按 `Ctrl + Shift + P` 和打字 `Preferences: Open User Settings (JSON)`.\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"jetbrains\": {\r\n        \"command\": \"npx\",\r\n        \"args\": [\"-y\", \"@jetbrains/mcp-proxy\"]\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您可以选择将其添加到名为的文件中 `.vscode/mcp.json` 在您的工作空间中：\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"jetbrains\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@jetbrains/mcp-proxy\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用Claude Desktop\r\n\r\n要在Claude Desktop中使用此功能，请将以下内容添加到您的 `claude_desktop_config.json`.\r\nMacOS上的完整路径： `~/Library/Application\\ Support/Claude/claude_desktop_config.json`，在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`.\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"jetbrains\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@jetbrains/mcp-proxy\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n安装MCP服务器插件并将JSON添加到配置文件后，重新启动Claude Desktop，并确保Jetbrains产品已打开，然后再重新启动克劳德Desktop。\r\n\r\n## 配置\r\n\r\n如果您正在使用MCP服务器运行多个IDE，并希望连接到特定的IDE，请添加到MCP服务器配置中：\r\n\r\n```json\r\n\"env\": {\r\n  \"IDE_PORT\": \"<port of IDE's built-in webserver>\"\r\n}\r\n```\r\n\r\n默认情况下，我们连接到127.0.0.1上的IDE，但您可以指定不同的地址/主机：\r\n\r\n```json\r\n\"env\": {\r\n  \"HOST\": \"<host/address of IDE's built-in webserver>\"\r\n}\r\n```\r\n\r\n要启用日志记录，请添加：\r\n\r\n```json\r\n\"env\": {\r\n  \"LOG_ENABLED\": \"true\"\r\n}\r\n```\r\n\r\n## 故障排除\r\n\r\n### Node.js版本要求\r\n\r\n**问题：** 错误消息： `Cannot find module 'node:path'`\r\n\r\n**解决方案：**\r\nMCP代理在节点16上不起作用。\r\n将Node.js安装升级到版本18或更高版本。确保 `command` in config指向正确的Node.js版本。\r\n尝试使用NodeJS最新版本的完整路径。\r\n\r\n### \r\n\r\n### MacOS:插件无法检测通过nvm安装的Node.js\r\n\r\n**问题：** 在MacOS上，如果您通过nvm（节点版本管理器）安装了Node.js，MCP服务器插件可能无法检测到您的Node.js安装。\r\n\r\n**解决方案：** 在中创建符号链接 `/usr/local/bin` 指向您的nvm-npx可执行文件：\r\n\r\n```bash\r\nwhich npx &>/dev/null && sudo ln -sf \"$(which npx)\" /usr/local/bin/npx\r\n```\r\n\r\n此单行程序检查您的路径中是否存在npx，并创建具有适当权限的必要符号链接。\r\n\r\n### 将MCP与外部客户端或Docker容器（LibreChat、Cline等）一起使用\r\n\r\n**问题：** 当试图从外部客户端、Docker容器或第三方应用程序（如LibreChat）连接到JetBrains MCP代理时，会向端点发出请求，例如http://host.docker.internal:6365/api/mcp/list_tools可能返回404错误或无法连接。\r\n**解决方案：** 有两个关键问题需要解决：\r\n\r\n1. 启用外部连接：\r\n\r\n在JetBrains IDE中，在 _设置|构建、执行、部署|调试器_.\r\n\r\n2. 配置LAN IP和端口：\r\n\r\n使用计算机的LAN IP地址，而不是 `host.docker.internal`\r\n在配置中明确设置IDE_PORT和HOST\r\nLibreChat或类似外部客户端的示例配置：\r\n\r\n```yaml\r\nmcpServers:\r\n  intellij:\r\n    type: stdio\r\n    command: sh\r\n    args:\r\n      - \"-c\"\r\n      - \"IDE_PORT=YOUR_IDEA_PORT HOST=YOUR_IDEA_LAN_IP npx -y @jetbrains/mcp-proxy\"\r\n```\r\n\r\n替换：\r\n\r\n`YOUR_IDEA_PORT` 使用IDE的调试端口（位于IDE设置中）\r\n`YOUR_IDEA_LAN_IP` 使用计算机的本地网络IP（例如192.168.0.12）\r\n\r\n## 如何构建\r\n\r\n1. 在macOS上测试\r\n1. `brew install node pnpm`\r\n1. 跑 `pnpm build` 建设项目\r\n",
+ "config": {
+  "jetbrains": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@jetbrains/mcp-proxy"
+   ],
+   "env": {}
+  }
+ }
+}

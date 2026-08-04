@@ -1,0 +1,21 @@
+{
+ "id": "1820",
+ "kind": "mcp",
+ "name": "advisorfinder",
+ "fingerprint_md5": "27951dae409e51c1104cecc5c541fd0a",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# AdvisorFinder MCP服务器\r\n\r\n\r\n一 [主控程序](https://modelcontextprotocol.io) 该服务器允许AI助手访问SEC注册的财务顾问数据。按姓名搜索顾问，查找完整的个人资料，检查披露历史，并获得风险评估——所有这些都来自克劳德或任何兼容MCP的客户。\r\n\r\n建造于 [顾问查找器](https://advisorfinder.com).\r\n\r\n## 快速开始\r\n\r\n### 安装\r\n\r\n```bash\r\npip install advisorfinder-mcp\r\n```\r\n\r\n### 配置Claude桌面\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"advisorfinder\": {\r\n      \"command\": \"advisorfinder-mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动克劳德桌面。然后自然地问——“找我的财务顾问约翰·史密斯”——克劳德会自动调用这些工具。\r\n\r\n### 替代方案：使用uvx运行（无需安装）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"advisorfinder\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"advisorfinder-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 你可以问什么\r\n\r\n配置后，只需自然地与Claude交谈：\r\n\r\n- “给我介绍一下富国银行的无名氏”\r\n- “查找财务顾问Thomas Kopelman”\r\n- “在纽约搜索名为Smith的顾问”\r\n- “我的顾问安全吗？他们的名字叫约翰·多伊，他在德克萨斯州的爱德华·琼斯”\r\n- “告诉我爱德华·琼斯公司的情况——他们有多少顾问？”\r\n- “SEC数据库中有多少注册顾问？”\r\n\r\n无需CRD编号。只需使用顾问的姓名、公司或州。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_advisors` |按姓名、州或公司搜索。支持全名（“Joseph Montgomery”）或仅支持姓氏。 |\r\n| `lookup_advisor` |CRD的完整顾问简介——就业历史、办公地点、注册州、经验年限、任命、考试、外部商业活动、披露和风险评分。 |\r\n| `verify_advisor` |快速风险状况检查——活动/非活动、披露、风险水平等。 |\r\n| `get_risk_profile` |详细的风险评估，包括个人风险因素和严重程度评级。 |\r\n| `get_firm_info` |公司概况——顾问总数、披露率、地点。 |\r\n| `get_database_stats` |全数据库统计数据——433000多名顾问、顶级州、披露率。 |\r\n\r\n当在我们的数据库中找不到顾问时，所有工具都会返回直接链接到 [SEC IAPD](https://adviserinfo.sec.gov) 和 [FINRA经纪人检查](https://brokercheck.finra.org) 所以你仍然可以通过官方渠道找到它们。\r\n\r\n## 资源\r\n\r\nAI助手可以读取的参考数据：\r\n\r\n|资源|描述|\r\n|----------|-------------|\r\n| `advisorfinder://risk-scoring-methodology` |如何计算风险评分——每种披露类型的分值、风险水平阈值|\r\n| `advisorfinder://credentials-guide` |财务顾问证书指南——CFP、CFA、CPA、ChFC、7/65/66系列等|\r\n| `advisorfinder://data-sources` |关于SEC IAPD、FINRA BrokerCheck以及如何独立验证数据|\r\n\r\n## 数据覆盖\r\n\r\n**内容包括：** 在美国证券交易委员会注册的433000多名投资顾问，包括就业历史、考试记录、专业指定、外部商业活动、披露事件（投诉、监管行动、刑事事项、终止、破产）以及所有50个州的注册状态。\r\n\r\n**未包含的内容：** 仅注册为经纪交易商代表（非投资顾问）的顾问可能不会出现。对于仅限经纪人的注册，这些工具提供了指向FINRA BrokerCheck的直接链接。费用表、管理资产、客户审查和投资业绩不可用——这些需要ADV表格或其他来源。\r\n\r\n数据来源于 **美国证券交易委员会投资顾问公开披露（IAPD）** 数据库，每月更新一次。\r\n\r\n## 免责声明\r\n\r\n此MCP服务器由提供 [顾问查找器](https://advisorfinder.com) 并且仅用于信息和研究目的。这不是财务、法律或投资建议。\r\n\r\n通过该工具提供的数据来源于公开可用的SEC和FINRA数据库。AdvisorFinder充当中介，使这些公共数据更易于访问——我们不会独立验证、认可或保证基础数据的准确性或完整性。\r\n\r\n**重要提示：**\r\n\r\n- 顾问记录中的披露并不一定表明存在不当行为。始终通过美国证券交易委员会和美国金融业监管局的官方来源审查任何披露事件的完整背景。\r\n- 人工智能助手可能会以不完整或不准确的方式解释或总结数据。在做出决定之前，始终根据官方来源核实人工智能生成的评估。\r\n- 该工具不应作为选择、评估或解雇财务顾问的唯一依据。\r\n\r\n如需个性化财务指导，请咨询合格的专业人士。\r\n\r\n## 链接\r\n\r\n- **顾问查找器**: [advisorfinder.com](https://advisorfinder.com)\r\n- **SEC IAPD**: [adviserinfo.sec.gov](https://adviserinfo.sec.gov)\r\n- **FINRA经纪人检查**: [brokercheck.finra.org](https://brokercheck.finra.org)\r\n- **来源**: [github/drew-keever/avisorfinder-mcp](https://github.com/drew-keever/advisorfinder-mcp)\r\n- **PyPI**: [pypi.org/project/advisorfinder-mcp](https://pypi.org/project/advisorfinder-mcp/)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "advisorfinder": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "advisorfinder-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "1680",
+ "kind": "mcp",
+ "name": "pulsemcp",
+ "fingerprint_md5": "a169936d7fa0edd9c3fc6ba66c9865a3",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# PulseMCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，通过PulseMCP API提供用于发现和探索MCP服务器和集成的工具。\r\n\r\n## 特性\r\n\r\n- 列出可用的MCP服务器，并进行过滤和分页\r\n- 按名称或功能搜索特定的MCP服务器\r\n- 按集成类型筛选服务器\r\n- 列出所有可用的集成\r\n- 完全支持TypeScript\r\n\r\n## 安装\r\n\r\n### 在MCP客户端中安装\r\n\r\n将此添加到MCP客户端配置中，并根据客户端的偏好进行调整。例如：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pulsemcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"pulsemcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone <repository-url>\r\ncd pulsemcp-server\r\n```\r\n\r\n2. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n3. 构建项目：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n## 用法\r\n\r\n### 运行服务器\r\n\r\n服务器可以在构建后直接运行：\r\n\r\n```bash\r\n./build/index.js\r\n```\r\n\r\n或者通过npm：\r\n\r\n```bash\r\nnpm start\r\n```\r\n\r\n### 发展\r\n\r\n要观察开发过程中的变化：\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n要检查服务器的MCP实现：\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n## 可用工具\r\n\r\n### list_server\r\n\r\n列出具有可选过滤和分页功能的MCP服务器。\r\n\r\n参数：\r\n\r\n- `query` （可选）：用于筛选服务器的搜索词\r\n- `integrations` （可选）：用于过滤的集成块数组\r\n- `count_per_page` （可选）：每页结果数（最大值：5000）\r\n- `offset` （可选）：分页时要跳过的结果数\r\n\r\n例子：\r\n\r\n```json\r\n{\r\n  \"query\": \"toolhouse\",\r\n  \"integrations\": [\"github\"],\r\n  \"count_per_page\": 10,\r\n  \"offset\": 0\r\n}\r\n```\r\n\r\n### list_集成\r\n\r\n列出所有可用的集成。此工具不接受任何参数。\r\n\r\n## 响应格式\r\n\r\n这两个工具都返回具有以下结构的JSON响应：\r\n\r\n### list_servers响应\r\n\r\n```json\r\n{\r\n  \"servers\": [\r\n    {\r\n      \"name\": \"Server Name\",\r\n      \"url\": \"https://example.com\",\r\n      \"external_url\": \"https://external-link.com\",\r\n      \"short_description\": \"Server description\",\r\n      \"source_code_url\": \"https://github.com/example/repo\",\r\n      \"github_stars\": 123,\r\n      \"package_registry\": \"npm\",\r\n      \"package_name\": \"package-name\",\r\n      \"package_download_count\": 1000,\r\n      \"integrations\": [\r\n        {\r\n          \"name\": \"Integration Name\",\r\n          \"slug\": \"integration-slug\",\r\n          \"url\": \"https://integration-url.com\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"total_count\": 1,\r\n  \"next\": null\r\n}\r\n```\r\n\r\n### list_集成响应\r\n\r\n```json\r\n{\r\n  \"integrations\": [\r\n    {\r\n      \"name\": \"Integration Name\",\r\n      \"slug\": \"integration-slug\",\r\n      \"url\": \"https://integration-url.com\"\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n## 错误处理\r\n\r\n该服务器包括强大的错误处理功能，用于：\r\n\r\n- 无效参数\r\n- API连接问题\r\n- 速率限制\r\n- 身份验证错误\r\n\r\n错误以标准化的格式返回，并带有适当的错误代码和消息。\r\n\r\n## 发展\r\n\r\n### 项目结构\r\n\r\n```\r\npulsemcp-server/\r\n├── src/\r\n│   └── index.ts    # Main server implementation\r\n├── build/          # Compiled JavaScript\r\n├── package.json    # Project configuration\r\n└── tsconfig.json   # TypeScript configuration\r\n```\r\n\r\n### 依赖项\r\n\r\n- @modelcontextprotocol/sdk:^0.6.0\r\n- 轴距：^1.7.9\r\n- TypeScript：^5.3.3\r\n\r\n## 许可证\r\n\r\n阅读许可证。医学博士\r\n\r\n## 贡献\r\n\r\n打开一个PR——友善一点，你会得到回报的！\r\n",
+ "config": {
+  "pulsemcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "pulsemcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

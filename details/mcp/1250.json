@@ -1,0 +1,18 @@
+{
+ "id": "1250",
+ "kind": "mcp",
+ "name": "preference-analytics",
+ "fingerprint_md5": "0c8783c974fc104b18df97d375d736a1",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Preference Analytics MCP Server\r\n\r\nModel Context Protocol server for cross-platform preference analytics via BigQuery.\r\n\r\n## Quick Start\r\n\r\n### 1. Install\r\n\r\n```bash\r\ncd preference-analytics-mcp\r\npython -m venv venv\r\nsource venv/bin/activate  # or venv\\Scripts\\activate on Windows\r\npip install -r requirements.txt\r\n```\r\n\r\n### 2. Configure\r\n\r\n```bash\r\ncp env.example .env\r\n# Edit .env - set GCP_PROJECT_ID\r\n```\r\n\r\n### 3. Test\r\n\r\n```bash\r\npython test_connection.py\r\n```\r\n\r\n### 4. Start Server\r\n\r\n```bash\r\n# Easy way\r\n./start_server.sh\r\n\r\n# Or manual\r\npython server.py --transport sse --port 8000\r\n```\r\n\r\nServer runs on `http://localhost:8000/messages`\r\n\r\n### 5. Configure Cursor\r\n\r\nIn Cursor Settings → Features → Model Context Protocol:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"preference-analytics\": {\r\n      \"url\": \"http://localhost:8000/messages\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\nRestart Cursor and start querying!\r\n\r\n## Available Tools\r\n\r\n1. **get_platform_synergy** - Platform reach, overlap, media mix recommendations\r\n2. **get_category_correlation** - Cross-platform category correlations  \r\n3. **get_user_coherence** - Individual user cross-platform behavior\r\n4. **get_segment_analysis** - Audience segment insights\r\n5. **get_category_preferences** - Top categories per platform\r\n\r\n## Example Queries (in Cursor)\r\n\r\n- \"Show me platform synergy analysis\"\r\n- \"Find category correlations between Spotify and Amazon\"\r\n- \"Analyze the gaming segment\"\r\n- \"What are top Spotify categories?\"\r\n\r\n## Predefined Segments\r\n\r\n- `all_users` - All users\r\n- `multi_platform` - Users on 2+ platforms\r\n- `high_engagement` - Highly engaged users\r\n- `indian_entertainment` - Indian content fans\r\n- `gaming` - Gaming enthusiasts\r\n- `fitness` - Fitness & wellness users\r\n\r\n## Command Options\r\n\r\n```bash\r\n# Default port\r\npython server.py --transport sse\r\n\r\n# Custom port\r\npython server.py --transport sse --port 8080\r\n\r\n# Localhost only\r\npython server.py --transport sse --host 127.0.0.1 --port 8000\r\n```\r\n\r\n## Troubleshooting\r\n\r\n**Port in use:**\r\n```bash\r\npython server.py --transport sse --port 8001\r\n```\r\n\r\n**Can't connect to BigQuery:**\r\n```bash\r\npython test_connection.py\r\n```\r\n\r\n**Cursor can't connect:**\r\n- Verify server is running\r\n- Check URL in Cursor config\r\n- Restart Cursor\r\n\r\n## Extending\r\n\r\n### Add New Segment\r\n\r\nEdit `analytics/segment_analysis.py`:\r\n\r\n```python\r\nelif segment_name == \"new_segment\":\r\n    query = f\"\"\"\r\n    SELECT DISTINCT user_id\r\n    FROM `{self.config.get_table_id('table_name')}`\r\n    WHERE condition = 'value'\r\n    \"\"\"\r\n```\r\n\r\n### Add New Analytics Tool\r\n\r\n1. Create module in `analytics/`\r\n2. Register in `server.py` `list_tools()`\r\n3. Add handler method\r\n\r\nSee existing modules for examples.\r\n\r\n## Requirements\r\n\r\n- Python 3.10+\r\n- BigQuery dataset with tables:\r\n  - preference_summary\r\n  - category_preferences\r\n  - user_platform_presence\r\n  - unified_interest_matrix\r\n  - category_mapping\r\n\r\n## License\r\n\r\nPart of the Preference Analytics project.\r\n",
+ "config": {
+  "preference-analytics": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:8000/messages"
+  }
+ }
+}

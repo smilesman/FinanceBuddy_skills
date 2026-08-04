@@ -1,0 +1,25 @@
+{
+ "id": "3355",
+ "kind": "mcp",
+ "name": "biggo-mcp-server",
+ "fingerprint_md5": "9d4e4b5107922d52c2b3816a0b6058fe",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# BigGo MCP服务器\r\n\r\n\r\n## 引言\r\n\r\nBigGo MCP服务器使用BigGo的API，这是一个专业的价格比较网站。\r\n\r\n## 特性\r\n\r\n> 支持 `stdio` 和 `SSE` 运输\r\n\r\n- **产品发现**：在多个电子商务平台（亚马逊、速卖通、Ebay、淘宝、Shopee等）上搜索产品\r\n- **价格历史跟踪**：通过提供产品网址或相关术语来跟踪产品价格历史。\r\n- **规格比较\\[在版本>=v0.1.28\\]上禁用\\]**：根据产品的规格进行比较和查找，从基本信息到更复杂的技术规格。\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n1. Python>=3.10\r\n1. [uvx包管理器（包含在uv中）](https://docs.astral.sh/uv/getting-started/installation/)\r\n1. BigGo认证(`client_id` 和 `client_secret`)用于规格搜索。\r\n\r\n#### 如何获得BigGo认证？\r\n\r\n- [注册](https://account.biggo.com/?url=https%3A%2F%2Fbiggo.com%2F&lang=en&source=web&type=biggo3&method=register) 如果你没有BigGo帐户，请注册一个。\r\n- 首选 [BigGo认证页面](https://account.biggo.com/setting/token)\r\n- 点击“生成认证”按钮\r\n-\r\n- 复制 `client_id` 和 `client_secret`\r\n- 在MCP服务器配置中使用它们(`BIGGO_MCP_SERVER_CLIENT_ID` 和 `BIGGO_MCP_SERVER_CLIENT_SECRET`)\r\n\r\n### 安装配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"biggo-mcp-server\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [ \"BigGo-MCP-Server@latest\"],\r\n      \"env\": {\r\n        \"BIGGO_MCP_SERVER_CLIENT_ID\": \"CLIENT_ID\",\r\n        \"BIGGO_MCP_SERVER_CLIENT_SECRET\": \"CLIENT_SECRET\",\r\n        \"BIGGO_MCP_SERVER_REGION\": \"REGION\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> 特定版本使用 `BigGo-MCP-Server@VERSION`，例如： `BigGo-MCP-Server@0.1.1`\r\n\r\n## 环境变量\r\n\r\n|变量|描述|默认值|选项|\r\n| -------------------------------- | ------------------------- | ------- | ------------------------------------------ |\r\n| `BIGGO_MCP_SERVER_CLIENT_ID` |客户端ID|无|规范搜索需要|\r\n| `BIGGO_MCP_SERVER_CLIENT_SECRET` |客户端密码|无|规范搜索需要|\r\n| `BIGGO_MCP_SERVER_REGION` |产品搜索区域|TW|US、TW、JP、HK、SG、MY、IN、PH、TH、VN、ID|\r\n| `BIGGO_MCP_SERVER_SSE_PORT` |SSE服务器的端口|9876|任何可用的端口号|\r\n| `BIGGO_MCP_SERVER_SERVER_TYPE` |服务器传输类型|stdio|stdio，sse|\r\n\r\n> 默认SSE URL：http://localhost:9876/sse\r\n\r\n## 可用工具\r\n\r\n- `product_search`：使用BigGo搜索api进行产品搜索\r\n- `price_history_graph`：可视化产品价格历史的链接\r\n- `price_history_with_history_id`：使用产品搜索结果中的历史ID\r\n- `price_history_with_url`：使用产品URL跟踪价格历史\r\n- `spec_indexes`：列出产品规格的可用Elasticsearch索引\r\n- `spec_mapping`：使用示例文档显示Elasticsearch索引映射\r\n- `spec_search`：从Elasticsearch查询产品规格\r\n- `get_current_region`：获取当前区域\r\n\r\n## 常见问题解答\r\n\r\n### 如何触发工具使用？\r\n\r\n对于 **产品发现** 相关：\r\n\r\n```\r\nLook for Nike running shoes\r\n```\r\n\r\n对于 **价格历史跟踪** 相关：\r\n\r\n```\r\nShow me the price history of this product: https://some-product-url\r\n```\r\n\r\n对于 **规格比较** 相关：\r\n\r\n```\r\nFind me phones with 16GB RAM and 1TB storage\r\n```\r\n\r\n```\r\nPlease show me diving watches that can withstand the most water pressure\r\n```\r\n\r\n## 构建\r\n\r\n看 [build.md](docs/build.md) 了解更多详情。\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "biggo-mcp-server": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "BigGo-MCP-Server@latest"
+   ],
+   "env": {
+    "BIGGO_MCP_SERVER_CLIENT_ID": "CLIENT_ID",
+    "BIGGO_MCP_SERVER_CLIENT_SECRET": "CLIENT_SECRET",
+    "BIGGO_MCP_SERVER_REGION": "REGION"
+   }
+  }
+ }
+}

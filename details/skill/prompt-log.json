@@ -1,0 +1,12 @@
+{
+ "id": "prompt-log",
+ "kind": "skill",
+ "name": "prompt-log",
+ "fingerprint_md5": "b0cd21f74d3560ef3cb668a3b88471e9",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# Prompt Log\r\n\r\n## 快速开始\r\n\r\n在会话文件上运行捆绑的脚本：\r\n\r\n```bash\r\nscripts/extract.sh <session-file>\r\n```\r\n\r\n## 输入\r\n\r\n- **Session file**: 来自 Clawdbot、Claude Code 或 Codex 的 `.jsonl` 会话日志。\r\n- **Optional filters**: `--after` 和 `--before` ISO timestamps。\r\n- **Optional output**: `--output` 路径用于 markdown transcript。\r\n\r\n## 输出\r\n\r\n- 写入 markdown transcript。默认保存到当前项目的 `.prompt-log/YYYY-MM-DD-HHMMSS.md`。\r\n\r\n## 示例\r\n\r\n```bash\r\nscripts/extract.sh ~/.codex/sessions/2026/01/12/abcdef.jsonl\r\nscripts/extract.sh ~/.claude/projects/my-proj/xyz.jsonl --after \"2026-01-12T10:00:00\" --before \"2026-01-12T12:00:00\"\r\nscripts/extract.sh ~/.clawdbot/agents/main/sessions/123.jsonl --output my-transcript.md\r\n```\r\n\r\n## 依赖\r\n\r\n- 需要 PATH 中有 `jq`。\r\n- 在 macOS 上如果可用则使用 `gdate`；否则回退到 `date`。",
+ "config": {}
+}

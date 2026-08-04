@@ -1,0 +1,18 @@
+{
+ "id": "1803",
+ "kind": "mcp",
+ "name": "woxpas",
+ "fingerprint_md5": "e0d3a4c60721d7387792fcad76f2fcc9",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Woxpas\r\n\r\n**你拥有的一段记忆。适用于您使用的所有AI工具。**\r\n\r\nWoxpas是一个个人记忆引擎，可以将您的文档、笔记和对话转化为活生生的知识。与静态文件存储不同，Woxpas可以理解您保存的内容，跨源连接相关想法，检测矛盾，跟踪\r\n你的承诺，并在你需要的时候重新提出被遗忘的见解。\r\n\r\n通过MCP连接任何AI工具——你的内存和偏好会跟随你穿越Claude、ChatGPT、Gemini、Cursor等。\r\n\r\n**[woxpas.ai](https://woxpas.ai)** | [文档](https://woxpas.ai/docs/getting-started) | [报告错误](https://github.com/woxpas/memoryengine/issues)\r\n\r\n## 问题\r\n\r\n我们消耗的信息比以往任何时候都多，但很难回忆起我们学到了什么。重要见解隐藏在文件夹中。承诺从缝隙中溜走了。在一个AI工具中设置的偏好不会转移到另一个。我们存得越多，我们就越少\r\n记得。\r\n\r\n## 运作原理\r\n\r\n### 随时随地捕捉\r\n\r\n- 上传文档、PDF、音频、图像和URL\r\n- 从Chrome浏览器扩展程序捕获\r\n- 从Slack对话导入\r\n- 从Google云端硬盘同步文件\r\n- 直接从任何兼容MCP的AI工具保存\r\n\r\n### 内存提取\r\n\r\n当你保存内容时，Woxpas不仅仅是存储它——它 *理解* 它\r\n\r\n- **实体** --人员、组织、项目和概念\r\n- **事件** --具有时间背景的会议、里程碑和事件\r\n- **想法** --值得记住的策略、计划和意图\r\n- **承诺** --与业主共同完成任务、跟进和截止日期\r\n- **知识声明** --结构化事实（主语、谓语、值）三元组\r\n- **连接** --概念如何在所有来源中相互关联\r\n\r\n### 矛盾检测\r\n\r\n当你的笔记包含冲突的信息时——会议时间发生了变化，决定被推翻——Woxpas会检测到它。声明图将知识作为结构化的三元组进行跟踪，并显示冲突供你解决。\r\n\r\n### 表面修复与每日文摘\r\n\r\n- **每日摘要** --人工智能生成的简报，包含见解、承诺更新和重新唤起的记忆\r\n- **情境回忆** --当你问问题时，几周或几个月前的相关记忆会重新浮现\r\n- **承诺跟踪** --任务和截止日期在到期之前就出现了\r\n\r\n### 偏好配置文件\r\n\r\n一个便携式身份层，在所有连接的AI工具中跟随您：\r\n\r\n- 沟通方式、工作环境、工具和堆栈、个人详细信息\r\n- 可从web应用程序或通过任何连接的AI工具进行编辑\r\n- 自动注入每个MCP会话——首选项为环境设置\r\n- 当人工智能工具了解到关于你的新事实时，它们可以主动更新你的偏好\r\n\r\n### MCP集成\r\n\r\n将任何兼容MCP的AI工具连接到您的完整内存库：\r\n\r\n- **15工具** --搜索、保存、列出、存档、解决冲突、管理首选项\r\n- **4资源** --摘要、保险库摘要、活动承诺、未解决的冲突\r\n- **8个提示** --常见工作流的快速操作\r\n- **OAuth 2.0** 使用动态客户端注册（RFC 7591）\r\n- **流式HTTP+SSE** 运输支援\r\n\r\n适用于Claude、ChatGPT、Gemini、Cursor、Claude Code和任何兼容MCP的工具。\r\n\r\n### 通过MCP连接\r\n\r\n将Woxpas添加到任何与MCP兼容的工具中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"woxpas\": {\r\n      \"url\": \"https://mcp.woxpas.ai/mcp/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n[](https://lobehub.com/mcp/woxpas-memoryengine)\r\n\r\n## 技术\r\n\r\n|图层|堆栈|\r\n|-------|-------|\r\n| **后端** |Python/FastAPI|\r\n| **数据库** |PostgreSQL（Supabase）|\r\n| **向量搜索** |Qdrant——混合语义+词汇检索|\r\n| **AI 提供商** |OpenAI、Anthropic、谷歌|\r\n| **前端** |Next.js，顺风CSS|\r\n| **MCP网关** |FastAPI+FastMCP——OAuth 2.0、流式HTTP、SSE|\r\n| **认证** |基于2FA的Supabase身份验证|\r\n| **基础设施** |德国（欧盟），AES-256加密处于静止状态|\r\n\r\n## 数据主权\r\n\r\n- 存储在服务器上的所有数据 **德国（欧盟）**\r\n- 静态加密（AES-256）和传输中加密（TLS）\r\n- **从未售出** 和 **从未用于训练人工智能模型** --不是我们的，也不是别人的\r\n- 30天宽限期内完全删除帐户\r\n- 您拥有自己的数据\r\n\r\n## 链接\r\n\r\n- [网站](https://woxpas.ai)\r\n- [文档](https://woxpas.ai/docs/getting-started)\r\n- [MCP设置指南](https://woxpas.ai/docs/integrations)\r\n- [首选项指南](https://woxpas.ai/docs/preferences)\r\n- [隐私政策](https://woxpas.ai/privacy)\r\n- [服务条款](https://woxpas.ai/terms)\r\n\r\n## 支持\r\n\r\n发现错误或有功能请求？ [打开一个问题](https://github.com/woxpas/memoryengine/issues).\r\n\r\n一般支持： [support@woxpas.ai](mailto:support@woxpas.ai)\r\n\r\n______________________________________________________________________\r\n\r\n*Woxpas——因为你的想法值得被记住。*\r\n",
+ "config": {
+  "woxpas": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.woxpas.ai/mcp/sse"
+  }
+ }
+}

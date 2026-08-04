@@ -1,0 +1,22 @@
+{
+ "id": "2702",
+ "kind": "mcp",
+ "name": "searxng-4",
+ "fingerprint_md5": "215844b0bf77f5e59feed32e82535400",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# SearXNG MCP服务器\r\n\r\n与SearXNG集成的MCP服务器实现，提供以隐私为中心的元搜索功能。\r\n\r\n## 特性\r\n\r\n- **元搜索引擎**：合并来自多个搜索引擎的结果\r\n- **注重隐私**：无跟踪，无用户分析\r\n- **多个类别**：支持一般、新闻、科学、文件、图像、视频等\r\n- **语言支持**：以特定语言或所有语言搜索\r\n- **时间范围过滤**：按天、周、月或年筛选结果\r\n- **安全搜索**：三级安全搜索过滤\r\n- **后备支援**：多个SearXNG实例的可靠性\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g @kevinwatt/mcp-server-searxng\r\n```\r\n\r\n## 用法\r\n\r\n### 直接运行\r\n\r\n```bash\r\nmcp-server-searxng\r\n```\r\n\r\n### 随着 [潜水桌面](https://github.com/OpenAgentPlatform/Dive)\r\n\r\n1. 点击Dive桌面中的“+添加MCP服务器”\r\n1. 复制并粘贴此配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"searxng\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@kevinwatt/mcp-server-searxng\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. 点击“保存”安装MCP服务器\r\n\r\n## 工具文档\r\n\r\n- **网络搜索**\r\n  - 跨多个引擎执行元搜索\r\n  - 输入：\r\n    - `query` （string）：搜索词\r\n    - `page` （数字，可选）：页码（默认值：1）\r\n    - `language` （字符串，可选）：语言代码（例如，“en”、“all”，默认值：“all”）\r\n    - `categories` （数组，可选）：搜索类别（默认值：\\[‘general’\\]）\r\n      - 可用：“一般”、“新闻”、“科学”、“文件”、“图像”、“视频”、“音乐”、“社交媒体”、“it”\r\n    - `time_range` （字符串，可选）：时间过滤器（日/周/月/年）\r\n    - `safesearch` （数字，可选）：安全搜索级别（0：无，1：中等，2：严格，默认值：1）\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/kevinwatt/mcp-server-searxng.git\r\ncd mcp-server-searxng\r\nnpm install\r\nnpm run build\r\nnpm start\r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。有关详细信息，请参阅LICENSE文件。\r\n\r\n## 先决条件\r\n\r\n您需要运行一个本地SearXNG实例。要设置它，请执行以下操作：\r\n\r\n# 使用Docker运行SearXNG\r\n\r\n## 快速开始\r\n\r\n```bash\r\n# Create config directory\r\nmkdir -p searxng\r\n\r\n# Create config file\r\ntee searxng/settings.yml << EOF\r\nuse_default_settings: true\r\n\r\nserver:\r\n  bind_address: \"0.0.0.0\"\r\n  secret_key: \"CHANGE_THIS_TO_SOMETHING_SECURE\"  # Generate a random key\r\n  port: 8080\r\n\r\nsearch:\r\n  safe_search: 0\r\n  formats:\r\n    - html\r\n    - json\r\n\r\nengines:\r\n  - name: google\r\n    engine: google\r\n    shortcut: g\r\n\r\n  - name: duckduckgo\r\n    engine: duckduckgo\r\n    shortcut: d\r\n\r\n  - name: bing\r\n    engine: bing\r\n    shortcut: b\r\n\r\nserver.limiter: false\r\nEOF\r\n\r\n# Start container\r\ndocker run -d \\\r\n  --name searxng \\\r\n  -p 8080:8080 \\\r\n  -v \"$(pwd)/searxng:/etc/searxng\" \\\r\n  searxng/searxng\r\n```\r\n\r\n## 测试搜索功能\r\n\r\n```bash\r\n# Test JSON API with curl\r\ncurl -v 'http://localhost:8080/search?q=test&format=json'\r\n\r\n# Or visit in browser\r\nhttp://localhost:8080/search?q=test\r\n```\r\n\r\n## 容器管理\r\n\r\n```bash\r\n# Stop container\r\ndocker stop searxng\r\n\r\n# Remove container\r\ndocker rm searxng\r\n\r\n# View container logs\r\ndocker logs searxng\r\n\r\n# Enable auto-start on boot\r\ndocker update --restart always searxng\r\n```\r\n\r\n这 `--restart always` 标志确保：\r\n\r\n- Docker守护进程启动时容器自动启动\r\n- 如果容器崩溃，它会自动重新启动\r\n- 除非用户明确停止，否则容器在停止时会自动重新启动\r\n\r\n## 自定义配置\r\n\r\n编辑 `searxng/settings.yml` 致：\r\n\r\n- 修改搜索引擎列表\r\n- 调整安全设置\r\n- 配置UI语言\r\n- 更改API限值\r\n\r\n有关详细的配置选项，请参阅 [SearXNG文件](https://docs.searxng.org/)\r\n\r\n## 环境变量\r\n\r\n- `SEARXNG_INSTANCES`：以逗号分隔的SearXNG实例URL列表\r\n  违约： `http://localhost:8080`\r\n\r\n- `SEARXNG_USER_AGENT`：请求的自定义User-Agent标头\r\n  违约： `MCP-SearXNG/1.0`\r\n\r\n- `NODE_TLS_REJECT_UNAUTHORIZED`：设置为“0”以绕过SSL证书验证（用于使用自签名证书的开发）\r\n  默认值：未定义（启用SSL验证）\r\n\r\n具有所有选项的示例配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"searxng\": {\r\n      \"name\": \"searxng\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@kevinwatt/mcp-server-searxng\"\r\n      ],\r\n      \"env\": {\r\n        \"SEARXNG_INSTANCES\": \"http://localhost:8080,https://searx.example.com\",\r\n        \"SEARXNG_USER_AGENT\": \"CustomBot/1.0\",\r\n        \"NODE_TLS_REJECT_UNAUTHORIZED\": \"0\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> ⚠️ 警告：不建议在生产环境中禁用SSL证书验证。\r\n",
+ "config": {
+  "searxng": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@kevinwatt/mcp-server-searxng"
+   ],
+   "env": {}
+  }
+ }
+}

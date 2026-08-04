@@ -1,0 +1,21 @@
+{
+ "id": "181",
+ "kind": "mcp",
+ "name": "dice-2",
+ "fingerprint_md5": "1d03a53fca3fc8290c7487feae1c0e87",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp-dice：一个用于掷骰子的mcp服务器\r\n\r\n[](https://smithery.ai/protocol/mcp-dice)\r\n\r\n\r\n一种模型上下文协议（MCP）服务器，使大型语言模型（LLM）能够掷骰子。它接受标准骰子符号（例如。， `1d20`)并返回单个卷及其总和。\r\n\r\n[](https://glama.ai/mcp/servers/vzu553gv26)\r\n\r\n## 特性\r\n\r\n- 支持标准骰子符号（例如。， `1d20`, `3d6`, `2d8+1`)\r\n- 返回单个卷和总和\r\n- 与Claude Desktop轻松集成\r\n- 与MCP Inspector兼容进行调试\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的Dice Roller [史密瑟里](https://smithery.ai/protocol/mcp-dice):\r\n\r\n```bash\r\nnpx @smithery/cli install mcp-dice --client claude\r\n```\r\n\r\n制造 `uv` 可用：https://docs.astral.sh/uv/getting-started/installation/\r\n\r\n## 用法\r\n\r\n### 基本命令行用法\r\n\r\n```shell\r\n# Using uvx\r\nuvx mcp-dice\r\n```\r\n\r\n### 输入格式\r\n\r\n服务器接受一个JSON对象 `notation` 字段：\r\n\r\n```json\r\n{\r\n  \"notation\": \"2d6+3\"\r\n}\r\n```\r\n\r\n示例响应：\r\n\r\n```json\r\n{\r\n  \"rolls\": [\r\n    3,\r\n    1\r\n  ],\r\n  \"sum\": 4,\r\n  \"modifier\": 3,\r\n  \"total\": 7,\r\n  \"notation\": \"2d6+3\",\r\n  \"timestamp\": \"2024-12-03T16:36:38.926452\"\r\n}\r\n```\r\n\r\n## Claude桌面配置\r\n\r\n### 位置\r\n\r\n- macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- 窗户： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n### 例子\r\n\r\n\r\nmacOS Configuration\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dice\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-dice\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\nWSL Configuration\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dice\": {\r\n      \"command\": \"wsl\",\r\n      \"args\": [\r\n        \"-e\",\r\n        \"zsh\",\r\n        \"-lc\",\r\n        \"uvx mcp-dice\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n注：更换 `zsh` 使用您的登录shell。\r\n\r\n\r\n## 开发与调试\r\n\r\n### 安装开发依赖项\r\n\r\n```shell\r\n# Clone the repository\r\ngit clone https://github.com/yourusername/mcp-dice\r\ncd mcp-dice\r\n\r\n# Install development dependencies\r\nuv pip install -e \".[dev]\"\r\n```\r\n\r\n### 运行测试\r\n\r\n```shell\r\nuv run pytest\r\n```\r\n\r\n### 使用MCP检查器\r\n\r\n这 [MCP检查员](https://github.com/modelcontextprotocol/inspector) 是调试MCP服务器的有用工具。使用npm安装并运行它：\r\n\r\n```shell\r\nnpx @modelcontextprotocol/inspector uvx mcp-dice\r\n```\r\n\r\n### Claude桌面开发配置\r\n\r\n\r\nmacOS configuration (local dev)\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dice\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--directory\",\r\n        \"path/to/mcp-dice-repo\",\r\n        \"mcp-dice\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n注：更换 `path/to/mcp-dice-repo` 文件系统上存储库的路径。\r\n\r\n\r\nWindows (WSL) configuration (local dev)\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dice\": {\r\n      \"command\": \"wsl\",\r\n      \"args\": [\r\n        \"-e\",\r\n        \"zsh\",\r\n        \"-lc\",\r\n        \"uv run --directory path/to/mcp-dice-repo mcp-dice\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n注：更换 `zsh` 使用您的登录shell。此外，更换 `path/to/mcp-dice-repo` 使用WSL文件系统上的存储库路径。\r\n",
+ "config": {
+  "dice": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-dice"
+   ],
+   "env": {}
+  }
+ }
+}

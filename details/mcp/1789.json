@@ -1,0 +1,21 @@
+{
+ "id": "1789",
+ "kind": "mcp",
+ "name": "vscode-mcp-server",
+ "fingerprint_md5": "a9e326a2460551c5b1cbbce3308cb089",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "# VSCode MCP\r\n\r\n此monorepo包含VSCode MCP服务器及其配套的VSCode扩展，它们共同使AI代理和助手（如Goose或Claude）能够通过模型上下文协议与VSCode交互。\r\n\r\n## 项目结构\r\n\r\n```\r\nvscode-mcp/\r\n├── server/    # MCP server implementation\r\n└── extension/ # VS Code extension\r\n```\r\n\r\n## 快速开始\r\n\r\n1. 安装MCP服务器\r\n\r\n```bash\r\nnpx vscode-mcp-server install\r\n```\r\n\r\n2. 安装MCP扩展\r\n\r\n> [MCP扩展](https://marketplace.visualstudio.com/items?itemName=block.vscode-mcp-extension)\r\n\r\n## 配置\r\n\r\n### Goose桌面设置\r\n\r\n\r\n- 身份证件： `code-mcp`\r\n- 姓名： `VS Code`\r\n- 说明： `Allows interaction with VS Code through the Model Context Protocol`\r\n- 命令： `npx vscode-mcp-server`\r\n\r\n### Claude桌面设置\r\n\r\n将此添加到您的Claude Desktop配置文件中(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"vscode-mcp-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"vscode-mcp-server\"],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\nCode MCP服务器为AI代理与VS Code交互提供了以下工具：\r\n\r\n### `create_diff`\r\n\r\n创建并显示修改现有文件的差异：\r\n\r\n- 应用前显示更改预览\r\n- 需要用户批准\r\n- 仅适用于现有文件\r\n\r\n### `open_file`\r\n\r\n在VS代码编辑器中打开文件：\r\n\r\n- 用于查看新文件或修改过的文件\r\n\r\n### `open_project`\r\n\r\n在VS Code中打开项目文件夹：\r\n\r\n- 为AI代理设置工作目录\r\n\r\n### `check_extension_status`\r\n\r\n检查扩展是否已安装并响应\r\n\r\n### `get_extension_port`\r\n\r\n获取VS代码MCP扩展的端口号\r\n\r\n### `list_available_projects`\r\n\r\n显示端口注册表文件中的项目\r\n\r\n## 许可证\r\n\r\n此项目根据Apache许可证2.0获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n版权所有2025 Block，股份有限公司。\r\n\r\n本产品包括在 [Block，股份有限公司。](https://block.xyz/)\r\n",
+ "config": {
+  "vscode-mcp-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "vscode-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

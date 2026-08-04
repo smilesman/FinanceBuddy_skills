@@ -1,0 +1,24 @@
+{
+ "id": "2361",
+ "kind": "mcp",
+ "name": "weather-21",
+ "fingerprint_md5": "a91c1bfcefb3f3d4e3f1be0dd66e6051",
+ "download_count": 0,
+ "category": "地图服务",
+ "tags": "",
+ "version": "",
+ "readme": "# HelloWorld mcp：带FastMCP的天气mcp服务器\r\n\r\n一个简单而有效的MCP服务器（Python微服务），用于使用 [OpenWeatherMap API](https://openweathermap.org/current)，基于FastMCP（MCP生态系统中的服务器框架）构建。\r\n\r\n## 特性\r\n\r\n- 按城市名称、国家或邮政编码获取当前天气\r\n- 湿度、温度（°C）、风速和描述\r\n- 使用MCP工具箱的简单API接口\r\n\r\n## 需求\r\n\r\n- Python 3.11+\r\n- OpenWeatherMap API密钥([看这里](https://home.openweathermap.org/api_keys))\r\n\r\n## 安装\r\n\r\n1. **克隆存储库**\r\n   ```bash\r\n   git clone\r\n   cd HelloWorld-mcp\r\n   ```\r\n1. **安装依赖项** （使用PEP 621 `pyproject.toml`)\r\n   ```bash\r\n   uv pip install -r requirements.txt  # or use your preferred tool for PEP 621 dependencies\r\n   ```\r\n1. **配置环境**\r\n   - 复制 `.env.example` 到 `.env` 并填写您的 `OPENWEATHER_API_KEY`.\r\n\r\n## 用法\r\n\r\n### 作为Python模块\r\n\r\n```bash\r\npython -m src.weather\r\n```\r\n\r\n### 使用MCP CLI\r\n\r\n```bash\r\nmcp dev src/weather.py\r\n```\r\n\r\n### 在流行客户端中作为本地MCP服务器运行\r\n\r\n您还可以使用以下配置从客户端/主机（如Claude Desktop、Cursor、VS Code等）本地运行此MCP服务器。 **确保你有 `uv` 已安装包管理器。调整 `--directory` 路径以匹配您自己的项目位置。**\r\n\r\n添加或更新您的mcpServers配置（例如在主机/编辑器设置中）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"D:\\\\model-context-protocol\\\\HelloWorld-mcp\",\r\n        \"run\",\r\n        \"src/weather.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **注：**\r\n>\r\n> - 将目录路径更改为项目所在的位置。\r\n> - `uv` 必须全局安装或在您的环境中可用。 ([请参阅uv文档](https://github.com/astral-sh/uv))\r\n\r\n## 工具已实施\r\n\r\n`get_weather(location: str) -> str`：返回特定城市、国家或邮政编码的格式化天气信息。\r\n\r\n#### 示例\r\n\r\n```\r\nWeather in London, GB: light rain. 14.2°C, humidity 82%, wind 5.1 m/s.\r\n```\r\n\r\n## 配置\r\n\r\n创建一个 `.env` 项目根目录中的文件：\r\n\r\n```\r\nOPENWEATHER_API_KEY=your_actual_api_key_here\r\n```\r\n\r\n## 文件结构\r\n\r\n- `src/weather.py` –带气象工具逻辑的主MCP服务器\r\n- `src/config.py` –从环境加载设置（API密钥）\r\n- `pyproject.toml` –项目元数据和依赖关系\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "D:\\model-context-protocol\\HelloWorld-mcp",
+    "run",
+    "src/weather.py"
+   ],
+   "env": {}
+  }
+ }
+}

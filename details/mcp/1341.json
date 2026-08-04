@@ -1,0 +1,22 @@
+{
+ "id": "1341",
+ "kind": "mcp",
+ "name": "atlas-docs",
+ "fingerprint_md5": "0fa31f874ed61836c39532ecfbb62621",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Atlas Docs MCP服务器\r\n\r\n[](https://www.npmjs.com/package/@cartographai/atlas-docs-mcp)\r\n[](https://smithery.ai/server/@CartographAI/atlas-docs-mcp)\r\n\r\nA. [模型上下文协议（MCP）](https://modelcontextprotocol.io/introduction) 为AI助手提供库和框架文档的服务器。\r\n\r\n> \\[！警告\\]\r\n> Atlas Docs目前处于测试阶段。并非一切都能完美运行，但我们正在积极改进服务。你的耐心和 [反馈](#support--feedback) 非常感谢！\r\n\r\n## 这个服务器做什么？\r\n\r\nLLM擅长生成通用代码，但不善于正确使用不太流行或新发布的库。这并不奇怪，因为这些模型还没有使用这些库对代码进行全面训练。\r\n\r\nAtlas Docs MCP服务器：\r\n\r\n- 为库和框架提供技术文档\r\n- 将官方文档处理成干净的降价版本，供LLM使用\r\n- 易于使用Cursor、Cline、Windsurf和任何其他兼容MCP的LLM客户端进行设置\r\n\r\n**克劳德3.5十四行诗：**\r\n\r\n\r\n**克劳德3.5十四行诗与阿特拉斯文档MCP：**\r\n\r\n\r\n<video src=\"https://github.com/user-attachments/assets/5fb1f3f2-18db-4ba4-8f47-da3892af22ee\"></video>\r\n\r\n## 📦 安装\r\n\r\nAtlas Docs MCP服务器可与任何支持 `stdio` 协议，包括：\r\n\r\n- 光标\r\n- 克莱恩\r\n- 帆板运动\r\n- 克劳德桌面\r\n\r\n将以下内容添加到MCP客户端配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"atlas-docs\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@cartographai/atlas-docs-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n就是这样！您可能需要重新启动应用程序（适用于Claude Desktop）才能识别服务器。\r\n\r\n**小贴士**：提示您的模型检查文档，例如“使用工具检查Astro的文档，以确保您正确使用库。”\r\n\r\n### 通过Smithery安装\r\n\r\n或者，您可以通过以下方式自动安装Atlas Docs MCP [史密瑟里](https://smithery.ai/server/@CartographAI/atlas-docs-mcp)克劳德桌面示例：\r\n\r\n```bash\r\nnpx -y @smithery/cli install @CartographAI/atlas-docs-mcp --client claude\r\n```\r\n\r\n将各个客户的“claude”更改为“cursor”、“cline”或“windsurf”。\r\n\r\n## 📒 可用的库\r\n\r\n- AI-SDK（来源：https://sdk.vercel.ai/docs/introduction)\r\n- Astro（来源：https://docs.astro.build/en/getting-started)\r\n- ast grep（来源：https://ast-grep.github.io/llms.txt)\r\n- Bun（来源：https://bun.sh/llms.txt)\r\n- CrewAI（来源：https://docs.crewai.com/llms.txt)\r\n- 细雨（来源：https://orm.drizzle.team/llms.txt)\r\n- ElevenLabs（来源：https://elevenlabs.io/docs/llms.txt)\r\n- 烟花（来源：https://docs.fireworks.ai/llms.txt)\r\n- Hono（来源：https://hono.dev/llms.txt)\r\n- Langgraph js（来源：https://langchain-ai.github.io/langgraphjs/llms.txt)\r\n- 语言py（来源：https://langchain-ai.github.io/langgraph/llms.txt)\r\n- Mastra（来源：https://mastra.ai/llms.txt)\r\n- ModelContextProtocol（来源：https://modelcontextprotocol.io/llms.txt)\r\n- Pglite（来源：https://pglite.dev/docs/about)\r\n- Prisma（来源：https://www.prisma.io/docs/llms.txt)\r\n- 重新发送（来源：https://resend.com/docs/llms.txt)\r\n- shadcn/ui（来源：https://ui.shadcn.com/docs)\r\n- 条纹（来源：https://docs.stripe.com/llms.txt)\r\n- Svelte（来源：https://svelte.dev/docs/svelte/overview)\r\n- SvelteKit（来源：https://svelte.dev/docs/kit/introduction)\r\n- 尾风css（来源：https://tailwindcss.com/docs/installation)\r\n- TanStack路由器（来源：https://tanstack.com/router/latest/docs/framework/react/overview)\r\n- Trigger.dev（来源：https://trigger.dev/docs/llms.txt)\r\n- X（来源：https://docs.x.com/llms.txt)\r\n- Zapier（来源：https://docs.zapier.com/llms.txt)\r\n\r\n想要不在此列表中的其他库的文档吗？请 [打开一个问题](https://github.com/CartographAI/atlas/issues/new) 在这个仓库中，我们将尝试处理和添加它！\r\n\r\n## 🔨 可用工具\r\n\r\n1. `list_docs`：列出所有可用的文档集\r\n1. `get_docs_index`：检索文档集的精简LLM友好索引\r\n1. `get_docs_full`：在单个合并文件中检索完整的文档集\r\n1. `search_docs`：按关键字搜索文档集\r\n1. `get_docs_page`：检索文档集的特定页面\r\n\r\n## 💭 运作原理\r\n\r\nAtlas Docs将技术图书馆的文档网站处理成干净的降价版本。此MCP服务器将文档作为MCP工具提供，并为数据调用Atlas docs API。\r\n\r\n## 在本地运行后端\r\n\r\n请访问 [制图AI/地图集](https://github.com/CartographAI/atlas) 并按照README中的说明进行操作。\r\n使用部署的URL更新ATLAS_API_URL。\r\n\r\n## 支持与反馈\r\n\r\n请 [打开一个问题](https://github.com/CartographAI/atlas/issues/new) 在这个仓库中，请求库的文档，或报告错误。\r\n\r\n如果您有任何问题、反馈或只是想打个招呼，我们很乐意收到您的来信。你可以在地图上找到我们 [不和谐的社会](https://discord.gg/MsBA7U7hH5) 如需实时支持，请发送电子邮件至 [contact@cartograph.app](mailto:contact@cartograph.app)\r\n",
+ "config": {
+  "atlas-docs": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@cartographai/atlas-docs-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

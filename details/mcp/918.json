@@ -1,0 +1,26 @@
+{
+ "id": "918",
+ "kind": "mcp",
+ "name": "vv-mcp",
+ "fingerprint_md5": "f822c0408b8b83cea10810a38b882afc",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# vv mcp\r\n\r\nVOICEVOX MCP Server-Claude Desktop和Claude\r\n用于在Code中利用语音合成的MCP服务器\r\n\r\n## 必要要件\r\n\r\n- Node.js 18以上\r\n- [VOICEVOX](https://voicevox.hiroshiba.jp/)已安装并启动\r\n- 支持操作系统：\r\n  - **macOS**: `afplay`使用（无需额外安装）\r\n  - **Linux**: `paplay`（PulseAudio）\r\n    - Arch Linux： `pacman -S pulseaudio`\r\n    - Ubuntu/Debian： `apt install pulseaudio-utils`\r\n    - Fedora： `dnf install pulseaudio-utils`\r\n  - **视窗**：使用PowerShell（无需额外安装）\r\n\r\n## 安装\r\n\r\n### 从npm安装（推荐）\r\n\r\n```bash\r\nnpm install -g @arrow2nd/vv-mcp\r\n```\r\n\r\n### 从源构建\r\n\r\n```bash\r\ngit clone https://github.com/arrow2nd/vv-mcp.git\r\ncd vv-mcp\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n## 在Claude Desktop中设置\r\n\r\n编辑配置文件：\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **Linux**: `~/.config/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n### 使用npm安装时\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"vv-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@arrow2nd/vv-mcp\"],\r\n      \"env\": {\r\n        \"VOICEVOX_URL\": \"http://localhost:50021\",\r\n        \"DEFAULT_VOICE_ID\": \"47\",\r\n        \"DEFAULT_SPEED\": \"1.0\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 从源构建时\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"vv-mcp\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/vv-mcp/dist/index.js\"],\r\n      \"env\": {\r\n        \"VOICEVOX_URL\": \"http://localhost:50021\",\r\n        \"DEFAULT_VOICE_ID\": \"47\",\r\n        \"DEFAULT_SPEED\": \"1.0\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 在Claude Code中设置\r\n\r\n`~/.claude.json`的，之`mcpServers`在节中添加：\r\n\r\n### 使用npx/bunx时（推荐）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"vv-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@arrow2nd/vv-mcp\"],\r\n      \"env\": {\r\n        \"VOICEVOX_URL\": \"http://localhost:50021\",\r\n        \"DEFAULT_VOICE_ID\": \"47\",\r\n        \"DEFAULT_SPEED\": \"1.0\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n使用bunx时`\"command\": \"bunx\"`中所述修改相应参数的值。\r\n\r\n### 从源构建时\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"vv-mcp\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/vv-mcp/dist/index.js\"],\r\n      \"env\": {\r\n        \"VOICEVOX_URL\": \"http://localhost:50021\",\r\n        \"DEFAULT_VOICE_ID\": \"47\",\r\n        \"DEFAULT_SPEED\": \"1.0\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用方法\r\n\r\n重新启动Claude Desktop/Code后，以下MCP工具可用：\r\n\r\n### 可用工具\r\n\r\n- `say` -语音合成文本并播放（异步执行）\r\n- `list_voices` -获取可用音频列表\r\n- `get_queue_status` -检查播放队列的状态\r\n- `clear_queue` -清除播放队列\r\n- `get_voices_in_use` -获取当前使用的语音ID列表（所有进程通用）\r\n- `get_random_unused_voice` -随机获取一个未使用的语音\r\n- `get_session_voice` -获取要在此会话中使用的语音（每个会话固定）\r\n\r\n### 使用例\r\n\r\n```\r\n「こんにちは」と言って\r\n```\r\n\r\n```\r\nナースロボの楽々な声で「完了しました」と言って\r\n```\r\n\r\n```\r\n利用可能な音声を教えて\r\n```\r\n\r\n## 会话语音功能\r\n\r\n为每个Claude会话自动分配固定语音：\r\n\r\n### 使用方法\r\n\r\n```\r\n# セッション音声を使用して読み上げ\r\n\"こんにちは\"とセッション音声で言って\r\n```\r\n\r\n### say工具参数\r\n\r\n- `useSessionVoice: true` -使用会话语音（voiceId被忽略）\r\n- `useSessionVoice: false`（默认值）-\r\n  使用指定的语音ID或默认语音\r\n\r\n### 机制\r\n\r\n- 会话开始时自动选择语音\r\n- 优先选择与其他会话不重复的语音\r\n- 在所有声音都在使用中的情况下选择使用频度低的声音\r\n- 会话结束时自动释放语音\r\n\r\n## 多实例支持\r\n\r\n多个Claude\r\n如果桌面/代码同时工作，则自动使用不同的声音避免重复的声音。\r\n\r\n- 共享每个进程正在使用的语音信息\r\n- `get_random_unused_voice`自动选择工具中未使用的音频\r\n- 在临时目录中创建状态文件以共享信息\r\n\r\n## 环境变数\r\n\r\n｜变量名｜默认值｜说明｜\r\n| ---------------- | ------------------------ | ----------------------------------------- |\r\n|voicex_URL|http://localhost:50021| VOICEVOX APIのURL|\r\n默认语音ID（护士机器人类型T）\r\n默认语速\r\n系统临时目录共享状态文件的保存目录\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "vv-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@arrow2nd/vv-mcp"
+   ],
+   "env": {
+    "VOICEVOX_URL": "http://localhost:50021",
+    "DEFAULT_VOICE_ID": "47",
+    "DEFAULT_SPEED": "1.0"
+   }
+  }
+ }
+}

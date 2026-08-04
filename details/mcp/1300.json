@@ -1,0 +1,24 @@
+{
+ "id": "1300",
+ "kind": "mcp",
+ "name": "uniprot",
+ "fingerprint_md5": "60fe59330770ad9e3ea275a27bba9a9f",
+ "download_count": 0,
+ "category": "缓存",
+ "tags": "",
+ "version": "",
+ "readme": "# UniProt MCP服务器\r\n\r\n提供对UniProt蛋白质信息访问的模型上下文协议（MCP）服务器。该服务器允许AI助手直接从UniProt获取蛋白质功能和序列信息。\r\n\r\n## 特性\r\n\r\n- 通过UniProt登录号获取蛋白质信息\r\n- 批量检索多种蛋白质\r\n- 缓存以提高性能（24小时TTL）\r\n- 错误处理和日志\r\n- 信息包括：\r\n  - 蛋白质名称\r\n  - 功能描述\r\n  - 完整序列\r\n  - 序列长度\r\n  - 生物体\r\n\r\n## 快速开始\r\n\r\n1. 确保您安装了Python 3.10或更高版本\r\n1. 克隆此存储库：\r\n   ```bash\r\n   git clone https://github.com/TakumiY235/uniprot-mcp-server.git\r\n   cd uniprot-mcp-server\r\n   ```\r\n1. 安装依赖项：\r\n   ```bash\r\n   # Using uv (recommended)\r\n   uv pip install -r requirements.txt\r\n\r\n   # Or using pip\r\n   pip install -r requirements.txt\r\n   ```\r\n\r\n## 配置\r\n\r\n添加到您的Claude Desktop配置文件中：\r\n\r\n- 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- Linux： `~/.config/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"uniprot\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"path/to/uniprot-mcp-server\", \"run\", \"uniprot-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用示例\r\n\r\n在Claude Desktop中配置服务器后，您可以提出以下问题：\r\n\r\n```\r\nCan you get the protein information for UniProt accession number P98160?\r\n```\r\n\r\n对于批量查询：\r\n\r\n```\r\nCan you get and compare the protein information for both P04637 and P02747?\r\n```\r\n\r\n## API 参考\r\n\r\n### 工具\r\n\r\n1. `get_protein_info`\r\n\r\n   - 获取单一蛋白质的信息\r\n   - 必需参数： `accession` （UniProt登录号）\r\n   - 示例响应：\r\n     ```json\r\n     {\r\n       \"accession\": \"P12345\",\r\n       \"protein_name\": \"Example protein\",\r\n       \"function\": [\"Description of protein function\"],\r\n       \"sequence\": \"MLTVX...\",\r\n       \"length\": 123,\r\n       \"organism\": \"Homo sapiens\"\r\n     }\r\n     ```\r\n\r\n1. `get_batch_protein_info`\r\n\r\n   - 获取多种蛋白质的信息\r\n   - 必需参数： `accessions` （UniProt登录号数组）\r\n   - 返回蛋白质信息对象的数组\r\n\r\n## 发展\r\n\r\n### 建立开发环境\r\n\r\n1. 克隆存储库\r\n1. 创建虚拟环境：\r\n   ```bash\r\n   python -m venv .venv\r\n   source .venv/bin/activate  # On Windows: .venv\\Scripts\\activate\r\n   ```\r\n1. 安装开发依赖项：\r\n   ```bash\r\n   pip install -e \".[dev]\"\r\n   ```\r\n\r\n### 运行测试\r\n\r\n```bash\r\npytest\r\n```\r\n\r\n### 代码风格\r\n\r\n本项目使用：\r\n\r\n- 黑色用于代码格式化\r\n- isort用于导入排序\r\n- 8号棉绒片\r\n- mypy用于类型检查\r\n- 土匪进行安全检查\r\n- 依赖漏洞检查的安全性\r\n\r\n运行所有检查：\r\n\r\n```bash\r\nblack .\r\nisort .\r\nflake8 .\r\nmypy .\r\nbandit -r src/\r\nsafety check\r\n```\r\n\r\n## 技术细节\r\n\r\n- 使用MCP Python SDK构建\r\n- 使用httpx进行异步HTTP请求\r\n- 使用基于OrderedDict的缓存实现24小时TTL缓存\r\n- 处理速率限制和重试\r\n- 提供详细的错误消息\r\n\r\n### 错误处理\r\n\r\n服务器处理各种错误情况：\r\n\r\n- 无效的登录号（404个响应）\r\n- API连接问题（网络错误）\r\n- 速率限制（429个响应）\r\n- 格式错误的响应（JSON解析错误）\r\n- 缓存管理（TTL和大小限制）\r\n\r\n## 贡献\r\n\r\n我们欢迎捐款！请随时提交拉取请求。以下是您如何做出贡献：\r\n\r\n1. 分叉存储库\r\n1. 创建功能分支(`git checkout -b feature/amazing-feature`)\r\n1. 提交您的更改(`git commit -m 'Add some amazing feature'`)\r\n1. 推到分支(`git push origin feature/amazing-feature`)\r\n1. 打开拉取请求\r\n\r\n请确保根据需要更新测试，并遵循现有的编码风格。\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 致谢\r\n\r\n- UniProt提供蛋白质数据API\r\n- 模型上下文协议规范的拟人化\r\n- 帮助改进此项目的贡献者\r\n",
+ "config": {
+  "uniprot": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "path/to/uniprot-mcp-server",
+    "run",
+    "uniprot-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

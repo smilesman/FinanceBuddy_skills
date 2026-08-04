@@ -1,0 +1,18 @@
+{
+ "id": "3166",
+ "kind": "mcp",
+ "name": "meitre",
+ "fingerprint_md5": "9c06911d2d9f2aa3d5f4483a460e9884",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# Meitre MCP服务器\r\n\r\nA主办 [主控程序](https://modelcontextprotocol.io) 将AI助手连接到的服务器 [迈特尔](https://meitre.com)，一个餐厅预订平台。它允许您通过自然语言查看可用性、搜索预订、预订、重新安排和取消。\r\n\r\n## 设置\r\n\r\n将此添加到您的MCP客户端配置中（Claude Desktop、Cursor等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"meitre\": {\r\n      \"url\": \"https://meitre.mcp.openbsp.dev/mcp\",\r\n      \"headers\": {\r\n        \"username\": \"your-meitre-email\",\r\n        \"password\": \"your-meitre-password\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n就是这样。如果你的账户只有一家餐厅，它会被自动检测到。对于多餐厅帐户，请添加 `restaurant` header--使用 `list_restaurants` 查找标识符的工具。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_restaurants` |列出您帐户可访问的餐厅|\r\n| `fetch_options` |获取区域、服务类型和菜单|\r\n| `fetch_dates` |未来15天的可用日期|\r\n| `fetch_timeslots` |特定日期的可用时间|\r\n| `search_reservations` |按电话号码查找预订|\r\n| `book_reservation` |预订新的预订|\r\n| `reschedule_reservation` |重新安排现有预订|\r\n| `cancel_reservation` |取消预订|\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm install\r\nnpm run dev          # http://localhost:8787\r\nnpm run typecheck    # Type check\r\nnpm run deploy       # Deploy to Cloudflare\r\n```\r\n",
+ "config": {
+  "meitre": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://meitre.mcp.openbsp.dev/mcp"
+  }
+ }
+}

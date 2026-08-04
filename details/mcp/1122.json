@@ -1,0 +1,24 @@
+{
+ "id": "1122",
+ "kind": "mcp",
+ "name": "mongo-local",
+ "fingerprint_md5": "59e5be63e701e90f468cadf8cbc0dfe4",
+ "download_count": 0,
+ "category": "NoSQL 数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# mongo mcp服务器\r\n\r\n一个定制的MCP（模型上下文协议）服务器，将Claude Code连接到MongoDB数据库，为TechNext Asia AI实习生面试测试而构建。\r\n\r\n## 它做什么\r\n\r\n公开了3个工具，允许Claude通过自然语言与任何MongoDB实例交互：\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `ping_db` |测试连接并返回MongoDB服务器信息（版本、主机、正常运行时间）|\r\n| `list_collections` |列出给定数据库中的所有集合|\r\n| `find_documents` |使用可选筛选器从集合中查询最多5个文档|\r\n\r\n## 技术栈\r\n\r\n- **python** 和 [`uv`](https://docs.astral.sh/uv/) 用于项目管理\r\n- **FastMCP** (`mcp.server.fastmcp`)--最小样板MCP服务器框架\r\n- **PyMongo** --官方MongoDB Python驱动程序\r\n\r\n## 项目结构\r\n\r\n```\r\nmongo-mcp-server/\r\n├── server.py          # MCP server with all 3 tools\r\n├── pyproject.toml     # Project metadata and dependencies\r\n├── uv.lock            # Locked dependency versions\r\n└── README.md\r\n```\r\n\r\n## 设置\r\n\r\n### 1.先决条件\r\n\r\n- Python 3.13+\r\n- [`uv`](https://docs.astral.sh/uv/) 安装\r\n- 正在运行的MongoDB实例（本地或Docker）\r\n\r\n### 2.安装依赖项\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n### 3.使用Docker运行本地MongoDB（可选）\r\n\r\n```bash\r\ndocker run -d --name mongodb-mcp -p 27017:27017 \\\r\n  -e MONGO_INITDB_ROOT_USERNAME=admin \\\r\n  -e MONGO_INITDB_ROOT_PASSWORD=password \\\r\n  mongo:7\r\n```\r\n\r\n## Claude代码配置\r\n\r\n添加以下内容 `~/.claude/settings.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mongo-local\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"server.py\"],\r\n      \"cwd\": \"/absolute/path/to/mongo-mcp-server\",\r\n      \"env\": {\r\n        \"MONGODB_URI\": \"mongodb://admin:password@localhost:27017/\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后重新启动Claude Code。这 `mongo-local` 服务器将显示为已连接的MCP服务器。\r\n\r\n## 环境变量\r\n\r\n|变量|默认值|描述|\r\n|----------|---------|-------------|\r\n| `MONGODB_URI` | `mongodb://localhost:27017/` |MongoDB连接字符串|\r\n\r\n## Claude代码中的示例用法\r\n\r\n一旦连接，你可以自然地问克劳德：\r\n\r\n```\r\nping the database\r\nlist collections in the technext_demo database\r\nfind documents in technext_demo.candidates where position is \"AI Intern\"\r\n```\r\n\r\n## 为什么选择MongoDB MCP？\r\n\r\n- **现实世界的相关性** --数据库几乎是每个后端系统的核心\r\n- **完整的读/写覆盖率** --ping、list和query涵盖了最常见的操作\r\n- **无需额外的基础设施** --适用于任何现有的MongoDB（本地、Docker或Atlas）\r\n- **自然语言查询** --Claude将纯英语翻译成MongoDB过滤器对象\r\n",
+ "config": {
+  "mongo-local": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "server.py"
+   ],
+   "env": {
+    "MONGODB_URI": "mongodb://admin:password@localhost:27017/"
+   }
+  }
+ }
+}

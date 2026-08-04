@@ -1,0 +1,22 @@
+{
+ "id": "3079",
+ "kind": "mcp",
+ "name": "espn",
+ "fingerprint_md5": "95c00d81d469bef634e2a34cdb3d796d",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# espn mcp\r\n\r\n一个MCP服务器，让克劳德可以访问ESPN的实时体育数据——21个联赛的得分、统计数据、名单、排名等。\r\n\r\n## 安装\r\n\r\n### 克劳德桌面\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"espn\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"espn-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add espn -- npx -y espn-mcp\r\n```\r\n\r\n## 工具\r\n\r\n|工具|说明|关键参数|\r\n|------|-------------|----------------|\r\n| `lookup` |将球队名称、球员或联赛解析为ESPN标识符| `query` |\r\n| `get_scores` |联赛中的实时和最新比分| `league`, `team`, `date` |\r\n| `get_team_info` |球队详情：阵容、赛程、伤病情况、深度图、交易记录、历史记录| `league`, `team`, `aspect` |\r\n| `get_player_info` |玩家详细信息：统计数据、游戏日志、拆分、个人简介| `league`, `player`, `aspect`, `team` （可选）|\r\n| `get_game` |游戏深度挖掘：盒子得分、逐局游戏、赔率、获胜概率| `gameId`, `detail` |\r\n| `get_standings` |联赛排名或民意调查排名| `league`, `type` |\r\n| `get_leaders` |按类别划分的统计负责人| `league`, `category` |\r\n| `get_news` |按体育或联赛筛选的最新头条新闻| `league` |\r\n\r\n`sport` 总是可选的——这是从以下内容推断出来的 `league` 自动。\r\n\r\n## 支持体育\r\n\r\n### 全深度\r\n\r\nNFL、NBA、MLB、NHL——得分、每场比赛、球员统计、赔率、获胜概率、伤病、交易\r\n\r\n### 强壮的\r\n\r\n大学橄榄球、大学篮球、大学棒球、WNBA、UFL、大学冰球——比赛摘要、比赛、赔率、运动员\r\n\r\n### 好\r\n\r\n足球（250个联赛，包括英超、西甲、美国职业足球大联盟、欧洲冠军联赛）、PLL、NLL、AFL——得分、球队、排名；顶级足球联赛有赔率和评论\r\n\r\n### 基础\r\n\r\n高尔夫（PGA）、F1、NASCAR、印地赛车、UFC/MMA、网球、橄榄球、CFL——分数、球队、排名、新闻\r\n\r\n## 示例查询\r\n\r\n安装后，询问Claude以下问题：\r\n\r\n### 快速查找\r\n\r\n- “凯文·麦戈尼格尔本赛季到目前为止表现如何？”\r\n- “贾斯汀·维兰德的职业生涯数据是什么？”\r\n- “现在有任何活跃的MLB游戏吗？”\r\n- “给我红翼队最后一场比赛的关键打法”\r\n\r\n### 分析与比较\r\n\r\n- “安德鲁·科普与红翼队的其他前锋相比怎么样？”\r\n- “当凯德·坎宁安不上场时，活塞队的战绩如何？”\r\n- “按月分解Yaxel Lendeborg的分裂-主场vs客场”\r\n- “红翼队的剩余赛程与季后赛中的其他球队相比有多难？”\r\n- “底特律队在剩下的赛程中表现如何？”\r\n- “为我打破东部联盟的外卡赛”\r\n\r\n### 在此基础上构建\r\n\r\n这些不是预设的回应——克劳德正在结合多个工具调用、交叉引用数据并进行真正的分析。这意味着您可以构建以下代理和工作流：\r\n\r\n- **童子军对手** --在比赛日前查看球员名单、最近的状态和正面交锋记录\r\n- **跟踪潜在客户开发** --监控各联盟球员的游戏日志和拆分\r\n- **力量投注模型** --将实时赔率、获胜概率和历史统计数据输入您自己的管道\r\n- **自动回顾** --根据盒子得分和逐局数据生成赛后总结\r\n- **监控季后赛比赛** --按需计算日程强度和剩余游戏场景\r\n\r\n## 运作原理\r\n\r\n服务器位于Claude和ESPN的公共API之间：\r\n\r\n1. **智能分辨率** -“Niners”通过内置的1200多支别名球队注册中心解析为旧金山49人队（ESPN ID 25）\r\n1. **响应微调** --ESPN的响应可以是500KB+。服务器仅提取相关内容（框分数降至约5KB）\r\n1. **缓存** -内存内TTL缓存可防止多余的API调用（30秒用于实时评分，1小时用于名册等）\r\n1. **并发限制** --最多可同时发送2个ESPN请求，以避免速率限制\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/ebrodymoore/espn-mcp.git\r\ncd espn-mcp\r\nnpm install\r\nnpm test                       # Run unit tests\r\nRUN_INTEGRATION=1 npm test     # Run unit + integration tests (hits live ESPN API)\r\nnpm run build                  # Compile TypeScript\r\nnpm run dev                    # Run server in dev mode\r\n```\r\n\r\n### 重新生成团队注册表\r\n\r\n团队注册表以静态JSON文件的形式提供。要使用当前ESPN数据刷新它：\r\n\r\n```bash\r\nnpm run generate-registry\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "espn": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "espn-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

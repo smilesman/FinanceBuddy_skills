@@ -1,0 +1,23 @@
+{
+ "id": "1570",
+ "kind": "mcp",
+ "name": "mcp-graphql-2",
+ "fingerprint_md5": "1a43fd58445e103230d3c35de3ff924f",
+ "download_count": 0,
+ "category": "API 调试",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp图形库\r\n\r\n[](https://smithery.ai/server/mcp-graphql)\r\n\r\n一个模型上下文协议服务器，使LLM能够与GraphQL API交互。此实现提供了模式自检和查询执行功能，允许模型动态发现和使用GraphQL API。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/4zwa4l8utf\"></a>\r\n\r\n## 用法\r\n\r\n跑 `mcp-graphql` 使用正确的端点，它将自动尝试反思您的查询。\r\n\r\n### 命令行参数\r\n\r\n|参数|描述|默认值|\r\n|----------|-------------|---------|\r\n| `--endpoint` |GraphQL端点URL| `http://localhost:4000/graphql` |\r\n| `--headers` |包含请求标头的JSON字符串| `{}` |\r\n| `--enable-mutations` |启用变异操作（默认禁用）| `false` |\r\n| `--name` |MCP服务器的名称| `mcp-graphql` |\r\n| `--schema` |本地GraphQL架构文件的路径（可选）|-|\r\n\r\n### 例子\r\n\r\n```bash\r\n# Basic usage with a local GraphQL server\r\nnpx mcp-graphql --endpoint http://localhost:3000/graphql\r\n\r\n# Using with custom headers\r\nnpx mcp-graphql --endpoint https://api.example.com/graphql --headers '{\"Authorization\":\"Bearer token123\"}'\r\n\r\n# Enable mutation operations\r\nnpx mcp-graphql --endpoint http://localhost:3000/graphql --enable-mutations\r\n\r\n# Using a local schema file instead of introspection\r\nnpx mcp-graphql --endpoint http://localhost:3000/graphql --schema ./schema.graphql\r\n```\r\n\r\n## 可用工具\r\n\r\n服务器提供两个主要工具：\r\n\r\n1. **内省模式**：此工具检索GraphQL模式。如果您没有将架构作为资源访问的权限，请先使用此选项。\r\n   这使用本地模式文件或自省查询。\r\n\r\n1. **查询图形库**：对端点执行GraphQL查询。默认情况下，突变被禁用，除非 `--enable-mutations` 已指定。\r\n\r\n## 资源\r\n\r\n- **graphql模式**：服务器将GraphQL模式作为客户端可以访问的资源公开。这要么是本地模式文件，要么基于内省查询。\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装GraphQL MCP Server for Claude Desktop [史密瑟里](https://smithery.ai/server/mcp-graphql):\r\n\r\n```bash\r\nnpx -y @smithery/cli install mcp-graphql --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n它可以手动安装到Claude：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"mcp-graphql\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\"mcp-graphql\", \"--endpoint\", \"http://localhost:3000/graphql\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 安全考虑\r\n\r\n默认情况下，作为防止LLM修改数据库或服务数据的安全措施，会禁用突变。在生产环境中启用突变之前，请仔细考虑。\r\n\r\n## 为您自己的服务器进行自定义\r\n\r\n这是一个非常通用的实现，它允许用户进行完全的内省，并允许用户做任何事情（包括突变）。如果你需要一个更具体的实现，我建议你创建自己的MCP和锁定工具，让客户端只输入特定的查询字段和/或变量。您可以将此作为参考。\r\n",
+ "config": {
+  "mcp-graphql": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-graphql",
+    "--endpoint",
+    "http://localhost:3000/graphql"
+   ],
+   "env": {}
+  }
+ }
+}

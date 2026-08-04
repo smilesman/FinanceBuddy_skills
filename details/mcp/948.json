@@ -1,0 +1,21 @@
+{
+ "id": "948",
+ "kind": "mcp",
+ "name": "youtube-transcript-4",
+ "fingerprint_md5": "daeba0bbea7ccc7a3c7548c6924d601d",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# youtube成绩单mcp\r\n\r\n\r\n通过以下方式为LLM聊天应用转录YouTube视频 [主控程序](https://modelcontextprotocol.io/).\r\n\r\n示例提示： `Summarize https://www.youtube.com/watch?v=uB9yZenVLzg`\r\n\r\n## 安装\r\n\r\n需要 [紫外线](https://docs.astral.sh/uv/getting-started/installation/).将此添加到MCP客户端的配置中--适用于任何兼容MCP的应用程序（Claude Desktop、Claude Code、Cursor、Windsurf、VS Code、Zed等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube-transcript\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"youtube-transcript-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果您的客户端需要一个命令，则等效为一行：\r\n\r\n```bash\r\nuvx youtube-transcript-mcp-server\r\n```\r\n\r\n## 工具\r\n\r\n- `transcribe(youtube_video_url: str) -> str` --获取成绩单（en/de/es/fr/ru），并为LLM添加广告删除指令。\r\n\r\n## 在当地发展\r\n\r\n```bash\r\ngit clone https://github.com/SeanPedersen/youtube-transcript-mcp\r\ncd youtube-transcript-mcp\r\nuv venv && uv pip install -r pyproject.toml && source .venv/bin/activate\r\npython mcp_server.py\r\n```\r\n\r\n将您的MCP客户端指向本地结账，而不是PyPI：\r\n\r\n```json\r\n{\r\n  \"command\": \"uv\",\r\n  \"args\": [\r\n    \"run\", \"--with\", \"fastmcp\", \"--with\", \"youtube-transcript-api\",\r\n    \"fastmcp\", \"run\", \"/absolute/path/to/youtube-transcript-mcp/mcp_server.py\"\r\n  ]\r\n}\r\n```\r\n",
+ "config": {
+  "youtube-transcript": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "youtube-transcript-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "git-helper",
+ "kind": "skill",
+ "name": "git-helper",
+ "fingerprint_md5": "a45727870cf9925a9059ba8e4595b88f",
+ "download_count": 0,
+ "category": "日志分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Git Helper\r\n\r\n常用 git 操作作为技能。为频繁使用的 git 命令提供方便的包装器，包括 status、pull、push、分支管理和日志查看。\r\n\r\n## 命令\r\n\r\n```bash\r\n# 显示工作树状态\r\ngit-helper status\r\n\r\n# 拉取最新更改\r\ngit-helper pull\r\n\r\n# 推送本地提交\r\ngit-helper push\r\n\r\n# 列出或管理分支\r\ngit-helper branch\r\n\r\n# 查看提交日志，可选限制\r\ngit-helper log [--limit 10]\r\n```\r\n\r\n## 安装\r\n\r\n无需安装。`git` 始终存在于系统上。",
+ "config": {}
+}

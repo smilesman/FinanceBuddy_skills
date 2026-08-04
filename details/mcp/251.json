@@ -1,0 +1,18 @@
+{
+ "id": "251",
+ "kind": "mcp",
+ "name": "japanese-fortune-teller",
+ "fingerprint_md5": "48e242d2922831c11b179fe39dda512d",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# rails_mcp示例\r\n\r\n一个使用Ruby on Rails实现MCP服务器的示例项目。\r\n\r\n## 概述\r\n\r\n该项目提供日本算命工具（omikuji和幸运物品）作为MCP工具。\r\n\r\n### 可用工具\r\n\r\n- omikuji_tool：绘制幸运单\r\n- luck_item_tool：获取今天的幸运物品\r\n\r\n## 设置\r\n\r\n### 启动Rails服务器\r\n\r\n```bash\r\nbundle install\r\nbin/rails s -p 3131\r\n```\r\n\r\n### 配置MCP客户端\r\n\r\n将以下内容添加到您的MCP客户端（Claude Desktop、Cursor等） `mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"japanese-fortune-teller\": {\r\n      \"url\": \"http://localhost:3131/mcp/messages\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 用法示例\r\n\r\n您可以从MCP客户端发出请求，例如：\r\n\r\n```\r\nUse the japanese-fortune-teller MCP Server to tell the fortune for \"kaibadash\"\r\n```\r\n",
+ "config": {
+  "japanese-fortune-teller": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:3131/mcp/messages"
+  }
+ }
+}

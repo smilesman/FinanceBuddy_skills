@@ -1,0 +1,23 @@
+{
+ "id": "753",
+ "kind": "mcp",
+ "name": "mind",
+ "fingerprint_md5": "c0a1a163ec4c4e5aa418c35ffaf79375",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Mind MCP服务器\r\n\r\n# Mind开源MCP服务器\r\n\r\n> 🔌 **与Claude Desktop和任何其他MCP客户端兼容！**\r\n>\r\n> Mind MCP也与任何MCP客户端兼容\r\n\r\n模型上下文协议（MCP）是一个开放标准，使人工智能系统能够与各种数据源和工具无缝交互，促进安全的双向连接。\r\n\r\nMind MCP通过MCP协议为任何代理应用程序提供快速、可靠的RAG访问，减少幻觉，由Mind的Trusted RAG平台提供支持。\r\n\r\n## 安装\r\n\r\n您可以直接从PyPI安装该软件包：\r\n\r\npip安装mind mcp\r\n\r\n## 可用工具\r\n\r\n- \\*\\*ask_mind:\\*\\*使用mind运行RAG查询，返回带有生成响应的搜索结果。\r\n  Args：\r\n  - query：str，要运行的用户查询-必填项。\r\n  - corpus_keys:list\\[str\\]，用于搜索的Mind语料库关键字列表-必填。请要求用户提供一个或多个语料库密钥。\r\n  - api_key:str，Mind api密钥-必需。\r\n  - n_sentences_before：int，答案前要包含在上下文中的句子数-可选，默认为2。\r\n  - n_sentences_after:int，答案后要包含在上下文中的句子数-可选，默认为2。\r\n  - lexical_interpolation：浮点数，要使用的词法插值量-可选，默认值为0.005。\r\n  - max_used_search_results:int，要使用的最大搜索结果数-可选，默认为10。\r\n  - generation_preset_name:str，要使用的生成预设名称-可选，默认为“mind-summary-table-md-query-ext-jan-2025-gpt-4o”。\r\n  - response_language:str，响应的语言可选，默认为“eng”。\r\n    退货：\r\n  - 来自Mind的响应，包括生成的答案和搜索结果。\r\n- \\*\\*search_mind:\\*\\*使用mind运行语义搜索查询，无需生成。\r\n  Args：\r\n  - query：str，要运行的用户查询-必填项。\r\n  - corpus_keys:list\\[str\\]，用于搜索的Mind语料库关键字列表-必填。请要求用户提供一个或多个语料库密钥。\r\n  - api_key:str，Mind api密钥-必需。\r\n  - n_sentences_before：int，答案前要包含在上下文中的句子数-可选，默认为2。\r\n  - n_sentences_after:int，答案后要包含在上下文中的句子数-可选，默认为2。\r\n  - lexical_interpolation：浮点数，要使用的词法插值量-可选，默认值为0.005。\r\n    退货：\r\n  - 来自Mind的响应，包括匹配的搜索结果。\r\n\r\n## 使用Claude Desktop进行配置\r\n\r\n添加到您的claude_desktop_config json：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Mind\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"tool\",\r\n        \"run\",\r\n        \"mind-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 在Claude桌面应用程序中的使用\r\n\r\n一旦安装完成，并且配置了Claude桌面应用程序，您必须完全关闭并重新打开Claude桌面程序才能看到Mind mcp服务器。你应该在应用程序的左下角看到一个锤子图标，指示可用的MCP工具，你可以点击锤子图标查看更多关于思维搜索和思维提取工具的详细信息。\r\n\r\n现在，克劳德将可以完全访问Mind mcp服务器，包括ask Mind和搜索Mind工具。当你第一次发布这些工具时，Claude会要求你提供你的Mind-api密钥和语料库密钥（如果你想使用多个语料库，可以提供多个密钥）。在你设置好这些之后，你就可以出发了。以下是一些你可以尝试的例子（使用包含我们网站信息的Mind语料库：\r\n\r\n### Mind RAG示例\r\n\r\n1. **查询心智语料库**:\r\n\r\n   ```\r\n   ask-mind Who is Amr Awadallah?\r\n   ```\r\n\r\n1. **搜索心灵语料库**:\r\n\r\n   ```\r\n   search-mind events in NYC?\r\n   ```\r\n\r\n## 致谢✨\r\n\r\n- MCP规范的模型上下文协议\r\n- 克劳德桌面的拟人化\r\n\r\n## 关于\r\n\r\nMind开源MCP服务器\r\n\r\n### 资源\r\n\r\n自述文件\r\n\r\n### 许可证\r\n\r\nApache-2.0许可证\r\n\r\n### 安全策略\r\n\r\n安全策略\r\n",
+ "config": {
+  "mind": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "tool",
+    "run",
+    "mind-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

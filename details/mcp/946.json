@@ -1,0 +1,23 @@
+{
+ "id": "946",
+ "kind": "mcp",
+ "name": "youtube-transcript-2",
+ "fingerprint_md5": "d6faa7872ab0972251b399a78f60437d",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# YouTube转录MCP服务器\r\n\r\n\r\n此MCP服务器检索给定YouTube视频URL的转录。\r\n\r\n\r\n## 工具\r\n\r\n此MCP服务器提供以下工具：\r\n\r\n### `get_transcript`\r\n\r\n获取指定YouTube视频的文字记录。\r\n\r\n#### 参数\r\n\r\n- **网址** *（字符串）*：YouTube视频的完整URL。此字段必填。\r\n- **语言** *（字符串，可选）*：成绩单所需的语言。默认为 `en` 如果没有指定。\r\n- **next_cursor** *（字符串，可选）*：光标用于检索成绩单的下一页。\r\n\r\n### `get_timed_transcript`\r\n\r\n获取带有时间戳的指定YouTube视频的转录。\r\n\r\n#### 参数\r\n\r\n- **网址** *（字符串）*：YouTube视频的完整URL。此字段必填。\r\n- **语言** *（字符串，可选）*：成绩单所需的语言。默认为 `en` 如果没有指定。\r\n- **next_cursor** *（字符串，可选）*：光标用于检索成绩单的下一页。\r\n\r\n### `get_video_info`\r\n\r\n获取指定YouTube视频的元数据。\r\n\r\n#### 参数\r\n\r\n- **网址** *（字符串）*：YouTube视频的完整URL。此字段必填。\r\n\r\n### `get_available_languages`\r\n\r\n检索视频的可用语言。\r\n\r\n#### 参数\r\n\r\n- **网址** *（字符串）*：YouTube视频的完整URL。此字段必填。\r\n\r\n## 安装\r\n\r\n> \\[！注意\\]\r\n> 你需要 [`uv`](https://docs.astral.sh/uv) 安装在您的系统上以供使用 `uvx` 命令。\r\n\r\n### 对于 [鹅](https://block.github.io/goose/)\r\n\r\n有关详细的安装说明，请参阅本教程：\r\n[YouTube转录扩展](https://block.github.io/goose/docs/mcp/youtube-transcript-mcp).\r\n\r\n### 对于 [克劳德](https://claude.com/download)\r\n\r\n下载最新的MCP捆绑包 `mcp-youtube-transcript.mcpb` 从\r\n这 [发布](https://github.com/jkawamoto/mcp-youtube-transcript/releases) 页面，\r\n然后打开下载的 `.mcpb `文件或将其拖动到Claude Desktop的“设置”窗口中。\r\n\r\n<details>\r\n<summary>Manually configuration</summary>\r\n\r\n您还可以为Claude Desktop手动配置此服务器。\r\n编辑 `claude_desktop_config.json` 通过在下面添加以下条目来创建文件\r\n`mcpServers`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube-transcript\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--from\",\r\n        \"git+https://github.com/jkawamoto/mcp-youtube-transcript\",\r\n        \"mcp-youtube-transcript\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n编辑后，重新启动应用程序。\r\n\r\n</details>\r\n\r\n欲了解更多信息，\r\n参见： [连接到本地MCP服务器-模型上下文协议。](https://modelcontextprotocol.io/docs/develop/connect-local-servers).\r\n\r\n### 对于 [LM 工作室](https://lmstudio.ai/)\r\n\r\n要为LM Studio配置此服务器，请单击下面的按钮。\r\n\r\n\r\n### 使用Docker\r\n\r\n此服务器的Docker镜像可在 [Docker 中心](https://hub.docker.com/mcp/server/youtube_transcript/).\r\n请参阅Docker Hub页面以获取详细的使用说明和文档。\r\n\r\n## 响应分页\r\n\r\n检索较长视频的转录时，内容可能会超过LLM的令牌大小限制。\r\n为了避免此问题，此服务器拆分超过50000个字符的转录。\r\n如果成绩单被拆分，回复将包括 `next_cursor`.\r\n要检索下一部分，请包含以下内容 `next_cursor` 您的请求很有价值。\r\n\r\n令牌大小限制因您使用的LLM和语言而异。\r\n如果你需要将响应分成更小的块，\r\n您可以使用 `--response-limit` 命令行参数。\r\n例如，下面的配置将响应拆分为每个不超过15000个字符：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube-transcript\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--from\",\r\n        \"git+https://github.com/jkawamoto/mcp-youtube-transcript\",\r\n        \"mcp-youtube-transcript\",\r\n        \"--response-limit\",\r\n        \"15000\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用代理服务器\r\n\r\n在限制访问YouTube的环境中，您可以使用代理服务器。\r\n\r\n使用时 [网上共享](https://www.webshare.io/)，使用以下任一方式设置住宅代理的用户名和密码\r\n环境变量 `WEBSHARE_PROXY_USERNAME` 和 `WEBSHARE_PROXY_PASSWORD`,\r\n或命令行参数 `--webshare-proxy-username` 和 `--webshare-proxy-password`.\r\n\r\n使用其他代理服务器时，使用环境变量设置代理服务器URL `HTTP_PROXY` 或\r\n`HTTPS_PROXY`，或命令行参数 `--http-proxy` 或 `--https-proxy`.\r\n\r\n如需了解更多详情，请访问：\r\n[处理IP禁令-YouTube转录API](https://github.com/jdepoix/youtube-transcript-api?tab=readme-ov-file#working-around-ip-bans-requestblocked-or-ipblocked-exception).\r\n\r\n## 许可证\r\n\r\n此应用程序根据MIT许可证获得许可。请参阅 [许可证](LICENSE) 文件以获取更多详细信息。\r\n",
+ "config": {
+  "youtube-transcript": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/jkawamoto/mcp-youtube-transcript",
+    "mcp-youtube-transcript"
+   ],
+   "env": {}
+  }
+ }
+}

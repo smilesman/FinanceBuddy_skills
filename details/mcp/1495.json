@@ -1,0 +1,24 @@
+{
+ "id": "1495",
+ "kind": "mcp",
+ "name": "image-compression",
+ "fingerprint_md5": "343730d86d07d45c669b4476f69700e0",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://mseep.ai/app/inhiblabcore-mcp-image-compression)\r\n\r\n# mcp图像压缩\r\n\r\n## 项目概述\r\n\r\nmcp图像压缩是一种基于mcp（模态上下文协议）架构的高性能图像压缩微服务。该服务侧重于提供快速和高质量的图像压缩功能，以帮助开发人员优化网站和应用程序的图像资源，提高加载速度和用户体验。\r\n\r\n## 特性\r\n\r\n- **多格式支持**：压缩主流图像格式，包括JPEG、PNG、WebP、AVIF\r\n- **离线使用**：无需连接到互联网即可使用\r\n- **智能压缩**：根据图像内容自动选择最佳压缩参数\r\n- **批量处理**：支持多幅图像的并行压缩，以提高效率\r\n- **质量控制**：可定制的压缩质量，以平衡文件大小和视觉质量\r\n\r\n## 工具\r\n\r\n1. `image_compression`\r\n   - 图像压缩\r\n   - 输入：\r\n     - `urls` （字符串）：要压缩的图像的URL\r\n     - `quality` （int）：压缩质量（0-100）\r\n     - `format` （string）：压缩图像的格式（例如“jpeg”、“png”、“webp”、“avif”）\r\n   - 返回：压缩图像url\r\n\r\n## 设置\r\n\r\n### NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Image compression\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@inhiblab-core/mcp-image-compression\"\r\n      ],\r\n      \"env\": {\r\n        \"IMAGE_COMPRESSION_DOWNLOAD_DIR\": \"<YOUR_DIR>\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 构建\r\n\r\n```bash\r\ndocker build -t mcp-image-compression .\r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "image-compression": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@inhiblab-core/mcp-image-compression"
+   ],
+   "env": {
+    "IMAGE_COMPRESSION_DOWNLOAD_DIR": "<YOUR_DIR>"
+   }
+  }
+ }
+}

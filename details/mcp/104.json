@@ -1,0 +1,24 @@
+{
+ "id": "104",
+ "kind": "mcp",
+ "name": "chess_server",
+ "fingerprint_md5": "e09f5b62739a9af013151923cab875e7",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP象棋服务器\r\n\r\n## 概述\r\n\r\n此存储库提供了一个模型上下文协议（MCP）服务器，该服务器通过Anthropic的FastMCP框架公开Chess.com数据。该服务器在stdio上运行，可以在本地或直接从Claude Desktop启动。\r\n\r\n## 能力\r\n\r\n- `get_chess_player_profile`：通过调用返回Chess.com用户名的公共配置文件 `https://api.chess.com/pub/player/{username}` 通过 `requests`.\r\n- `get_chess_player_stats`：从中检索评级历史和绩效指标 `https://api.chess.com/pub/player/{username}/stats`.\r\n\r\n这两个工具都已注册 `FastMCP('Chess.com')` 在 `chess.server` 并且一旦服务器运行，任何MCP兼容客户端都可以使用。\r\n\r\n## 先决条件\r\n\r\n- Python 3.13或更新版本\r\n- Git\r\n- [紫外线](https://github.com/astral-sh/uv) 用于依赖关系管理\r\n- Claude Desktop（或其他MCP客户端）\r\n\r\n## 设置\r\n\r\n### 1.克隆存储库\r\n\r\n```bash\r\ngit clone <your-repo-url>\r\ncd mcp-build-chess\r\n```\r\n\r\n### 2.在可编辑模式下安装依赖项\r\n\r\n```bash\r\nuv pip install -e .\r\n```\r\n\r\n> 提示：创建一个隔离的环境 `uv venv .venv` 并在安装前激活它。\r\n\r\n### 3.在本地验证服务器\r\n\r\n```bash\r\nuv run python -m chess.server\r\n```\r\n\r\n服务器将启动并等待stdio。使用 `Ctrl+C` 一旦你确认它没有错误地启动，就停止它。\r\n\r\n## Claude桌面集成\r\n\r\n更新 `claude_desktop_config.json` 因此Claude Desktop可以从该存储库启动服务器：\r\n\r\n## 克劳德在当地的形象\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Chess_Server\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"W:\\\\ITversity\\\\MCP Claude\\\\code\\\\mcp-build-chess\\\\src\\\\chess\",\r\n        \"run\",\r\n        \"chess\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n##git仓库中的claude配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Chess_Server_git\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--from\",\r\n        \"git+https://github.com/Ramakrishna-Gedala/mcp_chess.git@main\",\r\n        \"chess-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n更换 `cwd` 值与克隆存储库的绝对路径。macOS和Linux用户应该指定他们自己的路径语法（例如， `/Users/you/src/mcp-build-chess`).保存配置后，重新启动Claude Desktop以获取新的服务器配置。\r\n",
+ "config": {
+  "chess_server": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "W:\\ITversity\\MCP Claude\\code\\mcp-build-chess\\src\\chess",
+    "run",
+    "chess"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "2525",
+ "kind": "mcp",
+ "name": "exa-5",
+ "fingerprint_md5": "b75f11433f75891f3bda49f71c450ba4",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp考试\r\n\r\nMCP服务器 [Exa](https://exa.ai/) 搜索API。\r\n\r\n该项目由以下机构赞助 [ChatWise](https://chatwise.app)，一个具有一流MCP支持的一体化LLM聊天机器人。\r\n\r\n## 用法\r\n\r\n获取API密钥 [这里](https://dashboard.exa.ai/api-keys).\r\n\r\n### 手动配置\r\n\r\n```bash\r\n# stdio server\r\nnpx -y exa-mcp\r\n\r\n# sse server\r\nnpx -y exa-mcp --sse\r\n```\r\n\r\n环境变量：\r\n\r\n```\r\nEXA_API_KEY=<your-api-key>\r\n```\r\n\r\n### JSON配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"exa\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"exa-mcp\"],\r\n      \"env\": {\r\n        \"EXA_API_KEY\": \"<your-api-key>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\nMIT。\r\n",
+ "config": {
+  "exa": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "exa-mcp"
+   ],
+   "env": {
+    "EXA_API_KEY": "<your-api-key>"
+   }
+  }
+ }
+}

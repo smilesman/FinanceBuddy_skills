@@ -1,0 +1,12 @@
+{
+ "id": "image-ocr",
+ "kind": "skill",
+ "name": "image-ocr",
+ "fingerprint_md5": "7cf4f87236690fd59b3ea932cfedf3dd",
+ "download_count": 0,
+ "category": "效率工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Image OCR\r\n\r\n使用 Tesseract OCR 从图像中提取文本。支持多种语言和图像格式，包括 PNG、JPEG、TIFF 和 BMP。\r\n\r\n## 命令\r\n\r\n```bash\r\n# 从图像中提取文本（默认：英语）\r\nimage-ocr \"screenshot.png\"\r\n\r\n# 使用特定语言提取文本\r\nimage-ocr \"document.jpg\" --lang eng\r\n```\r\n\r\n## 安装\r\n\r\n```bash\r\nsudo dnf install tesseract\r\n```",
+ "config": {}
+}

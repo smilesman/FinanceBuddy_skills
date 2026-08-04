@@ -1,0 +1,12 @@
+{
+ "id": "volcengine-database-rds",
+ "kind": "skill",
+ "name": "volcengine-database-rds",
+ "fingerprint_md5": "00e31982b0c67571e896f8646fee061b",
+ "download_count": 0,
+ "category": "数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# volcengine-database-rds\r\n\r\n以安全的操作顺序处理 RDS 任务：检查、验证、更改、确认。\r\n\r\n## 执行清单\r\n\r\n1. 确认引擎类型、区域和实例标识符。\r\n2. 检查连接性、安全规则和参数组。\r\n3. 执行目标操作（查询、调优、备份、恢复）。\r\n4. 返回状态、指标和下一步建议操作。\r\n\r\n## 安全规则\r\n\r\n- 高风险更改前优先使用快照。\r\n- 在应用更新前显示参数漂移。\r\n- 将只读诊断与写操作分离。\r\n\r\n## 参考\r\n\r\n- `references/sources.md`",
+ "config": {}
+}

@@ -1,0 +1,34 @@
+{
+ "id": "3163",
+ "kind": "mcp",
+ "name": "mcp-toolkit-gateway",
+ "fingerprint_md5": "6c79a06725b8304bc0060347e44357ae",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 小贩中心关闭追踪器MCP服务器\r\n\r\nA. **模型上下文协议（MCP）** 提供新加坡小贩中心关闭实时信息的服务器，\r\n由数据驱动 [data.gov.sg](https://data.gov.sg).\r\n\r\n> **免责声明**:\r\n> 这是一个 **非官方的** MCP服务器项目，由Claude AI生成。虽然它功能正常，但请 **审查和\r\n> 在生产中使用前进行彻底测试**.\r\n\r\n______________________________________________________________________\r\n\r\n## 目的\r\n\r\n此MCP服务器为AI助手提供了一个安全的接口，以访问新加坡政府关于小贩的官方数据\r\n中心关闭。\r\n它包括关闭日期、重新开放日期和关闭原因等详细信息。\r\n\r\n______________________________________________________________________\r\n\r\n## 特性\r\n\r\n### 已实施的工具\r\n\r\n- **`search_hawker_centres`** –按关键字（名称、位置等）搜索关闭信息\r\n- **`search_hawker_centres_by_address`** –按街道地址搜索关闭\r\n- **`get_all_hawker_centres`** –检索所有当前小贩中心关闭记录（可配置限制）\r\n\r\n______________________________________________________________________\r\n\r\n## 先决条件\r\n\r\n- [Docker桌面](https://www.docker.com/products/docker-desktop/) 启用MCP工具包\r\n- Docker MCP CLI插件(`docker mcp` 命令）\r\n- *（可选，但推荐）*A. [data.gov.sg API密钥](https://data.gov.sg/developer) 更高的利率限制\r\n\r\n______________________________________________________________________\r\n\r\n## 使用示例\r\n\r\n在Claude Desktop中，您可以尝试以下提示：\r\n\r\n- “搜索名字中有‘勿洛’的小贩中心”\r\n- “查找裕廊小贩中心关闭情况”\r\n- “按地址搜索宏茂桥大道10号小贩中心”\r\n- “在大巴窑洛龙1号楼123号找到小贩中心”\r\n- “给我看看新加坡的所有小贩中心”\r\n- “获取所有小贩中心清洁时间表”\r\n- “宏茂桥小贩中心关门了吗？”\r\n\r\n______________________________________________________________________\r\n\r\n## 安装\r\n\r\n### 第一步：构建Docker镜像\r\n\r\n```bash\r\ndocker build -t [MCP_SERVER_NAME] .\r\n```\r\n\r\n### 步骤2：创建目录目录\r\n\r\n```bash\r\nmkdir -p ~/.docker/mcp/catalogs\r\n```\r\n\r\n### 步骤3：创建目录YAML文件\r\n\r\n创建一个名为的文件 `hawker-centre-closure.yaml` 目录目录中的（或任何自定义名称）：\r\n\r\n> **备注**：确保条目放置在 `registry:` 关键，而不是根。\r\n\r\n```yaml\r\nversion: 2\r\nname: custom\r\ndisplayName: Hawker Centre Closure Tracker\r\nregistry:\r\n  hawker-centre-tracker:\r\n    description: \"Track hawker centre closures in Singapore using official data.gov.sg API\"\r\n    title: \"Hawker Centre Closure Tracker\"\r\n    type: server\r\n    dateAdded: \"2025-01-15T00:00:00Z\"\r\n    image: hawker-mcp-server:latest\r\n    tools:\r\n      - name: search_hawker_centres\r\n      - name: search_hawker_centres_by_address\r\n      - name: get_all_hawker_centres\r\n    # Uncomment the following section if you have a data.gov.sg API key\r\n    # secrets:\r\n    #   - name: DATA_GOV_SG_API_KEY\r\n    #     env: DATA_GOV_SG_API_KEY\r\n    #     example: \"your-api-key-from-data-gov-sg\"\r\n    metadata:\r\n      category: integration\r\n      tags:\r\n        - singapore\r\n        - government-data\r\n        - hawker-centres\r\n        - food\r\n      license: MIT\r\n      owner: local\r\n```\r\n\r\n### 步骤4：配置Claude桌面\r\n\r\n找到您的Claude Desktop配置文件：\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- **Linux**: `~/.config/Claude/claude_desktop_config.json`\r\n\r\n在下面添加您的目录 `args` 阵列。例子：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-toolkit-gateway\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-v\",\r\n        \"/var/run/docker.sock:/var/run/docker.sock\",\r\n        \"-v\",\r\n        \"[YOUR_HOME]/mcp:/mcp\",\r\n        \"docker/mcp-gateway\",\r\n        \"--catalog=/mcp/catalogs/docker-mcp.yaml\",\r\n        \"--catalog=/mcp/catalogs/hawker-centre-mcp.yaml\",\r\n        \"--config=/mcp/config.yaml\",\r\n        \"--registry=/mcp/registry.yaml\",\r\n        \"--tools-config=/mcp/tools.yaml\",\r\n        \"--transport=stdio\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `[YOUR_HOME]` 与：\r\n\r\n- macOS： `/Users/your_username/.docker/mcp`\r\n- 窗户： `C:\\\\Users\\\\your_username\\\\.docker\\\\mcp` （需要双反斜杠）\r\n- Linux： `/home/your_username/.docker/mcp`\r\n\r\n### 步骤5：重新启动克劳德桌面\r\n\r\n退出并重新启动Claude Desktop。工具现在应该出现在界面中。\r\n\r\n### 步骤6：验证安装\r\n\r\n- 检查服务器列表：\r\n\r\n```bash\r\ndocker mcp server list\r\n```\r\n\r\n- 如果您的服务器未出现，请检查日志：\r\n\r\n  - **macOS**: `~/Library/Application Support/Claude/logs`\r\n  - **视窗**: `%APPDATA%\\Claude\\logs`\r\n  - **Linux**: `~/.config/Claude/logs`\r\n\r\n______________________________________________________________________\r\n\r\n## 建筑\r\n\r\n```\r\nClaude Desktop → MCP Gateway → Hawker Centre MCP Server → data.gov.sg API\r\n                                         ↓\r\n                              Docker Desktop Secrets\r\n                              (DATA_GOV_SG_API_KEY)\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 发展\r\n\r\n### 局部测试\r\n\r\n```bash\r\n# Set environment variables\r\nexport DATA_GOV_SG_API_KEY=\"your-api-key\"\r\n\r\n# Run server directly\r\npython hawker_server.py\r\n\r\n# Test MCP protocol\r\necho '{\"jsonrpc\":\"2.0\",\"method\":\"tools/list\",\"id\":1}' | python hawker_server.py\r\n```\r\n\r\n### 添加新工具\r\n\r\n1. 在中添加该功能 `hawker_server.py`\r\n1. 用 `@mcp.tool()`\r\n1. 用新的工具名称更新目录条目\r\n1. 重建Docker镜像\r\n\r\n______________________________________________________________________\r\n\r\n## 故障排除\r\n\r\n### 工具未出现\r\n\r\n- 确认Docker镜像构建成功\r\n- 验证目录和注册表文件\r\n- 确保Claude配置包含您的目录\r\n- 重新启动克劳德桌面\r\n\r\n### 身份验证错误\r\n\r\n- 检查秘密 `docker mcp secret list`\r\n- 确保环境变量名称在代码和目录中匹配\r\n- 在没有API密钥的情况下，服务器可以工作，但可能受到速率限制\r\n\r\n### API错误\r\n\r\n- 验证 [data.gov.sg API](https://data.gov.sg) 已联机\r\n- 检查是否正确 `resource_id` 被使用\r\n- 确认API密钥有效性\r\n\r\n______________________________________________________________________\r\n\r\n## 安全考虑\r\n\r\n- 将所有机密存储在Docker桌面机密中\r\n- 永远不要在代码中硬编码凭据\r\n- 以非root用户身份运行服务器\r\n- 避免记录敏感数据\r\n- API密钥是可选的，但建议用于生产\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n",
+ "config": {
+  "mcp-toolkit-gateway": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-v",
+    "/var/run/docker.sock:/var/run/docker.sock",
+    "-v",
+    "[YOUR_HOME]/mcp:/mcp",
+    "docker/mcp-gateway",
+    "--catalog=/mcp/catalogs/docker-mcp.yaml",
+    "--catalog=/mcp/catalogs/hawker-centre-mcp.yaml",
+    "--config=/mcp/config.yaml",
+    "--registry=/mcp/registry.yaml",
+    "--tools-config=/mcp/tools.yaml",
+    "--transport=stdio"
+   ],
+   "env": {}
+  }
+ }
+}

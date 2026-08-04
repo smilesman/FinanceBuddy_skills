@@ -1,0 +1,18 @@
+{
+ "id": "652",
+ "kind": "mcp",
+ "name": "for-five-coffee",
+ "fingerprint_md5": "4e43b4e2bf94ec10e9a74bb5df40baa6",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 五咖啡MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，提供对以下内容的访问 [五杯咖啡](https://for-five-coffee.ordrsliponline.com/menus) 菜单数据。与Claude Desktop、Cursor和其他MCP客户端配合使用，并提供REST API。\r\n\r\n## 快速开始\r\n\r\n```bash\r\ngit clone https://github.com/Kong/for-five-mcp.git\r\ncd for-five-mcp\r\nnpm install\r\nnpm start\r\n```\r\n\r\n这从两个方面开始：\r\n\r\n- **MCP服务器** （stdio）-用于AI助手\r\n- **HTTP API** （端口3000）-用于web应用程序\r\n\r\n## MCP客户端设置\r\n\r\n### 克劳德桌面版\r\n\r\n添加到 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"for-five-coffee\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/for-five-mcp/server.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n**选项1：让Cursor启动服务器**\r\n添加到 `~/.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"for-five-coffee\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/for-five-mcp/server.js\"],\r\n      \"env\": {\r\n        \"PORT\": \"3000\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**选项2：连接到已运行的服务器**\r\n如果你在跑步 `npm start` 另外，将此添加到 `~/.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"for-five-coffee\": {\r\n      \"url\": \"http://localhost:3000/mcp\",\r\n      \"transport\": \"http\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n这将通过HTTP JSON-RPC 2.0传输将Cursor连接到正在运行的MCP服务器。\r\n\r\n## 使用示例\r\n\r\n### 询问你的AI助手\r\n\r\n- “For Five coffee有什么咖啡饮料？”\r\n- “在菜单上搜索糕点”\r\n- “最便宜的咖啡是什么？”\r\n- “给我看看所有的茶品种”\r\n\r\n### 使用HTTP API\r\n\r\n```bash\r\n# Get full menu\r\ncurl http://localhost:3000/api/menu\r\n\r\n# Search for items\r\ncurl \"http://localhost:3000/api/menu/search?q=latte\"\r\n\r\n# Get categories\r\ncurl http://localhost:3000/api/menu/categories\r\n```\r\n\r\n### 在您的代码中\r\n\r\n```javascript\r\n// Fetch menu data\r\nconst response = await fetch('http://localhost:3000/api/menu');\r\nconst menu = await response.json();\r\n\r\n// Search items\r\nconst search = await fetch('http://localhost:3000/api/menu/search?q=coffee');\r\nconst results = await search.json();\r\n```\r\n\r\n```python\r\nimport requests\r\n\r\n# Get menu\r\nmenu = requests.get('http://localhost:3000/api/menu').json()\r\n\r\n# Search\r\nresults = requests.get('http://localhost:3000/api/menu/search',\r\n                      params={'q': 'latte'}).json()\r\n```\r\n\r\n## 可用端点\r\n\r\n|端点|描述|\r\n|----------|-------------|\r\n| `GET /` |服务器信息|\r\n| `GET /health` |健康检查|\r\n| `GET /api/menu` |完整菜单|\r\n| `GET /api/menu/search?q={query}` |搜索项目|\r\n| `GET /api/menu/categories` |所有类别|\r\n| `GET /api/menu/category/{name}` |按类别列出的项目|\r\n| `POST /mcp` |MCP JSON-RPC 2.0端点|\r\n\r\n## MCP工具\r\n\r\n- `get_full_menu` -获取完整菜单\r\n- `search_menu_items` -按查询搜索\r\n- `get_menu_categories` -列出类别\r\n- `get_items_by_category` -按类别筛选\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm run dev          # Start with auto-restart\r\nnpm test             # Run all tests\r\nnpm run test:unit    # Unit tests only\r\nnpm run test:http    # HTTP API tests only\r\nnpm run test:mcp     # MCP transport tests only\r\nnpm run test:integration # Integration tests only\r\nnpm run lint         # Check code style\r\n```\r\n\r\n## 故障排除\r\n\r\n**MCP不工作？**\r\n\r\n- 检查到的绝对路径 `server.js` 在您的配置中\r\n- 配置更改后重新启动MCP客户端\r\n- 跑 `npm start` 手动测试\r\n\r\n**HTTP API没有响应？**\r\n\r\n- 确保服务器正在运行： `npm start`\r\n- 检查端口3000是否未使用： `lsof -i :3000`\r\n- 测试： `curl http://localhost:3000/health`\r\n\r\n**没有菜单数据？**\r\n\r\n- 检查互联网连接\r\n- 服务器自动处理SSL问题\r\n- 网站结构可能已经改变（包括回退）\r\n\r\n## 许可证\r\n\r\nApache 2.0\r\n",
+ "config": {
+  "for-five-coffee": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:3000/mcp"
+  }
+ }
+}

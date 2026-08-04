@@ -1,0 +1,27 @@
+{
+ "id": "1381",
+ "kind": "mcp",
+ "name": "cloudflare-6",
+ "fingerprint_md5": "dbb880f9bf698ed9bcecd32ec3272605",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp云闪岩\r\n\r\n一个轻量级的Cloudflare MCP服务器，专注于最常见的工作流（D1、Workers、R2、Zones和原始Wrangler命令）。\r\n\r\n已发布包：\r\n\r\n- `@dots_software/mcp-cloudflare-lite`\r\n\r\n## 特性\r\n\r\n- 较小的刀具表面（聚焦刀具组）\r\n- 使用API令牌+帐户ID（无 `wrangler login` 必填）\r\n- 支持单帐户和多帐户环境设置\r\n- 包含 `wrangler_run` 用于高级/自定义牧马人命令\r\n\r\n## 安装（本地开发）\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n## 不使用本地路径（通过npm）\r\n\r\n在MCP客户端配置中使用此选项：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cloudflare\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"-p\", \"@dots_software/mcp-cloudflare-lite@latest\", \"mcp-cloudflare-lite\"],\r\n      \"env\": {\r\n        \"CLOUDFLARE_ACCOUNT_ID\": \"your_account_id\",\r\n        \"CLOUDFLARE_API_TOKEN\": \"your_api_token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果你的环境有 `npx` 路径问题（例如 `nvm`)，设置绝对命令路径和/或显式命令路径 `PATH`.\r\n\r\n## 认证\r\n\r\n单一账户（推荐）：\r\n\r\n```bash\r\nexport CLOUDFLARE_ACCOUNT_ID=\"your_account_id\"\r\nexport CLOUDFLARE_API_TOKEN=\"your_api_token\"\r\n```\r\n\r\n还支持：\r\n\r\n- `CLOUDFLARE_TOKEN` （作为替代令牌变量名）\r\n\r\n多账户（可选）：\r\n\r\n```bash\r\nexport ACCOUNT_MAIN_ID=\"account_id\"\r\nexport ACCOUNT_MAIN_TOKEN=\"api_token\"\r\nexport ACCOUNT_STAGE_ID=\"account_id\"\r\nexport ACCOUNT_STAGE_TOKEN=\"api_token\"\r\n```\r\n\r\n您还可以使用 `ACCOUNT_<NAME>_API_TOKEN`.\r\n\r\n## 可用工具\r\n\r\n- `list_accounts`\r\n- `whoami`\r\n- `d1_list`\r\n- `d1_query`\r\n- `d1_execute_file`\r\n- `worker_list`\r\n- `worker_deploy`\r\n- `worker_tail`\r\n- `r2_list_buckets`\r\n- `r2_list_objects`\r\n- `r2_delete_object`\r\n- `zones_list`\r\n- `secret_put`\r\n- `wrangler_run`\r\n\r\n## 示例提示\r\n\r\n- “列出D1数据库”\r\n- “显示所有员工”\r\n- “在我的数据库上运行此SQL”\r\n- “在此目录中部署worker”\r\n- “运行wrangler命令：d1 info my db”\r\n\r\n## 测试\r\n\r\n```bash\r\nnpm run inspector\r\nnode build/index.js\r\n```\r\n\r\n## 土耳其文件\r\n\r\n请参阅： `README_tr.md`\r\n",
+ "config": {
+  "cloudflare": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "-p",
+    "@dots_software/mcp-cloudflare-lite@latest",
+    "mcp-cloudflare-lite"
+   ],
+   "env": {
+    "CLOUDFLARE_ACCOUNT_ID": "your_account_id",
+    "CLOUDFLARE_API_TOKEN": "your_api_token"
+   }
+  }
+ }
+}

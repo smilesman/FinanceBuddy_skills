@@ -1,0 +1,12 @@
+{
+ "id": "tencent-ima-skill",
+ "kind": "skill",
+ "name": "tencent-ima-skill",
+ "fingerprint_md5": "d9e70cfc9a877135192a06075fbf620c",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# IMA Skill\r\n\r\nControl the **IMA (ima.copilot)** desktop application for AI search and private knowledge retrieval.\r\n\r\n## Tools\r\n\r\n### ima_search\r\nLaunches IMA and performs a search. Supports \"Private Knowledge Base\" mode via special tags.\r\n\r\n- **query** (required): The search query. Prefix with `@个人知识库` or `@knowledge` to search your private knowledge base (requires `config.json`).\r\n- **autoclose** (optional): \"true\" to close the app after searching. Default: \"false\".\r\n\r\n**Implementation:**\r\n```bash\r\n/usr/bin/python3 /opt/homebrew/lib/node_modules/clawdbot/skills/ima/scripts/ima.py \"{query}\" --autoclose=\"{autoclose}\"\r\n```\r\n\r\n## Configuration\r\n\r\nTo enable private knowledge base search, you must providing your `knowledge_id`.\r\nThe script looks for config in:\r\n1. `~/.clawd_ima_config.json`\r\n2. `skills/ima/config.json`\r\n\r\n**Format:**\r\n```json\r\n{\r\n  \"knowledge_id\": \"your_id_string\"\r\n}\r\n```\r\n\r\n## Examples\r\n\r\n- **Public:** `clawdbot ima_search query=\"DeepSeek analysis\"`\r\n- **Private:** `clawdbot ima_search query=\"@knowledge project update\"`",
+ "config": {}
+}

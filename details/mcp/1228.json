@@ -1,0 +1,25 @@
+{
+ "id": "1228",
+ "kind": "mcp",
+ "name": "postgres-29",
+ "fingerprint_md5": "c7b2daa58913ef9b711882c57e9b6aff",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# PostgreSQL\r\n\r\n我从Anthropic现在存档的参考服务器中删除了这个，因为这是一个很好的起点，并将根据需要添加一些功能。此行以下的所有内容都与参考服务器仓库中的内容完全一致，但组件列表除外，如果添加了功能，我将更新这些列表。\r\n\r\n一个模型上下文协议服务器，提供对PostgreSQL数据库的只读访问。此服务器使LLM能够检查数据库模式并执行只读查询。\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n- **怎么翻译**\r\n\r\n  - 对连接的数据库执行只读SQL查询\r\n  - 输入： `sql` （string）：要执行的SQL查询\r\n  - 所有查询都在只读事务中执行\r\n\r\n- **list_tables**\r\n\r\n  - 打印所有可用表及其模式\r\n  - 允许代理自行发现表及其模式，而不需要通过资源手动提供它们\r\n\r\n### 资源\r\n\r\n服务器为数据库中的每个表提供架构信息：\r\n\r\n- **持微软签名的表模式** (`postgres:////schema`)\r\n  - 每个表的JSON模式信息\r\n  - 包括列名和数据类型\r\n  - 从数据库元数据中自动发现\r\n\r\n## 配置\r\n\r\n### 使用Claude Desktop\r\n\r\n要将此服务器与Claude Desktop应用程序一起使用，请将以下配置添加到您的“mcpServers”部分 `claude_desktop_config.json`:\r\n\r\n### 码头工人\r\n\r\n- 在macos上运行docker时，如果服务器在主机网络上运行（例如localhost），请使用host.docker.internal\r\n- 用户名/密码可以添加到postgresql url中 `postgresql://user:password@host:port/db-name`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\", \r\n        \"-i\", \r\n        \"--rm\", \r\n        \"mcp/postgres\", \r\n        \"postgresql://host.docker.internal:5432/mydb\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@modelcontextprotocol/server-postgres\",\r\n        \"postgresql://localhost/mydb\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/mydb` 使用您的数据库名称。\r\n\r\n### 使用VS代码\r\n\r\n为了快速安装，请使用下面的一键安装按钮之一。..\r\n\r\n%22%7D%5D&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40modelcontextprotocol%2Fserver-postgres%22%2C%22%24%7Binput%3Apg_url%7D%22%5D%7D>) %22%7D%5D&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40modelcontextprotocol%2Fserver-postgres%22%2C%22%24%7Binput%3Apg_url%7D%22%5D%7D&quality=insiders>)\r\n\r\n%22%7D%5D&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22--rm%22%2C%22mcp%2Fpostgres%22%2C%22%24%7Binput%3Apg_url%7D%22%5D%7D>) %22%7D%5D&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22--rm%22%2C%22mcp%2Fpostgres%22%2C%22%24%7Binput%3Apg_url%7D%22%5D%7D&quality=insiders>)\r\n\r\n对于手动安装，请将以下JSON块添加到VS Code中的用户设置（JSON）文件中。您可以按 `Ctrl + Shift + P` 和打字 `Preferences: Open User Settings (JSON)`.\r\n\r\n您可以选择将其添加到名为的文件中 `.vscode/mcp.json` 在您的工作空间中。这将允许您与他人共享配置。\r\n\r\n> 请注意 `mcp` 中不需要密钥 `.vscode/mcp.json` 文件。\r\n\r\n### 码头工人\r\n\r\n**备注**：使用Docker并连接到主机上的PostgreSQL服务器时，请使用 `host.docker.internal` 而不是 `localhost` 在连接URL中。\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"inputs\": [\r\n      {\r\n        \"type\": \"promptString\",\r\n        \"id\": \"pg_url\",\r\n        \"description\": \"PostgreSQL URL (e.g. postgresql://user:pass@host.docker.internal:5432/mydb)\"\r\n      }\r\n    ],\r\n    \"servers\": {\r\n      \"postgres\": {\r\n        \"command\": \"docker\",\r\n        \"args\": [\r\n          \"run\",\r\n          \"-i\",\r\n          \"--rm\",\r\n          \"mcp/postgres\",\r\n          \"${input:pg_url}\"\r\n        ]\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### NPX\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"inputs\": [\r\n      {\r\n        \"type\": \"promptString\",\r\n        \"id\": \"pg_url\",\r\n        \"description\": \"PostgreSQL URL (e.g. postgresql://user:pass@localhost:5432/mydb)\"\r\n      }\r\n    ],\r\n    \"servers\": {\r\n      \"postgres\": {\r\n        \"command\": \"npx\",\r\n        \"args\": [\r\n          \"-y\",\r\n          \"@modelcontextprotocol/server-postgres\",\r\n          \"${input:pg_url}\"\r\n        ]\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 建筑\r\n\r\nDocker：\r\n\r\n```sh\r\ndocker build -t mcp/postgres -f src/postgres/Dockerfile . \r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "postgres": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "mcp/postgres",
+    "postgresql://host.docker.internal:5432/mydb"
+   ],
+   "env": {}
+  }
+ }
+}

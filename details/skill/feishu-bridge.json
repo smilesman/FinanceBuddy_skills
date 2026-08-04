@@ -1,0 +1,12 @@
+{
+ "id": "feishu-bridge",
+ "kind": "skill",
+ "name": "feishu-bridge",
+ "fingerprint_md5": "a847c070ae27b756a8afca642b410452",
+ "download_count": 0,
+ "category": "日志分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Feishu Bridge\r\n\r\nBridge Feishu bot messages to Clawdbot Gateway over local WebSocket.\r\n\r\n## Architecture\r\n\r\n```\r\nFeishu user → Feishu cloud ←WS→ bridge.mjs (local) ←WS→ Clawdbot Gateway → AI agent\r\n```\r\n\r\n- Feishu SDK connects outbound (no inbound port / public IP needed)\r\n- Bridge authenticates to Gateway using the existing gateway token\r\n- Each Feishu chat maps to a Clawdbot session (`feishu:<chatId>`)\r\n\r\n## Setup\r\n\r\n### 1. Create Feishu bot\r\n\r\n1. Go to [open.feishu.cn/app](https://open.feishu.cn/app) → Create self-built app → Add **Bot** capability\r\n2. Enable permissions: `im:message`, `im:message.group_at_msg`, `im:message.p2p_msg`\r\n3. Events: add `im.message.receive_v1`, set delivery to **WebSocket long-connection**\r\n4. Publish the app (create version → request approval)\r\n5. Note the **App ID** and **App Secret**\r\n\r\n### 2. Store secret\r\n\r\n```bash\r\nmkdir -p ~/.clawdbot/secrets\r\necho \"YOUR_APP_SECRET\" > ~/.clawdbot/secrets/feishu_app_secret\r\nchmod 600 ~/.clawdbot/secrets/feishu_app_secret\r\n```\r\n\r\n### 3. Install & run\r\n\r\n```bash\r\ncd <skill-dir>/feishu-bridge\r\nnpm install\r\nFEISHU_APP_ID=cli_xxx node bridge.mjs\r\n```\r\n\r\n### 4. Auto-start (macOS)\r\n\r\n```bash\r\nFEISHU_APP_ID=cli_xxx node setup-service.mjs\r\nlaunchctl load ~/Library/LaunchAgents/com.clawdbot.feishu-bridge.plist\r\n```\r\n\r\n## Diagnostics\r\n\r\n```bash\r\n# Check service\r\nlaunchctl list | grep feishu\r\n\r\n# Logs\r\ntail -f ~/.clawdbot/logs/feishu-bridge.err.log\r\n\r\n# Stop\r\nlaunchctl unload ~/Library/LaunchAgents/com.clawdbot.feishu-bridge.plist\r\n```\r\n\r\n## Group chat behavior\r\n\r\nBridge replies only when: user @-mentions the bot, message ends with `?`/`？`, contains request verbs (帮/请/分析/总结…), or calls the bot by name. Customize the name list in `bridge.mjs` → `shouldRespondInGroup()`.\r\n\r\n## Environment variables\r\n\r\n| Variable | Required | Default |\r\n|---|---|---|\r\n| `FEISHU_APP_ID` | ✅ | — |\r\n| `FEISHU_APP_SECRET_PATH` | — | `~/.clawdbot/secrets/feishu_app_secret` |\r\n| `CLAWDBOT_CONFIG_PATH` | — | `~/.clawdbot/clawdbot.json` |\r\n| `CLAWDBOT_AGENT_ID` | — | `main` |\r\n| `FEISHU_THINKING_THRESHOLD_MS` | — | `2500` |",
+ "config": {}
+}

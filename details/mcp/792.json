@@ -1,0 +1,24 @@
+{
+ "id": "792",
+ "kind": "mcp",
+ "name": "oura-2",
+ "fingerprint_md5": "cb81515af013f8a7b4add710cef7c3c4",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# 我们的mcp\r\n\r\n用于的CLI和MCP服务器 [欧拉戒指](https://ouraring.com/) API v2。从命令行或通过Claude Code/任何MCP客户端查询睡眠、准备状态、活动、心率、压力、SpO2、锻炼和会话数据。\r\n\r\n## 特性\r\n\r\n- **命令行界面**：查询任何日期的所有Oura数据\r\n- **MCP 服务器**：10个用于与Claude Code和其他MCP客户端集成的工具\r\n- **认证**：支持个人访问令牌和具有自动令牌刷新功能的OAuth2\r\n\r\n## MCP工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `oura_daily_summary` |睡眠评分、准备度评分、睡眠细节和约会活动|\r\n| `oura_sleep` |详细的睡眠时段数据（持续时间、阶段、心率、心率变异性）|\r\n| `oura_readiness` |准备度得分和贡献者|\r\n| `oura_activity` |每日活动数据（步数、卡路里、距离）|\r\n| `oura_workouts` |自动检测心率、卡路里、持续时间和强度的锻炼|\r\n| `oura_heart_rate` |一个时间窗口的连续心率数据|\r\n| `oura_stress` |日常压力和恢复水平|\r\n| `oura_spo2` |血氧（SpO2）百分比|\r\n| `oura_sessions` |冥想、呼吸和放松课程|\r\n| `oura_trends` |多日睡眠和准备度得分趋势|\r\n\r\n## 作为Claude代码插件安装\r\n\r\n```bash\r\nclaude plugin marketplace add daveremy/oura-mcp\r\nclaude plugin install oura-mcp@oura-mcp-plugins\r\n```\r\n\r\n然后在插件的env中设置Oura令牌（请参阅下面的Auth）。\r\n\r\n## 设置\r\n\r\n### 1.获取Oura API代币\r\n\r\n**个人访问令牌（最简单）：**\r\n\r\n1. 去 [Oura开发者门户](https://cloud.ouraring.com/personal-access-tokens)\r\n1. 创建新的个人访问令牌\r\n1. 保存： `npx @daveremy/oura-mcp config set-token YOUR_TOKEN`\r\n\r\n令牌存储在 `~/.oura-mcp/config.json` 并且可以在任何地方工作——CLI、MCP服务器和Claude Code插件。您还可以设置 `OURA_TOKEN` 作为环境变量（优先于存储的配置）。\r\n\r\n**OAuth2（用于自动令牌刷新）：**\r\n\r\n1. 在以下位置创建应用程序 [Oura OAuth应用程序](https://cloud.ouraring.com/oauth/applications)\r\n1. 将重定向URI设置为 `http://localhost:9876/callback`\r\n1. 集 `OURA_CLIENT_ID` 和 `OURA_CLIENT_SECRET` 在您的环境中\r\n1. 跑 `oura auth` 完成流程\r\n\r\n### 2.用作MCP服务器\r\n\r\n无需安装--使用 `npx` 直接运行：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"oura\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@daveremy/oura-mcp\"],\r\n      \"env\": {\r\n        \"OURA_TOKEN\": \"your_token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或通过CLI注册：\r\n\r\n```bash\r\nclaude mcp add oura -- npx -y @daveremy/oura-mcp\r\n```\r\n\r\n### 3.用作CLI\r\n\r\n```bash\r\nnpm install -g @daveremy/oura-mcp\r\nexport OURA_TOKEN=your_token\r\n\r\noura sleep                    # Today's sleep data\r\noura sleep --date 2026-03-05  # Specific date\r\noura readiness                # Today's readiness\r\noura activity                 # Today's activity\r\noura workouts                 # Today's workouts\r\noura stress                   # Today's stress levels\r\noura spo2                     # Today's blood oxygen\r\noura sessions                 # Today's meditation/breathing sessions\r\noura heart-rate --start 2026-03-05T08:00:00 --end 2026-03-05T09:00:00\r\noura summary                  # Everything for today\r\noura config set-token <tok>   # Save token to ~/.oura-mcp/config.json\r\noura config show              # Show stored config (masked)\r\noura config clear             # Remove stored credentials\r\n```\r\n\r\n所有命令都将JSON输出到stdout。\r\n\r\n### 4.从源头安装\r\n\r\n```bash\r\ngit clone https://github.com/daveremy/oura-mcp.git\r\ncd oura-mcp\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|---|---|---|\r\n| `OURA_TOKEN` |选项A|个人访问令牌（最简单）|\r\n| `OURA_ACCESS_TOKEN` |选项B|OAuth2访问令牌|\r\n| `OURA_REFRESH_TOKEN` |选项B|OAuth2刷新令牌|\r\n| `OURA_CLIENT_ID` |选项B|OAuth2客户端ID|\r\n| `OURA_CLIENT_SECRET` |选项B|OAuth2客户端机密|\r\n\r\n## 技能\r\n\r\n此插件捆绑了 `/oura` 会话式健康数据查询技能：\r\n\r\n```\r\n/oura              # Today's health briefing\r\n/oura sleep        # Detailed sleep data\r\n/oura readiness    # Readiness score and contributors\r\n/oura activity     # Steps, calories, distance\r\n/oura workouts     # Auto-detected workouts\r\n/oura hr <start> <end>  # Heart rate for a time window\r\n/oura stress       # Stress and recovery levels\r\n/oura spo2         # Blood oxygen\r\n/oura sessions     # Meditation/breathing sessions\r\n/oura trends       # 7-day sleep + readiness trends\r\n/oura trends 14    # 14-day trends\r\n/oura summary      # Full daily summary (same as default)\r\n```\r\n\r\n该技能将MCP工具编排成对话式、洞察力驱动的响应，而不是原始JSON。\r\n\r\n## 需求\r\n\r\n- Node.js 18+\r\n- 具有API访问权限的Oura环\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "oura": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@daveremy/oura-mcp"
+   ],
+   "env": {
+    "OURA_TOKEN": "your_token"
+   }
+  }
+ }
+}

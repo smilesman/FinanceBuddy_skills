@@ -1,0 +1,24 @@
+{
+ "id": "2530",
+ "kind": "mcp",
+ "name": "file-finder-mcp",
+ "fingerprint_md5": "e5a61987d842cfc119d342bfe3fcfb18",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 文件查找器-MCP MCP服务器\r\n\r\n一个基于路径片段在文件系统中搜索文件的MCP服务器。\r\n\r\n## 组件\r\n\r\n### 资源\r\n\r\n服务器实现了一个文件搜索系统：\r\n\r\n- 每个文件资源包括：\r\n  - 文件名\r\n  - 完整路径\r\n  - 文件大小\r\n  - 创建日期\r\n\r\n### 工具\r\n\r\n服务器提供了一个工具：\r\n\r\n- `search-files`搜索与给定路径片段匹配的文件。\r\n  - Takes `query` 作为必需的字符串参数。\r\n  - Takes `directory` 作为可选的字符串参数，用于指定搜索的基目录。如果未提供，则搜索在根目录中运行。\r\n  - 返回一个包含匹配文件及其元数据的列表。\r\n\r\n## 快速入门\r\n\r\n### 安装\r\n\r\n替换其中的内容 `cline_mcp_settings.json` 文件包含以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"file-finder-mcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/Users/stleubaev/Desktop/ClineTest/file-finder-mcp\",\r\n        \"run\",\r\n        \"file-finder-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 测试\r\n\r\n测试是使用Gemini模型并按照以下提示进行的：\r\n\r\n```\r\nhi can you find files called file_to_find on my desktop using my mcp server\r\n```\r\n",
+ "config": {
+  "file-finder-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/Users/stleubaev/Desktop/ClineTest/file-finder-mcp",
+    "run",
+    "file-finder-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

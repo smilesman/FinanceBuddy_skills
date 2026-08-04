@@ -1,0 +1,24 @@
+{
+ "id": "1474",
+ "kind": "mcp",
+ "name": "godot-mcp-docs",
+ "fingerprint_md5": "e18b25a26bf65f0b8c0bdc23440220c5",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Godot MCP文档服务器\r\n\r\n[](https://www.docker.com/)\r\n[](https://godotengine.org/)\r\n[](https://modelcontextprotocol.io/)\r\n[](https://opensource.org/licenses/MIT)\r\n\r\n一个模型上下文协议（MCP）服务器，为AI助手提供对完整Godot引擎文档的访问，通过直接向LLM提供文档来帮助开发人员进行Godot开发。\r\n\r\n## 目的\r\n\r\n此服务器弥合了AI助手和Godot文档之间的差距，使开发人员能够在不离开AI聊天界面的情况下获得有关Godot类、教程和功能的即时、准确的答案。\r\n\r\n## 部署\r\n\r\n1. **克隆存储库：**\r\n\r\n   ```bash\r\n   git clone https://github.com/Nihilantropy/godot-mcp-docs.git\r\n   cd godot-mcp-docs\r\n   ```\r\n\r\n1. **构建Docker镜像：**\r\n\r\n   ```bash\r\n   docker build -f deploy/Dockerfile -t godot-mcp-docs:local .\r\n   ```\r\n\r\n1. **配置您的MCP客户端** （克劳德桌面示例）：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"godot-mcp-docs\": {\r\n         \"command\": \"docker\",\r\n         \"args\": [\r\n           \"run\",\r\n           \"--rm\",\r\n           \"-i\",\r\n           \"godot-mcp-docs:local\"\r\n         ]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n## 文档结构\r\n\r\n服务器提供对完整的官方Godot文档的访问，其结构如下：\r\n\r\n```\r\ndocs/\r\n├── _styleguides\r\n├── _tools\r\n│   └── redirects\r\n├── about\r\n├── classes\r\n├── community\r\n│   └── asset_library\r\n├── contributing\r\n│   ├── development\r\n│   │   ├── compiling\r\n│   │   ├── configuring_an_ide\r\n│   │   ├── core_and_modules\r\n│   │   ├── debugging\r\n│   │   │   └── vulkan\r\n│   │   ├── editor\r\n│   │   └── file_formats\r\n│   ├── documentation\r\n│   └── workflow\r\n├── getting_started\r\n│   ├── first_2d_game\r\n│   ├── first_3d_game\r\n│   ├── introduction\r\n│   └── step_by_step\r\n├── img\r\n└── tutorials\r\n    ├── 2d\r\n    ├── 3d\r\n    │   ├── global_illumination\r\n    │   ├── particles\r\n    │   └── procedural_geometry\r\n    ├── animation\r\n    ├── assets_pipeline\r\n    │   ├── escn_exporter\r\n    │   └── importing_3d_scenes\r\n    ├── audio\r\n    ├── best_practices\r\n    ├── editor\r\n    ├── export\r\n    ├── i18n\r\n    ├── inputs\r\n    ├── io\r\n    ├── math\r\n    ├── migrating\r\n    ├── navigation\r\n    ├── networking\r\n    ├── performance\r\n    │   └── vertex_animation\r\n    ├── physics\r\n    │   └── interpolation\r\n    ├── platform\r\n    │   ├── android\r\n    │   ├── ios\r\n    │   └── web\r\n    ├── plugins\r\n    │   └── editor\r\n    ├── rendering\r\n    ├── scripting\r\n    │   ├── c_sharp\r\n    │   │   └── diagnostics\r\n    │   ├── cpp\r\n    │   ├── debug\r\n    │   ├── gdextension\r\n    │   └── gdscript\r\n    ├── shaders\r\n    │   ├── shader_reference\r\n    │   └── your_first_shader\r\n    ├── ui\r\n    └── xr\r\n```\r\n\r\n## 可用工具\r\n\r\n- `get_documentation_tree()` -获取整个文档结构的树形概览\r\n- `get_documentation_file(file_path: str)` -检索特定文档文件的内容\r\n\r\n## 示例使用\r\n\r\n**探索文档结构：**\r\n\r\n```\r\nWhat documentation is available for Godot?\r\n```\r\n\r\n**获取特定的类文档：**\r\n\r\n```\r\nShow me the documentation for CharacterBody2D\r\n```\r\n\r\n**了解教程：**\r\n\r\n```\r\nWhat tutorials are available for 2D game development?\r\n```\r\n\r\n**获取具体教程内容：**\r\n\r\n```\r\nShow me the first 2D game tutorial\r\n```\r\n\r\n**比较类：**\r\n\r\n```\r\nWhat's the difference between Node2D and CharacterBody2D?\r\n```\r\n\r\n## 推荐系统提示\r\n\r\n为了在使用Godot时获得最佳效果，请使用以下系统提示：\r\n\r\n> “处理Godot游戏开发问题时，请务必使用Godot-mcp文档工具搜索最新可用文档 `get_documentation_tree()` 要理解文档结构，请使用 `get_documentation_file()` 检索有关类、教程或功能的特定信息。在提供与Godot相关的帮助时，优先考虑官方Godot文档而不是一般知识。\"\r\n\r\n## 截图\r\n\r\n### Claude桌面中的MCP集成\r\n\r\n\r\n### 文档访问示例\r\n\r\n\r\n## 更新文档\r\n\r\n要更新到较新版本的Godot文档，请执行以下操作：\r\n\r\n**选项1：重建映像**\r\n\r\n```bash\r\ndocker build -f deploy/Dockerfile -t godot-mcp-docs:local . --no-cache\r\n```\r\n\r\n**选项2：在容器内手动更新**\r\n\r\n```bash\r\ndocker run -it --entrypoint /bin/bash godot-mcp-docs:local\r\n# Inside container:\r\npython docs_converter/godot_docs_converter.py\r\ntree docs/. > docs/docs_tree.txt\r\n```\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\nGodot文档内容遵循原始Godot文档许可：\r\n\r\n- 文件内容（不包括 `classes/` 文件夹）： [CC乘以3.0](https://creativecommons.org/licenses/by/3.0/)\r\n- 类参考文件(`classes/` 文件夹）：MIT许可证\r\n- 署名：“胡安·利涅茨基、阿里尔·曼祖尔和戈多社区”\r\n",
+ "config": {
+  "godot-mcp-docs": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "godot-mcp-docs:local"
+   ],
+   "env": {}
+  }
+ }
+}

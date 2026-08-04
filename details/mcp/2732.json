@@ -1,0 +1,23 @@
+{
+ "id": "2732",
+ "kind": "mcp",
+ "name": "sitemapkit",
+ "fingerprint_md5": "afa2f8c8a3bcd90d85165266f116f38f",
+ "download_count": 0,
+ "category": "数据抓取",
+ "tags": "",
+ "version": "",
+ "readme": "# SitemapKit MCP服务器\r\n\r\n模型上下文协议（MCP）服务器 [网站地图套件](https://sitemapkit.com)允许任何兼容MCP的AI助手（Claude、Cursor、Windsurf等）从任何网站发现和提取站点地图。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `discover_sitemaps` |查找域的所有站点地图文件（检查robots.txt、公共路径、站点地图索引）|\r\n| `extract_sitemap` |从特定站点地图文件中提取所有URL|\r\n| `full_crawl` |在一次调用中发现并提取所有站点地图上的所有URL|\r\n\r\n## 设置\r\n\r\n### 1.获取API密钥\r\n\r\n注册地址： [sitemapkit.com](https://sitemapkit.com) 并从获取您的API密钥 [app.sitemapkit.com/settings/api](https://app.sitemapkit.com/settings/api).\r\n\r\n### 2.配置您的MCP客户端\r\n\r\n#### 克劳德桌面版\r\n\r\n添加 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sitemapkit\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"sitemapkit-mcp\"],\r\n      \"env\": {\r\n        \"SITEMAPKIT_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 光标\r\n\r\n添加 `.cursor/mcp.json` 在您的项目（或全球 `~/.cursor/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sitemapkit\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"sitemapkit-mcp\"],\r\n      \"env\": {\r\n        \"SITEMAPKIT_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 帆板运动\r\n\r\n添加 `~/.codeium/windsurf/mcp_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sitemapkit\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"sitemapkit-mcp\"],\r\n      \"env\": {\r\n        \"SITEMAPKIT_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用示例\r\n\r\n配置后，您可以询问您的AI助手：\r\n\r\n- *“查找stripe.com的所有站点地图”*\r\n- *“从中提取每个URLhttps://example.com/sitemap.xml\"*\r\n- *获取shopify.com的完整URL列表，最多5000个URL*\r\n\r\n## API限值\r\n\r\n限制取决于你 [网站地图工具包计划](https://sitemapkit.com/pricing)The `meta.quota` 每个响应中的字段告诉您这个月还有多少请求。\r\n\r\n免费计划：每月20次请求\r\n初学者：500个请求/月\r\n优点：2000个请求/月\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "sitemapkit": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "sitemapkit-mcp"
+   ],
+   "env": {
+    "SITEMAPKIT_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

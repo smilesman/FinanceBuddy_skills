@@ -1,0 +1,24 @@
+{
+ "id": "2531",
+ "kind": "mcp",
+ "name": "files-vectorstore",
+ "fingerprint_md5": "dcb945716b970b7be9235c106e7d5d80",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# @lishenxydlgzs/简单文件矢量库\r\n\r\n一种模型上下文协议（MCP）服务器，提供跨文件的语义搜索功能。此服务器监视指定的目录并创建文件内容的矢量嵌入，从而实现跨文档的语义搜索。\r\n\r\n## 安装与使用\r\n\r\n添加到MCP设置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"files-vectorstore\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@lishenxydlgzs/simple-files-vectorstore\"\r\n      ],\r\n      \"env\": {\r\n        \"WATCH_DIRECTORIES\": \"/path/to/your/directories\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\nMCP设置文件位置：\r\n\r\n- VSCode临床扩展： `~/Library/Application Support/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json`\r\n- 克劳德桌面应用程序： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n## 配置\r\n\r\n服务器需要通过环境变量进行配置：\r\n\r\n### 所需的环境变量\r\n\r\n您必须使用以下方法之一指定要监视的目录：\r\n\r\n- `WATCH_DIRECTORIES`：以逗号分隔的要监视的目录列表\r\n- `WATCH_CONFIG_FILE`：JSON配置文件的路径，其中包含 `watchList` 数组\r\n\r\n使用WATCH_DIRECTORIES的示例：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"files-vectorstore\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@lishenxydlgzs/simple-files-vectorstore\"\r\n      ],\r\n      \"env\": {\r\n        \"WATCH_DIRECTORIES\": \"/path/to/dir1,/path/to/dir2\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n使用WATCH_CONFIG_FILE的示例：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"files-vectorstore\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@lishenxydlgzs/simple-files-vectorstore\"\r\n      ],\r\n      \"env\": {\r\n        \"WATCH_CONFIG_FILE\": \"/path/to/watch-config.json\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n手表配置文件应具有以下结构：\r\n\r\n```json\r\n{\r\n  \"watchList\": [\r\n    \"/path/to/dir1\",\r\n    \"/path/to/dir2\",\r\n    \"/path/to/specific/file.txt\"\r\n  ]\r\n}\r\n```\r\n\r\n### 可选环境变量\r\n\r\n- `CHUNK_SIZE`：要处理的文本块大小（默认值：1000）\r\n- `CHUNK_OVERLAP`：块之间的重叠（默认值：200）\r\n- `IGNORE_FILE`：.gitignore样式文件的路径，用于根据模式排除文件/目录\r\n\r\n包含所有可选参数的示例：\r\n\r\n```json\r\n  {\r\n    \"mcpServers\": {\r\n      \"files-vectorstore\": {\r\n        \"command\": \"npx\",\r\n        \"args\": [\r\n          \"-y\",\r\n          \"@lishenxydlgzs/simple-files-vectorstore\"\r\n        ],\r\n        \"env\": {\r\n          \"WATCH_DIRECTORIES\": \"/path/to/dir1,/path/to/dir2\",\r\n          \"CHUNK_SIZE\": \"2000\",\r\n          \"CHUNK_OVERLAP\": \"500\",\r\n          \"IGNORE_FILE\": \"/path/to/.gitignore\"\r\n        },\r\n        \"disabled\": false,\r\n        \"autoApprove\": []\r\n      }\r\n    }\r\n  }\r\n```\r\n\r\n## MCP工具\r\n\r\n此服务器提供以下MCP工具：\r\n\r\n### 1.搜索\r\n\r\n跨索引文件执行语义搜索。\r\n\r\n参数：\r\n\r\n- `query` （必填）：搜索查询字符串\r\n- `limit` （可选）：返回的最大结果数（默认值：5，最大值：20）\r\n\r\n示例响应：\r\n\r\n```json\r\n[\r\n  {\r\n    \"content\": \"matched text content\",\r\n    \"source\": \"/path/to/file\",\r\n    \"fileType\": \"markdown\",\r\n    \"score\": 0.85\r\n  }\r\n]\r\n```\r\n\r\n### 2.获取状态\r\n\r\n获取有关索引文件的统计信息。\r\n\r\n参数：无\r\n\r\n示例响应：\r\n\r\n```json\r\n{\r\n  \"totalDocuments\": 42,\r\n  \"watchedDirectories\": [\"/path/to/docs\"],\r\n  \"processingFiles\": []\r\n}\r\n```\r\n\r\n## 特性\r\n\r\n- 实时文件监视和索引\r\n- 基于向量嵌入的语义搜索\r\n- 支持多种文件类型\r\n- 可配置的块大小和重叠\r\n- 文件的后台处理\r\n- 自动处理文件更改和删除\r\n\r\n## 仓库\r\n\r\n[GitHub存储库](https://github.com/lishenxydlgzs/simple-files-vectorstore)\r\n",
+ "config": {
+  "files-vectorstore": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@lishenxydlgzs/simple-files-vectorstore"
+   ],
+   "env": {
+    "WATCH_DIRECTORIES": "/path/to/your/directories"
+   }
+  }
+ }
+}

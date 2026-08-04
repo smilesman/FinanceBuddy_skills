@@ -1,0 +1,23 @@
+{
+ "id": "1351",
+ "kind": "mcp",
+ "name": "baseline-mcp-server",
+ "fingerprint_md5": "394abc8ddff89d045df08187e01d245c",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "<p align=\"center\">\r\n\t\r\n</p>\r\n\r\n<h1 align=\"center\">Baseline MCP Server</h1>\r\n\r\n[日本语版](./README.md) | [英文版](./README_EN.md)\r\n\r\nWeb Platform API支持Model Context Protocol服务器。\r\n\r\n[](https://jsr.io/@yamanoku/baseline-mcp-server)\r\n\r\n## 概要\r\n\r\n此服务器包含：[Web平台仪表板](https://webstatus.dev/)的，之API来修改标记元素的显示属性Web的，之API功能Baseline获得状态（支持状态）MCP正在实施服务器。基于查询Web获取功能信息并将结果MCP返回给客户端。\r\n\r\n\r\n## 机能\r\n\r\n- Web Platform Dashboard的，之API使用功能搜索\r\n- 功能Baseline状态（`widely`、`newly`、`limited`、`no_data`）的提供\r\n- 提供浏览器实施情况（版本和实施日期）\r\n- 提供功能使用情况数据\r\n- 排除特定浏览器的功能搜索（`chrome`, `edge`, `firefox`, `safari`）\r\n- MCP通过各种途径AI与模型协作\r\n\r\n## Baseline关于状态\r\n\r\nBaseline状态为Web显示功能的浏览器支持情况：\r\n\r\n- **广泛地**:\r\n  广泛支持Web标准功能。在大多数浏览器中都可以安全使用。\r\n- **新近**:\r\n  新标准化Web功能。主要浏览器开始支持，但仍在推广中。\r\n- **有限的**:\r\n  有限支持Web功能。某些浏览器可能不可用或需要标记。\r\n- **无数据**:\r\n  目前Baseline未包含Web功能。您需要单独查看浏览器支持情况。\r\n\r\nBaseline有关详细信息，请参见[Baseline (互换性）-MDN Web Docs 用语集](https://developer.mozilla.org/ja/docs/Glossary/Baseline/Compatibility)中所述修改相应参数的值。\r\n\r\n## MCP客户端设置\r\n\r\n- 在动态输入提示中单击Deno建议使用\r\n  - 作为权限`api.webstatus.dev`仅允许访问\r\n- [`@yamanoku/baseline-mcp-server`](https://jsr.io/@yamanoku/baseline-mcp-server)或者在您的本地环境中baseline-mcp-server.ts进行动态观察时的轴心点\r\n\r\n### 克劳德桌面\r\n\r\n克劳德\r\nDesktop的，之MCP要在客户端上使用，请执行以下操作：`cline_mcp_settings.json`中所述修改相应参数的值。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"baseline-mcp-server\": {\r\n      \"command\": \"deno\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--allow-net=api.webstatus.dev\",\r\n        \"jsr:@yamanoku/baseline-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Visual Studio Code\r\n\r\nVisual Studio\r\nCode的，之MCP要在客户端上使用，请执行以下操作：`settings.json`中所述修改相应参数的值。\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"baseline-mcp-server\": {\r\n        \"command\": \"deno\",\r\n        \"args\": [\r\n          \"run\",\r\n          \"--allow-net=api.webstatus.dev\",\r\n          \"jsr:@yamanoku/baseline-mcp-server\"\r\n        ]\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## Docker启动\r\n\r\n首先Docker构建映像。\r\n\r\n```shell\r\ndocker build -t baseline-mcp-server .\r\n```\r\n\r\nMCP在客户端设置中Docker执行容器。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"baseline-mcp-server\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"baseline-mcp-server:latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 谢辞\r\n\r\n这个OSS表示GPT-4o Image Generation制作标志Claude 3.7\r\nSonnet对较大场景进行渲染期间已观察到该故障。非常感谢。\r\n\r\n## 许可证\r\n\r\n[MIT许可证](./LICENSE)\r\n",
+ "config": {
+  "baseline-mcp-server": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "baseline-mcp-server:latest"
+   ],
+   "env": {}
+  }
+ }
+}

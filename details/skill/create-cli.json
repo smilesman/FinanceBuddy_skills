@@ -1,0 +1,12 @@
+{
+ "id": "create-cli",
+ "kind": "skill",
+ "name": "create-cli",
+ "fingerprint_md5": "80599a905a7fa83c6fa5d858ddcb5609",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Create CLI\r\n\r\n设计 CLI 表面区域（语法 + 行为），以人为本，对脚本友好。\r\n\r\n## 首先执行此操作\r\n\r\n- 阅读 `agent-scripts/skills/create-cli/references/cli-guidelines.md` 并将其作为默认标准应用。\r\n- 上游/完整指南：https://clig.dev/ （提议更改：https://github.com/cli-guidelines/cli-guidelines）\r\n- 仅询问锁定界面所需的最少澄清问题。\r\n\r\n## 澄清（快速）\r\n\r\n询问，如果用户不确定，则使用最佳猜测默认值继续：\r\n\r\n- 命令名称 + 一句话目的。\r\n- 主要用户：人类、脚本或两者。\r\n- 输入来源：参数 vs 标准输入；文件 vs URL；密钥（绝不通过标志传递）。\r\n- 输出约定：人类文本、`--json`、`--plain`、退出代码。\r\n- 交互性：允许提示？需要 `--no-input`？破坏性操作需要确认？\r\n- 配置模型：标志/环境/配置文件；优先级；XDG vs 仓库本地。\r\n- 平台/运行时约束：macOS/Linux/Windows；单二进制文件 vs 运行时。\r\n\r\n## 可交付成果（输出内容）\r\n\r\n设计 CLI 时，生成一个用户可以实现的紧凑规范：\r\n\r\n- 命令树 + USAGE 概要。\r\n- 参数/标志表（类型、默认值、必需/可选、示例）。\r\n- 子命令语义（每个做什么；幂等性；状态更改）。\r\n- 输出规则：stdout vs stderr；TTY 检测；`--json`/`--plain`；`--quiet`/`--verbose`。\r\n- 错误 + 退出代码映射（主要故障模式）。\r\n- 安全规则：`--dry-run`、确认、`--force`、`--no-input`。\r\n- 配置/环境规则 + 优先级（标志 > 环境 > 项目配置 > 用户配置 > 系统）。\r\n- Shell 补全方案（如果相关）：安装/可发现性；生成命令或捆绑脚本。\r\n- 5–10 个示例调用（常见流程；包括管道/标准输入示例）。\r\n\r\n## 默认约定（除非用户另有说明）\r\n\r\n- `-h/--help` 始终显示帮助并忽略其他参数。\r\n- `--version` 将版本打印到 stdout。\r\n- 主要数据到 stdout；诊断/错误到 stderr。\r\n- 添加 `--json` 用于机器输出；考虑 `--plain` 用于稳定的基于行的文本。\r\n- 仅在 stdin 是 TTY 时提示；`--no-input` 禁用提示。\r\n- 破坏性操作：交互式确认 + 非交互式需要 `--force` 或显式 `--confirm=...`。\r\n- 尊重 `NO_COLOR`、`TERM=dumb`；提供 `--no-color`。\r\n- 处理 Ctrl-C：快速退出；有界清理；尽可能做到仅崩溃恢复。\r\n\r\n## 模板（复制到你的答案中）\r\n\r\n### CLI 规范骨架\r\n\r\n填写这些部分，删除任何不相关的内容：\r\n\r\n1. **名称**: `mycmd`\r\n2. **一句话**: `...`\r\n3. **USAGE**：\r\n   - `mycmd [global flags] <subcommand> [args]`\r\n4. **子命令**：\r\n   - `mycmd init ...`\r\n   - `mycmd run ...`\r\n5. **全局标志**：\r\n   - `-h, --help`\r\n   - `--version`\r\n   - `-q, --quiet` / `-v, --verbose`（精确定义）\r\n   - `--json` / `--plain`（如果适用）\r\n6. **I/O 约定**：\r\n   - stdout：\r\n   - stderr：\r\n7. **退出代码**：\r\n   - `0` 成功\r\n   - `1` 一般失败\r\n   - `2` 无效用法（解析/验证）\r\n   - （仅当实际有用时添加命令特定的代码）\r\n8. **环境/配置**：\r\n   - 环境变量：\r\n   - 配置文件路径 + 优先级：\r\n9. **示例**：\r\n   - …\r\n\r\n## 说明\r\n\r\n- 仅在询问时才推荐推荐解析库（特定于语言）；否则保持此技能与语言无关。\r\n- 如果请求是 \"设计参数\"，请不要偏离到实现中。",
+ "config": {}
+}

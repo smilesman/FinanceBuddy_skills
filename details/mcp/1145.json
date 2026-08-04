@@ -1,0 +1,18 @@
+{
+ "id": "1145",
+ "kind": "mcp",
+ "name": "my-server",
+ "fingerprint_md5": "597953d2a64dd4ae016084c762a4c80b",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# PostgreSQL MCP服务器\r\n\r\n一个模型上下文协议（MCP）服务器，为PostgreSQL数据库监控和优化提供工具和提示。\r\n\r\n## 特性\r\n\r\n- 连接统计和监控\r\n- 数据库大小信息\r\n- 指标使用统计\r\n- 查询检测速度慢\r\n- 缓存命中率监控\r\n- 表统计\r\n- 表分析工具\r\n- 查询EXPLAIN计划生成\r\n\r\n## 安装\r\n\r\n```bash\r\ngo get github.com/yourusername/psql-go-mcp\r\n```\r\n\r\n## 配置\r\n\r\n服务器要求通过环境变量提供PostgreSQL连接详细信息：\r\n\r\n```bash\r\nexport PG_HOST=localhost\r\nexport PG_PORT=5432\r\nexport PG_USER=postgres\r\nexport PG_PASSWORD=postgres\r\nexport PG_DB=postgres\r\nexport PG_SSLMODE=disable\r\n```\r\n\r\n## 用法\r\n\r\n### 启动服务器\r\n\r\n```bash\r\npsql-go-mcp\r\n```\r\n\r\n### 可用工具\r\n\r\n1. `postgresql/connection-stats`：获取PostgreSQL连接统计信息\r\n1. `postgresql/database-size`：获取PostgreSQL数据库大小信息\r\n1. `postgresql/index-usage`：获取PostgreSQL索引使用统计信息\r\n1. `postgresql/slow-queries`：获取PostgreSQL慢速查询统计信息\r\n1. `postgresql/cache-hit-ratio`：获取PostgreSQL缓存命中率\r\n1. `postgresql/table-stats`：获取PostgreSQL表统计信息\r\n1. `postgresql/analyze-table`：分析特定的PostgreSQL表\r\n1. `postgresql/explain-query`：获取PostgreSQL查询的EXPLAIN计划\r\n\r\n### 可用提示\r\n\r\n1. `connection-optimization`：优化PostgreSQL连接的指南\r\n1. `query-optimization`：优化PostgreSQL查询的指南\r\n\r\n### 与MCP检查器一起使用\r\n\r\nMCP检查器提供了一个与PostgreSQL MCP服务器交互的可视化界面。以下是如何使用它：\r\n\r\n1. **安装MCP检查器**:\r\n\r\n   ```bash\r\n   npm install -g @modelcontextprotocol/inspector\r\n   ```\r\n\r\n1. **创建检查器配置**:\r\n   创建一个名为的文件 `inspector-config.json` 内容如下：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"my-server\": {\r\n         \"type\": \"sse\",\r\n         \"url\": \"http://localhost:8080/events\"\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. **启动检查器**:\r\n\r\n   ```bash\r\n   npx @modelcontextprotocol/inspector --config inspector-config.json --server my-server\r\n   ```\r\n\r\n1. **访问检查器UI**:\r\n\r\n   - 打开浏览器并导航到 `http://127.0.0.1:6274`\r\n   - 您应该看到连接了PostgreSQL MCP服务器的Inspector界面\r\n   - 使用该界面可以：\r\n     - 查看可用工具和提示\r\n     - 执行数据库监控工具\r\n     - 获取优化指导\r\n     - 监控实时数据库统计信息\r\n\r\n## 需求\r\n\r\n- 转到1.23或更高版本\r\n- PostgreSQL服务器\r\n- [MCP兼容客户端](https://github.com/mark3labs/mcphost)\r\n",
+ "config": {
+  "my-server": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:8080/events"
+  }
+ }
+}

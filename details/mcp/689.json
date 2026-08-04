@@ -1,0 +1,26 @@
+{
+ "id": "689",
+ "kind": "mcp",
+ "name": "image-gen",
+ "fingerprint_md5": "8d909a71e4538feeccf4a126459e7880",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# 图像生成MCP服务器\r\n\r\n一个MCP（模型上下文协议）服务器，使用laozhang.ai Gemini 3 Pro API生成图像，并将其直接保存到您的黑社会金库。\r\n\r\n## 特性\r\n\r\n- **`generate_image`** --从文本提示生成单个图像\r\n- **`generate_multiple`** --从同一提示生成2-4幅图像（不同解释）\r\n- **`generate_variations`** --使用样式/修改提示转换参考图像\r\n- **`list_generated_images`** --列出最近生成的图像\r\n\r\n基于提示（例如。， `2026-01-19_cute_robot_waving.jpg`).\r\n\r\n## 需求\r\n\r\n- Python 3.11+\r\n- [紫外线](https://github.com/astral-sh/uv) 包管理器\r\n- [老张艾](https://laozhang.ai) API密钥\r\n\r\n## 安装\r\n\r\n```bash\r\ngit clone https://github.com/JasonBates/image-gen-mcp.git\r\ncd image-gen-mcp\r\nuv sync\r\n```\r\n\r\n## 配置\r\n\r\n1. 复制示例环境文件：\r\n\r\n   ```bash\r\n   cp .env.example .env\r\n   ```\r\n\r\n1. 编辑 `.env` 使用您的设置：\r\n\r\n   ```bash\r\n   LAOZHANG_API_KEY=your-api-key-here\r\n   OBSIDIAN_VAULT_PATH=~/path/to/your/vault\r\n   AI_GRAPHICS_FOLDER=Assets/AI graphics\r\n   ```\r\n\r\n## 用法\r\n\r\n### 添加到克劳德代码\r\n\r\n添加到您的Claude Code MCP配置中(`~/.claude.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"image-gen\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/image-gen-mcp\", \"image-gen-mcp\"],\r\n      \"env\": {\r\n        \"LAOZHANG_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### MCP检验员测试\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv run image-gen-mcp\r\n```\r\n\r\n## 工具\r\n\r\n### generate_image\r\n\r\n从文本提示生成单个图像。\r\n\r\n|参数|默认值|说明|\r\n|-----------|---------|-------------|\r\n| `prompt` |（必填）|所需图像的文字描述|\r\n| `aspect_ratio` | `\"1:1\"` | 1:1, 16:9, 9:16, 4:3, 3:4, 3:2, 2:3, 21:9, 9:21, 5:4 |\r\n| `size` | `\"2K\"` |1K（快速）、2K（默认）、4K（最高质量）|\r\n\r\n### generate_multimate\r\n\r\n对同一提示生成多个新的解释。\r\n\r\n|参数|默认值|说明|\r\n|-----------|---------|-------------|\r\n| `prompt` |（必填）|文字描述|\r\n| `count` | `4` |图像数量（2-4）|\r\n| `aspect_ratio` | `\"1:1\"` |见上文|\r\n| `size` | `\"2K\"` |见上文|\r\n| `diversity` | `0.0` |提示变化水平（0.0-1.0）。0.0=相同的提示，0.3=细微的变化，0.6=风格/情绪的变化，1.0=创造性的重新解释|\r\n\r\n**多样性示例：**\r\n\r\n```\r\n# Low diversity - subtle variations (lighting, minor details)\r\ngenerate_multiple(\"a robot waving\", count=4, diversity=0.3)\r\n\r\n# High diversity - creative reinterpretations\r\ngenerate_multiple(\"a robot waving\", count=4, diversity=0.9)\r\n→ \"a vintage 1950s tin robot waving on a kitchen counter\"\r\n→ \"a massive robot waving goodbye to a departing spaceship\"\r\n→ \"a tiny robot waving from inside a snow globe\"\r\n→ \"a robot made of flowers waving in a garden\"\r\n```\r\n\r\n### 发电机变量\r\n\r\n使用样式/修改提示转换参考图像。\r\n\r\n|参数|默认值|说明|\r\n|-----------|---------|-------------|\r\n| `image_paths` |（必填）|参考图像的路径列表（1-14）|\r\n| `prompt` |（必填）|如何转换（例如，“水彩风格”）|\r\n| `count` | `4` |变化数量（1-4）|\r\n| `aspect_ratio` | `\"1:1\"` |见上文|\r\n| `size` | `\"2K\"` |见上文|\r\n\r\n**例子：** 取一个现有的机器人图像，生成像素艺术和赛博朋克版本。\r\n\r\n### list_generated_images\r\n\r\n在输出文件夹中列出最近生成的图像。\r\n\r\n|参数|默认值|说明|\r\n|-----------|---------|-------------|\r\n| `limit` | `20` |要列出的最大图像数|\r\n\r\n## API功能\r\n\r\nlaozhang.ai Gemini 3 Pro API支持：\r\n\r\n|功能|选项|\r\n|---------|---------|\r\n|纵横比| 1:1、16:9、9:16、4:3、3:4、3:2、2:3、21:9、9:21、5:4|\r\n|尺寸|1K（~1024px）、2K（~2048px）、4K（~4096px）|\r\n|参考图片|最多14张用于风格/内容指导|\r\n\r\n**注：** API为每个请求生成一个映像。对于多个图像，此服务器会自动发出顺序请求。\r\n\r\n## 文件名生成\r\n\r\n文件名是根据您的提示自动生成的：\r\n\r\n1. 提取关键术语（跳过常用词）\r\n1. 山宁泰（小写，下划线）\r\n1. 添加日期前缀\r\n\r\n示例：\r\n\r\n- 单人： `2026-01-19_cute_robot_waving.jpg`\r\n- 多个： `2026-01-19_cute_robot_waving_v1.jpg`, `_v2.jpg`\r\n- 变化： `2026-01-19_watercolor_style_var1.jpg`, `_var2.jpg`\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "image-gen": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "/path/to/image-gen-mcp",
+    "image-gen-mcp"
+   ],
+   "env": {
+    "LAOZHANG_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "1485",
+ "kind": "mcp",
+ "name": "hackernews",
+ "fingerprint_md5": "fa6f10bf5e6625205a614383d881c415",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 黑客新闻MCP服务器\r\n\r\n[](https://smithery.ai/server/@devabdultech/hn-mcp)\r\n官方黑客新闻MCP服务器-为Cursor、Claude和任何其他LLM客户端添加强大的黑客新闻集成。通过模型上下文协议访问故事、评论、用户配置文件和搜索功能。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/73uji99mwg\">\r\n  \r\n</a>\r\n\r\n## 特性\r\n\r\n- 使用Algolia的HN搜索API搜索故事和评论\r\n- 按类型获取故事（热门、新、最佳、提问、展示、工作）\r\n- 获取带有评论的个人故事\r\n- 获取评论树和用户讨论\r\n- 获取用户资料和提交\r\n- 实时访问黑客新闻数据\r\n\r\n## 建立\r\n\r\n### 在Claude桌面上运行\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"hackernews\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@devabdultech/hn-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面版黑客新闻MCP服务器 [史密瑟里](https://smithery.ai/server/@devabdultech/hn-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @devabdultech/hn-mcp --client claude\r\n```\r\n\r\n## 工具\r\n\r\n1. `search`\r\n\r\n   - 使用Algolia的搜索API在Hacker News上搜索故事和评论\r\n   - 输入：\r\n     \\* `query` （string）：搜索查询\r\n     \\* `type` （可选字符串）：按类型筛选（“故事”或“评论”）\r\n     \\* `page` （可选编号）：分页页码\r\n     \\* `hitsPerPage` （可选数字）：每页结果（最多100个）\r\n   - 返回：包含故事和评论的搜索结果\r\n\r\n1. `getStories`\r\n\r\n   - 按类型获取多个故事（热门、新、最佳、提问、展示、工作）\r\n   - 输入：\r\n     \\* `type` （string）：要获取的故事类型（'top'、'new'、'best'、'ask'、'show'、'job'）\r\n     \\* `limit` （可选数字）：要获取的故事数（最多100个）\r\n   - 返回：故事对象数组\r\n\r\n1. `getStoryWithComments`\r\n\r\n   - 获取一个故事及其评论线索\r\n   - 输入：\r\n     \\* `id` （编号）：故事ID\r\n   - 返回：带有嵌套注释的故事详细信息\r\n\r\n1. `getCommentTree`\r\n\r\n   - 获取故事的完整评论树\r\n   - 输入：\r\n     \\* `storyId` （数字）：故事的ID\r\n   - 返回：分层注释树结构\r\n\r\n1. `getUser`\r\n\r\n   - 获取用户的个人资料信息\r\n   - 输入：\r\n     \\* `id` （string）：用户名\r\n   - 返回：用户配置文件详细信息，包括业力、创建日期和关于文本\r\n\r\n1. `getUserSubmissions`\r\n\r\n   - 获取用户提交的内容（故事和评论）\r\n   - 输入：\r\n     \\* `id` （string）：用户名\r\n   - 返回：用户提交的故事和评论数组\r\n\r\n### 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建功能分支\r\n1. 提交您的更改\r\n1. 推到分支\r\n1. 创建新的Pull请求\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。有关详细信息，请参阅LICENSE文件。\r\n\r\n## 关于\r\n\r\n此MCP服务器由以下人员构建和维护 [devabdultech](https://github.com/devabdultech).它使用官方的Hacker News API和Algolia Search API，通过模型上下文协议提供对Hacker News数据的全面访问。\r\n",
+ "config": {
+  "hackernews": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@devabdultech/hn-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

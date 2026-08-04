@@ -1,0 +1,18 @@
+{
+ "id": "783",
+ "kind": "mcp",
+ "name": "nvidia-blog",
+ "fingerprint_md5": "f03299680e7e11285a5707b574b48857",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# NVIDIA博客MCP服务器\r\n\r\nA. [模型上下文协议（MCP）](https://modelcontextprotocol.io) 该服务器通过检索增强生成（RAG）为Cursor等人工智能助手提供对NVIDIA官方开发人员和博客内容的可靠访问。\r\n\r\n## 特性\r\n\r\n- **RAG的背景**：检索增强生成根据NVIDIA官方博客的内容提供响应\r\n- **多语言支持**：用途 `text-multilingual-embedding-002` 用于50多种语言的语义搜索\r\n- **基于AI的查询增强**：自动查询转换和答案分级，以获得更高质量的结果\r\n- **当前内容**：从2025年12月1日起索引的博客帖子。旧内容尚未摄入；所有未来的帖子都将通过每日更新自动添加\r\n- **准确反应**：内置答案质量评估可防止产生幻觉\r\n\r\n## 光标快速启动\r\n\r\n在游标设置中，将此.json块添加到游标MCP配置中（通常 `~/.cursor/mcp.json` 或 `%APPDATA%\\Cursor\\User\\mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"nvidia-blog\": {\r\n      \"url\": \"https://nvidia-blog-mcp-server-4vvir4xvda-ey.a.run.app/mcp\",\r\n      \"transport\": \"streamable-http\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n添加此配置后，重新启动Cursor。然后，您可以询问有关NVIDIA技术的问题，服务器将搜索NVIDIA博客档案，根据NVIDIA官方内容提供可靠的答案。\r\n\r\n## 运作原理\r\n\r\n### 数据管道\r\n\r\n服务器通过每日自动摄取管道维护数据库：\r\n\r\n1. **RSS源集合**：从NVIDIA官方RSS源获取新帖子\r\n1. **内容处理**：将HTML内容清理并处理为可搜索的文本\r\n1. **RAG索引**：将内容摄入Vertex AI RAG语料库进行语义搜索\r\n1. **每日更新**：每天上午7:00 UTC自动运行\r\n\r\n### 响应质量\r\n\r\n所有回复均按以下标准评分：\r\n\r\n- **相关性**：检索到的内容与查询的匹配程度\r\n- **完整性**：答案是否充分涵盖了主题\r\n- **接地**：所有答案均基于NVIDIA官方博客文章的内容\r\n\r\n## 项目结构\r\n\r\n```\r\nnvidia_blog/\r\n├── mcp/                      # MCP server implementation\r\n│   ├── mcp_server.py         # Main MCP server\r\n│   ├── mcp_service.py        # Cloud Run service entry point\r\n│   ├── query_rag.py          # RAG Corpus query module\r\n│   ├── query_vector_search.py # Vector Search query module\r\n│   ├── rag_query_transformer.py # Query enhancement\r\n│   ├── rag_answer_grader.py  # Answer quality evaluation\r\n│   └── config.py             # Configuration management\r\n├── Dockerfile.mcp            # Container definition\r\n├── cloudbuild.mcp.yaml       # CI/CD configuration\r\n├── requirements.txt           # Python dependencies\r\n├── LICENSE                   # MIT License\r\n├── NOTICE                    # Third-party content notice\r\n├── CONTRIBUTING.md           # Contribution guidelines\r\n└── SECURITY.md               # Security policy\r\n```\r\n\r\n## 内容免责声明\r\n\r\n**重要**：此服务提供对NVIDIA公司官方博客内容的搜索访问。所有博客内容均为NVIDIA公司的知识产权。此软件不声称拥有任何NVIDIA内容的所有权。\r\n\r\n**SynapGarden不隶属于NVIDIA公司，也不受其认可或赞助。** 这是一个由SynapGarden独立开发的免费开源项目。\r\n\r\n看 [许可证](LICENSE) 和 [通知](NOTICE) 了解全部细节。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请看 [贡献.md](CONTRIBUTING.md) 作为指导方针。\r\n\r\n## 安全\r\n\r\n如果您发现安全漏洞，请参阅 [安全.md](SECURITY.md) 用于报告说明。\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n**备注**：代码是MIT授权的，但NVIDIA博客中的所有内容仍然是NVIDIA公司的财产。有关完整的第三方内容免责声明，请参阅LICENSE文件。\r\n\r\n## 资源\r\n\r\n- [MCP协议文件](https://modelcontextprotocol.io)\r\n- [NVIDIA开发者博客](https://developer.nvidia.com/blog)\r\n- [NVIDIA官方博客](https://blogs.nvidia.com)\r\n- [GitHub存储库](https://github.com/SynapGarden/NVIDIA_blog_mcp)\r\n\r\n## 致谢\r\n\r\nSynapGarden是NVIDIA Inception计划和Google Cloud for Startups计划的成员。我们感谢他们提供资源，使我们能够为开发人员社区构建有用的工具。\r\n\r\n**备注**：计划会员资格并不意味着除参与计划外，与NVIDIA Corporation或Google Cloud的认可、赞助或附属关系。\r\n\r\n______________________________________________________________________\r\n\r\n由开发 [SynapGarden](https://github.com/SynapGarden) |免费和开源\r\n",
+ "config": {
+  "nvidia-blog": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://nvidia-blog-mcp-server-4vvir4xvda-ey.a.run.app/mcp"
+  }
+ }
+}

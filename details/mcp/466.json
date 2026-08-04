@@ -1,0 +1,29 @@
+{
+ "id": "466",
+ "kind": "mcp",
+ "name": "spotify-9",
+ "fingerprint_md5": "170d5eab6e7c55ab8c0a786cb89d3363",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "Spotify MCP服务器\r\n\r\nA. **模型上下文协议（MCP）服务器** 它为人工智能助手提供了访问Spotify音乐目录的权限。\r\n\r\n[](https://golang.org/)\r\n[](https://www.docker.com/)\r\n\r\n## 🎯 **这是什么？**\r\n\r\n此MCP服务器使AI助手能够通过三个工具在Spotify上搜索音乐：\r\n\r\n- **搜索轨迹**：按名称/艺术家查找歌曲\r\n- **搜索艺术家**：查找受欢迎程度评分的艺术家\r\n- **get_track**：获取详细的赛道信息\r\n\r\n## 📋 **先决条件**\r\n\r\n- [Spotify开发者帐户](https://developer.spotify.com/) （适用于API证书）\r\n- [Docker&Docker编写](https://www.docker.com/) 或 [转到1.23+](https://golang.org/)\r\n\r\n## 🚀 **快速开始**\r\n\r\n### **1.获取Spotify凭据**\r\n\r\n1. 首选 [Spotify开发者仪表板](https://developer.spotify.com/dashboard)\r\n1. 创建新应用程序\r\n1. 复制您的 **客户端ID** 和 **客户端密钥**\r\n\r\n### **2.设置和运行**\r\n\r\n```bash\r\n# Clone and setup\r\ngit clone https://github.com/anuragkothare/spotify_mcp_server.git\r\ncd spotify-mcp-server\r\n\r\n# Configure environment\r\ncp .env.example .env\r\n# Edit .env with your Spotify credentials:\r\n# SPOTIFY_CLIENT_ID=your_client_id_here\r\n# SPOTIFY_CLIENT_SECRET=your_client_secret_here\r\n\r\n# Run with Docker (recommended)\r\ndocker-compose up -d\r\n\r\n# Or run locally\r\ngo mod tidy\r\ngo run ./cmd/server\r\n```\r\n\r\n### **3.测试**\r\n\r\n```bash\r\n# Health check\r\ncurl http://localhost:8080/health\r\n\r\n# List available tools\r\ncurl -X POST http://localhost:8080/mcp \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}'\r\n\r\n# Search for tracks\r\ncurl -X POST http://localhost:8080/mcp \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"jsonrpc\": \"2.0\",\r\n    \"id\": 2,\r\n    \"method\": \"tools/call\",\r\n    \"params\": {\r\n      \"name\": \"search_tracks\",\r\n      \"arguments\": {\"query\": \"bohemian rhapsody\", \"limit\": 5}\r\n    }\r\n  }'\r\n```\r\n\r\n## ⚙️ **配置**\r\n\r\n**所需的环境变量：**\r\n\r\n```bash\r\nSPOTIFY_CLIENT_ID=your_spotify_client_id\r\nSPOTIFY_CLIENT_SECRET=your_spotify_client_secret\r\n```\r\n\r\n**可选：**\r\n\r\n```bash\r\nSPOTIFY_REDIRECT_URI=http://localhost:8080/callback\r\nSERVER_PORT=8080\r\nLOG_LEVEL=info\r\n```\r\n\r\n## 🐳 **Docker命令**\r\n\r\n```bash\r\n# Development\r\ndocker-compose up -d          # Start services\r\ndocker-compose logs -f        # View logs\r\ndocker-compose down           # Stop services\r\n\r\n# Production\r\ndocker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d\r\n\r\n# Useful commands\r\ndocker-compose ps             # Check status\r\ndocker-compose exec spotify-mcp sh  # Access container\r\n```\r\n\r\n## 🎵 **可用的MCP工具**\r\n\r\n### **搜索轨迹**\r\n\r\n```json\r\n{\r\n  \"name\": \"search_tracks\",\r\n  \"arguments\": {\r\n    \"query\": \"song name or artist\",\r\n    \"limit\": 10\r\n  }\r\n}\r\n```\r\n\r\n### **搜索艺术家**\r\n\r\n```json\r\n{\r\n  \"name\": \"search_artists\",\r\n  \"arguments\": {\r\n    \"query\": \"artist name\",\r\n    \"limit\": 10\r\n  }\r\n}\r\n```\r\n\r\n### **get_track**\r\n\r\n```json\r\n{\r\n  \"name\": \"get_track\",\r\n  \"arguments\": {\r\n    \"track_id\": \"spotify_track_id\"\r\n  }\r\n}\r\n```\r\n\r\n## 🛠️ **项目结构**\r\n\r\n```\r\nspotify-mcp-server/\r\n├── cmd/server/           # Main application\r\n├── internal/\r\n│   ├── config/          # Configuration\r\n│   ├── mcp/            # MCP protocol implementation\r\n│   ├── spotify/        # Spotify API client\r\n│   └── handlers/       # HTTP handlers\r\n├── configs/            # Config files\r\n├── Dockerfile          # Container build\r\n├── docker-compose.yml  # Service orchestration\r\n├── .env.example        # Environment template\r\n└── Makefile           # Build commands\r\n```\r\n\r\n## 🚨 **故障排除**\r\n\r\n### **“invalid_client”错误**\r\n\r\n- 检查你的 `.env` 文件具有实际的Spotify凭据（不是占位符）\r\n- 验证凭据是否有效：在以下位置进行测试 [Spotify控制台](https://developer.spotify.com/console/)\r\n\r\n### **“找不到.env文件”**\r\n\r\n- 确保 `.env` 存在于项目根目录中\r\n- 从包含以下内容的目录运行 `docker-compose.yml`\r\n\r\n### **Docker问题**\r\n\r\n```bash\r\n# Clean up and restart\r\ndocker-compose down --volumes --remove-orphans\r\ndocker-compose up -d --build\r\n\r\n# Check logs\r\ndocker-compose logs spotify-mcp\r\n```\r\n\r\n### **端口冲突**\r\n\r\n```bash\r\n# Check what's using port 8080\r\nlsof -i :8080\r\n\r\n# Change port in .env\r\nSERVER_PORT=8081\r\n```\r\n\r\n## 🔗 **整合**\r\n\r\n### **Python示例**\r\n\r\n```python\r\nimport requests\r\n\r\ndef search_tracks(query, limit=5):\r\n    response = requests.post('http://localhost:8080/mcp', json={\r\n        \"jsonrpc\": \"2.0\",\r\n        \"id\": 1,\r\n        \"method\": \"tools/call\",\r\n        \"params\": {\r\n            \"name\": \"search_tracks\",\r\n            \"arguments\": {\"query\": query, \"limit\": limit}\r\n        }\r\n    })\r\n    return response.json()\r\n\r\n# Usage\r\nresults = search_tracks(\"hello adele\")\r\nprint(results)\r\n```\r\n\r\n### **Claude桌面集成**\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"spotify\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-p\",\r\n        \"8080:8080\",\r\n        \"--env-file\",\r\n        \".env\",\r\n        \"spotify-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"SPOTIFY_CLIENT_ID\": \"your_client_id\",\r\n        \"SPOTIFY_CLIENT_SECRET\": \"your_client_secret\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 📄 **许可证**\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件。\r\n\r\n______________________________________________________________________\r\n\r\n**快速设置：** 将您的Spotify凭据复制到 `.env` 然后跑 `docker-compose up -d` 🎵\r\n",
+ "config": {
+  "spotify": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-p",
+    "8080:8080",
+    "--env-file",
+    ".env",
+    "spotify-mcp-server"
+   ],
+   "env": {
+    "SPOTIFY_CLIENT_ID": "your_client_id",
+    "SPOTIFY_CLIENT_SECRET": "your_client_secret"
+   }
+  }
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "id": "3462",
+ "kind": "mcp",
+ "name": "google-search-3",
+ "fingerprint_md5": "2d4994fd0e1abf14907c7b47a6ae4635",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp谷歌服务器用于谷歌自定义搜索和网页阅读的mcp服务器\r\n\r\n\r\n模型上下文协议服务器，使用Google自定义搜索API和网页内容提取功能提供网络搜索功能。\r\n\r\n## 设置\r\n\r\n### 获取Google API密钥和搜索引擎ID\r\n\r\n1. 创建Google Cloud项目：\r\n\r\n   - 首选 [谷歌云控制台](https://console.cloud.google.com/)\r\n   - 创建新项目或选择现有项目\r\n   - 为您的项目启用计费\r\n\r\n1. 启用自定义搜索API：\r\n\r\n   - 首选 [API库](https://console.cloud.google.com/apis/library)\r\n   - 搜索“自定义搜索API”\r\n   - 点击“启用”\r\n\r\n1. 获取API密钥：\r\n\r\n   - 首选 [凭证](https://console.cloud.google.com/apis/credentials)\r\n   - 单击“创建凭据”>“API密钥”\r\n   - 复制API密钥\r\n   - （可选）将API键限制为仅自定义搜索API\r\n\r\n1. 创建自定义搜索引擎：\r\n\r\n   - 首选 [可编程搜索引擎](https://programmablesearchengine.google.com/create/new)\r\n   - 输入要搜索的网站（使用www.google.com进行一般网络搜索）\r\n   - 点击“创建”\r\n   - 在下一页上，单击“自定义”\r\n   - 在设置中，启用“搜索整个网络”\r\n   - 复制您的搜索引擎ID（cx）\r\n\r\n## 发展\r\n\r\n安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n对于自动重建的开发：\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n## 特性\r\n\r\n### 搜索工具\r\n\r\n使用Google Custom Search API执行web搜索：\r\n\r\n- 搜索整个网站或特定网站\r\n- 控制结果数量（1-10）\r\n- 使用标题、链接和代码片段获取结构化结果\r\n\r\n### 网页阅读器工具\r\n\r\n从任何网页提取内容：\r\n\r\n- 获取并解析网页内容\r\n- 提取页面标题和正文\r\n- 通过删除脚本和样式来清理内容\r\n- 返回带有标题、文本和URL的结构化数据\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装适用于Claude Desktop的Google自定义搜索服务器 [史密瑟里](https://smithery.ai/server/@adenot/mcp-google-search):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @adenot/mcp-google-search --client claude\r\n```\r\n\r\n要与Claude Desktop一起使用，请使用Google API凭据添加服务器配置：\r\n\r\n在MacOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"google-search\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@adenot/mcp-google-search\"\r\n      ],\r\n      \"env\": {\r\n        \"SMARTSEARCH_ENDPOINT\": \"your-endpoint-here\",\r\n        \"SMARTSEARCH_AK\": \"your-ak-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n### 搜索工具\r\n\r\n```json\r\n{\r\n  \"name\": \"search\",\r\n  \"arguments\": {\r\n    \"query\": \"your search query\",\r\n    \"num\": 5  // optional, default is 5, max is 10\r\n  }\r\n}\r\n```\r\n\r\n### 网页阅读器工具\r\n\r\n```json\r\n{\r\n  \"name\": \"read_webpage\",\r\n  \"arguments\": {\r\n    \"url\": \"https://example.com\"\r\n  }\r\n}\r\n```\r\n\r\n网页阅读器的示例响应：\r\n\r\n```json\r\n{\r\n  \"title\": \"Example Domain\",\r\n  \"text\": \"Extracted and cleaned webpage content...\",\r\n  \"url\": \"https://example.com\"\r\n}\r\n```\r\n\r\n### 调试\r\n\r\n由于MCP服务器通过stdio进行通信，调试可能具有挑战性。我们建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector)，可作为包脚本使用：\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n检查器将提供一个URL，用于访问浏览器中的调试工具。\r\n",
+ "config": {
+  "google-search": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@adenot/mcp-google-search"
+   ],
+   "env": {
+    "SMARTSEARCH_ENDPOINT": "your-endpoint-here",
+    "SMARTSEARCH_AK": "your-ak-here"
+   }
+  }
+ }
+}

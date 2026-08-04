@@ -1,0 +1,18 @@
+{
+ "id": "642",
+ "kind": "mcp",
+ "name": "epub_template_search",
+ "fingerprint_md5": "b5ef107e527ff3fc9911d7a56a5f5d62",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 📋模板搜索 MCP 服务\r\n\r\n> 智能模板发现助手 - 为 AI 应用提供强大的 epub360 模板搜索能力\r\n\r\n## 🎯 产品定位\r\n\r\n**智能模板发现助手** - 一个专为 AI 应用设计的 epub360 模板搜索服务，通过 Model Context Protocol (MCP) 标准为 Cursor、Claude 等 AI 工具提供强大的模板检索能力。\r\n\r\n### 🌟 核心价值\r\n\r\n- **🤖 AI 原生设计** - 专为 AI 工具优化的接口和响应格式\r\n- **🔗 标准化集成** - 遵循 MCP 协议，可无缝集成到任何支持 MCP 的 AI 应用\r\n- **🧠 智能搜索** - 支持中文关键词搜索，精准匹配模板需求\r\n- **⚡ 高性能** - 快速响应，10秒超时保护\r\n\r\n\r\n#### ✨ 功能特性\r\n\r\n| 特性 | 说明 |\r\n\r\n|------|------|\r\n\r\n| 🔍 中文搜索 | 支持中文关键词智能搜索 |\r\n\r\n| 📊 灵活限制 | 可配置返回数量（1-50个） |\r\n\r\n| 🎨 详细信息 | 返回模板名称、描述、封面等 |\r\n\r\n| ⚡ 快速响应 | 10秒超时保护，确保响应速度 |\r\n\r\n| 🛡️ 错误处理 | 完善的异常处理和错误提示 |\r\n\r\n\r\n### 📝 完善的日志系统\r\n\r\n- 🛡️ 完善的异常处理机制\r\n- 📝 详细的请求/响应日志\r\n- 🔄 网络超时和重试保护\r\n- 📊 实时状态监控\r\n\r\n## 🎯 适用场景\r\n\r\n### 1. 🤖 AI 辅助设计场景\r\n\r\n```markdown\r\n用户: \"帮我找一些科技风格的模板\"\r\n\r\nAI: 通过 MCP 调用模板搜索，返回相关模板列表\r\n\r\n```\r\n\r\n**典型对话：**\r\n\r\n- \"我需要制作一个商务演示，有什么模板推荐？\"\r\n- \"找一些适合教育培训的模板\"\r\n- \"搜索几个现代简约风格的设计模板\"\r\n\r\n### 2. 📝 内容创作工作流\r\n\r\n| 场景 | 描述 | 示例 |\r\n\r\n|------|------|------|\r\n\r\n| **博客写作** | 搜索适合的文章模板 | 技术博客、生活分享模板 |\r\n\r\n| **演示制作** | 快速找到演示文稿模板 | 产品发布、项目汇报模板 |\r\n\r\n| **营销材料** | 寻找宣传册、海报模板 | 品牌宣传、活动推广模板 |\r\n\r\n### 3. 🛠️ 开发集成场景\r\n\r\n- **Cursor IDE** - 在编程时快速查找UI模板\r\n- **设计工具** - 集成到设计软件中\r\n- **自动化工具** - 批量模板分析和管理\r\n- **工作流集成** - 与现有设计流程无缝对接\r\n\r\n### 4. 🎓 教育培训场景\r\n\r\n- **课程设计** - 查找教育相关模板\r\n- **培训材料** - 搜索培训演示模板\r\n- **学术展示** - 寻找学术报告模板\r\n\r\n## 📚 使用教程\r\n\r\n### 🚀 第一步：启动服务器\r\n\r\n```bash\r\n# 1. 克隆项目，进入项目目录\r\n\r\ngit clone https://github.com/21epub/epub-mcp-server.git && cd epub-mcp-server\r\n\r\n# 2. 确保Python环境\r\n\r\npython --version  # 需要 Python 3.8+\r\n\r\n# 3. 安装依赖\r\n\r\npip install mcp requests\r\n\r\n# 4. 启动 MCP 服务器\r\n\r\npython src/template_mcp_http_server.py\r\n\r\n```\r\n\r\n\r\n### ⚙️ 第二步：配置 Cursor\r\n\r\n#### 方法一：编辑配置文件（推荐）\r\n\r\n编辑 `~/.cursor/mcp.json`：\r\n\r\n```json\r\n{\r\n\r\n  \"mcpServers\": {\r\n\r\n    \"epub_template_search\": {\r\n\r\n      \"url\": \"http://localhost:8081/api/template\",\r\n\r\n      \"transport\": \"sse\"\r\n\r\n    }\r\n\r\n  }\r\n\r\n}\r\n\r\n```\r\n\r\n#### 方法二：通过设置界面\r\n\r\n1. **打开 Cursor 设置**\r\n\r\n   - macOS: `Cmd + Shift + J`\r\n   - Windows/Linux: `Ctrl + Shift + J`\r\n\r\n2. **添加 MCP 服务器**\r\n\r\n   - 找到 \"MCP Servers\" 选项卡\r\n   - 点击添加新服务器\r\n\r\n3. **配置服务器信息**\r\n\r\n   ```\r\n   名称: epub_template_search\r\n\r\n   URL: http://localhost:8081/api/template\r\n\r\n   传输方式: SSE\r\n\r\n   ```\r\n\r\n\r\n### 🎮 第三步：在 Cursor 中使用\r\n\r\n重启 Cursor 后，你可以通过以下方式使用：\r\n\r\n#### 🔍 基础搜索示例\r\n\r\n```markdown\r\n# 简单搜索\r\n\r\n请帮我搜索一些商务风格的模板\r\n\r\n# 指定数量\r\n\r\n找5个教育相关的模板给我\r\n\r\n# 特定主题\r\n\r\n我需要科技、未来感的设计模板\r\n\r\n# 具体用途\r\n\r\n帮我找适合产品发布会的演示模板\r\n\r\n```\r\n\r\n#### 🛠️ 直接工具调用\r\n\r\n```markdown\r\n# 直接调用工具\r\n\r\n使用 search_templates 工具搜索 \"医疗\" 相关的模板，限制10个结果\r\n\r\n# 批量分析\r\n\r\n帮我分析一下 \"商务\"、\"教育\"、\"科技\" 这三个主题的模板特点\r\n\r\n# 对比搜索\r\n\r\n对比一下 \"简约\" 和 \"复古\" 风格的模板有什么区别\r\n\r\n```\r\n\r\n------\r\n\r\n**🎨 让 AI 驱动的设计工作流更加高效！** ✨\r\n\r\n> 这个 MCP 服务器为创意工作者提供了强大的模板搜索能力，让设计灵感触手可及！\r\n",
+ "config": {
+  "epub_template_search": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:8081/api/template"
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "id": "2735",
+ "kind": "mcp",
+ "name": "spacefrontiers",
+ "fingerprint_md5": "0667112dd6fa71591d34aa1ccd5af064",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# 太空前沿MCP服务器\r\n\r\n在同行评审的论文、书籍、专利、维基百科、Reddit、Telegram和YouTube上为人工智能代理提供检索层。返回引用的全文和规范源URI。\r\n\r\n主办地点： **https://mcp.spacefrontiers.org/** （可流式HTTP传输，OAuth 2.1，带PKCE或承载API密钥）。\r\n\r\n[https://glama.ai/mcp/servers/@SpaceFrontiers/mcp](https://glama.ai/mcp/servers/@SpaceFrontiers/mcp)\r\n\r\n## 工具\r\n\r\n这四个工具都是只读的、幂等的、带前缀的 `spacefrontiers_` 以避免多服务器代理设置中的冲突。\r\n\r\n|工具|何时使用|\r\n|------|-------------|\r\n| `spacefrontiers_search_documents` |同行评审的论文、书籍、专利、维基百科。用于引用和现有技术|\r\n| `spacefrontiers_search_social` |Reddit、Telegram频道、YouTube文字记录。用于新闻和社区讨论。 |\r\n| `spacefrontiers_fetch_document` |一个规范URI（DOI、arXiv、PMID、ISBN）的全文+参考文献。 |\r\n| `spacefrontiers_search_in_document` |按查询在一个文档中传递。用于超过约20K代币的文档。 |\r\n\r\n每个搜索结果包括 `source_uri`, `score`, `snippet`, `authors`, `issued_date`，以及 `content_size_tokens` 用于键入解析和引用。\r\n\r\n## 安装\r\n\r\n托管服务器有自己的 [/mcp安装页面](https://spacefrontiers.org/mcp) 只需单击Cursor、VS Code和Smithery的链接。\r\n\r\n### 克劳德代码（推荐）\r\n\r\n```sh\r\nclaude mcp add --transport http spacefrontiers https://mcp.spacefrontiers.org\r\n```\r\n\r\n首次使用时，会打开浏览器进行OAuth登录-不需要粘贴API密钥。\r\n\r\n### 游标/VS代码/Cline/Windsurf（HTTP）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"spacefrontiers\": {\r\n      \"url\": \"https://mcp.spacefrontiers.org\",\r\n      \"headers\": { \"Authorization\": \"Bearer YOUR_API_KEY\" }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n在获取API密钥https://spacefrontiers.org/keys.\r\n\r\n### 自托管（stdio）\r\n\r\n```sh\r\ngit clone https://github.com/SpaceFrontiers/mcp.git\r\ncd mcp\r\nuv sync\r\nSPACE_FRONTIERS_API_KEY=sf_live_xxx uv run fastmcp run mcp_server.py\r\n```\r\n\r\n## 仓库布局\r\n\r\n- `mcp_server.py` --Starlette+FastMCP入口点，OAuth知名端点。\r\n- `tools.py` --四个具有Pydantic输出模式的工具。\r\n- `prompts.py` — `deep_research_agent` 提示。\r\n- `resources.py` — `spacefrontiers://document/{uri_b64}` URI模板。\r\n- `auth.py` --承载令牌验证、源分配列表、MCP协议版本检查。\r\n- `client.py` -用于v2搜索API的异步HTTP客户端。\r\n- `server.json` --MCP官方注册条目。\r\n- `smithery.yaml` --Smithery部署配置。\r\n- `registry.json` --内部注册表元数据。\r\n- `tests/` --pytest单元测试。\r\n\r\n## 规范合规性\r\n\r\n- **运输**：流式HTTP，无状态。\r\n- **认证**OAuth 2.1与RFC 7591动态客户端注册；长期使用的API密钥也被接受。\r\n- **注释**：每个工具都声明 `readOnlyHint`, `idempotentHint`, `openWorldHint`, `destructiveHint:false`.\r\n- **输出模式**：每个工具 `outputSchema` 是从Pydantic返回模型自动生成的。\r\n- **资源**：为文档注册了一个URI模板。\r\n- **接受规范版本**: `2025-03-26`, `2025-06-18`, `2025-11-25`.\r\n\r\n## 发展\r\n\r\n```sh\r\nuv sync\r\nuv run pytest\r\nuv run ruff check .\r\n```\r\n\r\nmcp名称：io.github。太空前沿/mcp\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "spacefrontiers": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.spacefrontiers.org"
+  }
+ }
+}

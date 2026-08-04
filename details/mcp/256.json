@@ -1,0 +1,22 @@
+{
+ "id": "256",
+ "kind": "mcp",
+ "name": "keyboard-maestro",
+ "fingerprint_md5": "e508950af19625e81d245fa9e3a896ad",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# 键盘大师MCP服务器\r\n\r\n一个MCP（模型上下文协议）服务器，将克劳德等人工智能助手连接到 [键盘大师](https://www.keyboardmaestro.com/)，使它们能够触发宏并从Mac检索剪贴板结果。\r\n\r\n## 它的作用\r\n\r\n此MCP服务器允许AI助手：\r\n\r\n- **触发宏** 在一台或多台Mac上\r\n- **捕获剪贴板内容** （文本和图像）来自宏\r\n- **截图** 并对其进行分析\r\n- **运行OCR** 并提取文本\r\n- **控制多台机器** 从单一配置\r\n\r\n当你运行一个宏将某些内容复制到剪贴板（如屏幕截图）时，人工智能可以直接检索和查看这些内容。\r\n\r\n## 需求\r\n\r\n- macOS与 [键盘大师](https://www.keyboardmaestro.com/) 11+已安装\r\n- 键盘Maestro Web服务器已启用\r\n- Node.js 18+\r\n\r\n## 快速开始\r\n\r\n### 1.添加MCP服务器\r\n\r\n添加到MCP客户端配置中：\r\n\r\n**克劳德桌面版** (`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"keyboard-maestro\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"keyboard-maestro-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**克劳德代码** (`~/.claude/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"keyboard-maestro\": {\r\n    \"command\": \"npx\",\r\n    \"args\": [\"-y\", \"keyboard-maestro-mcp\"]\r\n  }\r\n}\r\n```\r\n\r\n### 2.运行配置工具\r\n\r\n添加服务器并重新启动MCP客户端后，询问AI：\r\n\r\n```\r\nOpen the Keyboard Maestro config tool\r\n```\r\n\r\n配置工具将指导您完成以下操作：\r\n\r\n1. **启用Web服务器** -键盘大师Web服务器设置说明\r\n1. **添加机器** -输入连接详细信息并测试连接\r\n1. **更新配置** -自动更新MCP配置文件（或复制JSON）\r\n1. **安装宏** -生成并导入所需的Keyboard Maestro宏\r\n\r\n## 配置参考\r\n\r\n### 环境变量\r\n\r\n配置机器时，服务器使用以下环境变量：\r\n\r\n|变量|描述|\r\n|----------|-------------|\r\n| `KM_MACHINES` |机器配置的JSON数组|\r\n\r\n或者对于一台机器：\r\n\r\n|变量|必填|默认|描述|\r\n|----------|----------|---------|-------------|\r\n| `KM_HOST` |是|-|主机名或IP地址|\r\n| `KM_PORT` |无|4490| Web服务器端口|\r\n| `KM_USERNAME` |是|-| Web服务器用户名|\r\n| `KM_PASSWORD` |是|-| Web服务器密码|\r\n| `KM_SECURE` |否|错误|使用HTTPS而不是HTTP|\r\n| `KM_NAME` |否|主机值|计算机的友好名称|\r\n| `KM_OUTPUT_DIR` |是|-|保存剪贴板文件的文件夹|\r\n\r\n### 机器配置对象\r\n\r\n每台机器 `KM_MACHINES` 支持：\r\n\r\n|字段|必填|默认|描述|\r\n|-------|----------|---------|-------------|\r\n| `name` |是|-|机器的友好名称|\r\n| `host` |是|-|主机名或IP地址|\r\n| `port` |无|4490| Web服务器HTTP端口|\r\n| `username` |是|-| Web服务器用户名|\r\n| `password` |是|-| Web服务器密码|\r\n| `secure` |否|错误|使用HTTPS而不是HTTP|\r\n| `outputDir` |是|-|保存剪贴板文件的文件夹|\r\n\r\n> **端口间距：** Keyboard Maestro使用两个连续端口（端口+1上的HTTP和HTTPS）。配置多台机器时，将端口间隔至少2个（例如，4490、4492、4494）。\r\n\r\n## 可用工具\r\n\r\n### 交互式配置\r\n\r\n带有交互式UI的可视化配置工具（适用于Claude Desktop和其他支持客户端的MCP应用程序）。提供：\r\n\r\n- 机器管理（添加、编辑、删除、测试）\r\n- MCP配置文件更新\r\n- 宏组生成和安装\r\n\r\n### 配置\r\n\r\n基于文本的配置工具（适用于Claude Code和其他CLI客户端）。\r\n\r\n### list_machines\r\n\r\n列出所有已配置的Keyboard Maestro机器。\r\n\r\n### list_macros\r\n\r\n列出计算机中可用的宏。\r\n\r\n### 触发器_宏\r\n\r\n按名称或UUID触发宏。\r\n\r\n### trigger_macro_on_all\r\n\r\n在所有已配置的计算机上同时触发宏。\r\n\r\n### get_clipboard_result\r\n\r\n从计算机检索当前剪贴板内容。\r\n\r\n### 触发和捕获\r\n\r\n触发宏并自动捕获剪贴板结果。\r\n\r\n## 示例工作流\r\n\r\n### 屏幕截图分析\r\n\r\n```\r\nTake a screenshot of the active window and describe what you see\r\n```\r\n\r\n### OCR文本提取\r\n\r\n```\r\nRun OCR on my clipboard image and read the text\r\n```\r\n\r\n### 多机控制\r\n\r\n```\r\nMute audio on all my machines\r\n```\r\n\r\n## 键盘大师设置\r\n\r\n配置工具将为您提供指导，但以下是摘要：\r\n\r\n### 启用Web服务器\r\n\r\n1. 打开 **键盘大师**\r\n1. 首选 **键盘大师→ 偏好** (⌘,)\r\n1. 点击 **Web服务器** 标签\r\n1. 检查 **Web服务器已启用**\r\n1. 设定一个 **用户名** 和 **密码**\r\n1. 注意 **http端口** （默认值：4490）\r\n\r\n### 导入宏\r\n\r\n使用配置工具生成宏后：\r\n\r\n1. 首选 **File → 导入→ 安全导入宏。..**\r\n1. 选择已下载的 `keyboard-maestro-mcp.kmmacros` 文件\r\n1. 将出现“键盘大师MCP”组\r\n\r\n## 安全考虑\r\n\r\n- 凭据通过环境变量传递\r\n- 使用HTTPS(`secure: true`)通过不受信任的网络连接时\r\n- web服务器使用HTTP基本身份验证\r\n- 考虑防火墙规则来限制对web服务器端口的访问\r\n- 剪贴板文件存储在您配置的文件夹中\r\n\r\n## 故障排除\r\n\r\n### “连接被拒绝”错误\r\n\r\n- 验证键盘大师的web服务器是否已启用\r\n- 检查端口号是否与您的配置匹配\r\n- 确保没有防火墙阻止连接\r\n\r\n### 宏未出现在列表中\r\n\r\n- 必须启用宏\r\n- 必须启用宏组\r\n- 宏必须有一个名称\r\n\r\n### 剪贴板捕获不返回任何内容\r\n\r\n- 运行配置工具以验证是否安装了宏\r\n- 检查一下 `outputDir` 指向宏中配置的同一文件夹\r\n- 确保文件夹存在并且可写\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "keyboard-maestro": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "keyboard-maestro-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

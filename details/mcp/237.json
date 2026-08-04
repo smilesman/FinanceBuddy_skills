@@ -1,0 +1,23 @@
+{
+ "id": "237",
+ "kind": "mcp",
+ "name": "halo-stats",
+ "fingerprint_md5": "cc7df9200d904f7819e55456e5b7daee",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 领跑者——Halo Infinite Stat Tracker MCP应用程序\r\n\r\n一个模型上下文协议（MCP）应用程序，显示您的Halo Infinite比赛统计数据和职业发展。内置于 [MCP应用程序](https://github.com/anthropics/ext-apps) 丰富交互式视图的基础， [@邓多德夫/咕噜](https://gruntapi.com) 用于Halo Infinite API访问，以及 [@丹多德夫/海螺](https://github.com/dend/conch) 用于Xbox Live身份验证。\r\n\r\n## 它的作用\r\n\r\nForerunner公开了LLM可以调用的三个MCP工具：\r\n\r\n- **`halo_authenticate`** --在浏览器中运行Xbox Live OAuth流。令牌被加密并在本地持久化(`tokens.bin`)，所以您只登录一次。\r\n- **`halo_match_stats`** --获取你的最后一场比赛：结果、地图、模式、K/D/A、准确度、伤害统计数据，以及用精灵图标获得的奖牌。\r\n- **`halo_career`** --获取你的职业等级进展：当前等级与图标、等级内的XP进展以及英雄的整体进展。\r\n\r\n每个统计工具都返回一个JSON有效载荷，捆绑的单文件React应用程序将其渲染为一个深色的Halo风格的仪表板，带有锐利的边缘、大写标签和难度着色的奖牌图块。\r\n\r\n## 先决条件\r\n\r\n- **Node.js** 18+\r\n- **Azure Entra（Azure AD）应用程序** 适用于Xbox Live OAuth\r\n\r\n### 创建Azure Entra应用程序\r\n\r\n1. 首选 [Azure门户--应用程序注册](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)\r\n1. 点击 **新注册**\r\n1. 设置一个名称（例如“领跑者”）\r\n1. 在...之下 **支持的帐户类型**，选择 **仅限个人Microsoft帐户**\r\n1. 在...之下 **重定向URI**，选择 **移动和桌面应用程序** 并输入：\r\n   ```\r\n   http://localhost:8787/callback\r\n   ```\r\n1. 点击 **注册**\r\n1. 复制 **应用程序（客户端）ID**\r\n\r\n不需要客户端密钥——这是一个使用PKCE的公共客户端应用程序。\r\n\r\n## 入门指南\r\n\r\n```sh\r\n# Clone and install\r\ngit clone <repo-url>\r\ncd forerunner-mcp-app\r\nnpm install\r\n\r\n# Configure your Azure client ID\r\ncp config.example.json config.json\r\n```\r\n\r\n编辑 `config.json`:\r\n\r\n```json\r\n{\r\n  \"clientId\": \"your-client-id-here\",\r\n  \"redirectUri\": \"http://localhost:8787/callback\"\r\n}\r\n```\r\n\r\n构建：\r\n\r\n```sh\r\nnpm run build\r\n```\r\n\r\n## 使用Claude Desktop\r\n\r\n添加到您的Claude Desktop MCP服务器配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"halo-stats\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"main.ts\", \"--stdio\"],\r\n      \"cwd\": \"/path/to/forerunner-mcp-app\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后问克劳德 _“显示我的最后一场Halo比赛”_ 或 _“我的职业排名是多少？”_第一次，克劳德会打电话来 `halo_authenticate` 要触发登录，请获取并显示您的统计数据。\r\n\r\n## 使用VS代码\r\n\r\n添加到您的VS代码设置JSON(`settings.json` 或工作空间 `.vscode/settings.json`):\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"halo-stats\": {\r\n        \"command\": \"npx\",\r\n        \"args\": [\"tsx\", \"main.ts\", \"--stdio\"],\r\n        \"cwd\": \"/path/to/forerunner-mcp-app\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n```sh\r\n# Vite watch + server with hot reload\r\nnpm run dev\r\n\r\n# Or run the server directly\r\nnpm run serve\r\n```\r\n\r\n服务器启动于 `http://localhost:3001/mcp` 默认情况下（HTTP传输）。使用 `--stdio` 用于stdio传输。\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。看 [许可证](LICENSE) 了解详情。\r\n",
+ "config": {
+  "halo-stats": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "tsx",
+    "main.ts",
+    "--stdio"
+   ],
+   "env": {}
+  }
+ }
+}

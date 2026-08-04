@@ -1,0 +1,22 @@
+{
+ "id": "2968",
+ "kind": "mcp",
+ "name": "sui-tools",
+ "fingerprint_md5": "2bc2b9f7b2b90e1d72902740f1b51cf5",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# Sui MCP工具\r\n\r\n这是一个基于Sui区块链的MCP（模型上下文协议）工具包。该项目提供了与Sui区块链交互的功能，并集成了MCP SDK来实现模型上下文协议功能。\r\n\r\n## 🚀 特性\r\n\r\n- 使用TypeScript开发用于类型安全\r\n- 与Sui区块链功能深度集成\r\n- 支持多种网络环境（测试网、开发网）\r\n- 完整的构建脚本和开发工具链\r\n\r\n## 📦 安装和配置\r\n\r\n有两种方法可以安装和配置Sui MCP工具：\r\n\r\n### 方法1：使用npx（推荐）\r\n\r\n这是最简单的方法-只需将以下配置添加到您的Claude Desktop配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sui-tools\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"sui-mcp@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 方法2：本地构建\r\n\r\n1. 克隆和安装依赖关系：\r\n\r\n```bash\r\ngit clone https://github.com/0xdwong/sui-mcp.git\r\ncd sui-mcp\r\nyarn install\r\n```\r\n\r\n2. 构建项目：\r\n\r\n```bash\r\nyarn build\r\n```\r\n\r\n3. 使用您的本地版本配置Claude Desktop：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sui-tools\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"<absolute-path-to-your-project>/build/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 配置位置\r\n\r\nClaude Desktop配置文件位于：\r\n\r\n- macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- Linux： `~/.config/Claude/claude_desktop_config.json`\r\n\r\n您可以通过克劳德桌面访问此文件：克劳德>设置>开发人员>编辑配置\r\n\r\n重新启动Claude Desktop以使更改生效。\r\n\r\n## 🛠 可用工具\r\n\r\n- 测试网水龙头\r\n\r\n  > 例如：请求SUI为0x9eb94b1c301505d188f1b97914208b31a5419b57b2a3571169ad2165d41c2ffa\r\n\r\n- 检查SUI余额\r\n\r\n  > 例如：检查SUI余额0x9eb94b1c301505d188f1b97914208b31a5419b57b2a3571169ad2165d41c2ffa\r\n\r\n- 转移SUI\r\n\r\n  > 例如：将1个SUI转移到0x9eb94b1c301505d188f1b97914208b31a5419b57b2a3571169ad2165d41c2ffa\r\n\r\n## 📚 文档\r\n\r\n- [Sui开发人员文档](https://docs.sui.io/)\r\n- [MCP协议文件](https://modelcontextprotocol.io/)\r\n",
+ "config": {
+  "sui-tools": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "sui-mcp@latest"
+   ],
+   "env": {}
+  }
+ }
+}

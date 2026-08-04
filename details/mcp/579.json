@@ -1,0 +1,26 @@
+{
+ "id": "579",
+ "kind": "mcp",
+ "name": "audio-rag",
+ "fingerprint_md5": "6750fc2cf0a83e744cd3b1cc18d748c0",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP音频RAG服务器\r\n\r\n> 使用人工智能将您的音频文件转换为可搜索的知识库。向克劳德询问有关您的会议、播客、讲座或任何音频内容的问题。\r\n\r\n<p align=\"center\">\r\n  <a href=\"https://www.buymeacoffee.com/matheusslg\" target=\"_blank\">\r\n  </a>\r\n</p>\r\n\r\n## 这是什么？\r\n\r\n这是一个MCP（模型上下文协议）服务器，它允许您：\r\n\r\n1. **转录** 使用谷歌Gemini AI的任何音频文件\r\n1. **商店** 可搜索数据库中的转录\r\n1. **搜索** 使用自然语言浏览所有音频内容\r\n\r\n设置完成后，您可以简单地问Claude以下问题：\r\n\r\n- *“他们在我的会议录音中讨论了什么预算？”*\r\n- *“在我的播客收藏中查找机器学习的提及”*\r\n- *“昨天讲座的要点是什么？”*\r\n\r\n## 运作原理\r\n\r\n```\r\n┌─────────────┐     ┌─────────────┐     ┌─────────────┐     ┌─────────────┐\r\n│ Audio File  │ ──▶ │   Gemini    │ ──▶ │  Chunking   │ ──▶ │  Supabase   │\r\n│ (.mp3, etc) │     │ Transcribe  │     │ + Embedding │     │  (pgvector) │\r\n└─────────────┘     └─────────────┘     └─────────────┘     └─────────────┘\r\n                                                                   │\r\n┌─────────────┐     ┌─────────────┐     ┌─────────────┐            │\r\n│   Claude    │ ◀── │   Results   │ ◀── │   Search    │ ◀──────────┘\r\n│  Response   │     │ + Snippets  │     │   Query     │\r\n└─────────────┘     └─────────────┘     └─────────────┘\r\n```\r\n\r\n## 快速开始\r\n\r\n### 先决条件\r\n\r\n- **Node.js 18+** - [点击此处下载](https://nodejs.org/)\r\n- **Gemini API密钥** - [免费获得一个](https://aistudio.google.com/apikey)\r\n- **辅助数据库账户** - [免费注册](https://supabase.com)\r\n\r\n### 步骤1：克隆并安装\r\n\r\n```bash\r\ngit clone https://github.com/matheusslg/mcp-audio-rag.git\r\ncd mcp-audio-rag\r\nnpm install\r\n```\r\n\r\n### 步骤2：设置辅助数据库\r\n\r\n1. 在以下位置创建新项目 [网站 supabase.com](https://supabase.com)\r\n1. 首选 **SQL编辑器** 在您的仪表板中\r\n1. 粘贴并运行以下内容 `supabase/schema.sql`\r\n\r\n### 第3步：获取API密钥\r\n\r\n**Supabase** （设置→ API):\r\n\r\n- 复制 **项目Url** → `SUPABASE_URL`\r\n- 复制 **service_role密钥** → `SUPABASE_SERVICE_KEY`\r\n\r\n**谷歌AI工作室**:\r\n\r\n- 在以下位置创建密钥 [aistudio.google.com/apikey](https://aistudio.google.com/apikey) → `GEMINI_API_KEY`\r\n\r\n### 步骤4：配置\r\n\r\n```bash\r\ncp .env.example .env\r\n```\r\n\r\n编辑 `.env`:\r\n\r\n```\r\nGEMINI_API_KEY=your-key-here\r\nSUPABASE_URL=https://your-project.supabase.co\r\nSUPABASE_SERVICE_KEY=your-service-role-key\r\n```\r\n\r\n### 第五步：加入克劳德\r\n\r\n**适用于Claude Code CLI** (`~/.claude.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"audio-rag\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"/full/path/to/mcp-audio-rag/src/server.ts\"],\r\n      \"env\": {\r\n        \"GEMINI_API_KEY\": \"your-key\",\r\n        \"SUPABASE_URL\": \"https://your-project.supabase.co\",\r\n        \"SUPABASE_SERVICE_KEY\": \"your-service-role-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**适用于克劳德桌面** (`~/Library/Application Support/Claude/claude_desktop_config.json` 在Mac上）：\r\n\r\n配置与上述相同。\r\n\r\n## 用法\r\n\r\n### 转录音频\r\n\r\n只需告诉克劳德转录一个文件：\r\n\r\n```\r\nTranscribe /path/to/meeting.mp3\r\n```\r\n\r\n想要使用特定的模型吗？只要问：\r\n\r\n```\r\nTranscribe /path/to/lecture.m4a using gemini-2.5-pro\r\n```\r\n\r\n### 搜索您的音频\r\n\r\n问一些自然的问题：\r\n\r\n```\r\nWhat did they say about the project timeline?\r\nSearch for mentions of \"budget\" in my recordings\r\nFind discussions about AI in my podcasts\r\n```\r\n\r\n### 管理您的图书馆\r\n\r\n```\r\nList all my transcribed audio files\r\nDelete the recording from last week\r\nGet the full transcript of meeting.mp3\r\nSummarize the podcast episode\r\n```\r\n\r\n## 可用型号\r\n\r\n|型号|最适合|\r\n|-------|----------|\r\n| `gemini-2.5-flash` | **默认** -快速准确，平衡性好|\r\n| `gemini-2.5-flash-lite` |最快、最便宜-适合批量加工|\r\n| `gemini-2.5-pro` |最佳音质-复杂音频，多扬声器|\r\n| `gemini-3-pro-preview` |最新-尖端功能|\r\n| `gemini-2.0-flash` |可靠-上一代|\r\n| `gemini-2.0-flash-lite` |快速-上一代|\r\n\r\n## 支持的音频格式\r\n\r\n`.mp3` `.mp4` `.m4a` `.wav` `.webm` `.mpeg` `.mpga`\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `ingest_audio` |转录并存储音频文件|\r\n| `search_transcripts` |使用自然语言搜索音频|\r\n| `list_transcripts` |列出所有转录的音频文件|\r\n| `get_full_transcript` |获取文件的完整副本|\r\n| `summarize_audio` |生成成绩单的AI摘要|\r\n| `delete_transcript` |从数据库中删除转录的文件|\r\n\r\n## 故障排除\r\n\r\n|问题|解决方案|\r\n|---------|----------|\r\n|“未找到相关片段”|尝试重新表述您的搜索，或检查是否摄入了音频|\r\n|“缺少环境变量”|检查您的 `.env` 文件或Claude配置包含所有3个键|\r\n|Supabase错误|确保您正在使用 `service_role` 钥匙，不是 `anon` 钥匙|\r\n|慢转录|使用 `gemini-2.5-flash-lite` 为了更快的处理|\r\n\r\n## 支持这个项目\r\n\r\n如果这个项目为你节省了时间或帮助了你，考虑给我买杯咖啡！\r\n\r\n<a href=\"https://www.buymeacoffee.com/matheusslg\" target=\"_blank\">\r\n</a>\r\n\r\n## 许可证\r\n\r\nMIT-随心所欲地使用它！\r\n\r\n______________________________________________________________________\r\n\r\n<p align=\"center\">\r\n  Made with Gemini + Supabase + Claude\r\n</p>\r\n",
+ "config": {
+  "audio-rag": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "tsx",
+    "/full/path/to/mcp-audio-rag/src/server.ts"
+   ],
+   "env": {
+    "GEMINI_API_KEY": "your-key",
+    "SUPABASE_URL": "https://your-project.supabase.co",
+    "SUPABASE_SERVICE_KEY": "your-service-role-key"
+   }
+  }
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "id": "1134",
+ "kind": "mcp",
+ "name": "mssql-2",
+ "fingerprint_md5": "50e97af8331227460bfe4dbbdbf95587",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# 指南\r\n\r\n1. **创建虚拟环境**：运行以下命令以创建名为的虚拟环境 `venv`:\r\n\r\n   ```bash\r\n   python3.10 -m venv venv\r\n   ```\r\n\r\n1. **激活虚拟环境**:\r\n\r\n   - 在macOS和Linux上：\r\n     ```bash\r\n     source venv/bin/activate\r\n     ```\r\n\r\n1. **验证Python版本**：激活后，通过运行以下命令验证虚拟环境是否使用Python 3.10：\r\n\r\n   ```bash\r\n   python --version\r\n   ```\r\n\r\n1. **输入连接字符串详细信息**:\r\n\r\n   - 创建一个 `.env` 文件并添加以下连接详细信息：\r\n\r\n   ```bash\r\n   MSSQL_SERVER=localhost\r\n   MSSQL_USER=SA\r\n   MSSQL_PASSWORD=YourStrong@Passw0rd\r\n   MSSQL_DATABASE=localdatabase\r\n   MSSQL_PORT=1433\r\n   ```\r\n\r\n1. **将MSSQL MCP服务器连接到光标编辑器**:\r\n\r\n   - 在文件夹中创建或编辑文件： `.cursor/mcp.json`\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"mssql\": {\r\n         \"command\": \"uv\",\r\n         \"args\": [\r\n           \"--directory\", \r\n           \"path/to/mssql_mcp_server\",\r\n           \"run\",\r\n           \"mssql_mcp_server\"\r\n         ],\r\n         \"env\": {\r\n           \"MSSQL_SERVER\": \"localhost\",\r\n           \"MSSQL_USER\": \"your_username\",\r\n           \"MSSQL_PASSWORD\": \"your_password\",\r\n           \"MSSQL_DATABASE\": \"your_database\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. **在编辑器中选择AGENT模式并检查连接**\r\n\r\n- 您可以向游标提示类似“使用MSSQL MCP服务器检查连接”的内容\r\n",
+ "config": {
+  "mssql": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "path/to/mssql_mcp_server",
+    "run",
+    "mssql_mcp_server"
+   ],
+   "env": {
+    "MSSQL_SERVER": "localhost",
+    "MSSQL_USER": "your_username",
+    "MSSQL_PASSWORD": "your_password",
+    "MSSQL_DATABASE": "your_database"
+   }
+  }
+ }
+}

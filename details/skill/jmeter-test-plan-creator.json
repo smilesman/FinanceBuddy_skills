@@ -1,0 +1,12 @@
+{
+ "id": "jmeter-test-plan-creator",
+ "kind": "skill",
+ "name": "jmeter-test-plan-creator",
+ "fingerprint_md5": "0d25999d64fa89af0329cc451399643b",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\n根据业务需求自动生成 JMeter 测试计划（.jmx 文件），包括线程组、HTTP 请求、断言、定时器等配置。",
+ "config": {}
+}

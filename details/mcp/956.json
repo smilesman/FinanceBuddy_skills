@@ -1,0 +1,24 @@
+{
+ "id": "956",
+ "kind": "mcp",
+ "name": "aact",
+ "fingerprint_md5": "236b345440b21d26f305100454b9de60",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# AACT临床试验MCP服务器\r\n\r\n查询 [抗糜蛋白酶](https://aact.ctti-clinicaltrials.org) （ClinicalTrials.gov）数据库直接来自克劳德。使用带缓冲分页的只读SQL浏览70多个临床试验数据表，包括研究、干预措施、结果、赞助商、设施。\r\n\r\n## 为什么AACT优于ClinicalTrials.gov API？\r\n\r\nClinicalTrials.gov API每次试验返回一条JSON记录，这对快速查找很有用，但对分析很难。想要了解2020年至2025年2期非小细胞肺癌试验的平均持续时间吗？使用API，您可以过滤试验，从每个JSON记录中提取日期，然后计算客户端的持续时间。使用AACT，这是一个SQL查询。\r\n\r\n结构化的PostgreSQL数据库使 **汇总、组合和总结** 以您需要的任何方式提供临床试验数据。对于人工智能辅助分析，SQL是LLM处理得非常好的标准——与解析定制的API响应相比，错误更少，需要管理的上下文更少，性能更好，成本更低。\r\n\r\n> **注：** 这是一个独立的第三方集成。它不隶属于或认可 [临床试验转型倡议（CTTI）](https://ctti-clinicaltrials.org) 或杜克大学。然而，我们发布了CTTI关于将其数据库与Claude集成的案例研究-请参阅 [AACT案例研究](https://connects.ctti-clinicaltrials.org/show/57.pdf).\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `database_info` |确认数据库连接、服务器时间和数据货币|\r\n| `list_tables` |查找所有具有近似行数的可用表|\r\n| `describe_table` |检查列名、类型、不同计数和样本值|\r\n| `get_column_values` |为具有计数的列获取不同的值——在筛选之前至关重要|\r\n| `search_columns` |在所有表中按关键字查找列（例如。 `masking` -> `designs.masking`) |\r\n| `read_query` |使用缓冲结果执行SELECT、CTE或EXPLAIN查询并预览|\r\n| `fetch_rows` |浏览缓冲的查询结果，无需重新查询|\r\n\r\n所有表都加入 `nct_id`.\r\n\r\n## 设置\r\n\r\n1. 在以下网址创建免费帐户https://aact.ctti-clinicaltrials.org/users/sign_up\r\n1. 安装插件（见下面的选项）\r\n1. 在系统提示时输入您的AACT凭据\r\n\r\n## 安装\r\n\r\n### 选项1:克劳德桌面插件（推荐）\r\n\r\n下载最新 `.mcpb` 文件来自 [发布](https://github.com/navisbio/mcp-server-aact/releases) 并在Claude Desktop中打开它。系统将提示您输入AACT凭据。\r\n\r\n### 选项2：已发布的包\r\n\r\n添加到您的 `claude_desktop_config.json` (`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上， `%APPDATA%\\Claude\\claude_desktop_config.json` 在Windows上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"aact\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-server-aact\"],\r\n      \"env\": {\r\n        \"DB_USER\": \"your_username\",\r\n        \"DB_PASSWORD\": \"your_password\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 选项3:Docker\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"aact\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\", \"--rm\", \"-i\",\r\n        \"--env\", \"DB_USER=your_username\",\r\n        \"--env\", \"DB_PASSWORD=your_password\",\r\n        \"navisbio/mcp-server-aact:latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 选项4：来源\r\n\r\n```bash\r\ngit clone https://github.com/navisbio/mcp-server-aact.git\r\ncd mcp-server-aact\r\nuv sync\r\n```\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"aact\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/mcp-server-aact\", \"mcp-server-aact\"],\r\n      \"env\": {\r\n        \"DB_USER\": \"your_username\",\r\n        \"DB_PASSWORD\": \"your_password\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 示例提示\r\n\r\n### 1.竞争格局分析\r\n\r\n> “谁是阿尔茨海默病3期试验的前10名赞助商？按试验状态分列。”\r\n\r\n服务器将发现相关表，检查阶段和状态的枚举值，然后构建一个查询连接 `studies`, `conditions`，以及 `sponsors`.\r\n\r\n### 2.药品管道搜索\r\n\r\n> “查找pembrolizumab治疗非小细胞肺癌的所有积极招募的2期和3期试验。显示NCT ID、标题、注册和主要赞助商。”\r\n\r\n用途 `get_column_values` 确认相位格式(`PHASE2`, `PHASE3`)，然后查询 `studies`, `browse_interventions`，以及 `conditions`.\r\n\r\n### 3.终点分析\r\n\r\n> “在已完成的3期2型糖尿病试验中，最常见的主要结局指标是什么？”\r\n\r\n连接 `studies` 随着 `outcomes` 分析按结果度量类型分组的端点模式。\r\n\r\n### 4.地理分布\r\n\r\n> “一个典型的罕见病试验有多少个临床试验点？按试验点数量显示排名靠前的国家。”\r\n\r\n查询 `facilities` 表已连接 `conditions` 绘制试验地理图。\r\n\r\n## 隐私\r\n\r\n此服务器是只读的，不收集或存储任何个人数据。看 [隐私.md](PRIVACY.md) 了解详情。\r\n\r\n## 故障排除\r\n\r\n### 连接或身份验证错误\r\n\r\n- 在以下网址验证您的AACT凭据https://aact.ctti-clinicaltrials.org/users/sign_in\r\n- AACT数据库每周进行一次维护（通常是周末）——如果连接被拒绝，请稍后重试\r\n- 确保 `DB_USER` 和 `DB_PASSWORD` 在配置中设置正确\r\n\r\n### `spawn uvx ENOENT` 错误\r\n\r\n系统找不到 `uvx`.使用完整路径：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"aact\": {\r\n      \"command\": \"/Users/username/.local/bin/uvx\",\r\n      \"args\": [\"mcp-server-aact\"],\r\n      \"env\": {\r\n        \"DB_USER\": \"your_username\",\r\n        \"DB_PASSWORD\": \"your_password\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 贡献\r\n\r\n- 打开一个问题 [GitHub](https://github.com/navisbio/mcp-server-aact)\r\n- 电子邮件：jonas.walheim@navis-bio.com\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "aact": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-server-aact"
+   ],
+   "env": {
+    "DB_USER": "your_username",
+    "DB_PASSWORD": "your_password"
+   }
+  }
+ }
+}

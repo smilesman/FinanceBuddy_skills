@@ -1,0 +1,22 @@
+{
+ "id": "3179",
+ "kind": "mcp",
+ "name": "nordic",
+ "fingerprint_md5": "f85d41f145736ae372ee43785a3c880e",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp北欧语\r\n\r\n一个MCP服务器用于所有北欧数据。10个模块中的33个工具，不需要任何API密钥。\r\n\r\n## 包含什么\r\n\r\n|模块|工具|数据源|\r\n|--------|-------|-------------|\r\n| 🇩🇰 `dk-cvr` | `dk_cvr_search`, `dk_cvr_lookup` | [cvrapi.dk](https://cvrapi.dk) |\r\n| 🇩🇰 `dk-addresses` | `dk_address_search`, `dk_reverse_geocode`, `dk_postal_code_lookup`, `dk_municipality_lookup`, `dk_nearby_addresses` | [达瓦](https://dawadocs.dataforsyningen.dk) |\r\n| 🇩🇰 `dk-weather` | `dk_current_weather`, `dk_weather_forecast`, `dk_compare_weather` | [DMI和谐2公里](https://open-meteo.com) |\r\n| 🇩🇰 `dk-energy` | `dk_electricity_prices`, `dk_co2_emissions`, `dk_energy_mix`, `dk_cheapest_hours` | [Energi数据服务](https://www.energidataservice.dk) |\r\n| 🇳🇴 `no-companies` | `no_search_companies`, `no_company_lookup`, `no_search_subunits`, `no_company_roles` | [刷太阳](https://data.brreg.no) |\r\n| 🇳🇴 `no-weather` | `no_current_weather`, `no_weather_forecast` | [MET挪威/年份](https://api.met.no) |\r\n| 🇫🇮 `fi-companies` | `fi_search_companies`, `fi_company_lookup`, `fi_search_by_industry`, `fi_recent_registrations` | [PRH/YTJ](https://avoindata.prh.fi) |\r\n| 🇫🇮 `fi-weather` | `fi_current_weather`, `fi_weather_forecast`, `fi_compare_weather` | [开放天气](https://open-meteo.com) |\r\n| 🇳🇴 `no-addresses` | `no_address_search`, `no_reverse_geocode`, `no_postal_code_lookup`, `no_municipality_addresses` | [地图](https://ws.geonorge.no/adresser/v1/) |\r\n| 🇸🇪 `se-weather` | `se_current_weather`, `se_weather_forecast` | [瑞典水文气象局](https://opendata.smhi.se) |\r\n\r\n所有API都是免费的、开放的，不需要身份验证。\r\n\r\n## 快速启动\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"nordic\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-nordic\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者克隆并直接运行：\r\n\r\n```bash\r\ngit clone https://github.com/robobobby/mcp-nordic.git\r\ncd mcp-nordic\r\nnpm install\r\nnode src/index.js\r\n```\r\n\r\n## 选择性加载\r\n\r\n只需要丹麦天气和芬兰公司？\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"nordic\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-nordic\", \"--dk-weather\", \"--fi-companies\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n可用标志： `--dk-cvr`, `--dk-addresses`, `--dk-weather`, `--dk-energy`, `--no-companies`, `--no-addresses`, `--no-weather`, `--fi-companies`, `--fi-weather`, `--se-weather`, `--all` （默认）。\r\n\r\n## 例子\r\n\r\n问你的AI助手：\r\n\r\n- “查找丹麦诺和诺德公司”\r\n- “哥本哈根vs奥斯陆的天气怎么样？”\r\n- “斯德哥尔摩这个周末的天气预报如何？”\r\n- “今天在DK1给电动汽车充电最便宜的时间是什么时候？”\r\n- “查找科技行业最近注册的芬兰公司”\r\n- “丹麦目前的能源结构是什么？”\r\n- “寻找石油行业的挪威公司”\r\n- “特罗姆瑟vs基律纳的天气？”\r\n- “查找卑尔根Bryggen的地址”\r\n- “挪威坐标59.91，10.75处是什么？”\r\n\r\n## 国家覆盖范围\r\n\r\n|国家|公司|天气|地址|能源|\r\n|---------|-----------|---------|-----------|--------|\r\n| 🇩🇰 丹麦|✅ CVR |✅ DMI |✅ 达瓦|✅ Energine|\r\n| 🇳🇴 挪威。✅ 绿太阳。✅ MET/年编号。✅ 纸板。\r\n| 🇫🇮 芬兰|✅ PRH/YTJ |✅ 打开Meteo |--|--|\r\n| 🇸🇪 瑞典✅ SMHI |--|--|\r\n\r\n## Cloudflare Workers部署（托管MCP）\r\n\r\n此仓库现在包括一个使用MCP web标准流式HTTP传输的Worker入口点。\r\n\r\n### 部署\r\n\r\n```bash\r\nnpm install\r\nnpm run worker:deploy\r\n```\r\n\r\n### 端点\r\n\r\n- `https://.workers.dev/health`\r\n- `https://.workers.dev/mcp`\r\n\r\n使用 `/mcp` URL作为您的托管MCP端点。\r\n\r\n## 独立服务器\r\n\r\n每个模块也可以作为独立服务器使用：\r\n\r\n- [mcp丹麦cvr](https://github.com/robobobby/mcp-danish-cvr)\r\n- [mcp丹麦地址](https://github.com/robobobby/mcp-danish-addresses)\r\n- [丹麦天气](https://github.com/robobobby/mcp-danish-weather)\r\n- [丹麦能源公司](https://github.com/robobobby/mcp-danish-energy)\r\n- [mcp挪威公司](https://github.com/robobobby/mcp-norwegian-companies)\r\n- [mcp挪威天气](https://github.com/robobobby/mcp-norwegian-weather)\r\n- [mcp芬兰公司](https://github.com/robobobby/mcp-finnish-companies)\r\n- [mcp瑞典天气](https://github.com/robobobby/mcp-swedish-weather)\r\n- [mcp芬兰天气](https://github.com/robobobby/mcp-finnish-weather)\r\n- [mcp挪威地址](https://github.com/robobobby/mcp-norwegian-addresses)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "nordic": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-nordic"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "3695",
+ "kind": "mcp",
+ "name": "wikipedia",
+ "fingerprint_md5": "6f66a52f4db811f4bdc4f2a5fe410f86",
+ "download_count": 0,
+ "category": "知识库检索",
+ "tags": "",
+ "version": "",
+ "readme": "# 维基百科MCP服务器\r\n\r\n用于维基百科API交互的MCP（模型上下文协议）服务器。\r\n\r\n## 概述\r\n\r\n该服务器提供了通过模型上下文协议与维基百科API交互的工具。它允许人工智能助手访问维基百科内容、搜索文章、获取历史事件和检索图像。\r\n\r\n## 特性\r\n\r\n服务器提供以下工具：\r\n\r\n- **今天**：获取特定日期发生的历史事件\r\n- **findPage**：搜索与查询匹配的维基百科页面\r\n- **getPage**：按标题获取维基百科页面的内容\r\n- **获取页面图像**：按标题从维基百科页面获取图像\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install @shelm/wikipedia-mcp-server\r\n```\r\n\r\n发展：\r\n\r\n```bash\r\ngit clone https://github.com/scotthelm/wikipedia-mcp-server.git\r\ncd wikipedia-mcp-server\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n## 用法\r\n\r\n### 运行服务器\r\n\r\n```bash\r\nnpx @shelm/wikipedia-mcp-server\r\n```\r\n\r\n这将启动MCP服务器，该服务器通过stdio进行通信。\r\n\r\n### 程序化使用\r\n\r\n您还可以在自己的项目中以编程方式使用该包：\r\n\r\n```javascript\r\nimport {\r\n  WikipediaServer,\r\n  isValidOnThisDayArgs,\r\n  isValidFindPageArgs,\r\n  isValidGetPageArgs,\r\n  isValidGetImagesForPageArgs,\r\n} from \"@shelm/wikipedia-mcp-server\";\r\n\r\n// Create a new server instance\r\nconst server = new WikipediaServer();\r\n\r\n// Run the server\r\nserver.run().catch(console.error);\r\n\r\n// Or use the validation functions and handlers directly\r\nif (isValidOnThisDayArgs({ date: \"2023-01-01\" })) {\r\n  const result = await server.handleOnThisDay({ date: \"2023-01-01\" });\r\n  console.log(result);\r\n}\r\n```\r\n\r\n### 客户端示例\r\n\r\n提供了一个示例客户端来演示如何与服务器交互：\r\n\r\n```bash\r\nnode example-client.js\r\n```\r\n\r\n这将：\r\n\r\n1. 启动服务器\r\n1. 查询可用工具\r\n1. 使用示例查询演示每个工具\r\n1. 在简单的web界面中显示结果http://localhost:3000\r\n\r\n## 发展\r\n\r\n### 建筑\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n### 以开发模式运行\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n### 测试\r\n\r\n可以使用示例客户端手动测试此项目：\r\n\r\n```bash\r\nnode example-client.js\r\n```\r\n\r\n这将通过示例查询演示所有可用的工具。\r\n\r\n## MCP服务器配置\r\n\r\n要将此服务器与Claude或其他MCP兼容助手一起使用，请将其添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"wikipedia\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@shelm/wikipedia-mcp-server\"],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 归因\r\n\r\n如果没有创造这个世界的人们所做的伟大工作，这是不可能的 [维基百科包](https://github.com/dopecodez/wikipedia)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "wikipedia": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@shelm/wikipedia-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

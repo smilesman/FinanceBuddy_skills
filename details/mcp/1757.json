@@ -1,0 +1,21 @@
+{
+ "id": "1757",
+ "kind": "mcp",
+ "name": "task-manager-2",
+ "fingerprint_md5": "1b475fe3f2ce2d6bf30baec84a916732",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 克劳德所有MCP服务器\r\n\r\n[](https://pypi.org/project/claude-todo-emulator/)\r\n[](https://pepy.tech/projects/claude-todo-emulator)\r\n\r\n**为Cursor、Windsurf和其他IDE中的任何AI编码助手添加持久任务管理。**\r\n\r\n此MCP服务器复制了Claude Code的todo系统，使您的AI助手能够：\r\n\r\n- 跨会话跟踪复杂的多步骤任务\r\n- 将大型功能分解为可管理的部分\r\n- 在项目之间切换时记住进度\r\n- 强制执行单个正在进行的任务重点\r\n\r\n## 快速开始\r\n\r\n**无需安装！** 只需将此添加到您的MCP配置中：\r\n\r\n### 光标IDE\r\n\r\n创建 `.cursor/mcp.json` 在项目根目录中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"task-manager\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"claude-todo-emulator\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Codex CLI\r\n\r\n创建 `config.toml` 在您的项目根目录中：\r\n\r\n```toml\r\n[mcp_servers.task-manager]\r\ncommand = \"uvx\"\r\nargs = [\"claude-todo-emulator\"]\r\n```\r\n\r\n### 其他IDE\r\n\r\n将上述JSON配置添加到MCP设置文件中。\r\n\r\n**重新启动IDE** 并尝试： _“创建待办事项列表以添加用户身份验证”_\r\n\r\n系统会自动下载软件包，并在首次使用时设置所有内容！\r\n\r\n## 所得\r\n\r\n配置后，您的AI助手将自动：\r\n\r\n**为复杂任务创建待办事项：**\r\n\r\n```\r\nYou: \"Add dark mode support with user preferences\"\r\nAI: \"I'll create a todo list for this multi-step feature:\r\n- ✅ Add theme context and state management\r\n- 🔄 Create dark mode CSS variables and styles\r\n- ⏳ Build settings UI for theme switching\r\n- ⏳ Add persistence to localStorage\r\n- ⏳ Update existing components for theme support\"\r\n```\r\n\r\n**直观地跟踪进度：**\r\n\r\n```\r\nYou: \"What's the status on the authentication system?\"\r\nAI: \"Current authentication tasks:\r\n- ✅ Set up JWT middleware\r\n- ✅ Create login/signup endpoints\r\n- 🔄 Building user profile management (in progress)\r\n- ⏳ Add password reset flow\r\n- ⏳ Implement role-based permissions\"\r\n```\r\n\r\n**保持专注：**\r\n\r\n```\r\nYou: \"Let's also add email notifications\"\r\nAI: \"I'll add that to the todo list, but let me finish the current user profile task first to maintain focus.\"\r\n```\r\n\r\n### API 参考\r\n\r\n**全部阅读**\r\n\r\n- 参数：无\r\n- 退货： `{todos: Todo[]}`\r\n\r\n**TodoWrite**\r\n\r\n- 参数： `{todos: Todo[]}`\r\n- 退货： `{success: boolean, count: number}`\r\n\r\n**全模式**\r\n\r\n```typescript\r\n{\r\n  id: string;\r\n  content: string;\r\n  status: \"pending\" | \"in_progress\" | \"completed\";\r\n  priority: \"high\" | \"medium\" | \"low\";\r\n  created_at: string;\r\n  updated_at: string;\r\n  metadata?: object;\r\n}\r\n```\r\n\r\n## 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建要素分支\r\n1. 添加新功能的测试\r\n1. 提交拉取请求\r\n\r\n## 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件。\r\n\r\n## 相关项目\r\n\r\n- [模型上下文协议](https://modelcontextprotocol.io/)\r\n- [FastMCP](https://gofastmcp.com/)\r\n- [克劳德代码](https://www.anthropic.com/claude-code)\r\n",
+ "config": {
+  "task-manager": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "claude-todo-emulator"
+   ],
+   "env": {}
+  }
+ }
+}

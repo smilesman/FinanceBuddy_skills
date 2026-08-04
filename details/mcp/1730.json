@@ -1,0 +1,21 @@
+{
+ "id": "1730",
+ "kind": "mcp",
+ "name": "slicer",
+ "fingerprint_md5": "0076ba1213c01a38a5c468e7b6c0c89c",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP切片器-3D切片器模型上下文协议集成\r\n\r\n[英语](README.md) | [简体中文](README_zh.md)\r\n\r\n[](https://www.python.org/)\r\n[](https://opensource.org/licenses/MIT)\r\n[](https://pypi.org/project/mcp-slicer/)\r\n\r\n\r\nMCP Slicer通过模型上下文协议（MCP）将3D Slicer与Claude Desktop或Cline等模型客户端连接起来，实现了对3D Slicer的直接交互和控制。这种集成允许使用自然语言进行医学图像处理、场景创建和操纵。\r\n\r\n## 特性\r\n\r\n1. **list_nodes**：列出和筛选Slicer MRML节点并查看其属性\r\n\r\n1. **execute_python_code**：在Slicer环境中执行Python代码\r\n\r\n1. **capture_screenshot**：捕获切片器视图的实时屏幕截图\r\n\r\n   - 完整的应用程序窗口（包括模块面板）\r\n   - 单个切片视图（红色/黄色/绿色）\r\n   - 三维渲染视图\r\n   - 通过视觉反馈实现完整的REACT循环\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- 3D切片器5.8或更新版本\r\n- Python 3.13或更新版本\r\n- uv包管理器\r\n\r\n**如果您使用的是Mac，请将uv安装为**\r\n\r\n```bash\r\nbrew install uv\r\n```\r\n\r\n**在Windows上**\r\n\r\n```bash\r\npowershell -c \"irm https://astral.sh/uv/install.ps1 | iex\"\r\n```\r\n\r\n然后\r\n\r\n```bash\r\nset Path=C:\\Users\\nntra\\.local\\bin;%Path%\r\n```\r\n\r\n否则，安装说明在他们的网站上： [安装uv](https://docs.astral.sh/uv/getting-started/installation/)\r\n\r\n**⚠️ 请先安装UV**\r\n\r\n### Claude桌面集成\r\n\r\n转到Claude>设置>开发人员>编辑配置>Claude_desktop_Config.json，以包含以下内容：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"slicer\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-slicer\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 临床整合\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"slicer\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-slicer\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n### 检查Claude设置\r\n\r\n\r\nMake sure you see the corresponding slicer tools added to the Claude Desktop App\r\n\r\n\r\n### 打开切片器Web服务器\r\n\r\n1. 打开切片器Web服务器模块，\r\n1. 确保检查了所需的接口，\r\n1. 然后启动服务器\r\n\r\n\r\n## 例子\r\n\r\n### -list_nodes\r\n\r\n> 现在切片器场景中有哪些标记节点，列出它们的名称，如果是直线，它们的长度是多少，如果是角度，它们的角度是多少\r\n\r\n\r\n### -执行python代码\r\n\r\n> 在切片器场景中绘制一个8厘米的半透明绿色立方体，标记其顶点，然后在其中绘制一个红色球体。\r\n\r\n\r\n### -capture_screenshot\r\n\r\n> 捕捉切片器的当前状态，为AI提供视觉反馈\r\n\r\n**使用示例：**\r\n\r\n- `capture_screenshot()` -捕获完整的应用程序窗口\r\n- `capture_screenshot(view_type=\"slice\", view_name=\"red\")` -捕获红色切片视图\r\n- `capture_screenshot(view_type=\"3d\", camera_axis=\"A\")` -从前部捕捉3D视图\r\n\r\n这实现了一个完整的REACT循环，AI可以：\r\n\r\n1. **理由** 关于该做什么\r\n1. **法案** 使用 `execute_python_code`\r\n1. **观察** 结果使用 `capture_screenshot`\r\n\r\n## 技术细节\r\n\r\n利用现有的Slicer Web服务器界面。有关技术细节，请参阅 [Slicer web服务器用户指南](https://slicer.readthedocs.io/en/latest/user_guide/modules/webserver.html)\r\n\r\n## 限制和安全考虑\r\n\r\n- 这 `execute_python_code` 该工具允许在3D Slicer中运行任意Python代码，这功能强大但有潜在危险。\r\n\r\n  **⚠️ 不建议用于生产。**\r\n\r\n- 复杂的操作可能需要分解成更小的步骤。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 免责声明\r\n\r\n这是一个第三方集成项目，不是由3D Slicer团队开发的。\r\n",
+ "config": {
+  "slicer": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-slicer"
+   ],
+   "env": {}
+  }
+ }
+}

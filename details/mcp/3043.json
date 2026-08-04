@@ -1,0 +1,21 @@
+{
+ "id": "3043",
+ "kind": "mcp",
+ "name": "blue-hrm",
+ "fingerprint_md5": "ccda6c593f86d979f8d481594e1e26d1",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# ble人力资源管理服务器\r\n\r\nMCP服务器，用作BLE **H**耳特 **比率** **M**监控以与HRM设备连接。\r\n\r\n# 生成状态\r\n\r\n# 安装\r\n\r\n我们建议使用虚拟环境和 `uv` 管理依赖关系。\r\n\r\n此项目使用 `pyproject.toml` 用于依赖性管理。\r\n\r\n```bash\r\n# Create and activate a virtual environment\r\npython3 -m venv .venv\r\nsource .venv/bin/activate  # On Windows use `.venv\\Scripts\\activate`\r\n\r\n# Install uv if not already installed\r\npip install uv\r\n\r\n# Install dependencies\r\nuv sync\r\n```\r\n\r\n# 环境配置\r\n\r\n此项目支持通过 `.env` 文件。您可以使用提供的 `.env.sample` 作为模板。\r\n\r\n```bash\r\ncp .env.sample .env\r\n```\r\n\r\n使用以下环境变量：\r\n\r\n- `QINIU_ACCESS_KEY`：您的Qiniu访问密钥。\r\n- `QINIU_SECRET_KEY`：你的七牛秘钥。\r\n- `QINIU_BUCKET_NAME`：七牛桶的名字。\r\n- `QINIU_BUCKET_DOMAIN`：与七牛桶关联的域。\r\n\r\n# 用法\r\n\r\n## 运行服务器\r\n\r\n```bash\r\nuv run src/hrm/server.py\r\n```\r\n\r\n从PyPI安装后，您可以直接使用以下命令运行服务器：\r\n\r\n```bash\r\nuvx ble-hrm-server\r\n```\r\n\r\n## 运行测试\r\n\r\n```bash\r\nuv run pytest\r\n```\r\n\r\n## 以覆盖率运行测试\r\n\r\n```bash\r\nuv run coverage run -m pytest\r\nuv run coverage html\r\n```\r\n\r\n# MCP定义\r\n\r\n## 资源\r\n\r\n蓝牙HRM是基于蓝牙协议的，我们应该使用 `bleak` 以发现设备并连接到它。\r\n\r\n- 通过HRM配置文件发现蓝牙设备和过滤器（心率服务0x180D）\r\n- 资源： `discover://hrm`\r\n\r\n## 工具\r\n\r\n- **工具：监测心率 `monitoring_heart_rate`**\r\n\r\n  - 总结：在给定的持续时间内开始监测设备的心率，默认持续时间为30分钟（1800秒）。监控将在后台进行。\r\n  - 输入：\r\n    - device_id:str，要监视的设备UUID\r\n    - duration：int，要监视的持续时间，默认为1800秒（30分钟）\r\n  - 输出：无\r\n\r\n- **工具：获取心率 `get_heart_rate`**\r\n\r\n  - 摘要：获取当前HR，使用最后10秒并返回HR的平均值\r\n  - 输入：无（假设基线读数）\r\n  - 输出：当前HR（int），例如。 `{\"avg_hr\": 60}`\r\n\r\n- **工具：评估活动心率 `evaluate_active_heart_rate`**\r\n\r\n  - 总结：评估最后60秒的最大心率，将此练习中观察到的最大心率记录为活动心率。\r\n  - 输入：无（假设基线读数）\r\n  - 输出：最大HR:int，例如。 `{\"max_hr\": 100}`\r\n\r\n- **工具：获取心率桶 `get_heart_rate_bucket`**\r\n\r\n  - 摘要：获取最后10秒的心率桶，桶大小为1秒。\r\n  - 输入：\r\n    - since_from:float，监控的开始时间，默认为10秒前\r\n    - bucket_size：float，bucket的大小，默认为1秒\r\n  - 输出：心率桶：列表\\[字典\\]，例如。 `[{\"time\": 1715904000, \"value\": 60}, {\"time\": 1715904001, \"value\": 61}]`\r\n\r\n- **工具：构建心率图 `build_heart_rate_chart`**\r\n\r\n  - 摘要：构建最近600秒的心率图，bucket是一个动态大小，默认大小为1秒。最大铲斗数为60，如果铲斗数超过60，铲斗大小将增加到 `duration / 60` 秒。\r\n  - 输入：\r\n    - since_from:float，监控的开始时间，默认为600秒前\r\n  - 输出：心率图PNG URL:str，例如。 `https://example.com/chart.png`\r\n\r\n# MCP设置\r\n\r\n以下是服务器的MCP设置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"blue-hrm\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"ble-hrm-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n以下是DeepSeek V3.1测试的LLM的示例提示：\r\n\r\n```\r\n你是一位健康专家，通过心率来检测测试者的心脏健康程度，现在测试者携带了蓝牙的心率带，\r\n\r\n以下为检测步骤\r\n- 你通过发现来获取的设备ID,通过rssi获取最接近的设备，再以此设备开始监控。\r\n- 获取当前测试者的静息心率。\r\n- 当测试结束后，提示测试者开始中高强度运动，比如波比跳，当测试者完成运动后，回复后，立刻测试其最高运动心率。\r\n- 之后提示测试者计时休息2分钟，得到确认后，再次获取当前心率，并与最高心率的差额作为恢复心率。\r\n\r\n最后通过恢复心率的值和以下列表评估测试者的心脏健康程度，并用健康专家的口吻给测试者一些关于心脏健康方面的建议。\r\n------\r\n- =66: 身体年龄比真实年龄小很多\r\n```\r\n\r\n# 代码覆盖率\r\n\r\n|姓名|名字|小姐|封面|\r\n|------------------------ | -------: | -------: | ------: |\r\n|src/hrm/\\_\\_init\\_\\_.py |0|0|100%|\r\n|src/hrm/bt_client.py | 139 | 5 | 96%|\r\n|src/hrm/ts_db.py | 41 | 1 | 98%|\r\n| **总计** | **180** | **6** | **97%** |\r\n\r\n## 赞助商\r\n\r\n特别感谢七牛云提供存储服务。七牛还提供LLM推理服务。\r\n",
+ "config": {
+  "blue-hrm": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "ble-hrm-server"
+   ],
+   "env": {}
+  }
+ }
+}

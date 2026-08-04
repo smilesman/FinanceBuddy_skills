@@ -1,0 +1,21 @@
+{
+ "id": "2742",
+ "kind": "mcp",
+ "name": "taiwan-law",
+ "fingerprint_md5": "19dd7c69a02d62c58fe8f521e11517d4",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Taiwan Law MCP 台灣法規查詢 MCP 伺服器\r\n\r\n基於 **FastMCP** 框架開發的台灣法規查詢系統，提供簡潔、高效的法規搜尋和條文查詢功能。\r\n\r\n## 特色功能\r\n\r\n- 🚀 **FastMCP 框架** - 採用官方推薦的高階 MCP 框架，程式碼簡潔易維護\r\n- 📉 **Token 耗用優化** - 摘要模式、條文分頁、關鍵字精準回傳\r\n- 🔍 **7 種查詢工具** - 涵蓋搜尋、條文、關鍵字、代碼驗證、裁判書查詢等場景\r\n- 🌐 **資料來源** - 直連 [法務部全國法規資料庫](https://law.moj.gov.tw/) 與 [司法院裁判書系統](https://judgment.judicial.gov.tw/FJUD/default.aspx)\r\n\r\n## 主要工具\r\n\r\n| 工具 | 說明 |\r\n|---|---|\r\n| `search_law` | 搜尋法規名稱，取得基本資訊與官方連結 |\r\n| `get_law_pcode` | 快速取得法規代碼（pcode），供後續工具使用 |\r\n| `get_full_law` | 取得完整法規條文，支援**摘要模式**與條文數量限制 |\r\n| `get_single_article` | 查詢特定法條詳細內容（例如：民法第1條）|\r\n| `search_by_keyword` | 在所有法規中以關鍵字搜尋相關條文 |\r\n| `validate_law_pcode` | 驗證法規代碼（pcode）是否有效 |\r\n| `search_judgments_by_law` | 依據法規名稱或關鍵字查詢司法院裁判書系統相關判例 |\r\n\r\n## 安裝使用\r\n\r\n### 使用 UVX（推薦，無需安裝）\r\n\r\n```bash\r\nuvx taiwan-law-mcp\r\n```\r\n\r\n### 本地開發\r\n\r\n```bash\r\ngit clone <repository-url>\r\ncd legel-mcp\r\n\r\n# 安裝依賴（需要 Python 3.10+）\r\nuv sync\r\n\r\n# 啟動伺服器\r\nuv run fastmcp run src/taiwan_law_mcp/server.py\r\n```\r\n\r\n## Claude Desktop 設定\r\n\r\n### 方法一：uvx（最簡單）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"taiwan-law\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"taiwan-law-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 方法二：本地開發模式\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"taiwan-law\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--directory\", \"C:/path/to/legel-mcp\",\r\n        \"fastmcp\", \"run\", \"src/taiwan_law_mcp/server.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**設定檔位置：**\r\n- **Windows**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **Linux**: `~/.config/Claude/claude_desktop_config.json`\r\n\r\n## 使用範例\r\n\r\n不需要特殊指令，用自然語言詢問即可：\r\n\r\n- 「我想了解民法第 1 條」\r\n- 「搜尋包含契約的法條」\r\n- 「公司設立需要什麼條件？」\r\n- 「查詢公平交易法的獨占規定」\r\n\r\n## API 範例\r\n\r\n### 搜尋法規\r\n\r\n```json\r\n{\r\n  \"name\": \"search_law\",\r\n  \"arguments\": { \"name\": \"公平交易法\" }\r\n}\r\n```\r\n\r\n### 取得完整法規（摘要模式）\r\n\r\n```json\r\n{\r\n  \"name\": \"get_full_law\",\r\n  \"arguments\": {\r\n    \"pcode\": \"J0150002\",\r\n    \"summary_mode\": true,\r\n    \"max_articles\": 20\r\n  }\r\n}\r\n```\r\n\r\n### 關鍵字搜尋\r\n\r\n```json\r\n{\r\n  \"name\": \"search_by_keyword\",\r\n  \"arguments\": {\r\n    \"keyword\": \"獨占\",\r\n    \"max_results\": 10,\r\n    \"summary_only\": true\r\n  }\r\n}\r\n```\r\n\r\n### 查詢最新相關裁判書\r\n\r\n```json\r\n{\r\n  \"name\": \"search_judgments_by_law\",\r\n  \"arguments\": {\r\n    \"keyword\": \"勞動基準法 21\",\r\n    \"max_results\": 5\r\n  }\r\n}\r\n```\r\n\r\n## 技術規格\r\n\r\n- **Python 版本**: 3.10+\r\n- **框架**: [FastMCP](https://gofastmcp.com/) 3.x\r\n- **主要依賴**:\r\n  - `fastmcp >= 2.0.0`\r\n  - `requests >= 2.28.0`\r\n  - `beautifulsoup4 >= 4.11.0`\r\n\r\n## 開發\r\n\r\n```bash\r\n# 安裝含開發工具的環境\r\nuv sync --dev\r\n\r\n# 驗證伺服器設定\r\nuv run fastmcp inspect src/taiwan_law_mcp/server.py\r\n\r\n# 程式碼格式化\r\nuv run black src\r\nuv run ruff check src\r\n```\r\n\r\n---\r\n\r\n## ⚠️ 免責聲明\r\n\r\n本工具僅提供法條查詢功能，**不提供法律建議**。如需專業法律意見，請諮詢合格律師或相關專業人士。\r\n\r\n---\r\n\r\n## 📚 參考來源\r\n\r\n本專案基於以下開源專案進行修改與改良：\r\n\r\n- **原始專案**：[wasonisgood/legel-mcp](https://github.com/wasonisgood/legel-mcp)\r\n- **主要改動**：\r\n  - 將 MCP 伺服器從低階 `mcp` SDK 遷移至 [FastMCP](https://gofastmcp.com/) 框架\r\n  - 整理並移除冗餘的多版本 server 執行檔\r\n  - 更新套件依賴、Python 最低版本要求與專案設定\r\n\r\n- **資料來源**：[法務部全國法規資料庫](https://law.moj.gov.tw/)\r\n\r\n---\r\n",
+ "config": {
+  "taiwan-law": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "taiwan-law-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

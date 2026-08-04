@@ -1,0 +1,24 @@
+{
+ "id": "1430",
+ "kind": "mcp",
+ "name": "excel-2",
+ "fingerprint_md5": "dd1ad0aba93628ac16744cbbfcbe10ff",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Excel MCP服务器\r\n\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@negokaz/excel-mcp-server\">\r\n  \r\n</a>\r\n\r\n[](https://www.npmjs.com/package/@negokaz/excel-mcp-server)\r\n[](https://smithery.ai/server/@negokaz/excel-mcp-server)\r\n\r\n读取和写入MS Excel数据的模型上下文协议（MCP）服务器。\r\n\r\n## 特性\r\n\r\n- 读取/写入文本值\r\n- 读/写公式\r\n- 创建新图纸\r\n\r\n**🪟仅限Windows：**\r\n\r\n- 实时编辑\r\n- 从工作表中捕获屏幕图像\r\n\r\n有关更多详细信息，请参阅 [工具](#tools) 部分。\r\n\r\n## 需求\r\n\r\n- Node.js 20.x或更高版本\r\n\r\n## 支持的文件格式\r\n\r\n- xlsx（Excel书籍）\r\n- xlsm（支持Excel宏的书籍）\r\n- xltx（Excel模板）\r\n- xltm（启用Excel宏的模板）\r\n\r\n## 安装\r\n\r\n### 通过NPM安装\r\n\r\n通过将以下配置添加到mcp服务器配置中，可以自动安装excelmcp服务器。\r\n\r\n对于Windows：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"excel\": {\r\n            \"command\": \"cmd\",\r\n            \"args\": [\"/c\", \"npx\", \"--yes\", \"@negokaz/excel-mcp-server\"],\r\n            \"env\": {\r\n                \"EXCEL_MCP_PAGING_CELLS_LIMIT\": \"4000\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n对于其他平台：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"excel\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\"--yes\", \"@negokaz/excel-mcp-server\"],\r\n            \"env\": {\r\n                \"EXCEL_MCP_PAGING_CELLS_LIMIT\": \"4000\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Excel MCP Server for Claude Desktop [史密瑟里](https://smithery.ai/server/@negokaz/excel-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @negokaz/excel-mcp-server --client claude\r\n```\r\n\r\n<h2 id=\"tools\">Tools</h2>\r\n\r\n### `excel_describe_sheets`\r\n\r\n列出指定Excel文件的所有工作表信息。\r\n\r\n**论据：**\r\n\r\n- `fileAbsolutePath`\r\n  - Excel文件的绝对路径\r\n\r\n### `excel_read_sheet`\r\n\r\n从带分页的Excel表中读取值。\r\n\r\n**论据：**\r\n\r\n- `fileAbsolutePath`\r\n  - Excel文件的绝对路径\r\n- `sheetName`\r\n  - Excel文件中的工作表名称\r\n- `range`\r\n  - Excel工作表中要读取的单元格范围（例如“A1:C10”）。\\[默认值：第一个分页范围\\]\r\n- `showFormula`\r\n  - 显示公式而不是值\\[默认值：false\\]\r\n- `showStyle`\r\n  - 显示单元格的样式信息\\[默认值：false\\]\r\n\r\n### `excel_screen_capture`\r\n\r\n**\\[仅限Windows\\]** 对Excel工作表进行分页截图。\r\n\r\n**论据：**\r\n\r\n- `fileAbsolutePath`\r\n  - Excel文件的绝对路径\r\n- `sheetName`\r\n  - Excel文件中的工作表名称\r\n- `range`\r\n  - Excel工作表中要读取的单元格范围（例如“A1:C10”）。\\[默认值：第一个分页范围\\]\r\n\r\n### `excel_write_to_sheet`\r\n\r\n将值写入Excel工作表。\r\n\r\n**论据：**\r\n\r\n- `fileAbsolutePath`\r\n  - Excel文件的绝对路径\r\n- `sheetName`\r\n  - Excel文件中的工作表名称\r\n- `newSheet`\r\n  - 如果为true，则创建新工作表，否则写入现有工作表\r\n- `range`\r\n  - Excel工作表中要读取的单元格范围（例如“A1:C10”）。\r\n- `values`\r\n  - 要写入Excel工作表的值。如果该值是公式，则应以“=”开头\r\n\r\n### `excel_create_table`\r\n\r\n在Excel工作表中创建表格\r\n\r\n**论据：**\r\n\r\n- `fileAbsolutePath`\r\n  - Excel文件的绝对路径\r\n- `sheetName`\r\n  - 创建表的图纸名称\r\n- `range`\r\n  - 范围为表格（例如“A1:C10”）\r\n- `tableName`\r\n  - 要创建的表名\r\n\r\n### `excel_copy_sheet`\r\n\r\n将现有图纸复制到新图纸\r\n\r\n**论据：**\r\n\r\n- `fileAbsolutePath`\r\n  - Excel文件的绝对路径\r\n- `srcSheetName`\r\n  - Excel文件中的源工作表名称\r\n- `dstSheetName`\r\n  - 要复制的图纸名称\r\n\r\n### `excel_format_range`\r\n\r\n使用样式信息设置Excel工作表中单元格的格式\r\n\r\n**论据：**\r\n\r\n- `fileAbsolutePath`\r\n  - Excel文件的绝对路径\r\n- `sheetName`\r\n  - Excel文件中的工作表名称\r\n- `range`\r\n  - Excel工作表中的单元格范围（例如“A1:C3”）\r\n- `styles`\r\n  - 每个单元格的二维样式对象数组。如果单元格没有更改样式，请使用null。数组的项数必须与范围大小匹配。\r\n  - 样式对象特性：\r\n    - `border`：边框样式数组（类型、颜色、样式）\r\n    - `font`：字体样式（粗体、斜体、下划线、大小、罢工、颜色、vertAlign）\r\n    - `fill`：填充/背景样式（类型、图案、颜色、阴影）\r\n    - `numFmt`：自定义数字格式字符串\r\n    - `decimalPlaces`：小数位数（0-30）\r\n\r\n<h2 id=\"configuration\">Configuration</h2>\r\n\r\n您可以通过以下环境变量更改MCP服务器行为：\r\n\r\n### `EXCEL_MCP_PAGING_CELLS_LIMIT`\r\n\r\n在单个分页操作中要读取的最大单元格数。\\\r\n\\[默认值：4000\\]\r\n\r\n## 许可证\r\n\r\n版权所有（c）2025 Kazuki Negoro\r\n\r\nexcelmcp服务器在 [MIT许可证](LICENSE)\r\n",
+ "config": {
+  "excel": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "--yes",
+    "@negokaz/excel-mcp-server"
+   ],
+   "env": {
+    "EXCEL_MCP_PAGING_CELLS_LIMIT": "4000"
+   }
+  }
+ }
+}

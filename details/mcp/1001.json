@@ -1,0 +1,24 @@
+{
+ "id": "1001",
+ "kind": "mcp",
+ "name": "chroma-2",
+ "fingerprint_md5": "a5f895982ee48b65048bdc1e4e3b3532",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Chroma MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器实现，通过Chroma提供矢量数据库功能。此服务器支持语义文档搜索、元数据过滤和具有持久存储的文档管理。\r\n\r\n## 需求\r\n\r\n- Python 3.8+\r\n- 色度0.4.0+\r\n- MCP SDK 0.1.0+\r\n\r\n## 组件\r\n\r\n### 资源\r\n\r\n服务器通过Chroma的矢量数据库提供文档存储和检索：\r\n\r\n- 存储包含内容和元数据的文档\r\n- 将数据持久化 `src/chroma/data` 目录\r\n- 支持语义相似度搜索\r\n\r\n### 工具\r\n\r\n服务器实现CRUD操作和搜索功能：\r\n\r\n#### 文档管理\r\n\r\n- `create_document`：创建新文档\r\n\r\n  - 必修的： `document_id`, `content`\r\n  - 可选： `metadata` （键值对）\r\n  - 返回：成功确认\r\n  - 错误：已存在，输入无效\r\n\r\n- `read_document`：按ID检索文档\r\n\r\n  - 必修的： `document_id`\r\n  - 返回：文档内容和元数据\r\n  - 错误：未找到\r\n\r\n- `update_document`：更新现有文档\r\n\r\n  - 必修的： `document_id`, `content`\r\n  - 可选： `metadata`\r\n  - 返回：成功确认\r\n  - 错误：未找到，输入无效\r\n\r\n- `delete_document`：删除文档\r\n\r\n  - 必修的： `document_id`\r\n  - 返回：成功确认\r\n  - 错误：未找到\r\n\r\n- `list_documents`：列出所有文件\r\n\r\n  - 可选： `limit`, `offset`\r\n  - 返回：包含内容和元数据的文档列表\r\n\r\n#### 搜索操作\r\n\r\n- `search_similar`：查找语义相似的文档\r\n  - 必修的： `query`\r\n  - 可选： `num_results`, `metadata_filter`, `content_filter`\r\n  - 返回：具有距离分数的类似文档的排名列表\r\n  - 错误：筛选器无效\r\n\r\n## 特性\r\n\r\n- **语义搜索**：使用Chroma的嵌入根据含义查找文档\r\n- **元数据筛选**：按元数据字段筛选搜索结果\r\n- **内容过滤**：基于文档内容的附加过滤\r\n- **永久存储**：在服务器重新启动之间，数据保留在本地目录中\r\n- **错误处理**：全面的错误处理，信息清晰\r\n- **重试逻辑**：暂时性故障的自动重试\r\n\r\n## 安装\r\n\r\n1. 安装依赖项：\r\n\r\n```bash\r\nuv venv\r\nuv sync --dev --all-extras\r\n```\r\n\r\n## 配置\r\n\r\n### 克劳德桌面\r\n\r\n将服务器配置添加到您的Claude Desktop配置中：\r\n\r\n窗户： `C:\\Users\\\\AppData\\Roaming\\Claude\\claude_desktop_config.json`\r\n\r\nMacOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chroma\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"C:/MCP/server/community/chroma\",\r\n        \"run\",\r\n        \"chroma\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 数据存储\r\n\r\n服务器将数据存储在：\r\n\r\n- 窗户： `src/chroma/data`\r\n- MacOS/Linux： `src/chroma/data`\r\n\r\n## 用法\r\n\r\n1. 启动服务器：\r\n\r\n```bash\r\nuv run chroma\r\n```\r\n\r\n2. 使用MCP工具与服务器交互：\r\n\r\n```python\r\n# Create a document\r\ncreate_document({\r\n    \"document_id\": \"ml_paper1\",\r\n    \"content\": \"Convolutional neural networks improve image recognition accuracy.\",\r\n    \"metadata\": {\r\n        \"year\": 2020,\r\n        \"field\": \"computer vision\",\r\n        \"complexity\": \"advanced\"\r\n    }\r\n})\r\n\r\n# Search similar documents\r\nsearch_similar({\r\n    \"query\": \"machine learning models\",\r\n    \"num_results\": 2,\r\n    \"metadata_filter\": {\r\n        \"year\": 2020,\r\n        \"field\": \"computer vision\"\r\n    }\r\n})\r\n```\r\n\r\n## 错误处理\r\n\r\n服务器为常见场景提供清晰的错误消息：\r\n\r\n- `Document already exists [id=X]`\r\n- `Document not found [id=X]`\r\n- `Invalid input: Missing document_id or content`\r\n- `Invalid filter`\r\n- `Operation failed: [details]`\r\n\r\n## 发展\r\n\r\n### 测试\r\n\r\n1. 运行MCP检查器进行交互式测试：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv --directory C:/MCP/server/community/chroma run chroma\r\n```\r\n\r\n2. 使用检查员的web界面：\r\n   - 测试CRUD操作\r\n   - 验证搜索功能\r\n   - 检查错误处理\r\n   - 监控服务器日志\r\n\r\n### 建筑\r\n\r\n1. 更新依赖关系：\r\n\r\n```bash\r\nuv compile pyproject.toml\r\n```\r\n\r\n2. 构建包：\r\n\r\n```bash\r\nuv build\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请阅读我们的 [贡献指南](CONTRIBUTING.md) 有关以下内容的详细信息：\r\n\r\n- 代码风格\r\n- 测试要求\r\n- 拉取请求流程\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "chroma": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "C:/MCP/server/community/chroma",
+    "run",
+    "chroma"
+   ],
+   "env": {}
+  }
+ }
+}

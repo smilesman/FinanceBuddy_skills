@@ -1,0 +1,28 @@
+{
+ "id": "469",
+ "kind": "mcp",
+ "name": "steam-2",
+ "fingerprint_md5": "addd5b7f239912167273e6369ee3ea6f",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 蒸汽mcp\r\n\r\nSteam Web API的MCP服务器。提供用于搜索Steam游戏、获取商店详细信息和访问玩家游戏库的工具。\r\n\r\n## 工具\r\n\r\n|工具|描述|需要授权|\r\n|------|-------------|---------------|\r\n| `search-apps` |按名称模糊搜索Steam应用程序|是|\r\n| `get-store-details` |定价、描述、截图、系统要求|否|\r\n| `compare-regional-prices` |将不同国家代码的Steam定价与货币安全摘要进行比较|否|\r\n| `get-games` |Steam用户拥有的所有游戏|是|\r\n| `get-recent-games` |过去两周玩过的游戏|是|\r\n| `get-player-summaries` |个人资料信息、在线状态、头像和当前正在玩的游戏（最多100个ID）|是|\r\n| `get-friend-list` |好友列表，包括显示名称、Steam ID和好友来源日期（仅限公开个人资料）|是|\r\n| `get-player-achievements` |解锁时间和全局解锁百分比的成就进度|是|\r\n| `get-playtime-analytics` |库播放时间摘要：最近播放、最多播放、最少播放和从未播放|是|\r\n| `get-current-players` |当前游戏玩家数量|否|\r\n| `get-news` |最新新闻文章和补丁说明|否|\r\n\r\n## 快速入门（Docker）\r\n\r\n从GitHub容器注册表中提取预构建映像：\r\n\r\n```bash\r\ndocker pull ghcr.io/jjstrat3/steam-mcp:latest\r\ndocker run -i -e STEAM_API_KEY=your_key -e STEAM_USER_ID=your_id ghcr.io/jjstrat3/steam-mcp:latest\r\n```\r\n\r\n## 设置\r\n\r\n### 获取Steam API密钥\r\n\r\n1. 首选https://steamcommunity.com/dev/apikey\r\n1. 登录并注册密钥\r\n1. 您的帐户必须至少进行过一次购买，或者您的Steam钱包中有5美元以上\r\n\r\n### 查找您的64位Steam ID\r\n\r\n您的64位Steam ID是您的Steam个人资料URL中的数字（例如。， `https://steamcommunity.com/profiles/76561198012345678`).如果您使用自定义URL，请在以下网址查找您的IDhttps://steamid.io.\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|---|---|---|\r\n| `STEAM_API_KEY` |某些工具| Steam Web API密钥（对于 `search-apps`, `get-games`, `get-recent-games`, `get-player-summaries`, `get-friend-list`, `get-player-achievements`，以及 `get-playtime-analytics`；可选 `get-store-details`, `compare-regional-prices`, `get-current-players`，以及 `get-news`) |\r\n| `STEAM_USER_ID` |否|默认64位Steam ID（每次调用都可以覆盖）|\r\n| `TOOL_PREFIX` |否|工具名称的前缀（例如。， `steam_` 使 `steam_search-apps`) |\r\n\r\n## 用法\r\n\r\n### 本地（Node.js）\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\nnode build/index.js\r\n```\r\n\r\n### 码头工人\r\n\r\n#### 预构建图像（推荐）\r\n\r\n```bash\r\ndocker pull ghcr.io/jjstrat3/steam-mcp:latest\r\ndocker run -i -e STEAM_API_KEY=your_key -e STEAM_USER_ID=your_id ghcr.io/jjstrat3/steam-mcp:latest\r\n```\r\n\r\n#### 本地建设\r\n\r\n```bash\r\ndocker build -t steam-mcp .\r\ndocker run -i -e STEAM_API_KEY=your_key -e STEAM_USER_ID=your_id steam-mcp\r\n```\r\n\r\n### Claude桌面配置\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"steam\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/absolute/path/to/steam-mcp/build/index.js\"],\r\n      \"env\": {\r\n        \"STEAM_API_KEY\": \"your_steam_api_key\",\r\n        \"STEAM_USER_ID\": \"your_64bit_steam_id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用Docker（使用预构建映像）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"steam\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"-e\", \"STEAM_API_KEY=your_key\", \"-e\", \"STEAM_USER_ID=your_id\", \"ghcr.io/jjstrat3/steam-mcp:latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### MCP检验员测试\r\n\r\n```bash\r\nnpm run build\r\nnpx @modelcontextprotocol/inspector build/index.js\r\n```\r\n\r\n## 释放\r\n\r\n使用 `Create Release` GitHub操作工作流 `patch`, `minor`，或 `major` 当您希望从默认分支一键释放时，可以使用bump。工作流更新 `package.json` 和 `package-lock.json`，创建匹配 `v*` 标签，发布Docker镜像标签，并创建GitHub Release。\r\n\r\n手册 `v*` 标签推送仍然像以前一样创建GitHub Release。\r\n\r\n## 行为说明\r\n\r\n- `compare-regional-prices` 需要2-10个国家代码的明确列表，并且仅在地区共享相同货币时计算比较增量。\r\n- `get-player-summaries` 最多可接受100个Steam ID。私有配置文件返回一个缩减的字段集，而不是完整的配置文件详细信息。\r\n- `get-friend-list` 仅适用于公开资料。如果显示名称丰富失败，该工具仍会返回Steam ID和好友自日期，并附上通知。\r\n- `get-player-achievements` 当全局解锁百分比不可用时，仍会返回成就进度，并记录稀有性富集缺失的情况。\r\n\r\n## 查询示例\r\n\r\n- “查找Stardew Valley的应用程序ID”→ `search-apps`\r\n- “Baldur's Gate 3的价格是多少？”→ `search-apps` + `get-store-details`\r\n- “比较美国、加利福尼亚州和英国的Hades定价”→ `compare-regional-prices`\r\n- “显示赛博朋克2077的系统要求”→ `search-apps` + `get-store-details`\r\n- “我最近玩了什么游戏？”→ `get-recent-games`\r\n- “我玩得最多的游戏是什么？”→ `get-games`\r\n- “我的Steam个人资料是什么？”→ `get-player-summaries`\r\n- “我的朋友现在在线吗？”→ `get-player-summaries`\r\n- “谁是我的Steam好友？”→ `get-friend-list`\r\n- “我在Elden Ring解锁了哪些成就？”→ `search-apps` + `get-player-achievements`\r\n- “展示我在《空灵骑士》中的成就进度”→ `search-apps` + `get-player-achievements`\r\n- “现在有多少人在玩CS2？”→ `search-apps` + `get-current-players`\r\n- “Factorio的最新消息是什么？”→ `search-apps` + `get-news`\r\n- “分析我的Steam库播放时间”→ `get-playtime-analytics`\r\n- “我从来没玩过什么游戏？”→ `get-playtime-analytics`\r\n",
+ "config": {
+  "steam": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "STEAM_API_KEY=your_key",
+    "-e",
+    "STEAM_USER_ID=your_id",
+    "ghcr.io/jjstrat3/steam-mcp:latest"
+   ],
+   "env": {}
+  }
+ }
+}

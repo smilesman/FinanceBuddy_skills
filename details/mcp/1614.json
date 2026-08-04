@@ -1,0 +1,21 @@
+{
+ "id": "1614",
+ "kind": "mcp",
+ "name": "memory-bank",
+ "fingerprint_md5": "f6fbb9020609d356f7e52773c97f176e",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 存储库MCP\r\n\r\n> 用于人工智能辅助开发的引导式内存库插件\r\n\r\n[](./README_CN.md)\r\n\r\nMemory Bank MCP是一个模型上下文协议（MCP）插件，通过结构化的markdown文件帮助AI助手维护持久的项目上下文。它提供了一种系统的方法，通过指导性指示而不是直接操作来跟踪项目目标、决策、进度和模式。\r\n\r\n## 特性\r\n\r\n- **引导式操作**：为人工智能助手提供自行执行操作的说明\r\n- **结构化上下文管理**：跨5个核心文件组织项目信息\r\n- **智能制导**：初始化和更新的分步说明\r\n- **灵活的更新**：基于不同变更类型的智能更新指导\r\n- **与跨平台支持**：Windows/macOS/Linux的自动路径规范化\r\n\r\n### MCP配置\r\n\r\n使用已发布的npm包：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"memory-bank\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@neko0721/memory-bank-mcp\"],\r\n      \"timeout\": 600\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 快速开始\r\n\r\n1. **初始化内存库**\r\n\r\n   ```\r\n   Use init-memory-bank to create the memory-bank directory and core files\r\n   ```\r\n\r\n1. **读取存储库**\r\n\r\n   ```\r\n   Use get-memory-bank-info to view all Memory Bank content\r\n   ```\r\n\r\n1. **更新内存库**\r\n\r\n   ```\r\n   Use update-memory-bank to get guidance on updating specific files\r\n   ```\r\n\r\n## 核心文件\r\n\r\n### 1.productContext.md（产品上下文）\r\n\r\n- 高级项目概述\r\n- 目标和关键特征\r\n- 整体架构\r\n- 自动合并projectBrief.md（如果可用）\r\n\r\n### 2.activeContext.md（活动上下文）\r\n\r\n- 当前工作状态\r\n- 最近的更改\r\n- 未决问题和议题\r\n- 重点领域\r\n\r\n### 3.进度.md（进度）\r\n\r\n- 以清单形式进行任务跟踪\r\n- 已完成、当前和计划中的任务\r\n- 进度时间表\r\n\r\n### 4.decisionLog.md（决策日志）\r\n\r\n- 架构和实施决策\r\n- 理由和影响\r\n- 决策历史\r\n\r\n### 5.systemPatterns.md（系统模式）\r\n\r\n- 反复出现的模式和标准\r\n- 编码约定\r\n- 结构模式\r\n- 测试策略\r\n\r\n## 使用指南\r\n\r\n### AI助理\r\n\r\n1. **开始每个会话**：检查内存库目录是否存在，然后使用 `get-memory-bank-info` 了解项目状态\r\n1. **需要时初始化**：使用 `init-memory-bank` 对于新项目\r\n1. **阅读上下文**：使用 `get-memory-bank-info` 了解项目状态\r\n1. **更新指南**：使用 `update-memory-bank` 获取更新说明\r\n1. **遵照说明**：执行提供的指南以维护记忆库\r\n\r\n### 更新触发器\r\n\r\n- **架构更改**：重大结构决策\r\n- **功能完成**：新特性或功能\r\n- **漏洞修补**：重大问题解决\r\n- **重构**：代码结构改进\r\n- **决策**：任何重要的技术选择\r\n- **进度更新**：任务状态更改\r\n\r\n## 工具参考\r\n\r\n### init内存库\r\n\r\n使用所有核心文件初始化内存库。\r\n\r\n**参数：**\r\n\r\n- `rootPath`：项目根目录路径\r\n- `force` （可选）：强制重新初始化\r\n\r\n**退货：** 已创建文件列表和下一步指南\r\n\r\n### 获取存储体信息\r\n\r\n读取并返回所有内存库内容（类似于codelf的获取项目信息）。\r\n\r\n**参数：**\r\n\r\n- `rootPath`：项目根目录路径\r\n\r\n**退货：** 用于AI上下文的格式化内存库内容\r\n\r\n### 更新内存库\r\n\r\n提供更新内存库文件的指导。\r\n\r\n**参数：**\r\n\r\n- `rootPath`：项目根目录路径\r\n- `changeType`：更改类型（架构/功能/错误修复/重构/决策/进度）\r\n- `description`：变更简要说明\r\n\r\n**退货：** 带有模板和时间戳的详细更新说明\r\n\r\n## 集成提示\r\n\r\n### 光标设置\r\n\r\n添加到设置→ 规则→ 用户规则：\r\n\r\n```\r\nBefore starting any task, check if memory-bank directory exists in the project. If not, run the MCP command init-memory-bank.\r\nUse the MCP command get-memory-bank-info to read Memory Bank content at session start.\r\nAfter completing tasks or conversations, you must use the MCP command update-memory-bank to update Memory Bank content.\r\nFollow the MCP guidance to maintain Memory Bank files.\r\n```\r\n\r\n### 风帆设置\r\n\r\n添加到设置→ 级联→ 记忆与规则→ 全球规则：\r\n\r\n```\r\nBefore starting any task, check if memory-bank directory exists in the project. If not, run the MCP command init-memory-bank.\r\nUse the MCP command get-memory-bank-info to read Memory Bank content at session start.\r\nAfter completing tasks or conversations, you must use the MCP command update-memory-bank to update Memory Bank content.\r\nFollow the MCP guidance to maintain Memory Bank files.\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交问题或拉取请求。\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 致谢\r\n\r\n受到SPARC方法和代码的启发。\r\n",
+ "config": {
+  "memory-bank": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@neko0721/memory-bank-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

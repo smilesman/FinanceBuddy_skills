@@ -1,0 +1,12 @@
+{
+ "id": "feishu-clawbot-card",
+ "kind": "skill",
+ "name": "feishu-clawbot-card",
+ "fingerprint_md5": "d35b4a0f3f34316e19d3bfb62deb55ca",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# Feishu ClawBot Card (FCC)\r\n\r\n**飞书上 AI Agents 的通用名片协议。**\r\n\r\n此技能允许 OpenClaw bots 创建、交换和存储标准化身份名片（\"ClawCards\"）。它相当于你的 AI 用来记住谁是谁的通讯录。\r\n\r\n## 📦 安装\r\n\r\n```bash\r\nopenclaw install HMyaoyuan/feishu-clawbot-card\r\n```\r\n\r\n## 🚀 使用指南\r\n\r\n### 1. 🆔 铸造你的名片（创建身份）\r\n首先，定义*你*是谁。运行一次以在本地注册表中注册你自己。\r\n\r\n```bash\r\nnode skills/feishu-clawbot-card/index.js mint '{\r\n  \"display_name\": \"MyBotName\",\r\n  \"feishu_id\": \"cli_a...\", \r\n  \"avatar\": { \"url\": \"https://...\" },\r\n  \"bio\": {\r\n    \"species\": \"Robot\",\r\n    \"mbti\": \"INTJ\",\r\n    \"desc\": \"I am a helpful coding assistant.\"\r\n  },\r\n  \"capabilities\": [\"coding\", \"search\"]\r\n}'\r\n```\r\n*注意：`feishu_id` 应该是你的 App ID (`cli_...`) 或 User Open ID (`ou_...`)。*\r\n\r\n### 2. 📤 分享你的名片（导出）\r\n生成一个可分享的 JSON 代码块，发送给其他 bots 或人类。\r\n\r\n```bash\r\n# 获取特定 bot 的 JSON（按名称或 ID）\r\nnode skills/feishu-clawbot-card/index.js export \"MyBotName\"\r\n```\r\n**输出：** 一个 JSON 块。复制它并在聊天中发送！\r\n\r\n### 3. 📥 保存朋友的名片（导入）\r\n当有人发送给你他们的名片 JSON（遵循 FCC-v1 协议）时，将其保存到你的注册表。\r\n\r\n```bash\r\n# 粘贴接收到的 JSON 字符串\r\nnode skills/feishu-clawbot-card/index.js import '{\"protocol\":\"fcc-v1\", ...}'\r\n```\r\n\r\n### 4. 📇 查看注册表（列表）\r\n查看你认识的所有 bots。\r\n\r\n```bash\r\nnode skills/feishu-clawbot-card/index.js list\r\n```\r\n\r\n### 5. 🎨 展示名片（渲染）\r\n生成精美的飞书富文本（Post）JSON，以在聊天中展示名片。\r\n\r\n```bash\r\nnode skills/feishu-clawbot-card/index.js render \"MyBotName\"\r\n```\r\n\r\n## 📜 协议模式 (FCC v1)\r\n\r\n有效的名片必须遵循以下 JSON 结构：\r\n\r\n```json\r\n{\r\n  \"protocol\": \"fcc-v1\",\r\n  \"id\": \"uuid...\",\r\n  \"display_name\": \"Name\",\r\n  \"feishu_id\": \"cli_... or ou_...\",\r\n  \"avatar\": { \"url\": \"https://...\" },\r\n  \"bio\": {\r\n    \"species\": \"...\",\r\n    \"mbti\": \"...\",\r\n    \"desc\": \"...\"\r\n  },\r\n  \"capabilities\": [\"tag1\", \"tag2\"]\r\n}\r\n```",
+ "config": {}
+}

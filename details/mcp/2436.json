@@ -1,0 +1,27 @@
+{
+ "id": "2436",
+ "kind": "mcp",
+ "name": "awslabs.bedrock-kb-retrieval-mcp-server",
+ "fingerprint_md5": "906aa991b8a10a9343bfacdf6b2f3faa",
+ "download_count": 0,
+ "category": "知识库检索",
+ "tags": "",
+ "version": "",
+ "readme": "# 亚马逊基岩知识库检索MCP服务器\r\n\r\n用于访问亚马逊基岩知识库的MCP服务器\r\n\r\n## 特性\r\n\r\n### 发现知识库及其数据源\r\n\r\n- 查找并探索所有可用的知识库\r\n- 按名称或标签搜索知识库\r\n- 列出与每个知识库关联的数据源\r\n\r\n### 用自然语言查询知识库\r\n\r\n- 使用会话查询检索信息\r\n- 从你的知识库中获取相关段落\r\n- 访问所有结果的引用信息\r\n\r\n### 按数据源筛选结果\r\n\r\n- 将您的查询集中在特定的数据源上\r\n- 包含或排除特定数据源\r\n- 优先考虑特定数据源的结果\r\n\r\n### 重新排列结果\r\n\r\n- 提高检索结果的相关性\r\n- 使用Amazon Bedrock重新分级功能\r\n- 按与查询的相关性对结果进行排序\r\n\r\n## 先决条件\r\n\r\n### 安装要求\r\n\r\n1. 安装 `uv` 从 [星体](https://docs.astral.sh/uv/getting-started/installation/) 或 [GitHub自述](https://github.com/astral-sh/uv#installation)\r\n1. 使用以下命令安装Python `uv python install 3.10`\r\n\r\n### AWS要求\r\n\r\n1. **AWS CLI配置**：您必须将AWS CLI配置为具有凭据和AWS_PROFILE，该AWS_PROFILE可以访问Amazon Bedrock和知识库\r\n1. **亚马逊基岩知识库**：您必须至少有一个带有标签密钥的亚马逊基岩知识库 `mcp-multirag-kb` 值为 `true`\r\n1. **IAM权限**：您的IAM角色/用户必须具有适当的权限：\r\n   - 列出并描述知识库\r\n   - 访问数据源\r\n   - 查询知识库\r\n\r\n### 重新排序要求\r\n\r\n如果您打算使用重新分级功能，您的基岩知识库需要额外的权限：\r\n\r\n1. 您的IAM角色必须同时具有这两个权限 `bedrock:Rerank` 和 `bedrock:InvokeModel` 行动\r\n1. 亚马逊基岩知识库服务角色也必须具有这些权限\r\n1. 重新排名仅在特定地区可用。请咨询官方 [文档](https://docs.aws.amazon.com/bedrock/latest/userguide/rerank-supported.html) 获取最新的支持区域列表。\r\n1. 为指定区域中的可用重新分级模型启用模型访问。\r\n\r\n### 控制重新排名\r\n\r\n可以使用全局启用或禁用重新排名 `BEDROCK_KB_RERANKING_ENABLED` 环境变量：\r\n\r\n- 设置为 `false` （默认）：除非明确启用，否则禁用所有查询的重新分级\r\n- 设置为 `true`：启用所有查询的重新分级，除非明确禁用\r\n\r\n环境变量接受各种格式：\r\n\r\n- 用于启用：“true”、“1”、“yes”或“on”（不区分大小写）\r\n- 用于禁用：任何其他值或未设置（默认行为）\r\n\r\n此设置提供全局默认值，而单个API调用仍然可以通过显式设置 `reranking` 参数。\r\n\r\n有关设置知识库的详细说明，请参阅：\r\n\r\n- [创建知识库](https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-create.html)\r\n- [管理亚马逊基岩知识库的权限](https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-prereq-permissions-general.html)\r\n- [Amazon Bedrock的重新登录权限](https://docs.aws.amazon.com/bedrock/latest/userguide/rerank-prereq.html)\r\n\r\n## 安装\r\n\r\n|Kiro|光标|VS代码|\r\n|:----:|:------:|:-------:|\r\n|  |  |  |\r\n\r\n在MCP客户端配置中配置MCP服务器（例如，对于Kiro，编辑 `~/.kiro/settings/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"awslabs.bedrock-kb-retrieval-mcp-server\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"awslabs.bedrock-kb-retrieval-mcp-server@latest\"],\r\n      \"env\": {\r\n        \"AWS_PROFILE\": \"your-profile-name\",\r\n        \"AWS_REGION\": \"us-east-1\",\r\n        \"FASTMCP_LOG_LEVEL\": \"ERROR\",\r\n        \"KB_INCLUSION_TAG_KEY\": \"optional-tag-key-to-filter-kbs\",\r\n        \"BEDROCK_KB_RERANKING_ENABLED\": \"false\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Windows安装\r\n\r\n对于Windows用户，MCP服务器配置格式略有不同：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"awslabs.bedrock-kb-retrieval-mcp-server\": {\r\n      \"disabled\": false,\r\n      \"timeout\": 60,\r\n      \"type\": \"stdio\",\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"tool\",\r\n        \"run\",\r\n        \"--from\",\r\n        \"awslabs.bedrock-kb-retrieval-mcp-server@latest\",\r\n        \"awslabs.bedrock-kb-retrieval-mcp-server.exe\"\r\n      ],\r\n      \"env\": {\r\n        \"FASTMCP_LOG_LEVEL\": \"ERROR\",\r\n        \"AWS_PROFILE\": \"your-aws-profile\",\r\n        \"AWS_REGION\": \"us-east-1\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或docker成功后 `docker build -t awslabs/bedrock-kb-retrieval-mcp-server .`:\r\n\r\n```file\r\n# fictitious `.env` file with AWS temporary credentials\r\nAWS_ACCESS_KEY_ID=ASIAIOSFODNN7EXAMPLE\r\nAWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\r\nAWS_SESSION_TOKEN=AQoEXAMPLEH4aoAH0gNCAPy...truncated...zrkuWJOgQs8IZZaIv2BXIa2R4Olgk\r\n```\r\n\r\n```json\r\n  {\r\n    \"mcpServers\": {\r\n      \"awslabs.bedrock-kb-retrieval-mcp-server\": {\r\n        \"command\": \"docker\",\r\n        \"args\": [\r\n          \"run\",\r\n          \"--rm\",\r\n          \"--interactive\",\r\n          \"--env\",\r\n          \"FASTMCP_LOG_LEVEL=ERROR\",\r\n          \"--env\",\r\n          \"KB_INCLUSION_TAG_KEY=optional-tag-key-to-filter-kbs\",\r\n          \"--env\",\r\n          \"BEDROCK_KB_RERANKING_ENABLED=false\",\r\n          \"--env\",\r\n          \"AWS_REGION=us-east-1\",\r\n          \"--env-file\",\r\n          \"/full/path/to/file/above/.env\",\r\n          \"awslabs/bedrock-kb-retrieval-mcp-server:latest\"\r\n        ],\r\n        \"env\": {},\r\n        \"disabled\": false,\r\n        \"autoApprove\": []\r\n      }\r\n    }\r\n  }\r\n```\r\n\r\n注意：您的凭据需要从主机刷新\r\n\r\n## 局限性\r\n\r\n- 结果与 `IMAGE` KB查询响应中不包括内容类型。\r\n- 这 `reranking` 参数需要额外的权限，亚马逊基岩模型访问权限，并且仅在特定地区可用。\r\n",
+ "config": {
+  "awslabs.bedrock-kb-retrieval-mcp-server": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "awslabs.bedrock-kb-retrieval-mcp-server@latest"
+   ],
+   "env": {
+    "AWS_PROFILE": "your-profile-name",
+    "AWS_REGION": "us-east-1",
+    "FASTMCP_LOG_LEVEL": "ERROR",
+    "KB_INCLUSION_TAG_KEY": "optional-tag-key-to-filter-kbs",
+    "BEDROCK_KB_RERANKING_ENABLED": "false"
+   }
+  }
+ }
+}

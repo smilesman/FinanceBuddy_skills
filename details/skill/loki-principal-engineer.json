@@ -1,0 +1,12 @@
+{
+ "id": "loki-principal-engineer",
+ "kind": "skill",
+ "name": "loki-principal-engineer",
+ "fingerprint_md5": "606d8ceacc3392267a0f431e4c07357f",
+ "download_count": 0,
+ "category": "日志分析",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\n面向大规模部署的 Loki 架构设计与性能调优，涵盖存储引擎选型、查询性能优化、容量规划。",
+ "config": {}
+}

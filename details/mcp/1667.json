@@ -1,0 +1,26 @@
+{
+ "id": "1667",
+ "kind": "mcp",
+ "name": "phoenix",
+ "fingerprint_md5": "cfc64b10561d57cd25a382221b449cc0",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "<h1 align=\"center\" style=\"border-bottom: none\">\r\n    <div>\r\n        <a href=\"https://phoenix.arize.com/?utm_medium=github&utm_content=header_img&utm_campaign=phoenix-mcp\">\r\n            <picture>\r\n                <source media=\"(prefers-color-scheme: dark)\" srcset=\"https://raw.githubusercontent.com/Arize-ai/phoenix-assets/refs/heads/main/logos/Phoenix/phoenix.svg\">\r\n                <source media=\"(prefers-color-scheme: light)\" srcset=\"https://raw.githubusercontent.com/Arize-ai/phoenix-assets/refs/heads/main/logos/Phoenix/phoenix-white.svg\">\r\n                \r\n            </picture>\r\n        </a>\r\n        <br>\r\n        Arize Phoenix MCP Server\r\n    </div>\r\n</h1>\r\n\r\n<p align=\"center\">\r\n    <a href=\"https://www.npmjs.com/package/@arizeai/phoenix-mcp\">\r\n        \r\n    </a>\r\n    <a href=\"https://github.com/Arize-ai/phoenix/blob/main/js/packages/phoenix-mcp/LICENSE\">\r\n        \r\n    </a>\r\n    \r\n    <a href=\"https://cursor.com/install-mcp?name=phoenix&config=eyJjb21tYW5kIjoibnB4IC15IEBhcml6ZWFpL3Bob2VuaXgtbWNwQGxhdGVzdCAtLWJhc2VVcmwgaHR0cDovL2xvY2FsaG9zdDo2MDA2IC0tYXBpS2V5IHlvdXItYXBpLWtleSJ9\">\r\n        \r\n    </a>\r\n    \r\n</p>\r\n\r\nPhoenix MCP Server是Arize Phoenix平台的模型上下文协议的实现。它为Phoenix的功能提供了一个统一的接口。\r\n\r\n您可以使用Phoenix MCP服务器：\r\n\r\n- **项目管理**：列出并探索组织可观察性数据的项目\r\n- **痕迹、跨度和注释**：检索跟踪、跨度和注释配置以进行分析和调试\r\n- **会话**：探索对话流和会话级注释\r\n- **提示管理**：创建、列出、更新和迭代提示\r\n- **数据集**：探索数据集并综合新的例子\r\n- **实验**：在LLM的帮助下，提取实验结果并将其可视化\r\n\r\n没有看到覆盖的用例？ `@arizeai/phoenix-mcp` 是 [开放源代码的](https://github.com/Arize-ai/phoenix)！欢迎发布问题和PR。\r\n\r\n## 安装\r\n\r\n此MCP服务器可用于 `npx` 并且可以直接与Claude Desktop、Cursor等客户端集成。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"phoenix\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@arizeai/phoenix-mcp@latest\",\r\n        \"--baseUrl\",\r\n        \"https://my-phoenix.com\",\r\n        \"--apiKey\",\r\n        \"your-api-key\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n## 安装\r\n\r\n此包通过pnpm工作区进行管理。\r\n\r\n```sh\r\n// From the /js/ directory\r\npnpm install\r\npnpm build\r\n```\r\n\r\n只有在依赖关系发生变化或phoenix客户端发生变化时，才需要重复此操作。\r\n\r\n### 建筑\r\n\r\n要构建项目，请执行以下操作：\r\n\r\n```sh\r\npnpm build\r\n```\r\n\r\n### 发展模式\r\n\r\n要在开发模式下运行：\r\n\r\n```bash\r\npnpm dev\r\n```\r\n\r\n### 调试\r\n\r\n您可以使用以下方法构建和运行MCP检查器：\r\n\r\n```bash\r\npnpm inspect\r\n```\r\n\r\n## 环境变量\r\n\r\n开发时，服务器需要以下环境变量：\r\n\r\n- `PHOENIX_API_KEY`：您的Phoenix API密钥\r\n- `PHOENIX_HOST`：Phoenix的基本URL\r\n- `PHOENIX_PROJECT`：项目范围工具的可选默认项目\r\n- `PHOENIX_CLIENT_HEADERS`：可选的JSON编码请求头\r\n\r\n确保将这些设置为 `.env` 文件。看 `.env.example`.\r\n\r\n## 工具覆盖范围\r\n\r\nMCP服务器涵盖了Phoenix的主要操作工作流程：\r\n\r\n**提示** — `list-prompts`, `get-prompt`, `get-latest-prompt`, `get-prompt-by-identifier`, `get-prompt-version`, `list-prompt-versions`, `get-prompt-version-by-tag`, `list-prompt-version-tags`, `add-prompt-version-tag`, `upsert-prompt`\r\n\r\n**项目** — `list-projects`, `get-project`\r\n\r\n**痕迹** — `list-traces`, `get-trace`\r\n\r\n**跨度** — `get-spans`, `get-span-annotations`\r\n\r\n**会话** — `list-sessions`, `get-session`\r\n\r\n**注释配置** — `list-annotation-configs`\r\n\r\n**数据集** — `list-datasets`, `get-dataset`, `get-dataset-examples`, `get-dataset-experiments`, `add-dataset-examples`\r\n\r\n**实验** — `list-experiments-for-dataset`, `get-experiment-by-id`\r\n\r\n对于Phoenix文档搜索，请使用单独的Phoenix Docs MCP服务器，而不是此包。\r\n\r\n## 社区\r\n\r\n加入我们的社区，与成千上万的人工智能建设者建立联系：\r\n\r\n- 🌍 加入我们 [Slack社区](https://join.slack.com/t/arize-ai/shared_invite/zt-3r07iavnk-ammtATWSlF0pSrd1DsMW7g).\r\n- 📚 阅读 [Phoenix文档](https://arize.com/docs/phoenix).\r\n- 💡 在 _#凤凰支持_ 频道。\r\n- 🌟 在我们的网站上留下一颗星 [GitHub](https://github.com/Arize-ai/phoenix).\r\n- 🐞 报告bug [GitHub问题](https://github.com/Arize-ai/phoenix/issues).\r\n- 𝕏 关注我们 [𝕏](https://twitter.com/ArizePhoenix).\r\n- 💼 关注我们 [领英](https://www.linkedin.com/showcase/113218220).\r\n- 🗺️ 查看我们的 [路线图](https://github.com/orgs/Arize-ai/projects/45) 看看我们接下来要去哪里。\r\n\r\n## 许可证\r\n\r\nApache 2.0\r\n",
+ "config": {
+  "phoenix": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@arizeai/phoenix-mcp@latest",
+    "--baseUrl",
+    "https://my-phoenix.com",
+    "--apiKey",
+    "your-api-key"
+   ],
+   "env": {}
+  }
+ }
+}

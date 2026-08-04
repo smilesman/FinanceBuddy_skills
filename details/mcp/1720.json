@@ -1,0 +1,22 @@
+{
+ "id": "1720",
+ "kind": "mcp",
+ "name": "simctl-mcp",
+ "fingerprint_md5": "751a40cf2a1bcac0f1987eea96dc750e",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# simctl mcp\r\n\r\niOS模拟器控件的模型上下文协议服务器实现。\r\n\r\n[](https://archestra.ai/mcp-catalog/ambar__simctl-mcp)\r\n[](https://cursor.com/install-mcp?name=simctl-mcp&config=eyJjb21tYW5kIjoibnB4IC15IHNpbWN0bC1tY3AifQ%3D%3D)\r\n\r\n## 配置\r\n\r\n`.cursor/mcp.json` 或 `.vscode/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"simctl-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"simctl-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 提示\r\n\r\n提示的一些示例：\r\n\r\n- 模拟器支持哪些操作？\r\n- 打开快捷方式：//\r\n- “设置”应用程序的捆绑ID是什么？\r\n- 将剪贴板内容设置为：Hello\r\n- 模拟器SDK版本是什么？\r\n- 为“设置”应用程序生成Appium连接字符串\r\n\r\n## 用法\r\n\r\n服务器可以以两种模式启动：\r\n\r\n1. STDIO模式（默认）\r\n1. HTTP服务器模式\r\n\r\n### STDIO模式\r\n\r\n在STDIO模式下，服务器通过标准输入/输出流进行通信。\r\n\r\n```bash\r\nnpx simctl-mcp\r\n```\r\n\r\n### HTTP服务器模式\r\n\r\n在HTTP服务器模式下，服务器在指定端口上侦听HTTP连接。\r\n\r\n```bash\r\n# Start with default port (8081)\r\nnpx simctl-mcp --http\r\n\r\n# Start with custom port using --port flag\r\nnpx simctl-mcp --http --port 3000\r\n\r\n# Start with custom port using environment variable\r\nPORT=3000 npx simctl-mcp --http\r\n```\r\n\r\n## 工具\r\n\r\n## 设备管理：\r\n\r\n- 创建新的模拟器设备\r\n- 删除现有设备\r\n- 引导设备\r\n- 关闭设备\r\n- 列出所有可用设备\r\n- 列出可用设备类型\r\n- 列出可用运行时\r\n\r\n## 应用程序管理：\r\n\r\n- 安装应用程序\r\n- 卸载应用程序\r\n- 启动应用程序\r\n- 终止正在运行的应用程序\r\n- 获取应用容器路径\r\n- 获取应用程序信息\r\n- 列出已安装的应用程序\r\n\r\n## 应用程序权限：\r\n\r\n- 授予应用程序权限\r\n- 撤销应用程序权限\r\n- 重置所有应用程序权限\r\n\r\n## 系统特点：\r\n\r\n- 在模拟器中打开URL\r\n- 添加媒体文件\r\n- 获取/设置环境变量\r\n- 获取/设置外观（亮/暗模式）\r\n- 发送模拟推送通知\r\n\r\n## 证书和安全：\r\n\r\n- 添加根证书\r\n- 添加常规证书\r\n- 重置钥匙链\r\n\r\n## 媒体和内容：\r\n\r\n- 截图\r\n- 获取/设置剪贴板内容\r\n",
+ "config": {
+  "simctl-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "simctl-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

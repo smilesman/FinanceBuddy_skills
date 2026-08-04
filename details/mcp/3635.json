@@ -1,0 +1,26 @@
+{
+ "id": "3635",
+ "kind": "mcp",
+ "name": "serpfire",
+ "fingerprint_md5": "85d9a09c8314be71c8e0d651a3e23191",
+ "download_count": 0,
+ "category": "数据抓取",
+ "tags": "",
+ "version": "",
+ "readme": "# SerpFire MCP服务器\r\n\r\n一个强大的模型上下文协议（MCP）服务器，它结合了 **Serper.dev** （谷歌搜索）和 **火爬** （网络抓取）为人工智能代理提供全面的研究能力。\r\n\r\n## 特性\r\n\r\n- 🔍 **谷歌搜索** 通过Serper.dev API\r\n- 🌐 **Web剪贴** 通过Firecrawl API\r\n- 🤖 **智能研究** -自动搜索并抓取热门结果\r\n- 🚀 **轻松集成** 使用Cursor、Claude Desktop和其他MCP客户端\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g @zrald/serpfire\r\n```\r\n\r\n## 先决条件\r\n\r\n您需要来自以下位置的API密钥：\r\n\r\n- [Serper.dev](https://serper.dev) -谷歌搜索API\r\n- [Firecrawl.dev](https://firecrawl.dev) -网页抓取API\r\n- [背景7](https://context7.com) -文档搜索API（可选，用于context7工具）\r\n\r\n## 配置\r\n\r\n### 适用于Cursor/Claude桌面\r\n\r\n添加到您的MCP设置文件（例如。， `mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"serpfire\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@zrald/serpfire\"],\r\n      \"env\": {\r\n        \"SERPER_API_KEY\": \"your_serper_api_key_here\",\r\n        \"FIRECRAWL_API_KEY\": \"your_firecrawl_api_key_here\",\r\n        \"CONTEXT7_API_KEY\": \"your_context7_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 环境变量\r\n\r\n或者，设置环境变量：\r\n\r\n```bash\r\nexport SERPER_API_KEY=\"your_serper_api_key\"\r\nexport FIRECRAWL_API_KEY=\"your_firecrawl_api_key\"\r\n```\r\n\r\n## 可用工具\r\n\r\n### 1. `serper_search`\r\n\r\n搜索谷歌，得到结构化的结果。\r\n\r\n**论据：**\r\n\r\n- `query` （字符串，必填）：搜索查询\r\n- `num` （数字，可选）：结果数量（默认值：10）\r\n\r\n### 2. `firecrawl_scrape`\r\n\r\n删除一个网页。\r\n\r\n**论据：**\r\n\r\n- `url` （字符串，必填）：要抓取的URL\r\n- `formats` （数组，可选）：输出格式（默认值： `[\"markdown\"]`)\r\n\r\n### 3. `firecrawl_crawl`\r\n\r\n抓取整个网站。\r\n\r\n**论据：**\r\n\r\n- `url` （字符串，必填）：要爬网的基本URL\r\n- `limit` （数字，可选）：要抓取的最大页面数\r\n\r\n### 4. `context7_search`\r\n\r\n使用Context7搜索最新文档和代码库。\r\n\r\n**论据：**\r\n\r\n- `query` （字符串，必填）：搜索查询（例如“next.js”、“redis”）\r\n\r\n### 5. `super_search` 🚀 新\r\n\r\n全面的深度研究工具，结合了：\r\n\r\n1. **上下文7搜索**：查找权威库并获取文档。\r\n1. **谷歌搜索（Serper）**：查找更广泛的网络结果。\r\n1. **Firecrawl刮擦**：删除相关网页。\r\n\r\n**论据：**\r\n\r\n- `topic` （string，必填）：研究主题\r\n\r\n### 6. `research_topic`\r\n\r\n自动搜索主题并抓取顶部结果。\r\n\r\n**论据：**\r\n\r\n- `topic` （string，必填）：研究主题\r\n- `max_sources` （number，可选）：要抓取的源数量（默认值：3）\r\n\r\n**它是如何工作的：**\r\n\r\n1. 在谷歌上搜索该主题\r\n1. 提取前N个URL\r\n1. 并行删除所有URL\r\n1. 返回综合研究\r\n\r\n## 用法示例\r\n\r\n配置后，询问您的AI助手：\r\n\r\n- *“使用serpfire研究最新的人工智能发展”*\r\n- *“搜索MCP服务器并抓取前3个结果”*\r\n- *“查找有关Firecrawl API功能的信息”*\r\n\r\n## 许可证\r\n\r\n国际学生中心\r\n\r\n## 作者\r\n\r\n由Zrald创建\r\n\r\n## 链接\r\n\r\n- [GitHub 仓库](https://github.com/Zrald1/SerpFire-MCP-Server)\r\n- [npm包](https://www.npmjs.com/package/@zrald/serpfire)\r\n\r\n## 💝 支持发展\r\n\r\n如果你觉得这个项目有帮助，可以考虑支持开发：\r\n\r\n**加密货币捐赠**\r\n\r\n- **BNB（币安智能链）：** `0xB8E0b6D4BaaFd1ac4De9245A760cB8F09bB7D084`\r\n- **比特币（BTC）：** `bc1q77k0ju6ta3sp0vm3phm6dek432rzg7cqwf43z6`\r\n- **以太坊（ETH）：** `0xB8E0b6D4BaaFd1ac4De9245A760cB8F09bB7D084`\r\n- **多边形（MATIC）：** `0xB8E0b6D4BaaFd1ac4De9245A760cB8F09bB7D084`\r\n- **狗狗币（DOGE）：** `DGbDQEgJLnNR2yEmWFrusFd7jLya4aoZMA`\r\n\r\n您的支持有助于维护和改进这个开源项目！ 🙏\r\n",
+ "config": {
+  "serpfire": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@zrald/serpfire"
+   ],
+   "env": {
+    "SERPER_API_KEY": "your_serper_api_key_here",
+    "FIRECRAWL_API_KEY": "your_firecrawl_api_key_here",
+    "CONTEXT7_API_KEY": "your_context7_api_key_here"
+   }
+  }
+ }
+}

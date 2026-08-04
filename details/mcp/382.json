@@ -1,0 +1,21 @@
+{
+ "id": "382",
+ "kind": "mcp",
+ "name": "pokemon-calc",
+ "fingerprint_md5": "db60169cdf77bf61a938d24fa86dfa01",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 宝可梦VGC伤害计算器MCP服务器\r\n\r\n一个使用模型-上下文协议（MCP）构建的服务器，为人工智能代理提供一个标准化接口，用于执行宝可梦伤害计算 `@smogon/calc` 包。\r\n\r\n[](https://glama.ai/mcp/servers/@jpbullalayao/pokemon-vgc-calc-mcp)\r\n\r\n## 功能\r\n\r\n- **符合MCP标准的服务器** 使用TypeScript和官方MCP SDK\r\n- **准确的伤害计算** 由社区审核通过的平台提供支持 `@smogon/calc` 图书馆\r\n- **全面的输入处理** 对于宝可梦的属性、特性、道具、招式和场地条件\r\n- **错误处理** 对于无效的宝可梦名称、招式以及输入验证\r\n- **Vercel 部署准备就绪** 支持零配置部署\r\n\r\n## 先决条件\r\n\r\n- Node.js 18+\r\n- npm\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g pokemon-vgc-calc-mcp\r\n```\r\n\r\n## 开发\r\n\r\n```bash\r\nnpm run build  # Build TypeScript\r\nnpm run test   # Run test calculation\r\n```\r\n\r\n### MCP客户端配置\r\n\r\n配置您的MCP客户端（Claude Desktop、Cursor等）：\r\n\r\n**使用远程npm包：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pokemon-calc\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"pokemon-vgc-calc-mcp\"],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**本地开发：**\r\n\r\n在本地克隆仓库，构建项目，然后配置MCP客户端：\r\n\r\n```\r\n$ git clone git@github.com:jpbullalayao/pokemon-vgc-calc-mcp.git\r\n$ npm install\r\n$ npm run build\r\n```\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pokemon-calc\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"path/to/pokemon-vgc-calc-mcp/dist/index.js\"],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 可用工具\r\n\r\n服务器提供了一个主要工具： `calculateDamage`\r\n\r\n#### 工具：计算伤害\r\n\r\n计算攻击方和防守方宝可梦之间的战斗伤害。\r\n\r\n**输入参数：**\r\n\r\n- `attacker`宝可梦对象，包含种类、等级、属性、特性、道具等。\r\n- `defender`宝可梦对象，包含种类、等级、属性、特性、道具等。\r\n- `move`移动具有名称和可选暴击标志的对象\r\n- `field`现场条件包括天气、地形和副作用\r\n\r\n**根据上面的信息，执行如下指令：**\r\n\r\n- `description`人类可读的计算结果\r\n- `damage`\\[最小值，最大值\\] 损伤范围\r\n- `koChance`淘汰概率说明\r\n- `fullResult`来自smogon/calc的完整结果对象\r\n\r\n### 示例用法\r\n\r\n当由MCP客户端调用时，该工具接受如下参数：\r\n\r\n```json\r\n{\r\n  \"attacker\": {\r\n    \"species\": \"Pikachu\",\r\n    \"level\": 50,\r\n    \"ability\": \"Static\", \r\n    \"item\": \"Light Ball\",\r\n    \"nature\": \"Timid\",\r\n    \"evs\": { \"spa\": 252, \"spe\": 252, \"hp\": 4 }\r\n  },\r\n  \"defender\": {\r\n    \"species\": \"Charizard\",\r\n    \"level\": 50,\r\n    \"ability\": \"Blaze\"\r\n  },\r\n  \"move\": {\r\n    \"name\": \"Thunderbolt\"\r\n  },\r\n  \"field\": {\r\n    \"gameType\": \"Singles\"\r\n  }\r\n}\r\n```\r\n\r\n**根据上面的信息，执行如下指令：**\r\n\r\n```\r\n**252 SpA Light Ball Pikachu Thunderbolt vs. 0 HP / 0 SpD Charizard: 198-234 (107 - 126.4%) -- guaranteed OHKO**\r\n\r\nDamage: 198-234\r\nKO Chance: guaranteed OHKO\r\n```\r\n\r\n## 测试\r\n\r\n### 本地MCP服务器测试\r\n\r\n您可以使用MCP Inspector测试本地MCP服务器：\r\n\r\n```bash\r\nnpm run build\r\nnpx @modelcontextprotocol/inspector node path/to/pokemon-vgc-calc-mcp/dist/index.js\r\n```\r\n\r\n#### 测试输入示例\r\n\r\n使用以下输入来测试 `calculateDamage` 工具：\r\n\r\n```json\r\n{\r\n  \"attacker\": {\r\n    \"species\": \"Chien-Pao\",\r\n    \"nature\": \"Jolly\",\r\n    \"evs\": {\r\n      \"atk\": 252,\r\n      \"spe\": 252,\r\n      \"hp\": 4\r\n    },\r\n    \"level\": 50\r\n  },\r\n  \"defender\": {\r\n    \"species\": \"Flutter Mane\",\r\n    \"nature\": \"Modest\",\r\n    \"evs\": {\r\n      \"hp\": 164,\r\n      \"def\": 100\r\n    },\r\n    \"level\": 50\r\n  },\r\n  \"move\": {\r\n    \"name\": \"Icicle Crash\"\r\n  },\r\n  \"field\": {}\r\n}\r\n```\r\n\r\n#### 预期输出\r\n\r\n```\r\n**252 Atk Sword of Ruin Chien-Pao Icicle Crash vs. 164 HP / 100 Def Flutter Mane: 126-148 (83.4 - 98%) -- guaranteed 2HKO**\r\n\r\nDamage: 126-148\r\nKO Chance: guaranteed 2HKO\r\n```\r\n\r\n## 项目结构\r\n\r\n```\r\nsrc/\r\n├── index.ts       # Main MCP server implementation\r\n├── calculator.ts  # Damage calculation wrapper\r\n└── types.ts       # TypeScript type definitions\r\n```\r\n\r\n## 作者注\r\n\r\n对这个项目的进展感兴趣吗？欢迎随时关注仓库获取最新更新！\r\n\r\n如果你需要就这个项目联系我，请随时通过以下任一方式：\r\n\r\n- 请给我发送邮件至professor.ragna@gmail.com\r\n- 关注我 [@教授拉格纳](https://twitter.com/professorragna)\r\n\r\n如果你有兴趣资助这个项目，你可以支持我 [好的，以下是原文内容的翻译：](https://www.buymeacoffee.com/professorragna)任何支持都将不胜感激！\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "pokemon-calc": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "pokemon-vgc-calc-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

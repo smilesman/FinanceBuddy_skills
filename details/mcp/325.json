@@ -1,0 +1,22 @@
+{
+ "id": "325",
+ "kind": "mcp",
+ "name": "msfs",
+ "fingerprint_md5": "5351fe7488c3891bfd0a7792a693201d",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# MSFS SimConnect MCP\r\n\r\n微软2024飞行模拟器的模型上下文协议（MCP）服务器。通过SimConnect向AI代理公开实时飞行数据，用于AI驱动的飞行指令等用例。\r\n\r\n## 它的作用\r\n\r\n此Windows应用程序位于您的系统托盘中，并连接到正在运行的Microsoft Flight Simulator实例。它通过模型上下文协议公开飞行数据，允许人工智能代理（如克劳德）实时查询您当前的飞行状态。\r\n\r\n**示例用例：** 你正在飞近，问克劳德“我的着陆配置正确吗？”克劳德调用MCP工具检查你的高度、空速、襟翼和自动驾驶仪设置，然后给你提供上下文反馈。\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_connection_status` |检查MSFS是否正在运行并已连接|\r\n| `get_flight_position` |位置+磁航向、GS/VS、俯仰/倾斜、AGL/无线电高度、风、AoA、滑移、地面|\r\n| `get_flight_instruments` |指示高度、空速（IAS/TAS/Mach）、航向指示器、高度计设置|\r\n| `get_engine_status` |转速/油门、燃油流量/数量/重量、温度、N1/N2/扭矩、燃油压力、辅助动力装置|\r\n| `get_autopilot_status` |AP/FD、HDG/ALT/VS/IAS模式、APP/GS/BC、VNAV臂/主动、倾斜/俯仰保持、偏航阻尼器、自动油门|\r\n| `get_aircraft_info` |飞机类型、机尾号、重量|\r\n| `get_flight_plan_leg` |当前GPS计划状态、下一个航路点方位/距离/ETE/ETA、XTK、目的地ETE/ETA|\r\n| `get_flight_plan_waypoint` |当前航段下一个/上一个航路点详细信息（ID/lat/lon/alt、方位、距离）|\r\n| `get_navigation_status` |导航源（GPS/VLOC）、OBS/航向、CDI/GSI、LOC/GS可用性、NAV1/2频率、DME、往返、magvar|\r\n| `get_approach_status` |进场加载/激活、分段标志、下滑道/GS偏差|\r\n| `get_aircraft_configuration` |齿轮、襟翼、扰流板、自动刹车、驻车制动器、装饰件、车外灯|\r\n\r\n所有工具都是 **只读**。此服务器无法控制您的飞机。\r\n\r\n## 需求\r\n\r\n- Windows 10/11\r\n- 微软飞行模拟器2024（也可能与MSFS 2020兼容-未经测试）\r\n- 已安装MSFS SDK（用于SimConnect.dll）\r\n\r\n## 安装\r\n\r\n待办事项\r\n\r\n## 配置\r\n\r\n### 克劳德桌面（连接器UI）\r\n\r\n1. 运行服务器： `dotnet run --project src/MsfsMcpServer` （继续听 `http://localhost:5000`).\r\n1. 使用此JSON配置Claude（例如，在 `claude_desktop_config.json`):\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"msfs\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\r\n           \"mcp-remote\",\r\n           \"http://localhost:5000/mcp/sse\"\r\n         ]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n1. 使用时保持服务器运行。\r\n\r\n### 其他MCP客户端\r\n\r\n服务器运行在 `http://localhost:5000` SSE运输。使用SSE端点： `http://localhost:5000/mcp/sse`（有些客户也可以接受 `http://localhost:5000/mcp`.)\r\n\r\n### 快速开始\r\n\r\n1. 确保MSFS正在运行（对于真实数据，最好是在运行中）。\r\n1. 启动服务器： `dotnet run --project src/MsfsMcpServer`\r\n1. 将您的MCP客户端连接到 `http://localhost:5000/mcp/sse`.\r\n1. 呼叫 `get_connection_status` 和 `get_flight_position`.\r\n\r\n### MCP检查员进行本地测试\r\n\r\n服务器运行时，您可以通过MCP检查器浏览工具：\r\n\r\n```\r\nnpx @modelcontextprotocol/inspector http://localhost:5000/mcp\r\n```\r\n\r\n## 用法\r\n\r\n待办事项\r\n\r\n## Web仪表板\r\n\r\n服务器包括一个web仪表板，位于 `http://localhost:5000` 用于监控连接状态和查看实时飞行数据。\r\n\r\nTodo-屏幕截图\r\n\r\n## 故障排除\r\n\r\n**“未连接到MSFS”**\r\n\r\n- 确保Microsoft飞行模拟器正在运行\r\n- 检查你是否在航班上（不在主菜单上）\r\n\r\n**“请求超时”**\r\n\r\n- MSFS可能正在加载或位于菜单中\r\n- 请在飞行中再试一次\r\n\r\n**服务器无法启动**\r\n\r\n- 检查端口5000是否已在使用中\r\n- 确保SimConnect.dll与exe位于同一文件夹中\r\n\r\n## 许可证\r\n\r\n该项目发布于 [无许可证](LICENSE) -公共领域。\r\n\r\n## 贡献\r\n\r\n请发送一个提示请求，说明您希望工具或服务器做什么，哪些SimVars/行为很重要，以及预期的输出，而不是拉取请求。我将亲自运行提示，以便更改反映真实的使用意图。\r\n\r\n## 链接\r\n\r\n- [SimConnect SDK文档](https://docs.flightsimulator.com/msfs2024/html/6_Programming_APIs/SimConnect/SimConnect_SDK.htm)\r\n- [模型上下文协议](https://modelcontextprotocol.io/)\r\n- [MCP C#SDK](https://github.com/modelcontextprotocol/csharp-sdk)\r\n",
+ "config": {
+  "msfs": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "http://localhost:5000/mcp/sse"
+   ],
+   "env": {}
+  }
+ }
+}

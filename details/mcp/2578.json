@@ -1,0 +1,29 @@
+{
+ "id": "2578",
+ "kind": "mcp",
+ "name": "jina-mcp-tools",
+ "fingerprint_md5": "94210d51c05929050a6bfa6302018c92",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Jina AI MCP工具\r\n\r\n一种集成了以下功能的模型上下文协议（MCP）服务器 [Jina人工智能搜索基金会API](https://docs.jina.ai/).\r\n\r\n## 特性\r\n\r\n此MCP服务器提供对以下Jina AI API的访问：\r\n\r\n- **网络阅读器** -使用r.jina.ai从网页中提取内容\r\n- **网络搜索** -使用s.jina.ai或svip.jina.ai搜索网络（可通过配置 `--search-endpoint`)\r\n\r\n## 先决条件\r\n\r\n1. **Jina AI API密钥** （可选）-从获取免费的API密钥 [https://jina.ai/?sui=apikey](https://jina.ai/?sui=apikey) 用于增强功能\r\n1. **Node.js** -版本16或更高\r\n\r\n## MCP服务器\r\n\r\n### 使用stdio传输（默认）\r\n\r\n对于由另一个进程（例如，Claude Desktop、VS Code、Cursor）生成的本地集成：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"jina-mcp-tools\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"jina-mcp-tools\",\r\n        \"--transport\", \"stdio\",\r\n        \"--tokens-per-page\", \"15000\",\r\n        \"--search-endpoint\", \"standard\"\r\n      ],\r\n      \"env\": {\r\n        \"JINA_API_KEY\": \"your_jina_api_key_here_optional\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用HTTP传输\r\n\r\n对于可通过HTTP访问的远程服务器部署：\r\n\r\n**启动服务器：**\r\n\r\n```bash\r\n# With API key\r\nJINA_API_KEY=your_api_key npx jina-mcp-tools --transport http --host 127.0.0.1 --port 3000\r\n\r\n# Without API key (reader tool only, binds to 127.0.0.1 by default)\r\nnpx jina-mcp-tools --transport http --port 3000\r\n```\r\n\r\n**从MCP客户端连接：**\r\n\r\n- MCP检查员： `npx @modelcontextprotocol/inspector` → `http://localhost:3000/mcp`\r\n- 克劳德代码： `claude mcp add --transport http jina-tools http://localhost:3000/mcp`\r\n- VS代码： `code --add-mcp '{\"name\":\"jina-tools\",\"type\":\"http\",\"url\":\"http://localhost:3000/mcp\"}'`\r\n\r\n**CLI选项：**\r\n\r\n- `--transport` -运输类型： `stdio` 或 `http` （默认值：stdio）\r\n- `--host` -在HTTP模式下绑定的主机/接口（默认值： `127.0.0.1`)\r\n- `--port` -HTTP服务器端口（默认值：3000，仅用于HTTP传输）\r\n- `--tokens-per-page` -分页每页标记数（默认值：15000）\r\n- `--search-endpoint` -要使用的搜索端点： `standard` （s.jina.ai）或 `vip` （svip.jina.ai）（默认：标准）\r\n- `--cache-size` -URL中的读取器缓存大小（默认值：50）\r\n- `--help` -显示内置CLI帮助\r\n\r\n### 代理环境变量\r\n\r\n出站HTTP请求现在遵守标准代理环境变量。这适用于 `jina_reader`, `jina_search`，以及 `jina_search_vip`.\r\n\r\n- 支持的代理变量： `HTTP_PROXY`, `HTTPS_PROXY`, `ALL_PROXY`\r\n- 还支持较低版本： `http_proxy`, `https_proxy`, `all_proxy`\r\n- 例外情况通过以下方式得到尊重 `NO_PROXY` / `no_proxy`\r\n\r\n例子：\r\n\r\n```bash\r\nHTTPS_PROXY=http://proxy.internal:8080 npx jina-mcp-tools --transport stdio\r\n```\r\n\r\n## 可用工具\r\n\r\n### 名称_reader\r\n\r\n提取并阅读网页内容。\r\n\r\n**参数：**\r\n\r\n- `url` -要读取的URL（必需）\r\n- `page` -分页内容的页码（默认值：1）\r\n- `customTimeout` -超时覆盖（秒）（可选）\r\n\r\n**特征：**\r\n\r\n- 大型文档的自动分页\r\n- LRU缓存（50个URL）用于即时后续页面请求\r\n- GitHub文件URL自动转换为原始内容URL\r\n- 尝试 `Accept: text/markdown` 首先是一个支持markdown的文档/博客主机的维护列表，然后回到 `r.jina.ai` 获取失败或响应为空\r\n\r\n### jina_search/jina_search_vip\r\n\r\n搜索网络。返回部分内容；使用 `jina_reader` 为了获得完整的内容。需要API密钥。\r\n\r\n注册的工具取决于 `--search-endpoint`:\r\n\r\n- `jina_search` → `standard` （s.jina.ai，默认）\r\n- `jina_search_vip` → `vip` （svip.jina.ai）\r\n\r\n**参数：**\r\n\r\n- `query` -搜索查询（必填）\r\n- `count` -结果数（默认值：5）\r\n- `siteFilter` -仅限于特定域名（例如“github.com”）\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 链接\r\n\r\n- github： [https://github.com/PsychArch/jina-mcp-tools](https://github.com/PsychArch/jina-mcp-tools)\r\n- 问题： [https://github.com/PsychArch/jina-mcp-tools/issues](https://github.com/PsychArch/jina-mcp-tools/issues)\r\n",
+ "config": {
+  "jina-mcp-tools": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "jina-mcp-tools",
+    "--transport",
+    "stdio",
+    "--tokens-per-page",
+    "15000",
+    "--search-endpoint",
+    "standard"
+   ],
+   "env": {
+    "JINA_API_KEY": "your_jina_api_key_here_optional"
+   }
+  }
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "id": "55",
+ "kind": "mcp",
+ "name": "autoglm-mcp",
+ "fingerprint_md5": "5ef2cb1f0f782af7eb2b71dcaaf3dc19",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# AutoGLM MCP服务器\r\n\r\n通过MCP协议的Android屏幕分析功能。\r\n\r\n## 安装\r\n\r\n### 选项1：使用uvx（推荐）\r\n\r\n无需手动安装。只需添加到AI代理MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"autoglm-mcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"autoglm-mcp\"],\r\n      \"env\": {\r\n        \"AUTOGLM_BASE_URL\": \"https://api.z.ai/api/paas/v4\",\r\n        \"AUTOGLM_MODEL\": \"autoglm-phone-multilingual\",\r\n        \"AUTOGLM_APIKEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 选项2:pip安装\r\n\r\n```bash\r\npip install autoglm-mcp\r\n```\r\n\r\n然后配置AI代理MCP：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"autoglm-mcp\": {\r\n      \"command\": \"autoglm-mcp\",\r\n      \"env\": {\r\n        \"AUTOGLM_BASE_URL\": \"https://api.z.ai/api/paas/v4\",\r\n        \"AUTOGLM_MODEL\": \"autoglm-phone-multilingual\",\r\n        \"AUTOGLM_APIKEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|描述|默认值|\r\n|----------|-------------|---------|\r\n| `AUTOGLM_APIKEY` |API密钥（必需）|-|\r\n| `AUTOGLM_BASE_URL` |API终点| `https://api.z.ai/api/paas/v4` |\r\n| `AUTOGLM_MODEL` |型号名称| `autoglm-phone-multilingual` |\r\n\r\n## 用法\r\n\r\n确保您的手机已通过ADB连接，然后使用 `aiAsk` AI代理中的工具：\r\n\r\n- “单击搜索按钮的坐标是多少？”\r\n- “如何打开设置？”\r\n\r\n## 本地开发与调试\r\n\r\n### 先决条件\r\n\r\n- Python>=3.10\r\n- Node.js>=18（用于MCP检查器）\r\n- 安装ADB并连接电话(`adb devices` 显示您的设备）\r\n\r\n### 从源代码安装\r\n\r\n```bash\r\ncd mcp\r\npython3 -m venv .venv\r\nsource .venv/bin/activate\r\npip install -r requirements.txt\r\n```\r\n\r\n### MCP检查员（推荐）\r\n\r\n[MCP检查员](https://github.com/modelcontextprotocol/inspector) 是MCP服务器的官方可视化调试工具，就像MCP的Postman一样。\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector \\\r\n  -e AUTOGLM_APIKEY=\"your-api-key-here\" \\\r\n  -e AUTOGLM_BASE_URL=\"https://api.z.ai/api/paas/v4\" \\\r\n  -e AUTOGLM_MODEL=\"autoglm-phone-multilingual\" \\\r\n  -- \\\r\n  /path/to/file/mcp/.venv/bin/python -m autoglm_mcp.server\r\n```\r\n\r\n然后打开 `http://localhost:6274` 在浏览器中：\r\n\r\n1. 点击 **连接** 连接到服务器\r\n1. 切换到 **工具** 选项卡——您应该看到 `aiAsk` 工具\r\n1. 输入一个问题（例如。 `\"What is on the screen?\"`)然后单击 **运行工具**\r\n1. 检查左侧面板中的JSON-RPC请求/响应\r\n\r\n### 使用本地mcp服务器\r\n\r\n```json\r\n\"autoglm-mcp\": {\r\n  \"command\": \"/path/to/file/mcp/.venv/bin/python\",\r\n  \"args\": [\r\n    \"-m\",\r\n    \"autoglm_mcp.server\"\r\n  ],\r\n  \"env\": {\r\n    \"AUTOGLM_BASE_URL\": \"https://api.z.ai/api/paas/v4\",\r\n    \"AUTOGLM_MODEL\": \"autoglm-phone-multilingual\",\r\n    \"AUTOGLM_APIKEY\": \"xxx\"\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "autoglm-mcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "autoglm-mcp"
+   ],
+   "env": {
+    "AUTOGLM_BASE_URL": "https://api.z.ai/api/paas/v4",
+    "AUTOGLM_MODEL": "autoglm-phone-multilingual",
+    "AUTOGLM_APIKEY": "your-api-key-here"
+   }
+  }
+ }
+}

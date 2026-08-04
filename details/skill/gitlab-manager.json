@@ -1,0 +1,12 @@
+{
+ "id": "gitlab-manager",
+ "kind": "skill",
+ "name": "gitlab-manager",
+ "fingerprint_md5": "d44416c0b6644a92990d280af6216d3d",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "# GitLab Manager\r\n\r\n此技能允许通过 API 与 GitLab.com 互动。\r\n\r\n## 前提条件\r\n\r\n- **GITLAB_TOKEN**: 必须在环境中设置具有 `api` 范围的个人访问令牌。\r\n\r\n## 用法\r\n\r\n使用提供的 Node.js 脚本与 GitLab 互动。\r\n\r\n### 脚本位置\r\n`scripts/gitlab_api.js`\r\n\r\n### 命令\r\n\r\n#### 1. 创建仓库\r\n在 GitLab 中创建一个新项目。\r\n```bash\r\n./scripts/gitlab_api.js create_repo \"<name>\" \"<description>\" \"<visibility>\"\r\n# 可见性: private (默认), public, internal\r\n```\r\n\r\n#### 2. 列出合并请求\r\n列出特定项目的 MR。\r\n```bash\r\n./scripts/gitlab_api.js list_mrs \"<project_path>\" \"[state]\"\r\n# 项目路径: 例如, \"jorgermp/my-repo\" (将自动进行 URL 编码)\r\n# 状态: opened (默认), closed, merged, all\r\n```\r\n\r\n#### 3. 对合并请求发表评论\r\n向特定 MR 添加评论 (note)。用于代码审查。\r\n```bash\r\n./scripts/gitlab_api.js comment_mr \"<project_path>\" <mr_iid> \"<comment_body>\"\r\n```\r\n\r\n#### 4. 创建问题\r\n打开一个新问题。\r\n```bash\r\n./scripts/gitlab_api.js create_issue \"<project_path>\" \"<title>\" \"<description>\"\r\n```\r\n\r\n## 示例\r\n\r\n**创建私有仓库:**\r\n```bash\r\nGITLAB_TOKEN=... ./scripts/gitlab_api.js create_repo \"new-tool\" \"A cool new tool\" \"private\"\r\n```\r\n\r\n**审查 MR:**\r\n```bash\r\n# 首先列出以查找 ID\r\nGITLAB_TOKEN=... ./scripts/gitlab_api.js list_mrs \"jorgermp/my-tool\" \"opened\"\r\n# 然后评论\r\nGITLAB_TOKEN=... ./scripts/gitlab_api.js comment_mr \"jorgermp/my-tool\" 1 \"Great work, but check indentation.\"\r\n```",
+ "config": {}
+}

@@ -1,0 +1,22 @@
+{
+ "id": "1378",
+ "kind": "mcp",
+ "name": "cloudflare-3",
+ "fingerprint_md5": "7d854f39f68c15d085da330144c90d32",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Cloudflare Workers绑定MCP服务器\r\n\r\n这是一个 [模型上下文协议（MCP）](https://modelcontextprotocol.io/introduction) 支持远程MCP的服务器\r\n连接，内置Cloudflare OAuth。\r\n\r\n它集成了Cloudflare Workers Platform中用于管理资源的工具，您可以通过以下方式连接到您的Worker [绑定](https://developers.cloudflare.com/workers/runtime-apis/bindings/).\r\n\r\n## 🔨 可用工具\r\n\r\n目前可用的工具：\r\n\r\n| **类别** | **工具** | **描述** |\r\n| ----------------- | -------------------------- | ----------------------------------------------------------------------------- |\r\n| **KV命名空间** | `kv_namespaces_list` |列出Cloudflare帐户中的所有kv命名空间|\r\n|                   | `kv_namespace_create` |在Cloudflare帐户中创建新的kv命名空间|\r\n|                   | `kv_namespace_delete` |删除Cloudflare帐户中的kv命名空间|\r\n|                   | `kv_namespace_get` |获取Cloudflare帐户中kv命名空间的详细信息|\r\n|                   | `kv_namespace_update` |更新Cloudflare帐户中kv命名空间的标题|\r\n| **工人** | `workers_list` |列出Cloudflare帐户中的所有Workers|\r\n|                   | `workers_get_worker` |获取Cloudflare Worker的详细信息|\r\n|                   | `workers_get_worker_code` |获取Cloudflare Worker的源代码|\r\n| **R2铲斗** | `r2_buckets_list` |在Cloudflare帐户中列出r2存储桶|\r\n|                   | `r2_bucket_create` |在Cloudflare帐户中创建新的r2存储桶|\r\n|                   | `r2_bucket_get` |获取特定R2存储桶的详细信息|\r\n|                   | `r2_bucket_delete` |删除R2存储桶|\r\n| **D1数据库** | `d1_databases_list` |列出Cloudflare帐户中的所有D1数据库|\r\n|                   | `d1_database_create` |在Cloudflare帐户中创建新的D1数据库|\r\n|                   | `d1_database_delete` |删除Cloudflare帐户中的d1数据库|\r\n|                   | `d1_database_get` |在Cloudflare帐户中获取D1数据库|\r\n|                   | `d1_database_query` |查询Cloudflare帐户中的D1数据库|\r\n| **超光速推进器** | `hyperdrive_configs_list` |在Cloudflare帐户中列出Hyperdrive配置|\r\n|                   | `hyperdrive_config_create` |在Cloudflare帐户中创建新的Hyperdrive配置|\r\n|                   | `hyperdrive_config_delete` |删除Cloudflare帐户中的Hyperdrive配置|\r\n|                   | `hyperdrive_config_get` |在Cloudflare帐户中获取特定Hyperdrive配置的详细信息|\r\n|                   | `hyperdrive_config_edit` |在Cloudflare帐户中编辑（修补）Hyperdrive配置|\r\n\r\n此MCP服务器仍在开发中，我们计划在未来添加更多工具。\r\n\r\n### 提示示例\r\n\r\n- `List my Cloudflare accounts.`\r\n- `Set my active account to 'YOUR_ACCOUNT_ID'.` （将YOUR_ACCOUNT_ID替换为实际ID）\r\n- `Show me my KV namespaces.`\r\n- `Create a new KV namespace called 'my-kv-store'.`\r\n- `Get the details for KV namespace 'YOUR_NAMESPACE_ID'.` （替换YOUR_NAMESPACE_ID）\r\n- `Delete the KV namespace 'NAMESPACE_TO_DELETE_ID'.` （替换NAMESPACE_TO_DELETE_ID）\r\n- `List my Cloudflare Workers.`\r\n- `Get the code for the 'my-worker-script' worker.`\r\n- `Show me my R2 buckets.`\r\n- `Create an R2 bucket named 'my-new-bucket'.`\r\n- `Get details for the R2 bucket 'my-data-bucket'.`\r\n- `Delete the R2 bucket 'old-bucket'.`\r\n- `List my D1 databases.`\r\n- `Create a D1 database named 'analytics-db'.`\r\n- `Get details for D1 database 'YOUR_D1_DB_ID'.` （替换YOUR_D1_DB_ID）\r\n- `Run the query 'SELECT * FROM customers LIMIT 10;' on D1 database 'YOUR_D1_DB_ID'.` （替换YOUR_D1_DB_ID）\r\n- `Delete the D1 database 'TEMP_DB_ID'.` （替换TEMP_DB_ID）\r\n- `List my Hyperdrive configurations.`\r\n- `Create a Hyperdrive config named 'prod-db-cache' for my database.` （您可能需要提供更多原产地详细信息）\r\n- `Get details for Hyperdrive config 'YOUR_HYPERDRIVE_ID'.` （替换YOUR_HYPERDRIVE_ID）\r\n- `Update the cache settings for Hyperdrive config 'YOUR_HYPERDRIVE_ID'.` （替换YOUR_HYPERDRIVE_ID）\r\n- `Delete the Hyperdrive config 'OLD_HYPERDRIVE_ID'.` （替换OLD_HYPERDRIVE_ID）\r\n\r\n## 从任何MCP客户端访问远程MCP服务器\r\n\r\n如果您的MCP客户端对远程MCP服务器具有一流的支持，则客户端将提供一种接受服务器URL的方法(`https://bindings.mcp.cloudflare.com`)直接在其界面内（例如 [Cloudflare AI游乐场](https://playground.ai.cloudflare.com/)).\r\n\r\n如果您的客户端尚不支持远程MCP服务器，则需要使用设置其相应的配置文件 [mcp遥控器](https://www.npmjs.com/package/mcp-remote) 指定您的客户端可以访问哪些服务器。\r\n\r\n用以下配置替换内容：\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"cloudflare\": {\r\n\t\t\t\"command\": \"npx\",\r\n\t\t\t\"args\": [\"mcp-remote\", \"https://bindings.mcp.cloudflare.com/mcp\"]\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\n设置好配置文件后，重新启动MCP客户端，将打开一个浏览器窗口，显示您的OAuth登录页面。继续执行身份验证流程，以授予客户端访问MCP服务器的权限。授予访问权限后，这些工具将可供您使用。\r\n\r\n有兴趣贡献并在本地运行此服务器吗？看 [贡献.md](CONTRIBUTING.md) 开始吧。\r\n",
+ "config": {
+  "cloudflare": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://bindings.mcp.cloudflare.com/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,28 @@
+{
+ "id": "988",
+ "kind": "mcp",
+ "name": "biomart",
+ "fingerprint_md5": "a324e2085cd25d24a84a64a3e962edc6",
+ "download_count": 0,
+ "category": "缓存",
+ "tags": "",
+ "version": "",
+ "readme": "# 生物标记MCP\r\n\r\n\r\n### 与Biomart接口的MCP服务器\r\n\r\n[模型上下文协议](https://modelcontextprotocol.io/introduction) （MCP）是一个开放协议，它规范了应用程序如何为开发的LLM提供上下文 [Anthropic](https://www.anthropic.com/)在这里，我们使用 [MCP python sdk](https://github.com/modelcontextprotocol/python-sdk) 创建一个MCP服务器，通过 [生物质](https://github.com/jrderuiter/pybiomart) 包裹。\r\n\r\n\r\n有一个短 [演示视频](assets/mcp-demo.mp4) 显示了Claude Desktop上正在运行的MCP服务器。\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的Biomart MCP [史密瑟里](https://smithery.ai/server/@jzinno/biomart-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @jzinno/biomart-mcp --client claude\r\n```\r\n\r\n### 克隆存储库\r\n\r\n```bash\r\ngit clone https://github.com/jzinno/biomart-mcp.git\r\ncd biomart-mcp\r\n```\r\n\r\n### 克劳德桌面\r\n\r\n```bash\r\nuv run --with mcp[cli] mcp install --with pybiomart biomart-mcp.py\r\n```\r\n\r\n### 光标\r\n\r\n通过Curor的代理模式，其他模型也可以利用MCP服务器，例如OpenAI或DeepSeek的服务器。点击光标设置齿轮并导航到 `MCP` 并将MCP服务器添加到全局配置中，或通过添加以下内容将其添加到项目范围中 `.cursor/mcp.json` 对于该项目。\r\n\r\n示例 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"Biomart\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"run\",\r\n                \"--with\",\r\n                \"mcp[cli]\",\r\n                \"--with\",\r\n                \"pybiomart\",\r\n                \"mcp\",\r\n                \"run\",\r\n                \"/your/path/to/biomart-mcp.py\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n### 格拉玛\r\n\r\n### 发展\r\n\r\n```bash\r\n# Create a virtual environment\r\nuv venv\r\n\r\n# MacOS/Linux\r\nsource .venv/bin/activate\r\n\r\n# Windows\r\n.venv\\Scripts\\activate\r\n\r\nuv sync #or uv add mcp[cli] pybiomart\r\n\r\n# Run the server in dev mode\r\nmcp dev biomart-mcp.py\r\n```\r\n\r\n## 特性\r\n\r\nBiomart MCP提供了几种与Biomart数据库交互的工具：\r\n\r\n- **集市和数据集发现**：列出可用的集市和数据集，以探索Biomart数据库结构\r\n- **属性和过滤器探索**：查看特定数据集的通用或所有可用属性和过滤器\r\n- **数据检索**：使用特定属性和过滤器查询生物标记以获取生物数据\r\n- **ID转换**：在不同的生物标识符之间进行转换（例如，将基因符号转换为Ensembl ID）\r\n\r\n## 贡献\r\n\r\n欢迎拉取请求！关于发展的一些小提示：\r\n\r\n- 我们只使用 `@mcp.tool()` 从设计上讲，这是为了最大限度地提高与支持MCP的客户端的兼容性，如 [文档](https://modelcontextprotocol.io/clients).\r\n- 我们正在使用 `@lru_cache` 以缓存计算上昂贵的函数的结果或进行外部API调用。\r\n- 我们需要注意不要打开模型的上下文窗口，例如，您将看到 `df.to_csv(index=False).replace(\"\\r\", \"\")` 在许多地方。这种csv风格的返回比类似的东西更具令牌效率 `df.to_string()` 其中大多数标记是空白。还要注意，从染色体或类似的大请求中提取所有基因对于上下文窗口来说也太大了。\r\n\r\n## 未来潜在特征\r\n\r\n当然，还有更多的功能可以添加，有些可能超出了名称的范围 `biomart-mcp`。以下是一些想法：\r\n\r\n- 为资源网站添加网络抓取功能 `bs4`例如，我们获得了NOTCH1的Ensembl基因ID，那么在某些情况下，收集整理后的基因ID可能会很有用 `Comments and Description Text from UniProtKB` 部分从 [这是UCSC上的页面](https://genome.ucsc.edu/cgi-bin/hgGene?db=hg38&hgg_chrom=chr9&hgg_gene=ENST00000651671.1&hgg_start=136494433&hgg_end=136546048&hgg_type=knownGene)\r\n- $...$\r\n",
+ "config": {
+  "biomart": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--with",
+    "mcp[cli]",
+    "--with",
+    "pybiomart",
+    "mcp",
+    "run",
+    "/your/path/to/biomart-mcp.py"
+   ],
+   "env": {}
+  }
+ }
+}

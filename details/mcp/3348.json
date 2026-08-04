@@ -1,0 +1,21 @@
+{
+ "id": "3348",
+ "kind": "mcp",
+ "name": "baidu-search",
+ "fingerprint_md5": "31bf18882a305d1a6ee4cb7d07b84b58",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 百度搜索MCP服务器\r\n\r\n\r\n一种模型上下文协议（MCP）服务器，通过百度提供网络搜索功能，并具有内容获取和解析的附加功能。\r\n\r\n[https://glama.ai/mcp/servers/@Evilran/baidu-mcp-server](https://glama.ai/mcp/servers/@Evilran/baidu-mcp-server)\r\n\r\n## 特性\r\n\r\n- **网页搜索**：使用高级限速和结果格式搜索百度\r\n- **内容获取**：通过智能文本提取检索和解析网页内容\r\n- **速率限制**：内置对搜索和内容获取速率限制的保护\r\n- **错误处理**：全面的错误处理和记录\r\n- **LLM友好输出**：专门为大型语言模型使用而格式化的结果\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面百度搜索服务器 [史密瑟里](https://smithery.ai/server/@Evilran/baidu-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @Evilran/baidu-mcp-server --client claude\r\n```\r\n\r\n### 通过安装 `uv`\r\n\r\n使用以下命令直接从PyPI安装 `uv`:\r\n\r\n```bash\r\nuv pip install baidu-mcp-server\r\n```\r\n\r\n## 用法\r\n\r\n### 使用Claude Desktop运行\r\n\r\n1. 下载 [Claude桌面版](https://claude.ai/download)\r\n1. 创建或编辑您的Claude Desktop配置：\r\n   - 在macOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - 在Windows上： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n添加以下配置：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"baidu-search\": {\r\n            \"command\": \"uvx\",\r\n            \"args\": [\"baidu-mcp-server\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n3. 重新启动克劳德桌面\r\n\r\n### 发展\r\n\r\n对于本地开发，您可以使用MCP CLI：\r\n\r\n```bash\r\n# Run with the MCP Inspector\r\nmcp dev server.py\r\n\r\n# Install locally for testing with Claude Desktop\r\nmcp install server.py\r\n```\r\n\r\n## 可用工具\r\n\r\n### 1.搜索工具\r\n\r\n```python\r\nasync def search(query: str, max_results: int = 10) -> str\r\n```\r\n\r\n在百度上执行网络搜索并返回格式化结果。\r\n\r\n**参数：**\r\n\r\n- `query`：搜索查询字符串\r\n- `max_results`：要返回的最大结果数（默认值：10）\r\n\r\n**退货：**\r\n包含带有标题、URL和片段的搜索结果的格式化字符串。\r\n\r\n### 2.内容获取工具\r\n\r\n```python\r\nasync def fetch_content(url: str) -> str\r\n```\r\n\r\n从网页中获取和解析内容。\r\n\r\n**参数：**\r\n\r\n- `url`：从中获取内容的网页URL\r\n\r\n**退货：**\r\n已清理并格式化网页中的文本内容。\r\n\r\n## 详细功能\r\n\r\n### 速率限制\r\n\r\n- 搜索：每分钟限制30个请求\r\n- 内容获取：每分钟限制20个请求\r\n- 自动队列管理和等待时间\r\n\r\n### 结果处理\r\n\r\n- 删除广告和无关内容\r\n- 清理百度重定向网址\r\n- 格式化结果以实现最佳LLM消耗\r\n- 适当截断长内容\r\n\r\n### 错误处理\r\n\r\n- 全面的错误捕获和报告\r\n- 通过MCP上下文进行详细日志记录\r\n- 在速率限制或超时方面表现良好\r\n\r\n## 贡献\r\n\r\n欢迎问题和拉取请求！一些有待改进的领域：\r\n\r\n- 其他搜索参数（地区、语言等）\r\n- 增强的内容解析选项\r\n- 用于频繁访问内容的缓存层\r\n- 额外的限速策略\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。\r\n\r\n## 致谢\r\n\r\n此项目中的代码引用了以下存储库：\r\n\r\n- [nicklyde/duckduckgo mcp服务器](https://github.com/nickclyde/duckduckgo-mcp-server)\r\n- [百度蜘蛛/百度蜘蛛](https://github.com/BaiduSpider/BaiduSpider)\r\n\r\n感谢这些存储库的作者和贡献者为开源社区所做的努力和贡献。\r\n",
+ "config": {
+  "baidu-search": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "baidu-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

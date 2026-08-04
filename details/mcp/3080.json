@@ -1,0 +1,18 @@
+{
+ "id": "3080",
+ "kind": "mcp",
+ "name": "eto-travel",
+ "fingerprint_md5": "a41e34e2be365513d3fc8a698bc21058",
+ "download_count": 0,
+ "category": "出行交通",
+ "tags": "",
+ "version": "",
+ "readme": "# ETO.Travel MCP Server\r\n\r\nMCP сервер для поиска туров на сайте eto.travel через Tourvisor API.\r\n\r\n## Возможности\r\n\r\nСервер предоставляет следующие инструменты:\r\n\r\n1. **load_dictionary** - загрузка справочника стран, регионов, городов отправления\r\n2. **search_tours** - поиск туров по параметрам\r\n3. **get_hotel_types** - получение типов отелей для страны\r\n4. **get_hotels_by_country** - список отелей в стране\r\n5. **find_country** - поиск страны по названию\r\n6. **find_region** - поиск региона/курорта\r\n7. **get_popular_countries** - список популярных направлений\r\n\r\n## Установка локально\r\n\r\n```bash\r\npip install -r requirements.txt\r\n```\r\n\r\n## Запуск\r\n\r\n```bash\r\npython mcp_server.py\r\n```\r\n\r\n## Деплой на Railway\r\n\r\n1. Создай новый проект на [Railway](https://railway.app)\r\n2. Подключи GitHub репозиторий с этим кодом\r\n3. Railway автоматически обнаружит Dockerfile и задеплоит сервер\r\n4. Получи URL сервера из настроек проекта\r\n\r\n## Подключение к Cursor\r\n\r\nДобавь в настройки MCP в Cursor (Settings → Features → MCP):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"eto-travel\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"/path/to/mcp_server.py\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\nДля удаленного сервера на Railway:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"eto-travel\": {\r\n      \"url\": \"https://your-railway-url.railway.app\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## Использование\r\n\r\nПосле подключения к Cursor, ты можешь использовать естественный язык для поиска туров:\r\n\r\n- \"Найди туры в Египет на 7 ночей\"\r\n- \"Покажи отели в Турции\"\r\n- \"Какие есть популярные страны для отдыха?\"\r\n- \"Найди туры в Таиланд, Пхукет с 1 марта по 15 марта\"\r\n\r\n## Примеры запросов\r\n\r\n### 1. Загрузка справочника\r\n\r\n```\r\nload_dictionary\r\n```\r\n\r\n### 2. Поиск страны\r\n\r\n```\r\nfind_country(\"Египет\")\r\n```\r\n\r\n### 3. Поиск туров\r\n\r\n```\r\nsearch_tours(\r\n  country_id=1,  # Египет\r\n  date_from=\"01.03.2026\",\r\n  date_to=\"15.03.2026\",\r\n  nights_from=7,\r\n  nights_to=10,\r\n  adults=2\r\n)\r\n```\r\n\r\n## API Endpoints\r\n\r\nСервер работает с следующими API:\r\n\r\n- `tourvisor.ru/xml/listdev.php` - справочники\r\n- `tourvisor.ru/api/v1.1/hotel-actypes/all` - типы отелей\r\n- `search3.tourvisor.ru/modresult.php` - результаты поиска\r\n\r\n## Структура данных\r\n\r\n### Страны\r\n\r\n```json\r\n{\r\n  \"id\": 1,\r\n  \"name\": \"Египет\",\r\n  \"popular\": 1,\r\n  \"directfly\": 1\r\n}\r\n```\r\n\r\n### Туры\r\n\r\n```json\r\n{\r\n  \"op\": 62,\r\n  \"dt\": \"2026-02-13\",\r\n  \"nt\": 7,\r\n  \"pr\": 145933,\r\n  \"hotel_id\": 143644,\r\n  \"ml\": 2\r\n}\r\n```\r\n\r\n## Технологии\r\n\r\n- Python 3.10\r\n- MCP SDK\r\n- httpx для HTTP запросов\r\n- asyncio для асинхронности\r\n\r\n## Лицензия\r\n\r\nMIT\r\n",
+ "config": {
+  "eto-travel": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://your-railway-url.railway.app"
+  }
+ }
+}

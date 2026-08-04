@@ -1,0 +1,23 @@
+{
+ "id": "1725",
+ "kind": "mcp",
+ "name": "skills",
+ "fingerprint_md5": "fe39496a941c373a7c5c4d04a1350e50",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 代理技能mcp-加载 [代理技能](https://agentskills.io/home) 为你的代理人\r\n\r\n[](https://pypi.org/project/agent-skills-mcp/)\r\n\r\n\r\n> \\[！警告\\]\r\n> 此Python实现已弃用。请改用Rust实现：https://github.com/DiscreteTom/agent-skills-mcp-rs\r\n\r\n## 用法\r\n\r\n### 完整CLI使用情况\r\n\r\n<details>\r\n\r\n<summary><code>uvx agent-skills-mcp --help</code></summary>\r\n\r\n```sh\r\n Usage: agent-skills-mcp [OPTIONS]\r\n\r\n Agent Skills MCP - Load Agent Skills for your agents\r\n\r\n╭─ Options ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮\r\n│ --skill-folder  TEXT                  Path to folder containing skill markdown files [env var: SKILL_FOLDER] [default: skills] │\r\n│ --mode          [tool|system_prompt]  Operating mode [env var: MODE] [default: tool]                                           │\r\n│ --version                             Show version and exit                                                                    │\r\n│ --help                                Show this message and exit.                                                              │\r\n╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯\r\n```\r\n\r\n</details>\r\n\r\n### 设置\r\n\r\n首先，把你的技能放在 `~/skills`例如。\r\n\r\n```sh\r\ngit clone https://github.com/anthropics/skills.git ~/skills\r\n```\r\n\r\n服务器递归搜索 `SKILL.md` 文件并遵循符号链接，允许灵活的技能组织。\r\n\r\n然后，将此添加到MCP客户端配置中：\r\n\r\n[](https://cursor.com/en-US/install-mcp?name=skills&config=eyJlbnYiOnsiU0tJTExfRk9MREVSIjoifi9za2lsbHMifSwiY29tbWFuZCI6InV2eCBhZ2VudC1za2lsbHMtbWNwIn0%3D)\r\n[](https://kiro.dev/launch/mcp/add?name=skills&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22agent-skills-mcp%22%5D%2C%22env%22%3A%7B%22SKILL_FOLDER%22%3A%22~%2Fskills%22%7D%7D)\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"skills\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"agent-skills-mcp\"],\r\n      \"env\": {\r\n        \"SKILL_FOLDER\": \"~/skills\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 模式\r\n\r\n- `system_prompt`：在MCP说明中包含技能信息（如果您的代理遵守MCP服务器说明，建议这样做）\r\n- `tool`：将技能注册为MCP工具（回退模式，因为许多代理忽略MCP服务器指令）\r\n\r\n## [更新日志](./CHANGELOG.md)\r\n",
+ "config": {
+  "skills": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "agent-skills-mcp"
+   ],
+   "env": {
+    "SKILL_FOLDER": "~/skills"
+   }
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "950",
+ "kind": "mcp",
+ "name": "youtube-video-summary",
+ "fingerprint_md5": "43c99ad679cba573ad99240bb6f390c0",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# YouTube视频摘要\r\n\r\n一种模型上下文协议（MCP）服务器，用于获取YouTube视频转录并生成可定制的摘要。\r\n\r\n## 特性\r\n\r\n- **视频ID提取**：从各种URL格式（YouTube.com、youtu.be等）提取YouTube视频ID\r\n- **获取成绩单**：使用YouTube转录API获取视频转录\r\n- **缓存**：在本地缓存转录，以便更快地检索\r\n- **可定制的提示**：生成多种格式的摘要：\r\n  - 快速30秒总结\r\n  - 详细的2-3分钟总结\r\n  - markdown格式的结构化笔记\r\n\r\n## 安装\r\n\r\n### 需求\r\n\r\n- Python>=3.12\r\n- `uv` 包管理器（可选，但推荐）\r\n\r\n### 设置\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone <repository-url>\r\ncd mcp-youtube-video-summary\r\n```\r\n\r\n2. 安装依赖项：\r\n\r\n```bash\r\n# Using uv\r\nuv sync\r\n\r\n# Or using pip\r\npip install -r requirements.txt\r\n```\r\n\r\n## 用法\r\n\r\n### 运行MCP服务器\r\n\r\n```bash\r\nuv run main.py\r\n```\r\n\r\n服务器将从MCP通信的标准I/O传输开始。\r\n\r\n### 可用工具\r\n\r\n- **`get_youtube_video_transcript(url: str)`**：获取给定YouTube URL的文字记录\r\n\r\n### 可用提示\r\n\r\n- **`quick_summary_prompt(video_url: str)`**：快速生成30秒摘要\r\n- **`detailed_summary_prompt(video_url: str)`**：生成详细的2-3分钟摘要\r\n- **`structured_notes_prompt(video_url: str)`**：生成全面的结构化笔记\r\n\r\n## 与AI客户端集成\r\n\r\n### 克劳德桌面\r\n\r\n1. 打开 `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n1. 添加以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Youtube-Video-Summary\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/Users/Shiva/Developer/mcp/mcp-youtube-video-summary\",\r\n        \"run\",\r\n        \"main.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. 重新启动克劳德桌面\r\n\r\n### VS Code\r\n\r\n1. 安装VS Code的MCP扩展\r\n1. 将服务器配置添加到VS代码设置中：\r\n\r\n```json\r\n{\r\n  \"mcp.servers\": {\r\n    \"Youtube-Video-Summary\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/Users/Shiva/Developer/mcp/mcp-youtube-video-summary\",\r\n        \"run\",\r\n        \"main.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 项目结构\r\n\r\n```\r\n.\r\n├── main.py                          # MCP server entry point\r\n├── prompts.yaml                     # Prompt templates\r\n├── pyproject.toml                   # Project configuration\r\n├── youtube_transcript/\r\n│   ├── __init__.py                 # Package exports\r\n│   ├── video_id.py                 # Video ID extraction\r\n│   ├── transcript.py               # Transcript fetching\r\n│   └── cache.py                    # Local caching\r\n└── README.md                        # This file\r\n```\r\n\r\n## 配置\r\n\r\n编辑 `prompts.yaml` 为不同的用例定制摘要提示。\r\n\r\n## 依赖项\r\n\r\n- **fastmcp**：模型上下文协议框架\r\n- **youtube转录api**：获取YouTube成绩单\r\n- **格式**：YAML配置解析\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 贡献\r\n\r\n请随时提交问题和增强请求！\r\n",
+ "config": {
+  "youtube-video-summary": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/Users/Shiva/Developer/mcp/mcp-youtube-video-summary",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

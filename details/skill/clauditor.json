@@ -1,0 +1,12 @@
+{
+ "id": "clauditor",
+ "kind": "skill",
+ "name": "clauditor",
+ "fingerprint_md5": "aa72b6c765acc3e4837d762a8077732e",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "# Clauditor\r\n\r\n安全看门狗，监控文件系统活动并创建防篡改日志。即使 Clawdbot 被入侵，也无法停止看门狗、伪造条目或删除证据。\r\n\r\n## 安装（引导式）\r\n\r\n使用 CLI 向导引导用户完成安装：\r\n\r\n```bash\r\ncd /path/to/clauditor\r\ncargo build --release\r\n```\r\n\r\n### 代理工作流\r\n\r\n1. **检查状态：** `./target/release/clauditor wizard status`\r\n   - 返回 JSON，包含 `current_step`（1-6）和 `complete`（true/false）\r\n\r\n2. **获取下一步：** `./target/release/clauditor wizard next`\r\n   - 显示它做什么、为什么重要，以及要运行的确切 COMMAND\r\n\r\n3. **用户运行 sudo 命令**\r\n\r\n4. **验证：** `./target/release/clauditor wizard verify`\r\n   - 确认步骤已完成\r\n\r\n5. **重复直到 `complete: true`**\r\n\r\n### 示例交互\r\n\r\n```\r\n用户：\"安装 clauditor\"\r\n\r\n代理：[运行 wizard status → current_step: 1]\r\n代理：\"第 1 步，共 6 步：创建系统用户\r\n\r\n这将创建一个运行看门狗的 'sysaudit' 用户。即使你被入侵，也无法杀死另一个用户拥有的进程。\r\n\r\n运行以下命令：\r\nsudo useradd --system --shell /usr/sbin/nologin --no-create-home sysaudit\r\n\r\n完成后告诉我。\"\r\n\r\n用户：\"done\"\r\n\r\n代理：[运行 wizard verify → success]\r\n代理：[运行 wizard next → step 2...]\r\n```\r\n\r\n## 安装后\r\n\r\n### 检查状态\r\n```bash\r\nsystemctl status systemd-journaldd\r\n```\r\n\r\n### 生成摘要\r\n```bash\r\n./target/release/clauditor digest \\\r\n  --log /var/lib/.sysd/.audit/events.log \\\r\n  --key /etc/sysaudit/key \\\r\n  --format markdown\r\n```\r\n\r\n## 快速安装（高级用户）\r\n\r\n```bash\r\nsudo bash wizard/wizard.sh\r\n```\r\n\r\n## 配置\r\n\r\n- 配置：`/etc/sysaudit/config.toml`\r\n- 密钥：`/etc/sysaudit/key`\r\n- 日志：`/var/lib/.sysd/.audit/events.log`\r\n\r\n编辑配置以自定义 `watch_paths` 和 `target_uid`。",
+ "config": {}
+}

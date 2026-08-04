@@ -1,0 +1,22 @@
+{
+ "id": "1424",
+ "kind": "mcp",
+ "name": "emacs-mcp",
+ "fingerprint_md5": "ea7a3c57858f39b35bfc4dae08bc4c80",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Emacs MCP服务器\r\n\r\n这是一个简单的MCP（模型上下文协议）服务器，允许语言模型通过以下方式与Emacs交互 `emacsclient --eval` 命令并查看Emacs的当前状态。\r\n\r\n## 特性\r\n\r\n服务器提供三个工具：\r\n\r\n- `emacs_eval`：计算Emacs Lisp表达式并返回结果\r\n- `emacs_get_visible_text`：获取当前在Emacs窗口中可见的文本\r\n- `emacs_get_context`：获取有关当前Emacs状态（缓冲区、模式、点位置等）的上下文信息\r\n\r\n## 需求\r\n\r\n- Node.js\r\n- 运行服务器的Emacs(`M-x server-start` 在Emacs中）\r\n\r\n## 安装\r\n\r\n如果使用npx，则不需要安装。请确保您已安装Node.js和npm。\r\n\r\n## 使用Claude for Desktop\r\n\r\n要将此MCP服务器与Claude for Desktop一起使用，请执行以下操作：\r\n\r\n1. 确保Emacs在服务器启动的情况下运行(`M-x server-start`)\r\n\r\n1. 将服务器添加到您的Claude进行桌面配置：\r\n\r\n   - MacOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - Linux： `~/.config/Claude/claude_desktop_config.json`\r\n   - 窗户： `%AppData%\\Claude\\claude_desktop_config.json`\r\n\r\n配置示例：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"emacs-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\", \"@keegancsmith/emacs-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. 重新启动桌面版的Claude\r\n\r\n## 运作原理\r\n\r\n服务器使用 `emacsclient --eval` 将Lisp表达式发送到正在运行的Emacs实例。所有操作都在所选窗口中当前可见缓冲区的上下文中执行。这允许语言模型：\r\n\r\n- 从Emacs查询信息（缓冲区、模式、变量等）\r\n- 在Emacs中执行命令\r\n- 操纵文本和缓冲区\r\n- 访问Emacs功能\r\n- 查看Emacs中当前可见的内容\r\n- 获取光标位置和其他缓冲区上下文\r\n\r\n## 示例用法\r\n\r\n设置好服务器后，您可以在Claude中使用它与Emacs交互：\r\n\r\n```\r\nCan you show me the list of buffers in my Emacs?\r\n```\r\n\r\n克劳德将使用 `emacs_eval` 具有类似表达式的工具 `(buffer-list)` 检索和显示缓冲区。\r\n\r\n```\r\nWhat's currently visible in my Emacs window?\r\n```\r\n\r\n克劳德可以使用 `emacs_get_visible_text` 查看当前显示的文本内容。\r\n\r\n```\r\nWhat file am I currently editing in Emacs?\r\n```\r\n\r\n克劳德将使用 `emacs_get_context` 以提供关于当前缓冲器的信息。\r\n\r\n## 安全考虑\r\n\r\n此服务器允许执行任意Emacs Lisp代码，这些代码可以完全访问您的Emacs环境，甚至可能访问您的系统。与受信任的LLM提供者一起使用，并对可能执行的表达式保持谨慎。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "emacs-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@keegancsmith/emacs-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

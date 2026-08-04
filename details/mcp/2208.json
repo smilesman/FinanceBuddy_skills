@@ -1,0 +1,24 @@
+{
+ "id": "2208",
+ "kind": "mcp",
+ "name": "google-maps-2",
+ "fingerprint_md5": "2909425968489cfe3ea6c7ca73dbed78",
+ "download_count": 0,
+ "category": "地图服务",
+ "tags": "",
+ "version": "",
+ "readme": "# 🗺️ 谷歌地图MCP服务器\r\n\r\n通过Claude查找任何有自然语言查询的地方！\r\n\r\n## ✨ 快速开始\r\n\r\n1. **安装uv** （如果你没有）\r\n\r\n```bash\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n2. **安装依赖项**\r\n\r\n```bash\r\nuv pip install fastmcp httpx python-dotenv\r\n```\r\n\r\n3. **添加API密钥**\r\n   创建一个 `.env` 文件：\r\n\r\n```env\r\nGOOGLE_API_KEY=your_api_key_here\r\n```\r\n\r\n从获取API密钥 [谷歌云控制台](https://console.cloud.google.com/) （启用Places API）。\r\n\r\n## 🚀 用法\r\n\r\n**运行服务器：**\r\n\r\n```bash\r\nuv run google_map.py\r\n```\r\n\r\n**添加到Claude桌面配置：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"google-maps\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"/path/to/project\", \"run\", \"google_map.py\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**试试看：**\r\n\r\n- “在东京找到评级为4+的咖啡馆”\r\n- “布鲁克林最好的披萨店”\r\n- “埃菲尔铁塔附近的酒店”\r\n\r\n## 🛠️ 它做什么\r\n\r\n搜索谷歌地图并返回：\r\n\r\n- 地名\r\n- 地址\r\n- 评分\r\n- 每个查询最多5个结果\r\n\r\n## 📝 需求\r\n\r\n```\r\nfastmcp\r\nhttpx\r\npython-dotenv\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n由以下材料制成❤️ 使用 [FastMCP](https://github.com/jlowin/fastmcp)\r\n",
+ "config": {
+  "google-maps": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/project",
+    "run",
+    "google_map.py"
+   ],
+   "env": {}
+  }
+ }
+}

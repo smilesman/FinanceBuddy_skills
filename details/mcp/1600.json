@@ -1,0 +1,22 @@
+{
+ "id": "1600",
+ "kind": "mcp",
+ "name": "mcp-wordcounter",
+ "fingerprint_md5": "84d02c5f9ae9ae37002b9ec74bf798de",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP字计数器\r\n\r\n一种模型上下文协议服务器，提供用于分析文本文档的工具，包括计数单词和字符。此服务器通过提供简单的文档统计功能来帮助LLM执行文本分析任务。\r\n\r\n## 特性\r\n\r\n- 统计文档中的单词\r\n- 统计总字符数（包括空格）\r\n- 统计除空格外的字符数\r\n- 直接处理文件，而不将内容暴露给LLM\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install mcp-wordcounter\r\n```\r\n\r\n## 用法\r\n\r\n### 作为CLI工具\r\n\r\n```bash\r\nnpx mcp-wordcounter\r\n```\r\n\r\n### 在克劳德桌面\r\n\r\n添加到您的Claude Desktop配置(`claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-wordcounter\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-wordcounter\"],\r\n      \"alwaysAllow\": [\"analyze_text\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 可用工具\r\n\r\n#### analyze_text\r\n\r\n统计文本文档中的单词和字符。\r\n\r\n参数：\r\n\r\n- `filePath` （string，必填）：要分析的文本文件的路径\r\n\r\n退货：\r\n\r\n- 字数统计\r\n- 字符数（包括空格）\r\n- 字符数（不包括空格）\r\n\r\n示例响应：\r\n\r\n```json\r\n{\r\n  \"content\": [{\r\n    \"type\": \"text\",\r\n    \"text\": \"Analysis Results:\\n• Word count: 150\\n• Character count (including spaces): 842\\n• Character count (excluding spaces): 702\"\r\n  }]\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build the project\r\nnpm run build\r\n\r\n# Run in watch mode during development\r\nnpm run watch\r\n\r\n# Test with MCP Inspector\r\nnpm run inspector\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n",
+ "config": {
+  "mcp-wordcounter": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-wordcounter"
+   ],
+   "env": {}
+  }
+ }
+}

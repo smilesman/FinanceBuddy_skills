@@ -1,0 +1,24 @@
+{
+ "id": "3645",
+ "kind": "mcp",
+ "name": "spider",
+ "fingerprint_md5": "a36e45ae840c86ec049b3e2fdb507e77",
+ "download_count": 0,
+ "category": "数据抓取",
+ "tags": "",
+ "version": "",
+ "readme": "# 蜘蛛云mcp\r\n\r\nMCP服务器 [蜘蛛](https://spider.cloud) 网站抓取和抓取API。为AI代理、RAG管道和LLM抓取、抓取、搜索和提取web数据。\r\n\r\n## 设置\r\n\r\n### 1.获取API密钥\r\n\r\n注册地址： [蜘蛛云](https://spider.cloud) 并从 [API密钥](https://spider.cloud/api-keys) 页面。\r\n\r\n### 2.配置您的MCP客户端\r\n\r\n#### 克劳德桌面\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"spider\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"spider-cloud-mcp\"],\r\n      \"env\": {\r\n        \"SPIDER_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add spider -- npx -y spider-cloud-mcp\r\n```\r\n\r\n然后在环境中设置API密钥或 `.env` 文件：\r\n\r\n```\r\nSPIDER_API_KEY=your-api-key\r\n```\r\n\r\n#### 光标\r\n\r\n添加到光标MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"spider\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"spider-cloud-mcp\"],\r\n      \"env\": {\r\n        \"SPIDER_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### 核心工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `spider_crawl` |抓取网站并从多个页面中提取内容|\r\n| `spider_scrape` |抓取单个页面（不爬行）|\r\n| `spider_search` |使用可选的页面内容获取功能搜索网络|\r\n| `spider_links` |从页面中提取所有链接|\r\n| `spider_screenshot` |捕获页面截图|\r\n| `spider_unblocker` |通过反机器人绕过访问受机器人保护的内容|\r\n| `spider_transform` |将HTML转换为markdown/text/其他格式|\r\n| `spider_get_credits` |检查您的信用余额|\r\n\r\n### AI工具（需要订阅）\r\n\r\n这些工具需要主动 [AI订阅计划](https://spider.cloud/ai/pricing).\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `spider_ai_crawl` |人工智能引导的爬行，带有自然语言提示|\r\n| `spider_ai_scrape` |使用简明英语提取结构化数据|\r\n| `spider_ai_search` |人工智能增强的语义网络搜索|\r\n| `spider_ai_browser` |使用自然语言自动化浏览器交互|\r\n| `spider_ai_links` |智能链路提取和过滤|\r\n\r\n## 例子\r\n\r\n### 抓取网站以降价\r\n\r\n```\r\nUse spider_crawl to crawl https://example.com with limit 10 and return_format \"markdown\"\r\n```\r\n\r\n### 搜索网页\r\n\r\n```\r\nUse spider_search to search for \"latest AI research papers\" with fetch_page_content true and num 5\r\n```\r\n\r\n### 人工智能驱动的提取\r\n\r\n```\r\nUse spider_ai_scrape on https://news.ycombinator.com with prompt \"Extract all article titles, URLs, points, and comment counts as structured JSON\"\r\n```\r\n\r\n### 检查积分\r\n\r\n```\r\nUse spider_get_credits to check my balance\r\n```\r\n\r\n## API 参考\r\n\r\nAPI完整文档： [spider.cloud/docs/api](https://spider.cloud/docs/api)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "spider": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "spider-cloud-mcp"
+   ],
+   "env": {
+    "SPIDER_API_KEY": "your-api-key"
+   }
+  }
+ }
+}

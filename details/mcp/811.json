@@ -1,0 +1,25 @@
+{
+ "id": "811",
+ "kind": "mcp",
+ "name": "porcus-lardum",
+ "fingerprint_md5": "b8336adca60b12273c350c7010f606c0",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# Porcus Lardum MCP服务器\r\n\r\n一种MCP（模型上下文协议）服务器，使用Porcus Lardum API的ImageOpsTransformParamsIn模型提供图像转换功能。\r\n\r\n## 特性\r\n\r\n- **ImageOps转换**：仅使用ImageOpsTransformParamsIn模型\r\n- **裁剪**：按坐标、纵横比或边框裁剪\r\n- **遏制**：缩放图像以适应边界\r\n- **填充**：将画布扩展到目标尺寸\r\n- **旋转**：按度数旋转图像或自动旋转为横向/纵向\r\n- **DPI控制**：设置图像DPI元数据\r\n- **灰度**：将图像转换为灰度\r\n- **PDF转换**：将图像转换为PDF格式\r\n- **预构建提示**：已准备好使用的常见转换场景\r\n\r\n## 安装\r\n\r\n1. 克隆此存储库：\r\n\r\n```bash\r\ngit clone <repository-url>\r\ncd porcus-lardum-mcp-server\r\n```\r\n\r\n2. 使用uv安装依赖项：\r\n\r\n```bash\r\nuv pip install -e .\r\n```\r\n\r\n或者使用pip：\r\n\r\n```bash\r\npip install -e .\r\n```\r\n\r\n3. 配置环境变量：\r\n\r\n```bash\r\ncp .env.example .env\r\n# Edit .env and add your Porcus Lardum API key\r\n```\r\n\r\n## 配置\r\n\r\n在您的 `.env` 文件：\r\n\r\n- `PORCUS_LARDUM_API_KEY`：您的Porcus Lardum API密钥（必需）\r\n- `PORCUS_LARDUM_BASE_URL`：API基本URL（可选，默认为https://porcus-lardum-func-dev.azurewebsites.net)\r\n\r\n## 用法\r\n\r\n### 运行服务器\r\n\r\n发展：\r\n\r\n```bash\r\nuv run mcp dev server.py\r\n```\r\n\r\n### 在Claude Desktop中安装\r\n\r\n```bash\r\nuv run mcp install server.py\r\n```\r\n\r\n或者手动添加到Claude Desktop配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"porcus-lardum\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"python\", \"/path/to/server.py\"],\r\n      \"env\": {\r\n        \"PORCUS_LARDUM_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### transform_image\r\n\r\n使用ImageOpsTransformParamsIn模型转换图像：\r\n\r\n- **百万像素**：从边框中删除像素\\[上、右、下、左\\]\r\n- **crop_box_像素**：提取矩形\\[x1，y1，x2，y2\\]（像素）\r\n- **作物性状比率**：作物与宽度/高度比（例如，16:9为1.77）\r\n- **pad_像素**：以像素为单位展开画布\\[宽度、高度\\]\r\n- **包含像素**：缩放以适应\\[宽度，高度\\]像素\r\n- **override_dpi**：设置DPI元数据\r\n- **旋转**：旋转角度（度）\r\n- **rotate_to**：自动旋转到“横向”或“纵向”\r\n- **灰度**：转换为灰度\r\n- **PDF**：将输出转换为PDF\r\n\r\n## 可用提示\r\n\r\n服务器包括常见用例的预配置提示：\r\n\r\n- `crop_image_prompt`：裁剪到特定像素坐标\r\n- `crop_aspect_ratio_prompt`：裁剪到特定的纵横比\r\n- `contain_image_prompt`：缩放图像以适应尺寸\r\n- `rotate_image_prompt`：按度旋转图像\r\n- `convert_to_grayscale_prompt`：转换为灰度\r\n- `set_dpi_prompt`：设置图像DPI元数据\r\n- `pad_image_prompt`：添加填充以展开画布\r\n\r\n## Claude中的示例用法\r\n\r\n```\r\nUser: \"Please contain this image within 800x600 pixels\"\r\nAssistant: [Uses contain_image_prompt to scale the image]\r\n\r\nUser: \"Crop this image to 16:9 aspect ratio\"\r\nAssistant: [Uses crop_aspect_ratio_prompt with aspect_ratio=1.77]\r\n\r\nUser: \"Convert this image to grayscale and rotate 90 degrees\"\r\nAssistant: [Uses transform_image with grayscale=true and rotate=90]\r\n```\r\n\r\n## 发展\r\n\r\n### 运行测试\r\n\r\n```bash\r\n# Test the server locally\r\nuv run python server.py\r\n```\r\n\r\n### 添加新转换\r\n\r\n要添加新的转换功能，请修改 `ImageOpsTransformParamsIn` 类在 `server.py` 并更新相应的刀具参数。\r\n\r\n## 许可证\r\n\r\n\\[您的许可证在这里\\]\r\n\r\n## 支持\r\n\r\n有关MCP服务器的问题或疑问，请在此存储库中打开问题。\r\n有关Porcus Lardum API文档，请参阅OpenAPI规范。\r\n",
+ "config": {
+  "porcus-lardum": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "python",
+    "/path/to/server.py"
+   ],
+   "env": {
+    "PORCUS_LARDUM_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

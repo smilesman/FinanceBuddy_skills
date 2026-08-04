@@ -1,0 +1,22 @@
+{
+ "id": "1758",
+ "kind": "mcp",
+ "name": "taskwarrior",
+ "fingerprint_md5": "ed08eecaf3604f69f5b1b7fc68eec05e",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# TaskWarrior MCP服务器\r\n\r\n实现模型上下文协议（MCP）的Node.js服务器 [TaskWarrior](https://taskwarrior.org/) 操作。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/e8w3e1su1x\">\r\n  \r\n</a>\r\n\r\n## 特性\r\n\r\n- 查看待处理任务\r\n- 按项目和标签筛选任务\r\n- 添加带有描述、截止日期、优先级、项目和标签的新任务\r\n- 将任务标记为已完成\r\n\r\n**备注**：这运行你的本地 `task` 二进制文件，因此需要安装和配置TaskWarrior！\r\n\r\n> \\[！警告\\]\r\n> 此当前使用任务 `id` 这是一个不稳定的标识符；任务战士\r\n> 有时在添加或删除新任务时对任务进行重新编号。未来\r\n> 这应该更加小心，改用任务UUID。\r\n\r\n## API\r\n\r\n### 工具\r\n\r\n- **get_ext_tasks**\r\n\r\n  - 获取所有待处理任务的列表\r\n  - 可选过滤器：\r\n    - `project`：按项目名称筛选\r\n    - `tags`：按一个或多个标签筛选\r\n\r\n- **add_task**\r\n\r\n  - 向TaskWarrior添加新任务\r\n  - 必修的：\r\n    - `description`：任务描述文本\r\n  - 可选：\r\n    - `due`：到期日（ISO时间戳）\r\n    - `priority`：优先级（“H”、“M”或“L”）\r\n    - `project`：项目名称（小写带圆点）\r\n    - `tags`：标签数组（小写）\r\n\r\n- **mark_task_done**\r\n\r\n  - 将任务标记为已完成\r\n  - 必修的：\r\n    - `identifier`：任务ID或UUID\r\n\r\n## 使用Claude Desktop\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"taskwarrior\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"mcp-server-taskwarrior\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g mcp-server-taskwarrior\r\n```\r\n\r\n确保你有TaskWarrior(`task`)在您的系统上安装和配置。\r\n\r\n## 示例使用思路：\r\n\r\n- 我目前的工作任务是什么？\r\n  - 执行： `task project:work next`\r\n- TODO：打电话给我妹妹（优先）\r\n  - 执行： `task add priority:H Call my sister`\r\n- 好的，我已经给我妹妹打电话了\r\n  - 执行： `task done 1`\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。有关详细信息，请参阅LICENSE文件。\r\n",
+ "config": {
+  "taskwarrior": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-server-taskwarrior"
+   ],
+   "env": {}
+  }
+ }
+}

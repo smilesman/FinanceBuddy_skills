@@ -1,0 +1,18 @@
+{
+ "id": "195",
+ "kind": "mcp",
+ "name": "double-color-ball-mcp-server",
+ "fingerprint_md5": "39c2d69d9474d531ba6eac35ba4347d0",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 简易 MCP 服务器 (Simple MCP Server)\r\n\r\n[English](README_EN.md) | 中文\r\n\r\n## 项目介绍\r\n\r\n这是一个基于 Model Context Protocol (MCP) 的简单示例项目。项目实现了一个双色球号码生成工具，可以随机生成指定数量的双色球号码。\r\n\r\n## 技术栈\r\n\r\n- Spring Boot 3.4.4\r\n- Java 17\r\n- MCP SDK 0.9.0\r\n- Lombok\r\n- Maven\r\n\r\n## 功能特性\r\n\r\n- 支持生成1-10组双色球号码\r\n- 每组号码包含6个红球(1-33)和1个蓝球(1-16)\r\n- 通过MCP协议提供服务，可以与支持MCP的客户端（如大语言模型）进行交互\r\n\r\n## 项目运行\r\n\r\n### 本地运行\r\n\r\n1. 确保你已安装以下环境：\r\n   - JDK 17+\r\n   - Maven 3.6+\r\n\r\n2. 克隆项目：\r\n```bash\r\ngit clone https://github.com/beilingai/simple-mcp-server.git\r\ncd simple-mcp-server\r\n```\r\n\r\n3. 编译项目：\r\n```bash\r\nmvn clean package\r\n```\r\n\r\n4. 运行项目：\r\n```bash\r\njava -jar target/mcp-server-1.0-SNAPSHOT.jar\r\n```\r\n\r\n5. 服务将在默认端口8080启动\r\n\r\n## 如何使用\r\n\r\n本服务通过MCP协议提供工具，可以被支持MCP的客户端调用。\r\n\r\n调用示例：\r\n\r\n### Cursor中调用示例\r\n\r\n在Cursor编辑器中，可以通过以下方式调用本服务：\r\n\r\n1. 在设置中添加本地MCP服务器地址\r\n```json\r\n{\r\n   \"mcpServers\": {\r\n      \"double-color-ball-mcp-server\": {\r\n         \"url\": \"http://localhost:8080/sse\"\r\n      }\r\n   }\r\n}\r\n```\r\n2. 在聊天窗口中请求生成双色球号码：\r\n   ```\r\n   请帮我生成3组双色球号码\r\n   ```\r\n3. AI助手会调用本MCP服务并返回生成的结果，例如：\r\n   ```\r\n   生成的双色球号码如下：\r\n\r\n   第1组: 05 11 16 22 30 33 + 08\r\n   第2组: 03 06 14 20 25 31 + 12\r\n   第3组: 02 09 17 25 29 32 + 06\r\n",
+ "config": {
+  "double-color-ball-mcp-server": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:8080/sse"
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "id": "2679",
+ "kind": "mcp",
+ "name": "reddit-2",
+ "fingerprint_md5": "c44672b53623181cc73336f588a3aa26",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# reddit mcp\r\n\r\n用于Reddit公共数据的MCP服务器。使用Reddit的公共JSON API（无需身份验证）。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search` |在全球范围内搜索Reddit|\r\n| `subreddit_info` |获取subreddit详细信息|\r\n| `subreddit_posts` |从subreddit获取帖子|\r\n| `post_comments` |获取带有评论的帖子|\r\n| `subreddit_search` |在subreddit中搜索|\r\n\r\n所有工具都接受 `format` 参数： `md` （默认）或 `json`.\r\n\r\n## 用法\r\n\r\n### 标准传输（默认）\r\n\r\n```bash\r\nbun install\r\nbun start\r\n```\r\n\r\n### HTTP传输\r\n\r\n```bash\r\nbun start:http\r\n# Server runs on http://localhost:3000/mcp\r\n```\r\n\r\n自定义端口：\r\n\r\n```bash\r\nPORT=8080 bun start:http\r\n```\r\n\r\n### 码头工人\r\n\r\n```bash\r\n# stdio (default)\r\ndocker run --rm -i ghcr.io/paltaio/reddit-mcp:latest\r\n\r\n# http\r\ndocker run --rm -p 3000:3000 -e TRANSPORT=http ghcr.io/paltaio/reddit-mcp:latest\r\n```\r\n\r\n## 代理\r\n\r\n设置标准代理环境变量以通过代理（HTTP、HTTPS或SOCKS5）路由Reddit API请求：\r\n\r\n```bash\r\nHTTPS_PROXY=http://proxy:8080 bun start\r\nHTTPS_PROXY=socks5://proxy:1080 bun start\r\n```\r\n\r\n支持的变量（按顺序检查）： `HTTPS_PROXY`, `https_proxy`, `HTTP_PROXY`, `http_proxy`, `ALL_PROXY`, `all_proxy`.\r\n\r\n经过身份验证的代理使用URL格式： `http://user:pass@proxy:8080`\r\n\r\nDocker：\r\n\r\n```bash\r\ndocker run --rm -i -e HTTPS_PROXY=http://proxy:8080 ghcr.io/paltaio/reddit-mcp:latest\r\n```\r\n\r\n## MCP客户端配置\r\n\r\n### 标准（克劳德代码）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"reddit\": {\r\n      \"command\": \"bun\",\r\n      \"args\": [\"start\"],\r\n      \"cwd\": \"/path/to/reddit-mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 超文本传输协议\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"reddit\": {\r\n      \"type\": \"http\",\r\n      \"url\": \"http://localhost:3000/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "reddit": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:3000/mcp"
+  }
+ }
+}

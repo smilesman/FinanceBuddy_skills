@@ -1,0 +1,12 @@
+{
+ "id": "feishu-vc",
+ "kind": "skill",
+ "name": "feishu-vc",
+ "fingerprint_md5": "e0375bbee2bd01260e3f6fa173203701",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Feishu Video Conference Skill\r\n\r\n管理飞书视频会议（VC）。\r\n\r\n## 用法\r\n\r\n### 预约会议\r\n创建会议预约。\r\n```bash\r\nnode skills/feishu-vc/reserve.js --subject \"会议标题\" --time \"2026-02-04T10:00:00+08:00\"\r\n```\r\n\r\n## API 参考\r\n- Reserve: `POST /open-apis/vc/v1/reserve`\r\n- 所需权限：`vc:meeting:request`（更新会议预约信息）\r\n\r\n## 设置\r\n需要 `FEISHU_APP_ID` 和 `FEISHU_APP_SECRET`。",
+ "config": {}
+}

@@ -1,0 +1,18 @@
+{
+ "id": "199",
+ "kind": "mcp",
+ "name": "emojihub",
+ "fingerprint_md5": "faab32b3368259c19404ab6356dd5592",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp-emojihub 的\r\n\r\nEmojiHub MCP-包装EmojiHub API（免费，无授权）\r\n\r\n部分 [Pipeworx](https://pipeworx.io) --MCP网关，将AI代理连接到673+个实时数据源。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `random_emoji` |随机获取表情符号及其字符、名称、类别和组。当你需要一个不可预测的表情符号来表现多样性或惊喜元素时，请使用。 |\r\n\r\n## 快速开始\r\n\r\n添加到您的MCP客户端（Claude Desktop、Cursor、Windsurf等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"emojihub\": {\r\n      \"url\": \"https://gateway.pipeworx.io/emojihub/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者连接到完整的Pipeworx网关，以访问所有673+数据源：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pipeworx\": {\r\n      \"url\": \"https://gateway.pipeworx.io/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用ask_pipeworx\r\n\r\n您可以用简单的英语提问，而不是直接调用工具：\r\n\r\n```\r\nask_pipeworx({ question: \"your question about Emojihub data\" })\r\n```\r\n\r\n网关选择正确的工具并自动填充参数。\r\n\r\n## 更多\r\n\r\n- [所有工具和指南](https://github.com/pipeworx-io/examples)\r\n- [pipeworx.io](https://pipeworx.io)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "emojihub": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://gateway.pipeworx.io/emojihub/mcp"
+  }
+ }
+}

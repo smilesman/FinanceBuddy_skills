@@ -1,0 +1,24 @@
+{
+ "id": "1502",
+ "kind": "mcp",
+ "name": "interactive-feedback-mcp",
+ "fingerprint_md5": "1ed866a5ee945c41004730816248271e",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 交互式反馈MCP\r\n\r\n开发商： Fábio Ferreira[@fabiomlferreira](https://x.com/fabiomlferreira)).\r\n结账 [网站 dotcursorrules.com](https://dotcursorrules.com/) 以获得更多的AI开发增强功能。\r\n\r\n简单 [MCP服务器](https://modelcontextprotocol.io/) 在人工智能辅助开发工具中实现人机交互工作流程，如 [光标](https://www.cursor.com)。此服务器允许您运行命令、查看其输出并直接向AI提供文本反馈。它还与 [克莱恩](https://cline.bot) 和 [帆板运动](https://windsurf.com).\r\n\r\n\r\n## 提示工程\r\n\r\n为了获得最佳效果，请将以下内容添加到AI助手中的自定义提示中，您应该将其添加到规则上或直接添加到提示中（例如Cursor）：\r\n\r\n> 无论何时你想问问题，一定要打电话给MCP `interactive_feedback`.\\\r\n> 每当您要完成用户请求时，请致电MCP `interactive_feedback` 而不是简单地结束该过程。\r\n> 继续呼叫MCP，直到用户的反馈为空，然后结束请求。\r\n\r\n这将确保您的AI助手在标记任务完成之前使用此MCP服务器请求用户反馈。\r\n\r\n## 💡 为什么使用这个？\r\n\r\n通过引导助手与用户联系，而不是分散到推测性的、高成本的工具调用中，该模块可以大大减少Cursor等平台上的高级请求（例如OpenAI工具调用）的数量。在某些情况下，它有助于将多达25个工具调用整合到一个单一的、有反馈意识的请求中，从而节省资源并提高性能。\r\n\r\n## 配置\r\n\r\n此MCP服务器使用Qt `QSettings` 以每个项目为基础存储配置。这包括：\r\n\r\n- 要运行的命令。\r\n- 是否在下次启动该项目时自动执行该命令（请参阅“下次运行时自动执行”复选框）。\r\n- 命令部分的可见性状态（显示/隐藏）（切换后立即保存）。\r\n- 窗口几何图形和状态（通用UI首选项）。\r\n\r\n这些设置通常存储在特定于平台的位置（例如，Windows上的注册表、macOS上的plist文件、 `~/.config` 或 `~/.local/share` 在Linux上），组织名称为“FabioFerreira”，应用程序名称为“InteractiveFeedbackMCP”，每个项目目录都有一个唯一的组。\r\n\r\nUI中的“保存配置”按钮主要保存在命令输入字段中键入的当前命令以及活动项目的“下次运行时自动执行”复选框的状态。当您切换命令部分时，它的可见性会自动保存。当应用程序关闭时，会保存常规窗口大小和位置。\r\n\r\n## 安装（光标）\r\n\r\n\r\n1. **先决条件：**\r\n   - Python 3.11或更高版本。\r\n   - [紫外线](https://github.com/astral-sh/uv) （Python包管理器）。安装时使用：\r\n     - 窗户： `pip install uv`\r\n     - Linux/Mac： `curl -LsSf https://astral.sh/uv/install.sh | sh`\r\n1. **获取代码：**\r\n   - 克隆此存储库：\r\n     `git clone https://github.com/noopstudios/interactive-feedback-mcp.git`\r\n   - 或者下载源代码。\r\n1. **导航到目录：**\r\n   - `cd path/to/interactive-feedback-mcp`\r\n1. **安装依赖项：**\r\n   - `uv sync` （这将创建一个虚拟环境并安装软件包）\r\n1. **运行MCP服务器：**\r\n   - `uv run server.py`\r\n1. **在游标中配置：**\r\n   - 游标通常允许在其设置中指定自定义MCP服务器。您需要将游标指向此正在运行的服务器。确切的机制可能会有所不同，因此请参阅Cursor的文档以添加自定义MCP。\r\n\r\n   - **手动配置（例如，通过 `mcp.json`)**\r\n     **记住要更改 `/Users/fabioferreira/Dev/scripts/interactive-feedback-mcp` 指向您在系统上克隆存储库的实际路径的路径。**\r\n\r\n     ```json\r\n     {\r\n       \"mcpServers\": {\r\n         \"interactive-feedback-mcp\": {\r\n           \"command\": \"uv\",\r\n           \"args\": [\r\n             \"--directory\",\r\n             \"/Users/fabioferreira/Dev/scripts/interactive-feedback-mcp\",\r\n             \"run\",\r\n             \"server.py\"\r\n           ],\r\n           \"timeout\": 600,\r\n           \"autoApprove\": [\r\n             \"interactive_feedback\"\r\n           ]\r\n         }\r\n       }\r\n     }\r\n     ```\r\n\r\n   - 您可以使用服务器标识符，如 `interactive-feedback-mcp` 在Cursor中配置时。\r\n\r\n### 适用于Cline/Windsurf\r\n\r\n类似的设置原则也适用。您可以配置服务器命令（例如。， `uv run server.py` 与正确 `--directory` 指向项目目录的参数）在相应工具的MCP设置中，使用 `interactive-feedback-mcp` 作为服务器标识符。\r\n\r\n## 发展\r\n\r\n要在开发模式下使用web界面运行服务器进行测试，请执行以下操作：\r\n\r\n```sh\r\nuv run fastmcp dev server.py\r\n```\r\n\r\n这将打开一个web界面，允许您与MCP工具进行交互以进行测试。\r\n\r\n## 可用工具\r\n\r\n下面是一个AI助手如何调用 `interactive_feedback` 工具：\r\n\r\n```xml\r\n<use_mcp_tool>\r\n  <server_name>interactive-feedback-mcp</server_name>\r\n  <tool_name>interactive_feedback</tool_name>\r\n  <arguments>\r\n    {\r\n      \"project_directory\": \"/path/to/your/project\",\r\n      \"summary\": \"I've implemented the changes you requested and refactored the main module.\"\r\n    }\r\n  </arguments>\r\n</use_mcp_tool>\r\n```\r\n\r\n## 致谢与联系\r\n\r\n如果你觉得这个互动反馈MCP很有用，表达感激之情的最佳方式是关注法比奥·费雷拉 [X@fabiomlferreira](https://x.com/fabiomlferreira).\r\n\r\n如果有任何问题、建议，或者你只是想分享你是如何使用它的，请随时联系X！\r\n\r\n另外，请查看 [网站 dotcursorrules.com](https://dotcursorrules.com/) 获取更多关于增强人工智能辅助开发工作流程的资源。\r\n",
+ "config": {
+  "interactive-feedback-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/Users/fabioferreira/Dev/scripts/interactive-feedback-mcp",
+    "run",
+    "server.py"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "1595",
+ "kind": "mcp",
+ "name": "mcp-sys-bridge",
+ "fingerprint_md5": "9b4f967ebd909f349fa09a54162bd808",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP系统桥\r\n\r\n[](https://opensource.org/licenses/MIT)\r\n[](https://pypi.org/project/mcp-sys-bridge)\r\n[](https://github.com/leynier/mcp-sys-bridge/commits)\r\n[](https://github.com/leynier/mcp-sys-bridge/commits)\r\n[](https://github.com/leynier/mcp-sys-bridge/stargazers)\r\n[](https://github.com/leynier/mcp-sys-bridge/network/members)\r\n[](https://github.com/leynier/mcp-sys-bridge)\r\n[](https://github.com/leynier/mcp-sys-bridge/graphs/contributors)\r\n\r\n桥梁实施 **模型上下文协议（MCP）** 它公开了本地操作系统功能，如剪贴板管理、URL处理和日期信息检索。\r\n\r\n______________________________________________________________________\r\n\r\n## 目录\r\n\r\n- [概述](#overview)\r\n- [主要特点](#key-features)\r\n- [安装](#installation)\r\n- [快速开始](#quick-start)\r\n- [可用工具](#available-tools)\r\n- [更新日志](#changelog)\r\n- [许可证](#license)\r\n\r\n______________________________________________________________________\r\n\r\n## 概述\r\n\r\n`mcp-sys-bridge` 为MCP兼容客户端提供了一套最少的工具，允许它们以安全的方式与底层操作系统交互。\r\n\r\n______________________________________________________________________\r\n\r\n## 主要特点\r\n\r\n- 🚀 **URL打开** --在默认浏览器中打开一个或多个URL。\r\n- 📋 **剪贴板支持** --将文本直接复制到剪贴板。\r\n- 🔔 **系统通知** --发送本地操作系统通知（Windows、macOS、Linux）。\r\n- 📆 **日期信息** --检索有关当前日期和时间的详细信息。\r\n\r\n______________________________________________________________________\r\n\r\n## 安装\r\n\r\n`mcp-sys-bridge` 直接运行 [uvx](https://docs.astral.sh/uv/getting-started/installation);\r\n无需安装软件包。将服务器添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-sys-bridge\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-sys-bridge\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n确保 `uv` 按照以下步骤安装 [紫外线文件](https://docs.astral.sh/uv/getting-started/installation).\r\n\r\n______________________________________________________________________\r\n\r\n## 快速开始\r\n\r\n手动启动网桥：\r\n\r\n```bash\r\nuvx mcp-sys-bridge\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 可用工具\r\n\r\n- `open_urls` --在默认浏览器中打开URL列表。\r\n- `copy_to_clipboard` --将文本复制到剪贴板。\r\n- `send_notification` --发送带有可自定义标题、消息、应用程序名称和超时的本地系统通知。\r\n- `get_current_date_info` --返回有关当前日期的丰富信息，如日期、星期、季度等。\r\n\r\n______________________________________________________________________\r\n\r\n## 更新日志\r\n\r\n### 0.1.5\r\n\r\n- 添加 `send_notification` 该工具用于在Windows、macOS和Linux上发送本机系统通知。\r\n- 添加 `plyer` 跨平台通知支持的依赖性。\r\n\r\n### 0.1.4\r\n\r\n- 定义注释以将工具声明为只读。\r\n\r\n### 0.1.3\r\n\r\n- 添加 `get_current_date_info` 该工具可获取有关当前日期的全面信息。\r\n\r\n### 0.1.2\r\n\r\n- 改变 `open_url` 到 `open_urls` 在默认浏览器中打开URL列表。\r\n\r\n### 0.1.1\r\n\r\n- 改善 `open_url` 该工具用于处理没有方案的URL，并验证URL的有效性。\r\n\r\n### 0.1.0\r\n\r\n- 添加 `open_url` 工具。\r\n- 添加 `copy_to_clipboard` 工具。\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\nMIT许可证。看 [`license`](license).\r\n",
+ "config": {
+  "mcp-sys-bridge": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-sys-bridge"
+   ],
+   "env": {}
+  }
+ }
+}

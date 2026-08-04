@@ -1,0 +1,23 @@
+{
+ "id": "3632",
+ "kind": "mcp",
+ "name": "serper-3",
+ "fingerprint_md5": "e8186e0854354c8719b52c788edb6a54",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Serper MCP服务器（修复版）\r\n\r\n🚀 **具有特定端点和完全参数支持的Serper MCP服务器的修复版本**\r\n\r\n提供的Model Context Protocol服务器 **通过Serper进行谷歌搜索** 根据官方Serper文档更正端点。\r\n\r\n## 🆕 此版本中的更正\r\n\r\n- ✅ **特定端点** ：为每种类型的搜索使用正确的端点\r\n- ✅ **地点搜索** ：修正端点 `https://google.serper.dev/places`\r\n- ✅ **评论搜索** ：修正端点 `https://google.serper.dev/reviews`\r\n- ✅ **新的PlacesRequest方案** ：为位置搜索优化的设置\r\n- ✅ **ReviewsRequest改进** 参数： `fid` 可选渲染\r\n- ✅ **支持完成** ：参数 `gl`, `hl`, `location` 正确管理\r\n- ✅ **测试有效** ：根据实际用例验证操作\r\n\r\n## 📋 可用工具\r\n\r\n- `google_search` -搜索谷歌标准\r\n- `google_search_images` -图片检索\r\n- `google_search_videos` -搜索视频\r\n- `google_search_places` - **\\[更正\\]** 搜索具有特定端点的位置\r\n- `google_search_maps` -搜索谷歌地图\r\n- `google_search_reviews` - **\\[更正\\]** 使用灵活设置搜索评论\r\n- `google_search_news` -新闻搜索\r\n- `google_search_shopping` -重新搜索购物\r\n- `google_search_lens` -搜索谷歌镜头\r\n- `google_search_scholar` -搜索谷歌学者\r\n- `google_search_parents` -重新审视父母\r\n- `google_search_autocomplete` -自动完成\r\n- `webpage_scrape` -网页抓取\r\n\r\n## 🔧 使用\r\n\r\n### 配置avec `uv` （推荐）\r\n\r\n1. 确保已安装 [`uv`](https://docs.astral.sh/uv/) 在你的系统上。\r\n\r\n1. 在MCP客户端配置或设置中 **克劳德** （文件 `claude_desktop_config.json`），添加Serper MCP服务器：\r\n\r\n   ```json\r\n   {\r\n       \"mcpServers\": {\r\n           \"serper\": {\r\n               \"command\": \"uvx\",\r\n               \"args\": [\"serper-mcp-server\"],\r\n               \"env\": {\r\n                   \"SERPER_API_KEY\": \"<Votre clé API Serper>\"\r\n               }\r\n           }\r\n       }\r\n   }\r\n   ```\r\n\r\n### 配置avec `pip`\r\n\r\n1. 安装软件包：\r\n\r\n   ```bash\r\n   pip install serper-mcp-server\r\n   ```\r\n\r\n1. MCP客户端的配置：\r\n\r\n   ```json\r\n   {\r\n       \"mcpServers\": {\r\n           \"serper\": {\r\n               \"command\": \"python3\",\r\n               \"args\": [\"-m\", \"serper_mcp_server\"],\r\n               \"env\": {\r\n                   \"SERPER_API_KEY\": \"<Votre clé API Serper>\"\r\n               }\r\n           }\r\n       }\r\n   }\r\n   ```\r\n\r\n## 🧪 使用示例\r\n\r\n### 搜索地点（地点）\r\n\r\n```python\r\n# Recherche de lieux avec les paramètres corrigés\r\n{\r\n    \"q\": \"Smartch\",\r\n    \"location\": \"France\",\r\n    \"gl\": \"fr\",\r\n    \"hl\": \"fr\"\r\n}\r\n```\r\n\r\n### 搜索评论（评论）\r\n\r\n```python\r\n# Recherche d'avis avec CID obtenu via Places\r\n{\r\n    \"cid\": \"17077932821649815749\",\r\n    \"gl\": \"fr\",\r\n    \"hl\": \"fr\"\r\n}\r\n```\r\n\r\n## 🐛 调试\r\n\r\n您可以使用MCP检查器调试服务器：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uvx serper-mcp-server\r\n```\r\n\r\n或用于地方发展：\r\n\r\n```bash\r\ncd path/to/servers/src/serper\r\nnpx @modelcontextprotocol/inspector uv run serper-mcp-server -e SERPER_API_KEY=<votre-clé>\r\n```\r\n\r\n## 📝 更新日志\r\n\r\n### 修正版（2024年）\r\n\r\n- **\\[修复\\]** 修复端点以匹配Serper文档\r\n- **新** 添加特定的PlacesRequest模式\r\n- **\\[改进\\]** ReviewsRequest中的可选FID参数\r\n- **\\[测试\\]** 真实用例的完整验证\r\n\r\n### 原始版本\r\n\r\n- Serper MCP服务器的初始实现\r\n- 对所有类型搜索的基本支持\r\n\r\n## 🔑 获取Serper API密钥\r\n\r\n1. 在上创建帐户 [瑟珀·德夫](https://serper.dev)\r\n1. 从仪表板获取API密钥\r\n1. 配置环境变量 `SERPER_API_KEY`\r\n\r\n## 📄 许可证\r\n\r\n此Serper MCP服务器根据MIT许可证授权。您可以根据MIT许可条款自由使用、修改和分发软件。\r\n",
+ "config": {
+  "serper": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "serper-mcp-server"
+   ],
+   "env": {
+    "SERPER_API_KEY": "<Votre clé API Serper>"
+   }
+  }
+ }
+}

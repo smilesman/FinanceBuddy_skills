@@ -1,0 +1,24 @@
+{
+ "id": "3620",
+ "kind": "mcp",
+ "name": "semanticscholar",
+ "fingerprint_md5": "4e748c6971c84609e59cc87f0911375b",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# Semantic Scholar MCP Server\r\n\r\n\r\n一个 MCP (Model Context Protocol) 服务器，提供 Semantic Scholar 学术搜索功能。\r\n\r\n## 功能特性\r\n\r\n- 论文搜索、详情查询、引用分析\r\n- 作者搜索和学术档案查询\r\n- 基于论文的智能推荐\r\n- 支持多种论文 ID 格式 (DOI, ArXiv, PMID 等)\r\n- 内置速率限制和自动重试机制\r\n\r\n## 快速开始\r\n\r\n### 在 Claude Desktop 中使用\r\n\r\n编辑配置文件：\r\n\r\n- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- Windows: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"semanticscholar\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@xbghc/semanticscholar-mcp\"],\r\n      \"env\": {\r\n        \"SEMANTIC_SCHOLAR_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 配置 API Key (可选)\r\n\r\nSemantic Scholar API 可以无需认证使用，但有速率限制。申请 API Key 可获得更高的请求配额。\r\n\r\n1. 访问 [Semantic Scholar API](https://www.semanticscholar.org/product/api) 申请 API Key\r\n2. 在配置中设置 `SEMANTIC_SCHOLAR_API_KEY` 环境变量\r\n\r\n## 可用工具\r\n\r\n### 论文相关\r\n\r\n| 工具 | 描述 |\r\n|------|------|\r\n| `search_papers` | 搜索学术论文，支持年份、学科、引用数等过滤条件 |\r\n| `get_paper` | 获取论文详情，支持多种 ID 格式 |\r\n| `get_paper_citations` | 获取引用该论文的文献列表 |\r\n| `get_paper_references` | 获取论文的参考文献列表 |\r\n| `batch_get_papers` | 批量获取多篇论文详情 (最多 500 篇) |\r\n\r\n### 作者相关\r\n\r\n| 工具 | 描述 |\r\n|------|------|\r\n| `search_authors` | 搜索学术作者 |\r\n| `get_author` | 获取作者详情 (h-index, 论文数等) |\r\n| `get_author_papers` | 获取指定作者的论文列表 |\r\n\r\n### 推荐\r\n\r\n| 工具 | 描述 |\r\n|------|------|\r\n| `get_recommendations` | 基于指定论文获取推荐的相关论文 |\r\n\r\n## 使用示例\r\n\r\n在支持 MCP 的客户端中直接对话即可使用：\r\n\r\n```\r\n搜索关于 transformer attention 的论文\r\n\r\n查看论文 ARXIV:1706.03762 的详细信息\r\n\r\n找出引用了 \"Attention Is All You Need\" 的论文\r\n\r\n推荐与这篇论文相似的研究\r\n```\r\n\r\n### 支持的论文 ID 格式\r\n\r\n- Semantic Scholar ID: `204e3073870fae3d05bcbc2f6a8e263d9b72e776`\r\n- DOI: `DOI:10.1038/nature12373`\r\n- ArXiv: `ARXIV:1706.03762`\r\n- PubMed: `PMID:19872477`\r\n- Corpus ID: `CorpusId:123456`\r\n\r\n## 其他安装方式\r\n\r\n### 从源码安装\r\n\r\n```bash\r\ngit clone https://github.com/xbghc/semanticscholar-mcp.git\r\ncd semanticscholar-mcp\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n配置文件使用本地路径：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"semanticscholar\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/semanticscholar-mcp/dist/index.js\"],\r\n      \"env\": {\r\n        \"SEMANTIC_SCHOLAR_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 全局安装\r\n\r\n```bash\r\nnpm install -g @xbghc/semanticscholar-mcp\r\n```\r\n\r\n## 开发\r\n\r\n### 项目结构\r\n\r\n```\r\nsemanticscholar-mcp/\r\n├── src/\r\n│   ├── index.ts              # 入口文件\r\n│   ├── server.ts             # MCP 服务器\r\n│   ├── api/\r\n│   │   ├── client.ts         # API 客户端\r\n│   │   ├── rate-limiter.ts   # 速率限制 (p-queue)\r\n│   │   ├── backoff.ts        # 指数退避重试\r\n│   │   └── types.ts          # 类型定义\r\n│   ├── tools/\r\n│   │   ├── papers.ts         # 论文工具\r\n│   │   ├── authors.ts        # 作者工具\r\n│   │   └── recommendations.ts # 推荐工具\r\n│   └── utils/\r\n│       ├── errors.ts         # 错误处理\r\n│       └── fields.ts         # 字段常量\r\n├── tests/                    # 测试文件\r\n├── package.json\r\n└── tsconfig.json\r\n```\r\n\r\n### 常用命令\r\n\r\n```bash\r\n# 开发模式\r\nnpm run dev\r\n\r\n# 构建\r\nnpm run build\r\n\r\n# 运行测试\r\nnpm test\r\n```\r\n\r\n### 速率限制\r\n\r\n| 模式 | 请求间隔 |\r\n|------|----------|\r\n| 有 API Key | 2 秒 |\r\n| 无 API Key | 5 秒 |\r\n\r\n遇到 429 错误时会自动指数退避重试 (1s → 2s → 4s → 8s → 16s)。\r\n\r\n## API 参考\r\n\r\n本服务器基于 [Semantic Scholar Academic Graph API](https://api.semanticscholar.org/api-docs/)。\r\n\r\n主要端点：\r\n- `/graph/v1/paper/search` - 论文搜索\r\n- `/graph/v1/paper/{paper_id}` - 论文详情\r\n- `/graph/v1/author/search` - 作者搜索\r\n- `/recommendations/v1/papers` - 论文推荐\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "semanticscholar": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@xbghc/semanticscholar-mcp"
+   ],
+   "env": {
+    "SEMANTIC_SCHOLAR_API_KEY": "your-api-key"
+   }
+  }
+ }
+}

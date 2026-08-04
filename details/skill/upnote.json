@@ -1,0 +1,12 @@
+{
+ "id": "upnote",
+ "kind": "skill",
+ "name": "upnote",
+ "fingerprint_md5": "5b84e3447163f99b3376ea61ad801497",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# UpNote\r\n\r\n管理 UpNote 注意 and notebooks using x-callback-url automation.\r\n\r\n## 概述\r\n\r\nUpNote is installed and supports x-callback-url endpoints for automation. Use the bundled `upnote.sh` script for all UpNote operations.\r\n\r\n## 快速开始\r\n\r\n创建 a 注意:\r\n```bash\r\nscripts/upnote.sh new --title \"My Note\" --text \"Note content here\"\r\n```\r\n\r\n创建 a 注意 with markdown:\r\n```bash\r\nscripts/upnote.sh new --title \"Meeting Notes\" --text \"# Agenda\\n- Item 1\" --markdown\r\n```\r\n\r\n创建 a 注意 in a specific notebook:\r\n```bash\r\nscripts/upnote.sh new --title \"Project Ideas\" --text \"Ideas...\" --notebook \"Work\"\r\n```\r\n\r\n## Common Operations\r\n\r\n### 创建 注意\r\n```bash\r\nscripts/upnote.sh new \\\r\n  --title \"Note Title\" \\\r\n  --text \"Content here\" \\\r\n  [--notebook \"Notebook Name\"] \\\r\n  [--markdown] \\\r\n  [--new-window]\r\n```\r\n\r\n### 创建 Notebook\r\n```bash\r\nscripts/upnote.sh notebook new \"Notebook Name\"\r\n```\r\n\r\n### Open 注意 (requires 注意 ID)\r\n```bash\r\nscripts/upnote.sh open <noteId> [true|false]\r\n```\r\n\r\n迁移到 获取 a 注意 ID, right-click a 注意 in UpNote → 复制 Link → 提取 the ID from the URL.\r\n\r\n### Open Notebook (requires notebook ID)\r\n```bash\r\nscripts/upnote.sh notebook open <notebookId>\r\n```\r\n\r\n### 查看 Tag\r\n```bash\r\nscripts/upnote.sh tag \"tag-name\"\r\n```\r\n\r\n### 搜索 注意\r\n```bash\r\nscripts/upnote.sh view all_notes --query \"search term\"\r\n```\r\n\r\n### 查看 Modes\r\n```bash\r\nscripts/upnote.sh view <mode>\r\n```\r\n\r\nAvailable modes:\r\n- `all_notes` - All 注意\r\n- `quick_access` - Quick access 注意\r\n- `templates` - All templates\r\n- `trash` - Trash\r\n- `notebooks` - Notebooks (use with ```--notebook-id`\r\n- `tags` - Tags (u`--tag-id`-id`-id`)\r\n- `filters` - Filters (use wit`--filter-id```)\r\n- `all_notebooks` - All notebooks\r\n- `all_tags` - All tags\r\n\r\n## 注意\r\n\r\n- All UpNote operations open the UpNote app\r\n- 注意 and notebook IDs 可以 be obtained by copying links from UpNote (right-click → 复制 Link)\r\n- The script handles URL encoding automatically\r\n- For multi-line content, use `\\n` for line breaks or pass content via heredoc\r\n\r\n## 资源\r\n\r\n### scripts/upnote.sh\r\n\r\nShell script wrapper for UpNote x-callback-url operations. Handles URL encoding and provides a 清理 CLI interface.",
+ "config": {}
+}

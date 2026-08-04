@@ -1,0 +1,23 @@
+{
+ "id": "562",
+ "kind": "mcp",
+ "name": "ai-council",
+ "fingerprint_md5": "14403aa8bc0c875d5ed7c8bd5a52d108",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# AI委员会MCP服务器\r\n\r\n> **多AI共识工具**并行查询多个AI模型，综合响应以提高准确性，并通过集成决策减少AI偏差。\r\n\r\nAI Council是一个强大的MCP（模型上下文协议）服务器，通过同时咨询多个AI模型来利用“群体智慧”。通过结合OpenAI、Claude、Gemini和任何与OpenAI兼容的API的见解，获得更可靠、更全面的答案。\r\n\r\n## ✨ 什么是AI委员会？\r\n\r\nAI委员会通过以下方式改变您与AI的互动方式：\r\n\r\n- **🔄 并行处理**：同时查询多个AI模型（不是按顺序）\r\n- **🎯 减少偏差**：使用匿名代号防止合成偏差\r\n- **⚡ 智能合成**：一个模型将所有答案综合为一个全面的答案\r\n- **🔧 通用兼容性**：适用于OpenAI、OpenRouter和任何与OpenAI兼容的API\r\n- **🛡️ 稳健的错误处理**：当单个模型失败时，性能会下降\r\n\r\n**非常适合**研究问题、复杂分析、创意项目、技术决策以及任何多个人工智能视角增值的任务。\r\n\r\n## 📋 需求\r\n\r\n- Python 3.10+\r\n- **紫外线** 已安装([安装指南](https://docs.astral.sh/uv/getting-started/installation))\r\n- 或者：\r\n  - **pipx** 已安装([安装指南](https://pipx.pypa.io/stable/installation))，更新配置\r\n    ```json\r\n      \"command\": \"pipx\",\r\n      \"args\": [\"run\", \"ai-council\"]\r\n    ```\r\n  - 或手动安装 `pip install ai-council`，并更新配置\r\n    ```json\r\n    \"command\": \"ai-council\",\r\n    \"args\": []\r\n    ```\r\n\r\n## 🚀 快速开始\r\n\r\n1. 得到你的 [OpenRouter 的](https://openrouter.ai/) API密钥\r\n\r\n### 光标IDE设置\r\n\r\n2. 打开光标设置→ MCP\r\n1. 添加新的MCP服务器并设置您的api密钥：\r\n\r\n```json\r\n{\r\n  \"ai-council\": {\r\n    \"command\": \"uvx\",\r\n    \"args\": [\"ai-council\"],\r\n    \"env\": {\r\n      \"OPENROUTER_API_KEY\": \"...\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Claude桌面设置\r\n\r\n2. 编辑 `~/.claude_desktop_config.json` 并设置您的api密钥：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ai-council\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"ai-council\"],\r\n      \"env\": {\r\n        \"OPENROUTER_API_KEY\": \"...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**就是这样！** 问任何复杂的问题，AI Council工具都会自动参与多个模型。\r\n\r\n默认情况下，它将与Claude Sonnet 4、Gemini 2.5 Pro和DeepSeek V3一起使用OpenRouter。\r\n\r\n### CLI参数\r\n\r\n使用命令行参数进行快速设置，将其中任何一个添加到 `args` 在您的mcp配置中：\r\n\r\n**可用CLI参数**:\r\n\r\n- `--openai-api-key`：您的OpenAI API密钥\r\n- `--openrouter-api-key`：您的OpenRouter API密钥\r\n- `--max-models`：要查询的最大模型数（默认值：3）\r\n- `--parallel-timeout`：超时时间（秒）（默认值：60）\r\n- `--log-level`：日志记录级别（调试、信息、警告、错误）\r\n- `--config`：自定义配置文件的路径\r\n\r\n## ⚙️ 高级配置\r\n\r\n对于高级设置，请创建 `config.yaml` 文件并链接到它 `--config path/to/config.yaml`:\r\n\r\n```yaml\r\n# config.yaml\r\nopenai_api_key: \"your_openai_key_here\"\r\nopenrouter_api_key: \"your_openrouter_key_here\"\r\nmax_models: 3\r\nparallel_timeout: 90 # in seconds\r\nsynthesis_model_selection: \"random\"  # or \"first\"\r\n\r\nmodels:\r\n  # use OpenAI API\r\n  - name: \"GPT-4o\"\r\n    provider: \"openai\"\r\n    model_id: \"gpt-4o\"\r\n    enabled: true # optional, defaults to true\r\n\r\n  # use OpenRouter API\r\n  - name: \"Claude Sonnet\"\r\n    provider: \"openrouter\"\r\n    model_id: \"anthropic/claude-3.5-sonnet\"\r\n    code_name: \"Bob\" # optional, auto assigned otherwise\r\n\r\n  # or any custom OpenAI compatible API\r\n  - name: \"Perplexity\"\r\n    provider: \"custom\"\r\n    model_id: \"llama-3.1-sonar-large-128k-online\"\r\n    base_url: \"https://api.perplexity.ai\"\r\n    api_key: \"your_perplexity_key_here\"\r\n\r\n  # Local LLM (Ollama)\r\n  - name: \"Local Llama\"\r\n    provider: \"custom\"\r\n    model_id: \"llama-3b\"\r\n    base_url: \"http://localhost:11434\"\r\n    api_key: \"key-if-needed\"\r\n```\r\n\r\n## 📖 运作原理\r\n\r\n人工智能委员会采用了一种复杂的三阶段方法：\r\n\r\n### 1. **平行协商**\r\n\r\n- 同时查询您配置的AI模型\r\n- 为每个模型保持相同的上下文和问题\r\n- 优雅地处理故障（继续成功响应）\r\n\r\n### 2. **匿名分析**\r\n\r\n- 为每个模型的响应分配代码名称（Alpha、Beta、Gamma等）\r\n- 防止对特定品牌或供应商的综合偏见\r\n- 在删除模型标识的同时保留响应质量\r\n\r\n### 3. **智能合成**\r\n\r\n- 随机选择一个模型作为合成器\r\n- 合成器分析所有匿名响应\r\n- 结合最佳见解，得出全面的答案\r\n\r\n## 🤝 致谢\r\n\r\n这个项目的灵感来自 [认知轮](https://github.com/Hormold/cognition-wheel).\r\n\r\n人工智能委员会通过以下方式扩展了这些想法：\r\n\r\n- 增强的配置灵活性\r\n- OpenRouter支持使用单个api密钥的多种型号选项\r\n- 支持自定义API端点\r\n- 改进了错误处理和日志记录\r\n- 使用Python\r\n",
+ "config": {
+  "ai-council": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "ai-council"
+   ],
+   "env": {
+    "OPENROUTER_API_KEY": "..."
+   }
+  }
+ }
+}

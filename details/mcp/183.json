@@ -1,0 +1,22 @@
+{
+ "id": "183",
+ "kind": "mcp",
+ "name": "dice-roll",
+ "fingerprint_md5": "aa4efa0c7440a2bdb7647e7803addd4c",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "## mcp服务器diceroll\r\n\r\n添加以下内容 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dice-roll\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-server-diceroll\"]\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "dice-roll": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-server-diceroll"
+   ],
+   "env": {}
+  }
+ }
+}

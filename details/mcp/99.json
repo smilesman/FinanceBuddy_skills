@@ -1,0 +1,23 @@
+{
+ "id": "99",
+ "kind": "mcp",
+ "name": "chess-6",
+ "fingerprint_md5": "97b260736247c3dfea4b75ca4195d187",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 国际象棋MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，使AI助手能够玩和分析国际象棋游戏。\r\n\r\n## 概述\r\n\r\n此MCP服务器通过模型上下文协议提供国际象棋功能，允许像Claude这样的AI助手：\r\n\r\n- 通过正确的移动验证玩国际象棋游戏\r\n- 分析头寸并提出行动建议\r\n- 跟踪游戏状态和历史\r\n- 支持标准国际象棋符号\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Python 3.8或更高版本\r\n- `uvx` 包装运行器\r\n\r\n### 设置\r\n\r\n将以下配置添加到MCP设置文件中（通常 `claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chess\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--from\",\r\n        \"git+https://github.com/chatkausik/Chess-mcp-server-build.git\",\r\n        \"chess\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 配置文件位置\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- **Linux**: `~/.config/Claude/claude_desktop_config.json`\r\n\r\n## 用法\r\n\r\n配置后，国际象棋服务器将通过MCP协议对Claude可用。你可以：\r\n\r\n1. **开始新游戏**请克劳德开始下棋\r\n1. **采取行动**：使用标准代数符号（例如“e4”、“Nf3”、“O-O”）\r\n1. **分析职位**：请求分析当前董事会状态\r\n1. **查看游戏历史记录**：查看以前的移动和位置\r\n\r\n## 特性\r\n\r\n- ♟️ 完整的国际象棋规则实施\r\n- ✅ 移动验证和合法移动生成\r\n- 📊 岗位评价与分析\r\n- 📝 游戏历史跟踪\r\n- 🎯 支持标准国际象棋符号\r\n- 🔄 会话期间的游戏状态持久性\r\n\r\n## 交互示例\r\n\r\n```\r\nUser: Let's play chess. I'll be white.\r\nClaude: I'll start a new game. Make your first move!\r\n\r\nUser: e4\r\nClaude: Good opening! I'll respond with e5.\r\n\r\nUser: Analyze the position\r\nClaude: [Provides analysis of current board state]\r\n```\r\n\r\n## 发展\r\n\r\n### 仓库\r\n\r\n源代码： [https://github.com/chatkausik/Chess-mcp-server-build](https://github.com/chatkausik/Chess-mcp-server-build)\r\n\r\n### 贡献\r\n\r\n欢迎投稿！请随时向GitHub存储库提交问题或拉取请求。\r\n\r\n## 技术细节\r\n\r\n此服务器使用：\r\n\r\n- **MCP协议**：用于AI集成的模型上下文协议\r\n- **Python象棋库**：用于游戏逻辑和验证\r\n- **uvx**：用于包执行和管理\r\n\r\n## 故障排除\r\n\r\n如果您遇到问题：\r\n\r\n1. 确保 `uvx` 已安装并可在PATH中访问\r\n1. 验证配置文件是否在正确的位置\r\n1. 更改配置后重新启动Claude\r\n1. 检查初始安装时是否有活动的互联网连接\r\n\r\n## 许可证\r\n\r\n请参阅 [仓库](https://github.com/chatkausik/Chess-mcp-server-build) 获取许可证信息。\r\n\r\n## 支持\r\n\r\n对于错误、功能请求或问题，请在 [GitHub 仓库](https://github.com/chatkausik/Chess-mcp-server-build/issues).\r\n\r\n______________________________________________________________________\r\n\r\n由...制作♟️ 国际象棋MCP社区\r\n",
+ "config": {
+  "chess": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/chatkausik/Chess-mcp-server-build.git",
+    "chess"
+   ],
+   "env": {}
+  }
+ }
+}

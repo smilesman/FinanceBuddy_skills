@@ -1,0 +1,18 @@
+{
+ "id": "3652",
+ "kind": "mcp",
+ "name": "tas-jurisprudence",
+ "fingerprint_md5": "650315b0ffa939dcb2246d7e5e82b5ee",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# TAS/CAS司法MCP服务器\r\n\r\n> 体育仲裁法院（TAS/neneneba CAS）裁决检索\r\n\r\n## 概述\r\n\r\n此MCP服务器提供了搜索和检索体育仲裁法院（CAS/TAS）仲裁裁决的工具。它使克劳德能够研究体育法先例、反兴奋剂案件和商业体育纠纷。\r\n\r\n## 可用工具\r\n\r\n### `cas_search`\r\n\r\n按关键字、运动、年份范围或程序类型搜索CAS/TAS仲裁裁决。\r\n\r\n**参数：**\r\n\r\n- `query` （必填）：搜索案件内容、当事人或关键字\r\n- `sport` （可选）：按运动筛选（例如，“足球”、“自行车”、“田径”）\r\n- `year_from` （可选）：过滤今年（1984-2026）的决定\r\n- `year_to` （可选）：过滤决定，直到今年（1984-2026）\r\n- `procedure_type` （可选）：按类型筛选-“上诉”、“普通”、“反兴奋剂”、“咨询”\r\n- `page` （可选）：页码（默认：1）\r\n- `page_size` （可选）：每页最多25个结果（默认值：10）\r\n\r\n### `cas_get_award`\r\n\r\n检索有关特定CAS/TAS奖励的详细信息。\r\n\r\n**参数：**\r\n\r\n- `case_number` （可选）：CAS案例编号（例如，“CAS 2023/A/9876”）\r\n- `url` （可选）：指向奖励页面的直接URL\r\n- `include_full_text` （可选）：包含完整的PDF文本（默认值：false）\r\n\r\n### `cas_recent`\r\n\r\n获取最新的CAS/TAS仲裁裁决。\r\n\r\n**参数：**\r\n\r\n- `limit` （可选）：最大决策数（1-50，默认值：10）\r\n\r\n### `cas_by_sport`\r\n\r\n按体育类别浏览CAS/TAS决策。\r\n\r\n**参数：**\r\n\r\n- `sport` （必填）：可浏览的运动（例如“足球”、“自行车”）\r\n- `page` （可选）：页码（默认：1）\r\n\r\n## 安装\r\n\r\n```bash\r\n# Navigate to server directory\r\ncd mcp-servers/tas-jurisprudence\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build TypeScript\r\nnpm run build\r\n\r\n# Run locally\r\nnpm run dev\r\n```\r\n\r\n## 部署\r\n\r\n### 铁路\r\n\r\n此服务器专为使用HTTP传输的铁路部署而设计：\r\n\r\n```bash\r\n# From the tas-jurisprudence directory\r\nrailway up\r\n```\r\n\r\n**配置：**\r\n\r\n- 设置自定义域： `tas.bettercallclaude.ch`\r\n- MCP端点： `https://tas.bettercallclaude.ch/tas-jurisprudence/mcp`\r\n\r\n## 客户端配置\r\n\r\n### 克劳德桌面版\r\n\r\n对于本地stdio传输（不建议用于此服务器）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tas-jurisprudence\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/mcp-servers/tas-jurisprudence/dist/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 远程HTTP传输\r\n\r\n对于铁路部署：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tas-jurisprudence\": {\r\n      \"url\": \"https://tas.bettercallclaude.ch/tas-jurisprudence/mcp\",\r\n      \"transport\": \"http\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 技术细节\r\n\r\n### 建筑\r\n\r\n- **运输**：流式HTTP（Express.js）\r\n- **抓取**：JavaScript渲染内容的编剧\r\n- **缓存**：具有可配置TTL的内存LRU缓存\r\n- **速率限制**：10秒爬行延迟（尊重robots.txt）\r\n\r\n### 缓存TTL\r\n\r\n- 搜索结果：10分钟\r\n- 奖励详情：30分钟\r\n- 最近的决定：5分钟\r\n- 体育浏览：15分钟\r\n\r\n### 数据源\r\n\r\n- 主数据库： `jurisprudence.tas-cas.org` （JavaScript渲染）\r\n- 最近的决定： `tas-cas.org/en/jurisprudence/recent-decisions.html`\r\n- PDF文件： `tas-cas.org/files/decision/`\r\n\r\n## 法律声明\r\n\r\nCAS奖项是公开的，但其内容受版权保护。此服务器：\r\n\r\n- 默认情况下提供元数据和摘要\r\n- 链接到官方PDF源，而不是重新分发内容\r\n- 遵守robots.txt爬行延迟要求\r\n- 用于合法的法律研究目的\r\n\r\n若要重新分发全部奖励，可能需要CAS权限。\r\n\r\n## 发展\r\n\r\n```bash\r\n# Run tests\r\nnpm test\r\n\r\n# Watch mode\r\nnpm run test:watch\r\n\r\n# Clean build artifacts\r\nnpm run clean\r\n```\r\n\r\n## 故障排除\r\n\r\n### 没有搜索结果\r\n\r\n- CAS数据库需要JavaScript呈现\r\n- 确保Playwright/Chromium安装正确\r\n- 检查速率限制器未阻止请求\r\n\r\n### 生产中的内存问题\r\n\r\n- 重用单个浏览器实例\r\n- 每次操作后页面都会关闭\r\n- 为长时间运行的实例实现定期浏览器重启\r\n\r\n### 速率限制错误\r\n\r\n- 请求之间的默认延迟为10秒\r\n- 增加 `CRAWL_DELAY_MS` 如果被封锁\r\n- 查看CAS网站状态\r\n\r\n## 许可证\r\n\r\nMIT许可证-BetterCallClaude项目\r\n\r\n## 资源\r\n\r\n- [CAS/TAS官方网站](https://www.tas-cas.org)\r\n- [CAS法学数据库](https://jurisprudence.tas-cas.org)\r\n- [MCP规范](https://modelcontextprotocol.io)\r\n",
+ "config": {
+  "tas-jurisprudence": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://tas.bettercallclaude.ch/tas-jurisprudence/mcp"
+  }
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "id": "1232",
+ "kind": "mcp",
+ "name": "postgres-32",
+ "fingerprint_md5": "ee059400c46e19deaa14fa8944e1901f",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp服务器postgres\r\n\r\n\r\nPostgreSQL数据库的模型上下文协议服务器。此服务器使LLM能够检查数据库模式并执行只读查询。\r\n\r\n## 特性\r\n\r\n- PostgreSQL数据库的只读访问\r\n- 模式检查功能\r\n- 在只读事务中安全执行查询\r\n- Docker支持\r\n- NPM包可用\r\n\r\n## 安装\r\n\r\n### 使用Docker\r\n\r\n```bash\r\n# Build the Docker image\r\nmake docker\r\n\r\n# Run with Docker\r\ndocker run -i --rm mcp/postgres postgresql://host:port/dbname\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装用于Claude Desktop的PostgreSQL数据库服务器 [史密瑟里](https://smithery.ai/server/@yuru-sha/mcp-server-postgres):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @yuru-sha/mcp-server-postgres --client claude\r\n```\r\n\r\n## 用法\r\n\r\n### 使用克劳德桌面\r\n\r\n将以下配置添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"mcp/postgres\",\r\n        \"postgresql://host:port/dbname\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n注意：在macOS上使用Docker时，请使用 `host.docker.internal` 如果PostgreSQL服务器正在主机网络上运行。\r\n\r\n### 连接URL格式\r\n\r\n```\r\npostgresql://[user][:password]@host[:port]/database\r\n```\r\n\r\n替换 `/database` 使用您的数据库名称。\r\n\r\n## 发展\r\n\r\n```bash\r\n# Initial setup\r\nmake setup\r\n\r\n# Build the project\r\nmake build\r\n\r\n# Format code\r\nmake format\r\n\r\n# Run linter\r\nmake lint\r\n```\r\n\r\n## 许可证\r\n\r\n该项目发布于 [MIT许可证](LICENSE).\r\n\r\n## 安全\r\n\r\n此服务器强制执行只读访问以保护您的数据库。所有查询都在只读事务中执行。\r\n\r\n为了增强安全性，我们建议创建只读用户。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n",
+ "config": {
+  "postgres": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "mcp/postgres",
+    "postgresql://host:port/dbname"
+   ],
+   "env": {}
+  }
+ }
+}

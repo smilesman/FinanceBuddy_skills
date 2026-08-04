@@ -1,0 +1,18 @@
+{
+ "id": "855",
+ "kind": "mcp",
+ "name": "server-with-yolo",
+ "fingerprint_md5": "5537c036541a0a6f3d2e6c7541afb0d9",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# CVDLT（计算机视觉和深度学习工具）的MCP服务器\r\n\r\n该仓库基于Ultralytics和Python SDK的模型上下文协议\r\n相关链接：\r\n\r\nMCP游乐场（客户端）-https://github.com/MRonaldo-gif/mcp-playground-local\r\n\r\nUltralytics-https://github.com/ultralytics/ultralytics\r\n\r\nPython的MCPhttps://github.com/modelcontextprotocol/python-sdk\r\n\r\nPython服务器实现了用于图像对象检测、分割和姿态估计操作的模型上下文协议（MCP）。\r\n\r\n\r\n## 特性\r\n\r\n- 使用YOLOv10检测图像中的对象\r\n- 使用YOLOv8分割图像中的对象\r\n- 使用Ultralytics SAM分割整个图像\r\n- 使用YOLOv8估计图像中的人体姿势\r\n- 支持本地和网络图像输入\r\n- 用于客户端交互的MCP工具集成\r\n- Stdio和SSE传输协议\r\n\r\n**备注**：服务器需要有效的图像路径或URL以及对以下模型文件的访问权限： `yolov10b.pt` （YOLOv10检测）， `yolov8n-seg.pt` （YOLOv8分割）， `yolov8n-pose.pt` （YOLOv8姿态估计），以及 `sam_b.pt` （Ultralytics SAM）。\r\n\r\n## 全部\r\n\r\n- 三维检测\r\n- AIGC（GAN，扩散）\r\n- Denso估算\r\n- 部署DL（深度学习）模型\r\n\r\n## QucikStart\r\n\r\n### 再进行\r\n\r\n```bash\r\nuv sync\r\n//如需要清华源\r\nuv sync --index https://pypi.tuna.tsinghua.edu.cn/simple --extra-index-url https://pypi.org/simple\r\n\r\nuv pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple\r\n```\r\n\r\n### 启动服务器\r\n\r\n1. **stdio 模式**：\r\n\r\n   ```bash\r\n   python server.py\r\n   ```\r\n\r\n   输出：\r\n\r\n   ```\r\n   使用 stdio 传输启动 MCP 服务器（YOLO）\r\n   ```\r\n\r\n1. **SSE 模式**：\r\n\r\n   ```bash\r\n   python server.py sse [端口号]\r\n   ```\r\n\r\n   示例：\r\n\r\n   ```bash\r\n   python server.py sse 8080\r\n   ```\r\n\r\n   输出：\r\n\r\n   ```\r\n   在端口 8080 上启动 MCP 服务器（YOLO），使用 SSE 传输\r\n   ```\r\n\r\n此外，用户需要将权重下载到。/检查点目录。\r\n下载链接🔗：https://docs.ultralytics.com/models/yolov10/，https://docs.ultralytics.com/models/yolov8/，https://docs.ultralytics.com/models/sam-2/\r\n\r\n├── 检查点\r\n│   ├── sam_b.pt\r\n│   ├── yolov10b.pt\r\n│   ├── yolov8-pose.pt\r\n│   └── yolov8-seg.pt\r\n\r\n## API\r\n\r\n### 资源\r\n\r\n- `image://system`：图像处理操作界面\r\n\r\n### 工具\r\n\r\n- **检测对象**\r\n  - 使用YOLOv10检测图像中的对象\r\n  - 输入： `image_url` （字符串）\r\n  - 支持本地路径(`file://` 或相对）和网络URL(`http://` 或 `https://`)\r\n  - 返回带有边界框、置信度分数和类标签的检测对象的JSON数组\r\n  - 输出示例： `[{\"box\": [x, y, w, h], \"confidence\": 0.9, \"class\": \"person\"}, ...]`\r\n- **分段对象**\r\n  - 使用YOLOv8分割图像中的对象\r\n  - 输入： `image_url` （字符串）\r\n  - 支持本地路径(`file://` 或相对）和网络URL(`http://` 或 `https://`)\r\n  - 返回带有边界框、置信度分数和类标签的分段对象的JSON数组\r\n  - 输出示例： `[{\"box\": [x, y, w, h], \"confidence\": 0.85, \"class\": \"car\"}, ...]`\r\n- **分段图像**\r\n  - 使用Ultralytics SAM分割整个图像\r\n  - 输入： `image_url` （字符串）\r\n  - 支持本地路径(`file://` 或相对）和网络URL(`http://` 或 `https://`)\r\n  - 返回带有边界框、面积和置信度分数的分割区域的JSON数组\r\n  - 输出示例： `[{\"bbox\": [x, y, w, h], \"area\": 2500, \"confidence\": 0.95}, ...]`\r\n- **估计姿势**\r\n  - 使用YOLOv8估计图像中的人体姿势\r\n  - 输入： `image_url` （字符串）\r\n  - 支持本地路径(`file://` 或相对）和网络URL(`http://` 或 `https://`)\r\n  - 返回检测到的姿势的JSON数组，其中包含关键点坐标和置信度得分\r\n  - 输出示例： `[{\"keypoints\": [[x1, y1], [x2, y2], ...], \"confidence\": [0.9, 0.8, ...]}, ...]`\r\n\r\n## 使用Claude Desktop\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n**备注**：您可以通过将沙盒目录装载到以下位置来向服务器提供沙盒目录 `/projects`.添加 `ro` 标志将使目录对服务器只读。\r\n\r\n### SSE\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"server-with-yolo\": {\r\n      \"url\": \"http://localhost:8080/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "server-with-yolo": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:8080/sse"
+  }
+ }
+}

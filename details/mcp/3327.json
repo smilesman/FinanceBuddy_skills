@@ -1,0 +1,21 @@
+{
+ "id": "3327",
+ "kind": "mcp",
+ "name": "arxiv-2",
+ "fingerprint_md5": "fcdd78a65105acb849e1e3211bbcba96",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# arXiv MCP服务器\r\n\r\n用于搜索和分析arXiv学术论文的MCP（模型上下文协议）服务器。\r\n\r\n作为一个案例研究，展示了开放式学术API如何通过MCP协议作为AI就绪资产进行公开。\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `search_papers` |按关键字、主题或作者搜索论文|\r\n| `get_paper` |通过arXiv ID获取论文的完整详细信息|\r\n| `search_by_category` |按arXiv分类浏览论文（cs.AI、cs.LG等）|\r\n\r\n## 安装选项\r\n\r\n### 选项1——不安装（托管端点）\r\n\r\n将此URL添加到Claude桌面设置→ 集成，或与Claude.ai：\r\n\r\n```\r\nhttps://arxiv-mcp-server.dileomargherita.workers.dev/mcp\r\n```\r\n\r\n### 选项2——通过npx本地（需要Node.js）\r\n\r\n添加到您的Claude Desktop配置文件中：\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- **Linux**: `~/.config/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"arxiv\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"arxiv-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 选项3——克隆并在本地运行\r\n\r\n```bash\r\ngit clone https://github.com/madi/arxiv-mcp-server\r\ncd arxiv-mcp-server\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n然后添加到Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"arxiv\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/absolute/path/to/arxiv-mcp-server/dist/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 部署到Cloudflare Workers\r\n\r\n```bash\r\nnpm install -g wrangler\r\nwrangler login\r\nwrangler deploy\r\n```\r\n\r\n您的服务器将在 `https://arxiv-mcp-server.dileomargherita.workers.dev`.\r\n\r\n## Claude Desktop中的示例用法\r\n\r\n连接后，您可以问Claude以下问题：\r\n\r\n> “搜索最近关于人工智能政策和监管的论文”\r\n\r\n> “查找过去6个月关于地理空间机器学习的论文”\r\n\r\n> “获取纸张2301.07041的详细信息”\r\n\r\n> “cs.AI关于大型语言模型的最新论文是什么？”\r\n\r\n> “在cs.LG类别中搜索变压器相关论文”\r\n\r\n## 项目结构\r\n\r\n```\r\narxiv-mcp-server/\r\n├── src/\r\n│   ├── index.ts          # Local entry point (stdio transport)\r\n│   ├── worker.ts         # Cloudflare Workers entry point (HTTP transport)\r\n│   ├── server.ts         # MCP tool registration — the core of the server\r\n│   └── utils/\r\n│       └── arxiv.ts      # arXiv API client and XML parser\r\n├── package.json\r\n├── tsconfig.json\r\n├── wrangler.toml         # Cloudflare Workers configuration\r\n├── .env.example\r\n└── README.md\r\n```\r\n\r\n## 为什么这是AI就绪资产\r\n\r\n该服务器展示了AI就绪生态系统的完整资产链：\r\n\r\n```\r\nData (arXiv corpus)\r\n  → API (arXiv REST API wrapped as MCP tools)\r\n    → Model (any LLM can consume and analyze the papers)\r\n      → Agent (Claude orchestrates search + analysis via MCP)\r\n```\r\n\r\n关键见解：arXiv数据变得真实 **AI就绪** 不仅仅是因为它是开放和结构化的，\r\n但因为它是 **代理人可以访问** 通过标准化接口（MCP）。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "arxiv": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "arxiv-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "devlog-agent-skill",
+ "kind": "skill",
+ "name": "devlog-agent-skill",
+ "fingerprint_md5": "48f45d3c560ecfde03f989abf6284891",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# DevLog Skill 🦞\r\n\r\n一个标准化的日志记录技能，供 OpenClaw 代理使用 `dev-log-cli` 跟踪进度、任务和项目状态。\r\n\r\n## 描述\r\n此技能使代理能够维护专业的开发者日志。它旨在以结构化的 SQLite 数据库捕获上下文、项目里程碑和任务状态。\r\n\r\n## 要求\r\n- `dev-log-cli`（通过 `pipx` 安装）\r\n\r\n## 链接\r\n- **GitHub**: [https://github.com/CrimsonDevil333333/dev-log-cli](https://github.com/CrimsonDevil333333/dev-log-cli)\r\n- **PyPI**: [https://pypi.org/project/dev-log-cli/](https://pypi.org/project/dev-log-cli/)\r\n- **ClawHub**: [https://clawhub.com/skills/devlog-skill](https://clawhub.com/skills/devlog-skill) (Pending Publication)\r\n\r\n## 用法\r\n\r\n### 📝 添加条目\r\n代理应使用此功能来记录重大进展或阻碍。\r\n```bash\r\ndevlog add \"Finished implementing the auth module\" --project \"Project Alpha\" --status \"completed\" --tags \"auth,feature\"\r\n```\r\n\r\n### 📋 列出日志\r\n查看最近的活动以获取上下文。\r\n```bash\r\ndevlog list --project \"Project Alpha\" --limit 5\r\n```\r\n\r\n### 📊 查看统计\r\n检查项目健康状况和活动。\r\n```bash\r\ndevlog stats --project \"Project Alpha\"\r\n```\r\n\r\n### 🔍 搜索\r\n查找特定主题的历史上下文。\r\n```bash\r\ndevlog search \"infinite loop\"\r\n```\r\n\r\n### 🛠️ 编辑/查看\r\n详细检查或更正条目。\r\n```bash\r\ndevlog view <id>\r\ndevlog edit <id>\r\n```\r\n\r\n## 内部设置\r\n该技能包含一个 `setup.sh`，以确保 CLI 可用。",
+ "config": {}
+}

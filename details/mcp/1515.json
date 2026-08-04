@@ -1,0 +1,23 @@
+{
+ "id": "1515",
+ "kind": "mcp",
+ "name": "json-skeleton",
+ "fingerprint_md5": "24a309a4be927fe20be3c8e08eccd0b6",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# JSON骨架MCP服务器\r\n\r\n一个轻量级的MCP（模型上下文协议）服务器，可以创建大型JSON文件的紧凑“骨架”表示，帮助您在没有完整数据负载的情况下理解JSON结构。\r\n\r\n## 特性\r\n\r\n- **轻量级JSON骨架**：保留截断字符串值的结构\r\n- **可配置字符串长度**：自定义最大字符串长度（默认值：200个字符）\r\n- **仅类型模式**：超紧凑输出，仅显示数据类型\r\n- **智能阵列重复数据消除**：在数组中仅保留唯一的DTO结构\r\n- **有效处理**：处理超过AI模型上下文限制的大量JSON文件\r\n\r\n## 安装\r\n\r\n### uvx快速入门（推荐）\r\n\r\n您可以使用直接运行MCP服务器，而无需安装 `uvx`:\r\n\r\n```bash\r\n# Run from GitHub\r\nuvx --from git+https://github.com/jskorlol/json-skeleton-mcp.git json-skeleton\r\n\r\n# Run from local directory\r\nuvx --from /path/to/json-skeleton-mcp json-skeleton\r\n```\r\n\r\n### 传统安装\r\n\r\n1. 克隆此存储库：\r\n\r\n```bash\r\ngit clone https://github.com/jskorlol/json-skeleton-mcp.git\r\ncd json-skeleton-mcp\r\n```\r\n\r\n2. 创建虚拟环境并安装：\r\n\r\n```bash\r\npython -m venv venv\r\nsource venv/bin/activate  # On Windows: venv\\Scripts\\activate\r\npip install -e .\r\n```\r\n\r\n## 用法\r\n\r\n### 作为Claude Desktop中的MCP服务器\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n**使用uvx（推荐）：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"json-skeleton\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--from\", \"git+https://github.com/jskorlol/json-skeleton-mcp.git\", \"json-skeleton\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**使用本地安装：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"json-skeleton\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--from\", \"/path/to/json-skeleton-mcp\", \"json-skeleton\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 可用工具\r\n\r\n**`json_skeleton`**\r\n\r\n使用以下参数创建JSON文件的轻量级骨架：\r\n\r\n- `file_path` （必填）：要处理的JSON文件的路径\r\n- `max_length` （可选，默认值：200）：字符串值的最大长度\r\n- `type_only` （可选，默认值：false）：仅返回值类型而不是值（最紧凑的输出）\r\n\r\n#### 示例1：基本用法\r\n\r\n```\r\nInput: json_skeleton(file_path=\"/path/to/data.json\")\r\nOutput: Truncated JSON with strings limited to 200 characters\r\n```\r\n\r\n#### 示例2：自定义字符串长度\r\n\r\n```\r\nInput: json_skeleton(file_path=\"/path/to/data.json\", max_length=50)\r\nOutput: More aggressively truncated JSON with 50-char limit\r\n```\r\n\r\n#### 示例3：仅类型模式（最紧凑型）\r\n\r\n```\r\nInput: json_skeleton(file_path=\"/path/to/data.json\", type_only=true)\r\nOutput: \r\n{\r\n  \"name\": \"str\",\r\n  \"age\": \"int\",\r\n  \"active\": \"bool\",\r\n  \"balance\": \"float\",\r\n  \"notes\": \"null\",\r\n  \"items\": [\r\n    {\r\n      \"id\": \"int\",\r\n      \"label\": \"str\"\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n### 程序化使用\r\n\r\n```python\r\nfrom json_skeleton import SkeletonGenerator\r\n\r\n# Initialize generator\r\ngenerator = SkeletonGenerator(max_value_length=200)\r\n\r\n# Process a file\r\nresult = generator.process_file(\"large_data.json\")\r\nprint(result['skeleton'])\r\n\r\n# Process with custom length\r\nresult = generator.process_file(\"large_data.json\", max_length=50)\r\nprint(result['skeleton'])\r\n\r\n# Process in type-only mode\r\nresult = generator.process_file(\"large_data.json\", type_only=True)\r\nprint(result['skeleton'])\r\n\r\n# Or process data directly\r\ndata = {\"key\": \"very long value\" * 50, \"items\": [1, 2, 3, 1, 2, 3]}\r\nskeleton = generator.create_skeleton(data)\r\nprint(skeleton)\r\n```\r\n\r\n## 运作原理\r\n\r\n### 阵列重复数据消除\r\n\r\n该工具通过比较阵列项的DTO（数据传输对象）结构来智能地消除重复：\r\n\r\n- 对于原始数组：最多保留3个唯一值\r\n- 对于对象数组：保留每个唯一结构的一个示例\r\n- 结构比较基于键和值类型，而不是实际值\r\n- 在仅类型模式下：仅显示第一个数组元素的类型\r\n\r\n### 价值处理\r\n\r\n- **正常模式**：长度超过max_length的字符串将使用“…（截断）”后缀截断\r\n- **仅类型模式**：所有值都替换为它们的类型名称（str、int、float、bool、null）\r\n- 数字、布尔值和空值在正常模式下保持不变\r\n\r\n## 用例\r\n\r\n1. **了解API响应**：快速掌握大型API响应的结构，无需处理兆字节的数据\r\n1. **文档**：生成API文档的结构示例\r\n1. **发展**：在不处理大型有效载荷的情况下使用数据结构\r\n1. **令牌优化**：使用AI模型时减少令牌使用\r\n1. **架构发现**：使用纯类型模式来理解复杂JSON结构中的数据类型\r\n\r\n## 测试\r\n\r\n运行测试脚本以查看工具的运行情况：\r\n\r\n```bash\r\n# Test basic functionality\r\npython test_skeleton.py\r\n\r\n# Test with different max_length values\r\npython test_max_length.py\r\n\r\n# Test type-only mode\r\npython test_type_only.py\r\n```\r\n\r\n## 需求\r\n\r\n- Python 3.10+\r\n- MCP库\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n",
+ "config": {
+  "json-skeleton": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/jskorlol/json-skeleton-mcp.git",
+    "json-skeleton"
+   ],
+   "env": {}
+  }
+ }
+}

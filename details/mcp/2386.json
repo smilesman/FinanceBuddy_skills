@@ -1,0 +1,25 @@
+{
+ "id": "2386",
+ "kind": "mcp",
+ "name": "weatherapi",
+ "fingerprint_md5": "2b79bf0c504bf91bd884d57fbafa6dd7",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# WeatherAPI MCP服务器\r\n\r\nMCP服务器使用 [WeatherAPI.com](https://www.weatherapi.com/) 服务。\r\n\r\n## 特性\r\n\r\n此MCP服务器提供以下工具：\r\n\r\n- **get_current天气**：获取任何位置的当前天气状况\r\n- **获取预测**：获取每小时的天气预报（1-10天）\r\n- **搜索位置**：按名称搜索位置\r\n- **天文学**：获取日出、日落、月相和其他天文数据\r\n- **获得空气质量**：获取空气质量指数和污染物水平\r\n\r\n## 设置\r\n\r\n1. 从获取免费的API密钥 [WeatherAPI.com](https://www.weatherapi.com/signup.aspx)\r\n\r\n1. 将API键设置为环境变量：\r\n\r\n   ```bash\r\n   # Windows PowerShell\r\n   $env:WEATHERAPI_KEY = \"your_api_key_here\"\r\n\r\n   # Or add to your profile for persistence\r\n   # Edit $PROFILE and add:\r\n   # $env:WEATHERAPI_KEY = \"your_api_key_here\"\r\n   ```\r\n\r\n1. 使用uvx安装：\r\n\r\n   ```bash\r\n   uvx mcp-weatherapi\r\n   ```\r\n\r\n## 与MCP客户端一起使用\r\n\r\n将此添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weatherapi\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--from\", \"git+https://github.com/bsparks/mcp-weatherapi.git\",\r\n        \"mcp-weatherapi\"\r\n      ],\r\n      \"env\": {\r\n        \"WEATHERAPI_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n1. 克隆存储库\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   pip install -e .\r\n   ```\r\n\r\n1. 设置API密钥：\r\n\r\n   ```bash\r\n   $env:WEATHERAPI_KEY = \"your_api_key_here\"\r\n   ```\r\n\r\n1. 运行服务器：\r\n\r\n   ```bash\r\n   python weather_server.py\r\n   ```\r\n\r\n## 可用工具\r\n\r\n### get_current天气（位置：str）\r\n\r\n获取当前的天气状况，包括温度、风、湿度、空气质量等。\r\n\r\n**示例**: `get_current_weather(\"London\")`\r\n\r\n### get_forecast（位置：str，天数：int=3）\r\n\r\n获取1-10天的天气预报，包括每日摘要和每小时数据。\r\n\r\n**示例**: `get_forecast(\"New York\", 5)`\r\n\r\n### search_location（查询：str）\r\n\r\n按名称搜索位置（至少3个字符）。\r\n\r\n**示例**: `search_location(\"Paris\")`\r\n\r\n### get_astronomy（位置：str，日期：可选\\[str\\]=无）\r\n\r\n获取天文信息，包括日出、日落、月出、月落和月相。\r\n\r\n**示例**: `get_astronomy(\"Tokyo\", \"2025-11-07\")`\r\n\r\n### 获取空气质量（位置：str）\r\n\r\n获取空气质量指数和污染物水平。\r\n\r\n**示例**: `get_air_quality(\"Beijing\")`\r\n\r\n## API文档\r\n\r\n有关WeatherAPI.com服务的更多信息，请访问：https://www.weatherapi.com/docs/\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "weatherapi": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/bsparks/mcp-weatherapi.git",
+    "mcp-weatherapi"
+   ],
+   "env": {
+    "WEATHERAPI_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

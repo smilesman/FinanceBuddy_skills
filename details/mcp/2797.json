@@ -1,0 +1,24 @@
+{
+ "id": "2797",
+ "kind": "mcp",
+ "name": "crypto-liquidations",
+ "fingerprint_md5": "d88f25dd7333fc287cec65efc276b2ae",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# 加密清算MCP\r\n\r\n\r\n一个MCP服务器，从币安实时传输加密货币清算事件，使人工智能代理能够对高波动性的市场走势做出即时反应。\r\n\r\n\r\n## 特性\r\n\r\n- **实时清算流**：连接到 [双向通信](wss://fstream.binance.com/ws/!forceOrder@arr%60) 以捕捉清算事件。\r\n- **清算数据存储**：维护最多1000个清算事件的内存列表，无需持久存储。\r\n- **工具： `get_latest_liquidations`**:\r\n  - 检索Markdown表中的最新清算事件。\r\n  - 柱： `Symbol`, `Side`, `Price`, `Quantity`, `Time` （HH:MM:SS格式）。\r\n  - 参数： `limit` （默认值10）。\r\n- **提示： `analyze_liquidations`**:\r\n  - 生成提示，分析所有交易品种的清算趋势，利用 `get_latest_liquidations` 工具。\r\n\r\n## 先决条件\r\n\r\n- **Python 3.10**：兼容性要求。\r\n- **紫外线**：包和依赖关系管理器（安装说明如下）。\r\n- **互联网接入**：连接到币安WebSocket。\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的加密清算 [史密瑟里](https://smithery.ai/server/@kukapay/crypto-liquidations-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @kukapay/crypto-liquidations-mcp --client claude\r\n```\r\n\r\n### 1.克隆存储库\r\n\r\n```bash\r\ngit clone https://github.com/kukapay/crypto-liquidations-mcp.git\r\ncd crypto-liquidations-mcp\r\n```\r\n\r\n### 2.安装依赖项\r\n\r\n使用安装所需的软件包 `uv`:\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n### 3.与MCP客户端集成\r\n\r\n配置您的MCP客户端以连接到服务器。对于Claude Desktop：\r\n\r\n```json\r\n{\r\n \"mcpServers\": {\r\n   \"crypto-liquidations\": {\r\n     \"command\": \"uv\",\r\n     \"args\": [\"--directory\", \"/path/to/crypto-liquidations-mcp\", \"run\", \"main.py\"]\r\n   }\r\n }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n首先，启动MCP服务器，开始从币安流式传输清算事件。服务器安静运行，在内存中收集多达1000个最近的事件，而不生成日志或将数据保存到磁盘。\r\n\r\n### 检索清算事件\r\n\r\n使用 `get_latest_liquidations` 获取最新清算事件的工具。您可以使用指定要检索的事件数量（最多1000个） `limit` 参数。例如，您可能会问：\r\n\r\n> “给我看看币安最近发生的5起清算事件。”\r\n\r\n这将返回一个格式整洁的表格，以HH:MM:SS格式显示交易对、买方或卖方、价格、数量和每次清算的时间。\r\n\r\n**输出示例**:\r\n\r\n```markdown\r\n| Symbol   | Side | Price  | Quantity | Time     |\r\n|----------|------|--------|----------|----------|\r\n| BTCUSDT  | BUY  | 50000  | 1.5      | 14:30:45 |\r\n| ETHUSDT  | SELL | 3000   | 10.0     | 14:30:40 |\r\n| BNBUSDT  | BUY  | 500    | 20.0     | 14:30:35 |\r\n| ADAUSDT  | SELL | 1.2    | 1000.0   | 14:30:30 |\r\n| XRPUSDT  | BUY  | 0.8    | 5000.0   | 14:30:25 |\r\n```\r\n\r\n此表便于查看最近的市场活动，例如币安的大规模买入或卖出清算。\r\n\r\n### 分析清算趋势\r\n\r\n这 `analyze_liquidations` prompt帮助您更深入地了解数据。它生成分析所有交易对清算趋势的指令，重点关注频率、交易量和市场影响。提示建议使用 `get_latest_liquidations` 获取数据的工具，确保您有最新的信息可供使用。\r\n\r\n这对于理解更广泛的市场动态特别有用，例如清算是否正在增加或是否预示着价格的大幅波动。\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "crypto-liquidations": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/crypto-liquidations-mcp",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

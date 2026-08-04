@@ -1,0 +1,12 @@
+{
+ "id": "goal-tracker",
+ "kind": "skill",
+ "name": "goal-tracker",
+ "fingerprint_md5": "ee77efe65ba91079b931ef5ae0cdcd2c",
+ "download_count": 0,
+ "category": "Grafana",
+ "tags": "",
+ "version": "",
+ "readme": "# 目标追踪技能\r\n\r\n使用里程碑、每日日志和问责制追踪长期目标。\r\n\r\n## 位置\r\n`/root/clawd/goal-tracker/`\r\n\r\n## 命令\r\n\r\n```bash\r\n# 显示状态\r\n/root/clawd/tracker status\r\n\r\n# 记录每日活动\r\n/root/clawd/tracker log --trained --business --wins \"Description\"\r\n\r\n# 更新 MRR\r\n/root/clawd/tracker mrr 5000\r\n\r\n# 标记里程碑完成\r\n/root/clawd/tracker milestone ironman \"5km run\"\r\n/root/clawd/tracker milestone mrr_100k \"first client\"\r\n\r\n# 每周总结\r\n/root/clawd/tracker week\r\n\r\n# 生成 HTML 仪表板\r\n/root/clawd/goal-tracker/generate-dashboard\r\n```\r\n\r\n## 数据文件\r\n- `data/goals.json` - 目标定义和里程碑\r\n- `data/daily-log.json` - 每日签到\r\n- `index.html` - 生成的可视化仪表板\r\n\r\n## 与 Alto 集成\r\n\r\n### 晚间签到期间\r\n问: \"Did you train today? Work on business?\"\r\n然后记录: `tracker log --trained --business` (或 `--no-trained` 等)\r\n\r\n### 当胜利发生时\r\n记录它们: `tracker log --wins \"Landed new client\"`\r\n\r\n### 当 MRR 变化时\r\n更新: `tracker mrr 5000`\r\n\r\n### 当里程碑完成时\r\n标记: `tracker milestone ironman \"5km\"`\r\n\r\n## 追踪的目标\r\n\r\n### 铁人三项 (by 2030)\r\n里程碑:\r\n1. Run 5km without stopping\r\n2. Complete sprint triathlon\r\n3. Complete Olympic distance\r\n4. Complete Half Ironman (70.3)\r\n5. Complete Full Ironman\r\n\r\n### $100k MRR (by 2030)\r\n里程碑:\r\n1. First paying client\r\n2. $5k MRR\r\n3. $10k MRR\r\n4. $25k MRR\r\n5. $50k MRR\r\n6. $100k MRR\r\n\r\n## 每周节奏\r\n- Monday: Week planning (set priorities)\r\n- Daily: Evening check-in (log training + business)\r\n- Friday: Week review (score + adjust)\r\n\r\n## 需要注意的模式\r\n- 3+ days without training = gentle nudge\r\n- Week score < 50% = check in on blockers\r\n- Milestone dates approaching = increase urgency",
+ "config": {}
+}

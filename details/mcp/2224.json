@@ -1,0 +1,26 @@
+{
+ "id": "2224",
+ "kind": "mcp",
+ "name": "japan-data-mcp",
+ "fingerprint_md5": "96d5de8d54895111c172c505172f7cc6",
+ "download_count": 0,
+ "category": "出行交通",
+ "tags": "",
+ "version": "",
+ "readme": "# 日本数据mcp\r\n\r\n是专门用于日本的地域分析·比较的MCP（Model Context Protocol）服务器。\r\n\r\n[e-Stat（政府统计の総合窗口）](https://www.e-stat.go.jp/)、\r\n[网站页面信息](https://www.houjin-bangou.nta.go.jp/)、\r\n[国土交通省房地产信息库](https://www.reinfolib.mlit.go.jp/)、\r\n[网站页面信息](https://www.invoice-kohyo.nta.go.jp/) 的API\r\n访问日本的公共数据，自动转换为人类容易读的形式返回。\r\n\r\n> **解说记事**: [打100次e-Stat API就知道了，政府数据是宝物的腐败事件](https://datapopcorn.jp/japan-data-mcp/)\r\n\r\n## 特徴\r\n\r\n- **代码自动转换** —e-Stat返回的代码编号（`13000` → `東京都`）自动转换为名称\r\n- **全国市区町村対応** — 47 都道府県 + 20 政令指定都市 + 全国約 1,700 市区町村に対応\r\n- **地域比较** -将多个地区的数据与透视表进行比较\r\n- **预置分析** —即使不知道统计表ID，也可以仅凭地区名称获取人口数据和地区概况\r\n- **法人検索** —从法人名中检索企业的法人编号、所在地、类别\r\n- **发票确认** —根据公司名称查找发票登记号，确认登记情况和有效性\r\n- **不动产取引似格** —获取地区房地产交易数据和价格汇总\r\n- **数据验证** —为所有输出提供数据来源、验证链接、获取日期和时间\r\n\r\n## 提供工具列表\r\n\r\n### 统计数据（e-Stat API）\r\n\r\n工具名称｜说明｜\r\n| --- | --- |\r\n| `search_statistics` 用关键字搜索统计表\r\n| `get_regional_data` ｜获取指定地区的统计数据（`summary=True` 仅限最新数据）\r\n| `compare_regions` 比较多个地区的数据（透视表）\r\n| `get_meta_info` 确认统计表的元信息（分类代码体系）\r\n| `resolve_area` ｜地区名称→查找地区代码｜\r\n| `list_available_stats` 显示统计领域代码的一览表\r\n| `get_population` 自动获取地区人口数据（预设）\r\n| `get_regional_profile` 自动获取区域综合配置文件（预设）\r\n\r\n### 法人情報（法人番号 Web-API）\r\n\r\n工具名称｜说明｜\r\n| --- | --- |\r\n| `search_corporations` ｜以法人名搜索企业（可按地域、类别进行筛选）｜\r\n| `get_corporation` 从法人编号中获取企业的详细信息\r\n\r\n### 发票（合格发票发行商公布的Web-API）\r\n\r\n工具名称｜说明｜\r\n| --- | --- |\r\n| `search_invoice_by_name` ｜从公司名称中检索发票登记号码（仅限法人）｜\r\n| `check_invoice_registration` 用注册号码（T+13位）确认发票注册状况\r\n| `validate_invoice_on_date` ｜确认指定日期时的发票登记有效性｜\r\n\r\n### 房地产交易（房地产信息库API）\r\n\r\n工具名称｜说明｜\r\n| --- | --- |\r\n| `get_real_estate_transactions` 获取房地产交易价格信息（附带价格汇总）\r\n\r\n## 安装，安装\r\n\r\n### 1.安装\r\n\r\n```bash\r\n# uv（推奨）\r\nuv add japan-data-mcp\r\n\r\n# pip\r\npip install japan-data-mcp\r\n\r\n# ソースから\r\ngit clone https://github.com/Izyuusya/japan-data-mcp.git\r\ncd japan-data-mcp\r\nuv sync\r\n```\r\n\r\n### 2.API密钥设置\r\n\r\n通过交互式设置命令轻松设置：\r\n\r\n```bash\r\njapan-data-mcp setup\r\n```\r\n\r\n按照画面的向导输入API键的话 `.env` 文件将自动生成。\r\n\r\n#### 所需的API密钥\r\n\r\n|环境变数| API |必须|取得先|\r\n| --- | --- | --- | --- |\r\n| `ESTAT_APP_ID` |电子统计API| **必须** | [e-Stat API指南](https://www.e-stat.go.jp/api/api-info/api-guide) |\r\n| `CORP_APP_ID` | 法人番号 Web-API | 任意 | [网站页面信息](https://www.houjin-bangou.nta.go.jp/webapi/)（发行前2～4周）｜\r\n| `REALESTATE_API_KEY` ｜房地产信息库API｜可选｜ [房地产信息库](https://www.reinfolib.mlit.go.jp/api/request/) |\r\n\r\n- **e-Stat API是必需的** 是。未设置时服务器不会启动。\r\n- 法人编号・不动产API是任意的。即使未设定，其他功能也能正常工作。\r\n- `CORP_APP_ID` 在发票API中也共享（不需要附加密钥）。\r\n- 一切 **无料** 中所述修改相应参数的值。\r\n\r\n#### 手动设置时\r\n\r\n项目根目录 `.env` 创建文件：\r\n\r\n```\r\nESTAT_APP_ID=あなたのアプリケーションID\r\nCORP_APP_ID=あなたのアプリケーションID\r\nREALESTATE_API_KEY=あなたのAPIキー\r\n```\r\n\r\n### 3.服务器启动\r\n\r\n```bash\r\njapan-data-mcp\r\n```\r\n\r\n## 在Claude Desktop中设置\r\n\r\n`claude_desktop_config.json` 中所述修改相应参数的值。\r\n\r\n### 使用uv安装时\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"japan-data-mcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"japan-data-mcp\"],\r\n      \"env\": {\r\n        \"ESTAT_APP_ID\": \"あなたのアプリケーションID\",\r\n        \"CORP_APP_ID\": \"あなたのアプリケーションID（任意）\",\r\n        \"REALESTATE_API_KEY\": \"あなたのAPIキー（任意）\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 用pip安装时\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"japan-data-mcp\": {\r\n      \"command\": \"japan-data-mcp\",\r\n      \"env\": {\r\n        \"ESTAT_APP_ID\": \"あなたのアプリケーションID\",\r\n        \"CORP_APP_ID\": \"あなたのアプリケーションID（任意）\",\r\n        \"REALESTATE_API_KEY\": \"あなたのAPIキー（任意）\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **提示**: `.env` 如果已设置为文件 `env` 可以省略部分。\r\n\r\n## 使用例\r\n\r\n### 获取地区人口数据\r\n\r\n```\r\nget_population(\"札幌市\")\r\n```\r\n\r\n### 比较多个地区\r\n\r\n```\r\ncompare_regions(\r\n    stats_data_id=\"0003433219\",\r\n    areas=[\"札幌市\", \"仙台市\", \"福岡市\"]\r\n)\r\n```\r\n\r\n### 查找法人\r\n\r\n```\r\nsearch_corporations(\"トヨタ\", area=\"愛知県\")\r\n```\r\n\r\n### 确认发票登记\r\n\r\n```\r\nsearch_invoice_by_name(\"トヨタ自動車\", area=\"愛知県\")\r\n```\r\n\r\n### 调查房地产交易价格\r\n\r\n```\r\nget_real_estate_transactions(\"札幌市\", year=2023)\r\n```\r\n\r\n### 获取区域综合配置文件\r\n\r\n```\r\nget_regional_profile(\"東京都\")\r\n```\r\n\r\n汇总获取人口、经济、劳动等多个领域的数据，作为一个报告返回。\r\n\r\n## 开発\r\n\r\n```bash\r\n# 依存関係のインストール\r\nuv sync\r\n\r\n# テスト実行\r\nuv run python -m pytest tests/ -v\r\n\r\n# サーバーの直接起動\r\nuv run japan-data-mcp\r\n```\r\n\r\n## 出典\r\n\r\n此项目使用以下API：\r\n\r\n- [e-Stat（政府统计の総合窗口）](https://www.e-stat.go.jp/) —统计数据显示 [CC 4.0](https://creativecommons.org/licenses/by/4.0/deed.ja) 提供\r\n- [网站页面信息查询](https://www.houjin-bangou.nta.go.jp/webapi/) — 法人番号・法人情報\r\n- [国税厅合格发票发行经营者公布网站Web-API](https://www.invoice-kohyo.nta.go.jp/web-api/) —发票登记信息\r\n- [国土交通省房地产信息库](https://www.reinfolib.mlit.go.jp/) —不动产取引似格情报\r\n\r\n> 此服务使用每个API提供者的数据，但服务内容不是由每个机构保证的。\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n",
+ "config": {
+  "japan-data-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "japan-data-mcp"
+   ],
+   "env": {
+    "ESTAT_APP_ID": "あなたのアプリケーションID",
+    "CORP_APP_ID": "あなたのアプリケーションID（任意）",
+    "REALESTATE_API_KEY": "あなたのAPIキー（任意）"
+   }
+  }
+ }
+}

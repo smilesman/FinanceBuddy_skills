@@ -1,0 +1,22 @@
+{
+ "id": "120",
+ "kind": "mcp",
+ "name": "chrome-inspector",
+ "fingerprint_md5": "da0681316070f8f2325204c43f61487e",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 铬检查器MCP\r\n\r\n这给了代理人 **DOM元素**, **CSS规则**，以及 **计算样式**，工具 `chrome-devtools-mcp` 不提供。\r\n\r\n对DevTools MCP的重新设计旨在使代理能够接管DevTools进行复杂的调试。欢迎提出任何建议。目前的方向包括：\r\n\r\n- **Agent人机工程学**：直接建立在 [Chrome DevTools协议（CDP）](https://chromedevtools.github.io/devtools-protocol/)，为代理需求而非库约束进行设计\r\n- **可扩展性**：让用户（和代理？）更容易破解和定制自己的工具集\r\n\r\n## 演示\r\n\r\nhttps://github.com/user-attachments/assets/c880a415-f35a-4fc4-93c4-001030116b90\r\n\r\n## 安装\r\n\r\n1. 从安装扩展 [发布](https://github.com/devtoolcss/chrome-inspector-mcp/releases)\r\n\r\n1. 将以下配置添加到MCP客户端：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chrome-inspector\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"chrome-inspector-mcp@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n- [`getTabs`](./tools.md#gettabs)\r\n- [`selectTab`](./tools.md#selecttabs)\r\n- [`getNodes`](./tools.md#getnodes)\r\n- [`getMatchedStyles`](./tools.md#getmatchedstyles)\r\n- [`getComputedStyle`](./tools.md#getcomputedstyle)\r\n- [`getOuterHTML`](./tools.md#getouterhtml)\r\n\r\n### TODO\r\n\r\n- 控制台js和消息\r\n- 设备仿真\r\n\r\n### 指南\r\n\r\n1. **泛化**：更喜欢采用程序化表达。让模型编码。\r\n\r\n1. **过滤**：当原始输出可能很大时，提供内置的过滤逻辑。\r\n\r\n## 运作原理\r\n\r\nChrome启动时，扩展程序的后台工作程序每隔几秒钟轮询一个特定端口。当MCP服务器从它们连接的地址启动时。通过manifest v3，一个后台工作程序提供一个配置文件，因此MCP服务器可以访问其所有选项卡（TODO:过滤）。\r\n\r\n目前，该扩展处理所有DevTools逻辑，MCP服务器只是一个中继。然而Chrome扩展程序有很多限制，所以我计划转发 `chrome` API并保持MCP的Nodejs运行时中的内容 [剧作家麦克的设计](https://github.com/microsoft/playwright-mcp/tree/main/extension).\r\n\r\n检查逻辑在 [铬检验员](https://github.com/devtoolcss/chrome-inspector)，编程接口封装 [客户数据平台](https://chromedevtools.github.io/devtools-protocol/) DOM方法。\r\n",
+ "config": {
+  "chrome-inspector": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "chrome-inspector-mcp@latest"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "feishu-whiteboard",
+ "kind": "skill",
+ "name": "feishu-whiteboard",
+ "fingerprint_md5": "8c41bf59210a21144412a9c2400dbc03",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Feishu Whiteboard Skill\r\n\r\n允许以编程方式创建和操作飞书白板。\r\n\r\n## 配置\r\n需要在环境或 `config.json` 中设置 `FEISHU_APP_ID` 和 `FEISHU_APP_SECRET`。\r\n所需权限：`board:whiteboard:node:create`\r\n\r\n## 用法\r\n\r\n### 创建白板\r\n```bash\r\nnode skills/feishu-whiteboard/create.js \"My Architecture Diagram\"\r\n```\r\n输出：包含 `whiteboard_id` 的 JSON。\r\n\r\n### 添加节点（演示）\r\n```bash\r\nnode skills/feishu-whiteboard/draw.js <whiteboard_id> demo\r\n```\r\n添加一个矩形和一个圆形，并用一条线连接。\r\n\r\n### 编程用法\r\n\r\n```javascript\r\nconst { createWhiteboard } = require('./create');\r\nconst { addNodes, createShape, createConnector } = require('./draw');\r\n\r\nconst board = await createWhiteboard(\"System Design\");\r\nconst nodes = [\r\n  createShape(\"web\", \"rect\", 0, 0, 200, 100, \"Web Server\"),\r\n  createShape(\"db\", \"cylinder\", 0, 300, 100, 100, \"Database\"),\r\n  createConnector(\"link1\", \"web\", \"db\")\r\n];\r\nawait addNodes(board.whiteboard_id, nodes);\r\n```\r\n\r\n## 故障排除\r\n如果遇到 `404 page not found`，通常意味着您的租户未启用白板 API，或者端点 URL 已更改。当前实现使用 `/open-apis/board/v1/whiteboards`。",
+ "config": {}
+}

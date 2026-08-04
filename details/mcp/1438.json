@@ -1,0 +1,21 @@
+{
+ "id": "1438",
+ "kind": "mcp",
+ "name": "fetch-2",
+ "fingerprint_md5": "cf96cbea2eb5495ce2c4c09a80ac0e35",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 获取MCP服务器\r\n\r\n\r\n[](https://www.npmjs.com/package/mcp-fetch-server)\r\n\r\n一个MCP服务器，用于获取多种格式的web内容——HTML、JSON、纯文本、Markdown、可读文章内容和YouTube转录本。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/nu09wf23ao\">\r\n  \r\n</a>\r\n\r\n## 工具\r\n\r\n所有工具都接受以下通用参数：\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `url` |string |是|要获取的URL|\r\n| `headers` |object |否|要包含在请求中的自定义标头|\r\n| `max_length` |number |否|返回的最大字符数（默认值：5000）|\r\n| `start_index` |number |否|从此字符索引开始（默认值：0）|\r\n| `proxy` |string |否|代理URL（例如。 `http://proxy:8080`) |\r\n\r\n- **fetch_html** --获取一个网站并返回其原始HTML内容。\r\n\r\n- **fetch_markdown** --获取一个网站并返回转换为Markdown的内容。\r\n\r\n- **fetch_txt** --获取一个网站并返回删除了HTML标签、脚本和样式的纯文本。\r\n\r\n- **fetch_json** --获取一个URL并返回JSON响应。\r\n\r\n- **fetch_readable** --使用以下命令获取网站并提取主要文章内容 [Mozilla可读性](https://github.com/mozilla/readability)，返回为Markdown。剥离导航、广告和样板。非常适合发表文章和博客文章。\r\n\r\n- **fetch_youtube_transcript** --获取YouTube视频的字幕/文字记录。用途 `yt-dlp` 如果可用，则直接从页面中提取。接受额外 `lang` 参数（默认值： `\"en\"`)选择字幕语言。\r\n\r\n## 安装\r\n\r\n### 作为MCP服务器\r\n\r\n添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fetch\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-fetch-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 作为CLI\r\n\r\n```bash\r\nnpx mcp-fetch <command> <url> [flags]\r\n```\r\n\r\n或全局安装：\r\n\r\n```bash\r\nnpm install -g mcp-fetch-server\r\nmcp-fetch <command> <url> [flags]\r\n```\r\n\r\n## CLI使用情况\r\n\r\n```\r\nmcp-fetch <command> <url> [flags]\r\n```\r\n\r\n### 命令\r\n\r\n|命令|描述|\r\n|---------|-------------|\r\n| `html` |获取URL并返回原始HTML|\r\n| `markdown` |获取一个URL并返回Markdown|\r\n| `readable` |获取一个URL并将文章内容作为Markdown返回（通过可读性）|\r\n| `txt` |获取URL并返回纯文本|\r\n| `json` |获取URL并返回JSON|\r\n| `youtube` |获取YouTube视频记录|\r\n\r\n### 旗帜\r\n\r\n|标志|描述|\r\n|------|-------------|\r\n| `--max-length <N>` |要返回的最大字符数|\r\n| `--start-index <N>` |从这个字符索引开始|\r\n| `--proxy <URL>` |代理URL|\r\n| `--lang <code>` |YouTube成绩单的语言代码（默认值： `en`) |\r\n| `--help` |显示帮助消息|\r\n| `--version` |显示版本|\r\n\r\n### 例子\r\n\r\n```bash\r\n# Fetch a page as markdown\r\nmcp-fetch markdown https://example.com\r\n\r\n# Extract article content without boilerplate\r\nmcp-fetch readable https://example.com/blog/post\r\n\r\n# Get a YouTube transcript in Spanish\r\nmcp-fetch youtube https://www.youtube.com/watch?v=dQw4w9WgXcQ --lang es\r\n\r\n# Fetch with a length limit\r\nmcp-fetch html https://example.com --max-length 10000\r\n\r\n# Fetch through a proxy\r\nmcp-fetch json https://api.example.com/data --proxy http://proxy:8080\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|描述|\r\n|----------|-------------|\r\n| `DEFAULT_LIMIT` |响应的默认字符限制（默认值： `5000`，设置为 `0` 无限制）|\r\n| `MAX_RESPONSE_BYTES` |最大响应正文大小（以字节为单位）（默认值： `10485760` /10 MB）|\r\n\r\n自定义限制示例：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fetch\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-fetch-server\"],\r\n      \"env\": {\r\n        \"DEFAULT_LIMIT\": \"50000\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 特性\r\n\r\n- 获取HTML、JSON、纯文本或Markdown格式的web内容\r\n- 使用Mozilla可读性提取文章内容（条形广告、导航、样板）\r\n- 提取YouTube视频转录（通过 `yt-dlp` 或直接提取）\r\n- 防火墙后请求的代理支持\r\n- 分页与 `max_length` 和 `start_index`\r\n- 自定义请求标头\r\n- SSRF保护（阻止私有/本地主机地址和DNS重新绑定）\r\n- 响应大小限制以防止内存耗尽\r\n\r\n## 发展\r\n\r\n```bash\r\nbun install\r\nbun run dev     # start with watch mode\r\nbun test        # run tests\r\nbun run build   # build for production\r\n```\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。\r\n",
+ "config": {
+  "fetch": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-fetch-server"
+   ],
+   "env": {}
+  }
+ }
+}

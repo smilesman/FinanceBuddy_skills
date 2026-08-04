@@ -1,0 +1,26 @@
+{
+ "id": "2983",
+ "kind": "mcp",
+ "name": "uniswap-pools",
+ "fingerprint_md5": "d27e5b419cef541f8a22202f8e0924f3",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Uniswap池MCP\r\n\r\nMCP服务器，用于按令牌地址查询Uniswap池/对，提供干净、结构化的结果，便于集成和分析。\r\n\r\n\r\n## 特性\r\n\r\n- **查询Uniswap池/对**:\r\n  - 获取给定令牌地址的V2、V3和V4池/对。\r\n  - 按版本检索特定池/对详细信息(`v2`, `v3`, `v4`)以及ID。\r\n- **格式化输出**:\r\n  - 返回组合池查询的markdown表中的数据。\r\n  - 为特定的池/对查询提供标记文本摘要，包括令牌地址。\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- **python**：版本3.10或更高版本。\r\n- **紫外线**Python包管理器（推荐用于依赖关系管理）。\r\n- **图形API键**：查询子图时需要。从以下位置获取一个 [图表](https://thegraph.com).\r\n\r\n### 设置\r\n\r\n1. **克隆存储库**:\r\n\r\n   ```bash\r\n   git clone https://github.com/kukapay/uniswap-pools-mcp.git\r\n   cd uniswap-pools-mcp\r\n   ```\r\n\r\n1. **再进行**:\r\n\r\n   ```bash\r\n   uv sync\r\n   ```\r\n\r\n1. **安装到克劳德桌面**:\r\n\r\n   将服务器安装为Claude Desktop应用程序：\r\n\r\n   ```bash\r\n   uv run mcp install main.py --name \"Uniswap Pools\"\r\n   ```\r\n\r\n   配置文件作为参考：\r\n\r\n   ```json\r\n   {\r\n      \"mcpServers\": {\r\n          \"Uniswap Pools\": {\r\n              \"command\": \"uv\",\r\n              \"args\": [ \"--directory\", \"/path/to/uniswap-pools-mcp\", \"run\", \"main.py\" ],\r\n              \"env\": { \"THEGRAPH_API_KEY\": \"thegraph-api-key\"}\r\n          }\r\n      }\r\n   }\r\n   ```\r\n\r\n   替换 `/path/to/uniswap-pools-mcp` 根据您的实际安装路径，以及 `thegraph-api-key` 使用图形中的API键。\r\n\r\n## 用法\r\n\r\n服务器提供了多种工具来查询Uniswap池/对数据。\r\n\r\n### 工具\r\n\r\n1. **获取代币的所有池/对**:\r\n\r\n   ```python\r\n   def get_token_pools(token_address: str) -> str:\r\n   ```\r\n\r\n   - **描述**：查询给定令牌地址的所有Uniswap V2、V3和V4池/对。\r\n\r\n   - **参数**:\r\n\r\n     - `token_address` （str）：令牌的以太坊地址（例如。， `0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48` 美元）。\r\n\r\n   - **输出**：带列的Markdown表：版本、ID、配对、费用级别、交易量美元、流动性/储备美元、费用美元。\r\n\r\n   - **示例**:\r\n\r\n     提示：\r\n\r\n     ```\r\n     Get Uniswap pools for token at address 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\r\n     ```\r\n\r\n     输出：\r\n\r\n     ```\r\n     | Version | ID                                         | Pair      | Fee Tier | Volume USD | Liquidity/ReserveUSD | Fees USD |\r\n     |---------|--------------------------------------------|-----------|----------|------------|---------------------|----------|\r\n     | v2      | 0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc | USDC/WETH | 3000     | 2000000.0  | 500000.0            | N/A      |\r\n     | v3      | 0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640 | USDC/WETH | 500      | 1000000.0  | 123456789           | 5000.0   |\r\n     | v4      | 0x1234567890abcdef1234567890abcdef12345678 | USDC/WETH | 1000     | 500000.0   | 987654321           | 2500.0   |\r\n     ```\r\n\r\n1. **按版本和ID获取特定池/对**:\r\n\r\n   ```python\r\n   def get_pool_data(version: str, pool_id: str) -> str:\r\n   ```\r\n\r\n   - **描述**：按版本查询特定的Uniswap池/对(`v2`, `v3`，或 `v4`)以及ID。\r\n\r\n   - **参数**:\r\n\r\n     - `version` (str): Uniswap 版本 (`v2`, `v3`，或 `v4`).\r\n     - `pool_id` （str）：池或对的以太坊地址（例如。， `0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc`).\r\n\r\n   - **输出**：带有详细信息的Markdown文本：版本、ID、配对、Token0地址、Token1地址、费用级别、交易量美元、流动性/储备美元、费用美元。\r\n\r\n   - **示例**:\r\n\r\n     提示：\r\n\r\n     ```\r\n     Get Uniswap V2 pool data by ID 0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc\r\n     ```\r\n\r\n     输出：\r\n\r\n     ```\r\n     **Uniswap V2 Pair Details**\r\n     - **Version**: v2\r\n     - **ID**: 0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc\r\n     - **Pair**: USDC/WETH\r\n     - **Token0 Address**: 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\r\n     - **Token1 Address**: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2\r\n     - **Fee Tier**: 3000 (0.3%)\r\n     - **Volume USD**: 2000000.0\r\n     - **Liquidity/ReserveUSD**: 500000.0\r\n     - **Fees USD**: N/A\r\n     ```\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "uniswap-pools": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/uniswap-pools-mcp",
+    "run",
+    "main.py"
+   ],
+   "env": {
+    "THEGRAPH_API_KEY": "thegraph-api-key"
+   }
+  }
+ }
+}

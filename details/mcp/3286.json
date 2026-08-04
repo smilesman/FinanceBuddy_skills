@@ -1,0 +1,23 @@
+{
+ "id": "3286",
+ "kind": "mcp",
+ "name": "weather-6",
+ "fingerprint_md5": "8b27478419a2de7beca48294a6611b89",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 气象MCP服务器\r\n\r\n提供天气信息工具的示例模型上下文协议（MCP）服务器。此服务器演示了如何构建可以使用MCP Autodeploy平台部署的MCP服务器。\r\n\r\n## 特性\r\n\r\n### 工具\r\n\r\n- **get_weather**：获取任何城市的当前天气信息\r\n- **获取预测**：获取任何城市的5天天气预报\r\n\r\n### 资源\r\n\r\n- **weather://cities/popular**：天气查询热门城市列表\r\n- **weather://api/status**：API天气现状\r\n\r\n### 鼓励\r\n\r\n- **天气_总结**：生成全面的天气摘要\r\n- **旅游天气广告**：根据天气状况提供旅行建议\r\n\r\n## 设置\r\n\r\n1. **克隆此存储库** （或将其用作模板）\r\n1. **获取天气API密钥** 从 [OpenWeatherMap](https://openweathermap.org/api)\r\n1. **设置环境变量**: `WEATHER_API_KEY=your_api_key_here`\r\n\r\n## 地方发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Run in development mode\r\nnpm run dev\r\n\r\n# Build for production\r\nnpm run build\r\n\r\n# Run production build\r\nnpm start\r\n```\r\n\r\n## 使用MCP自动部署进行部署\r\n\r\n1. **推送到GitHub**：确保你的代码在GitHub存储库中\r\n1. **访问MCP自动部署**：转到\\[您的部署URL\\]\r\n1. **部署**：粘贴您的GitHub存储库URL并单击部署\r\n1. **配置**：添加您的 `WEATHER_API_KEY` 作为环境变量\r\n1. **使用**：获取您的部署URL并与AI应用程序集成\r\n\r\n## 使用Claude Desktop\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@modelcontextprotocol/server-remote\"],\r\n      \"env\": {\r\n        \"REMOTE_SERVER_URL\": \"https://your-deployed-server.run.app\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## api参考\r\n\r\n### 工具\r\n\r\n#### get_weather\r\n\r\n获取一个城市的当前天气。\r\n\r\n**参数：**\r\n\r\n- `city` （字符串，必填）：城市名称\r\n- `units` （字符串，可选）：温度单位(`metric`, `imperial`, `kelvin`)\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"name\": \"get_weather\",\r\n  \"arguments\": {\r\n    \"city\": \"San Francisco\",\r\n    \"units\": \"metric\"\r\n  }\r\n}\r\n```\r\n\r\n#### 获取预测\r\n\r\n获取一个城市的5天天气预报。\r\n\r\n**参数：**\r\n\r\n- `city` （字符串，必填）：城市名称\r\n- `units` （字符串，可选）：温度单位(`metric`, `imperial`, `kelvin`)\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"name\": \"get_forecast\",\r\n  \"arguments\": {\r\n    \"city\": \"London\",\r\n    \"units\": \"metric\"\r\n  }\r\n}\r\n```\r\n\r\n### 资源\r\n\r\n#### weather://cities/popular\r\n\r\n返回用于天气查询的热门城市的JSON列表。\r\n\r\n#### weather://api/status\r\n\r\n返回天气API和配置的当前状态。\r\n\r\n### 鼓励\r\n\r\n#### 天气_总结\r\n\r\n为城市生成全面的天气摘要。\r\n\r\n**论据：**\r\n\r\n- `city` （必填）：生成天气摘要的城市\r\n\r\n#### 旅游天气广告\r\n\r\n根据天气状况提供旅行建议。\r\n\r\n**论据：**\r\n\r\n- `destination` （必填）：旅行目的地城市\r\n- `travel_date` （可选）：计划旅行日期（YYYY-MM-DD）\r\n\r\n## 环境变量\r\n\r\n|变量|描述|必填|默认|\r\n|----------|-------------|----------|---------|\r\n| `WEATHER_API_KEY` |OpenWeatherMap API密钥|是| `demo_key` |\r\n| `NODE_ENV` |环境模式|否| `development` |\r\n\r\n## 错误处理\r\n\r\n服务器处理各种错误情况：\r\n\r\n- **未找到城市**：返回用户友好的错误消息\r\n- **API密钥无效**：提示配置API密钥\r\n- **网络错误**：返回连接错误信息\r\n- **费率限制**：处理API速率限制响应\r\n\r\n## 测试\r\n\r\n```bash\r\n# Run tests\r\nnpm test\r\n```\r\n\r\n## 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建要素分支\r\n1. 进行更改\r\n1. 添加新功能的测试\r\n1. 提交拉取请求\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 支持\r\n\r\n- 文档： [MCP自动部署文档](https://docs.mcp-autodeploy.com)\r\n- 问题： [GitHub问题](https://github.com/mcp-autodeploy/weather-mcp-server/issues)\r\n- 社区： [Discord 的中文翻译是“不和谐”或“纷争”。](https://discord.gg/mcp-autodeploy)\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@modelcontextprotocol/server-remote"
+   ],
+   "env": {
+    "REMOTE_SERVER_URL": "https://your-deployed-server.run.app"
+   }
+  }
+ }
+}

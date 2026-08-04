@@ -1,0 +1,30 @@
+{
+ "id": "960",
+ "kind": "mcp",
+ "name": "adls2",
+ "fingerprint_md5": "d4c527ea8dde930227109af3ddd1caaf",
+ "download_count": 0,
+ "category": "数据库与数据",
+ "tags": "",
+ "version": "",
+ "readme": "# ADLS2 MCP服务器🚀\r\n\r\nAzure数据湖存储Gen2的模型上下文协议（MCP）服务器实现。该服务提供了一个标准化的接口，用于与ADLS2存储进行交互，通过MCP工具实现文件操作。\r\n\r\n   \r\n\r\n## 设置🛠️\r\n\r\n### 安装📦\r\n\r\n需要Python 3.13或更高版本。\r\n\r\n使用安装软件包 `uv`:\r\n\r\n```bash\r\nuv pip install adls2-mcp-server\r\n```\r\n\r\n### MCP配置⚙️\r\n\r\n### Claude桌面配置\r\n\r\n1-编辑Claude桌面配置：\r\n\r\n打开 `claude_desktop_config.json` 并添加以下配置。\r\n\r\n在MacOs上，文件位于此处：\r\n`~/Library/Application Support/Claude Desktop/claude_desktop_config.json`.\r\n\r\n在Windows上，文件位于此处：\r\n`%APPDATA%\\Claude Desktop\\claude_desktop_config.json`.\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"adls2\": {\r\n            \"command\": \"adls2-mcp-server\",\r\n            \"env\": {\r\n                \"LOG_LEVEL\": \"DEBUG\",\r\n                \"UPLOAD_ROOT\": \"/path/to/store/uploads\",\r\n                \"DOWNLOAD_ROOT\": \"/path/to/store/downloads\",\r\n                \"AZURE_STORAGE_ACCOUNT_NAME\": \"your-azure-adls2-storage-account-name\",\r\n                \"READ_ONLY_MODE\": \"false\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n以下是可用环境配置变量表：\r\n\r\n|变量|描述|默认值|\r\n| --- | --- | --- |\r\n| `LOG_LEVEL` |日志记录级别| `INFO` |\r\n| `UPLOAD_ROOT` |文件上传的根目录| `./uploads` |\r\n| `DOWNLOAD_ROOT` |文件下载的根目录| `./downloads` |\r\n| `AZURE_STORAGE_ACCOUNT_NAME` |Azure ADLS2存储帐户名称| `None` |\r\n| `AZURE_STORAGE_ACCOUNT_KEY` |Azure ADLS2存储帐户密钥（可选）| `None` |\r\n| `READ_ONLY_MODE` |服务器是否应以只读模式运行| `true` |\r\n\r\n如果 `AZURE_STORAGE_ACCOUNT_KEY` 如果未设置，服务器将尝试使用Azure CLI凭据进行身份验证。在运行服务器之前，请确保您已使用Azure CLI登录：\r\n\r\n```bash\r\naz login\r\n```\r\n\r\n2-重新启动克劳德桌面。\r\n\r\n### 可用工具🔧\r\n\r\n#### 文件系统（容器）操作\r\n\r\n- `list_filesystems` -列出存储帐户中的所有文件系统\r\n- `create_filesystem` -创建新的文件系统\r\n- `delete_filesystem` -删除现有文件系统\r\n\r\n#### 文件操作\r\n\r\n- `upload_file` -将文件上传到ADLS2\r\n- `download_file` -从ADLS2下载文件\r\n- `file_exists` -检查文件是否存在\r\n- `rename_file` -重命名/移动文件\r\n- `get_file_properties` -获取文件属性\r\n- `get_file_metadata` -获取文件元数据\r\n- `set_file_metadata` -设置文件元数据\r\n- `set_file_metadata_json` -使用JSON设置多个元数据键值对\r\n\r\n#### 目录操作\r\n\r\n- `create_directory` -创建新目录\r\n- `delete_directory` -删除目录\r\n- `rename_directory` -重命名/移动目录\r\n- `directory_exists` -检查目录是否存在\r\n- `directory_get_paths` -获取指定目录下的所有路径\r\n\r\n## 发展💻\r\n\r\n### 地方发展设置\r\n\r\n1-克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/erikhoward/adls2-mcp-server.git\r\ncd adls2-mcp-server\r\n```\r\n\r\n2-创建并激活虚拟环境：\r\n\r\nLinux/macOS：\r\n\r\n```bash\r\npython -m venv .venv\r\nsource .venv/bin/activate\r\n```\r\n\r\n窗户：\r\n\r\n```bash\r\n.venv\\Scripts\\activate\r\n```\r\n\r\n3-安装依赖项：\r\n\r\n```bash\r\npip install -e \".[dev]\"\r\n```\r\n\r\n4-复制和配置环境变量：\r\n\r\n```bash\r\ncp .env.example .env\r\n```\r\n\r\n使用您的设置编辑.env。\r\n\r\n```bash\r\nAZURE_STORAGE_ACCOUNT_NAME=your_azure_adls2_storage_account_name\r\nAZURE_STORAGE_ACCOUNT_KEY=your_azure_adls2_storage_key (optional)\r\nDOWNLOAD_ROOT=/path/to/download/folder\r\nUPLOAD_ROOT=/path/to/upload/folder\r\nREAD_ONLY_MODE=True\r\nLOG_LEVEL=INFO\r\n```\r\n\r\n如果 `AZURE_STORAGE_ACCOUNT_KEY` 如果未设置，服务器将尝试使用Azure CLI凭据进行身份验证。在运行服务器之前，请确保您已使用Azure CLI登录：\r\n\r\n```bash\r\naz login\r\n```\r\n\r\n5-克劳德桌面配置\r\n\r\n打开 `claude_desktop_config.json` 并添加以下配置。\r\n\r\n在MacOs上，文件位于此处：\r\n`~/Library/Application Support/Claude Desktop/claude_desktop_config.json`.\r\n\r\n在Windows上，文件位于此处：\r\n`%APPDATA%\\Claude Desktop\\claude_desktop_config.json`.\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"adls2\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"/path/to/adls2-mcp-server/repo\",\r\n                \"run\",\r\n                \"adls2-mcp-server\"\r\n            ],\r\n            \"env\": {\r\n                \"LOG_LEVEL\": \"DEBUG\",\r\n                \"UPLOAD_ROOT\": \"/path/to/store/uploads\",\r\n                \"DOWNLOAD_ROOT\": \"/path/to/store/downloads\",\r\n                \"AZURE_STORAGE_ACCOUNT_NAME\": \"your-azure-adls2-storage-account-name\",\r\n                \"READ_ONLY_MODE\": \"false\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n6-重新启动克劳德桌面。\r\n\r\n## 贡献🤝\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n1. 分叉存储库\r\n1. 创建功能分支(`git checkout -b feature/AmazingFeature`)\r\n1. 提交您的更改(`git commit -m '✨ Add some AmazingFeature'`)\r\n1. 推到分支(`git push origin feature/AmazingFeature`)\r\n1. 打开拉取请求\r\n\r\n## 许可证⚖️\r\n\r\nMIT授权-见 [许可证.md](LICENSE) 文件。\r\n\r\n**这不是微软的官方产品。**\r\n",
+ "config": {
+  "adls2": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/adls2-mcp-server/repo",
+    "run",
+    "adls2-mcp-server"
+   ],
+   "env": {
+    "LOG_LEVEL": "DEBUG",
+    "UPLOAD_ROOT": "/path/to/store/uploads",
+    "DOWNLOAD_ROOT": "/path/to/store/downloads",
+    "AZURE_STORAGE_ACCOUNT_NAME": "your-azure-adls2-storage-account-name",
+    "READ_ONLY_MODE": "false"
+   }
+  }
+ }
+}

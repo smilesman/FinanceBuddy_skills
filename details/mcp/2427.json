@@ -1,0 +1,18 @@
+{
+ "id": "2427",
+ "kind": "mcp",
+ "name": "arxiv-research",
+ "fingerprint_md5": "d20ddf60b827946270f52d0b5505c299",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP arXiv研究服务器\r\n\r\n该项目提供了 **模型上下文协议（MCP）** 允许LLM与进行交互的服务器 **arXiv研究数据库**.\\\r\n它为研究工作流程实现了自动论文发现、元数据提取和主题组织存储。\r\n\r\n## 🚀 实时部署\r\n\r\n使用服务器发送事件（SSE）在Render上部署服务器。\r\n\r\n- **基本URL:** `https://mcp-project-336t.onrender.com`\r\n- **SSE端点：** `https://mcp-project-336t.onrender.com/sse`\r\n\r\n## ✨ 特性\r\n\r\n### 🛠️ 工具\r\n\r\n- **`search_papers(topic, max_results)`**\\\r\n  在arXiv中搜索给定主题的论文并存储元数据：\r\n\r\n  - 标题\r\n  - 作者们\r\n  - 总结\r\n  - pdf链接\r\n  - 发布日期\r\n\r\n- **`extract_info(paper_id)`**\\\r\n  检索所有主题中以前保存的arXiv论文ID的详细元数据。\r\n\r\n### 🗂️ 资源\r\n\r\n- **`papers://folders`**\\\r\n  列出已在本地保存论文的所有可用主题。\r\n\r\n- **`papers://{topic}`**\\\r\n  返回特定主题下所有论文的格式化Markdown摘要。\r\n\r\n### 🧠 鼓励\r\n\r\n- **`generate_search_prompt(topic, num_papers)`**\\\r\n  生成结构化的研究分析提示，指导法学硕士：\r\n  - 搜索arXiv\r\n  - 提取关键发现\r\n  - 总结贡献\r\n  - 识别趋势和差距\r\n  - 综合领域概述\r\n\r\n## 🔌 MCP客户端的配置\r\n\r\n要将此服务器连接到MCP兼容客户端（例如，Claude Desktop），请添加以下内容：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"arxiv-research\": {\r\n      \"transport\": \"sse\",\r\n      \"url\": \"https://mcp-project-336t.onrender.com/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 📁 项目结构\r\n\r\n```text\r\n.\r\n├── research_server.py   # Main MCP server implementation\r\n├── requirements.txt     # Dependencies (uv-generated)\r\n├── pyproject.toml       # Project metadata\r\n├── runtime.txt          # Python version for deployment\r\n├── Dockerfile           # Render deployment container\r\n└── papers/              # Auto-created storage for topic results\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n### 地方发展\r\n\r\n```text\r\ngit clone https://github.com/Pratham061204/MCP-project.git\r\ncd MCP-project\r\nuv pip install -r requirements.txt\r\npython research_server.py\r\n```\r\n\r\n## 当地SSE教育点\r\n\r\nhttp://localhost:8001/sse\r\n",
+ "config": {
+  "arxiv-research": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp-project-336t.onrender.com/sse"
+  }
+ }
+}

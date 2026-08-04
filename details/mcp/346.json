@@ -1,0 +1,22 @@
+{
+ "id": "346",
+ "kind": "mcp",
+ "name": "osrs-player-stats",
+ "fingerprint_md5": "35450c08358ebdca32e43670f6092116",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# OSRS玩家统计MCP服务器\r\n\r\n[](https://github.com/lukehollenback/mcp-osrs-stats/actions)\r\n[](https://codecov.io/gh/lukehollenback/mcp-osrs-stats)\r\n[](https://www.npmjs.com/package/mcp-osrs-stats)\r\n\r\n一种模型上下文协议（MCP）服务器，为人工智能助手提供实时老派RuneScape（OSRS）玩家统计数据和排行榜数据。\r\n\r\n## 特性\r\n\r\n- **球员统计**：获取任何OSRS玩家的全面统计数据，包括技能、活动和boss击杀次数\r\n- **技能排行榜**：查看不同游戏模式下任何技能的顶级玩家\r\n- **活动/老板排行榜**：查看活动、迷你游戏和老板遭遇的排名\r\n- **球员比较**：并排比较多个玩家的统计数据\r\n- **多种游戏模式**：支持主模式、铁人模式、硬核铁人模式、终极铁人模式、死亡模式和季节模式\r\n\r\n## 安装\r\n\r\n### 通过npx（推荐）\r\n\r\n```bash\r\nnpx mcp-osrs-stats\r\n```\r\n\r\n### 通过npm\r\n\r\n```bash\r\nnpm install -g mcp-osrs-stats\r\nmcp-osrs-stats\r\n```\r\n\r\n## 用法\r\n\r\n### Claude桌面配置\r\n\r\n将此添加到您的Claude Desktop配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"osrs-player-stats\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-osrs-stats\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 通过超级网关进行远程访问\r\n\r\n对于远程访问或HTTP集成，请使用 [超级网关](https://www.npmjs.com/package/supergateway) 通过HTTP公开MCP服务器：\r\n\r\n```bash\r\n# Start the server with Streamable HTTP endpoint\r\nnpx supergateway --stdio \"npx mcp-osrs-stats\" --outputTransport streamableHttp --port 3000\r\n\r\n# Server will be available at: http://localhost:3000/mcp\r\n```\r\n\r\n**HTTP请求示例：**\r\n\r\n```bash\r\n# List available tools\r\ncurl -X POST http://localhost:3000/mcp \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Accept: application/json, text/event-stream\" \\\r\n  -d '{\"jsonrpc\":\"2.0\",\"method\":\"tools/list\",\"id\":1}'\r\n\r\n# Get player stats\r\ncurl -X POST http://localhost:3000/mcp \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"Accept: application/json, text/event-stream\" \\\r\n  -d '{\"jsonrpc\":\"2.0\",\"method\":\"tools/call\",\"params\":{\"name\":\"get_player_stats\",\"arguments\":{\"username\":\"zezima\"}},\"id\":2}'\r\n```\r\n\r\n**部署选项：**\r\n\r\n- 将Supergateway+MCP服务器部署到任何云提供商\r\n- 与无服务器函数或容器一起使用\r\n- 通过HTTP端点与web应用程序集成\r\n- 将多个AI系统连接到同一OSRS数据源\r\n\r\n## 可用工具\r\n\r\n### 1. `get_player_stats`\r\n\r\n检索特定OSRS播放器的全面统计数据。\r\n\r\n**参数：**\r\n\r\n- `username` （必填）：OSRS玩家用户名（1-12个字符）\r\n- `gamemode` （可选）：玩家游戏模式（默认：“main”）\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"username\": \"Zezima\",\r\n  \"gamemode\": \"main\"\r\n}\r\n```\r\n\r\n### 2. `get_skill_leaderboard`\r\n\r\n为特定技能招募顶尖球员。\r\n\r\n**参数：**\r\n\r\n- `skill` （必填）：技能名称（如“攻击”、“伐木”、“整体”）\r\n- `gamemode` （可选）：玩家游戏模式过滤器（默认：“main”）\r\n- `page` （可选）：页码（默认：1，每页25名玩家）\r\n\r\n**有效技能：**\r\n总体而言，攻击、防御、力量、命中点、射程、祈祷、魔法、烹饪、伐木、打传单、捕鱼、生火、手工制作、铁匠、采矿、草药、敏捷性、偷窃、杀戮、耕种、狩猎、建筑\r\n\r\n### 3. `get_activity_leaderboard`\r\n\r\n让顶级玩家参与活动（老板、迷你游戏、线索）。\r\n\r\n**参数：**\r\n\r\n- `activity` （必填）：活动或老板姓名\r\n- `gamemode` （可选）：玩家游戏模式过滤器（默认：“main”）\r\n- `page` （可选）：页码（默认：1，每页25名玩家）\r\n\r\n**有效活动：**\r\n\r\n- 线索滚动：Clue_Scrolls_all、Clue_scralls_beginner、Clue_Scrolls_easy等。\r\n- 老板：祖拉、沃卡斯、舍监、血战剧场等。\r\n- 其他：lms_rank、赏金猎人、灵魂战士、热情等。\r\n\r\n### 4. `compare_players`\r\n\r\n比较多个OSRS玩家之间的统计数据。\r\n\r\n**参数：**\r\n\r\n- `usernames` （必填）：2-5个玩家用户名的数组\r\n- `focus` （可选）：比较重点（“技能”、“老板”、“活动”或“全部”）\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"usernames\": [\"Player1\", \"Player2\", \"Player3\"],\r\n  \"focus\": \"skills\"\r\n}\r\n```\r\n\r\n## 游戏模式\r\n\r\n- `main`：常规账户\r\n- `ironman`：铁人账户\r\n- `hardcore_ironman`：铁杆铁人账户\r\n- `ultimate_ironman`：终极铁人账户\r\n- `deadman`：Deadman模式帐户\r\n- `seasonal`：季节性/联赛账户\r\n\r\n## 错误处理\r\n\r\n服务器为常见问题提供详细的错误消息：\r\n\r\n- 无效的用户名（格式错误、太长等）\r\n- 技能/活动名称无效\r\n- 未找到玩家\r\n- API连接问题\r\n\r\n所有错误都包含指导正确使用的有用信息。\r\n\r\n## 技术细节\r\n\r\n- **运行时**：Node.js 18+\r\n- **语言**：TypeScript\r\n- **API**：用途 `osrs-json-hiscores` OSRS数据库\r\n- **协议**：模型上下文协议（MCP）\r\n- **验证**：对所有输入进行Zod模式验证\r\n\r\n## 贡献\r\n\r\n1. 审查 `CLAUDE.md` 完整的技术规范和开发模式\r\n1. 检查 `DECISIONS.md` 用于建筑背景和决策历史\r\n1. 遵循现有的代码模式，并确保所有更改都正确键入和验证\r\n1. 在提交PR之前运行完整的测试套件\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 支持\r\n\r\n有关问题和功能请求，请查看项目的问题跟踪器。\r\n",
+ "config": {
+  "osrs-player-stats": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-osrs-stats"
+   ],
+   "env": {}
+  }
+ }
+}

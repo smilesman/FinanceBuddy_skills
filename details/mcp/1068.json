@@ -1,0 +1,27 @@
+{
+ "id": "1068",
+ "kind": "mcp",
+ "name": "imply-druid",
+ "fingerprint_md5": "feaba21c3dd3a9194cbaa6dd6d85ebb7",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 暗示德鲁伊mcp\r\n\r\n\r\n用于Imply Cloud/Druid数据库的只读MCP（模型上下文协议）服务器。通过Claude和其他人工智能助手查询和探索您的德鲁伊数据。\r\n\r\n## 特性\r\n\r\n### 支持✅\r\n\r\n- **SQL查询执行**\r\n  - 同步查询执行\r\n  - 异步查询执行（适用于大型数据集）\r\n- **查询管理**\r\n  - 检查查询状态\r\n  - 检索查询结果\r\n  - 取消正在运行的查询\r\n- **表操作**\r\n  - 列出项目中的所有表\r\n  - 获取表架构详细信息\r\n- **仪表板操作**\r\n  - 列出所有仪表板\r\n  - 获取仪表板详细信息\r\n- **数据立方体操作**\r\n  - 列出所有数据立方体\r\n  - 获取数据立方体详细信息\r\n  - 执行Pivot SQL查询\r\n\r\n### 不支持❌\r\n\r\n- 数据摄入\r\n- 表/模式创建或修改\r\n- 用户/权限管理\r\n- 主管管理\r\n\r\n## 工具\r\n\r\n### 查询工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `execute_sql_query` |同步执行SQL查询并立即返回结果|\r\n| `execute_async_query` |对大型数据集异步执行SQL查询。返回查询ID|\r\n| `get_query_results` |使用查询ID从异步查询中检索结果|\r\n| `get_query_status` |检查异步查询的执行状态|\r\n| `cancel_query` |取消正在运行的异步查询|\r\n\r\n### 表格工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_tables` |列出Druid项目中的所有表（数据源）|\r\n| `get_table_schema` |获取特定表的详细架构信息|\r\n\r\n### 仪表板工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_dashboards` |列出Imply项目中的所有仪表板|\r\n| `get_dashboard` |获取特定仪表板的详细信息|\r\n\r\n### 数据立方体工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_data_cubes` |列出Imply项目中的所有数据立方体|\r\n| `get_data_cube` |获取详细的数据立方体信息，包括维度和度量值|\r\n| `query_data_cube` |对数据多维数据集执行Pivot SQL查询|\r\n\r\n## API映射\r\n\r\n此MCP服务器映射到 [隐含北极星API](https://docs.imply.io/api/polaris/api-reference):\r\n\r\n|MCP工具|隐含API端点|\r\n|----------|-------------------|\r\n| `execute_sql_query` | `POST /v1/projects/{projectId}/query/sql` |\r\n| `execute_async_query` | `POST /v1/projects/{projectId}/query/sql/statements` |\r\n| `get_query_results` | `GET /v1/projects/{projectId}/query/sql/statements/{queryId}/results` |\r\n| `get_query_status` | `GET /v1/projects/{projectId}/query/sql/statements/{queryId}` |\r\n| `cancel_query` | `DELETE /v1/projects/{projectId}/query/sql/statements/{queryId}` |\r\n| `list_tables` | `GET /v1/projects/{projectId}/tables` |\r\n| `get_table_schema` | `GET /v1/projects/{projectId}/tables/{tableName}` |\r\n| `list_dashboards` | `GET /v1/projects/{projectId}/dashboards` |\r\n| `get_dashboard` | `GET /v1/projects/{projectId}/dashboards/{dashboardId}` |\r\n| `list_data_cubes` | `GET /v1/projects/{projectId}/data-cubes` |\r\n| `get_data_cube` | `GET /v1/projects/{projectId}/data-cubes/{cubeName}` |\r\n| `query_data_cube` | `POST /v0/projects/{projectId}/pivot/data-cube-sql/query` |\r\n\r\n## 安装\r\n\r\n### 使用uvx（推荐）\r\n\r\n```bash\r\nuvx imply-druid-mcp\r\n```\r\n\r\n### 使用pip\r\n\r\n```bash\r\npip install imply-druid-mcp\r\nimply-druid-mcp\r\n```\r\n\r\n### 使用pipx\r\n\r\n```bash\r\npipx install imply-druid-mcp\r\nimply-druid-mcp\r\n```\r\n\r\n## 配置\r\n\r\n|环境变量|必填|默认|描述|\r\n|---------------------|----------|---------|-------------|\r\n| `IMPLY_ORGANIZATION` |是|-|隐含云组织名称|\r\n| `IMPLY_REGION` |是|-|地区（例如。， `us-east-1`) |\r\n| `IMPLY_CLOUD_PROVIDER` |是|-|云提供商： `aws`, `gcp`，或 `azure` |\r\n| `IMPLY_PROJECT_ID` |是|-|表示项目ID|\r\n| `IMPLY_API_KEY` |是\\*|-|隐含API密钥|\r\n| `IMPLY_ACCESS_TOKEN` |是\\*|-|OAuth访问令牌（可选）|\r\n| `LOG_LEVEL` |没有| `INFO` |日志记录级别|\r\n| `DEFAULT_QUERY_TIMEOUT_MS` |没有| `30000` |默认查询超时（ms）|\r\n| `MAX_QUERY_LENGTH` |没有| `10000` |最大SQL查询长度|\r\n\r\n\\*要么 `IMPLY_API_KEY` 或 `IMPLY_ACCESS_TOKEN` 是必需的。\r\n\r\n## Claude桌面设置\r\n\r\n添加到您的Claude Desktop配置文件中：\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"imply-druid\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"imply-druid-mcp\"],\r\n      \"env\": {\r\n        \"IMPLY_ORGANIZATION\": \"your-org\",\r\n        \"IMPLY_REGION\": \"us-east-1\",\r\n        \"IMPLY_CLOUD_PROVIDER\": \"aws\",\r\n        \"IMPLY_PROJECT_ID\": \"your-project-id\",\r\n        \"IMPLY_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用示例\r\n\r\n```\r\nUser: Show me all tables in my Druid project\r\n\r\nClaude: [Uses list_tables]\r\n- wikipedia (datasource)\r\n- events (datasource)\r\n- metrics (datasource)\r\n```\r\n\r\n```\r\nUser: Query the top 10 records from wikipedia table\r\n\r\nClaude: [Uses execute_sql_query with \"SELECT * FROM wikipedia LIMIT 10\"]\r\n[Results displayed]\r\n```\r\n\r\n```\r\nUser: Show me all data cubes\r\n\r\nClaude: [Uses list_data_cubes]\r\n- sales_cube: Sales Analytics (source: sales_table)\r\n- events_cube: Events Tracking (source: events)\r\n```\r\n\r\n```\r\nUser: Query the sales data cube for top cities\r\n\r\nClaude: [Uses query_data_cube with Pivot SQL syntax]\r\nSELECT \"DIM:city\" AS \"City\", MEASURE_BY_ID('total_sales') AS \"Sales\"\r\nFROM \"datacube\".\"sales_cube\"\r\nORDER BY 2 DESC\r\nLIMIT 10\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/yeongbin-hwang/imply-druid-mcp.git\r\ncd imply-druid-mcp\r\npip install -e \".[dev]\"\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 了解详情。\r\n\r\n## 资源\r\n\r\n- [MCP协议](https://modelcontextprotocol.io/)\r\n- [Imply云文档](https://docs.imply.io/)\r\n- [阿帕奇德鲁伊](https://druid.apache.org/)\r\n",
+ "config": {
+  "imply-druid": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "imply-druid-mcp"
+   ],
+   "env": {
+    "IMPLY_ORGANIZATION": "your-org",
+    "IMPLY_REGION": "us-east-1",
+    "IMPLY_CLOUD_PROVIDER": "aws",
+    "IMPLY_PROJECT_ID": "your-project-id",
+    "IMPLY_API_KEY": "your-api-key"
+   }
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "nexus-sql-builder",
+ "kind": "skill",
+ "name": "nexus-sql-builder",
+ "fingerprint_md5": "48fb5d405b0b3cf9ec844140daad5f65",
+ "download_count": 0,
+ "category": "MySQL",
+ "tags": "",
+ "version": "",
+ "readme": "# NEXUS SQL 架构师\r\n\r\n> Cardano 原生 AI 服务，用于自主智能体 | NEXUS AaaS 平台\r\n\r\n## 何时使用\r\n\r\n当您的智能体需要查询数据库但使用自然语言输入时。提供类似\"查找上季度收入最高的客户\"的描述，即可获取带有性能优化提示的可执行 SQL。处理复杂的多表 JOIN、聚合和子查询。\r\n\r\n## 与众不同之处\r\n\r\n方言感知：生成特定于您数据库的语法（PostgreSQL 数组、MySQL LIMIT、SQL Server TOP）。包含查询执行计划分析、索引创建建议，并警告潜在的 N+1 查询模式。处理 CTE、窗口函数和递归查询。\r\n\r\n## 步骤\r\n\r\n1. 将您的输入准备为 JSON 载荷。\r\n2. 使用 `X-Payment-Proof` 请求头 POST 到 NEXUS API。\r\n3. 解析结构化的 JSON 响应。\r\n\r\n### API 调用\r\n\r\n```bash\r\ncurl -X POST https://ai-service-hub-15.emergent.host/api/original-services/sql-builder \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"X-Payment-Proof: sandbox_test\" \\\r\n  -d '{\"description\": \"Find top 10 customers by total spend in last 90 days with their most recent order date\", \"dialect\": \"postgresql\", \"tables\": \"customers, orders, order_items\"}'\r\n```\r\n\r\n**端点：** `https://ai-service-hub-15.emergent.host/api/original-services/sql-builder`\r\n**方法：** POST\r\n**请求头：**\r\n- `Content-Type: application/json`\r\n- `X-Payment-Proof: <masumi_payment_id>` （免费沙盒使用 `sandbox_test`）\r\n\r\n## 外部端点\r\n\r\n| URL | 方法 | 发送数据 |\r\n|-----|--------|-----------|\r\n| `https://ai-service-hub-15.emergent.host/api/original-services/sql-builder` | POST | 输入参数作为 JSON 请求体 |\r\n\r\n## 安全与隐私\r\n\r\n所有请求通过 HTTPS/TLS 加密到 `https://ai-service-hub-15.emergent.host`。数据不会永久存储 —— 在内存中处理并丢弃。通过 Cardano 上的 Masumi 协议进行支付验证（非托管托管）。不需要文件系统或 shell 权限。\r\n\r\n## 模型调用说明\r\n\r\n此技能调用 NEXUS AI 服务 API，该 API 使用大型语言模型在服务器端处理请求。您可以通过不安装此技能来选择退出。\r\n\r\n## 信任声明\r\n\r\n通过安装此技能，输入数据将被传输到 NEXUS (https://ai-service-hub-15.emergent.host) 进行 AI 处理。所有支付均通过 Cardano 进行非托管。访问 https://ai-service-hub-15.emergent.host 查看文档和条款。",
+ "config": {}
+}

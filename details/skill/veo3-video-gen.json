@@ -1,0 +1,12 @@
+{
+ "id": "veo3-video-gen",
+ "kind": "skill",
+ "name": "veo3-video-gen",
+ "fingerprint_md5": "d0d48b07412d7a608cdc59e19c927b18",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Veo 3 视频生成（Gemini API）\r\n\r\n使用捆绑脚本从文本提示生成 MP4。\r\n\r\n## 生成（文本 → 视频）\r\n\r\n```bash\r\nuv run {baseDir}/scripts/generate_video.py \\\r\n  --prompt \"A close up of ...\" \\\r\n  --filename \"out.mp4\" \\\r\n  --model \"veo-3.1-generate-preview\" \\\r\n  --aspect-ratio \"9:16\" \\\r\n  --poll-seconds 10\r\n```\r\n\r\n## 通过拼接片段生成更长的视频\r\n\r\nVeo 通常每次请求输出约 8 秒的片段。使用 `--segments` 生成多个片段并使用 ffmpeg 拼接它们。\r\n\r\n**重要：** 此技能为 **每个片段发送一个提示**（每个片段一个 Veo 请求）。使用 `--base-style` 保持跨片段的风格一致。\r\n\r\n```bash\r\nuv run {baseDir}/scripts/generate_video.py \\\r\n  --prompt \"Same scene, consistent style...\" \\\r\n  --filename \"out-24s.mp4\" \\\r\n  --model \"veo-3.1-generate-preview\" \\\r\n  --aspect-ratio \"9:16\" \\\r\n  --segments 3 \\\r\n  --segment-style continuation\r\n```\r\n\r\n选项：\r\n- `--base-style \"...\"`：添加到每个片段提示的开头（推荐）。\r\n- `--segment-prompt \"...\"`（可重复）：为每个片段提供一个提示（覆盖 `--prompt`）。\r\n- `--segment-style continuation`（默认）：为每个片段添加连续性指令（仅在使用 `--prompt` 时）。\r\n- `--segment-style same`：为每个片段使用完全相同的提示（仅在使用 `--prompt` 时）。\r\n- `--use-last-frame`：对于片段 >=2，提取前一个片段的最后一帧并将其作为 `lastFrame` 传递以保持连续性。\r\n- `--emit-segment-media`：在每个片段完成时打印 `MEDIA:`（用于进度显示）。\r\n- `--keep-segments`：保留中间的 `*.segXX.mp4` 文件。\r\n- `--reference-image path.jpg`（可重复）：使用产品/风格参考引导生成。\r\n\r\n## 要求\r\n\r\n- `GEMINI_API_KEY` 环境变量（或 `--api-key`）。\r\n- 使用 `--segments > 1` 时 PATH 上需要有 `ffmpeg`。\r\n\r\n## 故障排除\r\n\r\n- 429/RESOURCE_EXHAUSTED：API 密钥没有视频配额/计费。\r\n- 503/UNAVAILABLE：模型过载；稍后重试。",
+ "config": {}
+}

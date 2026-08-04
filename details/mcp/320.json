@@ -1,0 +1,21 @@
+{
+ "id": "320",
+ "kind": "mcp",
+ "name": "mobile-mcp-3",
+ "fingerprint_md5": "fdca6d72ad03c83db247d2fd95bcb342",
+ "download_count": 0,
+ "category": "移动端自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 移动MCP\r\n\r\n提供移动自动化功能的模型上下文协议（MCP）服务器。此服务器使LLM能够使用结构化UI转储与移动设备进行交互，而无需依赖屏幕截图或其他视觉输入。\r\n\r\n[](LICENSE) [](https://discord.runable.xyz)\r\n\r\nhttps://github.com/user-attachments/assets/f6d9c88e-005a-4a99-b073-3308b1fbca12\r\n\r\n## 安装\r\n\r\n## 支持的平台\r\n\r\n目前，仅支持android手机。iOS支持即将到来。\r\n\r\n你需要 [安装安卓工作室](https://developer.android.com/studio/install) 并安装平台工具。安装完所有这些后，运行以下to命令进行验证。\r\n\r\n```sh\r\nadb\r\n```\r\n\r\n你可以运行一个 [模拟器中的安卓设备](https://developer.android.com/studio/run/emulator) 或者在打开usb调试的情况下连接您的物理android手机。\r\n\r\n### Claude桌面配置\r\n\r\n运行以下命令以自动安装\r\n\r\n```sh\r\nnpx mobile-mcp install\r\n```\r\n\r\n或者手动将其添加到您的claude桌面配置中。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mobile-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mobile-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## VScode安装\r\n\r\n您可以使用VS Code CLI安装移动MCP服务器：\r\n\r\n```bash\r\n# For VS Code\r\ncode --add-mcp '{\"name\":\"mobile\",\"command\":\"npx\",\"args\":[\"mobile-mcp\"]}'\r\n\r\n# For VS Code Insiders\r\ncode-insiders --add-mcp '{\"name\":\"mobile\",\"command\":\"npx\",\"args\":[\"mobile-mcp\"]}'\r\n```\r\n\r\n## 📄 许可证\r\n\r\n该项目根据 [MIT许可证](LICENSE).\r\n",
+ "config": {
+  "mobile-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mobile-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

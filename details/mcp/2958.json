@@ -1,0 +1,26 @@
+{
+ "id": "2958",
+ "kind": "mcp",
+ "name": "solana-launchpads",
+ "fingerprint_md5": "a352e6f03bdc3507fe2c4f1312769737",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# Solana发射台MCP\r\n\r\n一个MCP服务器，用于跟踪多个Solana发射台的日常活动和毕业指标。\r\n\r\n\r\n## 特性\r\n\r\n- **MCP工具**：检索每日指标的四种工具：\r\n  - 令牌部署。\r\n  - 成功的毕业生（已完成的项目）。\r\n  - 毕业率。\r\n  - 活动钱包地址。\r\n- **Markdown输出**：数据格式为markdown表，便于阅读。\r\n\r\n## 先决条件\r\n\r\n- Python 3.10或更高版本\r\n- [紫外线](https://github.com/astral-sh/uv) （推荐包管理器）\r\n- A. [沙丘分析API密钥](https://dune.com/docs/api/getting-started/#authentication)\r\n\r\n## 安装\r\n\r\n1. **克隆存储库**:\r\n\r\n   ```bash\r\n   git clone https://github.com/kukapay/solana-launchpads-mcp.git\r\n   cd solana-launchpads-mcp\r\n   ```\r\n\r\n1. **安装依赖项**:\r\n\r\n   ```bash\r\n   uv sync\r\n   ```\r\n\r\n1. **安装到克劳德桌面**:\r\n\r\n   将服务器安装为Claude Desktop应用程序：\r\n\r\n   ```bash\r\n   uv run mcp install main.py --name \"Solana Launchpads\"\r\n   ```\r\n\r\n   配置文件作为参考：\r\n\r\n   ```json\r\n   {\r\n      \"mcpServers\": {\r\n          \"Solana Launchpads\": {\r\n              \"command\": \"uv\",\r\n              \"args\": [ \"--directory\", \"/path/to/solana-launchpads-mcp\", \"run\", \"main.py\" ],\r\n              \"env\": { \"DUNE_API_KEY\": \"dune_api_key\"}\r\n          }\r\n      }\r\n   }\r\n   ```\r\n\r\n   替换 `/path/to/solana-launchpads-mcp` 根据您的实际安装路径，以及 `dune_api_key` 使用Dune Analytics的API密钥。\r\n\r\n## 工具\r\n\r\n|工具名称|描述|参数|\r\n|-------------------------------|-----------------------------------------------------------------------------|-----------------------------------------|\r\n| `get_daily_tokens_deployed` |按平台检索每日令牌部署，可选地以百分比形式。   | `return_percent: bool` （默认值：False）`limit: int` （默认值：1000）|\r\n| `get_daily_graduates` |通过平台获取每日成功的毕业生。                             | `limit: int` （默认值：1000）|\r\n| `get_daily_graduation_rate` |按平台检索每日毕业率。                               | `limit: int` （默认值：1000）|\r\n| `get_daily_active_addresses` |按平台获取每日活动钱包地址。                          | `limit: int` （默认值：1000）|\r\n\r\n## 示例用法\r\n\r\n要使用MCP服务器，请启动它，并通过LLM客户端（例如Claude Desktop或MCP Inspector）与其工具和提示进行交互。以下是使用自然语言输入的每个工具和提示的示例。\r\n\r\n### 获取每日令牌部署\r\n\r\n**提示**:\r\n\r\n```\r\nShow me the number of tokens launched on Solana memecoin launchpads each day for the past week.\r\n```\r\n\r\n**输出**:\r\n\r\n```markdown\r\n| date       | LaunchLabs | LetsBonk | Pump.fun | Boop | Bags | Believeapp | Moonshot | Sunpump.meme |\r\n|------------|------------|----------|----------|------|------|------------|----------|--------------|\r\n| 2025-06-15 | 50         | 20       | 120      | 10   | 15   | 5          | 30       | 25           |\r\n| 2025-06-14 | 45         | 18       | 110      | 8    | 12   | 4          | 25       | 20           |\r\n| ...        | ...        | ...      | ...      | ...  | ...  | ...        | ...      | ...          |\r\n```\r\n\r\n### 获得每日毕业生\r\n\r\n**提示**:\r\n\r\n```\r\nHow many projects successfully graduated from Solana memecoin launchpads daily over the last 10 days?\r\n```\r\n\r\n**输出**:\r\n\r\n```markdown\r\n| block_date | LaunchLabs | LetsBonk | Pump.fun | Boop | Bags | Believeapp | Moonshot | Sunpump.meme |\r\n|------------|------------|----------|----------|------|------|------------|----------|--------------|\r\n| 2025-06-15 | 10         | 5        | 15       | 2    | 3    | 1          | 5        | 4            |\r\n| 2025-06-14 | 8          | 4        | 12       | 1    | 2    | 0          | 4        | 3            |\r\n| ...        | ...        | ...      | ...      | ...  | ...  | ...        | ...      | ...          |\r\n```\r\n\r\n### 获取每日毕业率\r\n\r\n**提示**:\r\n\r\n```\r\nWhat’s the success rate of projects on Solana memecoin launchpads for the past 5 days?\r\n```\r\n\r\n**输出**:\r\n\r\n```markdown\r\n| block_date | LaunchLabs | LetsBonk | Pump.fun | Boop | Bags | Believeapp | Moonshot | Sunpump.meme |\r\n|------------|------------|----------|----------|------|------|------------|----------|--------------|\r\n| 2025-06-15 | 0.20       | 0.25     | 0.30     | 0.15 | 0.18 | 0.10       | 0.22     | 0.19         |\r\n| 2025-06-14 | 0.18       | 0.22     | 0.28     | 0.12 | 0.15 | 0.08       | 0.20     | 0.17         |\r\n| ...        | ...        | ...      | ...      | ...  | ...  | ...        | ...      | ...          |\r\n```\r\n\r\n### 获取每日活动地址\r\n\r\n**提示**:\r\n\r\n```\r\nTell me how many wallets were active on Solana memecoin launchpads each day for the last week.\r\n```\r\n\r\n**输出**:\r\n\r\n```markdown\r\n| date_time  | LaunchLabs | LetsBonk | Pump.fun | Boop | Bags | Believeapp | Moonshot | Sunpump.meme |\r\n|------------|------------|----------|----------|------|------|------------|----------|--------------|\r\n| 2025-06-15 | 2000       | 800      | 5000     | 300  | 400  | 100        | 1200     | 900          |\r\n| 2025-06-14 | 1800       | 700      | 4800     | 250  | 350  | 80         | 1100     | 800          |\r\n| ...        | ...        | ...      | ...      | ...  | ...  | ...        | ...      | ...          |\r\n```\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "solana-launchpads": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/solana-launchpads-mcp",
+    "run",
+    "main.py"
+   ],
+   "env": {
+    "DUNE_API_KEY": "dune_api_key"
+   }
+  }
+ }
+}

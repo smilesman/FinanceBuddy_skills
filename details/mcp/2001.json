@@ -1,0 +1,21 @@
+{
+ "id": "2001",
+ "kind": "mcp",
+ "name": "mongodb",
+ "fingerprint_md5": "29879687b4d77134a0600591d63672f8",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# Coincap MCP\r\n\r\n\r\n## 这个服务器做什么？\r\n\r\n允许您从coincap的公共API查询加密信息-无需API密钥或注册\r\n\r\n## 🚀 快速开始\r\n\r\n要开始，请将此配置添加到您的Claude Desktop配置文件中：\r\n\r\n**MacOS**: `~/Library/Application\\ Support/Claude/claude_desktop_config.json`\\\r\n**视窗**: `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mongodb\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"coincap-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面版Coincap [史密瑟里](https://smithery.ai/server/coincap-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install coincap-mcp --client claude\r\n```\r\n\r\n### 先决条件\r\n\r\n- Node.js 18+\r\n- 新巴拿马型船舶\r\n\r\n然后，启动Claude Desktop，您就可以开始了！\r\n\r\n## 示例提示\r\n\r\n- 比特币的价格是多少？\r\n- 可用的加密资产有哪些？\r\n- 以太坊的市值是多少？\r\n\r\n## 工具\r\n\r\n#### 比特币价格工具\r\n\r\n获取比特币的价格特别是，这是一个简单的原始API调用工具的例子\r\n\r\n#### 获取加密货币价格工具\r\n\r\n获取coincap API上可用的任何加密货币的价格。这是一个很好的例子，说明如何为工具调用获取强制参数数据\r\n\r\n#### 列出资产\r\n\r\n获取coincap API中可用的所有加密资产的列表\r\n\r\n## 发展-本地建设\r\n\r\n要在本地构建它：\r\n\r\n在MacOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"coincap-mcp\": {\r\n      \"command\": \"/path/to/coincap-mcp/build/index.js\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n对于自动重建的开发：\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n## 📜 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "mongodb": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "coincap-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

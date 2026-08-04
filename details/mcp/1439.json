@@ -1,0 +1,22 @@
+{
+ "id": "1439",
+ "kind": "mcp",
+ "name": "fetch-3",
+ "fingerprint_md5": "26766ec482c0916fa76a8fdb68e12ef2",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP NPX获取\r\n\r\n<div align=\"center\">\r\n\r\n[](https://www.npmjs.com/package/@tokenizin/mcp-npx-fetch)\r\n[](https://opensource.org/licenses/MIT)\r\n[](https://www.typescriptlang.org/)\r\n[](https://github.com/modelcontextprotocol)\r\n\r\n一个强大的MCP服务器，用于轻松获取和转换web内容为各种格式（HTML、JSON、Markdown、纯文本）。\r\n\r\n[安装](#installation) •\r\n[特性](#features) •\r\n[用法](#usage) •\r\n[文档](#documentation) •\r\n[贡献](#contributing)\r\n\r\n</div>\r\n\r\n<a href=\"https://glama.ai/mcp/servers/m2a0ue08n2\"></a>\r\n\r\n______________________________________________________________________\r\n\r\n## 🚀 特性\r\n\r\n- 🌐 **通用内容获取**：支持HTML、JSON、纯文本和Markdown格式\r\n- 🔒 **自定义标头支持**：在请求中添加身份验证和自定义标头\r\n- 🛠 **内置转换**：格式之间的自动转换\r\n- ⚡ **高性能**：采用现代JavaScript功能构建，并针对速度进行了优化\r\n- 🔌 **MCP兼容**：与Claude Desktop和其他MCP客户端无缝集成\r\n- 🎯 **类型安全**：用TypeScript编写，具有完整的类型定义\r\n\r\n## 📦 安装\r\n\r\n### NPM全球安装\r\n\r\n```bash\r\nnpm install -g @tokenizin/mcp-npx-fetch\r\n\r\n```\r\n\r\n### 直接使用NPX\r\n\r\n```bash\r\nnpx @tokenizin/mcp-npx-fetch\r\n```\r\n\r\n## 📚 文档\r\n\r\n### 可用工具\r\n\r\n#### `fetch_html`\r\n\r\n从任何URL获取并返回原始HTML内容。\r\n\r\n```typescript\r\n{\r\n  url: string;     // Required: Target URL\r\n  headers?: {      // Optional: Custom request headers\r\n    [key: string]: string;\r\n  };\r\n}\r\n```\r\n\r\n#### `fetch_json`\r\n\r\n从任何URL获取并解析JSON数据。\r\n\r\n```typescript\r\n{\r\n  url: string;     // Required: Target URL\r\n  headers?: {      // Optional: Custom request headers\r\n    [key: string]: string;\r\n  };\r\n}\r\n```\r\n\r\n#### `fetch_txt`\r\n\r\n获取并返回干净的纯文本内容，删除HTML标签和脚本。\r\n\r\n```typescript\r\n{\r\n  url: string;     // Required: Target URL\r\n  headers?: {      // Optional: Custom request headers\r\n    [key: string]: string;\r\n  };\r\n}\r\n```\r\n\r\n#### `fetch_markdown`\r\n\r\n获取内容并将其转换为格式良好的Markdown。\r\n\r\n```typescript\r\n{\r\n  url: string;     // Required: Target URL\r\n  headers?: {      // Optional: Custom request headers\r\n    [key: string]: string;\r\n  };\r\n}\r\n```\r\n\r\n## 🔧 用法\r\n\r\n### CLI使用情况\r\n\r\n直接启动MCP服务器：\r\n\r\n```bash\r\nmcp-npx-fetch\r\n```\r\n\r\n或者通过npx：\r\n\r\n```bash\r\nnpx @tokenizin/mcp-npx-fetch\r\n```\r\n\r\n### Claude桌面集成\r\n\r\n1. 找到您的Claude Desktop配置文件：\r\n\r\n   - macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - 窗户： `%APPDATA%/Claude/claude_desktop_config.json`\r\n   - Linux： `~/.config/Claude/claude_desktop_config.json`\r\n\r\n1. 将以下配置添加到您的 `mcpServers` 对象：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fetch\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@tokenizin/mcp-npx-fetch\"],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 💻 地方发展\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/tokenizin-agency/mcp-npx-fetch.git\r\ncd mcp-npx-fetch\r\n```\r\n\r\n2. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n3. 启动开发模式：\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n4. 运行测试：\r\n\r\n```bash\r\nnpm test\r\n```\r\n\r\n## 🛠 技术栈\r\n\r\n- [模型上下文协议SDK](https://github.com/modelcontextprotocol/sdk) -核心MCP功能\r\n- [JSDOM](https://github.com/jsdom/jsdom) -HTML解析和操作\r\n- [关闭](https://github.com/mixmark-io/turndown) -HTML到Markdown的转换\r\n- [TypeScript](https://www.typescriptlang.org/) -类型安全和现代JavaScript功能\r\n- [萨德](https://github.com/colinhacks/zod) -运行时类型验证\r\n\r\n## 🤝 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。对于重大更改，请先打开一个问题来讨论您想要更改的内容。\r\n\r\n1. 分叉存储库\r\n1. 创建功能分支(`git checkout -b feature/AmazingFeature`)\r\n1. 提交您的更改(`git commit -m 'Add some AmazingFeature'`)\r\n1. 推到分支(`git push origin feature/AmazingFeature`)\r\n1. 打开拉取请求\r\n\r\n## 📄 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n______________________________________________________________________\r\n\r\n<div align=\"center\">\r\nMade with ❤️ by <a href=\"https://github.com/tokenizin-agency\">PT Tokenizin Technology Agency</a>\r\n</div>\r\n",
+ "config": {
+  "fetch": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@tokenizin/mcp-npx-fetch"
+   ],
+   "env": {}
+  }
+ }
+}

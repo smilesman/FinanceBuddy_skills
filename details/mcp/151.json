@@ -1,0 +1,22 @@
+{
+ "id": "151",
+ "kind": "mcp",
+ "name": "cloudflare-playwright-mcp-25",
+ "fingerprint_md5": "aac95b116c77f4d38ea75c342da2c7a2",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "## Cloudflare Playwright MCP 示例\r\n\r\n[](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/playwright-mcp/tree/main/cloudflare/example)\r\n\r\n### 概述\r\n\r\n这个项目展示了如何使用 [使用 Cloudflare Workers 的 Playwright（或：结合 Cloudflare Workers 的 Playwright）](https://github.com/cloudflare/playwright) 作为模型控制协议（MCP）服务器使用 [Cloudflare Playwright MCP（注：此处的“MCP”可能是一个特定上下文中的缩写或专有名词，没有直接的中文对应，因此在翻译时保留了原样。如果“MCP”有具体的含义或需要解释，请根据实际情况进行调整。）](https://github.com/cloudflare/playwright-mcp)。\r\n\r\n它使人工智能助手能够通过一组工具控制浏览器，从而执行网页自动化任务，如导航、输入、点击和截取屏幕截图。\r\n\r\n该服务器可与多种AI平台配合使用，包括Cloudflare AI Playground、Claude Desktop以及VS Code中的GitHub Copilot。\r\n\r\n### 部署\r\n\r\n按照以下步骤设置并部署项目：\r\n\r\n1. 安装依赖项：\r\n\r\n```bash\r\nnpm ci\r\n```\r\n\r\n2. 部署到 Cloudflare Workers：\r\n\r\n```bash\r\nnpx wrangler deploy\r\n```\r\n\r\n### 与Cloudflare AI Playground配合使用\r\n\r\n\r\n[Cloudflare Playground AI](https://playground.ai.cloudflare.com/) 这是利用Workers AI中提供的大型语言模型（LLM）来测试MCP服务器的一种绝佳方法。\r\n\r\n- 导航至 https://playground.ai.cloudflare.com/\r\n- 确保模型设置为 `llama-3.3-70b-instruct-fp8-fast`\r\n- 在 **MCP 服务器**，设置 **URL** to `https://[my-mcp-url].workers.dev/sse`\r\n- 点击 **连接**\r\n- 状态应更新为 **连接** 并且它应该列出14个可用工具\r\n\r\n现在您可以开始与模型进行交互，模型将运行必要的工具来完成您所请求的任务。\r\n\r\n> \\[!TIP\\]（注：此标记通常用于指示提示或注意事项，在中文中可直接保留或根据上下文翻译为“提示”等）\r\n> 为了获得最佳效果，请给出包含单一动作的简单指令，例如：“创建一个新的待办事项条目”，“访问Cloudflare网站”，“截个屏”\r\n\r\n对话示例：\r\n\r\n| 角色 | 消息 |\r\n|------|---------|\r\n| **用户** | 访问 demo.playwright.dev/todomvc |\r\n| **助手** | *运行浏览器导航工具*\r\n 页面已导航至 https://demo.playwright.dev/todomvc/。页面标题为“React • TodoMVC”。页面快照显示了页面内容，包括一个标题、一个文本框和几个链接。 |\r\n| **用户** | 创建一些待办事项条目 |\r\n| **助手** | *运行浏览器类型工具*\r\n 已创建一个新的待办事项条目“购买杂货”。页面快照显示了页面的更新内容，包括这个新的待办事项条目。 |\r\n| **用户** | 好的。现在用鹦鹉风格创建一个待办事项 |\r\n| **助手** | *运行 browser_type 工具*\r\n 以鹦鹉风格创建了一个新的待办事项条目：“波莉想要一片饼干”。页面快照显示了页面的更新内容，包括这个新的待办事项条目。 |\r\n| **用户** | 并以尤达风格创建另一个待办事项 |\r\n| **助手** | *运行浏览器类型工具*\r\n 以尤达风格创建了一个新的待办事项条目：“必须出去走走”。页面快照显示了页面更新后的内容，包括这个新的待办事项条目。 |\r\n| **用户** | 截图 |\r\n| **助手** | *运行浏览器截图工具*\r\n  已截取当前页面的截图。截图格式为PNG，大小为56KB。 |\r\n| **用户** | 现在勾选鹦鹉待办事项的复选框 |\r\n| **助手** | *运行浏览器点击工具*\r\n 鹦鹉待办事项条目“波莉想要一片饼干”的复选框已被点击。页面快照显示了页面的更新内容，现在复选框已被选中。 |\r\n| **用户** | 截图 |\r\n| **助手** | *运行浏览器截图工具*\r\n  已截取当前页面的截图。截图格式为PNG，大小为58KB。 |\r\n| **用户** | 删除已完成的待办事项条目 |\r\n| **助手** | *运行 browser_clickt 工具*\r\n “清除已完成”按钮已被点击。页面快照显示了页面更新后的内容，已完成的待办事项条目“波莉想要一片饼干”已被移除。 |\r\n| **用户** | 拍摄最终截图 |\r\n| **助手** | *运行浏览器截图工具*\r\n  已截取当前页面的最终截图。截图格式为PNG，大小为50KB。 |\r\n\r\n### 与Claude桌面版一起使用\r\n\r\n截至目前， [Claude Desktop（可译为“Claude桌面版”或根据具体语境简化为“Claude桌面”）](https://claude.ai/download) 仅支持本地MCP服务器。要使用 `playground-mcp` 使用Claude Desktop，我们得以利用 [mcp-remote 翻译为中文是“远程MCP（可能指某种管理控制协议或平台）”。不过，具体翻译可能需要根据上下文来确定“MCP”在这里的确切含义。如果“MCP”是一个特定产品、系统或协议的缩写，那么翻译时可能需要保留该缩写或根据具体情况给出更准确的翻译。但基于一般理解，可以翻译为“远程MCP（管理控制协议/平台）”](https://github.com/geelen/mcp-remote)，一个工具，用于代理远程MCP服务器并在本地暴露它们。使用以下配置：\r\n\r\n1. 打开Claude Desktop的配置文件。\r\n1. 在以下位置添加以下JSON片段： `mcpServers` 部分/章节：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cloudflare-playwright-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-remote\",\r\n        \"https://[my-mcp-url].workers.dev/sse\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. 保存配置文件并 **重启** 在Claude Desktop中应用更改。\r\n\r\n此设置确保Claude Desktop能够与Cloudflare Playwright MCP服务器进行通信。\r\n\r\n以下是一个会话示例，展示了如何打开TODO演示应用，添加“购买柠檬”任务，并进行截图操作，这里使用了playwright-mcp工具和浏览器渲染功能：\r\n\r\n\r\n### 在VSCode中进行配置\r\n\r\n您可以使用以下方式安装 Playwright MCP 服务器： [VS Code 命令行界面 (CLI)](https://code.visualstudio.com/docs/configure/command-line)：\r\n\r\n```bash\r\n# For VS Code\r\ncode --add-mcp '{\"name\":\"cloudflare-playwright\",\"type\":\"sse\",\"url\":\"https://[my-mcp-url].workers.dev/sse\"}'\r\n```\r\n\r\n```bash\r\n# For VS Code Insiders\r\ncode-insiders --add-mcp '{\"name\":\"cloudflare-playwright\",\"type\":\"sse\",\"url\":\"https://[my-mcp-url].workers.dev/sse\"}'\r\n```\r\n\r\n安装完成后，您将可以在 VS Code 中使用 Playwright MCP 服务器与您的 GitHub Copilot 代理进行交互。\r\n",
+ "config": {
+  "cloudflare-playwright-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://[my-mcp-url].workers.dev/sse"
+   ],
+   "env": {}
+  }
+ }
+}

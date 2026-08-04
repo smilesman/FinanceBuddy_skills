@@ -1,0 +1,25 @@
+{
+ "id": "1283",
+ "kind": "mcp",
+ "name": "sqlite_db_mcp",
+ "fingerprint_md5": "82824d4efcdd2e91530c75585efb1235",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "\\[英语| [中文](README_ZH.md) \\]\r\n\r\n# 数据库查询mcp\r\n\r\n## 引言\r\n\r\ndb-query mcp是一个支持多种数据库查询和导出的mcp工具，其特点是：\r\n\r\n- **多数据库支持**：与主流数据库（ElasticSearch、MySQL、PostgreSQL、Oracle、SQLite等）完全兼容\r\n- **安全访问**：数据保护的默认只读模式\r\n- **智能查询**：使用查询优化进行自然语言到SQL的转换\r\n- **数据导出**：CSV/Json导出功能\r\n- **路线图**：扩展对MongoDB和GraphDatabase的支持，成为全栈DB查询MCP\r\n\r\n## 演示\r\n\r\nhttps://github.com/user-attachments/assets/60771cda-8b52-41bd-90e3-523c836f6366\r\n\r\n## 更新日志\r\n\r\n- 2025-06-02：增加了对ElasticSearch数据库查询的支持\r\n\r\n## 安装\r\n\r\n```bash\r\npip install db-query-mcp\r\n```\r\n\r\nElasticSearch：\r\n\r\n```bash\r\npip install \"db-query-mcp[elasticsearch]\"\r\n```\r\n\r\n从GitHub安装：\r\n\r\n```bash\r\npip install git+https://github.com/NewToolAI/db-query-mcp\r\n```\r\n\r\n**MySQL需要额外的依赖关系：**\r\n\r\n```bash\r\npip install pymysql\r\n```\r\n\r\n**PostgreSQL需要额外的依赖关系：**\r\n\r\n```bash\r\npip install psycopg2-binary\r\n```\r\n\r\n**对于其他数据库，请安装其各自的连接包：**\r\n\r\n|数据库|连接包|连接字符串示例|\r\n|-------------|--------------------------|---------------------------|\r\n| **数据库** |内置Python| `sqlite:///example.db` |\r\n| **MySQL** | `pymysql` 或 `mysql-connector-python` | `mysql+pymysql://user:password@localhost/dbname` |\r\n| **PostgreSQL** | `psycopg2` 或 `psycopg2-binary` | `postgresql://user:password@localhost:5432/dbname` |\r\n| **甲骨文** | `cx_Oracle` | `oracle+cx_oracle://user:password@hostname:1521/sidname` |\r\n| **SQL Server** | `pyodbc` 或 `pymssql` | `mssql+pyodbc://user:password@hostname/dbname` |\r\n\r\n## 配置\r\n\r\n**注：​对于某些客户端，如Cursor，一次只能运行一个db查询mcp服务器。​​**\r\n\r\n### 使用uvx运行\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n      \"sqlite_db_mcp\": {\r\n        \"command\": \"uvx\",\r\n        \"args\": [\r\n          \"db-query-mcp\",\r\n          \"--db\",\r\n          \"sqlite\",\r\n          \"--uri\", \r\n          \"sqlite:///sqlite_company.db\"\r\n        ]\r\n      }\r\n  }\r\n}\r\n```\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n      \"es_db_mcp\": {\r\n        \"command\": \"uvx\",\r\n        \"args\": [\r\n          \"db-query-mcp\",\r\n          \"--db\",\r\n          \"elasticsearch\",\r\n          \"--uri\", \r\n          \"https://user:password@localhost:9200?index=test_data_index&ca_certs=/home/user/http_ca.crt\"\r\n        ]\r\n      }\r\n  }\r\n}\r\n```\r\n\r\n### 使用命令运行\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n      \"sqlite_db_mcp\": {\r\n        \"command\": \"db-query-mcp\",\r\n        \"args\": [\r\n          \"--db\",\r\n          \"sqlite\",\r\n          \"--uri\", \r\n          \"sqlite:///sqlite_company.db\"\r\n        ]\r\n      }\r\n  }\r\n}\r\n```\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n      \"es_db_mcp\": {\r\n        \"command\": \"db-query-mcp\",\r\n        \"args\": [\r\n          \"--db\",\r\n          \"elasticsearch\",\r\n          \"--uri\", \r\n          \"https://user:password@localhost:9200?index=test_data_index&ca_certs=/home/user/http_ca.crt\"\r\n        ]\r\n      }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "sqlite_db_mcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "db-query-mcp",
+    "--db",
+    "sqlite",
+    "--uri",
+    "sqlite:///sqlite_company.db"
+   ],
+   "env": {}
+  }
+ }
+}

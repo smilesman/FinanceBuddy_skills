@@ -1,0 +1,12 @@
+{
+ "id": "check-ceph-health",
+ "kind": "skill",
+ "name": "check-ceph-health",
+ "fingerprint_md5": "4d58809a4ecade00a5146ff64e47c083",
+ "download_count": 0,
+ "category": "效率工具",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\n自动化 Ceph 集群健康检查，分析常见问题（OSD down、PG degraded、容量不足），给出修复建议。",
+ "config": {}
+}

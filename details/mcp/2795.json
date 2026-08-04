@@ -1,0 +1,23 @@
+{
+ "id": "2795",
+ "kind": "mcp",
+ "name": "zoekt",
+ "fingerprint_md5": "e1f81853b8f0bd3bb05cc68b962b68da",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp 搜索\r\n\r\n\r\nMCP（模型上下文协议）服务器，使AI编码助手能够使用 [正在搜索](https://github.com/sourcegraph/zoekt).\r\n\r\n## 概述\r\n\r\n此存储库提供：\r\n\r\n- **`zoekt-mcp/`** -将AI助手（GitHub Copilot、Claude等）连接到Zoekt的TypeScript MCP服务器\r\n- **`docker/`** -Docker Compose用于自托管Zoekt的基础设施，具有工作树索引和GitHub组织镜像（包括多组织）\r\n- **`zoekt/`** -Git子模块引用 [sourcegraph/搜索](https://github.com/sourcegraph/zoekt)\r\n\r\n## 快速开始\r\n\r\n### 1. 开始寻找基础设施\r\n\r\n```bash\r\ncd docker\r\n\r\n# Create a .env from the template and choose a mode via COMPOSE_PROFILES\r\ncp .env.example .env\r\n\r\n# For GitHub mode only: create config directory and add your GitHub token\r\n# mkdir -p config\r\n# echo \"ghp_your_token_here\" > config/github-token.txt\r\n\r\n# Start services\r\ndocker compose up -d\r\n```\r\n\r\n### 2.配置您的AI助手\r\n\r\n**VS代码与GitHub Copilot** -添加到 `.vscode/settings.json`:\r\n\r\n```json\r\n{\r\n  \"github.copilot.chat.experimental.mcpServers\": {\r\n    \"zoekt\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-zoekt\", \"--url\", \"http://localhost:6070\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**克劳德桌面** -添加到您的配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"zoekt\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-zoekt\", \"--url\", \"http://localhost:6070\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.搜索您的代码\r\n\r\n让你的AI助手在你的索引存储库中搜索：\r\n\r\n> “在我的代码库中搜索身份验证中间件”\r\n> “查找UserService类的所有用法”\r\n> “演示如何实现错误处理”\r\n\r\n## MCP工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search` |使用Zoekt查询语法（正则表达式、文件过滤器、语言过滤器）的搜索代码|\r\n| `search_symbols` |使用可选的类型过滤查找符号定义（函数、类、方法）|\r\n| `search_files` |按文件名模式搜索文件|\r\n| `find_references` |在存储库中查找符号的所有定义和用法|\r\n| `list_repos` |列出所有具有可选筛选功能的索引存储库|\r\n| `file_content` |从索引存储库中检索完整文件内容|\r\n| `get_health` |检查MCP服务器和Zoekt后端的运行状况|\r\n\r\n## 文档\r\n\r\n- [MCP服务器文档](zoekt-mcp/README.md) -详细的MCP服务器使用和配置\r\n- [Docker设置](docker/README.md) -基础设施设置和配置选项\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\ncd zoekt-mcp\r\nnpm install\r\n\r\n# Run tests\r\nnpm test              # Unit tests\r\nnpm run test:all      # All tests (requires Docker infrastructure)\r\n\r\n# Build\r\nnpm run build\r\n```\r\n\r\n## 许可证\r\n\r\nApache许可证2.0-请参阅 [许可证](LICENSE) 了解详情。\r\n\r\n此项目使用 [正在搜索](https://github.com/sourcegraph/zoekt) 它也由Sourcegraph在Apache 2.0下授权。\r\n",
+ "config": {
+  "zoekt": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-zoekt",
+    "--url",
+    "http://localhost:6070"
+   ],
+   "env": {}
+  }
+ }
+}

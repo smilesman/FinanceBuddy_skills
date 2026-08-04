@@ -1,0 +1,27 @@
+{
+ "id": "1492",
+ "kind": "mcp",
+ "name": "i18next-translation",
+ "fingerprint_md5": "2d4849b3753d704320b995a803de9413",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# i18next MCP服务器\r\n\r\n[](https://badge.fury.io/js/i18next-mcp-server)\r\n[](https://opensource.org/licenses/MIT)\r\n\r\n一个模型上下文协议（MCP）服务器，为i18next项目提供翻译管理功能，使Cursor等人工智能助手能够直接与翻译文件交互。\r\n\r\n## 🚀 快速设置\r\n\r\n使用此MCP服务器的最简单方法是使用npx。无需安装：\r\n\r\n```bash\r\nnpx i18next-mcp-server@latest --help\r\n```\r\n\r\n## 🔧 光标配置\r\n\r\n将此添加到光标MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"i18next-translation\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"i18next-mcp-server@latest\"],\r\n      \"env\": {\r\n        \"I18N_PROJECT_ROOT\": \"/path/to/your/project\",\r\n        \"I18N_LOCALES_PATH\": \"public/locales\",\r\n        \"I18N_DEFAULT_LANGUAGE\": \"en\",\r\n        \"I18N_SUPPORTED_LANGUAGES\": \"en,es,fr\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n有关详细的设置说明，请参阅 [CURSOR_SETUP.md](./CURSOR_SETUP.md).\r\n\r\n## 📁 预期项目结构\r\n\r\n```\r\nyour-project/\r\n├── public/locales/          # Translation files\r\n│   ├── en/\r\n│   │   ├── common.json\r\n│   │   └── navigation.json\r\n│   ├── es/\r\n│   │   ├── common.json\r\n│   │   └── navigation.json\r\n│   └── ...\r\n└── src/                     # Your source code\r\n```\r\n\r\n## 🛠️ 可用工具\r\n\r\n### 核心工具\r\n\r\n- **`get_project_info`** -获取项目配置和统计信息\r\n- **`health_check`** -分析翻译文件的健康状况和完整性\r\n- **`scan_code_for_missing_keys`** -查找代码中缺少的翻译键\r\n\r\n### 密钥管理\r\n\r\n- **`add_translation_key`** -添加新的翻译密钥\r\n- **`sync_missing_keys`** -在语言之间同步丢失的密钥\r\n- **`get_missing_keys`** -按语言列出缺少的键\r\n\r\n### 文件操作\r\n\r\n- **`list_files`** -列出所有翻译文件\r\n- **`validate_files`** -验证JSON语法\r\n- **`export_data`** -将翻译导出为各种格式\r\n\r\n### 分析\r\n\r\n- **`coverage_report`** -翻译覆盖率统计\r\n- **`usage_analysis`** -查找未使用的翻译密钥\r\n- **`quality_analysis`** -分析翻译质量\r\n\r\n## 🔧 环境变量\r\n\r\n|变量|描述|默认值|\r\n|----------|-------------|---------|\r\n| `I18N_PROJECT_ROOT` |您的项目根目录|当前目录|\r\n| `I18N_LOCALES_PATH` |翻译文件的路径| `public/locales` |\r\n| `I18N_DEFAULT_LANGUAGE` |源语言| `en` |\r\n| `I18N_SUPPORTED_LANGUAGES` |逗号分隔的语言代码| `en` |\r\n\r\n## 🧪 发展\r\n\r\n```bash\r\ngit clone https://github.com/gtrias/i18next-mcp-server.git\r\ncd i18next-mcp-server\r\nnpm install\r\nnpm run build\r\nnpm test\r\n```\r\n\r\n## 📝 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 了解详情。\r\n\r\n## 🔗 链接\r\n\r\n- [安装指南](./CURSOR_SETUP.md)\r\n- [贡献](./CONTRIBUTING.md)\r\n- [问题](https://github.com/gtrias/i18next-mcp-server/issues)\r\n",
+ "config": {
+  "i18next-translation": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "i18next-mcp-server@latest"
+   ],
+   "env": {
+    "I18N_PROJECT_ROOT": "/path/to/your/project",
+    "I18N_LOCALES_PATH": "public/locales",
+    "I18N_DEFAULT_LANGUAGE": "en",
+    "I18N_SUPPORTED_LANGUAGES": "en,es,fr"
+   }
+  }
+ }
+}

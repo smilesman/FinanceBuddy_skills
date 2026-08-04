@@ -1,0 +1,21 @@
+{
+ "id": "1321",
+ "kind": "mcp",
+ "name": "accordo",
+ "fingerprint_md5": "b99aadb40f51001da7f6c921a95b2b65",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "<div align=\"center\">\r\n  \r\n</div>\r\n\r\n# MCP 服务器协议\r\n\r\n\r\n[](https://sonarcloud.io/summary/new_code?id=AndurilCode_accordo)\r\n\r\n一个强大的MCP（模型上下文协议）服务器，提供 **动态YAML驱动的工作流指导** AI编码代理。具有结构化的开发工作流程，带有进度控制和决策点。\r\n\r\n## 这有什么作用\r\n\r\n该服务器引导AI代理完成结构化、模式驱动的开发工作流程：\r\n\r\n- **📋 动态YAML工作流**：在YAML中定义的具有模式驱动执行的自定义工作流\r\n- **🔍 发现第一**：根据任务自动发现和选择适当的工作流\r\n- **⚡ 实时状态**：具有全面会话管理的实时工作流状态跟踪\r\n- **🎯 强制性指导**：代理商必须遵循权威的分阶段指示\r\n- **🤖 代理生成的工作流**：代理能够动态创建自定义YAML工作流的独特功能\r\n\r\n### 两种工作流方法\r\n\r\n### 内置工作流发现过程\r\n\r\n1. **自动发现** -系统扫描 `.accordo/workflows/` 对于可用的YAML工作流\r\n1. **智能匹配** -根据工作流功能和目标分析任务描述\r\n1. **工作流选择** -Agent从发现的选项中选择最合适的工作流\r\n1. **立即执行** -所选工作流从完整的状态管理和进度控制开始\r\n\r\n这提供了 **即时访问** 使用经过验证的通用开发模式工作流程-编码、文档、调试等！\r\n\r\n### 代理工作流生成过程\r\n\r\n1. **分析任务要求** -代理人了解具体需求\r\n1. **获取创作指导** -提供全面的模板和最佳实践\r\n1. **生成自定义YAML** -Agent创建根据确切要求定制的工作流\r\n1. **开始执行** -自定义工作流在完全状态管理下运行\r\n\r\n这使代理能够创建工作流 **任何域名** -web开发、数据科学、DevOps、研究、文档、测试等等！\r\n\r\n## 快速开始\r\n\r\n### 安装 **CLI 协议**\r\n\r\naccordo CLI提供了MCP服务器的简单配置和管理。直接安装：\r\n\r\n```bash\r\n# Download and run the installation script\r\ncurl -fsSL https://raw.githubusercontent.com/AndurilCode/accordo/refs/heads/main/install.sh | bash\r\n```\r\n\r\n安装程序将：\r\n\r\n- ✅ 检测您的环境（虚拟环境、可用工具）\r\n- 🌍 **全球安装（推荐）**：使用pipx进行全系统访问\r\n- 📦 **虚拟环境**：如果你在静脉注射，使用紫外线或pip\r\n- 🔧 **自动设置**：处理依赖关系和PATH配置\r\n\r\n#### CLI使用情况\r\n\r\n```bash\r\n# Configure MCP servers interactively\r\naccordo configure\r\n\r\n# Quick setup for specific platforms\r\naccordo configure -p cursor -y\r\naccordo configure -p claude-code -y\r\n\r\n# Deploy workflow guidelines to AI assistants\r\naccordo bootstrap-rules              # All assistants\r\naccordo bootstrap-rules cursor       # Cursor only\r\naccordo bootstrap-rules --force all  # Overwrite existing\r\n\r\n# List supported platforms and manage servers\r\naccordo list-platforms\r\naccordo list-servers -p cursor\r\naccordo validate -p cursor\r\n\r\n# Get help\r\naccordo --help\r\n```\r\n\r\n### 手动MCP配置\r\n\r\n或者，安装 [紫外线](https://docs.astral.sh/uv/) 对于Python包管理，请手动配置MCP客户端：\r\n**对于光标** (`.cursor/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"accordo\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"accordo-workflow-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用以下链接安装MCP服务器（光标已安装）：\r\n\r\n[](https://cursor.com/install-mcp?name=accordo&config=eyJjb21tYW5kIjoidXZ4IC0tZnJvbSBnaXQraHR0cHM6Ly9naXRodWIuY29tL0FuZHVyaWxDb2RlL2FjY29yZG9AbWFpbiBhY2NvcmRvLW1jcCJ9)\r\n\r\n## 获取帮助\r\n\r\n### 📚 文档\r\n\r\n- **[完整的文件](docs/)** -全面的指南和参考\r\n- **[安装先决条件](docs/installation/prerequisites.md)** -详细的设置要求\r\n\r\n### 🎯 例子\r\n\r\n- **[工作流示例](examples/workflows/)** -即用型工作流YAML文件\r\n- **[配置示例](examples/configurations/)** -MCP客户端设置示例\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "accordo": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "accordo-workflow-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

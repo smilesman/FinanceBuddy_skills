@@ -1,0 +1,22 @@
+{
+ "id": "3156",
+ "kind": "mcp",
+ "name": "mcp-hko",
+ "fingerprint_md5": "1aa2ccbd2104e2c273a22f094d9ba0ba",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 香港天文台mcp服务器\r\n\r\n此MCP服务器提供香港天文台天气数据API的访问。\r\n它实现了各种工具，允许客户端通过模型上下文协议检索天气预报、地震信息、潮汐数据和其他气象信息。\r\n\r\n## 可用的天气数据工具\r\n\r\n- 九天天气预报(**发现**)\r\n- 当前天气报告(**rhrread**)\r\n- 当地天气预报(**跟随**)\r\n- 天气预警信息(**警告信息**)\r\n- 天气预警摘要(**warnsum**)\r\n- 特殊天气提示(**甜**)\r\n- 快速地震信息(**qem**)\r\n- 当地感受到的地震报告(**毡地震**)\r\n- 潮汐信息(**HHOT，HLT**)\r\n- 天文数据(**SRS，lunardate**)\r\n- 闪电和能见度数据(**LHL、LTMV**)\r\n- 温度记录(**CLMTEMP，CLMMAXT，CLMMINT**)\r\n- 辐射水平报告(**黑麦**)\r\n- 降雨数据(**小时降雨**)\r\n\r\n## 使用示例\r\n\r\n### 获取9天天气预报\r\n\r\n> **提示：**\r\n>\r\n> 下周三的天气怎么样？\r\n\r\n### 获取当前天气预报\r\n\r\n> **提示：**\r\n>\r\n> 现在天气怎么样？\r\n\r\n## 开发设置\r\n\r\n1. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n2. 启动MCP开发服务器：\r\n\r\n```bash\r\nnpm run inspect\r\n```\r\n\r\n3. 构建MCP服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n4. 运行测试：\r\n\r\n```bash\r\nnpm test\r\n```\r\n\r\n5. 在监视模式下运行测试：\r\n\r\n```bash\r\nnpm run test:watch\r\n```\r\n\r\n已经为所有API函数创建了全面的测试。看 [docs/TEST.md](docs/TESTING.md) 了解详情。\r\n\r\n## 配置（克劳德桌面）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-hko\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"github:louiscklaw/mcp-hko\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 配置（docker）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-hko-docker\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"mcp-hko:latest\"],\r\n      \"name\": \"mcp-hko (Docker)\",\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 项目结构\r\n\r\n- `src/` -服务器源代码\r\n- `src/lib/` -API实现模块\r\n- `documentation/` -API文件和测试案例\r\n- `scripts/` -开发公用事业\r\n- `src/tests/` -测试文件\r\n\r\n## 服务器架构\r\n\r\nMCP服务器建立在FastMCP框架上，并实现与香港天文台API相对应的各种工具。\r\n为了提高可读性，该架构显示在两个图表中：\r\n\r\n### 服务器概述\r\n\r\n### 详细的工具结构\r\n\r\n#### REQ01xx：天气预报和警告\r\n\r\n```mermaid\r\nflowchart TD\r\n    subgraph REQ01xx[Weather Forecasts & Warnings]\r\n        direction BT\r\n        B1[9-day Forecast]\r\n        B2[Current Weather]\r\n        B3[Local Forecast]\r\n        B4[Warning Info]\r\n        B5[Warning Summary]\r\n        B6[Special Weather Tips]\r\n    end\r\n```\r\n\r\n#### REQ02xx：地震信息\r\n\r\n```mermaid\r\nflowchart TD\r\n    subgraph REQ02xx[Earthquake Information]\r\n        C1[Quick Earthquake]\r\n        C2[Felt Earthquake]\r\n    end\r\n```\r\n\r\n#### REQ03xx：潮汐、天文和气候\r\n\r\n```mermaid\r\nflowchart TD\r\n    subgraph REQ03xx[Tides, Astronomy & Climate]\r\n        D1[Tide: HHOT]\r\n        D2[Tide: HLT]\r\n        D3[Sunrise/Sunset: SRS]\r\n        D4[Lightning: LHL]\r\n        D5[Visibility: LTMV]\r\n        D6[Temperature: CLMTEMP]\r\n        D7[Max Temperature: CLMMAXT]\r\n        D8[Min Temperature: CLMMINT]\r\n        D9[Radiation: RYES]\r\n    end\r\n```\r\n\r\n#### REQ04xx：阴历\r\n\r\n```mermaid\r\nflowchart TD\r\n    subgraph REQ04xx[Lunar Calendar]\r\n        E1[Lunar Date]\r\n    end\r\n```\r\n\r\n#### 需求05xx：降雨\r\n\r\n```mermaid\r\nflowchart TD\r\n    subgraph REQ05xx[Rainfall]\r\n        F1[Hourly Rainfall]\r\n    end\r\n```\r\n\r\n## 信用：\r\n\r\n- [mcp-hk运输eta](https://github.com/kennyfong19931/mcp-hk-transport-eta)\r\n",
+ "config": {
+  "mcp-hko": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "github:louiscklaw/mcp-hko"
+   ],
+   "env": {}
+  }
+ }
+}

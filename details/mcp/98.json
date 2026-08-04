@@ -1,0 +1,23 @@
+{
+ "id": "98",
+ "kind": "mcp",
+ "name": "chess-5",
+ "fingerprint_md5": "03df770b7d215126e7818eb9cb373dcd",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "通过将以下JSON代码添加到您的JSON配置文件中来安装此MCP服务器\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chess\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--from\",\r\n        \"git+https://github.com/yekai426/chess-mcp.git\",\r\n        \"chess\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "chess": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/yekai426/chess-mcp.git",
+    "chess"
+   ],
+   "env": {}
+  }
+ }
+}

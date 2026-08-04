@@ -1,0 +1,24 @@
+{
+ "id": "467",
+ "kind": "mcp",
+ "name": "spotify-mcp-server",
+ "fingerprint_md5": "53096bd14ce001f3e4d208a9c56ca9ec",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Spotify MCP服务器\r\n\r\n一个简单的MCP服务器，通过LLM控制Spotify播放和管理您喜欢的歌曲。\r\n\r\n## 特性\r\n\r\n- 播放和暂停Spotify播放\r\n- 获取当前曲目的信息\r\n- 将当前曲目添加到您喜欢的歌曲中\r\n\r\n## 设置\r\n\r\n1. **克隆存储库：**\r\n\r\n   ```sh\r\n   git clone https://github.com/yourusername/spotify-mcp-server.git\r\n   cd spotify-mcp-server\r\n   ```\r\n\r\n1. **创建并激活虚拟环境：**\r\n\r\n   ```sh\r\n   python3 -m venv .venv\r\n   source .venv/bin/activate\r\n   ```\r\n\r\n1. **安装依赖项：**\r\n\r\n   ```sh\r\n   pip install uv\r\n   pip install -r requirements.txt\r\n   ```\r\n\r\n1. **创建一个 `.env` 文件：**\r\n\r\n   ```\r\n   SPOTIPY_CLIENT_ID=your_spotify_client_id\r\n   SPOTIPY_CLIENT_SECRET=your_spotify_client_secret\r\n   SPOTIPY_REDIRECT_URI=http://localhost:8888/callback\r\n   ```\r\n\r\n1. **运行服务器：**\r\n\r\n   ```sh\r\n   python main.py\r\n   ```\r\n\r\n## 与Claude Desktop（MCP服务器）集成\r\n\r\n要将此服务器用作Claude的MCP服务器，请将以下条目添加到Claude配置文件中（通常位于 `~/Library/Application Support/Claude/claude_desktop_config.json` 在 macOS 上：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"spotify-mcp-server\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/ABSOLUTE/PATH/TO/PROJECT/spotify-mcp-server\",\r\n        \"run\",\r\n        \"main.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n- 替换 `/ABSOLUTE/PATH/TO/PROJECT/spotify-mcp-server` 与项目的实际路径\r\n- 如果命令 `uv` 无法识别，请给出的绝对路径 `uv` 可执行文件（可以在 `which uv` macOS）\r\n- 确保在配置中或通过 `.env` 文件。\r\n- 编辑配置文件后重新启动Claude。\r\n\r\n## 备注\r\n\r\n- 您需要在以下网址注册您的应用程序 [Spotify开发者仪表板](https://developer.spotify.com/dashboard/) 获取您的客户ID和机密。\r\n\r\n## 示例会话\r\n\r\n以下是使用Claude与Spotify MCP服务器的示例会话：\r\n\r\n\r\n**示例交互：**\r\n\r\n```\r\nUser: Play the current track using Spotify MCP server\r\nClaude: Playback started successfully\r\n\r\nUser: What song is playing?\r\nClaude: Currently playing: Shape of You by Ed Sheeran\r\n\r\nUser: Like this song\r\nClaude: Added 'Shape of You' to your Liked Songs.\r\n```\r\n",
+ "config": {
+  "spotify-mcp-server": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/ABSOLUTE/PATH/TO/PROJECT/spotify-mcp-server",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

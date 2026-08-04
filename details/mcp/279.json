@@ -1,0 +1,22 @@
+{
+ "id": "279",
+ "kind": "mcp",
+ "name": "mcp-browser-lens",
+ "fingerprint_md5": "801cfd71583424ff007209f460c4e9c5",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 🔍 MCP浏览器镜头\r\n\r\n**基于人工智能的浏览器自动化和视觉检测** -让你的AI助手看到、捕捉和分析任何网页。一行安装，自动集成Chrome。\r\n\r\n立即将任何网页转换为AI上下文： *“看看这个Stripe定价页面，帮我构建类似的东西”* 或 *“将我的localhost仪表板与此Notion页面设计进行比较”*.\r\n\r\n## 🚀 **单线安装**\r\n\r\n只需将此添加到您的 `mcp.json` 并重新启动您的AI助手：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-browser-lens\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-browser-lens\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**就是这样！** 无需克隆、构建或设置。\r\n\r\n## ⚡ **接下来会发生什么？**\r\n\r\n当您重新启动AI助手（光标等）时：\r\n\r\n✅ **MCP浏览器镜头将准备好：**\r\n\r\n- 接受AI命令以实现浏览器自动化\r\n- 首次需要时初始化Chrome调试\r\n- 按需捕获、分析和提取网络内容\r\n\r\n**智能Chrome管理**：当您的AI助手首次需要与浏览器选项卡交互时，它将自动初始化Chrome调试。\r\n\r\n## 💬 AI命令示例\r\n\r\n配置后，您可以使用自然语言命令，如：\r\n\r\n```\r\n\"Take a screenshot of this page and suggest design improvements\"\r\n\r\n\"Show me all my open tabs and summarize what's in each one\"\r\n\r\n\"Extract the main navigation elements from this website\"\r\n\r\n\"Compare this page layout with the Stripe pricing page\"\r\n\r\n\"Help me debug the CSS issues on my localhost development site\"\r\n\r\n\"Capture the checkout flow from this e-commerce site\"\r\n\r\n\"Get the color palette and typography from this design system\"\r\n```\r\n\r\n## 🛠️ 可用的MCP工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `initialize_chrome_debugging` |启动Chrome时启用调试（需要时自动调用）|\r\n| `list_tabs` |列出所有打开的带有标题和URL的浏览器选项卡|\r\n| `capture_page_content` |从浏览器选项卡中提取HTML和CSS内容|\r\n| `capture_screenshot` |对特定标签页进行高质量截图|\r\n| `extract_elements` |使用CSS选择器获取详细的元素信息|\r\n| `scroll_page` |滚动页面（像素、视口、元素、顶部/底部）|\r\n| `set_active_tab` |安全切换到特定选项卡|\r\n| `get_browser_capabilities` |检查可用的浏览器功能|\r\n\r\n## 🌐 浏览器支持\r\n\r\n### ✅ **目前支持**\r\n\r\n- **铬/铬** -全面支持智能调试初始化\r\n\r\n### 🔄 **未来支持** （可选）\r\n\r\n- **游猎** -WebKit远程检查器集成（复杂设置）\r\n- **火狐/禅** -Gecko调试协议支持（不同架构）\r\n- **Arc浏览器** -基于Chromium的支持（应与Chrome提供商合作）\r\n\r\n> **备注**Chrome提供了最佳的调试体验和最广泛的兼容性。MCP浏览器镜头智能管理Chrome调试设置，在需要时启动Chrome进行调试。\r\n\r\n## 🖥️ 系统要求\r\n\r\n- **Node.js** 18.0.0或更高\r\n- **谷歌浏览器** （任何最新版本）\r\n- **macOS、Windows或Linux**\r\n\r\n## 👩‍💻 **发展与贡献**\r\n\r\n您想在本地进行贡献或运营吗？\r\n\r\n```bash\r\n# Clone and setup\r\ngit clone https://github.com/EzraApple/mcp-browser-lens.git\r\ncd mcp-browser-lens\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n然后使用本地版本 `mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-browser-lens\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/mcp-browser-lens/dist/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n",
+ "config": {
+  "mcp-browser-lens": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-browser-lens"
+   ],
+   "env": {}
+  }
+ }
+}

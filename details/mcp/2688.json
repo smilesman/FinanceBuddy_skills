@@ -1,0 +1,24 @@
+{
+ "id": "2688",
+ "kind": "mcp",
+ "name": "rolli",
+ "fingerprint_md5": "184d9f2c99c338ee94487119f313d0b5",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# rolli-mcp\r\n\r\n\r\nMCP server for Rolli IQ — social media search and analytics across X, Reddit, YouTube, Facebook, Instagram, Threads, Bluesky, and more.\r\n\r\n\r\n[https://glama.ai/mcp/servers/@rolliinc/rolli-mcp](https://glama.ai/mcp/servers/@rolliinc/rolli-mcp)\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_keyword_searches` |列出所有关键字搜索，按状态筛选|\r\n| `keyword_search` |创建关键字/标签搜索，完成后返回结果|\r\n| `get_keyword_search` |获取关键字搜索结果（状态、分析、帖子）|\r\n| `list_user_searches` |列出所有用户搜索，按状态筛选|\r\n| `user_search` |创建用户配置文件搜索，完成后返回结果|\r\n| `get_user_search` |获取用户搜索结果（个人资料、指标、内容分析）|\r\n| `list_expert_searches` |列出所有专家搜索，按状态筛选|\r\n| `expert_search` |查找与自然语言查询匹配的专家，并在完成后返回结果|\r\n| `get_expert_search` |获取专家搜索结果（使用AI生成的匹配摘要推荐专家）|\r\n| `get_topic_tree` |获取关键字搜索的对话主题树|\r\n| `get_keyword_search_posts` |从关键字搜索中获取原始帖子|\r\n| `get_user_search_posts` |从用户搜索中获取原始帖子|\r\n| `list_agent_runs` |List Rolli Agent运行（人工智能驱动的社会情报调查）|\r\n| `start_agent_run` |启动Rolli Agent调查，完成后返回降价报告|\r\n| `get_agent_run` |获取按ID运行的Rolli代理（运行时进度，完成时完整报告）|\r\n| `cancel_agent_run` |取消挂起或正在运行的Rolli代理运行|\r\n| `rerun_agent_run` |重试失败、等待或卡住的Rolli代理运行|\r\n| `update_agent_run` |固定或重命名Rolli代理运行|\r\n| `delete_agent_run` |软删除已完成或失败的Rolli代理运行|\r\n| `list_agent_schedules` |列出Rolli Agent计划报告|\r\n| `create_agent_schedule` |创建循环的Rolli Agent报告（每日/每周/每月/一次）|\r\n| `get_agent_schedule` |获取Rolli Agent最近10次运行的时间表|\r\n| `update_agent_schedule` |更新Rolli代理计划|\r\n| `delete_agent_schedule` |永久删除Rolli代理计划|\r\n| `pause_agent_schedule` |暂停Rolli代理计划|\r\n| `resume_agent_schedule` |恢复暂停的Rolli代理计划|\r\n| `list_agent_schedule_runs` |列出Rolli Agent计划的完整执行历史记录|\r\n| `get_integration_setup` |获取当前集成设置（webhook URL、名称）|\r\n| `update_integration_setup` |设置搜索完成通知的webhook URL|\r\n| `get_usage` |获取API使用数据和用户细分|\r\n\r\n## 设置\r\n\r\n您需要一个具有API访问权限的Rolli帐户。从获取您的API令牌 [角色.ai](https://rolli.ai).\r\n\r\n### 克劳德桌面/克劳德代码/VS代码/光标/风帆\r\n\r\n添加到MCP配置(`claude_desktop_config.json`, `.vscode/mcp.json`或同等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"rolli\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@rolli/mcp\"],\r\n      \"env\": {\r\n        \"ROLLI_API_TOKEN\": \"your_token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n`ROLLI_USER_ID` 是可选的，默认为 `\"rolli-mcp\"`。将其设置为用您自己的用户ID覆盖。\r\n\r\n### 可选环境变量\r\n\r\n|变量|默认值|描述|\r\n|----------|---------|-------------|\r\n| `ROLLI_USER_ID` | `\"rolli-mcp\"` |与API请求一起发送的用户ID|\r\n| `ROLLI_POLL_INTERVAL_MS` | `5000` |等待搜索结果时的轮询间隔（ms）|\r\n| `ROLLI_MAX_POLL_MS` | `600000` |搜索超时前等待的最长时间（ms）（默认值：10分钟）|\r\n\r\n### 史密瑟里\r\n\r\n此服务器包括 `smithery.yaml` 通过以下方式进行部署 [史密瑟里](https://smithery.ai)。它将在安装过程中提示您输入API令牌。\r\n\r\n## 使用示例\r\n\r\n**在社交媒体上搜索关键字：**\r\n\r\n> “搜索上周在推特和Reddit上关于‘人工智能’的帖子”\r\n\r\n**分析用户配置文件：**\r\n\r\n> “在推特上查找@elonmusk并分析他们最近的帖子”\r\n\r\n**获取主题细分：**\r\n\r\n> “显示我的关键字搜索#123的主题树”\r\n\r\n**检查API使用情况：**\r\n\r\n> “这个月我用了多少次搜索？”\r\n\r\n**设置webhook：**\r\n\r\n> “将我的webhook URL设置为https://myapp.com/rolli-callback\"\r\n\r\n## 发展\r\n\r\n```sh\r\nnpm ci\r\nnpm run lint    # ESLint\r\nnpm run build   # TypeScript\r\nnpm test        # Vitest\r\n```\r\n\r\nCI在每次推送和公关中都会运行 `master`在GitHub上发布的版本会自动发布到npm（需要 `NPM_TOKEN` 回购秘密）。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "rolli": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@rolli/mcp"
+   ],
+   "env": {
+    "ROLLI_API_TOKEN": "your_token"
+   }
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "microceph",
+ "kind": "skill",
+ "name": "microceph",
+ "fingerprint_md5": "6f5efdafe46bcd6f4b98c5222e24a494",
+ "download_count": 0,
+ "category": "Kubernetes",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\n基于 MicroCeph 部署轻量级 Ceph 存储集群，适用于开发测试和边缘场景，简化 Ceph 运维。",
+ "config": {}
+}

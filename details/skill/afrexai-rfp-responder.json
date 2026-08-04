@@ -1,0 +1,12 @@
+{
+ "id": "afrexai-rfp-responder",
+ "kind": "skill",
+ "name": "afrexai-rfp-responder",
+ "fingerprint_md5": "0f52f90fa4425aefdd60f4e418e4515c",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# RFP & Proposal Responder\r\n\r\nTurn RFPs, RFIs, and proposal requests into winning responses. Fast.\r\n\r\n## 功能\r\n\r\nTakes an RFP document (or 键 环境要求) and generates a structured proposal 响应 with:\r\n\r\n- **Executive 摘要** — why you're the right fit, in 3 sentences\r\n- **环境要求 矩阵** — every requirement mapped 迁移到 your capability + evidence\r\n- **定价 截面** — structured 选项 (good/better/best) with 清空 deliverables\r\n- **Risk 缓解** — 主动 answers 迁移到 \"what 可能 go wrong\"\r\n- **Timeline** — realistic milestones with 依赖 called out\r\n- **Differentiators** — what makes your bid stand out vs. generic competitors\r\n\r\n## 用法\r\n\r\n粘贴 the RFP text or 键 环境要求, then tell the 代理:\r\n\r\n```\r\nHere's the RFP: [paste text or attach file]\r\n\r\nOur company: [brief description]\r\nOur strengths: [2-3 key differentiators]\r\nBudget range: [if known]\r\n```\r\n\r\nThe 代理 将 produce a 完成 draft 响应 ready for 审查 and submission.\r\n\r\n## 提示\r\n\r\n- Include your past win 示例 — the 代理 weaves them into proof points\r\n- Specify word/page limits if the RFP has them\r\n- Ask for a \"合规 checklist\" first if the RFP is complex\r\n- Use \"score my 响应\" 迁移到 获取 a self-assessment before submitting\r\n\r\n## 适用人群\r\n\r\n- Agencies responding 迁移到 government or enterprise RFPs\r\n- B2B 服务 companies competing for contracts\r\n- Consultancies that burn 20+ hours per proposal\r\n\r\n## 深入了解\r\n\r\n- [AI Revenue 泄漏 Calculator](https://afrexai-cto.github.io/ai-revenue-calculator/) — 查找 where you're losing money before the next bid\r\n- [AI Context Packs](https://afrexai-cto.github.io/context-packs/) — industry-specific 代理 configurations ($47/pack)\r\n- [代理 设置 Wizard](https://afrexai-cto.github.io/agent-setup/) — 获取 your AI 代理 configured in 5 minutes",
+ "config": {}
+}

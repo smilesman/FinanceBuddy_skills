@@ -1,0 +1,25 @@
+{
+ "id": "2149",
+ "kind": "mcp",
+ "name": "cwa",
+ "fingerprint_md5": "3118dff7cebc711406279f45d9004b0e",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# CWA MCP 伺服器\r\n\r\n一個簡單的模型內容協定 (Model Context Protocol, MCP) 伺服器，可將 Claude Desktop 連接到台灣中央氣象署 (CWA) API 以獲取氣象資料。\r\n\r\n## 功能特色\r\n\r\n- 簡單、輕量的 Node.js 實作\r\n- 容易設定並與 Claude Desktop 配合使用\r\n- 存取所有台灣縣市的 CWA 氣象預報資料\r\n\r\n## 快速開始\r\n\r\n1. 取得 CWA API 金鑰：\r\n   - 前往 [https://opendata.cwa.gov.tw/user/authkey](https://opendata.cwa.gov.tw/user/authkey)\r\n   - 登入（若沒有帳號，請先註冊）\r\n   - 點擊「取得授權碼」按鈕\r\n   - 複製你的 API 金鑰\r\n\r\n2. 使安裝腳本可執行：\r\n   ```bash\r\n   chmod +x install.sh\r\n   ```\r\n\r\n3. 執行安裝腳本：\r\n   ```bash\r\n   ./install.sh\r\n   ```\r\n\r\n4. 編輯位於 `~/.config/claude/claude_desktop_config.json` 的設定檔，加入你的 CWA API 金鑰：\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"cwa\": {\r\n         \"command\": \"node\",\r\n         \"args\": [\r\n           \"/path/to/cwa-server.js\"\r\n         ],\r\n         \"env\": {\r\n           \"CWA_API_KEY\": \"CWA-1E740A28-FFDC-4186-BE0D-B02662F066EF\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n5. 重新啟動 Claude Desktop\r\n\r\n6. 開始在與 Claude 的對話中使用 CWA 氣象資料！\r\n\r\n## 可用工具\r\n\r\n### `get_weather_forecast`\r\n透過縣市名稱獲取台灣未來 36 小時的氣象預報。\r\n\r\n在 Claude 中的使用範例：\r\n```\r\n台北市現在的天氣如何？\r\n```\r\n\r\n## 使用 Docker\r\n\r\n你也可以使用 Docker 來執行這個 MCP 伺服器：\r\n\r\n1. 建立 `docker-compose.yml` 檔案：\r\n   ```yaml\r\n   version: '3'\r\n   services:\r\n     cwa-mcp-server:\r\n       container_name: cwa-mcp-server\r\n       image: node:18\r\n       volumes:\r\n         - ./:/app\r\n       working_dir: /app\r\n       command: node cwa-server.js\r\n       environment:\r\n         - CWA_API_KEY=你的_CWA_API_金鑰\r\n       restart: unless-stopped\r\n   ```\r\n\r\n2. 將 `你的_CWA_API_金鑰` 替換為你實際的 CWA API 金鑰\r\n\r\n3. 更新你的 Claude Desktop 設定：\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"cwa\": {\r\n         \"command\": \"docker\",\r\n         \"args\": [\r\n           \"exec\",\r\n           \"-i\",\r\n           \"cwa-mcp-server\",\r\n           \"node\",\r\n           \"cwa-server.js\"\r\n         ]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n4. 啟動 Docker 容器：\r\n   ```bash\r\n   docker-compose up -d\r\n   ```\r\n\r\n5. 重新啟動 Claude Desktop\r\n\r\n## 可用地區列表\r\n\r\n支援以下縣市名稱：\r\n- 宜蘭縣、花蓮縣、臺東縣、澎湖縣、金門縣、連江縣\r\n- 臺北市、新北市、桃園市、臺中市、臺南市、高雄市\r\n- 基隆市、新竹縣、新竹市、苗栗縣、彰化縣、南投縣\r\n- 雲林縣、嘉義縣、嘉義市、屏東縣\r\n\r\n## 故障排除\r\n\r\n- 確保已安裝 Node.js 18 或更高版本\r\n- 檢查你的 CWA API 金鑰是否有效並正確設定在設定檔中\r\n- 使用 `./test.sh` 測試伺服器以確認其正常運作\r\n- 確保 Claude Desktop 已正確設定，並在設定變更後重新啟動\r\n",
+ "config": {
+  "cwa": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "exec",
+    "-i",
+    "cwa-mcp-server",
+    "node",
+    "cwa-server.js"
+   ],
+   "env": {}
+  }
+ }
+}

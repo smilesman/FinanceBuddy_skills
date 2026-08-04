@@ -1,0 +1,24 @@
+{
+ "id": "3071",
+ "kind": "mcp",
+ "name": "dueros-iot-mcp",
+ "fingerprint_md5": "c471e801963f99c369f1afc8a5c154d1",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 小度IoT MCP Server\r\n\r\n一个基于 Model Context Protocol (MCP) 的小度IoT服务，让AI应用能够无缝控制小度IoT智能设备。支持Claude、Cursor、Cline等所有兼容MCP协议的平台。\r\n\r\n## ✨ 特性\r\n\r\n- 🎯 **外设控制** - 通过自然语言指令控制小度IoT各类智能设备\r\n- 🎯 **外设查询** - 查询小度IoT智能设备列表和状态详情\r\n- 🎯 **场景渲染** - 控制已有场景或者让模型自己渲染场景\r\n- 🎯 **场景查询** - 查询小度IoT场景列表\r\n\r\n## 📋 目录\r\n\r\n- [快速开始](#-快速开始)\r\n- [接入方式](#-接入方式)\r\n- [工具说明](#-工具说明)\r\n\r\n## 🚀 快速开始\r\n\r\n### 前提条件\r\n\r\n- 百度开发者账号\r\n- 小度智能设备\r\n- 支持MCP的AI工具（Claude、Cursor、Cline等）\r\n\r\n### 获取访问令牌\r\n\r\n1. 访问[百度开发者平台](https://developer.dueros.baidu.com/)\r\n2. 按照[接入授权文档](https://developer.dueros.baidu.com/doc/dueros-bot-platform//mcp-server/prepare/auth-intro_markdown)获取`access_token`\r\n3. 保存好您的`access_token`，后续配置时需要使用\r\n\r\n## 🔌 接入方式\r\n\r\n### Stdio 接入\r\n\r\n#### 支持的工具\r\n- **Cursor** ✅\r\n- **Claude Desktop** ✅\r\n- **Cline** ✅\r\n- **其他支持MCP的工具** ✅\r\n\r\n#### 配置\r\n\r\n**以 Cursor 为例：**\r\n\r\n1. 打开 Cursor → 设置 → MCP\r\n2. 编辑 `mcp.json` 配置文件：\r\n\r\n ```json\r\n    {\r\n      \"mcpServers\": {\r\n        \"dueros-iot-mcp\": {\r\n          \"command\": \"npx\",\r\n          \"args\": [\r\n            \"-y\",\r\n            \"dueros-iot-mcp\"\r\n          ],\r\n          \"env\": {\r\n            \"ACCESS_TOKEN\": \"你的ACEESS_TOKEN\"\r\n          }\r\n        }\r\n      }\r\n    }\r\n```\r\n3. 保存配置，重启Cursor\r\n4. 在会话中选择 **Agent** 模式开始使用\r\n\r\n**Claude Desktop 配置示例：**\r\n\r\n编辑 `claude_desktop_config.json`：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dueros-iot-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"dueros-iot-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"ACCESS_TOKEN\": \"你的ACEESS_TOKEN\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🛠️ 工具说明\r\n\r\n本MCP服务器提供以下4个工具，让您能够完全控制小度IoT智能设备：\r\n\r\n### 设备控制 `IOT_CONTROL_DEVICES`\r\n- 说明：控制智能家居设备工具\r\n- 输入：\r\n    - `action`：操作类型\r\n    - `applianceName`：设备名称\r\n    - `roomName`：房间名称\r\n    - `attribute`：设备属性\r\n    - `value`：设备属性值\r\n- 输出：\r\n    - `status`：状态\r\n    - `msg`：消息\r\n    - `data`：数据\r\n    - `logId`：日志ID\r\n\r\n### 查询设备列表和状态 `GET_ALL_DEVICES_WITH_STATUS`\r\n- 说明：查询所有智能家居设备列表和状态工具\r\n- 输入：\r\n    - `applianceName`：设备名称\r\n    - `roomName`：房间名称\r\n- 输出：\r\n    - `list`：设备列表\r\n        - `applianceName`：设备名称\r\n        - `roomName`：房间名称\r\n        - `applianceTypes`：设备类型\r\n\r\n### 场景触发 `TRIGGER_SCENES`\r\n- 说明：触发场景工具\r\n- 输入：\r\n    - `sceneName`：场景名称\r\n- 输出：\r\n    - `status`：状态\r\n    - `msg`：消息\r\n    - `data`：数据\r\n    - `logId`：日志ID\r\n\r\n### 场景查询 `GET_ALL_SCENES`\r\n- 说明：查询场景列表工具\r\n- 输入：\r\n    - `sceneName`：场景名称\r\n- 输出：\r\n    - `list`：场景列表\r\n        - `sceneName`：场景名称\r\n        - `roomName`：房间名称\r\n        - `sceneEnable`：场景是否启用\r\n",
+ "config": {
+  "dueros-iot-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "dueros-iot-mcp"
+   ],
+   "env": {
+    "ACCESS_TOKEN": "你的ACEESS_TOKEN"
+   }
+  }
+ }
+}

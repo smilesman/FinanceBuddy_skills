@@ -1,0 +1,25 @@
+{
+ "id": "2012",
+ "kind": "mcp",
+ "name": "neutron",
+ "fingerprint_md5": "bdfe8e05f19d07945a5edac8f094c585",
+ "download_count": 0,
+ "category": "支付服务",
+ "tags": "",
+ "version": "",
+ "readme": "# 中子MCP服务器\r\n\r\n\r\n在2分钟内将比特币闪电支付添加到任何AI驱动的应用程序中。此MCP服务器连接 [中子付款API](https://docs.neutron.me) Claude、Cursor、Windsurf和任何兼容MCP的客户端。\r\n\r\n## 设置（2分钟）\r\n\r\n### 1.获取API密钥\r\n\r\n注册地址： [portal.neutron.me](https://portal.neutron.me) → API密钥。\r\n\r\n### 2.添加到您的AI工具\r\n\r\n将此配置粘贴到您选择的工具中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"neutron\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"neutron-mcp\"],\r\n      \"env\": {\r\n        \"NEUTRON_API_KEY\": \"your_api_key\",\r\n        \"NEUTRON_API_SECRET\": \"your_api_secret\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**粘贴位置：**\r\n\r\n|工具|配置文件|\r\n|------|-------------|\r\n| **克劳德桌面** | `~/Library/Application Support/Claude/claude_desktop_config.json` （Mac）或 `%APPDATA%\\Claude\\claude_desktop_config.json` （Windows）|\r\n| **克劳德代码** | `~/.claude.json` 或项目 `.mcp.json` |\r\n| **光标** | `.cursor/mcp.json` 在您的项目中|\r\n| **帆板运动** |Windsurf MCP设置|\r\n| **Cline（VS代码）** |临床MCP设置|\r\n\r\n### 3.开始使用\r\n\r\n问你的AI助手：\r\n\r\n> “检查我的Neutron钱包余额”\r\n\r\n就是这样。你有联系。\r\n\r\n______________________________________________________________________\r\n\r\n## 它能做什么？\r\n\r\n### 接受付款\r\n\r\n> “创建50000 sats的闪电发票”\r\n\r\n您的AI创建发票，返回付款字符串和二维码页面。客户立即付款。\r\n\r\n### 发送付款\r\n\r\n> “发送10000个卫星到alice@getalby.com\"\r\n\r\n> “支付此闪电发票：lnbc100u1p…”\r\n\r\n> “将0.01 BTC发送到bc1qxy2kgd…”\r\n\r\n### 管理财务\r\n\r\n> “显示所有钱包余额”\r\n\r\n> “将0.005 BTC转换为USDT”\r\n\r\n> “目前BTC/USD的汇率是多少？”\r\n\r\n### 菲亚特支付\r\n\r\n> “查找越南的银行代码”\r\n\r\n> “向机构970422的银行账户0123456789汇款500000越南盾”\r\n\r\n### 网络钩子\r\n\r\n> “在以下位置设置webhookhttps://myapp.com/payments秘密我的密钥”\r\n\r\n______________________________________________________________________\r\n\r\n## 全部20个工具\r\n\r\n### 账户\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `neutron_authenticate` |验证API凭据|\r\n| `neutron_get_account` |帐户信息和状态|\r\n| `neutron_get_wallets` |所有钱包余额|\r\n| `neutron_get_wallet` |按ID指定钱包|\r\n\r\n### 支付\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `neutron_create_lightning_invoice` |生成闪电发票以接收BTC（自动确认）|\r\n| `neutron_create_transaction` |创建任何支付：闪电、链上、USDT、法定货币|\r\n| `neutron_confirm_transaction` |确认报价交易以执行它|\r\n| `neutron_get_transaction` |检查交易状态|\r\n| `neutron_list_transactions` |列出/过滤交易历史记录|\r\n\r\n### 接收地址\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `neutron_get_btc_address` |获取您的比特币链上存款地址|\r\n| `neutron_get_usdt_address` |获取您的USDT存款地址（TRON或以太坊）|\r\n\r\n### 网络钩子\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `neutron_create_webhook` |注册webhook以获取付款通知|\r\n| `neutron_list_webhooks` |列出已注册的webhooks|\r\n| `neutron_update_webhook` |更新webhook URL或密码|\r\n| `neutron_delete_webhook` |删除webhook|\r\n\r\n### 参考\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `neutron_get_rate` |BTC汇率（美元、越南盾、USDT等）|\r\n| `neutron_get_fiat_institutions` |按国家/地区划分的银行代码（用于法定支付）|\r\n\r\n______________________________________________________________________\r\n\r\n## 关键概念\r\n\r\n- **金额以BTC为单位**不是satoshis。10000个卫星= `0.0001` BTC。\r\n- **两步流程**: `create_transaction` 返回报价→ `confirm_transaction` 执行它。\r\n- **仅在一侧设置金额** --源或目标，而不是两者。\r\n- **`create_lightning_invoice`** 是一个自动确认的快捷方式（不需要第二步）。\r\n- **菲亚特支付需要KYC** （收件人姓名+国家）。比特币（闪电+链上）、稳定币（TRON/ETH上的USDT）和掉期需要 **没有KYC**.\r\n\r\n______________________________________________________________________\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `NEUTRON_API_KEY` |是|您的中子API密钥|\r\n| `NEUTRON_API_SECRET` |是|您的中子API秘密|\r\n| `NEUTRON_API_URL` |无| API URL（默认值： `https://api.neutron.me`) |\r\n\r\n______________________________________________________________________\r\n\r\n## 示例：向Web应用程序添加付款\r\n\r\n问你的AI助手：\r\n\r\n> “帮助我将比特币支付添加到我的Next.js结账中。当用户点击支付时，为购物车总额创建闪电发票，显示二维码，并在webhook触发时重定向到成功页面。”\r\n\r\nAI使用 `neutron_create_lightning_invoice` 对于发票， `neutron_create_webhook` 用于通知，并在一次对话中编写前端+后端代码。\r\n\r\n______________________________________________________________________\r\n\r\n## 链接\r\n\r\n- **文档**: [docs.neutron.me](https://docs.neutron.me)\r\n- **API 参考**: [docs.neutron.me/reference](https://docs.neutron.me/reference/overview)\r\n- **MCP指南**: [docs.neutron.me/docs/mcp-for-ai-试剂](https://docs.neutron.me/docs/mcp-for-ai-agents)\r\n- **问题**: [GitHub](https://github.com/Neutronpay/neutron-mcp/issues)\r\n- **联系**: support@neutron.me\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "neutron": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "neutron-mcp"
+   ],
+   "env": {
+    "NEUTRON_API_KEY": "your_api_key",
+    "NEUTRON_API_SECRET": "your_api_secret"
+   }
+  }
+ }
+}

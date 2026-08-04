@@ -1,0 +1,24 @@
+{
+ "id": "341",
+ "kind": "mcp",
+ "name": "obs-2",
+ "fingerprint_md5": "ffa89993fd474617cd8862262c1e3aef",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# obs-mcp服务器\r\n\r\n用于控制的MCP（模型上下文协议）服务器 [OBS工作室](https://obsproject.com/) 通过内置的obs websocket插件。让Claude控制您的场景、录制、流媒体、音频等。\r\n\r\n## 需求\r\n\r\n- [OBS工作室](https://obsproject.com/) 28或更高版本（内置obs websocket）\r\n- Node.js 18或更高版本\r\n\r\n## OBS设置\r\n\r\n1. 开放式OBS工作室\r\n1. 首选 **工具→ WebSocket服务器设置**\r\n1. 检查 **启用WebSocket服务器**\r\n1. 设置密码（推荐）\r\n1. 注意端口（默认值： `4455`)\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n创建一个 `.env` 项目根目录中的文件：\r\n\r\n```env\r\nOBS_WS_URL=ws://localhost:4455\r\nOBS_WS_PASSWORD=your_password_here\r\n```\r\n\r\n## Claude桌面配置\r\n\r\n将以下内容添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"obs\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"C:\\\\path\\\\to\\\\obs-mcp-server\\\\obs-mcp-server.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或使用 `npx` （无需克隆）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"obs\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"obs-mcp-server\"],\r\n      \"env\": {\r\n        \"OBS_WS_PASSWORD\": \"your_password_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 状态和场景\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_status` |当前场景、流媒体状态、录制状态+时间码|\r\n| `list_scenes` |列出活动收藏中的所有场景|\r\n| `set_scene` |切换到命名场景|\r\n\r\n### 录制和流媒体\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `start_recording` |开始录制|\r\n| `stop_recording` |停止录制（返回输出文件路径）|\r\n| `toggle_recording` |打开/关闭录制|\r\n| `start_streaming` |开始流媒体播放|\r\n| `stop_streaming` |停止流媒体播放|\r\n\r\n### 来源\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_sources` |列出场景中的所有源|\r\n| `set_source_visibility` |显示或隐藏源|\r\n\r\n### 音频\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_audio_inputs` |列出所有处于静音/音量状态的音频输入|\r\n| `set_mute` |将音频输入静音或取消静音|\r\n| `toggle_mute` |在音频输入上切换静音|\r\n| `set_volume` |设置音频输入的音量（0.0–1.0）|\r\n\r\n### 画布\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `set_canvas_resolution` |设置基础/输出分辨率和FPS（每次采集的全局）|\r\n\r\n### 场景管理\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `create_scene` |创建新的空场景|\r\n| `remove_scene` |删除场景|\r\n| `rename_scene` |重命名场景|\r\n\r\n### 场景集合\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_scene_collections` |列出所有收藏，显示活动|\r\n| `set_scene_collection` |切换到其他收藏|\r\n| `create_scene_collection` |创建新的场景集合|\r\n\r\n### 档案\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_profiles` |列出所有配置文件，显示活动状态|\r\n| `set_profile` |切换到其他配置文件|\r\n| `create_profile` |创建新配置文件|\r\n| `remove_profile` |删除个人资料|\r\n\r\n### 杂项\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `save_screenshot` |将当前输出的屏幕截图保存到磁盘|\r\n\r\n## 备注\r\n\r\n- **画布分辨率** 是一个全局OBS设置——它适用于当前集合中的所有场景。为不同的宽高比使用单独的场景集合（例如YouTube短片的16:9和9:16）。\r\n- **音频输入类型** 默认为Windows(`wasapi_*`).在macOS上，更新 `list_audio_inputs` 要使用的处理程序 `coreaudio_input_capture` / `coreaudio_output_capture`.\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "obs": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "obs-mcp-server"
+   ],
+   "env": {
+    "OBS_WS_PASSWORD": "your_password_here"
+   }
+  }
+ }
+}

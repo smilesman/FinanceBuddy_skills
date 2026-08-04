@@ -1,0 +1,24 @@
+{
+ "id": "2974",
+ "kind": "mcp",
+ "name": "tesouro-direto",
+ "fingerprint_md5": "e2715a3e662f08634679ecafe919b02f",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP 服务器\r\n\r\n\r\n模型上下文协议（MCP）服务器实现，用于与Tesouro Direto API集成，实现对巴西国债数据的自然语言访问。\r\n\r\n______________________________________________________________________\r\n\r\n## 特性\r\n\r\n通过兼容MCP的客户端，使用日常语言查询市场数据、债券详细信息并搜索/过滤债券。\r\n\r\n- **MCP工具**:\r\n  - `market_data`：检索一般国债市场数据（开盘/收盘时间、状态）\r\n  - `bond_data`：获取特定债券的详细信息\r\n  - `search_bonds`：按类型、到期日和其他条件搜索/筛选债券\r\n- **智能缓存**：基于API的10分钟内存缓存更新时间戳，以减少调用，同时确保数据新鲜度。\r\n\r\n______________________________________________________________________\r\n\r\n## 示例用法\r\n\r\n在MCP兼容的客户端中，您可以使用以下提示：\r\n\r\n- *“显示所有可用的Tesouro Direto债券”*\r\n- *“获取债券IPCA+2029的详细信息”*\r\n- *“搜索2045年后到期的IPCA债券”*\r\n- *“目前的国债市场状况如何？”*\r\n- *“提供IPCA和固定利率债券收益率最高的前三种债券的详细分析。”*\r\n\r\n______________________________________________________________________\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Tesouro Direto MCP Server for Claude Desktop [史密瑟里](https://smithery.ai/server/@AtilioA/tesouro-direto-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @AtilioA/tesouro-direto-mcp --client claude\r\n```\r\n\r\n### 通过npm安装\r\n\r\n### MCP客户端配置的JSON示例（Cursor/Claude）\r\n\r\n随着 [新巴拿马型船舶](https://docs.npmjs.com/cli/commands/npx)，将此添加到您的 `~/.cursor/mcp.json`，或 `claude_desktop_config.json` 如果您正在使用其桌面应用程序：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"tesouro-direto\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\r\n                \"-y\",\r\n                \"tesouro-direto-mcp\"\r\n            ],\r\n            \"env\": {\r\n                \"USE_MCP_CACHE\": \"true\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n### 从源头构建\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/AtilioA/tesouro-direto-mcp.git\r\ncd tesouro-direto-mcp\r\n\r\n# Install dependencies\r\npnpm install\r\n\r\n# Build the project\r\npnpm run build\r\n```\r\n\r\n您可以在构建后直接运行MCP服务器：\r\n\r\n```bash\r\nnode dist/index.js\r\n```\r\n\r\n或将其与任何兼容MCP的客户端（如MCP Inspector）一起使用：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector dist/index.js\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 工具\r\n\r\n### `market_data`\r\n\r\n检索一般市场数据，包括开盘/收盘时间和当前状态。\r\n\r\n### `bond_data`\r\n\r\n通过代码获取特定债券的详细信息。\r\n\r\n### `search_bonds`\r\n\r\n按类型（SELIC、IPCA、PREFIXADO）、到期日等搜索和过滤债券。\r\n\r\n______________________________________________________________________\r\n\r\n## 环境变量\r\n\r\n|变量|描述|默认值|\r\n|------------------|---------------------------------------------|---------|\r\n| `USE_MCP_CACHE` |为API响应启用内存中缓存| `true` |\r\n\r\n在您的环境或MCP客户端配置中设置这些。\r\n\r\n______________________________________________________________________\r\n\r\n## 项目结构\r\n\r\n```\r\nsrc/\r\n├── api/         # API client for Tesouro Direto\r\n│   └── tesouroDireto.ts\r\n├── cache/       # Caching implementation\r\n│   └── apiCache.ts\r\n├── resources/   # MCP resources implementation\r\n│   └── index.ts\r\n├── tools/       # MCP tools implementation\r\n│   ├── bondData.ts\r\n│   ├── marketData.ts\r\n│   └── searchBonds.ts\r\n├── types/       # Type definitions\r\n│   └── index.ts\r\n├── utils/       # Utility functions\r\n│   ├── errorHandler.ts\r\n│   └── logger.ts\r\n├── client.ts    # Example MCP client\r\n├── index.ts     # Entry point\r\n└── server.ts    # MCP server implementation\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 可用脚本\r\n\r\n- `pnpm run build` / `npm run build`：构建项目\r\n- `pnpm start` / `npm start`：启动服务器\r\n- `pnpm run dev` / `npm run dev`：以自动重新加载的开发模式启动服务器\r\n\r\n______________________________________________________________________\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请在上打开问题或提交拉取请求 [GitHub](https://github.com/AtilioA/tesouro-direto-mcp).\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\n此项目根据GNU Affero通用公共许可证v3.0获得许可。请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "tesouro-direto": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "tesouro-direto-mcp"
+   ],
+   "env": {
+    "USE_MCP_CACHE": "true"
+   }
+  }
+ }
+}

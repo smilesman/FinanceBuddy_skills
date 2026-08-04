@@ -1,0 +1,25 @@
+{
+ "id": "57",
+ "kind": "mcp",
+ "name": "bach-deezer_1",
+ "fingerprint_md5": "468124066256460fdd3ec6ac744b4dbd",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Deezer 1 MCP Server\r\n\r\n[English](./README_EN.md) |Simplified Chinese| [Traditional Chinese](./README_ZH-TW.md)\r\n\r\nMCP server used to access Deezer 1 API.\r\n\r\n## 🚀  Quickly experience using the EMCP platform\r\n\r\n**[EMCP](https://sit-emcp.kaleido.guru)** It is a powerful MCP server management platform that allows you to quickly use various MCP servers without manual configuration!\r\n\r\n### Quick Start:\r\n\r\n1. 🌐  visit **[EMCP platform](https://sit-emcp.kaleido.guru)**\r\n1. 📝  Register and log in to your account\r\n1. 🎯  enter **MCP Square**Browse all available MCP servers\r\n1. 🔍  Search or find this server（`bach-deezer_1`）\r\n1. 🎉  click **Install MCP** button\r\n1. ✅  Done! Can be used in your application\r\n\r\n### Advantages of the EMCP platform:\r\n\r\n- ✨ **Zero configuration**No need to manually edit configuration files\r\n- 🎨 **Visual management**Easily manage all MCP servers through a graphical interface\r\n- 🔐 **safe and reliable**Unified management of API keys and authentication information\r\n- 🚀 **One-click installation**MCP Square offers a wide range of server options\r\n- 📊 **Use statistics**Real time viewing of service invocation status\r\n\r\nVisit Now **[EMCP platform](https://sit-emcp.kaleido.guru)** Start your MCP journey!\r\n\r\n______________________________________________________________________\r\n\r\n## Introduction\r\n\r\nThis is an MCP server used to access the Deezer 1 API.\r\n\r\n- **PyPI package name**: `bach-deezer_1`\r\n- **version**: 1.0.0\r\n- **transmission protocol**: stdio\r\n\r\n## install\r\n\r\n### Install from PyPI:\r\n\r\n```bash\r\npip install bach-deezer_1\r\n```\r\n\r\n### Install from source code:\r\n\r\n```bash\r\npip install -e .\r\n```\r\n\r\n## run\r\n\r\n### Method 1: Use UVX (recommended, no installation required)\r\n\r\n```bash\r\n# 运行（uvx 会自动安装并运行）\r\nuvx --from bach-deezer_1 bach_deezer_1\r\n\r\n# 或指定版本\r\nuvx --from bach-deezer_1@latest bach_deezer_1\r\n```\r\n\r\n### Method 2: Direct Run (Development Mode)\r\n\r\n```bash\r\npython server.py\r\n```\r\n\r\n### Method 3: Run as a command after installation\r\n\r\n```bash\r\n# 安装\r\npip install bach-deezer_1\r\n\r\n# 运行（命令名使用下划线）\r\nbach_deezer_1\r\n```\r\n\r\n## configuration\r\n\r\n### API certification\r\n\r\nThis API requires authentication. Please set environment variables:\r\n\r\n```bash\r\nexport API_KEY=\"your_api_key_here\"\r\n```\r\n\r\n### environment variable\r\n\r\n|Variable Name | Description | Required|\r\n|--------|------|------|\r\n| `API_KEY` |API Key | Yes|\r\n| `PORT` |Not applicable | No|\r\n| `HOST` |Not applicable | No|\r\n\r\n### Use in cursor\r\n\r\nEdit cursor MCP configuration file `~/.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bach-deezer_1\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--from\", \"bach-deezer_1\", \"bach_deezer_1\"],\r\n      \"env\": {\r\n        \"API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Using Claude Desktop\r\n\r\nEdit Claude Desktop configuration file `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bach-deezer_1\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--from\", \"bach-deezer_1\", \"bach_deezer_1\"],\r\n      \"env\": {\r\n        \"API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## Available tools\r\n\r\nThis server provides the following tools:\r\n\r\n### `api_endpoint`\r\n\r\nPlease manually add endpoint information according to the RapidAPI page\r\n\r\n**endpoint**: `GET /endpoint`\r\n\r\n**parameter**:\r\n\r\n- `param` (string): Parameters\r\n\r\n______________________________________________________________________\r\n\r\n## tech stack\r\n\r\n- **transmission protocol**: stdio\r\n- **HTTP client**: httpx\r\n\r\n## license\r\n\r\nMIT License - see details [LICENSE](./LICENSE) Document.\r\n\r\n## development\r\n\r\nThis server is composed of [API-to-MCP](https://github.com/BACH-AI-Tools/api-to-mcp) Tool generation.\r\n\r\nVersion: 1.0.0\r\n",
+ "config": {
+  "bach-deezer_1": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "bach-deezer_1",
+    "bach_deezer_1"
+   ],
+   "env": {
+    "API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

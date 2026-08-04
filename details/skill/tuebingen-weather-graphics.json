@@ -1,0 +1,12 @@
+{
+ "id": "tuebingen-weather-graphics",
+ "kind": "skill",
+ "name": "tuebingen-weather-graphics",
+ "fingerprint_md5": "53b35b9e356dfb54c744d1b4b5c747dc",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Tübingen Weather Graphics\r\n\r\n## Überblick\r\nErstellt eine ansprechende PNG-Grafik (max/min-Temperaturen + Regenwahrscheinlichkeit für 5 Tage) auf Basis von Open-Meteo. Ideal für morgendliche Forecast-Posts via Telegram oder Archivierung.\r\n\r\n## Voraussetzungen\r\n- Python 3.11+ \r\n- `matplotlib`, `n`n`CODE_2___2__` (am einfachsten via virtuelles Environment):\r\n  ```bash\r\n  python3 -m venv /tmp/tuebingen-plot\r\n  source /tmp/tuebingen-plot/bin/activate\r\n  pip 安装 matplotlib\r\n  ```\r\n\r\n## 快速开始\r\n```bash\r\n/tmp/tuebingen-plot/bin/python \\\r\n  skills/tuebingen-weather-graphics/scripts/generate_forecast_graph.py \\\r\n  --days 5 \\\r\n  --output data/weather/tuebingen_forecast.png\r\n```\r\nAusgabe: \r\n- PNG unter `data/weather/...`\r\n- Textzusammenfassung im Terminal (z. B. „Fri 13.02: 5/10°C, Regen 85% | …“)\r\n\r\n## Automatischer Versand\r\n1. **Cron-Job 07:30 (Beispiel):**\r\n   ```bash\r\n   openclaw cron 添加 <<'JSON'\r\n   {\r\n     \"name\": \"tuebingen-forecast-graphic\",\r\n     \"schedule\": { \"kind\": \"cron\", \"expr\": \"30 7 * * *\", \"tz\": \"Europe/Berlin\" },\r\n     \"sessionTarget\": \"isolated\",\r\n     \"payload\": {\r\n       \"kind\": \"agentTurn\",\r\n       \"model\": \"default\",\r\n       \"message\": \"Run `/tmp/tuebingen-plot/bin/python skills/tuebingen-weather-graphics/scripts/generate_forecast_graph.py --output data/weather/tuebingen_forecast.png`. Send Master the summary text plus attach the PNG.\"\r\n     }\r\n   }\r\n   JSON\r\n   ```\r\n2. **Telegram Versand:** `message.send` mit `med`med`a=data/weather/tuebingen_forecast.png`\r\n\r\n## 故障排除\r\n- **Matplotlib ImportError:** Stelle sicher, dass das oben genannte venv aktiv ist oder die Pakete systemweit installiert wurden.\r\n- **Leere Daten:** Open-Meteo liefert manchmal keine Regenwahrscheinlichkeit → Script zeigt 0%. Kann im Code angepasst werden.\r\n- **Mehr Tage:** `--days 7` o. Ä. möglich (die API liefert bis zu 7+ Tage im daily-Block).\r\n\r\n## Ressourcen\r\n- `scripts/generate_forecast_graph.py` – Lädt Daily-Daten, zeichnet Linien/Flächen-Plot + Regen-Balken, speichert PNG.",
+ "config": {}
+}

@@ -1,0 +1,21 @@
+{
+ "id": "1893",
+ "kind": "mcp",
+ "name": "cse",
+ "fingerprint_md5": "49f014593049b5b4c508ad3fc055fe53",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# CSE MCP 服务器\r\n\r\n\r\n一个模型上下文协议（MCP）服务器，提供来自科伦坡证券交易所（CSE）的实时股市数据。该服务器使人工智能助手能够搜索公司并从斯里兰卡股市获取当前股票价格。\r\n\r\n## 特点/特性\r\n\r\n- **公司搜索**通过模糊匹配按名称或代码搜索CSE（加拿大证券交易所）上市公司的股票\r\n- **实时股票数据**获取任何CSE（加拿大证券交易所）股票代码的当前价格、变化量及百分比变化\r\n- **模糊匹配**即使名称有拼写错误或只是部分名称，也能找到公司\r\n- **308家公司**所有在CSE（证券交易所，此处为假设缩写，具体需根据上下文确定）上市公司的完整数据库\r\n\r\n## 使用MCP客户端进行安装\r\n\r\n### Claude Desktop（桌面版Claude）/ Claude Code（代码版Claude）\r\n\r\n#### 使用Claude CLI（推荐）\r\n\r\n```bash\r\nclaude mcp add cse-mcp -- npx cse-mcp\r\n```\r\n\r\n#### 手动配置\r\n\r\n或者，添加到您的Claude配置中（`~/Library/Application Support/Claude/claude_desktop_config.json` （在Mac上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cse\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"cse-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 其他MCP客户端\r\n\r\n使用以下命令配置：\r\n\r\n- 命令： `npx`\r\n- 参数： `[\"cse-mcp\"]`\r\n\r\n## 可用工具\r\n\r\n### 1. 搜索公司\r\n\r\n搜索在科伦坡证券交易所上市的公司。\r\n\r\n**输入：**\r\n\r\n- `query` (字符串)：要搜索的公司名称或代码\r\n\r\n**特点：**\r\n\r\n- 使用模糊搜索返回前3个匹配项\r\n- 同时搜索符号和公司名称\r\n- 处理拼写错误和部分匹配\r\n\r\n**示例：**\r\n\r\n```json\r\n{\r\n  \"query\": \"john keells\"\r\n}\r\n```\r\n\r\n**回复：**\r\n\r\n```json\r\n{\r\n  \"query\": \"john keells\",\r\n  \"count\": 3,\r\n  \"companies\": [\r\n    {\r\n      \"id\": 297,\r\n      \"symbol\": \"JKH.N0000\",\r\n      \"name\": \"JOHN KEELLS HOLDINGS PLC\"\r\n    },\r\n    {\r\n      \"id\": 596,\r\n      \"symbol\": \"JKL.N0000\",\r\n      \"name\": \"JOHN KEELLS HOTELS PLC\"\r\n    },\r\n    {\r\n      \"id\": 556,\r\n      \"symbol\": \"JKPL.N0000\",\r\n      \"name\": \"JOHN KEELLS PLC\"\r\n    }\r\n  ],\r\n  \"note\": \"Top 3 matches using fuzzy search\"\r\n}\r\n```\r\n\r\n### 2. 获取股票数据\r\n\r\n获取特定股票代码的实时股价数据。\r\n\r\n**输入：**\r\n\r\n- `symbol` (字符串)：精确的股票代码（例如，“JKH.N0000”）\r\n\r\n**特点：**\r\n\r\n- 验证符号是否与公司数据库中的信息匹配\r\n- 从CSE API获取实时数据\r\n- 以斯里兰卡卢比（Rs.）返回价格\r\n\r\n**示例：**\r\n\r\n```json\r\n{\r\n  \"symbol\": \"JKH.N0000\"\r\n}\r\n```\r\n\r\n**回应：**\r\n\r\n```json\r\n{\r\n  \"symbol\": \"JKH.N0000\",\r\n  \"companyName\": \"JOHN KEELLS HOLDINGS PLC\",\r\n  \"price\": \"Rs. 22.20\",\r\n  \"change\": \"-0.10\",\r\n  \"changePercentage\": \"-0.45%\",\r\n  \"lastUpdated\": \"2024-12-17T10:30:00.000Z\"\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n### 先决条件\r\n\r\n- Node.js 16或更高版本\r\n- npm 或 yarn\r\n\r\n### 从源代码构建\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/Shaveen12/cse-mcp.git\r\ncd cse-mcp\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build TypeScript\r\nnpm run build\r\n\r\n# Run in development mode (watches for changes)\r\nnpm run dev\r\n\r\n# Test locally with MCP Inspector\r\nnpx @modelcontextprotocol/inspector node dist/index.js\r\n```\r\n\r\n### 项目结构\r\n\r\n```\r\ncse-mcp/\r\n├── src/\r\n│   └── index.ts        # Main server implementation\r\n├── bin/\r\n│   └── cse-mcp.js      # CLI entry point\r\n├── dist/               # Compiled JavaScript (generated)\r\n├── cse_companies.csv   # Company database\r\n├── package.json\r\n├── tsconfig.json\r\n└── README.md\r\n```\r\n\r\n## API速率限制\r\n\r\n计算机科学与工程（CSE）API有以下考虑因素：\r\n\r\n- 无需认证\r\n- 建议采用合理的速率限制\r\n- 每个请求的超时时间设置为10秒\r\n\r\n## 数据源\r\n\r\n公司数据和实时价格来源于 [科伦坡证券交易所](https://www.cse.lk)。\r\n\r\n## 做出贡献\r\n\r\n欢迎贡献！请随时提交拉取请求。\r\n\r\n1. 为仓库创建分支（或“克隆仓库”）\r\n1. 创建你的特性分支（`git checkout -b feature/AmazingFeature`)\r\n1. 提交您的更改（`git commit -m 'Add some AmazingFeature'`)\r\n1. 推送至分支（`git push origin feature/AmazingFeature`）\r\n1. 提交一个拉取请求\r\n\r\n## 许可证\r\n\r\n此项目采用ISC许可证授权 - 详情请参阅package.json文件。\r\n\r\n## 免责声明\r\n\r\n此工具仅供信息参考之用。股市数据可能存在延迟。在做出投资决策前，请务必通过官方渠道核实数据。\r\n\r\n## 支持\r\n\r\n对于问题、疑问或建议，请在（相关平台）上提交一个议题 [GitHub](https://github.com/Shaveen12/cse-mcp/issues)。\r\n\r\n## 致谢\r\n\r\n- [科伦坡证券交易所](https://www.cse.lk) 提供数据API\r\n- [模型上下文协议](https://github.com/modelcontextprotocol) 针对MCP SDK（MCP软件开发工具包）\r\n",
+ "config": {
+  "cse": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "cse-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "id": "1141",
+ "kind": "mcp",
+ "name": "mssql-9",
+ "fingerprint_md5": "aca3420d89e5f975541b120733c72e94",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# Microsoft SQL Server MCP服务器\r\n\r\n通过Claude Desktop构建的用于安全访问SQL server数据库的模型上下文协议（MCP）服务器 **FastMCP 2.9.2** 以获得现代异步性能和增强的开发人员体验。\r\n\r\n## ✨ 主要特点\r\n\r\n- 🔍 **数据库发现**：列出表、架构和数据库\r\n- 📊 **SQL执行**：执行具有适当验证和安全性的查询\r\n- 🔐 **多身份验证支持**：SQL、Windows和Azure AD身份验证\r\n- 🏢 **平台支持**：本地数据库、SQL Server Express和Azure SQL\r\n- ⚡ **异步性能**：基于FastMCP 2.9.2构建，具有异步/等待模式\r\n- 🛡️ **安全第一**：SQL注入预防和查询验证\r\n- 📝 **丰富的资源**：可发现的表架构和数据资源\r\n- 🔌 **灵活的配置**：基于环境的配置和验证\r\n\r\n## 🚀 工具和资源\r\n\r\n### 工具\r\n\r\n- `execute_sql` -执行带有验证和日志记录的SQL查询\r\n- `get_table_schema` -检索详细的表架构信息\r\n- `list_databases` -枚举服务器上的可用数据库\r\n\r\n### 资源\r\n\r\n- `mssql://tables` -列出所有可用表格\r\n- `mssql://table/{table_name}` -获取特定的表数据和模式\r\n\r\n## 快速开始\r\n\r\n### 使用Claude Desktop安装\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mssql\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"microsoft_sql_server_mcp\"],\r\n      \"env\": {\r\n        \"MSSQL_SERVER\": \"localhost\",\r\n        \"MSSQL_DATABASE\": \"your_database\",\r\n        \"MSSQL_USER\": \"your_username\",\r\n        \"MSSQL_PASSWORD\": \"your_password\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 配置\r\n\r\n### 基本SQL身份验证\r\n\r\n```bash\r\nMSSQL_SERVER=localhost          # Required\r\nMSSQL_DATABASE=your_database    # Required\r\nMSSQL_USER=your_username        # Required for SQL auth\r\nMSSQL_PASSWORD=your_password    # Required for SQL auth\r\n```\r\n\r\n### 身份验证\r\n\r\n```bash\r\nMSSQL_SERVER=localhost\r\nMSSQL_DATABASE=your_database\r\nMSSQL_WINDOWS_AUTH=true         # Use Windows credentials\r\n```\r\n\r\n### Azure SQL数据库\r\n\r\n```bash\r\nMSSQL_SERVER=your-server.database.windows.net\r\nMSSQL_DATABASE=your_database\r\nMSSQL_USER=your_username\r\nMSSQL_PASSWORD=your_password\r\n# Encryption is automatic for Azure\r\n```\r\n\r\n### 可选设置\r\n\r\n```bash\r\nMSSQL_PORT=1433                 # Custom port (default: 1433)\r\nMSSQL_ENCRYPT=true              # Force encryption\r\n```\r\n\r\n## 替代安装方法\r\n\r\n### 使用pip\r\n\r\n```bash\r\npip install microsoft_sql_server_mcp\r\n```\r\n\r\n然后在 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mssql\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"-m\", \"mssql_mcp_server\"],\r\n      \"env\": { ... }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🔧 开发与测试\r\n\r\n### 运行测试\r\n\r\n```bash\r\n# Run refactoring validation tests\r\npython test_refactor.py\r\n\r\n# Run full test suite\r\npython -m pytest tests/\r\n```\r\n\r\n### 示例用法\r\n\r\n```bash\r\n# Copy example environment file\r\ncp .env.example .env\r\n\r\n# Edit configuration\r\nnano .env\r\n\r\n# Run example usage script\r\npython example_usage.py\r\n```\r\n\r\n## 🛡️ 安全最佳实践\r\n\r\n- **专用用户**：创建具有最小权限的专用SQL用户\r\n- **无管理员权限**：切勿在生产环境中使用admin/sa帐户\r\n- **Windows身份验证**：尽可能使用Windows身份验证\r\n- **加密**：为敏感数据连接启用加密\r\n- **查询验证**：所有查询都根据注射模式进行验证\r\n- **安全日志记录**：日志中隐藏了敏感数据\r\n\r\n## 🏗️ 建筑\r\n\r\n此服务器由以下组件构建：\r\n\r\n- **FastMCP 2.9.2**：带有上下文注入的现代异步MCP框架\r\n- **Pydantic V2**：配置验证和数据建模\r\n- **线程池**：同步pymssql操作的异步包装器\r\n- **安全层**：SQL注入预防和查询验证\r\n- **综合录井**：具有上下文感知的详细日志记录\r\n\r\n## 📝 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "mssql": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "microsoft_sql_server_mcp"
+   ],
+   "env": {
+    "MSSQL_SERVER": "localhost",
+    "MSSQL_DATABASE": "your_database",
+    "MSSQL_USER": "your_username",
+    "MSSQL_PASSWORD": "your_password"
+   }
+  }
+ }
+}

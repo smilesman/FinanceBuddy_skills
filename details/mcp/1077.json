@@ -1,0 +1,28 @@
+{
+ "id": "1077",
+ "kind": "mcp",
+ "name": "kafka",
+ "fingerprint_md5": "786e82459f515b32fe6c8f9eef6df146",
+ "download_count": 0,
+ "category": "数据库与数据",
+ "tags": "",
+ "version": "",
+ "readme": "## Kafka MCP服务器\r\n\r\nKafka MCP服务器是一个 [模型上下文协议（MCP）](https://modelcontextprotocol.io/introduction)\r\n该服务器提供与Apache Kafka的集成，以使用自然语言（LLM）与Kafka集群进行交互。\r\n\r\n[演示](https://github.com/user-attachments/assets/67d3207a-bfe1-4549-a5c5-b2058bd65717)\r\n\r\n## 先决条件\r\n\r\n您需要Docker或Golang在本地运行MCP服务器。\r\n\r\n## 入门指南\r\n\r\n您需要访问Kafka集群。跟随 [快速入门](https://kafka.apache.org/quickstart) 医生：\r\n\r\n```\r\n docker pull apache/kafka:4.0.0\r\n docker run -p 9092:9092 apache/kafka:4.0.0\r\n```\r\n\r\nKafka可在 `localhost:9092` 现在。\r\n\r\n### 使用Claude Desktop\r\n\r\n#### Docker：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kafka\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-e\",\r\n        \"KAFKA_MCP_BOOTSTRAP_SERVERS\",\r\n        \"ghcr.io/cefboud/kafka-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"KAFKA_MCP_BOOTSTRAP_SERVERS\": \"localhost:9092\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 在当地建设\r\n\r\n```\r\ncd <workdir>\r\ngit clone https://github.com/CefBoud/kafka-mcp-server.git\r\ncd kafka-mcp-server\r\ngo build -o kafka-mcp-server  cmd/kafka-mcp-server/main.go \r\n```\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kafka\": {\r\n      \"command\": \"<workdir>/kafka-mcp-server/kafka-mcp-server\",\r\n      \"args\": [\r\n        \"stdio\",\r\n      ],\r\n      \"env\": {\r\n        \"KAFKA_MCP_BOOTSTRAP_SERVERS\": \"localhost:9092\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n选项：\r\n\r\n```\r\n      --bootstrap-servers string   Comma-separated list of the Kafka servers to connect to.\r\n      --enable-command-logging     When enabled, the server will log all command requests and responses to the log file\r\n      --log-file string            Path to log file\r\n      --read-only                  Restrict the server to read-only operations\r\n```\r\n\r\n所有选项都可以作为环境变量传递，大写，连字符替换为下划线，前缀为 `MCP_KAFKA_` 例如。， `--bootstrap-servers` 成为 `MCP_KAFKA_BOOTSTRAP_SERVERS`.\r\n\r\n## 可用的MCP工具\r\n\r\n- \\[x\\] 列出主题\r\n- \\[x\\] 创建主题\r\n- \\[x\\] 消费消息。\r\n- \\[x\\] 生成消息。\r\n- \\[x\\] 描述集群（代理和控制器列表）\r\n- \\[x\\] 列出消费者群体及其滞后情况。\r\n- \\[x\\] 获取主题的最早和最新偏移量（GetOffsetShell）\r\n- \\[\\]重置消费者组偏移。\r\n- \\[\\]Kafka Connect？？\r\n- \\[\\]架构注册表？？\r\n\r\n## \r\n\r\n## 🔀 多路工具\r\n\r\n[演示多路复用工具 ](https://github.com/user-attachments/assets/ad264bab-f135-462d-9fed-e8aedf7ffcc7)\r\n\r\n运行许多顺序工具，特别是当每个工具都依赖于前一个工具的输出时，可能会很乏味和耗时。这需要客户端和服务器之间进行多次往返/\r\n\r\n**多路工具** 通过允许客户端将一系列工具调用批处理到单个请求中，并按顺序执行它们，解决了这个问题。它支持工具之间的动态依赖关系，允许您使用基于提示的占位符引用早期的输出。\r\n\r\n如果工具输入依赖于之前的结果，则客户端使用 `PROMPT_ARGUMENT:` 通过LLM的提示动态生成该输入的格式（目前仅支持Gemini）。\\\r\n例子：\\\r\n`\"userId\": \"PROMPT_ARGUMENT: the ID of the created user\"`\r\n\r\n**CLI标志：**\r\n\r\n- `--enable-multiplex`：启用工具调用的多路复用。\r\n- `--multiplex-model`：指定型号（例如。 `gemini`)用于推断 `PROMPT_ARGUMENT`s.需要 `GEMINI_API_KEY` env变量。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kafka\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-e\",\r\n        \"KAFKA_MCP_BOOTSTRAP_SERVERS\",\r\n        \"ghcr.io/cefboud/kafka-mcp-server\",\r\n        \"--enable-multiplex\",\r\n        \"--multiplex-model\",\r\n        \"gemini\"\r\n      ],\r\n      \"env\": {\r\n        \"KAFKA_MCP_BOOTSTRAP_SERVERS\": \"localhost:9092\",\r\n        \"GEMINI_API_KEY\": \".....\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n# 鸣谢\r\n\r\n- github/github/ithub-mcp服务器\r\n- github/mark3labs/mcp-go\r\n- github/IBM/sarama\r\n",
+ "config": {
+  "kafka": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "KAFKA_MCP_BOOTSTRAP_SERVERS",
+    "ghcr.io/cefboud/kafka-mcp-server"
+   ],
+   "env": {
+    "KAFKA_MCP_BOOTSTRAP_SERVERS": "localhost:9092"
+   }
+  }
+ }
+}

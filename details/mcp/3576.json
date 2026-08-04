@@ -1,0 +1,18 @@
+{
+ "id": "3576",
+ "kind": "mcp",
+ "name": "prospect-research",
+ "fingerprint_md5": "0d4f57af15057093598be2a0dbd563d3",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 前景研究MCP服务器\r\n\r\n\r\n一种模型上下文协议（MCP）服务器实现，侧重于部署在Smithery Web基础设施上的前景研究工具。\r\n\r\n## 特性\r\n\r\n- **语义搜索**：理解查询背后含义和意图的上下文搜索\r\n- **网页抓取**：从多个网页中提取和处理内容\r\n- **批量搜索处理**：并行执行多个搜索查询\r\n- **全面覆盖**：结合不同的搜索方法进行深入研究\r\n\r\n## 工具\r\n\r\n- **网络搜索**\r\n\r\n  - 一个语义搜索引擎（Tavily），能够理解查询背后的上下文含义和意图\r\n  - 输入：\r\n    - `query` （string）：要查找的搜索查询\r\n\r\n- **抓取网页**\r\n\r\n  - 删除提供的网页以获取详细信息\r\n  - 输入：\r\n    - `links` （array）：要抓取的URL列表（最好少于10个）\r\n  - 处理内容以删除图像，并从提供的URL返回组合内容\r\n\r\n- **批量网络搜索**\r\n\r\n  - 传统的基于关键字的搜索（谷歌通过Search1API），可同时处理多个查询\r\n  - 输入：\r\n    - `queries` （array）：要并行处理的搜索查询列表（最好少于30个）\r\n  - 并行执行多个不同的搜索查询\r\n\r\n## 鼓励\r\n\r\n- `simple-assist` -一般查询的基本提示\r\n- `research` -详细研究问题提示\r\n- `review-code` -代码审查提示\r\n\r\n## 配置\r\n\r\n### 必需的API密钥\r\n\r\n此服务器需要以下API密钥：\r\n\r\n- `TAVILY_API_KEY` -用于语义网络搜索功能\r\n- `JINA_API_KEY` -用于网页抓取\r\n- `SEARCH1API_KEY` -用于批量网络搜索\r\n\r\n这些是在Smithery Web环境中为部署的版本配置的。\r\n\r\n### 使用Claude Desktop\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"prospect-research\": {\r\n      \"transport\": \"sse\",\r\n      \"url\": \"https://smithery.ai/server/@jzhang17/prospect-research-mcp\",\r\n      \"env\": {\r\n        \"TAVILY_API_KEY\": \"YOUR_TAVILY_API_KEY\",\r\n        \"JINA_API_KEY\": \"YOUR_JINA_API_KEY\",\r\n        \"SEARCH1API_KEY\": \"YOUR_SEARCH1API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 对于其他MCP客户端\r\n\r\n配置您的客户端，使其使用SSE传输类型和Smithery托管的URL连接到服务器。\r\n\r\n## 结构\r\n\r\n- `/src/index.ts` -主服务器入口点\r\n- `/src/tools/` -MCP工具实现（网络搜索、网页抓取、批量搜索）\r\n- `/src/prompts/` -MCP提示实现\r\n- `/src/types/` -TypeScript类型定义\r\n\r\n## 部署\r\n\r\n此服务器部署到Smithery Web平台。要访问已部署的服务器，请执行以下操作：\r\n\r\n1. 访问 [Smithery.ai](https://smithery.ai/server/@jzhang17/prospect-research-mcp)\r\n1. 服务器可通过Smithery Web提供的URL访问\r\n\r\n## 参考文献\r\n\r\n- [模型上下文协议](https://modelcontextprotocol.io)\r\n- [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk)\r\n- [Smithery人工智能平台](https://smithery.ai)\r\n- [MCP客户端列表](https://modelcontextprotocol.io/clients)\r\n",
+ "config": {
+  "prospect-research": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://smithery.ai/server/@jzhang17/prospect-research-mcp"
+  }
+ }
+}

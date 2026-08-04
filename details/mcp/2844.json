@@ -1,0 +1,23 @@
+{
+ "id": "2844",
+ "kind": "mcp",
+ "name": "french-tax-mcp",
+ "fingerprint_md5": "948650c5a7ca571240cc72581f553fcf",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 法国税务MCP服务器\r\n\r\n\r\n一个MCP（模型上下文协议）服务器，为人工智能助手提供法国个人所得税计算。\r\n\r\n## 当前功能\r\n\r\n此MCP服务器当前支持：\r\n\r\n- **个人所得税计算**：根据净应税收入和家庭构成（家庭商数）计算法国所得税（impôt sur le revenu）\r\n- **税收级别**：从官方政府来源检索当前的法国所得税等级\r\n- **动态数据**：使用service-public.fr的网络抓取来获取最新的税务信息，并回退到硬编码数据\r\n\r\n## 数据源\r\n\r\n当前版本使用MarkItDown进行网络抓取，从法国政府官方网站（主要是service public.fr）获取税务信息。在未来的版本中，这可能会被官方API或其他更可靠的数据源所取代。\r\n\r\n## 安装\r\n\r\n```bash\r\n# Install via pip\r\npip install french-tax-mcp\r\n\r\n# Or install via uv (recommended)\r\nuv pip install french-tax-mcp\r\n```\r\n\r\n## MCP配置\r\n\r\n添加到MCP配置文件(`~/.config/mcp/mcp.json` 或工作空间 `.kiro/settings/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"french-tax-mcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"french-tax-mcp@latest\"],\r\n      \"env\": {\r\n        \"FASTMCP_LOG_LEVEL\": \"ERROR\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### `calculate_income_tax`\r\n\r\n计算法国个人所得税。\r\n\r\n**参数：**\r\n\r\n- `net_taxable_income`：应纳税所得额净额（欧元）\r\n- `household_parts`：家庭部件数量（家庭商数）-默认为1.0\r\n- `year`：纳税年度（可选，默认为本年度）\r\n\r\n**例子：**\r\n\r\n```\r\nCalculate income tax for 50,000€ salary with 2 children\r\n```\r\n\r\n### `get_tax_brackets`\r\n\r\n检索当前的法国所得税等级。\r\n\r\n**参数：**\r\n\r\n- `year`：纳税年度（可选，默认为本年度）\r\n\r\n**例子：**\r\n\r\n```\r\nWhat are the current French tax brackets?\r\n```\r\n\r\n## 使用示例\r\n\r\n**基本计算：**\r\n\r\n```\r\nHow much income tax will I pay on 45,000€ salary?\r\n```\r\n\r\n**家庭情况：**\r\n\r\n```\r\nCalculate tax for married couple earning 60,000€ with one child\r\n```\r\n\r\n**税级：**\r\n\r\n```\r\nShow me the 2024 French tax brackets\r\n```\r\n\r\n## 局限性\r\n\r\n- 目前仅支持法国居民的个人所得税计算\r\n- Web抓取可能偶尔会失败（在这种情况下使用回退数据）\r\n- 税务计算仅供参考\r\n\r\n## TODO-未来功能\r\n\r\n在未来的版本中可能会添加以下功能：\r\n\r\n- \\[ \\] **LMNP（非专业家具租赁）** -提供租金税计算\r\n- \\[ \\] **皮内尔投资** -房地产投资税收优惠\r\n- \\[ \\] **微型企业/汽车企业家** -营业税计算\r\n- \\[ \\] **公司税** -公司税计算\r\n- \\[ \\] **地税** -房地产税信息\r\n- \\[ \\] **社会负担费用** -社会保障缴款\r\n- \\[ \\] **纳税申报表** -详细的表格指导和填写协助\r\n- \\[ \\] **API官方集成** -用官方政府API取代网络抓取\r\n\r\n## 发展\r\n\r\n### 地方发展\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/your-username/french-tax-mcp.git\r\ncd french-tax-mcp\r\n\r\n# Install in development mode\r\npip install -e \".[dev]\"\r\n\r\n# Run the server locally\r\npython -m french_tax_mcp.server --port 8888\r\n```\r\n\r\n### 运行测试\r\n\r\n```bash\r\n# Run tests\r\npython -m pytest tests/\r\n```\r\n\r\n## 法律声明\r\n\r\n此工具提供的信息仅供参考，并不构成专业税务建议。如需根据您的个人情况提供建议，请咨询注册会计师或税务顾问。\r\n\r\n税务信息来源于法国政府官方网站，但可能无法反映税法的最新变化。始终与官方来源核实计算结果。\r\n\r\n## 许可证\r\n\r\n此项目根据Apache许可证2.0获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 链接\r\n\r\n- **法国官方税务网站**: https://www.impots.gouv.fr\r\n- **MCP协议**: https://modelcontextprotocol.io/\r\n",
+ "config": {
+  "french-tax-mcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "french-tax-mcp@latest"
+   ],
+   "env": {
+    "FASTMCP_LOG_LEVEL": "ERROR"
+   }
+  }
+ }
+}

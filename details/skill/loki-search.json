@@ -1,0 +1,12 @@
+{
+ "id": "loki-search",
+ "kind": "skill",
+ "name": "loki-search",
+ "fingerprint_md5": "d79700474b3f485d927f7e18fb8fd89f",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\n高效的 Loki 日志搜索能力，使用 LogQL 进行实时日志检索、全文搜索和结构化日志分析。",
+ "config": {}
+}

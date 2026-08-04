@@ -1,0 +1,12 @@
+{
+ "id": "html-anything-main",
+ "kind": "skill",
+ "name": "html-anything-main",
+ "fingerprint_md5": "5989a402bb8b8f961e4846b5a9eed5b7",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "【模板: 杂志文章】\r\n- 顶部 hero: 大标题 (text-5xl/6xl) + 可选副标题 + 作者 / 阅读时间 / 日期元数据。\r\n- 正文: 单栏, 最大宽度约 700px, 居中。段落 `text-lg leading-relaxed text-neutral-700 dark:text-neutral-300`。\r\n- H2 / H3 标题用 serif 字体, 让正文与标题有视觉对比。\r\n- 引用块使用左侧粗 accent 色边线 + 斜体。\r\n- 代码块: 圆角 + 深色背景 + 浅色文字, 显示语言标签。\r\n- 列表项使用自定义 bullet（小方块 / accent 圆点）。\r\n- 章节之间用 `<hr>` 分隔, 但样式做成中央居中的小 ornament。\r\n- 文末加一个简单的 \"如果觉得有用，欢迎转发\" 行动卡片。",
+ "config": {}
+}

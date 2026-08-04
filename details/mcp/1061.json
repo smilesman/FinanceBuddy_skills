@@ -1,0 +1,26 @@
+{
+ "id": "1061",
+ "kind": "mcp",
+ "name": "graphrag",
+ "fingerprint_md5": "af32fd9d1325a71777316d1d4b86aeed",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# GraphRAG LlamaIdex\r\n\r\n全栈GraphRAG引擎针对本地索引和轻量级云查询进行了优化。基于DuckDB、LlamaIdex和模型上下文协议（MCP）构建。\r\n\r\n## 1.背景\r\n\r\n该项目实现了 **解耦架构**:\r\n\r\n- **索引器（图像A）**：用于局部图构建的重型ML环境（PyTorch、GLiNER）。\r\n- **查询（图片B）**：轻量级API环境（Node.js，DuckDB），用于快速云部署（约1GB占用空间）。\r\n\r\n## 2.建立形象\r\n\r\n```bash\r\n# Build specialized images via Docker Compose\r\ndocker compose build\r\n```\r\n\r\n## 3.运行索引器和查询\r\n\r\n加载shell别名以实现最快的工作流：\r\n\r\n- **macOS（Zsh）**: `source .graphrag-alias.zsh`\r\n- **WSL/Bash**: `source .graphrag-alias.sh`\r\n- **PowerShell**: `. .\\.graphrag-alias.ps1`\r\n\r\n### 索引文档\r\n\r\n```bash\r\n# 1. Initialize a database entry\r\ngraphrag start my_project --source /app/documents/source_files\r\n\r\n# 2. Run the ingestion pipeline (Indexer Image)\r\ngraphrag index my_project [--reset] [--prune]\r\n```\r\n\r\n### 查询\r\n\r\n```bash\r\n# CLI Search (Query Image)\r\ngraphrag search my_project \"What are the common themes?\"\r\n\r\n# Start MCP Server for Agents\r\ndocker compose up query\r\n```\r\n\r\n## 4.部署文件夹\r\n\r\n- `deployment/fly/`：Fly.io上的零延迟托管脚本（针对免费层飞机进行了优化）。\r\n- `deployment/aws/`：用于ECR、S3备份和App Runner部署的基础架构脚本。\r\n\r\n## 5.设置和配置\r\n\r\n### 环境（.env）\r\n\r\n复制 `.env.example` 并设置：\r\n\r\n- `OPENAI_API_KEY`：用于LLM推理和提取。\r\n- `DOCUMENTS_HOME`：本地数据文件夹的绝对路径（映射到 `/app/documents` 在Docker中）。\r\n\r\n### 发动机配置（核心/graphrag_configur.py）\r\n\r\n调整这些参数以优化性能：\r\n\r\n- **`SearchType`**：切换 `entity_connections` （图形很重）或 `thematic_overview` （总结很重）。\r\n- **`ExtractionMode`**：选择 `llm` （创意）或 `gliner` （快速/经济高效）。\r\n\r\n## 6.本地集成和测试\r\n\r\n将此项目整合为 **MCP服务器** 在桌面代理（Claude Desktop、Cursor等）中，为它们提供文档的内存。\r\n\r\n**添加到MCP配置中：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"graphrag\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-v\",\r\n        \"C:/Users/<USER>/.graphrag:/root/.graphrag\",\r\n        \"graphrag-query\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 7.数据库备忘单\r\n\r\n### 核心命令\r\n\r\n- `graphrag list`：显示所有已注册的数据库。\r\n- `graphrag status `：检查实体/关系计数和健康状况。\r\n- `graphrag delete  [--files]`：注销数据库条目，并可选择删除物理文件。\r\n- `graphrag index  [--reset]`：将文档索引到数据库中（使用 `--reset` 跳过重复检查）。\r\n\r\n### 托管存储工作流程\r\n\r\n为了保持项目的可移植性，请将数据库文件移动到 `Managed/` 数据目录中的文件夹。\r\n\r\n**手动移动：**\r\n\r\n1. 移动 `your_db.duckdb` 到 `[DOCUMENTS_HOME]/Managed/`.\r\n1. 重新注册路径：\r\n\r\n```bash\r\ngraphrag register my_db --db-path /app/documents/Managed/your_db.duckdb\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n_有关S3管理，请参阅 [S3_目录.md](deployment/aws/S3_CHEATSHEET.md)._\r\n",
+ "config": {
+  "graphrag": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-v",
+    "C:/Users/<USER>/.graphrag:/root/.graphrag",
+    "graphrag-query"
+   ],
+   "env": {}
+  }
+ }
+}

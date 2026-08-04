@@ -1,0 +1,22 @@
+{
+ "id": "46",
+ "kind": "mcp",
+ "name": "arc",
+ "fingerprint_md5": "9b345f7b7c2ea3f7e837959662677aa8",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 电弧mcp\r\n\r\nArc浏览器的MCP（模型上下文协议）服务器。以编程方式管理空间和选项卡。\r\n\r\n## 特性\r\n\r\n- **列出空间** -获取所有Arc浏览器空间\r\n- **创造空间** -使用自定义名称和图标创建新空间\r\n- **删除空间** -删除空格\r\n- **焦点空间** -切换到特定空间（AppleScript）\r\n- **列表选项卡** -从所有空间或特定空间获取选项卡\r\n- **添加选项卡** -向空间添加选项卡\r\n- **删除选项卡** -删除选项卡\r\n- **打开网页** -立即在Arc中打开URL（AppleScript）\r\n\r\n## 需求\r\n\r\n- macOS（Arc浏览器仅适用于macOS）\r\n- 已安装Arc浏览器\r\n- **必须禁用电弧同步** 使空间/选项卡修改保持不变\r\n\r\n## 安装\r\n\r\n```bash\r\nbun install\r\n```\r\n\r\n## 用法\r\n\r\n### 使用克劳德代码\r\n\r\n添加到您的Claude Code MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"arc\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"/path/to/arc-mcp/src/index.ts\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 直接运行\r\n\r\n```bash\r\nbun start\r\n# or\r\nnpx tsx src/index.ts\r\n```\r\n\r\n## 工具\r\n\r\n### `list_spaces`\r\n\r\n列出所有Arc浏览器空间。\r\n\r\n### `create_space`\r\n\r\n创建一个新空间。\r\n\r\n|参数|类型|必填|说明|\r\n| --------- | ------ | -------- | ---------------------------------------------- |\r\n|name | string | Yes |新空间的名称|\r\n|icon|string|No |表情符号或SF符号名称（默认值：“星号”）|\r\n\r\n### `delete_space`\r\n\r\n删除空格。\r\n\r\n|参数|类型|必填|说明|\r\n| --------- | ------ | -------- | ------------------------------ |\r\n|space | string | Yes |要删除的空间的名称或ID|\r\n\r\n### `focus_space`\r\n\r\n切换到空格（使用AppleScript）。\r\n\r\n|参数|类型|必填|说明|\r\n| --------- | ------ | -------- | ----------------------------- |\r\n|space | string | Yes |要聚焦的空间的名称或ID|\r\n\r\n### `list_tabs`\r\n\r\n列出选项卡，可选择按空格筛选。\r\n\r\n|参数|类型|必填|说明|\r\n| --------- | ------ | -------- | ----------------------------------- |\r\n|space | string | No |要筛选的空间的名称或ID|\r\n\r\n### `add_tab`\r\n\r\n向空间添加选项卡。需要重新启动Arc。\r\n\r\n|参数|类型|必填|说明|\r\n| --------- | ------- | -------- | ---------------------------------- |\r\n|space | string | Yes |空间的名称或ID|\r\n|url|string |是|选项卡的url|\r\n|title | string |否|选项卡标题（默认为URL）|\r\n|固定|布尔|否|添加为固定选项卡（默认值：false）|\r\n\r\n### `delete_tab`\r\n\r\n按ID删除选项卡。需要重新启动Arc。\r\n\r\n|参数|类型|必填|说明|\r\n| --------- | ------ | -------- | ------------------- |\r\n|tabId | string |是|要删除的选项卡的ID|\r\n\r\n### `open_url`\r\n\r\n立即在Arc中打开URL（使用AppleScript）。\r\n\r\n|参数|类型|必填|说明|\r\n| --------- | ------ | -------- | ------------------------------ |\r\n|url|string |是|要打开的url|\r\n|space | string |否|打开URL的空间|\r\n\r\n## 重要说明\r\n\r\n1. **电弧同步**：要使空间/选项卡修改保持不变，请在Arc设置中禁用Arc Sync。否则，同步将覆盖本地更改。\r\n\r\n1. **需要重启**：大多数修改（创建/删除空间、添加/删除选项卡）需要重新启动Arc才能生效。\r\n\r\n1. **备份**：服务器在修改Arc的侧边栏数据之前会自动创建备份。\r\n\r\n## 运作原理\r\n\r\nArc将其侧边栏数据存储在 `~/Library/Application Support/Arc/StorableSidebar.json`此MCP服务器直接读取和修改该文件以进行空间和选项卡管理。\r\n\r\n对于即时操作（焦点空间、打开URL），它使用AppleScript来控制Arc。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "arc": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "tsx",
+    "/path/to/arc-mcp/src/index.ts"
+   ],
+   "env": {}
+  }
+ }
+}

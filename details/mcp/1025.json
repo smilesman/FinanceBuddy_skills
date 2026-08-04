@@ -1,0 +1,24 @@
+{
+ "id": "1025",
+ "kind": "mcp",
+ "name": "datagouv-fr",
+ "fingerprint_md5": "93ed157f519d806d3b127619b772c817",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Data.gouv.fr表格API MCP服务器\r\n\r\n这是一个模型上下文协议（MCP）服务器，提供对 [data.gouv.fr API表格](https://www.data.gouv.fr/dataservices/api-tabulaire-data-gouv-fr-beta/)。它允许您通过标准化的界面与法国开放数据进行交互。\r\n\r\n## 特性\r\n\r\nMCP服务器提供5个主要工具：\r\n\r\n1. **`get_resource`** -获取特定资源的元数据和可用端点\r\n1. **`get_resource_profile`** -获取详细的列描述、类型和统计信息\r\n1. **`get_resource_data`** -通过过滤和排序功能获取分页数据\r\n1. **`search_resources`** -在data.gov.fr上搜索数据集和资源\r\n1. **`get_resource_swagger`** -获取显示可用过滤器和排序的API文档\r\n\r\n## 安装\r\n\r\n### 地方发展\r\n\r\n1. 安装依赖项：\r\n\r\n```bash\r\nyarn install\r\n```\r\n\r\n2. 构建项目：\r\n\r\n```bash\r\nyarn build\r\n```\r\n\r\n3. 启动服务器：\r\n\r\n```bash\r\nyarn dev\r\n```\r\n\r\n服务器将在上运行 `http://localhost:8000/mcp` 默认情况下。\r\n\r\n## 用法\r\n\r\n### 查找资源ID\r\n\r\n要使用大多数工具，您需要一个资源ID（rid）。以下是如何找到一个：\r\n\r\n1. 首选 [data.gov.fr](https://www.data.gouv.fr)\r\n1. 搜索数据集\r\n1. 点击数据集\r\n1. 转到 **元数据** 资源选项卡\r\n1. 复制资源ID（看起来像： `1c5075ec-7ce1-49cb-ab89-94f507812daf`)\r\n\r\n### 示例资源ID\r\n\r\n文档使用此示例资源ID来表示电影数据：\r\n`1c5075ec-7ce1-49cb-ab89-94f507812daf`\r\n\r\n### 工具示例\r\n\r\n#### 1.获取资源元数据\r\n\r\n```json\r\n{\r\n  \"tool\": \"get_resource\",\r\n  \"parameters\": {\r\n    \"rid\": \"1c5075ec-7ce1-49cb-ab89-94f507812daf\"\r\n  }\r\n}\r\n```\r\n\r\n#### 2.获取资源配置文件\r\n\r\n```json\r\n{\r\n  \"tool\": \"get_resource_profile\",\r\n  \"parameters\": {\r\n    \"rid\": \"1c5075ec-7ce1-49cb-ab89-94f507812daf\"\r\n  }\r\n}\r\n```\r\n\r\n#### 3.通过过滤获取资源数据\r\n\r\n```json\r\n{\r\n  \"tool\": \"get_resource_data\",\r\n  \"parameters\": {\r\n    \"rid\": \"1c5075ec-7ce1-49cb-ab89-94f507812daf\",\r\n    \"page\": 1,\r\n    \"page_size\": 10,\r\n    \"filters\": {\r\n      \"Producteur__exact\": \"20th Century Fox\"\r\n    },\r\n    \"sort\": \"Date de sortieau cinéma__sort=desc\"\r\n  }\r\n}\r\n```\r\n\r\n#### 4.搜索资源\r\n\r\n```json\r\n{\r\n  \"tool\": \"search_resources\",\r\n  \"parameters\": {\r\n    \"query\": \"films cinéma\",\r\n    \"limit\": 5\r\n  }\r\n}\r\n```\r\n\r\n#### 5.获取API文档\r\n\r\n```json\r\n{\r\n  \"tool\": \"get_resource_swagger\",\r\n  \"parameters\": {\r\n    \"rid\": \"1c5075ec-7ce1-49cb-ab89-94f507812daf\"\r\n  }\r\n}\r\n```\r\n\r\n## 筛选选项\r\n\r\n这 `get_resource_data` 该工具支持多种过滤运算符：\r\n\r\n- `column_name__exact=value` -完全匹配\r\n- `column_name__differs=value` -不相等\r\n- `column_name__contains=value` -包含（用于字符串）\r\n- `column_name__in=value1,value2,value3` -在列表中\r\n- `column_name__less=value` -小于\r\n- `column_name__greater=value` -大于\r\n- `column_name__strictly_less=value` -严格小于\r\n- `column_name__strictly_greater=value` -严格大于\r\n\r\n## 排序选项\r\n\r\n使用 `sort` 参数为：\r\n\r\n- `column_name__sort=asc` -升序\r\n- `column_name__sort=desc` -降序\r\n\r\n## 支持的文件格式\r\n\r\nAPI支持以下表格格式：\r\n\r\n- CSV（最大100 MB）\r\n- CSV。GZ（最大100 MB）\r\n- XLS（最大50 MB）\r\n- XLSX（最大12.5 MB）\r\n\r\n## 速率限制\r\n\r\nAPI的速率限制为每秒100个请求。\r\n\r\n## 错误处理\r\n\r\n该服务器包括全面的错误处理功能，用于：\r\n\r\n- 网络超时（30秒）\r\n- HTTP错误\r\n- 资源ID无效\r\n- API速率限制\r\n\r\n## 发展\r\n\r\n要在开发模式下运行：\r\n\r\n```bash\r\nyarn dev\r\n```\r\n\r\n为生产而构建：\r\n\r\n```bash\r\nyarn build\r\n```\r\n\r\n要清理构建工件，请执行以下操作：\r\n\r\n```bash\r\nyarn clean\r\n```\r\n\r\n## 🌐 公共使用\r\n\r\n一旦部署，您的MCP服务器将公开可用，任何人都可以使用。用户可以：\r\n\r\n1. **通过MCP客户端连接** 使用您的服务器URL\r\n1. **访问法国开放数据** 通过标准化的MCP接口\r\n1. **使用全部5个工具** 用于数据探索和分析\r\n\r\n### 公用服务器使用示例\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"datagouv-fr\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@huextrat/datagouv-tabular-api-mcp-server\"],\r\n      \"env\": {\r\n        \"MCP_SERVER_URL\": \"https://your-deployed-server.com/mcp\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🤝 贡献\r\n\r\n欢迎投稿！拜托：\r\n\r\n1. 分叉存储库\r\n1. 创建要素分支\r\n1. 进行更改\r\n1. 如果适用，添加测试\r\n1. 提交拉取请求\r\n\r\n## 📄 许可证\r\n\r\n该项目根据MIT许可证获得许可。data.gouv.fr API由法国政府根据开放数据政策提供。\r\n",
+ "config": {
+  "datagouv-fr": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@huextrat/datagouv-tabular-api-mcp-server"
+   ],
+   "env": {
+    "MCP_SERVER_URL": "https://your-deployed-server.com/mcp"
+   }
+  }
+ }
+}

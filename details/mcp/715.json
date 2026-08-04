@@ -1,0 +1,25 @@
+{
+ "id": "715",
+ "kind": "mcp",
+ "name": "libralm",
+ "fingerprint_md5": "a1894fe480f71ff11be1e1fbb0b80f37",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# LibraLM MCP 服务器\r\n\r\n\r\n通过模型上下文协议（MCP），直接在Claude桌面版中访问50多个书籍摘要和章节分解内容。\r\n\r\n\r\n## 概述\r\n\r\nLibraLM MCP 服务器为您的 Claude 桌面对话带来了由人工智能生成的书籍摘要库。您可以搜索书籍、阅读全面的摘要、逐章探索详细内容，并即时获取来自商业、自助和教育类书籍的关键见解。\r\n\r\n## 特点/功能\r\n\r\n- 📚 书籍的符号，常用于表示书籍或阅读相关内容。 **50多本书籍摘要** - 访问不断增长的专业书籍摘要库\r\n- 🔍 看起来像放大镜的符号，常用于表示搜索、查看细节或调查等动作，可翻译为“🔍（放大镜）”或根据上下文具体翻译为“搜索”、“查看细节”、“调查”等。 **智能搜索** - 按书名、作者或ISBN查找书籍\r\n- 📖 书籍 **章节划分** - 获取各章节的详细摘要\r\n- 📋 一个清单或待办事项的图标，常用于表示需要查看或处理的事项列表。 **目录** - 查看包含章节描述的完整书籍结构\r\n- 🎯 目标（或瞄准） **关键见解** - 提取主要主题、框架和可实施的要点\r\n- 🔐（锁形符号，常用于表示保密、安全或密码等含义） **安全API** 使用API密钥认证进行受保护访问\r\n\r\n## 安装\r\n\r\n### 通过Smithery进行安装\r\n\r\n自动为Claude Desktop安装libralm_mcp_server [“Smithery”可以翻译为“铁匠铺”或“锻造工坊”。这个词汇来源于对铁匠或锻造工艺的描述，通常指的是一个进行金属加工、锻造或制造的场所](https://smithery.ai/server/@libralm-ai/libralm_mcp_server)：\r\n\r\n```bash\r\nnpx -y @smithery/cli install @libralm-ai/libralm_mcp_server --client claude\r\n```\r\n\r\n### 先决条件\r\n\r\n- Claude Desktop 已安装\r\n- Python 3.10或更高版本\r\n- LibraLM API密钥（在获取一个） [libralm.com（该网址本身在中文中没有直接对应的翻译，但可以理解为“Libralm的官方网站”或根据具体语境翻译为“Libralm的在线平台”等，其中“Libralm”是一个假设的公司或项目名称，实际翻译时需根据具体情况确定）](https://libralm.com))\r\n\r\n### 快速安装\r\n\r\n1. **克隆仓库**：\r\n\r\n```bash\r\ngit clone https://github.com/libralm-ai/libralm_mcp_server.git\r\ncd libralm_mcp_server\r\n```\r\n\r\n2. **安装依赖项**：\r\n\r\n```bash\r\npip install -r requirements.txt\r\n```\r\n\r\n3. **获取您的API密钥**:\r\n\r\n   - 访问 [libralm.com（注：这是一个网址，直接翻译为中文并无实际意义，但按照格式要求，可表述为“libralm.com”或保持原样，因为网址通常不进行翻译。）](https://libralm.com)\r\n   - 使用Google或GitHub登录\r\n   - 从仪表板复制您的API密钥\r\n\r\n1. **配置Claude桌面版**：\r\n\r\n在您的Claude Desktop配置文件中添加：\r\n\r\n**macOS（苹果电脑操作系统）**: `~/Library/Application Support/Claude/claude_desktop_config.json`\\\r\n**Windows**： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n      \"libralm\": {\r\n        \"command\": \"uvx\",\r\n        \"args\": [\"--from\", \"libralm-mcp-server\", \"libralm-mcp-server\"],\r\n        \"env\": {\r\n            \"LIBRALM_API_KEY\": \"your_api_key_here\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n```\r\n\r\n5. **重启Claude桌面版**\r\n\r\n## 可用工具\r\n\r\n### 🔍 看起来像是一个放大镜的符号，通常用于表示搜索、查看细节或寻找某物。在中文中，可以简单地翻译为“🔍 放大镜”或根据上下文翻译为“🔍 搜索”、“🔍 查看细节”等。 `search_books`\r\n\r\n按书名、作者或ISBN搜索书籍。\r\n\r\n```\r\nSearch for \"Atomic Habits\"\r\nFind books by James Clear\r\nLook up ISBN 0735211299\r\n```\r\n\r\n### 📖 书籍 `get_book_info`\r\n\r\n获取特定书籍的详细信息。\r\n\r\n```\r\nGet details for book ID 0735211299\r\nShow me information about this book\r\n```\r\n\r\n### 📝 `get_book_summary`\r\n\r\n获取由人工智能生成的书籍全面摘要。\r\n\r\n```\r\nSummarize \"Atomic Habits\"\r\nGive me the main points of this book\r\n```\r\n\r\n### 📋 表格/清单 `get_table_of_contents`\r\n\r\n查看带有描述的完整章节列表。\r\n\r\n```\r\nShow me the chapters in \"Atomic Habits\"\r\nWhat topics does this book cover?\r\n```\r\n\r\n### 📄（文件/纸张的符号，无具体文字含义，可理解为“文件”或“纸张”等，根据上下文具体翻译） `get_chapter_summary`\r\n\r\n获取特定章节的详细摘要。\r\n\r\n```\r\nSummarize chapter 3 of \"Atomic Habits\"\r\nWhat's in the first chapter?\r\n```\r\n\r\n## 示例用法\r\n\r\n以下是一些您可以与Claude一起使用的示例提示：\r\n\r\n- “在LibraLM中搜索关于习惯的书籍”\r\n- “你有哪些关于领导力的书？”\r\n- “给我总结一下《Outlive》这本书的内容”\r\n- “给我看看《财富阶梯》的第五章”\r\n- “查找亚当·格兰特的书籍”\r\n\r\n## 配置\r\n\r\n### 环境变量\r\n\r\n- `LIBRALM_API_KEY` （必填）：您的LibraLM API密钥\r\n\r\n## API限制\r\n\r\n- 免费套餐：每月50次API调用\r\n- 专业版：无限API调用\r\n- 速率限制：每分钟10个请求\r\n\r\n## 故障排除\r\n\r\n### “无效的API密钥”错误\r\n\r\n- 请验证配置中的API密钥是否正确\r\n- 检查你是否已复制了整个密钥，包括前缀\r\n\r\n### “资源未找到”错误\r\n\r\n- 确保您使用的是有效的书籍ID\r\n- 这本书可能还没到图书馆\r\n\r\n### 没有书籍显示出来\r\n\r\n- 检查你的网络连接\r\n- 验证API端点是否可访问\r\n- 请确保您的API密钥未超出其使用限制\r\n\r\n## 做出贡献\r\n\r\n我们欢迎投稿！请参阅我们的 [贡献指南](CONTRIBUTING.md) 详情见下。\r\n\r\n## 许可证\r\n\r\n这个项目采用MIT许可证授权——详见 [许可证](LICENSE) 请查阅文件以获取详细信息。\r\n\r\n## 支持\r\n\r\n- 📧 电子邮件：support@libralm.com\r\n- 🐛 问题： [GitHub Issues（GitHub问题）](https://github.com/libralm-ai/libralm_mcp_server/issues)\r\n\r\n<!-- - 💬 Discord: [Join our community](https://discord.gg/libralm) -->\r\n\r\n## 相关项目\r\n\r\n- [LibraLM 网页版](https://libralm.com) - 网页仪表盘和API密钥管理\r\n\r\n<!-- - [LibraLM API Docs](https://docs.libralm.com) - Full API documentation -->\r\n\r\n- [MCP规范](https://modelcontextprotocol.io) - 了解更多关于MCP的信息\r\n\r\n______________________________________________________________________\r\n\r\n由LibraLM团队倾心打造\r\n",
+ "config": {
+  "libralm": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "libralm-mcp-server",
+    "libralm-mcp-server"
+   ],
+   "env": {
+    "LIBRALM_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

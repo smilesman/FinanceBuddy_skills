@@ -1,0 +1,23 @@
+{
+ "id": "7",
+ "kind": "mcp",
+ "name": "ableton-mcp",
+ "fingerprint_md5": "9f46a7bddd6bda504d6043a3c6caa1a8",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 艾博顿mcp\r\n\r\n用于控制Ableton Live的MCP服务器——使AI助手能够通过模型上下文协议与Live会话进行交互。\r\n\r\n## 先决条件\r\n\r\n- **Ableton Live 10+**\r\n\r\n## 设置\r\n\r\n### 1.安装控制面\r\n\r\n必须在Ableton Live中安装控制界面脚本。它在Live内部运行，并为MCP服务器提供一个TCP套接字以供连接。\r\n\r\n**macOS：**\r\n\r\n```bash\r\nmkdir -p ~/Music/Ableton/User\\ Library/Remote\\ Scripts/AbletonMCP && curl -fsSL https://raw.githubusercontent.com/amamparo/ableton-mcp/main/control_surface/AbletonMCP/__init__.py -o ~/Music/Ableton/User\\ Library/Remote\\ Scripts/AbletonMCP/__init__.py\r\n```\r\n\r\n**Windows（PowerShell）：**\r\n\r\n```powershell\r\nNew-Item -ItemType Directory -Force -Path \"$env:USERPROFILE\\Documents\\Ableton\\User Library\\Remote Scripts\\AbletonMCP\" | Out-Null; Invoke-WebRequest -Uri \"https://raw.githubusercontent.com/amamparo/ableton-mcp/main/control_surface/AbletonMCP/__init__.py\" -OutFile \"$env:USERPROFILE\\Documents\\Ableton\\User Library\\Remote Scripts\\AbletonMCP\\__init__.py\"\r\n```\r\n\r\n### 2.在Ableton Live中启用\r\n\r\n1. 打开（或重新启动）Ableton Live\r\n1. 首选 **偏好** > **链接、节奏和MIDI**\r\n1. 在...之下 **控制表面**，选择 **AbletonMCP** 从下拉列表中\r\n1. 您应该在Ableton的日志中看到“AbletonMCP:监听9877端口”\r\n\r\n### 3.配置MCP客户端\r\n\r\n**克劳德桌面** --添加到 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ableton-mcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--from\", \"git+https://github.com/amamparo/ableton-mcp\", \"ableton-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n要固定到特定版本，请执行以下操作：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ableton-mcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--from\", \"git+https://github.com/amamparo/ableton-mcp@v0.1.0\", \"ableton-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**克劳德代码：**\r\n\r\n```bash\r\nclaude mcp add ableton-mcp -- uvx --from \"git+https://github.com/amamparo/ableton-mcp\" ableton-mcp\r\n```\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_session_info` |获取节奏、时间签名、曲目计数|\r\n| `get_track_info` |获取曲目详细信息（名称、音量、音调、剪辑、设备）|\r\n| `create_midi_track` |创建新的MIDI曲目|\r\n| `create_audio_track` |创建新的音轨|\r\n| `delete_track` |删除曲目|\r\n| `delete_all_tracks` |删除所有曲目（清除会话）|\r\n| `set_track_name` |重命名曲目|\r\n| `set_track_volume` |设置曲目音量（0.0–1.0）|\r\n| `set_track_pan` |设置轨迹盘（-1.0–1.0）|\r\n| `set_track_mute` |将曲目静音/取消静音|\r\n| `set_track_solo` |独奏/未售出曲目|\r\n| `create_clip` |创建一个空的MIDI片段|\r\n| `add_notes_to_clip` |将MIDI音符添加到剪辑中|\r\n| `set_clip_name` |重命名剪辑|\r\n| `fire_clip` |开始播放剪辑|\r\n| `stop_clip` |停止剪辑|\r\n| `get_clip_notes` |从会话剪辑中读取MIDI音符|\r\n| `get_clip_info` |获取剪辑详细信息（名称、长度、循环点）|\r\n| `duplicate_clip_to_scene` |将会话片段复制到另一个场景|\r\n| `delete_clip` |从会话剪辑槽中删除剪辑|\r\n| `create_scene` |创建新场景|\r\n| `delete_scene` |删除场景|\r\n| `set_scene_name` |重命名场景|\r\n| `fire_scene` |播放场景中的所有剪辑|\r\n| `start_playback` |开始会话播放|\r\n| `stop_playback` |停止会话播放|\r\n| `set_tempo` |在BPM中设定节奏|\r\n| `set_time_signature` |设置时间签名（例如5/4、7/8）|\r\n| `undo` |触发Ableton的撤销|\r\n| `get_browser_tree` |浏览乐器/效果类别|\r\n| `get_browser_items_at_path` |在浏览器路径中列出项目|\r\n| `load_instrument_or_effect` |将设备装载到轨道上|\r\n| `create_midi_track_with_instrument` |一步创建MIDI曲目并加载乐器|\r\n| `load_drum_kit` |装载鼓架和套件|\r\n| `get_device_parameters` |列出设备的所有参数|\r\n| `set_device_parameter` |设置设备参数值|\r\n| `get_arrangement_clips` |在安排时间线上列出剪辑|\r\n| `create_arrangement_clip` |在编排时间线上创建MIDI剪辑|\r\n| `delete_arrangement_clip` |删除排列剪辑|\r\n| `duplicate_arrangement_clip` |将排列片段复制到新位置|\r\n| `get_arrangement_clip_notes` |从编曲片段中读取MIDI音符|\r\n| `set_arrangement_clip_notes` |在编曲片段上设置MIDI音符|\r\n| `set_song_time` |设置播放光标位置|\r\n| `get_arrangement_loop` |获取排列环支架|\r\n| `set_arrangement_loop` |设置排列环支架|\r\n| `back_to_arranger` |从会话切换到排列播放|\r\n| `duplicate_session_to_arrangement` |将会话剪辑复制到排列中|\r\n| `session_to_arrangement` |按顺序布置场景|\r\n\r\n> **注：** 自动化断点无法通过控制表面API使用。排列视图功能需要Ableton Live 11+。\r\n\r\n## 发展\r\n\r\n```bash\r\njust install                  # Install dependencies\r\njust check                    # Run lint + tests\r\njust fmt                      # Auto-format code\r\njust install-control-surface  # Install control surface to Ableton\r\n```\r\n",
+ "config": {
+  "ableton-mcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/amamparo/ableton-mcp",
+    "ableton-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "19",
+ "kind": "mcp",
+ "name": "adb-screenshot",
+ "fingerprint_md5": "e7b3b2b1116ea92fa5a1a4799c90ed00",
+ "download_count": 0,
+ "category": "移动端自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp-adb截图\r\n\r\n[](https://www.npmjs.com/package/mcp-adb-screenshot)\r\n[](https://opensource.org/licenses/MIT)\r\n\r\n通过ADB从Android设备捕获屏幕截图的模型上下文协议（MCP）服务器。与Claude Desktop、VS Code和Copilot以及其他MCP兼容客户端配合使用。\r\n\r\n## 特性\r\n\r\n- 📱 **capture_app_screen** -从已连接的Android设备捕获屏幕截图\r\n- 📋 **列表_设备** -通过ADB列出所有已连接的Android设备\r\n- ⚙️ 通过CLI参数或环境变量配置默认设备ID\r\n- 🖥️ 跨平台支持（macOS、Linux（未经测试）、Windows（未测试））\r\n\r\n## 先决条件\r\n\r\n- **Node.js** >= 18.0.0\r\n- **安卓调试桥** （Android调试桥）已安装并位于您的PATH中\r\n- 通过USB连接并启用USB调试的Android设备\r\n\r\n## 安装\r\n\r\n### 通过npm（推荐）\r\n\r\n```bash\r\nnpm install -g mcp-adb-screenshot\r\n```\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone <repository-url>\r\ncd screen-capture\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n## 配置\r\n\r\n### VS代码（使用GitHub Copilot）\r\n\r\n添加到您的VS代码设置(`.vscode/settings.json` 或用户设置）：\r\n\r\n**使用npm全局安装：**\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"mcp-adb-screenshot\": {\r\n        \"command\": \"mcp-adb-screenshot\",\r\n        \"args\": [\"--device-id\", \"YOUR_DEVICE_ID\"]\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**使用npx（无需安装）：**\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"mcp-adb-screenshot\": {\r\n        \"command\": \"npx\",\r\n        \"args\": [\"-y\", \"mcp-adb-screenshot\", \"--device-id\", \"YOUR_DEVICE_ID\"]\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**来自当地来源：**\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"mcp-adb-screenshot\": {\r\n        \"command\": \"node\",\r\n        \"args\": [\"/path/to/adb-screenshot/dist/index.js\", \"--device-id\", \"YOUR_DEVICE_ID\"]\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德桌面\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-adb-screenshot\": {\r\n      \"command\": \"mcp-adb-screenshot\",\r\n      \"args\": [\"--device-id\", \"YOUR_DEVICE_ID\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用npx：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"adb-screenshot\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"adb-screenshot\", \"--device-id\", \"YOUR_DEVICE_ID\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 设备ID配置\r\n\r\n您可以通过三种方式（按优先级顺序）配置默认的ADB设备ID：\r\n\r\n1. **命令行参数** （最高优先级）：\r\n\r\n   ```bash\r\n   adb-screenshot --device-id YOUR_DEVICE_ID\r\n   ```\r\n\r\n1. **环境变量**:\r\n\r\n   ```json\r\n   {\r\n     \"mcp\": {\r\n       \"servers\": {\r\n         \"adb-screenshot\": {\r\n           \"command\": \"adb-screenshot\",\r\n           \"env\": {\r\n             \"ADB_DEVICE_ID\": \"YOUR_DEVICE_ID\"\r\n           }\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. **根据请求**：通行证 `deviceId` 作为调用时的参数 `capture_app_screen` 工具。\r\n\r\n### 查找您的设备ID\r\n\r\n跑 `adb devices -l` 在您的终端中，或使用 `list_devices` 工具：\r\n\r\n```\r\nList of devices attached\r\nemulator-5554          device product:sdk_gphone64_arm64 model:sdk_gphone64_arm64 device:emu64a\r\nABCD1234567            device usb:1234567X product:redfin model:Pixel_5 device:redfin\r\n```\r\n\r\n设备ID是第一列（例如。， `emulator-5554` 或 `ABCD1234567`).\r\n\r\n## 使用示例\r\n\r\n配置后，您可以要求您的AI助手：\r\n\r\n- “捕获我的Android屏幕”\r\n- “列出连接的ADB设备”\r\n- “从设备模拟器5554中截取屏幕截图”\r\n- “显示我手机屏幕上的内容”\r\n\r\n## CLI选项\r\n\r\n```\r\nadb-screenshot [options]\r\n\r\nOptions:\r\n  --device-id <id>    Set the default ADB device ID\r\n  --help, -h          Show help message\r\n  --version, -v       Show version number\r\n```\r\n\r\n## 故障排除\r\n\r\n### “adb：找不到命令”\r\n\r\n确保ADB已安装并位于您的PATH中：\r\n\r\n- **macOS**: `brew install android-platform-tools`\r\n- **Linux**: `sudo apt install adb`\r\n- **视窗**：从下载 [Android SDK平台工具](https://developer.android.com/studio/releases/platform-tools)\r\n\r\n### “设备未经授权”\r\n\r\n检查您的设备是否有USB调试授权提示并接受。\r\n\r\n### “未找到设备/模拟器”\r\n\r\n1. 确保您的设备上启用了USB调试\r\n1. 尝试重新连接USB电缆\r\n1. 跑 `adb kill-server && adb start-server`\r\n\r\n## 免责声明\r\n\r\n这个项目是在人工智能的帮助下创建的。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "adb-screenshot": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "adb-screenshot",
+    "--device-id",
+    "YOUR_DEVICE_ID"
+   ],
+   "env": {}
+  }
+ }
+}

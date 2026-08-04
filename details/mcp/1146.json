@@ -1,0 +1,26 @@
+{
+ "id": "1146",
+ "kind": "mcp",
+ "name": "my_database",
+ "fingerprint_md5": "03990068068e6a43b7860e29dc711bdf",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# 使用MCP与数据库对话\r\n\r\n\r\n本指南解释了如何设置和运行MCP服务器以与您的\r\n使用Claude Desktop的PostgreSQL数据库。它也应该与MySQL兼容，\r\nMariaDB，SQLite，因为它在幕后使用sqlalchemy。该项目建立在\r\n顶端https://github.com/runekaagaard/mcp-alchemy\r\n\r\n> **注：** 本指南假设您对Docker有基本的了解，\r\n> 环境变量和CLI使用情况。\r\n\r\n______________________________________________________________________\r\n\r\n## 先决条件\r\n\r\n- **Docker Compose**:\r\n  [安装说明](https://docs.docker.com/compose/install/)\r\n- **克劳德桌面**: [点击此处下载](https://claude.ai/download)\r\n- **紫外线**：一个现代的高性能Python包管理器。如果没有安装，\r\n  请按照以下说明进行操作。\r\n\r\n______________________________________________________________________\r\n\r\n## 1.设置环境变量\r\n\r\n1. **复制并重命名环境文件**\\\r\n   复制提供的 `.env.example` 文件并将其重命名为 `.env`:\r\n   ```bash\r\n   cp .env.example .env\r\n   ```\r\n\r\n______________________________________________________________________\r\n\r\n## 2.设置克劳德桌面\r\n\r\n1. **下载并安装Claude Desktop**\\\r\n   访问 [克劳德桌面下载页面](https://claude.ai/download) 和\r\n   安装应用程序。\r\n\r\n______________________________________________________________________\r\n\r\n## 3.使用伪数据启动PostgreSQL数据库\r\n\r\n1. **运行Docker Compose**\\\r\n   确保Docker Compose已安装并运行：\r\n   ```bash\r\n   docker-compose up -d\r\n   ```\r\n   - 此命令将在以下位置启动PostgreSQL数据库 `localhost:5432` 和\r\n     用虚拟数据填充它。\r\n\r\n______________________________________________________________________\r\n\r\n## 4.安装 `uv` （如果尚未安装）\r\n\r\n1. **安装 `uv`**\\\r\n   执行以下命令进行安装 `uv`:\r\n   ```bash\r\n   curl -LsSf https://astral.sh/uv/install.sh | sh\r\n   ```\r\n\r\n______________________________________________________________________\r\n\r\n## 5.配置并启动MCP服务器\r\n\r\n1. **创建/更新MCP服务器配置**\\\r\n   将以下JSON配置保存在MCP服务器配置文件中（调整\r\n   路径（如有必要）：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"my_database\": {\r\n         \"command\": \"uv\",\r\n         \"args\": [\r\n           \"--directory\",\r\n           \"/directory/where/this/app/is/located/app/\",\r\n           \"run\",\r\n           \"server.py\"\r\n         ],\r\n         \"env\": {\r\n           \"DB_URL\": \"postgresql://postgres:password@localhost:5432/mydatabase\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n   - **提示：** 如果 `uv` 如果安装在非标准位置，请更新\r\n     `\"command\"` 值以反映可执行文件的完整路径。\r\n\r\n1. **启动MCP服务器**\\\r\n   配置就绪后，MCP服务器将自动启动每个\r\n   克劳德桌面启动的时间。\r\n\r\n______________________________________________________________________\r\n\r\n## 6.享受您的设置\r\n\r\n- 打开 **克劳德桌面**.\r\n- 该工具将自动调用您的MCP服务器，使您能够进行交互\r\n  与您的数据库无缝连接。\r\n\r\n______________________________________________________________________\r\n\r\n## 总结\r\n\r\n1. **设置环境变量**：复制 `.env.example` 向 `.env`.\r\n1. **安装并运行Claude Desktop**：从下载\r\n   [克劳德桌面](https://claude.ai/download).\r\n1. **使用Docker Compose启动PostgreSQL**：运行 `docker-compose up` 开始\r\n   带有虚拟数据的数据库。\r\n1. **安装 `uv`**：如有必要，运行提供的安装命令。\r\n1. **配置MCP服务器**：更新配置文件并确保路径和\r\n   环境变量是正确的。\r\n1. **启动并享受**：启动Claude Desktop，开始与您的\r\n   通过MCP访问数据库。\r\n\r\n______________________________________________________________________\r\n\r\n如果您遇到任何问题或需要进一步帮助，请参阅\r\n相关文档或联系您的支持团队。\r\n\r\n编码愉快！\r\n",
+ "config": {
+  "my_database": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/directory/where/this/app/is/located/app/",
+    "run",
+    "server.py"
+   ],
+   "env": {
+    "DB_URL": "postgresql://postgres:password@localhost:5432/mydatabase"
+   }
+  }
+ }
+}

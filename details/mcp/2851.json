@@ -1,0 +1,18 @@
+{
+ "id": "2851",
+ "kind": "mcp",
+ "name": "gf_windmill",
+ "fingerprint_md5": "47a320729c4602371480ff50a62415ae",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 【广发证券】MCP服务-沪深指数估值分析\r\n\r\n## 什么是沪深指数估值分析MCP服务？\r\n\r\n沪深指数估值分析工具接口，通过该工具来判断指数的投资潜力，遵循“低买高卖”的原则，提示投资者可以在估值不高时考虑入场，静静等待上涨机会，并在估值较高时做出提醒。同时，该功能还进一步把指数和相关热门ETF进行配对关联，帮助投资者快速查询投资标的，提高投资决策效率。\r\n\r\n## 使用方式\r\n\r\n### streamable-http\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"gf_windmill\": {\r\n            \"type\": \"streamable-http\",\r\n            \"url\": \"https://mcp-api.gf.com.cn/server/mcp/windmill/mcp\",\r\n            \"headers\": {\r\n              \"Authorization\": \"Bearer <YOUR_TOKEN>\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n### sse\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"gf_windmill\": {\r\n            \"type\": \"sse\",\r\n            \"url\": \"https://mcp-api.gf.com.cn/server/mcp/windmill/sse\",\r\n            \"headers\": {\r\n              \"Authorization\": \"Bearer 2077f748-5b37-41ee-9d73-db5728639432\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n| 工具名称                                 | 用途                       |\r\n|------------------------------------------|----------------------------|\r\n| valuation_windmill_get                   | 获取指数估值&顺风车榜单数据 |\r\n\r\n---\r\n\r\n## 可用参数说明\r\n\r\n| 参数名   | 类型    | 必填 | 描述         | 示例 |\r\n|----------|---------|------|--------------|------|\r\n| page     | integer | 否   | 页码，默认0  | 0    |\r\n| perPage  | integer | 否   | 每页数量，默认10 | 10   |\r\n\r\n---\r\n\r\n## 相关工具使用示例\r\n\r\n### 1. 获取第一页（默认）\r\n```json\r\n{}\r\n```\r\n\r\n### 2. 获取第2页，每页5条\r\n```json\r\n{\r\n  \"page\": 1,\r\n  \"perPage\": 5\r\n}\r\n```\r\n\r\n---\r\n\r\n## 常见问题解答\r\n\r\nQ：使用广发证券MCP服务是否需要付费\r\nA：该服务目前限时免费体验，未来广发证券将根据平台规范以及业务需求，进行必要适时的服务策略调整。\r\n\r\nQ：使用/安装教程是否有详细介绍\r\nA： 可以参见https://github.com/gfconnect/mcp/tree/main\r\n",
+ "config": {
+  "gf_windmill": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp-api.gf.com.cn/server/mcp/windmill/mcp"
+  }
+ }
+}

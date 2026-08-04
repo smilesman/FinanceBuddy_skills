@@ -1,0 +1,25 @@
+{
+ "id": "2324",
+ "kind": "mcp",
+ "name": "tatilsepeti-hotel",
+ "fingerprint_md5": "ed6758830eaaf9546fdc8aedc15f2b1d",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 塔蒂尔塞佩蒂酒店搜索MCP服务器\r\n\r\nTatilspeti酒店搜索功能的模型上下文协议（MCP）服务器。\r\n\r\n## 特性\r\n\r\n- 搜索目的地：查找地区和地点\r\n- 列出酒店：使用过滤器获取酒店列表\r\n- 自动令牌管理：自动为每个请求获取新的令牌\r\n- 丰富的酒店数据：包括价格、评级、设施、活动\r\n\r\n## 安装\r\n\r\n### 使用npx（推荐）\r\n\r\n```bash\r\nnpx tatilsepeti-hotel-mcp\r\n```\r\n\r\n### 来自源头\r\n\r\n```bash\r\nnpm install\r\n# or\r\nyarn install\r\n```\r\n\r\n## 配置\r\n\r\n### 所需的环境变量\r\n\r\n创建 `.env` 文件或设置环境变量：\r\n\r\n```bash\r\nAPI_URL=https://api.tatilsepeti.com/api/v1\r\nAPI_TOKEN=your_api_token_here\r\nBASE_URL=https://www.tatilsepeti.com\r\n```\r\n\r\n或直接出口：\r\n\r\n```bash\r\nexport API_URL=\"https://api.tatilsepeti.com/api/v1\"\r\nexport API_TOKEN=\"your_api_token\"\r\nexport BASE_URL=\"https://www.tatilsepeti.com\"\r\n```\r\n\r\n## 用法\r\n\r\n### 使用Claude桌面版\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tatilsepeti-hotel\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tatilsepeti-hotel-mcp\"],\r\n      \"env\": {\r\n        \"API_URL\": \"https://api.tatilsepeti.com/api/v1\",\r\n        \"API_TOKEN\": \"your_api_token_here\",\r\n        \"BASE_URL\": \"https://www.tatilsepeti.com\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 手动运行\r\n\r\n```bash\r\nnode mcp.js\r\n```\r\n\r\n## 可用工具\r\n\r\n### 1.搜索_定位\r\n\r\n搜索旅行目的地（地区/地点）。\r\n\r\n**参数：**\r\n\r\n- `query` （string）：目的地名称（例如，“antalya”、“bodrum”、“istanbul”）\r\n\r\n**退货：**\r\n\r\n```json\r\n[\r\n  {\r\n    \"regionId\": 34,\r\n    \"subRegionId\": 0,\r\n    \"type\": 0,\r\n    \"title\": \"Antalya\"\r\n  }\r\n]\r\n```\r\n\r\n### 2.列表_酒店\r\n\r\n列出特定地区的酒店。\r\n\r\n**参数：**\r\n\r\n- `regionId` （number）：来自search_destination的区域ID\r\n- `subRegionId` （数字，可选）：子区域ID（默认值：0）\r\n- `type` （数字，可选）：类型（默认值：0）\r\n- `checkinDate` （字符串）：入住日期（YYYY-MM-DD）\r\n- `checkoutDate` （字符串）：退房日期（YYYY-MM-DD）\r\n- `adultCount` （数字，可选）：成年人数量（默认值：2）\r\n- `childCount` （数字，可选）：子项数量（默认值：0）\r\n- `childAges` （数组，可选）：儿童年龄（默认值：\\[\\]）\r\n- `pageNumber` （数字，可选）：页码（默认值：1）\r\n- `pageSize` （数量，可选）：每页酒店数（默认值：20）\r\n\r\n**退货：**\r\n\r\n```json\r\n{\r\n  \"totalCount\": 155,\r\n  \"currentPage\": 1,\r\n  \"pageSize\": 20,\r\n  \"showingCount\": 20,\r\n  \"hotels\": [\r\n    {\r\n      \"name\": \"Hotel Name\",\r\n      \"star\": 5,\r\n      \"score\": 8.9,\r\n      \"scoreText\": \"Harika\",\r\n      \"reviewCount\": 150,\r\n      \"location\": \"Kemer, Antalya\",\r\n      \"price\": 10500,\r\n      \"discountRate\": 30,\r\n      \"accommodation\": \"Her Şey Dahil\",\r\n      \"campaignName\": \"Son Dakika %30 İndirim\",\r\n      \"properties\": [\"Aquapark\", \"Spa\", \"Denize Sıfır\"],\r\n      \"isFreeCancellation\": true,\r\n      \"image\": \"https://cdn.tatilsepeti.com/...\",\r\n      \"link\": \"https://www.tatilsepeti.com/hotel-url\"\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n## 工作流示例\r\n\r\n1. **搜索目的地：**\r\n\r\n   ```\r\n   User: \"Antalya'da otel bul\"\r\n   → search_destination(query: \"antalya\")\r\n   → Returns: regionId: 34\r\n   ```\r\n\r\n1. **列出酒店：**\r\n\r\n   ```\r\n   → list_hotels(\r\n       regionId: 34,\r\n       checkinDate: \"2025-12-24\",\r\n       checkoutDate: \"2025-12-27\",\r\n       adultCount: 2\r\n     )\r\n   → Returns: 20 hotels with details\r\n   ```\r\n\r\n## 包含的功能\r\n\r\n- 静态API令牌身份验证\r\n- 酒店链接的查询字符串生成\r\n- 日期格式（YYYY-MM-DD→ DD.MM.YYYY）\r\n- 丰富的酒店详细信息（酒店、活动、评论）\r\n- 分页支持\r\n- 环境变量配置\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Run MCP server\r\nnpm start\r\n```\r\n\r\n## 建筑\r\n\r\n```\r\n┌─────────────────┐\r\n│  Claude/Client  │\r\n└────────┬────────┘\r\n         │ MCP Protocol\r\n         │\r\n┌────────▼────────┐\r\n│   MCP Server    │\r\n│   (mcp.js)      │\r\n└────────┬────────┘\r\n         │\r\n         │ OAuth2 + REST\r\n         │\r\n┌────────▼────────┐\r\n│ Tatilsepeti API │\r\n└─────────────────┘\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "tatilsepeti-hotel": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "tatilsepeti-hotel-mcp"
+   ],
+   "env": {
+    "API_URL": "https://api.tatilsepeti.com/api/v1",
+    "API_TOKEN": "your_api_token_here",
+    "BASE_URL": "https://www.tatilsepeti.com"
+   }
+  }
+ }
+}

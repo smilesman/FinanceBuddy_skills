@@ -1,0 +1,23 @@
+{
+ "id": "2009",
+ "kind": "mcp",
+ "name": "near-mcp",
+ "fingerprint_md5": "42cd986e3c429f66e4df985366bbecc9",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP附近\r\n\r\n此项目是一个模型上下文协议([主控程序](https://github.com/modelcontextprotocol))用于与交互的兼容服务器 [NEAR区块链](https://near.org/)该工具为LLM和AI代理提供了一种安全访问NEAR帐户和区块链功能并与之交互的方法。\r\n\r\n## 快速启动\r\n\r\n以下是如何快速开始使用附近的mcp服务器 `claude` 代码cli\r\n\r\n```\r\nnpm install -g @anthropic-ai/claude-code\r\nclaude mcp add near-mcp npx @nearai/near-mcp@latest run\r\nclaude\r\n```\r\n\r\n或者在Phala Cloud上远程部署MCP服务器，查看说明 [这里](./tee.md)\r\n\r\n## 安装\r\n\r\n`near-mcp` 意味着与MCP兼容的客户端一起使用。在 [MCP文件](https://modelcontextprotocol.io/introduction)\r\n\r\n添加到 [`claude` 代码](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview) cli：\r\n\r\n```bash\r\nclaude mcp add near-mcp npx @nearai/near-mcp@latest run\r\n```\r\n\r\n通过JSON配置添加到claude桌面：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"near-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@nearai/near-mcp@latest\", \"run\"],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n增加 [`goose`](https://block.github.io/goose/)\r\n\r\n```\r\n┌   goose-configure\r\n│\r\n◇  What would you like to configure?\r\n│  Add Extension\r\n│\r\n◇  What type of extension would you like to add?\r\n│  Command-line Extension\r\n│\r\n◇  What would you like to call this extension?\r\n│  near-mcp\r\n│\r\n◇  What command should be run?\r\n│  npx @nearai/near-mcp@latest run\r\n│\r\n◇  Please set the timeout for this tool (in secs):\r\n│  60\r\n│\r\n◇  Would you like to add environment variables?\r\n│  No\r\n│\r\n└  Added near-mcp extension\r\n```\r\n\r\n或者，您可以全局安装并直接使用它。\r\n\r\n```bash\r\n# Install globally\r\nnpm install -g @nearai/near-mcp@latest\r\n\r\n# Or use directly with npx\r\nnpx @nearai/near-mcp@latest run\r\n```\r\n\r\n## 可用工具\r\n\r\n看见 [TOOLS.md](./TOOLS.md) 查看可用工具和参数列表。\r\n\r\n## 与AI模型集成\r\n\r\n该工具旨在与支持以下功能的AI模型一起使用 [模型上下文协议](https://github.com/modelcontextprotocol)它使AI助手能够：\r\n\r\n1. 代表用户管理NEAR帐户\r\n1. 检查账户余额和状态\r\n1. 签署并发送交易\r\n1. 创建新帐户并管理访问密钥\r\n1. 检查和执行智能合约\r\n\r\n## 安全考虑\r\n\r\n- 此MCP旨在本地运行。帐户私钥存储在运行MCP服务器的本地未加密密钥库中。\r\n- 底层模型不应有权查看与其交互的帐户的私钥 _一个例外_The `import_account` 该工具允许模型从私钥导入帐户。这要求用户向模型提供私钥。\r\n\r\n## 贡献\r\n\r\n我们欢迎对NEAR MCP服务器的贡献！请查看 [贡献.md](CONTRIBUTING.md) 文件以获取更多信息。\r\n\r\n### 报告问题\r\n\r\n如果您发现错误或有功能请求，请在GitHub存储库上打开问题。\r\n",
+ "config": {
+  "near-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@nearai/near-mcp@latest",
+    "run"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "id": "37",
+ "kind": "mcp",
+ "name": "anybrowse",
+ "fingerprint_md5": "ac1b7fe0d3a46b8530c5c28fbeccb672",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 任意浏览\r\n\r\n[](https://glama.ai/mcp/servers/kc23go/anybrowse)\r\n\r\n**将任何URL转换为干净、LLM就绪的Markdown。**\r\n\r\n具有完整JavaScript渲染的真实Chrome浏览器。84%的成功率，包括JavaScript密集型网站、Cloudflare保护的页面和政府网站。\r\n\r\n**🆓 每天10次免费MCP通话，无需注册。** 免费获得50美元/天 [电子邮件注册](https://anybrowse.dev/signup).\r\n\r\n## MCP服务器（免费）\r\n\r\n将任何兼容MCP的客户端连接到 `https://anybrowse.dev/mcp` （流式HTTP传输）。\r\n\r\n**Claude Desktop/Cline/Cursor的快速配置：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"anybrowse\": {\r\n      \"url\": \"https://anybrowse.dev/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n不需要API密钥。开箱即用。每个IP每天10次免费通话，使用免费帐户每天50次。\r\n\r\n### 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `scrape` |将任何URL转换为干净、LLM优化的Markdown。处理SPA、动态内容和PDF。 |\r\n| `crawl` |在谷歌上搜索一个查询，并将顶部结果抓取到Markdown中。 |\r\n| `search` |谷歌搜索结果为结构化JSON（标题、URL、代码段）。 |\r\n\r\n## HTTP API（x402付费-每次使用）\r\n\r\n|端点|价格|描述|\r\n|----------|-------|-------------|\r\n| `POST /scrape` |0.003美元|网址→ Markdown|\r\n| `POST /crawl` |$0.005美元|搜索+抓取热门结果|\r\n| `POST /serp/search` |0.002美元|谷歌SERP格式为JSON|\r\n\r\n### 示例\r\n\r\n```bash\r\ncurl -X POST https://anybrowse.dev/scrape \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"X-PAYMENT: <x402_payment_proof>\" \\\r\n  -d '{\"url\": \"https://example.com\"}'\r\n```\r\n\r\n答复：\r\n\r\n```json\r\n{\r\n  \"url\": \"https://example.com\",\r\n  \"title\": \"Example Domain\",\r\n  \"markdown\": \"# Example Domain\\n\\nThis domain is for use in illustrative examples...\",\r\n  \"status\": \"ok\"\r\n}\r\n```\r\n\r\n## 免费层\r\n\r\n|级别|限制|如何获得|\r\n|------|-------|---------------|\r\n|匿名|每天10次MCP调用|只需使用它——无需配置|\r\n|免费账户|每天50次通话| [注册](https://anybrowse.dev/signup) --10秒，无信用卡|\r\n|点数|3000+个电话| [购买积分](https://anybrowse.dev/credits) 从$5起|\r\n|x402 |无限制|每次通话使用基本美元支付|\r\n\r\n## 支付\r\n\r\n付款使用 [x402协议](https://www.x402.org/) 以USDC为基础。任何兼容x402的客户端或代理钱包都可以自动支付。主持人是Coinbase CDP(`https://api.cdp.coinbase.com/platform/v2/x402`).\r\n\r\n## 发现\r\n\r\n- **代理卡**: [https://anybrowse.dev/.well-known/agent-card.json](https://anybrowse.dev/.well-known/agent-card.json)\r\n- **OpenAPI规范**: [https://anybrowse.dev/openapi.json](https://anybrowse.dev/openapi.json)\r\n- **x402发现**: [https://anybrowse.dev/.well-known/x402](https://anybrowse.dev/.well-known/x402)\r\n- **健康**: [https://anybrowse.dev/health](https://anybrowse.dev/health)\r\n\r\n## 链接\r\n\r\n- **网站**: [https://anybrowse.dev](https://anybrowse.dev)\r\n- **MCP端点**: `https://anybrowse.dev/mcp`\r\n- **协议**：A2A、x402、MCP\r\n- **网络**：基础（美元）\r\n- **钱包**: `0x8D76E8FB38541d70dF74b14660c39b4c5d737088`\r\n",
+ "config": {
+  "anybrowse": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://anybrowse.dev/mcp"
+  }
+ }
+}

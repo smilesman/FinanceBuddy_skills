@@ -1,0 +1,22 @@
+{
+ "id": "2400",
+ "kind": "mcp",
+ "name": "academic-hub",
+ "fingerprint_md5": "4ed7fea31f949561a12108b4db48d841",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp学术中心\r\n\r\n一个统一的MCP（模型上下文协议）服务器，用于搜索和下载来自10多个来源的学术论文和电子书。\r\n\r\n## 来源\r\n\r\n### 论文\r\n\r\n- **OpenAlex** -开放学术元数据\r\n- **arXiv** -预印本\r\n- **未付费墙** -法律开放获取PDF\r\n- **核心** -图书馆开放存取\r\n- **科学中心** -后退\r\n\r\n### 书籍\r\n\r\n- **安娜的档案**\r\n- **Z库** （镜子）\r\n- **海洋PDF**\r\n- **PDF驱动器**\r\n- **ManyBooks** （公共领域）\r\n- **BD电子书**\r\n- **数字图书馆**\r\n- **Smashwords**\r\n\r\n## 安装\r\n\r\n```bash\r\ngit clone https://github.com/bockybocky/mcp-academic-hub.git\r\ncd mcp-academic-hub\r\npip install -r requirements.txt\r\n```\r\n\r\n## 配置\r\n\r\n设置环境变量（可选）：\r\n\r\n```bash\r\nexport UNPAYWALL_EMAIL=\"your-email@example.com\"  # For Unpaywall API\r\nexport CORE_API_KEY=\"your-core-api-key\"           # For CORE API (free at https://core.ac.uk)\r\nexport DOWNLOAD_DIR=\"/path/to/downloads\"          # Default download directory\r\n```\r\n\r\n## 使用Claude代码\r\n\r\n添加到您的Claude Code MCP设置中(`~/.claude/settings.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"academic-hub\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"server.py\"],\r\n      \"cwd\": \"/path/to/mcp-academic-hub\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用Gemini CLI\r\n\r\n添加到您的Gemini MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"academic-hub\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"server.py\"],\r\n      \"cwd\": \"/path/to/mcp-academic-hub\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 搜索工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_papers` |搜索OpenAlex+ArXiv|\r\n| `search_ocean_of_pdf` |搜索海洋PDF|\r\n| `search_pdf_drive` |搜索PDF驱动器|\r\n| `search_manybooks` |搜索ManyBooks（免费/公共领域）|\r\n| `search_bdebooks` |搜索BD电子书|\r\n| `search_digilibraries` |搜索数字图书馆|\r\n| `search_smashwords` |搜索Smashwords|\r\n| `search_zlibrary_to` |搜索Z库镜像|\r\n| `search_annas_archive` |搜索安娜的档案|\r\n\r\n### 下载/链接提取工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_pdf_links` |查找DOI（Unpaywall+CORE+Sci-Hub）的PDF链接|\r\n| `download_paper` |从直接URL下载PDF|\r\n| `get_ocean_of_pdf_links` |从OceanofPDF中提取下载链接|\r\n| `get_pdf_drive_links` |从PDF驱动器中提取PDF链接|\r\n| `get_digilibraries_links` |从DigiLibraries提取下载链接|\r\n| `get_zlibrary_to_links` |从Z-Library中提取下载链接|\r\n| `get_smashwords_links` |提取Smashwords图书信息|\r\n\r\n## 需求\r\n\r\n- Python>=3.10\r\n- [紫外线](https://github.com/astral-sh/uv) （推荐）或pip\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "academic-hub": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "server.py"
+   ],
+   "env": {}
+  }
+ }
+}

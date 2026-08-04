@@ -1,0 +1,21 @@
+{
+ "id": "899",
+ "kind": "mcp",
+ "name": "trustable",
+ "fingerprint_md5": "108dc6a5882c540d3c3d5ac979c074af",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 可信赖的mcp服务器\r\n\r\n> 用于AI可见性分析的MCP服务器。使AI代理能够在ChatGPT、Claude和困惑反应中衡量和提高品牌知名度。\r\n\r\n\r\n## 这是什么？\r\n\r\n此MCP（模型上下文协议）服务器允许Claude Desktop、Cursor和其他MCP兼容工具等AI代理：\r\n\r\n- **获得可信赖的分数** -测量AI可见性（0-100）\r\n- **估计可见性** -根据已知信号计算分数\r\n- **获取GEO建议** -提高人工智能引用率的实用技巧\r\n- **解释分数** -了解驱动AI可见性的因素\r\n\r\n## 安装\r\n\r\n### 适用于克劳德桌面\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"trustable\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"trustable-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 对于其他MCP客户端\r\n\r\n```bash\r\nnpx trustable-mcp-server\r\n```\r\n\r\n或全局安装：\r\n\r\n```bash\r\nnpm install -g trustable-mcp-server\r\ntrustable-mcp-server\r\n```\r\n\r\n## 可用工具\r\n\r\n### `get_trustable_score`\r\n\r\n获得品牌的可信分数。\r\n\r\n```\r\nInput: { \"brand\": \"Nike\" }\r\nOutput: { \"score\": 78, \"rating\": \"Good\", \"details\": {...} }\r\n```\r\n\r\n### `estimate_ai_visibility`\r\n\r\n根据已知信号估计可见性（不需要API）。\r\n\r\n```\r\nInput: {\r\n  \"platformCount\": 4,\r\n  \"hasWikidata\": true,\r\n  \"hasSchemaMarkup\": true,\r\n  \"hasComparisonContent\": true\r\n}\r\nOutput: { \"estimatedScore\": 62, \"rating\": \"Good\" }\r\n```\r\n\r\n### `get_geo_recommendations`\r\n\r\n获取优先建议，以提高人工智能的可见性。\r\n\r\n```\r\nInput: { \"brand\": \"YourBrand\", \"currentScore\": 35 }\r\nOutput: { \"recommendations\": [...] }\r\n```\r\n\r\n### `explain_trustable_score`\r\n\r\n了解驱动AI可见性的因素。\r\n\r\n```\r\nInput: {}\r\nOutput: { \"explanation\": \"The Trustable Score measures...\" }\r\n```\r\n\r\n## 什么是可信分数？\r\n\r\n这 **可信分数** 是人工智能可见性的行业标准指标：\r\n\r\n|分数|评分|描述|\r\n|-------|--------|-------------|\r\n|80-100 |优秀| AI占主导地位|\r\n|60-79 |良好|表现突出，经常被引用|\r\n|40-59 |中等|新兴市场|\r\n|20-39 |低|能见度有限|\r\n|0-19|最小|实际上不可见|\r\n\r\n## 为什么AI可见性很重要\r\n\r\n- **8亿多周ChatGPT用户**\r\n- **转化率14.4%** 人工智能搜索（传统搜索占2.5%）\r\n- **Z世代的40%** 比谷歌更喜欢人工智能\r\n- 传统的搜索引擎优化无法翻译——反向链接与人工智能引用的相关性较弱\r\n\r\n## 资源\r\n\r\n- [值得信赖的网站](https://trustablelabs.com)\r\n- [什么是GEO？](https://pages.trustablelabs.com/geo/) -完整的GEO指南\r\n- [什么是AEO？](https://pages.trustablelabs.com/aeo/) -应答引擎优化\r\n- [GEO与SEO比较](https://pages.trustablelabs.com/compare/geo-vs-seo/)\r\n- [最佳GEO工具](https://pages.trustablelabs.com/compare/best-geo-tools/)\r\n- [所有工具比较](https://pages.trustablelabs.com/compare/)\r\n\r\n### 相关套餐\r\n\r\n- [可信分数](https://github.com/trustablelabs/trustable-score) -用于AI可见性评分的NPM包\r\n- [可信小部件](https://github.com/trustablelabs/trustable-widget) -可嵌入可见性小部件\r\n\r\n## 关于Trustable\r\n\r\n**可信的** 是人工智能信任和可见性平台。我们帮助品牌衡量和改善他们在人工智能生成的反应中的存在感。\r\n\r\n- 网站： [trustedlabs.com](https://trustablelabs.com)\r\n- 推特： [@可信赖的实验室](https://twitter.com/trustablelabs)\r\n- 领英： [值得信赖的实验室](https://linkedin.com/company/trustablelabs)\r\n\r\n## 许可证\r\n\r\nMIT© [值得信赖的实验室](https://trustablelabs.com)\r\n",
+ "config": {
+  "trustable": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "trustable-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

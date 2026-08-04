@@ -1,0 +1,22 @@
+{
+ "id": "2740",
+ "kind": "mcp",
+ "name": "statespace",
+ "fingerprint_md5": "74a25b06dc1cbc74b33420b7b67bd95a",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "<br>\r\n\r\n    <source media=\"(prefers-color-scheme: light)\" srcset=\"https://gips0.baidu.com/it/u=1267516142,1416071083&fm=3081&app=3081&f=PNG?w=1200&h=204\" />\r\n\r\n\r\n<br>\r\n\r\n\r\n______________________________________________________________________\r\n\r\n**网站： [https://statespace.com](https://statespace.com/)**\r\n\r\n______________________________________________________________________\r\n\r\n从以下位置搜索Markdown和.txt页面 [llms.txt](https://llmstxt.org/) 地点。提供CLI、SDK、MCP服务器和代理技能。\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install @statespace-tech/statespace\r\n```\r\n\r\n## 查询句法\r\n\r\n纯查询搜索所有站点：\r\n\r\n```\r\nmcp server setup\r\nvector database embeddings\r\nrate limiting middleware\r\noauth2 token refresh\r\nwebsocket reconnection strategy\r\n```\r\n\r\n将查询范围限定到特定站点 `site: query`:\r\n\r\n```\r\nstripe: webhook verification\r\nsupabase: edge functions auth\r\nvercel: edge middleware caching\r\nmistral.ai: function calling               # match by domain\r\ndocs.aws.amazon.com: s3 presigned urls     # match by subdomain\r\n```\r\n\r\n使用引号进行精确短语匹配：\r\n\r\n```\r\n\"context window limit\"\r\nvector database \"semantic search\"\r\nstripe: \"webhook signature verification\"\r\n```\r\n\r\n## 命令行界面\r\n\r\n从命令行搜索文档： `npx @statespace-tech/statespace search <query> [options]`\r\n\r\n```bash\r\nnpx @statespace-tech/statespace search \"mcp server setup\"\r\nnpx @statespace-tech/statespace search \"stripe: webhook verification\" --limit 5\r\nnpx @statespace-tech/statespace search \"redis connection pooling\" --limit 10 --offset 3\r\nnpx @statespace-tech/statespace search \"anthropic: tool function calling\" --limit 5 --human\r\n```\r\n\r\n|标志|短|默认|最大|描述|\r\n| -------------- | ----- | ------- | ---- | ------------------------------------- |\r\n| `--limit <n>` | `-l` | `10` | `50` |返回的最大结果|\r\n| `--offset <n>` | `-o` | `0` |--|要跳过的结果（用于分页）|\r\n| `--human` |--|--|--|人类可读的输出，而不是JSON|\r\n\r\n## 软件开发工具包\r\n\r\n导入和调用 `search()` 直接来自TypeScript或JavaScript。\r\n\r\n```typescript\r\nimport { search } from '@statespace-tech/statespace';\r\n\r\nconst results = await search(\"mcp server setup\");\r\nconst results = await search(\"stripe: webhook verification\", { limit: 5 });\r\nconst results = await search(\"redis connection pooling\", { limit: 10, offset: 3 });\r\n```\r\n\r\n## 主控程序\r\n\r\n添加到MCP配置中以公开 `search` 工具给您的代理：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"statespace\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@statespace-tech/statespace\", \"mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 代理技能\r\n\r\n看 [技能.md](SKILL.md)\r\n\r\n## 需求\r\n\r\nNode.js 18+\r\n\r\n## 社区与贡献\r\n\r\n- **Discord 的中文翻译是“不和谐”或“纷争”。**：加入我们 [社区服务器](https://discord.gg/rRyM7zkZTf) 用于实时帮助和讨论\r\n- **十、**：关注我们 [@国家航天科技](https://x.com/statespace_tech) 获取更新和新闻\r\n- **问题**：报告错误或请求功能 [GitHub 问题](https://github.com/statespace-tech/statespace/issues)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "statespace": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@statespace-tech/statespace",
+    "mcp"
+   ],
+   "env": {}
+  }
+ }
+}

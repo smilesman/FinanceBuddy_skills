@@ -1,0 +1,21 @@
+{
+ "id": "1433",
+ "kind": "mcp",
+ "name": "favicon-generator",
+ "fingerprint_md5": "b2441d3f603a83d9e430bff88f98b30f",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 自动收藏夹MCP服务器\r\n\r\n一个MCP（模型上下文协议）服务器，可以从PNG图像或URL自动生成完整的favicon集。该服务器创建了一组全面的favicons文件，包括各种大小、Apple touch图标和manifest.json文件。\r\n\r\n## 特性\r\n\r\n- **PNG转Favicon**：从本地PNG文件生成favicon集\r\n- **指向收藏夹图标的URL**：从URL下载图像并生成favicon集\r\n- **完整图标集**：创建多种尺寸（16x16、32x32、48x48、64x64、128x128、256x256）\r\n- **ICO格式**：生成传统的favicon.ico文件\r\n- **苹果触摸图标**：为iOS设备创建Apple特定的触摸图标\r\n- **Web应用程序清单**：为渐进式Web应用程序生成manifest.json\r\n\r\n## 安装与使用\r\n\r\n### MCP客户端配置\r\n\r\n添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"favicon-generator\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"auto-favicon\"],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n- `generate_favicon_from_png`：从本地PNG文件生成favicon集\r\n- `generate_favicon_from_url`：从URL下载图像并生成favicon集\r\n\r\n## 需求\r\n\r\n- Python 3.12+\r\n- uv包管理器\r\n",
+ "config": {
+  "favicon-generator": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "auto-favicon"
+   ],
+   "env": {}
+  }
+ }
+}

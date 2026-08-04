@@ -1,0 +1,22 @@
+{
+ "id": "2619",
+ "kind": "mcp",
+ "name": "military-service-workplace",
+ "fingerprint_md5": "ee3c3b83c5b740fc5b00586be9565696",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 兵役工作场所mcp\r\n\r\n\r\n在兵务厅兵役岗位搜索兵役特例指定企业的MCP服务器。<br/>\r\n查询行业技能人员、专业研究人员、可在船上工作预备役服役的企业信息。\r\n\r\n> \\[！注意\\]\r\n> [原版](https://github.com/antegral/agent-for-agent)但是，由于没有超过2天的问题响应，所以单独创建了问题响应。\r\n\r\n## 功能\r\n\r\n输入服务形式和条件后，兵务厅将查询指定供应商列表，并以CSV格式返回。\r\n\r\n|筛选器|说明|\r\n|------|------|\r\n|服务形态|产业技能人员、专业研究人员、乘船工作预备役\r\n|企业规模|大企业、中小企业、中坚企业、农渔民机械、其他\r\n|行业| 32个行业（信息处理、游戏软件、电子、医疗医药等）|\r\n|地区| 17个市道+市郡区|\r\n|是否招聘|仅过滤招聘公告注册企业|\r\n站种现役，补充役\r\n\r\n## MCP工具\r\n\r\n### `search_military_companies`\r\n\r\n在兵务厅兵役岗位搜索兵役特例指定企业。\r\n\r\n#### 参数\r\n\r\n|参数|类型|必需|默认值|说明|\r\n|----------|------|------|--------|------|\r\n| `service_type` |string|--|服务形式（`산업기능요원`, `전문연구요원`, `승선근무예비역`) |\r\n| `company_size` |string|-|企业规模（`대기업`, `중소기업`, `중견기업`, `농어민후계`, `기타`) |\r\n| `industry_sectors` | string | string\\[\\]-整个行业（可以有多个）|\r\n| `company_name` 搜索所有公司名称\r\n| `city_province` 全国市/道\r\n| `city_district` 所有市/郡/区\r\n| `is_hiring` |boolean |-| `false` |只查询招聘公告注册企业|\r\n| `military_service_type` | string | string\\[\\]-全部现役/补充役TO有无\r\n\r\n#### 支持行业列表\r\n\r\n<details>\r\n<summary>32개 업종 펼치기</summary>\r\n\r\n制造：钢铁、机械、电气、电子、化学、纤维、鞋类、西门餐饮业、生活用品、通信设备、信息处理、游戏软件、视频游戏、医疗医药、食品饮料、农产品加工、水产品加工、林产品加工、动物药品、动画\r\n\r\n矿业：煤炭开采、普通矿物开采、选矿冶炼\r\n\r\n能源：能源\r\n\r\n建设：国内建设，国外建设\r\n\r\n海运：内港货物、外港货物、内港船舶管理、外港船舶管理\r\n\r\n水产：近海、远洋\r\n\r\n</details>\r\n\r\n## 安装\r\n\r\n```bash\r\n# pnpm 없는 경우 \"npm install -g pnpm\"\r\npnpm install\r\npnpm build\r\n```\r\n\r\n## 使用方法\r\n\r\n### 以npx运行（建议）\r\n\r\n#### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add military-service-workplace -- npx -y military-service-workplace-mcp\r\n```\r\n\r\n#### 克劳德桌面版\r\n\r\n`claude_desktop_config.json`添加到：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"military-service-workplace\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"military-service-workplace-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 以本地版本运行\r\n\r\n#### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add military-service-workplace -- node /path/to/military-service-workplace-mcp/dist/index.js\r\n```\r\n\r\n#### 克劳德桌面版\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"military-service-workplace\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/military-service-workplace-mcp/dist/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 问题示例\r\n\r\n```\r\n산업기능요원 정보처리 업종 지정업체 검색해줘\r\n```\r\n\r\n```\r\n서울에서 게임SW 전문연구요원 채용 중인 업체 알려줘\r\n```\r\n\r\n```\r\n경기도 중소기업 산업기능요원 보충역 지정업체 찾아줘\r\n```\r\n\r\n## 限制\r\n\r\n- 这是从兵务厅API下载和解析Excel文件的方式，因此在更改API响应格式时可能不起作用。\r\n- 如果您在短时间内发送过多的请求，兵务厅服务器可能会限制您的访问。\r\n\r\n## 许可证\r\n\r\nMIT许可证。看 [许可证](LICENSE) 了解详情。\r\n",
+ "config": {
+  "military-service-workplace": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "military-service-workplace-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

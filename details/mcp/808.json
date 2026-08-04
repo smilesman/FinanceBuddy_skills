@@ -1,0 +1,23 @@
+{
+ "id": "808",
+ "kind": "mcp",
+ "name": "pixelpanda",
+ "fingerprint_md5": "fea928b925f610d554d05b1b684ae935",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "<!-- mcp-name: io.github.RyanKramer/pixelpanda-mcp -->\r\n\r\n# Pixel mcp服务器\r\n\r\n用于Claude Desktop、Cursor、VS Code和其他MCP兼容客户端的AI图像处理工具。\r\n\r\n**33工具** 从免费的本地图像编辑到人工智能驱动的产品摄影，分为三个层次。\r\n\r\n## 安装\r\n\r\n```bash\r\n# Using uv (recommended)\r\nuvx pixelpanda-mcp\r\n\r\n# Or pip\r\npip install pixelpanda-mcp\r\n```\r\n\r\n## 设置\r\n\r\n### 克劳德桌面\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pixelpanda\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"pixelpanda-mcp\"],\r\n      \"env\": {\r\n        \"PIXELPANDA_API_TOKEN\": \"pk_live_your_token_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n添加到MCP设置（设置>MCP服务器）：\r\n\r\n```json\r\n{\r\n  \"pixelpanda\": {\r\n    \"command\": \"uvx\",\r\n    \"args\": [\"pixelpanda-mcp\"],\r\n    \"env\": {\r\n      \"PIXELPANDA_API_TOKEN\": \"pk_live_your_token_here\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> API令牌为 **可选的** --所有本地和免费的人工智能工具都可以在没有它的情况下工作。你只需要一个付费生成工具的令牌。\r\n\r\n## 工具\r\n\r\n### 本地工具（免费，无需帐户，脱机运行）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `resize_image` |通过保留可选纵横比来调整大小|\r\n| `crop_image` |裁剪到特定像素坐标|\r\n| `rotate_image` |旋转任意角度|\r\n| `flip_image` |水平或垂直翻转|\r\n| `grayscale_image` |转换为灰度|\r\n| `invert_image` |反转颜色（负）|\r\n| `round_corners` |具有自定义半径的圆角|\r\n| `add_border` |添加纯色边框|\r\n| `compress_image` |压缩到JPEG/WebP并进行质量控制|\r\n| `merge_images` |合并多个图像（水平/垂直/网格）|\r\n| `convert_format` |在PNG、JPEG、WebP、BMP、TIFF之间转换|\r\n| `make_transparent` |调整图像不透明度|\r\n| `create_profile_picture` |圆形/方形/圆形轮廓图片|\r\n| `blur_image` |高斯模糊|\r\n| `adjust_image` |亮度、对比度、锐度、饱和度|\r\n| `add_watermark` |文本水印（中心/角/平铺）|\r\n| `pixelate_image` |像素效应|\r\n| `get_image_info` |尺寸、格式、文件大小、DPI、颜色模式|\r\n\r\n### 人工智能工具（免费，每天使用3次）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `remove_background` |AI背景移除（透明PNG）|\r\n| `upscale_image` |AI升级2倍或4倍（真正的ESRGAN）|\r\n| `remove_text` |AI文本/水印去除（OCR+修复）|\r\n| `analyze_image` |AI图像分析（对象、颜色、构图、质量）|\r\n\r\n### 专业工具（付费，1学分/图像）\r\n\r\n|工具|积分|描述|\r\n|------|---------|-------------|\r\n| `check_credits` |0|检查您的信用余额|\r\n| `list_avatars` |0|列出你的AI头像|\r\n| `list_products` |0|列出您上传的产品|\r\n| `upload_product` |0|上传产品图片|\r\n| `generate_product_photo` |1/图片|带有头像的AI产品照片|\r\n| `generate_tryon` |1/图片|AI试穿（戴头像产品）|\r\n| `generate_scenes` |1/场景| AI产品场景（工作室、生活方式）|\r\n| `check_job_status` |0|检查生成进度|\r\n| `list_jobs` |0|列出最新一代作业|\r\n\r\n## 定价\r\n\r\n- **自由**：所有本地工具+3个人工智能工具使用/每天/免费工具/\\*\r\n- **一次性10美元**：专业工具50学分（无需订阅，学分永不过期）\r\n- **24美元/月入门**：1125学分/月--最适合经常使用\r\n\r\n在获取API令牌 [pixelpanda.ai/定价](https://pixelpanda.ai/pricing)\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `PIXELPANDA_API_TOKEN` |对于专业工具|您的API代币(`pk_live_...`) |\r\n| `PIXELPANDA_API_URL` |没有| API基本URL（默认值： `https://pixelpanda.ai`) |\r\n\r\n## 示例\r\n\r\n```\r\n\"Resize photo.jpg to 800px wide\"\r\n\"Remove the background from product.png\"\r\n\"Upscale this image 4x\"\r\n\"Merge these 3 screenshots horizontally\"\r\n\"Generate 6 product photos using avatar abc123 and product def456\"\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "pixelpanda": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "pixelpanda-mcp"
+   ],
+   "env": {
+    "PIXELPANDA_API_TOKEN": "pk_live_your_token_here"
+   }
+  }
+ }
+}

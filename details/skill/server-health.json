@@ -1,0 +1,12 @@
+{
+ "id": "server-health",
+ "kind": "skill",
+ "name": "server-health",
+ "fingerprint_md5": "35fd753f4849f6a91d96ba5fd68253e6",
+ "download_count": 0,
+ "category": "生活方式",
+ "tags": "",
+ "version": "",
+ "readme": "# Server Health Skill\r\n\r\nQuick server monitoring with system stats, processes, OpenClaw gateway info, and services.\r\n\r\n## 用法\r\n\r\n**Standard 查看:**\r\n```bash\r\n./server-health.sh\r\n```\r\n\r\n**Verbose (includes temp, network, swap, I/O):**\r\n```bash\r\n./server-health.sh --verbose\r\n```\r\n\r\n**JSON 输出 (for automation):**\r\n```bash\r\n./server-health.sh --json\r\n```\r\n\r\n**Alerts only (warnings/errors):**\r\n```bash\r\n./server-health.sh --alerts\r\n```\r\n\r\n## What It Shows\r\n\r\n### 🔴 Always\r\n- System stats (CPU, RAM, Disk, Uptime)\r\n- Top 3-5 processes by CPU/RAM\r\n- OpenClaw Gateway status & config\r\n- Running services (Docker, PostgreSQL, etc.)\r\n\r\n### 🟡 Conditional\r\n- Alerts (disk >90%, RAM >80%, CPU >90%)\r\n- Swap 用法 (if in use)\r\n\r\n### 🟢 Verbose only\r\n- Temperature (if sensors available)\r\n- Network traffic\r\n- Disk I/O\r\n- Detailed service info\r\n\r\n## 示例 输出\r\n\r\n```\r\n🖥️ SERVER HEALTH\r\n━━━━━━━━━━━━━━━━━━━━\r\n\r\n💻 SYSTEM\r\nCPU: ████░░░░░░ 42% (Load: 1.2, 0.8, 0.5)\r\nRAM: ██████░░░░ 1.4GB/8GB (18%)\r\nDISK: ████░░░░░░ 45GB/100GB (45%)\r\nUP: ⏱️ 5d 3h\r\n\r\n🔄 TOP PROCESSES\r\nnode         35%    450MB\r\npostgres     12%    280MB\r\nopenclaw      8%    180MB\r\n\r\n⚡ OPENCLAW GATEWAY\r\nStatus: ✅ Running (PID: 1639125)\r\nUptime: 2d 5h | Port: 18789 | v2026.2.6-3\r\n\r\n🤖 MODEL CONFIG\r\nPrimary: claude-sonnet-4-5\r\nContext: 43k/128k (33%) | 574↓ 182↑ tokens\r\nFallbacks: glm-4.7 → copilot-sonnet → opus-4-5\r\n\r\n📊 SESSIONS\r\nActive: 3 | Heartbeat: 30m | Last: 1m ago\r\n\r\n🐳 SERVICES\r\nDocker: ✅ 3 containers\r\nPostgreSQL: ✅ Running\r\n```",
+ "config": {}
+}

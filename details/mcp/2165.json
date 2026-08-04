@@ -1,0 +1,27 @@
+{
+ "id": "2165",
+ "kind": "mcp",
+ "name": "earthdata",
+ "fingerprint_md5": "cc87ad3b15dd61e7dcab9865808459ec",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 🪐 ✨ 地球数据MCP服务器\r\n\r\nEarthdata MCP服务器是 [模型上下文协议](https://modelcontextprotocol.io/introduction) （MCP）服务器实现，提供与之交互的工具 [美国国家航空航天局地球数据](https://www.earthdata.nasa.gov/).\r\n\r\n此服务器有意仅用于Earthdata。\r\n\r\n如果您需要笔记本电脑/运行时工具，请使用以下工具组合此服务器 `jupyter-mcp-server` 使用 [mcp组成](https://github.com/datalayer/mcp-compose).\r\n\r\n## 主要特点\r\n\r\n- NASA地球数据的数据集发现\r\n- 使用时间和边界框过滤器进行颗粒搜索\r\n- 具有明确执行模式的灵活下载工作流程\r\n\r\n  [Analyzing Sea Level Rise with AI-Powered Geospatial Tools and Jupyter - Watch Video](https://www.loom.com/share/c2b5b05f548d4f1492d5c107f0c48dbc)\r\n\r\n## 入门指南\r\n\r\n### 本地安装\r\n\r\n```bash\r\npip install earthdata-mcp-server\r\n```\r\n\r\n### Docker与克劳德桌面\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"earthdata\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"datalayer/earthdata-mcp-server:latest\"\r\n      ],\r\n      \"env\": {\r\n        \"EARTHDATA_USERNAME\": \"your_username\",\r\n        \"EARTHDATA_PASSWORD\": \"your_password\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Linux主机网络\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"earthdata\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"--network=host\",\r\n        \"datalayer/earthdata-mcp-server:latest\"\r\n      ],\r\n      \"env\": {\r\n        \"EARTHDATA_USERNAME\": \"your_username\",\r\n        \"EARTHDATA_PASSWORD\": \"your_password\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n服务器提供3个Earthdata工具。\r\n\r\n### `search_earth_datasets`\r\n\r\n- 搜索美国国家航空航天局地球数据上的数据集。\r\n- 输入：\r\n  - search_keywords（str）：在数据集标题中搜索的关键字。\r\n  - count（int）：要返回的数据集数量。\r\n  - temporal（tuple）：（可选）时间范围，格式为（date_from，date_to）。\r\n  - bounding_box（tuple）：（可选）格式为（lower_lift_lon、lower_left_lat、upper_right_lon、upper_right_lat）的边界框。\r\n- 返回：数据集摘要列表。\r\n\r\n### `search_earth_datagranules`\r\n\r\n- 在NASA地球数据中搜索数据颗粒。\r\n- 输入：\r\n  - short_name（str）：数据集的简称。\r\n  - count（int）：要返回的数据颗粒数。\r\n  - temporal（tuple）：（可选）时间范围，格式为（date_from，date_to）。\r\n  - bounding_box（tuple）：（可选）格式为（lower_lift_lon、lower_left_lat、upper_right_lon、upper_right_lat）的边界框。\r\n- 返回：数据颗粒列表。\r\n\r\n### `download_earth_data_granules`\r\n\r\n- 使用显式模式搜索和可选下载颗粒。\r\n- **认证**：需要NASA地球数据登录凭据（请参阅 [身份验证指南](./docs/authentication.md))\r\n- 输入：\r\n  - folder_name（str）：用于保存数据的本地文件夹名称。\r\n  - short_name（str）：要下载的地球数据集的简称。\r\n  - count（int）：要下载的数据颗粒数。\r\n  - temporal（tuple）：（可选）时间范围，格式为（date_from，date_to）。\r\n  - bounding_box（tuple）：（可选）格式为（lower_lift_lon、lower_left_lat、upper_right_lon、upper_right_lat）的边界框。\r\n  - mode（str）：以下之一：\r\n    - `manifest`：仅返回颗粒元数据。\r\n    - `download`：直接在服务器端下载文件。\r\n    - `script`：返回要在其他地方执行的Python代码。\r\n  - max_manifest_items（int）：返回的最大项目数 `manifest` 模式。\r\n\r\n#### 下载是如何工作的\r\n\r\n`download_earth_data_granules` 始终从使用过滤器搜索颗粒开始，然后根据以下内容进行操作 `mode`:\r\n\r\n1. `manifest`\r\n   - 返回结构化预览(`items`)带有ID、标题和链接。\r\n   - 不写入文件。\r\n   - 验证查询范围的最佳第一步。\r\n1. `download`\r\n   - 使用环境凭据通过Earthdata进行身份验证。\r\n   - 将匹配颗粒直接下载到 `folder_name` 在服务器运行时。\r\n   - 返回下载的文件路径。\r\n1. `script`\r\n   - 返回执行相同搜索+下载的可执行Python代码。\r\n   - 当执行发生在由另一个MCP服务器控制的笔记本电脑/运行时时的最佳选择。\r\n\r\n#### 推荐下载策略\r\n\r\n1. 使用 `mode=\"manifest\"` 首先要安全检查结果。\r\n1. 使用 `mode=\"script\"` 当你想通过笔记本电脑驱动执行时 `mcp-compose` + `jupyter-mcp-server`.\r\n1. 使用 `mode=\"download\"` 仅当打算进行服务器端文件写入时。\r\n\r\n关于完整的构图示例 `mcp-compose`，请参阅 [下载工作流文档](./docs/download.md).\r\n\r\n## 提示\r\n\r\n1. `download_analyze_global_sea_level`\r\n\r\n   - 生成以以下内容开头的工作流 `download_earth_data_granules` 在 `script` 模式。\r\n   - 旨在在组合的笔记本/运行时堆栈中执行（通过 `mcp-compose`).\r\n\r\n1. `sealevel_rise_dataset`\r\n\r\n   - 搜索与全球海平面上升相关的数据集。\r\n   - 输入：\r\n     - `start_year` （int）：开始考虑年份。\r\n     - `end_year` （int）：年底考虑。\r\n   - 返回：提示格式正确。\r\n\r\n1. `ask_datasets_format`\r\n\r\n   - 询问数据集的格式。\r\n   - 返回：提示格式正确。\r\n\r\n## 建筑\r\n\r\n```bash\r\n# or run `docker build -t datalayer/earthdata-mcp-server .`\r\nmake build-docker\r\n```\r\n\r\n如果你愿意，你可以提取预构建的图像。\r\n\r\n```bash\r\nmake pull-docker\r\n```\r\n",
+ "config": {
+  "earthdata": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "datalayer/earthdata-mcp-server:latest"
+   ],
+   "env": {
+    "EARTHDATA_USERNAME": "your_username",
+    "EARTHDATA_PASSWORD": "your_password"
+   }
+  }
+ }
+}

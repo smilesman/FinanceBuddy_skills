@@ -1,0 +1,22 @@
+{
+ "id": "3352",
+ "kind": "mcp",
+ "name": "begagnad",
+ "fingerprint_md5": "73205e935486c243b7ee897a8f3acc77",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 烤面包MCP\r\n\r\n用于搜索瑞典两大二手市场Blocket和Tradera的模型上下文协议（MCP）服务器。\r\n\r\n## 它做什么\r\n\r\n使像克劳德这样的人工智能代理能够从瑞典二手市场搜索和检索商品。返回统一的数据，包括标题、描述、价格、图像、卖家信息和列表的直接链接。\r\n\r\n## 设置\r\n\r\n### 使用公共端点\r\n\r\n实时实例可在以下网址获得 `https://begagnad-mcp.bjesus.workers.dev/sse`\r\n\r\n通过编辑配置Claude Desktop `~/.config/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"begagnad\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-remote\",\r\n        \"https://begagnad-mcp.bjesus.workers.dev/sse\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动Claude Desktop以加载服务器。\r\n\r\n### 部署您自己的实例\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   npm install\r\n   ```\r\n\r\n1. 登录Cloudflare：\r\n\r\n   ```bash\r\n   wrangler login\r\n   ```\r\n\r\n1. 部署：\r\n\r\n   ```bash\r\n   npm run deploy\r\n   ```\r\n\r\n1. 使用部署URL更新您的Claude Desktop配置。\r\n\r\n### 地方发展\r\n\r\n```bash\r\nnpm start\r\n```\r\n\r\n服务器运行于 `http://localhost:8788/sse`\r\n\r\n### 配置\r\n\r\nTradera API凭证可以设置为Cloudflare机密：\r\n\r\n```bash\r\nwrangler secret put TRADERA_APP_ID\r\nwrangler secret put TRADERA_APP_KEY\r\n```\r\n\r\n## 可用工具\r\n\r\n- `search_blocket` -搜索Blocket市场\r\n\r\n  - 参数： `query` （字符串）， `limit` （数字，可选）\r\n\r\n- `get_blocket_item` -获取特定Blocket列表的详细信息\r\n\r\n  - 参数： `ad_id` （字符串）\r\n\r\n- `search_tradera` -搜索Tradera市场\r\n\r\n  - 参数： `query` （字符串）， `page` （数字，可选）\r\n\r\n- `get_tradera_item` -获取特定Tradera商品的详细信息\r\n\r\n  - 参数： `item_id` （字符串）\r\n\r\n- `search_both` -同时搜索两个市场\r\n\r\n  - 参数： `query` （字符串）， `blocket_limit` （数字，可选）\r\n\r\n## 示例用法\r\n\r\n问克劳德：\r\n\r\n- “给我找一个安装了OpenWRT的Linksys路由器”\r\n- “搜索20000瑞典克朗以下的红色皮卡”\r\n- “给我看看斯德哥尔摩的古董家具”\r\n\r\n## 数据格式\r\n\r\n返回统一的数据结构：\r\n\r\n- 项目ID、标题、描述\r\n- 价格（瑞典克朗），地点\r\n- 图片（URL）\r\n- 卖方名称和评级\r\n- 直接链接到列表\r\n- 源市场（Blocket或Tradera）\r\n\r\n## 应用程序编程接口\r\n\r\n- Blocket API： `https://blocket-api.se/v1/`\r\n- 交易API： `https://api.tradera.com/v3/`\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "begagnad": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://begagnad-mcp.bjesus.workers.dev/sse"
+   ],
+   "env": {}
+  }
+ }
+}

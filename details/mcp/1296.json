@@ -1,0 +1,22 @@
+{
+ "id": "1296",
+ "kind": "mcp",
+ "name": "todo",
+ "fingerprint_md5": "dd8df1eb6ad1378b3691d533c2e02c47",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# TODO管理MCP服务器\r\n\r\n使用Cloudflare Workers和D1数据库的TODO管理MCP服务器。\r\n\r\n## 特性\r\n\r\n- `addTodo`：创建新的TODO\r\n- `getTodos`：获取TODO列表\r\n- `completeTodo`：将TODO标记为完成\r\n- `markIncomplete`：将TODO标记为不完整\r\n- `deleteTodo`：删除所有\r\n\r\n## 设置\r\n\r\n### 1.创建项目\r\n\r\n```bash\r\nnpm create cloudflare@latest -- my-mcp-server --template=cloudflare/ai/demos/remote-mcp-authless\r\ncd my-mcp-server\r\n```\r\n\r\n### 2.创建D1数据库\r\n\r\n```bash\r\n# Create D1 database\r\nwrangler d1 create todo-tasks-db\r\n```\r\n\r\n### 3.配置wrangler.json\r\n\r\n将创建的数据库ID添加到 `wrangler.jsonc`:\r\n\r\n```json\r\n{\r\n  \"$schema\": \"node_modules/wrangler/config-schema.json\",\r\n  \"name\": \"todo-mcp-server\",\r\n  \"main\": \"src/index.ts\",\r\n  \"compatibility_date\": \"2025-03-10\",\r\n  \"compatibility_flags\": [\"nodejs_compat\"],\r\n  \"d1_databases\": [\r\n    {\r\n      \"binding\": \"DB\",\r\n      \"database_name\": \"todo-tasks-db\",\r\n      \"database_id\": \"your-database-id-here\"\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n### 4.创建数据库架构\r\n\r\n创建 `schema.sql` 文件：\r\n\r\n```sql\r\nCREATE TABLE todos (\r\n  id INTEGER PRIMARY KEY AUTOINCREMENT,\r\n  title TEXT NOT NULL,\r\n  completed BOOLEAN DEFAULT FALSE,\r\n  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,\r\n  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP\r\n);\r\n```\r\n\r\n将架构应用于数据库：\r\n\r\n```bash\r\n# Apply to local environment\r\nwrangler d1 execute todo-tasks-db --file=./schema.sql --local\r\n\r\n# Apply to remote environment\r\nwrangler d1 execute todo-tasks-db --file=./schema.sql --remote\r\n```\r\n\r\n### 5.生成类型\r\n\r\n```bash\r\nnpm run cf-typegen\r\n```\r\n\r\n### 6.实现src/index.ts\r\n\r\n创建从McpAgent继承的MCP代理类，并实现TODO管理工具。看 `src/index.ts` 了解详情。\r\n\r\n### 7.本地测试\r\n\r\n启动开发服务器：\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n在另一个终端中启动MCP检查器：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector@latest\r\n```\r\n\r\n在web浏览器中打开显示的端口并输入 `http://localhost:8787/mcp` 在MCP服务器URL字段中进行测试。\r\n\r\n### 8.部署\r\n\r\n```bash\r\nnpm run deploy\r\n```\r\n\r\n## 用法\r\n\r\n### Claude桌面使用情况\r\n\r\n部署后，将以下内容添加到Claude Desktop的配置文件中(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"todo\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-remote@latest\",\r\n        \"https://your-worker-domain.workers.dev/mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 资源清理\r\n\r\n要删除项目，请按照以下步骤删除Cloudflare资源：\r\n\r\n### 1.删除Worker\r\n\r\n```bash\r\nwrangler delete my-mcp-server\r\n```\r\n\r\n### 2.删除D1数据库\r\n\r\n```bash\r\nwrangler d1 delete todo-tasks-db\r\n```\r\n\r\n**备注**：删除Worker将自动删除关联的持久对象。\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 作者\r\n\r\n和田雄介\r\n",
+ "config": {
+  "todo": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote@latest",
+    "https://your-worker-domain.workers.dev/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

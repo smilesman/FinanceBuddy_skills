@@ -1,0 +1,24 @@
+{
+ "id": "897",
+ "kind": "mcp",
+ "name": "tripo-ai",
+ "fingerprint_md5": "7fc7388d94ec24a153c7fe7ec6728aab",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Tripo AI MCP服务器\r\n\r\n这是一个模型上下文协议（MCP）服务器，用于 [Tripo3D人工智能](https://www.tripo3d.ai/) API它允许AI助手与Tripo的3D生成功能进行交互。\r\n\r\n## 特性\r\n\r\n- **文本转换为3D**：根据文本提示生成3D模型。\r\n- **图像到3D**：从图像生成3D模型（支持本地路径、URL或预上传的令牌）。\r\n- **多视图到3D**：从多个视图图像（本地路径、URL或令牌）生成3D模型。\r\n- **优化模型**：提高模型草稿的质量。\r\n- **风格化**：将样式（乐高、体素、沃罗诺伊、minecraft）应用于模型。\r\n- **纹理模型**：重新为现有模型设置纹理，可选择由文本或图像提示引导。\r\n- **转换模型**：将模型导出为其他格式（GLTF、FBX、OBJ、STL、USDZ、3MF）。\r\n- **动画工作流程**：检查刚性→ 装配模型→ 重新定位预设动画。\r\n- **任务状态**：检查状态并检索任何生成任务的输出URL。\r\n- **上传文件**：上传本地映像文件并接收可重用的文件令牌。\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g tripo-ai-mcp-server\r\n```\r\n\r\n## 配置\r\n\r\n您需要一个Tripo3 D API机密。您可以将其设置为 `.env` 将其作为环境变量进行归档或传递 `TRIPO_API_SECRET`.\r\n\r\n## 客户端配置\r\n\r\n### 克劳德桌面\r\n\r\n将以下内容添加到您的 `claude_desktop_config.json` （通常在 `%APPDATA%\\Claude\\claude_desktop_config.json` 在Windows或 `~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tripo-ai\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"tripo-ai-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"TRIPO_API_SECRET\": \"your_api_secret_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n启动服务器：\r\n\r\n```bash\r\ntripo-ai-mcp-server\r\n```\r\n\r\n### 工具\r\n\r\n- `text_to_3d`：根据文本描述生成3D模型。\r\n- `image_to_3d`：从图像（本地路径、URL或预上传的令牌）生成3D模型。\r\n- `multiview_to_3d`：从多个视图图像生成3D模型。\r\n- `get_task_status`：检查任务状态并检索输出模型URL。\r\n- `upload_file`：上传本地映像文件并接收可重用的文件令牌。\r\n- `refine_model`：完善模型草案以提高质量。\r\n- `animate_prerigcheck`：检查模型是否适合装配。\r\n- `rig_model`：装配模型，使其可以设置动画。\r\n- `retarget_animation`：将预设动画应用于装配模型。\r\n- `stylize_model`：将视觉样式应用于模型（乐高、体素、沃罗诺伊、minecraft）。\r\n- `convert_model`：将模型转换为不同的文件格式（GLTF、FBX、OBJ、STL、USDZ、3MF）。\r\n- `texture_model`：为现有模型生成新纹理。\r\n\r\n## 发展\r\n\r\n1. 克隆仓库。\r\n1. `npm install`\r\n1. `npm run build`\r\n1. `node dist/index.js`\r\n\r\n## 发布到npm\r\n\r\nGitHub操作工作流(`.github/workflows/publish.yml`)每当创建新的GitHub Release时，都会自动将包发布到npm。\r\n\r\n**一次性设置：**\r\n\r\n1. 生成一个npm **自动化** 令牌在 [npmjs.com](https://www.npmjs.com) → 阿凡达→ 访问令牌→ 生成新令牌→ 自动化。\r\n1. 将其添加为GitHub中的存储库机密：设置→ 秘密与变量→ 行动→ 新存储库机密→ 命名它 `NPM_TOKEN`.\r\n\r\n**要发布新版本，请执行以下操作：**\r\n\r\n1. 碰撞 `\"version\"` 在 `package.json`.\r\n1. 承诺并推动。\r\n1. 创建一个新的GitHub版本（用版本标记它，例如。 `v1.1.0`).工作流会自动触发并发布到npm。\r\n\r\n## 许可证\r\n\r\n国际学生委员会\r\n",
+ "config": {
+  "tripo-ai": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "tripo-ai-mcp-server"
+   ],
+   "env": {
+    "TRIPO_API_SECRET": "your_api_secret_here"
+   }
+  }
+ }
+}

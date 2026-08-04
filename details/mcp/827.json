@@ -1,0 +1,27 @@
+{
+ "id": "827",
+ "kind": "mcp",
+ "name": "rag",
+ "fingerprint_md5": "271c40bba0d9e892367c7eb4bc5ddc27",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp-rag服务器\r\n\r\n\r\n一种支持检索增强生成（RAG）的模型上下文协议（MCP）服务器。它为您的文档建立索引，并通过MCP协议为大型语言模型提供相关上下文。\r\n\r\n## 集成示例\r\n\r\n### 通用MCP客户端配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"rag\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-rag-server\"],\r\n      \"env\": {\r\n        \"BASE_LLM_API\": \"http://localhost:11434/v1\",\r\n        \"EMBEDDING_MODEL\": \"nomic-embed-text\",\r\n        \"VECTOR_STORE_PATH\": \"./vector_store\",\r\n        \"CHUNK_SIZE\": \"500\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 交互示例\r\n\r\n```shell\r\n# Index documents\r\n>> tool:embedding_documents {\"path\":\"./docs\"}\r\n\r\n# Check status\r\n>> resource:embedding-status\r\n\r\n<< rag://embedding/status\r\nCurrent Path: ./docs/file1.md\r\nCompleted: 10\r\nFailed: 0\r\nTotal chunks: 15\r\nFailed Reason:\r\n```\r\n\r\n## 目录\r\n\r\n- [集成示例](#integration-examples)\r\n- [特性](#features)\r\n- [安装](#installation)\r\n- [快速开始](#quick-start)\r\n- [配置](#configuration)\r\n- [用法](#usage)\r\n  - [MCP工具](#mcp-tools)\r\n  - [MCP资源](#mcp-resources)\r\n- [RAG的工作原理](#how-rag-works)\r\n- [发展](#development)\r\n- [贡献](#contributing)\r\n- [许可证](#license)\r\n\r\n## 特性\r\n\r\n- 索引文档 `.txt`, `.md`, `.json`, `.jsonl`，以及 `.csv` 格式\r\n- 可定制的文本分割块大小\r\n- 由SQLite支持的本地矢量存储（通过LangChain的LibSQLVectorStore）\r\n- 支持多个嵌入提供商（OpenAI、Ollama、Granite、Nomic）\r\n- 通过stdio公开MCP工具和资源，以便与MCP客户端无缝集成\r\n\r\n## 安装\r\n\r\n### 来自npm\r\n\r\n```bash\r\nnpm install -g mcp-rag-server\r\n```\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone https://github.com/kwanLeeFrmVi/mcp-rag-server.git\r\ncd mcp-rag-server\r\nnpm install\r\nnpm run build\r\nnpm start\r\n```\r\n\r\n## 快速开始\r\n\r\n```bash\r\nexport BASE_LLM_API=http://localhost:11434/v1\r\nexport EMBEDDING_MODEL=granite-embedding-278m-multilingual-Q6_K-1743674737397:latest\r\nexport VECTOR_STORE_PATH=./vector_store\r\nexport CHUNK_SIZE=500\r\n\r\n# Run (global install)\r\nmcp-rag-server\r\n\r\n# Or via npx\r\nnpx mcp-rag-server\r\n```\r\n\r\n> 💡 **提示：** 我们建议使用 [没有](https://ollama.com) 用于嵌入。安装并拉动 `nomic-embed-text` 型号：\r\n\r\n```bash\r\nollama pull nomic-embed-text\r\nexport EMBEDDING_MODEL=nomic-embed-text\r\n```\r\n\r\n## 配置\r\n\r\n|变量|描述|默认值|\r\n| ------------------- | ------------------------------------------------ | --------------------------------- |\r\n| `BASE_LLM_API` |嵌入API的基本URL| `http://localhost:11434/v1` |\r\n| `LLM_API_KEY` |LLM提供程序的API密钥|（空）|\r\n| `EMBEDDING_MODEL` |嵌入模型标识符| `nomic-embed-text` |\r\n| `VECTOR_STORE_PATH` |本地矢量存储目录| `./vector_store` |\r\n| `CHUNK_SIZE` |每个文本块的字符数| `500` |\r\n\r\n> 💡 **建议：** 使用Olama嵌入模型，如 `nomic-embed-text` 为了获得最佳性能。\r\n\r\n## 用法\r\n\r\n### MCP工具\r\n\r\n运行后，服务器通过MCP公开这些工具：\r\n\r\n- `embedding_documents(path: string)`：为给定路径下的文档建立索引\r\n- `query_documents(query: string, k?: number)`：检索顶部 `k` 块（默认值15）\r\n- `remove_document(path: string)`：删除特定文档\r\n- `remove_all_documents(confirm: boolean)`：清除整个索引(`confirm=true`)\r\n- `list_documents()`：列出所有索引文档路径\r\n\r\n### MCP资源\r\n\r\n客户端还可以通过URI读取资源：\r\n\r\n- `rag://documents` --列出所有文档URI\r\n- `rag://document/{path}` --获取文档的完整内容\r\n- `rag://query-document/{numberOfChunks}/{query}` --将文档作为资源进行查询\r\n- `rag://embedding/status` --检查当前索引状态（已完成、失败、总计）\r\n\r\n## RAG的工作原理\r\n\r\n1. **索引**：读取文件，根据以下内容将文本分割成块 `CHUNK_SIZE`，并将它们排队进行嵌入。\r\n1. **嵌入**：根据嵌入API顺序处理每个块，将向量存储在SQLite中。\r\n1. **询问**：嵌入查询并从向量存储中检索最近的文本块，将其返回给客户端。\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm install\r\nnpm run build      # Compile TypeScript\r\nnpm start          # Run server\r\nnpm run watch      # Watch for changes\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请打开问题或拉取请求 [GitHub](https://github.com/kwanLeeFrmVi/mcp-rag-server).\r\n\r\n## 许可证\r\n\r\nMIT2025全乐\r\n",
+ "config": {
+  "rag": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-rag-server"
+   ],
+   "env": {
+    "BASE_LLM_API": "http://localhost:11434/v1",
+    "EMBEDDING_MODEL": "nomic-embed-text",
+    "VECTOR_STORE_PATH": "./vector_store",
+    "CHUNK_SIZE": "500"
+   }
+  }
+ }
+}

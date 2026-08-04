@@ -1,0 +1,27 @@
+{
+ "id": "798",
+ "kind": "mcp",
+ "name": "paragonos-misc-tools-2",
+ "fingerprint_md5": "bf407d4127d16812d440f088d3f936be",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# 其他工具MCP服务器\r\n\r\n**Metarune Labs私人有限公司ParagonOS的一部分**\r\n\r\n\r\n用于Claude、Cursor和MCP兼容客户端的各种工具的集合。包括利用Google Gemini API的OCR（光学字符识别）功能。通过模型上下文协议，使用文件路径或base64编码字符串从图像中提取文本。\r\n\r\n## 概述\r\n\r\n此MCP服务器提供企业级OCR功能，使AI助手能够使用谷歌先进的Gemini模型从图像中高精度提取文本。\r\n\r\n**示例用例：**\r\n\r\n从以下图像中提取文本：\r\n\r\n\r\n将其转换为纯文本。， `fbVk`\r\n\r\n## 主要特点\r\n\r\n- **基于文件的OCR：** 直接从本地系统上的图像文件中提取文本\r\n- **Base64 OCR：** 从base64编码的图像字符串中提取文本\r\n- **高精度：** 利用谷歌先进的Gemini模型进行卓越的文本识别\r\n- **易于集成：** 用于无缝集成AI助手的简单MCP工具\r\n- **多格式支持：** 适用于各种图像格式（PNG、JPG、JPEG等）\r\n\r\n## 需求\r\n\r\n- Python 3.8+\r\n- [Google Gemini API密钥](https://aistudio.google.com/)\r\n- [FastMCP](https://github.com/jlowin/fastmcp)\r\n- Claude桌面或光标（或任何MCP客户端）\r\n\r\n## 安装\r\n\r\n### 1.克隆存储库\r\n\r\n```bash\r\ngit clone https://github.com/Paragon-OS/paragonos-misc-tools-mcp.git\r\ncd paragonos-misc-tools-mcp\r\n```\r\n\r\n### 2.安装UV（如果需要）\r\n\r\n**macOS/Linux：**\r\n\r\n```bash\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n**窗户：**\r\n\r\n```powershell\r\npowershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\r\n```\r\n\r\n### 3.安装依赖项\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n### 4.安装Playwright浏览器（用于Notion工具）\r\n\r\n安装依赖项后，您需要安装Playwright的Chromium浏览器：\r\n\r\n```bash\r\nplaywright install chromium\r\n```\r\n\r\n## MCP配置\r\n\r\n编辑您的Claude配置(`~/Library/Application Support/Claude/claude_desktop_config.json`)或光标配置(`~/.cursor/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"paragonos-misc-tools\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/full/path/to/paragonos-misc-tools-mcp\",\r\n        \"run\",\r\n        \"misc-tools-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"GEMINI_MODEL\": \"gemini-2.5-flash-preview-05-20\",\r\n        \"GEMINI_API_KEY\": \"YOUR_GEMINI_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**窗户：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"paragonos-misc-tools\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"C:\\\\full\\\\path\\\\to\\\\paragonos-misc-tools-mcp\",\r\n        \"run\",\r\n        \"misc-tools-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"GEMINI_MODEL\": \"gemini-2.5-flash-preview-05-20\",\r\n        \"GEMINI_API_KEY\": \"YOUR_GEMINI_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### `ocr_image_file`\r\n\r\n对本地图像文件执行OCR。\r\n\r\n- **参数：** `image_file` （string）-图像文件的绝对或相对路径\r\n- **退货：** 从图像中提取文本\r\n\r\n### `ocr_image_base64`\r\n\r\n对base64编码的图像执行OCR。\r\n\r\n- **参数：** `base64_image` （string）-图像的Base64编码字符串\r\n- **退货：** 从图像中提取文本\r\n\r\n### `read_notion_markdown`\r\n\r\n从Notion发布的网站URL中提取降价内容。\r\n\r\n- **参数：** `notion_url` （string）-Notion发布网站的完整URL（必须是 `notion.site`，不 `notion.so`)\r\n- **退货：** 以字符串形式提取的markdown内容\r\n\r\n## 使用示例\r\n\r\n- “从/path/to/screencast.png处的图像中提取文本”\r\n- “读取此图像中的文本：\\[base64字符串\\]”\r\n- “验证码.jpg中的文本是什么意思？”\r\n- “OCR此收据图像并提取总金额”\r\n- “阅读此Notion页面的标记：https://example.notion.site/...\"\r\n\r\n## 关于ParagonOS\r\n\r\nParagonOS是由 **Metarune Labs私人有限公司**，在人工智能助手和现代服务之间提供安全、可靠和可扩展的桥梁。\r\n\r\n## 许可证\r\n\r\n根据Apache 2.0许可证授权。有关详细信息，请参阅LICENSE文件。\r\n\r\n______________________________________________________________________\r\n\r\n**由Metarune Labs私人有限公司开发**\r\nParagonOS生态系统的一部分\r\n",
+ "config": {
+  "paragonos-misc-tools": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/full/path/to/paragonos-misc-tools-mcp",
+    "run",
+    "misc-tools-mcp"
+   ],
+   "env": {
+    "GEMINI_MODEL": "gemini-2.5-flash-preview-05-20",
+    "GEMINI_API_KEY": "YOUR_GEMINI_API_KEY"
+   }
+  }
+ }
+}

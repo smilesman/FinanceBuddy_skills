@@ -1,0 +1,24 @@
+{
+ "id": "867",
+ "kind": "mcp",
+ "name": "spines",
+ "fingerprint_md5": "44e0a5a5f6dcc9332a82889c76b6462b",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# SPINES MCP服务器\r\n\r\n访问 [脊椎](https://spins.app) 通过人工智能助手获取的书籍收藏、阅读清单和书架数据 [模型上下文协议](https://modelcontextprotocol.io).\r\n\r\n## 特性\r\n\r\n- 按标题、作者或ISBN搜索书籍\r\n- 浏览和过滤图书收藏\r\n- 管理阅读列表（添加和删除书籍）\r\n- 探索人物角色和类别\r\n- 用于书架分析和书籍推荐的AI提示\r\n\r\n## 快速开始\r\n\r\n### 先决条件\r\n\r\n- Node.js 18+\r\n- 旋转API键([在这里买一个](https://spins.app/settings/developer))\r\n\r\n### 安装\r\n\r\n```bash\r\nnpm install -g @spines/mcp-server\r\n```\r\n\r\n### 配置\r\n\r\n#### 克劳德桌面\r\n\r\n添加 `~/Library/Application Support/Claude/claude_desktop_config.json` （macOS）或 `%APPDATA%\\Claude\\claude_desktop_config.json` （Windows）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"spines\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@spines/mcp-server\"],\r\n      \"env\": {\r\n        \"SPINES_API_KEY\": \"gtspn_live_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### VS代码/光标\r\n\r\n添加到MCP设置中：\r\n\r\n```json\r\n{\r\n  \"spines\": {\r\n    \"command\": \"npx\",\r\n    \"args\": [\"-y\", \"@spines/mcp-server\"],\r\n    \"env\": {\r\n      \"SPINES_API_KEY\": \"gtspn_live_your_key_here\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 环境变量\r\n\r\n|变量|必填|默认|描述|\r\n|----------|----------|---------|-------------|\r\n| `SPINES_API_KEY` |是|-|您的API密钥|\r\n| `SPINES_API_URL` |没有| `https://spins.app/api/v1` |API基本URL|\r\n| `SPINES_DEBUG` |没有| `false` |详细记录到stderr|\r\n\r\n## 工具\r\n\r\n### 阅读工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_books` |按标题、作者或ISBN搜索书籍|\r\n| `get_book_details` |获取特定书籍的完整详细信息|\r\n| `get_collection` |收集所有书籍|\r\n| `list_collections` |使用可选筛选器列出您的收藏|\r\n| `list_categories` |列出所有已批准的图书类别|\r\n| `get_persona` |获取角色的详细信息|\r\n\r\n### 写入工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `add_to_reading_list` |将一本书添加到阅读列表中|\r\n| `remove_from_reading_list` |从阅读列表中删除一本书|\r\n\r\n### 工具详情\r\n\r\n#### `search_books`\r\n\r\n```\r\nquery: string    - Search query (title, author, or ISBN)\r\nlimit?: number   - Max results (1-50, default 10)\r\n```\r\n\r\n#### `get_book_details`\r\n\r\n```\r\nbook_id: string  - The book's unique ID\r\n```\r\n\r\n#### `get_collection`\r\n\r\n```\r\ncollection_id: string  - The collection's unique ID\r\n```\r\n\r\n#### `list_collections`\r\n\r\n```\r\nlimit?: number        - Max results (1-50, default 20)\r\ncursor?: string       - Pagination cursor\r\npersona_id?: string   - Filter by persona\r\ncategory_id?: string  - Filter by category\r\n```\r\n\r\n#### `add_to_reading_list`\r\n\r\n```\r\nbook_id: string      - The book to add\r\nlist_name?: string   - List name (default: \"want_to_read\")\r\n```\r\n\r\n#### `remove_from_reading_list`\r\n\r\n```\r\nentry_id: string     - The reading list entry ID to remove\r\n```\r\n\r\n## 资源\r\n\r\n|URI|描述|\r\n|-----|-------------|\r\n| `spines://collection/{id}` |带有元数据的书籍集|\r\n| `spines://book/{id}` |完整书籍详情|\r\n| `spines://persona/{id}` |Persona简介和系列|\r\n| `spines://reading-lists` |用户阅读列表|\r\n\r\n## 提示\r\n\r\n|提示|描述|\r\n|--------|-------------|\r\n| `analyze_shelf` |分析一个系列的主题和阅读模式|\r\n| `recommend_books` |根据您的库获取推荐|\r\n| `compare_collections` |比较两个系列的相似之处|\r\n\r\n## 故障排除\r\n\r\n|问题|解决方案|\r\n|---------|----------|\r\n|“SPINES_API_KEY是必需的”|在MCP客户端配置中设置env var|\r\n|401个错误|检查您的API密钥是否有效且未过期|\r\n|403错误|您的密钥可能缺少所需的作用域|\r\n|429个错误|速率受限--等待并重试|\r\n|工具未出现|重新启动MCP客户端|\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/GetSpines/mcp-server\r\ncd mcp-server\r\nnpm install\r\nnpm run build\r\nnpm test\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "spines": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@spines/mcp-server"
+   ],
+   "env": {
+    "SPINES_API_KEY": "gtspn_live_your_key_here"
+   }
+  }
+ }
+}

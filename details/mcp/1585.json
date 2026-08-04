@@ -1,0 +1,22 @@
+{
+ "id": "1585",
+ "kind": "mcp",
+ "name": "mcp-security-audit",
+ "fingerprint_md5": "c91ebad0ae4762e10600b07c17160d74",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 安全审计工具\r\n\r\n[](https://smithery.ai/server/@qianniuspace/mcp-security-audit)\r\n[](https://www.npmjs.com/package/mcp-security-audit)\r\n[](https://opensource.org/licenses/MIT)\r\n\r\n<a href=\"https://glama.ai/mcp/servers/jjnmdxzmeu\">\r\n  \r\n</a>\r\n\r\n一个强大的MCP（模型上下文协议）服务器，可以审计npm包依赖关系中的安全漏洞。内置远程npm注册表集成，用于实时安全检查。\r\n\r\n## 特性\r\n\r\n- 🔍 实时安全漏洞扫描\r\n- 🚀 远程npm注册表集成\r\n- 📊 具有严重级别的详细漏洞报告\r\n- 🛡️ 支持多种严重级别（严重、高、中、低）\r\n- 📦 与npm/pnpm/yarn包管理器兼容\r\n- 🔄 自动修复建议\r\n- 📋 CVSS评分和CVE参考\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面安全审计工具 [史密瑟里](https://smithery.ai/server/@qianniuspace/mcp-security-audit):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @qianniuspace/mcp-security-audit --client claude\r\n```\r\n\r\n### MCP集成\r\n\r\n#### 选项1：使用NPX（推荐）\r\n\r\n1. 将MCP配置添加到Cline/Cursor：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-security-audit\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-security-audit\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 选项2：下载源代码并手动配置\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/qianniuspace/mcp-security-audit.git\r\ncd mcp-security-audit\r\n```\r\n\r\n2. 安装依赖项并构建：\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n3. 将MCP配置添加到Cline/Cursor：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-security-audit\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"/path/to/mcp-security-audit/build/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 配置屏幕截图\r\n\r\n### 光标配置\r\n\r\n\r\n### 临床配置\r\n\r\n\r\n## API响应格式\r\n\r\n该工具提供详细的漏洞信息，包括严重性级别、修复建议、CVSS评分和CVE参考。\r\n\r\n### 响应示例\r\n\r\n#### 1.发现漏洞时（严重性响应.json）\r\n\r\n```json\r\n{\r\n  \"content\": [{\r\n    \"vulnerability\": {\r\n      \"packageName\": \"lodash\",\r\n      \"version\": \"4.17.15\",\r\n      \"severity\": \"high\",\r\n      \"description\": \"Prototype Pollution in lodash\",\r\n      \"cve\": \"CVE-2020-8203\",\r\n      \"githubAdvisoryId\": \"GHSA-p6mc-m468-83gw\",\r\n      \"recommendation\": \"Upgrade to version 4.17.19 or later\",\r\n      \"fixAvailable\": true,\r\n      \"fixedVersion\": \"4.17.19\",\r\n      \"cvss\": {\r\n        \"score\": 7.4,\r\n        \"vector\": \"CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N\"\r\n      },\r\n      \"cwe\": [\"CWE-1321\"],\r\n      \"url\": \"https://github.com/advisories/GHSA-p6mc-m468-83gw\"\r\n    },\r\n    \"metadata\": {\r\n      \"timestamp\": \"2024-04-23T10:00:00.000Z\",\r\n      \"packageManager\": \"npm\"\r\n    }\r\n  }]\r\n}\r\n```\r\n\r\n#### 2.未发现漏洞时（无严重性响应.json）\r\n\r\n```json\r\n{\r\n  \"content\": [{\r\n    \"vulnerability\": null,\r\n    \"metadata\": {\r\n      \"timestamp\": \"2024-04-23T10:00:00.000Z\",\r\n      \"packageManager\": \"npm\",\r\n      \"message\": \"No known vulnerabilities found\"\r\n    }\r\n  }]\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n有关开发参考，请查看 `public` 目录：\r\n\r\n- [严重性响应.json](public/Severity-response.json) ：发现漏洞时的示例响应（从npm审核API响应转换而来）\r\n- [无严重性响应.json](public/no-Severity-response.json) ：未发现漏洞时的示例响应（从npm审核API响应转换而来）\r\n\r\n注：上面显示的示例响应是从原始的npm审计API响应转换而来的，以提供更结构化的格式。原始的npm审核API响应包含额外的元数据，并且可能具有不同的结构。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请阅读我们的 [贡献指南](CODE_OF_CONDUCT.md) 有关我们的行为准则和提交pull请求流程的详细信息。\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 作者\r\n\r\nESX(qianniuspace@gmail.com)\r\n\r\n## 链接\r\n\r\n- [GitHub存储库](https://github.com/qianniuspace/mcp-security-audit)\r\n- [问题追踪](https://github.com/qianniuspace/mcp-security-audit/issues)\r\n- [更新日志](CHANGELOG.md)\r\n\r\n```\r\n```\r\n",
+ "config": {
+  "mcp-security-audit": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-security-audit"
+   ],
+   "env": {}
+  }
+ }
+}

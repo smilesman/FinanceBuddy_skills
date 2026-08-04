@@ -1,0 +1,12 @@
+{
+ "id": "ceph-status",
+ "kind": "skill",
+ "name": "ceph-status",
+ "fingerprint_md5": "617bb3bc57502562602df1c5509a4f05",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\n查询 Ceph 集群详细状态信息，诊断集群问题，包括 OSD map、PG 状态、CRUSH map 等关键指标。",
+ "config": {}
+}

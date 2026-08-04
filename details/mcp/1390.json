@@ -1,0 +1,24 @@
+{
+ "id": "1390",
+ "kind": "mcp",
+ "name": "coding_guidelines",
+ "fingerprint_md5": "9c813060af08e4df950068b07dd9240b",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "# 柴油机开发环境用MCP服务器\r\n\r\nD-ZERO前端开发环境用Model Context Protocol（MCP）服务器。\r\n提供以下功能：\r\n\r\n- **Figma检索数据**: Figma文件和节点数据API获得\r\n- **提供编码准则**: D-ZERO提供前端开发条款\r\n- **CLINE与集成**: CLINE的，之MCP作为服务器运行AI支持与助手交互\r\n\r\n通过使用此服务器，开发人员可以Figma请参考设计或确认编码规则AI你可以通过和助理的谈话进行。\r\n\r\n## `cline_mcp_settings.json`\r\n\r\nCLINE在动态输入提示中单击「Installed」选项卡，然后单击Configure MCP Servers单击功能区上`cline_mcp_settings.json`编辑文件。\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"coding_guidelines\": {\r\n\t\t\t\"command\": \"npx\",\r\n\t\t\t\"args\": [\"-y\", \"@d-zero/mcp-server\"],\r\n\t\t\t\"env\": {\r\n\t\t\t\t\"FIGMA_ACCESS_TOKEN\": \"abcd_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"\r\n\t\t\t},\r\n\t\t\t\"disabled\": false,\r\n\t\t\t\"autoApprove\": []\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\n`@d-zero/mcp-server`如果软件包运行失败，请全局安装并指定完整路径（[参考Issue](https://github.com/cline/cline/issues/1247)）。\r\n\r\nFigma的访问令牌https://www.figma.com/developers/api#access-tokens 中所述修改相应参数的值。\r\n\r\n## 贡献\r\n\r\n这个MCP服务器本身的开发`.env`需要文件。\r\n\r\n```env\r\n# Figma API設定\r\nFIGMA_ACCESS_TOKEN=abcd_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\r\n\r\n# テスト用のFigma URL\r\nFIGMA_TEST_URL=https://www.figma.com/file/abcdef123456/FileName\r\n```\r\n",
+ "config": {
+  "coding_guidelines": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@d-zero/mcp-server"
+   ],
+   "env": {
+    "FIGMA_ACCESS_TOKEN": "abcd_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+   }
+  }
+ }
+}

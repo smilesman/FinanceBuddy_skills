@@ -1,0 +1,25 @@
+{
+ "id": "2933",
+ "kind": "mcp",
+ "name": "phalcon",
+ "fingerprint_md5": "2963609c46e12bad4b52fa304283cd19",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Phalcon MCP服务器\r\n\r\n此MCP服务器与 [Blocksec](https://blocksec.com) 该平台通过模型上下文协议（MCP）提供区块链交易分析工具。\r\n\r\n模型上下文协议（MCP）是一种用于AI模型集成的协议，允许AI模型访问外部工具和数据源。\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n#### 交易分析\r\n\r\n- **追踪**\r\n\r\n  - 跟踪区块链上交易的不同调用以及气体使用指标\r\n  - 参数： `chainId` （必填）， `transactionHash` （必填）\r\n\r\n- **个人资料**\r\n\r\n  - 在区块链上分析交易，包括交易、资金流和代币信息的详细信息\r\n  - 参数： `chainId` （必填）， `transactionHash` （必填）\r\n\r\n- **地址标签**\r\n\r\n  - 为合约地址获取人类可读的标签，如令牌、协议和其他链上实体\r\n  - 参数： `chainId` （必填）， `transactionHash` （必填）\r\n\r\n- **余额变化**\r\n\r\n  - 检索交易的详细余额变化信息\r\n  - 参数： `chainId` （必填）， `transactionHash` （必填）\r\n\r\n- **状态更改**\r\n\r\n  - 检索有关状态更改的详细信息，如事务合约中的存储变量\r\n  - 参数： `chainId` （必填）， `transactionHash` （必填）\r\n\r\n- **交易概览**\r\n\r\n  - 通过汇总所有可用分析工具的数据，对交易进行全面概述\r\n  - 参数： `chainId` （必填）， `transactionHash` （必填）\r\n\r\n#### 连锁信息\r\n\r\n- **GetChainIdByName**\r\n  - 按名称、链或chainSlug获取区块链的链ID\r\n  - 参数： `name` （必填）\r\n\r\n## 入门指南\r\n\r\n### 安装\r\n\r\n#### 使用Go安装\r\n\r\n```bash\r\ngo install github.com/mark3labs/phalcon-mcp@latest\r\n```\r\n\r\n### 用法\r\n\r\n启动MCP服务器：\r\n\r\n```bash\r\nphalcon-mcp serve\r\n```\r\n\r\n检查版本：\r\n\r\n```bash\r\nphalcon-mcp version\r\n```\r\n\r\n### 用作包\r\n\r\n您可以在Go项目中导入服务器：\r\n\r\n#### 标准模式\r\n\r\n```go\r\nimport \"github.com/mark3labs/phalcon-mcp/server\"\r\n\r\nfunc main() {\r\n    // Create a new server with version\r\n    s := server.NewServer(\"1.0.0\")\r\n\r\n    // Start the server in stdio mode\r\n    if err := s.ServeStdio(); err != nil {\r\n        log.Fatalf(\"Server error: %v\", err)\r\n    }\r\n}\r\n```\r\n\r\n#### 进程模式中\r\n\r\n对于mcp-go客户端库的进程内使用：\r\n\r\n```go\r\nimport (\r\n    \"context\"\r\n    \"log\"\r\n\r\n    \"github.com/mark3labs/mcp-go/client\"\r\n    \"github.com/mark3labs/mcp-go/client/transport\"\r\n    \"github.com/mark3labs/phalcon-mcp/server\"\r\n)\r\n\r\nfunc main() {\r\n    // Create the Phalcon MCP server\r\n    phalconServer := server.NewServer(\"1.0.0\")\r\n\r\n    // Create an in-process transport using the server's MCPServer\r\n    inProcessTransport := transport.NewInProcessTransport(phalconServer.GetMCPServer())\r\n\r\n    // Create an MCP client using the in-process transport\r\n    mcpClient := client.NewMCPClient(inProcessTransport)\r\n\r\n    // Start the transport\r\n    ctx := context.Background()\r\n    if err := mcpClient.Connect(ctx); err != nil {\r\n        log.Fatalf(\"Failed to connect: %v\", err)\r\n    }\r\n    defer mcpClient.Close()\r\n\r\n    // Initialize the client\r\n    if err := mcpClient.Initialize(ctx); err != nil {\r\n        log.Fatalf(\"Failed to initialize: %v\", err)\r\n    }\r\n\r\n    // List available tools\r\n    tools, err := mcpClient.ListTools(ctx)\r\n    if err != nil {\r\n        log.Fatalf(\"Failed to list tools: %v\", err)\r\n    }\r\n\r\n    // Use the tools...\r\n    result, err := mcpClient.CallTool(ctx, \"get-chain-id-by-name\", map[string]any{\r\n        \"name\": \"ethereum\",\r\n    })\r\n    if err != nil {\r\n        log.Fatalf(\"Failed to call tool: %v\", err)\r\n    }\r\n}\r\n```\r\n\r\n### 使用模型上下文协议\r\n\r\n要将此服务器与支持MCP的应用程序集成，请执行以下操作：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"phalcon\": {\r\n      \"command\": \"phalcon-mcp\",\r\n      \"args\": [\"serve\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 码头工人\r\n\r\n#### 使用Docker运行\r\n\r\n您可以使用Docker运行Phalcon MCP服务器：\r\n\r\n```bash\r\ndocker run -i --rm ghcr.io/mark3labs/phalcon-mcp:latest serve\r\n```\r\n\r\n#### 使用MCP配置Docker\r\n\r\n要将Docker镜像与支持MCP的应用程序集成，请执行以下操作：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"phalcon\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"ghcr.io/mark3labs/phalcon-mcp:latest\",\r\n        \"serve\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "phalcon": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "ghcr.io/mark3labs/phalcon-mcp:latest",
+    "serve"
+   ],
+   "env": {}
+  }
+ }
+}

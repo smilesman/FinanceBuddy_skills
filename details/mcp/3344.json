@@ -1,0 +1,24 @@
+{
+ "id": "3344",
+ "kind": "mcp",
+ "name": "awslabs.aws-documentation-mcp-server-2",
+ "fingerprint_md5": "0581b68dc1c56e31f4135ebc7335d640",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# AWS文档MCP服务器\r\n\r\nAWS文档的模型上下文协议（MCP）服务器\r\n\r\n此MCP服务器提供访问AWS文档、搜索内容和获取建议的工具。\r\n\r\n## 特性\r\n\r\n- **阅读文档**：获取AWS文档页面并将其转换为markdown格式\r\n- **搜索文档**：使用官方搜索API搜索AWS文档（仅限全球）\r\n- **建议**：获取AWS文档页面的内容建议（仅限全球）\r\n- **获取可用服务列表**：获取中国地区可用的AWS服务列表（仅限中国）\r\n\r\n## 先决条件\r\n\r\n### 安装要求\r\n\r\n1. 安装 `uv` 从 [星体](https://docs.astral.sh/uv/getting-started/installation/) 或 [GitHub自述](https://github.com/astral-sh/uv#installation)\r\n1. 使用以下命令安装Python 3.10或更高版本 `uv python install 3.10` （或更新版本）\r\n\r\n## 安装\r\n\r\n\r\n在MCP客户端配置中配置MCP服务器（例如，对于Amazon Q Developer CLI，编辑 `~/.aws/amazonq/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"awslabs.aws-documentation-mcp-server\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"awslabs.aws-documentation-mcp-server@latest\"],\r\n      \"env\": {\r\n        \"FASTMCP_LOG_LEVEL\": \"ERROR\",\r\n        \"AWS_DOCUMENTATION_PARTITION\": \"aws\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **备注**：设置 `AWS_DOCUMENTATION_PARTITION` 向 `aws-cn` 查询AWS中国文档，而不是全球AWS文档。\r\n\r\n或docker成功后 `docker build -t mcp/aws-documentation .`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"awslabs.aws-documentation-mcp-server\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"--interactive\",\r\n        \"--env\",\r\n        \"FASTMCP_LOG_LEVEL=ERROR\",\r\n        \"--env\",\r\n        \"AWS_DOCUMENTATION_PARTITION=aws\",\r\n        \"mcp/aws-documentation:latest\"\r\n      ],\r\n      \"env\": {},\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 基本用法\r\n\r\n例子：\r\n\r\n- “查找有关S3存储桶命名规则的文档。引用您的来源”\r\n- “为页面推荐内容https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html\"\r\n\r\n\r\n## 工具\r\n\r\n### read_文档\r\n\r\n获取AWS文档页面并将其转换为markdown格式。\r\n\r\n```python\r\nread_documentation(url: str) -> str\r\n```\r\n\r\n### search_文档（仅限全局）\r\n\r\n使用官方AWS文档搜索API搜索AWS文档。\r\n\r\n```python\r\nsearch_documentation(search_phrase: str, limit: int) -> list[dict]\r\n```\r\n\r\n### 推荐（仅限全球）\r\n\r\n获取AWS文档页面的内容建议。\r\n\r\n```python\r\nrecommend(url: str) -> list[dict]\r\n```\r\n\r\n### 获取可用服务（仅限中国）\r\n\r\n获取中国地区可用AWS服务的列表。\r\n\r\n```python\r\nget_available_services() -> str\r\n```\r\n",
+ "config": {
+  "awslabs.aws-documentation-mcp-server": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "awslabs.aws-documentation-mcp-server@latest"
+   ],
+   "env": {
+    "FASTMCP_LOG_LEVEL": "ERROR",
+    "AWS_DOCUMENTATION_PARTITION": "aws"
+   }
+  }
+ }
+}

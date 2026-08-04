@@ -1,0 +1,28 @@
+{
+ "id": "2662",
+ "kind": "mcp",
+ "name": "perplexity-ask",
+ "fingerprint_md5": "4c2ada53f0323533e05859cac2a89355",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# 困惑询问MCP服务器\r\n\r\nMCP服务器实现，集成Sonar API，为Claude提供无与伦比的实时网络研究。\r\n\r\n请咨询官方 [DeepWiki页面](https://deepwiki.com/ppl-ai/modelcontextprotocol) 协助执行。\r\n\r\n# 高级系统架构\r\n\r\n*来源：Devin支持的DeepWiki*\r\n\r\n\r\n## 工具\r\n\r\n- **困惑_问题**\r\n  - 与Sonar API进行对话，进行实时网络搜索。\r\n  - **输入：**\r\n    - `messages` （array）：一组对话消息。\r\n      - 每条消息必须包括：\r\n        - `role` （string）：消息的作用（例如。， `system`, `user`, `assistant`).\r\n        - `content` （string）：消息的内容。\r\n\r\n## 配置\r\n\r\n### 第一步：\r\n\r\n克隆此存储库：\r\n\r\n```bash\r\ngit clone git@github.com:ppl-ai/modelcontextprotocol.git\r\n```\r\n\r\n导航到 `perplexity-ask` 目录并安装必要的依赖项：\r\n\r\n```bash\r\ncd modelcontextprotocol/perplexity-ask && npm install\r\n```\r\n\r\n### 步骤2：获取Sonar API密钥\r\n\r\n1. 注册一个 [Sonar API帐户](https://docs.perplexity.ai/guides/getting-started).\r\n1. 按照帐户设置说明，从开发者面板生成API密钥。\r\n1. 将环境中的API密钥设置为 `PERPLEXITY_API_KEY`.\r\n\r\n### 步骤3：配置Claude桌面\r\n\r\n1. 下载克劳德桌面 [这里](https://claude.ai/download).\r\n\r\n1. 将此添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"perplexity-ask\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-e\",\r\n        \"PERPLEXITY_API_KEY\",\r\n        \"mcp/perplexity-ask\"\r\n      ],\r\n      \"env\": {\r\n        \"PERPLEXITY_API_KEY\": \"YOUR_API_KEY_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"perplexity-ask\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"server-perplexity-ask\"\r\n      ],\r\n      \"env\": {\r\n        \"PERPLEXITY_API_KEY\": \"YOUR_API_KEY_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您可以使用以下方式访问该文件：\r\n\r\n```bash\r\nvim ~/Library/Application\\ Support/Claude/claude_desktop_config.json\r\n```\r\n\r\n### 步骤4：构建Docker镜像\r\n\r\nDocker构建：\r\n\r\n```bash\r\ndocker build -t mcp/perplexity-ask:latest -f Dockerfile .\r\n```\r\n\r\n### 步骤5：测试\r\n\r\n让我们确保Claude for Desktop正在使用我们在 `perplexity-ask` 服务器。您可以通过查找锤子图标来完成此操作：\r\n\r\n\r\n点击锤子图标后，您应该看到文件系统MCP服务器附带的工具：\r\n\r\n\r\n如果您同时看到这两种情况，则表示集成处于活动状态。祝贺这意味着克劳德现在可以问困惑了。然后，您可以像使用Perplexity web应用程序一样简单地使用它。\r\n\r\n### 步骤6：高级参数\r\n\r\n目前，使用的搜索参数是默认参数。您可以直接在中修改API调用中的任何搜索参数 `index.ts` 脚本。对此，请咨询官方 [API文档](https://docs.perplexity.ai/api-reference/chat-completions).\r\n\r\n### 故障排除\r\n\r\nClaude文档提供了一个出色的 [故障排除指南](https://modelcontextprotocol.io/docs/tools/debugging) 您可以参考。但是，您仍然可以通过以下方式联系我们api@perplexity.ai获得任何额外支持或 [提交一个bug](https://github.com/ppl-ai/api-discussion/issues).\r\n\r\n# 光标集成\r\n\r\n您还可以将我们的MCP与Cursor（或任何其他支持此功能的应用程序）一起使用。要使用带有光标的声纳，您可以按照以下步骤操作。\r\n\r\n### 步骤1：导航到光标设置：\r\n\r\n\r\n### 步骤2：导航到MCP目录\r\n\r\n然后点击 `Add new global MCP server`\r\n\r\n\r\n### 步骤3：从上面插入MCP服务器配置\r\n\r\n这与您用于支持MCP的任何其他应用程序的配置相同。\r\n\r\n然后，您应该看到该应用程序是可用工具的一部分，如下所示：\r\n\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "perplexity-ask": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "PERPLEXITY_API_KEY",
+    "mcp/perplexity-ask"
+   ],
+   "env": {
+    "PERPLEXITY_API_KEY": "YOUR_API_KEY_HERE"
+   }
+  }
+ }
+}

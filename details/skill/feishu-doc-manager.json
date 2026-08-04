@@ -1,0 +1,12 @@
+{
+ "id": "feishu-doc-manager",
+ "kind": "skill",
+ "name": "feishu-doc-manager",
+ "fingerprint_md5": "02216adb1c1340f44c133f741a910758",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# 📄 Feishu Doc Manager | 飞书文档管理器\r\n\r\n> 将 Markdown 内容无缝发布到飞书文档，自动渲染格式。\r\n> \r\n> Seamlessly publish Markdown content to Feishu Docs with automatic formatting.\r\n\r\n## 🎯 解决的痛点 | Problems Solved\r\n\r\n| 问题 | 解决方案 | Problem | Solution |\r\n|---------|----------|------|----------|\r\n| **Markdown 表格无法渲染** | 自动转换为格式化列表 | Markdown tables not rendering | Auto-convert tables to formatted lists |\r\n| **权限管理复杂** | 一键协作者管理 | Permission management complexity | One-click collaborator management |\r\n| **长内容 400 错误** | 自动分段写入 | 400 errors on long content | Auto-split long documents |\r\n| **格式不一致** | `write`/`append` 自动渲染 | Inconsistent formatting | `write`/`append` auto-render Markdown |\r\n\r\n## ✨ 核心功能 | Key Features\r\n\r\n### 1. 📝 智能 Markdown 发布 | Smart Markdown Publishing\r\n- **自动渲染**: `write`/`append` 动作自动渲染 Markdown\r\n- **表格处理**: 表格自动转换为格式化列表\r\n- **语法支持**: 标题、列表、粗体、斜体、代码、引用\r\n\r\n### 2. 🔐 权限管理 | Permission Management\r\n- 添加/移除协作者\r\n- 更新权限级别（查看/编辑/full_access）\r\n- 列出当前权限\r\n\r\n### 3. 📄 文档操作 | Document Operations\r\n- 创建新文档\r\n- 使用 Markdown 写入完整内容\r\n- 追加到现有文档\r\n- 更新/删除特定块\r\n\r\n## 🚀 快速开始 | Quick Start\r\n\r\n```bash\r\ncd ~/.openclaw/workspace/skills\r\ngit clone https://github.com/Shuai-DaiDai/feishu-doc-manager.git\r\n```\r\n\r\n## 📋 支持的 Markdown | Supported Markdown\r\n\r\n| Markdown | 飞书结果 |\r\n|----------|---------------|\r\n| `# Title` | Heading 1 |\r\n| `- Item` | Bullet list |\r\n| `**bold**` | Bold |\r\n| `> quote` | Blockquote |\r\n\r\n## 🔧 重要区分 | Important Distinctions\r\n\r\n**`write`/`append` vs `update_block`**:\r\n\r\n| 特性 | `write`/`append` | `update_block` |\r\n|---------|------------------|----------------|\r\n| Markdown 渲染 | ✅ 是 | ❌ 否（纯文本） |\r\n\r\n## 📦 必需权限 | Required Permissions\r\n\r\n- `docx:document`\r\n- `docx:document:write_only`\r\n- `docs:permission.member`\r\n\r\n## 📝 许可证 | License\r\n\r\nMIT",
+ "config": {}
+}

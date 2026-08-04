@@ -1,0 +1,27 @@
+{
+ "id": "358",
+ "kind": "mcp",
+ "name": "playwright-11",
+ "fingerprint_md5": "8a33ef7d64dd64cf970f47cb85afcd34",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 无VNC显示的剧作家MCP服务器\r\n\r\nDocker Compose安装程序运行Microsoft Playwright MCP服务器，该服务器具有可通过web浏览器中的noVNC访问的虚拟X11显示器。\r\n\r\n## 特性\r\n\r\n- **剧作家MCP服务器**：通过模型上下文协议（MCP）实现浏览器自动化\r\n- **头部浏览器模式**：查看实时运行的浏览器\r\n- **noVNC Web界面**：从任何web浏览器查看浏览器显示\r\n- **可重用结构**：可通过SSE或stdio访问的持久剧作家服务\r\n- **stdio到SSE代理**：基于stdio的MCP客户端和SSE端点之间的桥梁\r\n\r\n## 快速开始\r\n\r\n### 使用Docker Compose（推荐）\r\n\r\n1. 启动持久化Playwright+noVNC服务：\r\n\r\n```bash\r\ndocker compose up -d playwright-display\r\n```\r\n\r\n2. 访问服务：\r\n   - **VNC 网页 用户 界面**: http://localhost:6080/vnc.html\r\n   - **MCP SSE端点**: http://localhost:3080/sse\r\n\r\n### MCP客户端配置\r\n\r\n**stdio传输** （推荐）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"playwright\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"--network=playwright-network\",\r\n        \"mcp-playwright-novnc:latest\",\r\n        \"mcp-proxy\",\r\n        \"http://playwright-display:3080/sse\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**SSE运输** （直接连接）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"playwright\": {\r\n      \"url\": \"http://localhost:3080/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|默认值|描述|\r\n|-----------------|----------|-------------------------------------|\r\n| `SCREEN_WIDTH` |1920|虚拟屏幕宽度（像素）|\r\n| `SCREEN_HEIGHT` |1080|虚拟屏幕高度（像素）|\r\n| `SCREEN_DEPTH` |24|颜色深度|\r\n| `MCP_PORT` |3080|MCP服务器端口|\r\n| `MCP_BROWSER` |chromium |浏览器（chromium、firefox、webkit）|\r\n\r\n## Docker编写配置\r\n\r\n该项目包括 `docker-compose.yml` 使用持久化Playwright+noVNC服务创建文件。\r\n\r\nDocker镜像还包括 `mcp-proxy` 将stdio桥接到SSE的脚本，允许使用stdio传输的MCP客户端连接到正在运行的Playwright服务。\r\n\r\n**代理使用情况**：The `mcp-proxy` 命令接受SSE URL作为命令行参数：\r\n\r\n```bash\r\nmcp-proxy <SSE_URL>\r\n```\r\n\r\n您还可以使用 `PLAYWRIGHT_SSE_URL` 环境变量作为回退。\r\n\r\n您可以在编写文件中自定义环境变量，也可以通过 `.env` 文件：\r\n\r\n```env\r\nSCREEN_WIDTH=1920\r\nSCREEN_HEIGHT=1080\r\nSCREEN_DEPTH=24\r\nMCP_BROWSER=chromium\r\n```\r\n\r\n## 在当地建设\r\n\r\n```bash\r\n# Build the Docker image\r\ndocker compose build\r\n\r\n# Start the service\r\ndocker compose up -d\r\n\r\n# View logs\r\ndocker compose logs -f playwright-display\r\n```\r\n\r\n## 测试代理\r\n\r\n```bash\r\n# Test the proxy connection\r\necho '{\"jsonrpc\":\"2.0\",\"method\":\"tools/list\",\"id\":1}' | \\\r\n  docker run --rm -i --network=playwright-network \\\r\n  mcp-playwright-novnc:latest mcp-proxy http://playwright-display:3080/sse\r\n```\r\n\r\n## 建筑\r\n\r\n该设置由一个运行以下命令的Docker容器组成：\r\n\r\n- **剧作家MCP服务器** （端口3080）：通过SSE或stdio接受浏览器自动化命令\r\n- **Chromium浏览器**：在虚拟显示器（Xvfb）上运行\r\n- **noVNC Web界面** （端口6080）：通过您的网络浏览器实时查看浏览器\r\n- **mcp代理**：将基于stdio的MCP客户端连接到SSE端点\r\n\r\n## 可用的MCP工具\r\n\r\nPlaywright MCP服务器提供浏览器自动化工具，包括：\r\n\r\n- `browser_navigate` -导航到URL\r\n- `browser_click` -点击元素\r\n- `browser_type` -在输入中键入文本\r\n- `browser_fill_form` -填写表单字段\r\n- `browser_take_screenshot` -截图\r\n- `browser_snapshot` -捕获可访问性快照\r\n- `browser_tabs` -管理浏览器选项卡\r\n- `browser_close` -关闭浏览器\r\n- `browser_evaluate` -评估JavaScript\r\n- `browser_console_messages` -获取控制台消息\r\n- 还有更多。..\r\n\r\n## 使用预构建图像\r\n\r\n预构建映像可从GitHub容器注册表获得：\r\n\r\n```bash\r\n# Pull the latest image\r\ndocker pull ghcr.io/xtr-dev/mcp-playwright-novnc:latest\r\n```\r\n\r\n### 完整设置示例\r\n\r\n**1.创建一个 `docker-compose.yml` 文件：**\r\n\r\n```yaml\r\nservices:\r\n  playwright-display:\r\n    image: ghcr.io/xtr-dev/mcp-playwright-novnc:latest\r\n    container_name: playwright-display\r\n    ports:\r\n      - \"6080:6080\"  # noVNC web interface\r\n      - \"3080:3080\"  # MCP SSE endpoint\r\n    environment:\r\n      - SCREEN_WIDTH=1920\r\n      - SCREEN_HEIGHT=1080\r\n      - MCP_BROWSER=chromium\r\n    networks:\r\n      - playwright-network\r\n\r\nnetworks:\r\n  playwright-network:\r\n    name: playwright-network\r\n```\r\n\r\n**2.启动服务：**\r\n\r\n```bash\r\ndocker compose up -d\r\n```\r\n\r\n**3.配置您的MCP客户端：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"playwright\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"--network=playwright-network\",\r\n        \"ghcr.io/xtr-dev/mcp-playwright-novnc:latest\",\r\n        \"mcp-proxy\",\r\n        \"http://playwright-display:3080/sse\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**4.访问浏览器显示：**\r\n\r\n打开http://localhost:6080在您的网络浏览器中查看Playwright浏览器的运行情况。\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 详细信息文件\r\n",
+ "config": {
+  "playwright": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "--network=playwright-network",
+    "mcp-playwright-novnc:latest",
+    "mcp-proxy",
+    "http://playwright-display:3080/sse"
+   ],
+   "env": {}
+  }
+ }
+}

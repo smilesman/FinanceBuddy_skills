@@ -1,0 +1,25 @@
+{
+ "id": "816",
+ "kind": "mcp",
+ "name": "premai",
+ "fingerprint_md5": "3afebce10321dda2a79847ed87824902",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Prem MCP服务器\r\n\r\n\r\n一种模型上下文协议（MCP）服务器实现 [通过 AI](https://premai.io/)，实现与Claude和其他MCP兼容客户端的无缝集成。该服务器通过MCP接口提供对Prem AI强大功能的访问。\r\n\r\n## 特性\r\n\r\n- 🤖 **聊天完成**：与Prem AI的语言模型交互\r\n- 📚 **RAG支持**：检索增强生成与文档存储库集成\r\n- 📝 **文档管理**：上传和管理存储库中的文档\r\n- 🎭 **模板系统**：使用预定义的提示模板进行专门的输出\r\n- ⚡ **流媒体响应**：模型输出的实时流式传输\r\n- 🛡️ **错误处理**：强大的错误处理和日志记录\r\n\r\n## 先决条件\r\n\r\n- Node.js（v16或更高版本）\r\n- 具有API密钥的Prem AI帐户\r\n- Prem项目ID\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动为Claude Desktop安装prem-mcp服务器 [史密瑟里](https://smithery.ai/server/@ucalyptus/prem-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @ucalyptus/prem-mcp-server --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\n# Using npm\r\nnpm install prem-mcp-server\r\n\r\n# Using yarn\r\nyarn add prem-mcp-server\r\n\r\n# Using pnpm\r\npnpm add prem-mcp-server\r\n```\r\n\r\n## 配置\r\n\r\n### 1.环境变量\r\n\r\n创建一个 `.env` 项目根目录中的文件：\r\n\r\n```env\r\nPREM_API_KEY=your_api_key_here\r\nPREM_PROJECT_ID=your_project_id_here\r\n```\r\n\r\n### 2.光标配置\r\n\r\n要将Prem MCP服务器与Cursor一起使用，请将以下内容添加到您的 `~/.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"PremAI\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/your/prem-mcp/build/index.js\", \"--stdio\"],\r\n      \"env\": {\r\n        \"PREM_API_KEY\": \"your_api_key_here\",\r\n        \"PREM_PROJECT_ID\": \"your_project_id_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/path/to/your/prem-mcp` 带有项目目录的实际路径。\r\n\r\n### 3.克劳德桌面配置\r\n\r\n对于Claude Desktop用户，请将以下内容添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"PremAI\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"prem-mcp-server\", \"--stdio\"],\r\n      \"env\": {\r\n        \"PREM_API_KEY\": \"your_api_key_here\",\r\n        \"PREM_PROJECT_ID\": \"your_project_id_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n### 启动服务器\r\n\r\n```bash\r\nnpx prem-mcp-server\r\n```\r\n\r\n### 示例提示\r\n\r\n1. **基本聊天**\r\n\r\n```\r\nLet's have a conversation about artificial intelligence.\r\n```\r\n\r\n2. **RAG与文件**\r\n\r\n```\r\nBased on the documents in repository XYZ, what are the key points about [topic]?\r\n```\r\n\r\n3. **使用模板**\r\n\r\n```\r\nUse template ABC to generate [specific type of content].\r\n```\r\n\r\n### 文档上传\r\n\r\n服务器支持将文档上传到Prem AI存储库进行RAG操作。支持的格式：\r\n\r\n- `.txt`\r\n- `.pdf`\r\n- `.docx`\r\n\r\n## api参考\r\n\r\n### 聊天完成参数\r\n\r\n- `query`：输入文本\r\n- `system_prompt`：自定义系统提示\r\n- `model`：型号标识符\r\n- `temperature`：响应随机性（0-1）\r\n- `max_tokens`：最大响应长度\r\n- `repository_ids`：RAG的存储库ID数组\r\n- `similarity_threshold`：文档相似性阈值\r\n- `limit`：文档块的最大数量\r\n\r\n### 模板参数\r\n\r\n- `template_id`：提示模板的ID\r\n- `params`：模板特定参数\r\n- `temperature`：响应随机性（0-1）\r\n- `max_tokens`：最大响应长度\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/yourusername/prem-mcp-server.git\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build the project\r\nnpm run build\r\n\r\n# Run tests\r\nnpm test\r\n```\r\n\r\n## 故障排除\r\n\r\n### 常见问题\r\n\r\n1. **找不到服务器**\r\n\r\n   - 验证中的服务器路径 `claude_desktop_config.json`\r\n   - 检查服务器是否正在运行\r\n\r\n1. **API密钥无效**\r\n\r\n   - 确保您的Prem AI API密钥有效\r\n   - 检查API密钥是否具有所需的权限\r\n\r\n1. **文档上传失败**\r\n\r\n   - 验证是否支持文件格式\r\n   - 检查文件权限\r\n   - 确保存储库ID正确\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 致谢\r\n\r\n- [通过 AI](https://prem.ai/) 因为他们强大的人工智能平台\r\n- [模型上下文协议](https://github.com/anthropics/anthropic-tools/tree/main/model-context-protocol) 对于协议规范\r\n- [Anthropic](https://www.anthropic.com/) 克劳德和MCP生态系统\r\n\r\n## 支持\r\n\r\n有关问题和功能请求，请使用GitHub问题页面。\r\n",
+ "config": {
+  "premai": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "prem-mcp-server",
+    "--stdio"
+   ],
+   "env": {
+    "PREM_API_KEY": "your_api_key_here",
+    "PREM_PROJECT_ID": "your_project_id_here"
+   }
+  }
+ }
+}

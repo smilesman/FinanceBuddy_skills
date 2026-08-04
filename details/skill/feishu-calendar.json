@@ -1,0 +1,12 @@
+{
+ "id": "feishu-calendar",
+ "kind": "skill",
+ "name": "feishu-calendar",
+ "fingerprint_md5": "0325690dcd3ea27972d86cd74716ac31",
+ "download_count": 0,
+ "category": "生活方式",
+ "tags": "",
+ "version": "",
+ "readme": "# feishu-calendar\r\n\r\n管理飞书 (Lark) 日历。使用此技能列出日历、检查日程和同步事件。\r\n\r\n## 用法\r\n\r\n### 列出日历\r\n检查可用的日历及其 ID。\r\n```bash\r\nnode skills/feishu-calendar/list_test.js\r\n```\r\n\r\n### 搜索日历\r\n按名称/摘要查找日历。\r\n```bash\r\nnode skills/feishu-calendar/search_cal.js\r\n```\r\n\r\n### 检查主日历\r\n专门检查主日历的状态。\r\n```bash\r\nnode skills/feishu-calendar/check_master.js\r\n```\r\n\r\n### 同步例行程序\r\n运行日历同步例行程序（将事件同步到本地状态/内存）。\r\n```bash\r\nnode skills/feishu-calendar/sync_routine.js\r\n```\r\n\r\n## 设置\r\n需要 `.env` 中的 `FEISHU_APP_ID` 和 `FEISHU_APP_SECRET`。\r\n\r\n## 标准协议：任务标记\r\n**触发器**：用户说 \"Mark this task\" 或 \"Remind me to...\"。\r\n**操作**：\r\n1. **分析**：提取日期/时间（例如，\"Feb 4th\" -> YYYY-MM-04）。\r\n2. **执行**：运行 `create.js`，`--attendees` 设置为请求者的 ID。\r\n3. **格式**：\r\n   ```bash\r\n   node skills/feishu-calendar/create.js --summary \"Task: <Title>\" --desc \"<Context>\" --start \"<ISO>\" --end \"<ISO+1h>\" --attendees \"<User_ID>\"\r\n   ```\r\n\r\n### 设置共享日历\r\n为项目创建共享日历并添加成员。\r\n```bash\r\nnode skills/feishu-calendar/setup_shared.js --name \"Project Name\" --desc \"Description\" --members \"ou_1,ou_2\" --role \"writer\"\r\n```",
+ "config": {}
+}

@@ -1,0 +1,22 @@
+{
+ "id": "1558",
+ "kind": "mcp",
+ "name": "mcp-compass",
+ "fingerprint_md5": "83c8d5310287d18e2c0c017bac04ac56",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP指南针🧭\r\n\r\n[](https://modelcontextprotocol.org)\r\n\r\n<a href=\"https://glama.ai/mcp/servers/85uxmq6wx7\"></a>\r\n\r\n## MCP发现和建议\r\n\r\n### 体验MCP指南针🌐\r\n\r\n您现在可以直接在我们的网站上体验MCP发现！\\\r\n👉 **[探索MCP指南针](https://mcphub.io/)** 👈\r\n\r\n深入了解MCP服务的强大功能，并提供实时建议和见解。\r\n\r\n______________________________________________________________________\r\n\r\n## 这是什么？ 🤔\r\n\r\nMCP Compass是一个发现和推荐服务，可帮助您探索模型上下文协议服务器。它作为一个智能指南，帮助人工智能助手基于以下内容找到并理解可用的MCP服务 **自然语言查询**，使发现和使用适合特定任务的工具变得更加容易。\r\n\r\n### 快速示例\r\n\r\n<div align=\"center\">\r\n  \r\n</div>\r\n\r\n## 特性🌟\r\n\r\n- 🔍 **智能搜索**：使用自然语言查询查找MCP服务\r\n- 📚 **元数据**：获取每项服务的详细信息\r\n- 🔄 **实时更新**：始终了解最新的MCP服务 [](https://github.com/modelcontextprotocol/servers)\r\n- 🤝 **易于集成**：易于与任何兼容MCP的AI助手集成\r\n\r\n## 快速开始🚀\r\n\r\n### 用法\r\n\r\n1. 克隆存储库\r\n\r\n或\r\n\r\n2. 使用 `npx`\r\n\r\n### 安装\r\n\r\n对于Claude Desktop，编辑您的 `claude_desktop_config.json` 文件：\r\n\r\n#### MacOS/Linux\r\n\r\n```bash\r\ncode ~/Library/Application\\ Support/Claude/claude_desktop_config.json\r\n```\r\n\r\n#### 视窗\r\n\r\n```bash\r\ncode $env:AppData\\Claude\\claude_desktop_config.json\r\n```\r\n\r\n1. **作为MCP服务**:\r\n\r\n   添加到AI助手的MCP配置中，以启用服务发现功能。\r\n\r\n   ```json\r\n   {\r\n   \"mcpServers\": {\r\n      \"mcp-compass\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\r\n            \"-y\",\r\n            \"@liuyoshio/mcp-compass\"\r\n         ]\r\n      }\r\n   }\r\n   }\r\n   ```\r\n\r\n   或\r\n\r\n   ```json\r\n   {\r\n   \"mcpServers\": {\r\n      \"mcp-compass\": {\r\n         \"command\": \"node\",\r\n         \"args\": [\r\n            \"/path/to/repo/build/index.js\"\r\n         ]\r\n      }\r\n   }\r\n   }\r\n   ```\r\n\r\n## 许可证📝\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 支持💬\r\n\r\n- 🐛 [报告问题](https://github.com/liuyoshio/mcp-compass/issues)\r\n- 💡 [功能请求](https://github.com/liuyoshio/mcp-compass/issues)\r\n- 📖 [文档](https://github.com/liuyoshio/mcp-compass)\r\n",
+ "config": {
+  "mcp-compass": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@liuyoshio/mcp-compass"
+   ],
+   "env": {}
+  }
+ }
+}

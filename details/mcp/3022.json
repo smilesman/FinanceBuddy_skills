@@ -1,0 +1,22 @@
+{
+ "id": "3022",
+ "kind": "mcp",
+ "name": "arbetsformedlingen",
+ "fingerprint_md5": "76b51b9ad9ddfd4644af88184cf0e686",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP 服务器\r\n\r\n瑞典劳动力市场的MCP服务器。建立在 [就业 服务](https://arbetsformedlingen.se) 和 [JobTech开发](https://data.arbetsformedlingen.se/) 开放API。\r\n\r\n为Claude和其他兼容MCP的人工智能助手提供13种工具，用于搜索工作、流式实时事件、人工智能分析招聘广告和浏览瑞典职业分类。\r\n\r\n不需要API密钥。所有API均可公开访问。\r\n\r\n______________________________________________________________________\r\n\r\n## 快速启动\r\n\r\n添加到您的Claude桌面配置(`%APPDATA%\\Claude\\claude_desktop_config.json` 在Windows上， `~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"arbetsformedlingen\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"arbetsformedlingen-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动克劳德桌面。这13个工具现在可用。\r\n\r\n______________________________________________________________________\r\n\r\n## 工具\r\n\r\n### JobSearch API\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `af_search_jobs` |按文本、职业、地点、雇主、就业类型等搜索实时工作列表。 |\r\n| `af_get_job` |按ID获取完整的工作列表|\r\n| `af_autocomplete` |提前键入搜索词建议|\r\n\r\n### JobStream API（实时）\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `af_stream_jobs` |自给定日期时间以来所有新的、更新的和删除的列表。按职业或地点过滤。 |\r\n\r\n### 历史招聘广告API\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `af_search_historical_jobs` |搜索可追溯到2006年的存档列表|\r\n\r\n### JobAd丰富API\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `af_enrich_job_text` |人工智能从招聘广告文本中提取职业、能力、特征和地点|\r\n| `af_synonym_dictionary` |用于匹配招聘广告中术语的同义词词典|\r\n\r\n### JobAd链接API\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `af_search_job_links` |从整个瑞典市场搜索列表，包括私人求职板|\r\n\r\n### JobEd Connect API\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `af_education_to_occupations` |特定的教育会带来哪些职业？ |\r\n| `af_occupation_to_educations` |哪些教育符合职业的能力要求？ |\r\n\r\n### 分类法API\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `af_search_taxonomy` |搜索职业、技能、城市、地区。返回用于筛选的概念ID|\r\n| `af_get_taxonomy_concept` |分类概念的详细信息，包括父/子关系|\r\n| `af_list_taxonomy_types` |列出给定类型的所有概念（例如所有职业领域或所有地区）|\r\n\r\n______________________________________________________________________\r\n\r\n## Claude的示例提示\r\n\r\n```\r\nSearch for Python developer jobs in Stockholm\r\n```\r\n\r\n```\r\nWhat are the top skills demanded in nurse job ads right now?\r\n```\r\n\r\n```\r\nWhich educations best match a career as a system developer?\r\n```\r\n\r\n```\r\nGive me all job events from the last hour\r\n```\r\n\r\n```\r\nSearch the occupation taxonomy for \"sjuksköterska\" and show me the concept ID\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 其他安装选项\r\n\r\n```bash\r\n# Run directly (no install)\r\nnpx arbetsformedlingen-mcp-server\r\n\r\n# Install globally\r\nnpm install -g arbetsformedlingen-mcp-server\r\narbetsformedlingen-mcp-server\r\n\r\n# HTTP mode (for hosted AI agents)\r\nTRANSPORT=http npx arbetsformedlingen-mcp-server\r\n# listens on http://localhost:3000/mcp\r\n# health check at http://localhost:3000/health\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 环境变量\r\n\r\n|变量|默认值|描述|\r\n|----------|---------|-------------|\r\n| `TRANSPORT` | `stdio` |设置为 `http` 用于HTTP/流式HTTP模式|\r\n| `PORT` | `3000` |HTTP模式端口|\r\n\r\n______________________________________________________________________\r\n\r\n## API文档\r\n\r\n- [JobSearch API](https://jobsearch.api.jobtechdev.se/)\r\n- [JobStream API](https://jobstream.api.jobtechdev.se/)\r\n- [历史招聘广告API](https://historical.api.jobtechdev.se/)\r\n- [JobAd丰富API](https://jobad-enrichments-api.jobtechdev.se/)\r\n- [JobAd链接API](https://links.api.jobtechdev.se/)\r\n- [JobEd Connect API](https://jobed-connect-api.jobtechdev.se/)\r\n- [分类法API](https://taxonomy.api.jobtechdev.se/)\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "arbetsformedlingen": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "arbetsformedlingen-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

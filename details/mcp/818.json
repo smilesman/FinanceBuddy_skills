@@ -1,0 +1,22 @@
+{
+ "id": "818",
+ "kind": "mcp",
+ "name": "promptpilot",
+ "fingerprint_md5": "3dc30676ad4cd0dc7d28c68f62dfed82",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# PromptPilot MCP服务器\r\n\r\n直接在Claude Code、Cursor、Windsurf或任何兼容MCP的AI代理中生成图像、视频和音频。\r\n\r\n**20+型号** --Flux、GPT-Image-1、Imagen 4、Grok Imagine、Seedance、ElevenLabs TTS等。\r\n**免费模特** 在没有API密钥的情况下工作。付费模特需要 [授粉](https://pollinations.ai) 钥匙。\r\n\r\n______________________________________________________________________\r\n\r\n## 安装\r\n\r\n### 克劳德代码/克劳德桌面\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"promptpilot\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"promptpilot-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n使用Pollings API密钥（适用于付费机型）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"promptpilot\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"promptpilot-mcp\"],\r\n      \"env\": {\r\n        \"POLLINATIONS_API_KEY\": \"sk_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n添加 `~/.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"promptpilot\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"promptpilot-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 帆板运动\r\n\r\n添加 `~/.codeium/windsurf/mcp_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"promptpilot\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"promptpilot-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### VS代码（GitHub副本）\r\n\r\n添加 `.vscode/mcp.json` 在您的工作空间中：\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"promptpilot\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"promptpilot-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 码头工人\r\n\r\n```bash\r\ndocker run -i --rm \\\r\n  -e POLLINATIONS_API_KEY=sk_your_key_here \\\r\n  mcp/promptpilot-mcp\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 工具（共8个）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_models` |列出所有图像/视频/音频型号及其定价|\r\n| `list_styles` |列出样式、照明、相机、情绪、颜色预设|\r\n| `build_prompt` |从结构化输入构建优化提示|\r\n| `generate_image` |生成图像（返回URL）|\r\n| `generate_video` |生成视频（返回URL）|\r\n| `generate_audio` |生成语音或音乐（返回URL）|\r\n| `check_balance` |检查轮询API余额|\r\n| `generate_batch` |一次通话最多生成10张图片|\r\n\r\n______________________________________________________________________\r\n\r\n## 例子\r\n\r\n**生成图像：**\r\n\r\n> “使用通量模型生成夜间赛博朋克城市景观”\r\n\r\n**批量生成：**\r\n\r\n> “生成5张不同背景的产品照片”\r\n\r\n**构建+生成：**\r\n\r\n> “用戏剧性的灯光和黄金时段的氛围为我构建一个肖像提示，然后生成它”\r\n\r\n**查看可用内容：**\r\n\r\n> “你们有什么型号的视频，价格是多少？”\r\n\r\n______________________________________________________________________\r\n\r\n## REST API\r\n\r\nPromptPilot还提供了一个REST API，用于从任何语言进行编程访问：\r\n\r\n```bash\r\n# Get your token at https://promptpilot.club/profile (REST API tab)\r\n\r\ncurl https://promptpilot.club/api/v1/generate \\\r\n  -H \"Authorization: Bearer pp_your_token\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\"prompt\": \"red panda in bamboo forest\", \"model\": \"flux\", \"fields\": \"url,model\"}'\r\n```\r\n\r\n终点：\r\n\r\n- `POST /api/v1/generate` --生成图像/视频/音频\r\n- `GET /api/v1/models` --列出带价格的型号\r\n- `GET /api/v1/balance` --检查余额\r\n- `GET /api/v1/schema` --OpenAPI模式\r\n- `GET /api/v1/AGENT_CONTEXT.md` --代理商快速参考\r\n\r\n______________________________________________________________________\r\n\r\n## 链接\r\n\r\n- [promptpilot.club](https://promptpilot.club) --Web用户界面\r\n- [人工智能投票](https://pollinations.ai) --基础模型提供商\r\n- [npm 包](https://www.npmjs.com/package/promptpilot-mcp)\r\n- [GitHub](https://github.com/doctorm333/promptpilot-mcp-server)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "promptpilot": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "promptpilot-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

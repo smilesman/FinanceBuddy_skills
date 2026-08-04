@@ -1,0 +1,25 @@
+{
+ "id": "1855",
+ "kind": "mcp",
+ "name": "binance-2",
+ "fingerprint_md5": "1dba7a7b5e75798811a6743c82bc00ea",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 币安MCP服务器\r\n\r\n\r\n> **多语言文档**\r\n>\r\n> - [英语](README.md) （当前）\r\n> - [中文](docs/README_zh.md)\r\n> - [日本语](docs/README_ja.md)\r\n\r\n模型上下文协议（MCP）服务器，为Claude Code提供Binance exchange API功能。\r\n\r\n## 快速开始\r\n\r\n### 📹 视频教程\r\n\r\n观看我们全面的MCP使用教程，快速入门：\r\n\r\n### 安装\r\n\r\n```bash\r\nnpm install -g binance-mcp-server\r\n```\r\n\r\n### 配置\r\n\r\n此MCP服务器可以与支持MCP的各种AI工具一起使用：\r\n\r\n\r\n#### MCP配置\r\n\r\n将以下配置添加到MCP设置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"binance\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"binance-mcp-server\"],\r\n      \"env\": {\r\n        \"BINANCE_API_KEY\": \"your_api_key\",\r\n        \"BINANCE_API_SECRET\": \"your_api_secret\",\r\n        \"BINANCE_TESTNET\": \"false\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **备注**：设置 `BINANCE_TESTNET` 到 `\"true\"` 如果你想使用币安测试网进行开发和测试。\r\n\r\n#### 使用Claude代码一键设置\r\n\r\n```bash\r\nclaude mcp add binance --env BINANCE_API_KEY=YOUR_API_KEY --env BINANCE_API_SECRET=YOUR_API_SECRET --env BINANCE_TESTNET=false -- npx -y binance-mcp-server\r\n```\r\n\r\n### 环境设置\r\n\r\n#### 获取API密钥\r\n\r\n**对于测试网（建议用于开发）：**\r\n\r\n1. 访问 [币安测试网](https://testnet.binance.vision/)\r\n1. 创建一个测试网帐户（无需实际验证）\r\n1. 在您的测试网帐户中转到API管理\r\n1. 创建具有交易权限的新API密钥\r\n1. 注：测试网使用虚拟资金-测试完全安全\r\n\r\n**主网（生产）：**\r\n\r\n1. 在上创建一个经过验证的帐户 [币安](https://www.binance.com/)\r\n1. 完成KYC验证\r\n1. 在您的帐户设置中转到API管理\r\n1. 创建具有所需权限的新API密钥\r\n1. ⚠️ **警告：主网使用真钱-非常小心！**\r\n\r\n#### 配置\r\n\r\n创建 `.env` 文件：\r\n\r\n```env\r\nBINANCE_API_KEY=your_api_key_here\r\nBINANCE_API_SECRET=your_api_secret_here\r\nBINANCE_TESTNET=true  # Set to false for mainnet (REAL money)\r\n```\r\n\r\n## 可用工具\r\n\r\n### 市场数据\r\n\r\n- `get_price` -获取交易对的当前价格\r\n- `get_orderbook` -获取订单簿深度数据\r\n- `get_klines` -获取K线/烛台数据\r\n- `get_24hr_ticker` -获取24小时价格统计\r\n\r\n### 账户\r\n\r\n- `get_account_info` -获取账户信息和余额\r\n- `get_open_orders` -获取当前未结订单\r\n- `get_order_history` -获取历史订单\r\n\r\n### 交易（主网和测试网）\r\n\r\n- `place_order` -下新订单（支持主网和测试网）\r\n- `cancel_order` -取消特定订单（支持主网和测试网）\r\n- `cancel_all_orders` -取消所有未结订单（支持主网和测试网）\r\n\r\n## 用法示例\r\n\r\n请克劳德：\r\n\r\n- “获取比特币的当前价格”\r\n- “给我看看ETHUDT的订单簿”\r\n- “检查我的账户余额”\r\n- “以50000美元的价格为0.001 BTC下达限价买入订单”\r\n\r\n## 安全\r\n\r\n⚠️ **重要**:\r\n\r\n- 集 `BINANCE_TESTNET=true` 使用虚拟资金进行安全测试\r\n- 集 `BINANCE_TESTNET=false` 或者省略使用真实货币进行主网交易\r\n- 主网交易将在执行订单前显示警告\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm run build    # Compile TypeScript\r\nnpm run dev      # Development mode\r\nnpm run lint     # Run linting\r\n```\r\n",
+ "config": {
+  "binance": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "binance-mcp-server"
+   ],
+   "env": {
+    "BINANCE_API_KEY": "your_api_key",
+    "BINANCE_API_SECRET": "your_api_secret",
+    "BINANCE_TESTNET": "false"
+   }
+  }
+ }
+}

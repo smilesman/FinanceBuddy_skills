@@ -1,0 +1,23 @@
+{
+ "id": "3244",
+ "kind": "mcp",
+ "name": "travel-planner-2",
+ "fingerprint_md5": "f46c3645774df96dcb00e9322d137c45",
+ "download_count": 0,
+ "category": "地图服务",
+ "tags": "",
+ "version": "",
+ "readme": "# 旅行计划器MCP服务器（@gongrshe/Server travelplanner MCP）\r\n\r\n用于与谷歌地图和旅行计划服务交互的旅行计划器模型上下文协议（MCP）服务器实现。此服务器使LLM能够执行与旅行相关的任务，如位置搜索、地点详细信息查找和旅行时间计算。\r\n\r\n## 安装与使用\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面旅行计划器 [史密瑟里](https://smithery.ai/server/@GongRzhe/TRAVEL-PLANNER-MCP-Server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @GongRzhe/TRAVEL-PLANNER-MCP-Server --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\n# Using npx (recommended)\r\nnpx @gongrzhe/server-travelplanner-mcp\r\n\r\n# With environment variable for Google Maps API\r\nGOOGLE_MAPS_API_KEY=your_api_key npx @gongrzhe/server-travelplanner-mcp\r\n```\r\n\r\n或全局安装：\r\n\r\n```bash\r\n# Install globally\r\nnpm install -g @gongrzhe/server-travelplanner-mcp\r\n\r\n# Run after global installation\r\nGOOGLE_MAPS_API_KEY=your_api_key @gongrzhe/server-travelplanner-mcp\r\n```\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n- **搜索地点**\r\n\r\n  - 使用Google places API搜索地点\r\n  - 输入：\r\n    - `query` （string）：地点搜索查询\r\n    - `location` （可选）：纬度和经度会影响结果\r\n    - `radius` （可选）：搜索半径（单位：米）\r\n\r\n- **getPlaceDetails**\r\n\r\n  - 获取特定地点的详细信息\r\n  - 输入：\r\n    - `placeId` （string）：用于检索详细信息的Google Place ID\r\n\r\n- **calculateRoute**\r\n\r\n  - 计算两个地点之间的路线\r\n  - 输入：\r\n    - `origin` （string）：起始位置\r\n    - `destination` （string）：结束位置\r\n    - `mode` （可选）：旅行方式（驾驶、步行、骑自行车、公交）\r\n\r\n- **获取时区**\r\n\r\n  - 获取某个位置的时区信息\r\n  - 输入：\r\n    - `location`：经纬度坐标\r\n    - `timestamp` （可选）：时区计算的时间戳\r\n\r\n## 配置\r\n\r\n### 使用Claude Desktop\r\n\r\n要将此服务器与Claude Desktop应用程序一起使用，请将以下配置添加到您的“mcpServers”部分 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"travel-planner\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@gongrzhe/server-travelplanner-mcp\"],\r\n      \"env\": {\r\n        \"GOOGLE_MAPS_API_KEY\": \"your_google_maps_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者，如果已安装软件包，则可以直接使用node命令：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"travel-planner\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"path/to/dist/index.js\"],\r\n      \"env\": {\r\n        \"GOOGLE_MAPS_API_KEY\": \"your_google_maps_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n### 从源头构建\r\n\r\n1. 克隆存储库\r\n1. 安装依赖项：\r\n   ```bash\r\n   npm install\r\n   ```\r\n1. 构建项目：\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n### 环境变量\r\n\r\n- `GOOGLE_MAPS_API_KEY` （必需）：启用了以下API的Google Maps API密钥：\r\n  - 地点API\r\n  - API指南\r\n  - 地理编码API\r\n  - API时区\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "travel-planner": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@gongrzhe/server-travelplanner-mcp"
+   ],
+   "env": {
+    "GOOGLE_MAPS_API_KEY": "your_google_maps_api_key"
+   }
+  }
+ }
+}

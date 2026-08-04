@@ -1,0 +1,24 @@
+{
+ "id": "1198",
+ "kind": "mcp",
+ "name": "osv-mcp",
+ "fingerprint_md5": "65b45403377b1ee93c50c9dc4263ed75",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# OSV的MCP服务器\r\n\r\n用于OSV数据库API的轻量级MCP（模型上下文协议）服务器。\r\n\r\n例子：\r\n\r\n\r\n______________________________________________________________________\r\n\r\n## 提供的工具\r\n\r\n### 概述\r\n\r\n|名称|描述|\r\n|---|---|\r\n|query_package_cve |列出特定包的所有cve ID。对于更窄范围的CVE ID，也可以传递特定版本。|\r\n|query_for_cve_affectd|查询OSV数据库中的cve，并返回包的所有受影响版本。|\r\n|query_for_cve_fix_versions|查询OSV数据库中的cve，并返回修复该漏洞的所有版本。|\r\n|get_ecosystems|查询MCP以获取当前支持的生态系统。\r\n\r\n### 详细描述\r\n\r\n- **query_package_cve**\r\n\r\n  - 在OSV数据库中查询包并返回CVE ID。\r\n  - 输入参数：\r\n    - `package` （string，必填）：要查询的包名称\r\n    - `version` （string，可选）：要查询的包的版本。如果未指定，则查询所有版本\r\n    - `ecosystem` （string，可选）：包的生态系统。Python包默认为“PyPI”\r\n  - 返回CVE ID及其详细信息的列表\r\n\r\n- **query_for_cve_受影响**\r\n\r\n  - 查询OSV数据库中的CVE，并返回所有受影响的版本。\r\n  - 输入参数：\r\n    - `cve` （字符串，必填）：要查询的CVE ID（例如，“CVE-2018-1000805”）\r\n  - 返回受影响的版本字符串列表\r\n\r\n- **query_for_cve_fix_versions**\r\n\r\n  - 查询OSV数据库中的CVE，并返回修复该漏洞的所有版本。\r\n  - 输入参数：\r\n    - `cve` （字符串，必填）：要查询的CVE ID（例如，“CVE-2018-1000805”）\r\n  - 返回固定版本字符串列表\r\n\r\n- **get_ecosystems**\r\n\r\n  - 查询MCP服务器当前支持的所有生态系统。\r\n  - 返回一个dict，其键为生态系统名称和编程语言/OS的值。\r\n\r\n______________________________________________________________________\r\n\r\n## 先决条件\r\n\r\n1. **Python 3.11或更高版本**：此项目需要Python 3.11或更高版本。\r\n\r\n   ```bash\r\n   # Check your Python version\r\n   python --version\r\n   ```\r\n\r\n1. **安装uv**：一个快速的Python包安装程序和解析器。\r\n\r\n   ```bash\r\n   pip install uv\r\n   ```\r\n\r\n   或者使用Homebrew：\r\n\r\n   ```bash\r\n   brew install uv\r\n   ```\r\n\r\n______________________________________________________________________\r\n\r\n## 测试于\r\n\r\n- \\[X\\] 光标\r\n- \\[X\\] 克劳德\r\n\r\n______________________________________________________________________\r\n\r\n## 安装\r\n\r\n1. 经由 [史密瑟里](https://smithery.ai/server/@EdenYavin/OSV-MCP):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @EdenYavin/OSV-MCP --client claude\r\n```\r\n\r\n2. 当地：\r\n\r\n   1. 克隆仓库： `https://github.com/EdenYavin/OSV-MCP.git`\r\n   1. 配置您的MCP主机（Cussor/Claude桌面等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"osv-mcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"path-to/OSV-MCP\", \"run\", \"osv-server\"],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n**发表评论 [VibeApp](https://www.vibeapp.store/app/vulnerability-osv-mcp-server)\r\n如果你喜欢：）！**\r\n",
+ "config": {
+  "osv-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "path-to/OSV-MCP",
+    "run",
+    "osv-server"
+   ],
+   "env": {}
+  }
+ }
+}

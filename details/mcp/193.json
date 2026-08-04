@@ -1,0 +1,22 @@
+{
+ "id": "193",
+ "kind": "mcp",
+ "name": "dndbeyond",
+ "fingerprint_md5": "b4b63e32e2b69edb9c8ae7bc4e52ad27",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# dndbeyond mcp\r\n\r\n用于D&D Beyond的TypeScript MCP（模型上下文协议）服务器。让克劳德（和其他兼容MCP的AI助手）访问你的D&D Beyond角色、战役、咒语、怪物、物品等。\r\n\r\n> **免责声明：** 该项目使用非官方的反向工程D&D Beyond端点。它不隶属于D&D Beyond或海岸奇才队，也不受其认可或支持。端点可能会更改，恕不另行通知。\r\n\r\n## 特性\r\n\r\n- **角色管理** --阅读角色表、更新生命值、法术槽、死亡保存、货币\r\n- **活动访问权限** --列出活动，查看政党名册\r\n- **参考查询** --搜索和检索法术、怪物、魔法物品、专长、条件、职业\r\n- **工作流提示** --会话准备、遭遇构建、升级指导、拼写建议\r\n- **基于浏览器的身份验证** --Playwright驱动的登录流程（无需手动提取cookie）\r\n\r\n## 安装\r\n\r\n您可以运行此服务器，而无需通过安装 `npx`:\r\n\r\n```bash\r\nnpx dndbeyond-mcp\r\n```\r\n\r\n或全局安装：\r\n\r\n```bash\r\nnpm install -g dndbeyond-mcp\r\n```\r\n\r\n## 设置\r\n\r\n在使用服务器之前，请向D&D Beyond进行身份验证：\r\n\r\n```bash\r\nnpx dndbeyond-mcp setup\r\n```\r\n\r\n这将打开一个浏览器窗口，您可以在其中正常登录D&D Beyond。服务器会自动捕获您的会话cookie并将其保存到 `~/.dndbeyond-mcp/config.json`.\r\n\r\n## Claude桌面配置\r\n\r\n将此添加到您的Claude Desktop配置文件中：\r\n\r\n**macOS：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dndbeyond\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"dndbeyond-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n添加配置后，重新启动Claude Desktop。\r\n\r\n## 工具\r\n\r\n### 角色\r\n\r\n- `get_character` --按ID或姓名列出的完整字符表\r\n- `list_characters` --你所有的角色\r\n- `update_hp` --施加伤害或愈合\r\n- `update_spell_slots` --使用或恢复法术槽\r\n- `update_death_saves` --创纪录的死亡拯救\r\n- `update_currency` --修改金/银/铜\r\n- `use_ability` --限制使用功能\r\n\r\n### 活动\r\n\r\n- `list_campaigns` --您的活跃活动\r\n- `get_campaign_characters` --活动中的所有角色\r\n\r\n### 参考\r\n\r\n- `search_spells` / `get_spell` --使用过滤器进行拼写查找\r\n- `search_monsters` / `get_monster` --怪物属性块\r\n- `search_items` / `get_item` --魔法物品目录\r\n- `search_feats` --Feat发现\r\n- `get_condition` --条件规则\r\n- `search_classes` --类/子类信息\r\n\r\n### 效用\r\n\r\n- `setup_auth` --重新运行登录流程\r\n- `check_auth` --验证会话是否有效\r\n\r\n## 资源\r\n\r\n|URI|描述|\r\n|-----|-------------|\r\n| `dndbeyond://characters` |您的角色列表|\r\n| `dndbeyond://character/{id}` |字符表|\r\n| `dndbeyond://character/{id}/spells` |拼写列表|\r\n| `dndbeyond://character/{id}/inventory` |库存|\r\n| `dndbeyond://campaigns` |您的活动|\r\n| `dndbeyond://campaign/{id}/party` |政党名册|\r\n\r\n## 提示\r\n\r\n|提示|目的|\r\n|--------|---------|\r\n| `character-summary` |完整角色概述|\r\n| `session-prep` |DM会话准备|\r\n| `encounter-builder` |平衡的相遇设计|\r\n| `spell-advisor` |拼写建议|\r\n| `level-up-guide` |升级演练|\r\n| `rules-lookup` |规则澄清|\r\n\r\n## 安全\r\n\r\n此服务器将您的D&D Beyond会话cookie存储在本地 `~/.dndbeyond-mcp/config.json`。cookie提供对您D&D Beyond帐户的完全访问权限。永远不要共享此文件。服务器仅与 `dndbeyond.com` 域。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "dndbeyond": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "dndbeyond-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

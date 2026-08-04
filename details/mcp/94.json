@@ -1,0 +1,21 @@
+{
+ "id": "94",
+ "kind": "mcp",
+ "name": "chess-10",
+ "fingerprint_md5": "795bae8a3b75c409b59b79537b1241ce",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP象棋服务器\r\n\r\n这个MCP让你和任何LLM下棋。\r\n\r\n## 安装\r\n\r\n要使用此国际象棋服务器，请将以下配置添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chess\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"mcp-chess\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n玩游戏：\r\n\r\n\r\n在PGN中找到一个职位进行游戏分析：\r\n\r\n\r\n## 可用工具\r\n\r\n服务器提供以下工具：\r\n\r\n- `get_board_visualization()`：以图像形式提供棋盘的当前状态。电路板方向会根据用户指定的颜色自动翻转。\r\n- `get_turn()`：表示轮到谁（“白色”或“黑色”）。\r\n- `get_valid_moves()`：以UCI记数法列出当前玩家的所有合法移动（例如“e2e4”、“g1f3”）。如果游戏结束，则返回空列表。\r\n- `make_move(move_san: str)`：使用标准代数符号（SAN）在板上移动（例如，“e4”、“Nf3”、“Bxe5”）。返回SAN和UCI中的移动、新板FEN和游戏状态。\r\n- `new_game(user_plays_white: bool = True)`：开始新游戏，重置棋盘。默认情况下，用户播放白色。为电路板方向设置用户的颜色。返回确认消息。\r\n- `find_position_in_pgn(pgn_string: str, condition: str)`：在匹配条件的PGN字符串中查找第一个板位置（例如“a3上的bishop”），并返回该板状态的图像。条件格式为“square_name上的piece_type”。有效的棋子类型有“典当”、“骑士”、“主教”、“鲁克”、“女王”、“国王”。\r\n",
+ "config": {
+  "chess": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-chess"
+   ],
+   "env": {}
+  }
+ }
+}

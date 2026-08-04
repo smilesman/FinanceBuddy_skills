@@ -1,0 +1,22 @@
+{
+ "id": "651",
+ "kind": "mcp",
+ "name": "fish-speech",
+ "fingerprint_md5": "cd907d7a80b2161c34c7e67bdfc56a83",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# 鱼语mcp\r\n\r\n用于LLM的文本到语音合成（TTS）的MCP服务器。\r\n\r\n## 特性\r\n\r\n- **文本转语音**：使用FishSpeech将文本转换为语音\r\n- **保存语音参考**：保存语音参考\r\n- **MCP集成**：适用于Dive和其他兼容MCP的LLM\r\n\r\n## 安装\r\n\r\n不可用\r\n\r\n### 随着 [潜水桌面](https://github.com/OpenAgentPlatform/Dive)\r\n\r\n1. 点击Dive桌面中的“+添加MCP服务器”\r\n1. 复制并粘贴此配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fish-speech\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@demon24ru/fish-speech-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. 点击“保存”安装MCP服务器\r\n\r\n## 配置\r\n\r\nMCP服务器可以使用环境变量进行配置：\r\n\r\n- `MCP_FISH_SPEECH_SERVER_URL`：Optivus服务器的URL（默认值： `http://localhost:5000`)\r\n\r\n## 工具文档\r\n\r\n- **文本到语音**\r\n\r\n  - 使用FishSpeech将文本转换为语音\r\n  - 输入：\r\n    - `text` （字符串，必填）：要转换为语音的文本\r\n    - `reference_id` （字符串，可选）：已保存语音的标识符\r\n\r\n- **保存_语音_引用**\r\n\r\n  - 保存语音参考以供将来进行语音克隆\r\n  - 输入：\r\n    - `reference_audio` （字符串，必填）：用于语音克隆的音频文件的路径\r\n    - `reference_text` （string，必填）：与语音克隆的音频文件对应的文本\r\n\r\n## 技术细节\r\n\r\n### 与Optivus服务器通信\r\n\r\nMCP服务器使用Socket与Optivus服务器通信。IO。通信流程如下：\r\n\r\n1. MCP服务器使用Socket连接到Optivus服务器。IO客户端\r\n1. 请求通过以下方式发送到服务器 `message` 事件\r\n1. 使用从服务器接收响应 `message` 事件\r\n1. MCP服务器自动处理连接、重新连接和错误情况\r\n\r\n### 语音参考\r\n\r\n语音引用存储在optivus的目录中。每个引用都存储在一个名为唯一ID的子目录中。\r\n\r\n## 使用示例\r\n\r\n要求你的法学硕士：\r\n\r\n```\r\n\"Convert this text to speech: Text to convert, Reference ID\"\r\n\"Save a voice reference: Path to audio file, Text corresponding to the audio file\"\r\n```\r\n\r\n## 手动启动\r\n\r\n如果需要，请手动启动服务器：\r\n\r\n```bash\r\nnpx @demon24ru/fish-speech-mcp\r\n```\r\n\r\n## 调试\r\n\r\n如果需要，请在调试模式下启动服务器：\r\n\r\n```bash\r\nnpm run prepare\r\nnpx @modelcontextprotocol/inspector node ./lib/index.mjs -y\r\n```\r\n\r\n## 需求\r\n\r\n- Node.js 20+\r\n- MCP兼容LLM服务\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 作者\r\n\r\n@demon24ru\r\n",
+ "config": {
+  "fish-speech": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@demon24ru/fish-speech-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

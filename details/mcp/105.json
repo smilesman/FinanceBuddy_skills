@@ -1,0 +1,23 @@
+{
+ "id": "105",
+ "kind": "mcp",
+ "name": "chord-player",
+ "fingerprint_md5": "f7984731b6a6701bc47d673122773cd8",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 和弦演奏者mcp\r\n\r\n通过MIDI/WAV合成播放和弦进行的MCP服务器。\r\n\r\n## 先决条件\r\n\r\n- [FluidSynth](https://www.fluidsynth.org/) 安装了SoundFont\r\n- [紫外线](https://docs.astral.sh/uv/) （为 `uvx`)\r\n\r\n```bash\r\n# macOS\r\nbrew install fluid-synth\r\n```\r\n\r\n## 设置（克劳德代码）\r\n\r\n将以下内容添加到 `mcpServers` 你的部分 `~/.claude.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chord-player\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--from\", \"git+https://github.com/mohhh-ok/chord-player-mcp@v0.1.1\", \"chord-player-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## MCP工具\r\n\r\n### `play_chords`\r\n\r\n演奏和弦进行曲。\r\n\r\n|参数|说明|默认值|\r\n|-----------|-------------|---------|\r\n| `chords` |空格分隔和弦进行（例如。 `\"C Am F G\"`)|必填|\r\n| `bpm` |温度|120|\r\n| `beats` |每和弦节拍|4|\r\n| `instrument` |乐器名称或GM程序编号|钢琴|\r\n| `voicing` | `close` / `open` / `drop2` |关闭|\r\n| `velocity` |第（0-127）卷|90|\r\n| `output` |输出WAV路径（如果省略，则为临时文件）|-|\r\n\r\n### `list_instruments`\r\n\r\n返回可用仪器名称的列表。\r\n\r\n## 支持的和弦\r\n\r\n大调（C）、小调（Cm）、第七（C7）、大调（Cmaj7）、m7（Cm7）、小调、dim7、aug、sus2、sus4、7sus4、add9、madd9、6、m6、9、maj9、m9、5（力量和弦）。也支持Slash和弦（C/E）。\r\n\r\n## 仪器\r\n\r\n钢琴、电子琴、吉他、声学吉他、管风琴、弦乐、贝司、小提琴、长笛、萨克斯、小号、合成器、电颤琴、合唱团等等。\r\n\r\n## 示例\r\n\r\n```\r\n# Basic progression\r\nplay_chords(\"C Am F G\")\r\n\r\n# Jazz voicing\r\nplay_chords(\"Cmaj7 Am7 Dm7 G7\", bpm=90, instrument=\"electric_piano\", voicing=\"drop2\")\r\n\r\n# Guitar ballad\r\nplay_chords(\"G Em C D\", bpm=72, instrument=\"guitar\", beats=8, voicing=\"open\")\r\n\r\n# Slash chords\r\nplay_chords(\"C C/B Am Am/G F G C\", bpm=100)\r\n```\r\n",
+ "config": {
+  "chord-player": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/mohhh-ok/chord-player-mcp@v0.1.1",
+    "chord-player-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

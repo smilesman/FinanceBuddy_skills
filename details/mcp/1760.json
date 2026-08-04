@@ -1,0 +1,23 @@
+{
+ "id": "1760",
+ "kind": "mcp",
+ "name": "terminal",
+ "fingerprint_md5": "428a14b2bf28dbc0120c2fafd1498030",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP终端服务器\r\n\r\n用于模型上下文协议（MCP）的安全命令行界面服务器，使AI模型能够与您的终端交互，同时保持安全性和控制。\r\n\r\n## 特性\r\n\r\n- 🔒 具有可配置权限的安全命令执行\r\n- 📁 允许路径内的文件系统操作\r\n- 🌍 环境变量管理\r\n- 💻 跨平台支持（Windows、macOS、Linux）\r\n- 🔌 通过命令执行支持远程系统连接\r\n\r\n## 使用Claude Desktop\r\n\r\n将服务器配置添加到Claude Desktop配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"terminal\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"@dillip285/mcp-terminal\",\r\n        \"--allowed-paths\",\r\n        \"/path/to/allowed/directory\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动Claude Desktop以应用更改。现在，您可以通过Claude使用终端功能，实现安全的文件访问和命令执行。\r\n\r\n## 可用工具\r\n\r\n- `execute_command`：安全运行终端命令（包括SSH和远程命令）\r\n\r\n## 安全\r\n\r\n- 所有操作仅限于指定的允许路径\r\n- 命令在执行前经过验证和净化\r\n- 精心管理环境变量\r\n- 对安全相关问题进行适当的错误处理\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/dillip285/mcp-terminal.git\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Configure npm authentication\r\ncp .npmrc.example .npmrc\r\n# Edit .npmrc and add your NPM_TOKEN\r\n\r\n# Run tests\r\nnpm test\r\n\r\n# Build the project\r\nnpm run build\r\n```\r\n\r\n## 出版\r\n\r\n要发布包，请执行以下操作：\r\n\r\n1. 复制 `.npmrc.example` 向 `.npmrc`\r\n1. 将您的npm身份验证令牌添加到 `.npmrc`\r\n1. 跑 `npm publish --access public`\r\n\r\n注意：切勿承诺 `.npmrc` 带有身份验证令牌的文件。它已添加到 `.gitignore`.\r\n\r\n## 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建功能分支(`git checkout -b feature/amazing-feature`)\r\n1. 提交您的更改(`git commit -m 'feat: Add amazing feature'`)\r\n1. 推到分支(`git push origin feature/amazing-feature`)\r\n1. 打开拉取请求\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 相关项目\r\n\r\n- [模型上下文协议](https://modelcontextprotocol.io/)\r\n- [克劳德桌面](https://claude.ai/download)\r\n\r\n## 支持\r\n\r\n有关错误报告和功能请求，请 [打开一个问题](https://github.com/dillip285/mcp-terminal/issues).\r\n",
+ "config": {
+  "terminal": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@dillip285/mcp-terminal",
+    "--allowed-paths",
+    "/path/to/allowed/directory"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "64",
+ "kind": "mcp",
+ "name": "backgammon",
+ "fingerprint_md5": "0e1e62f7e00a9a3d8c1579d92543f076",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# 双陆棋MCP\r\n\r\n和你最喜欢的LLM玩双陆棋。\r\n\r\n一款双陆棋游戏，可以通过Claude Desktop（通过MCP）或作为独立的网络应用程序玩。\r\n\r\n## 项目结构\r\n\r\n```\r\npackages/\r\n├── game/          # Core game logic (Redux-based, framework-agnostic)\r\n├── viewer/        # React UI components for the board\r\n├── web-app/       # Standalone web app (\"couch mode\")\r\n└── mcp-server/    # MCP server for Claude Desktop integration\r\n```\r\n\r\n## 先决条件\r\n\r\n- Node.js 18+\r\n- pnpm(`npm install -g pnpm`)\r\n\r\n## 安装\r\n\r\n```bash\r\ngit clone <repo-url>\r\ncd backgammon-mcp\r\npnpm install\r\n```\r\n\r\n## 运行模式\r\n\r\n### 沙发模式（独立Web应用程序）\r\n\r\n在浏览器中本地玩双陆棋——非常适合两个人在同一台设备上玩。\r\n\r\n```bash\r\n# Start the development server\r\npnpm --filter @backgammon/web-app dev\r\n```\r\n\r\n打开http://localhost:3000在您的浏览器中。\r\n\r\n### 克劳德桌面（MCP应用程序）\r\n\r\n与克劳德作为对手玩双陆棋，或观看克劳德与自己对弈。\r\n\r\n#### 1.构建MCP应用程序\r\n\r\nMCP服务器需要一个内置的客户端UI包。这必须在首次使用之前以及对查看器或客户端代码进行任何更改之后完成。\r\n\r\n```bash\r\n# Build the client UI bundle (required)\r\npnpm --filter @backgammon/mcp-server build:client\r\n```\r\n\r\n这创造了 `packages/mcp-server/dist/client/index.html` -包含交互式板UI的单个文件包。\r\n\r\n#### 2.配置克劳德桌面\r\n\r\n编辑您的Claude Desktop配置文件：\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n添加双陆棋服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"backgammon\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"tsx\",\r\n        \"/ABSOLUTE/PATH/TO/backgammon-mcp/packages/mcp-server/src/server.ts\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**重要**：替换 `/ABSOLUTE/PATH/TO/backgammon-mcp` 以及此存储库的实际完整路径。\r\n\r\n#### 3.重新启动克劳德桌面\r\n\r\n保存配置后，重新启动Claude Desktop。您应该在MCP服务器列表中看到“双陆棋”。\r\n\r\n#### 4.开始游戏\r\n\r\n让克劳德开始游戏：\r\n\r\n> “我们玩双陆棋吧！开始一个新游戏，我玩白棋，你玩黑棋。”\r\n\r\n或者观看AI vs AI游戏：\r\n\r\n> “开始一个双陆棋游戏，你可以控制两个玩家，并与自己对抗。”\r\n\r\n### 已知限制\r\n\r\n**董事会每一轮都重新抽签**：每次您或模型转弯时，板UI都会完全重新绘制。这是一个正在讨论的已知问题 [modelcontextprotocol/ext应用程序#430](https://github.com/modelcontextprotocol/ext-apps/issues/430)，所以希望将来能有所改善。\r\n\r\n**End Turn不会自动触发模型**：当您在视图中单击“结束转弯”时，模型不会自动转弯。MCP应用软件开发工具包 `ui/message` （至少在Claude Desktop中）只填充聊天输入，但不发送——你必须按回车键。同样地， `ui/update-model-context` 推迟到下一条用户消息。作为一种解决方法，在单击“结束转弯”后，在聊天中按回车键提示模型进行转弯。\r\n\r\n## 发展\r\n\r\n### 运行测试\r\n\r\n```bash\r\n# All packages\r\npnpm test\r\n\r\n# Specific package\r\npnpm --filter @backgammon/game test\r\n```\r\n\r\n### 类型检查\r\n\r\n```bash\r\npnpm typecheck\r\n```\r\n\r\n### 棉绒\r\n\r\n```bash\r\npnpm lint\r\n```\r\n\r\n## 建筑\r\n\r\n- **游戏/**：纯粹的游戏逻辑，没有UI依赖。使用Redux Toolkit进行状态管理。导出缩减器、操作、选择器和类型定义。\r\n\r\n- **观众/**：渲染双陆棋棋盘的React组件。完全受控-通过props接收所有状态，通过回调发出事件。使用CSS自定义属性进行主题化。\r\n\r\n- **web应用程序/**：独立的Vite+React应用程序，结合了游戏逻辑和查看器。使用Redux进行状态管理。\r\n\r\n- **mcp服务器/**：MCP服务器，它公开游戏工具，并作为MCP应用程序资源为观众提供服务。查看器使用vite插件singlefile捆绑为单个HTML文件。\r\n",
+ "config": {
+  "backgammon": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "tsx",
+    "/ABSOLUTE/PATH/TO/backgammon-mcp/packages/mcp-server/src/server.ts"
+   ],
+   "env": {}
+  }
+ }
+}

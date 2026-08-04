@@ -1,0 +1,12 @@
+{
+ "id": "volcengine-security-kms",
+ "kind": "skill",
+ "name": "volcengine-security-kms",
+ "fingerprint_md5": "2b9fe0380ef5c3d48b20a64ab99d0f16",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "# volcengine-security-kms\r\n\r\n以生命周期感知和最小权限访问检查操作 KMS 密钥。\r\n\r\n## 执行清单\r\n\r\n1. 确认密钥用途、算法和使用范围。\r\n2. 创建或选择密钥并验证策略绑定。\r\n3. 执行加密/解密/签名任务。\r\n4. 返回密钥元数据、操作结果和审计提示。\r\n\r\n## 安全规则\r\n\r\n- 切勿在日志中暴露明文密钥。\r\n- 按照策略窗口轮换密钥。\r\n- 在密钥操作前验证调用者权限。\r\n\r\n## 参考\r\n\r\n- `references/sources.md`",
+ "config": {}
+}

@@ -1,0 +1,26 @@
+{
+ "id": "1086",
+ "kind": "mcp",
+ "name": "knowledgebase",
+ "fingerprint_md5": "81f76fc6deac66381a2087722b49e948",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP知识库服务器\r\n\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io/) （MCP）服务器，允许LLMS在对话期间存储记忆并在以后搜索。记忆存储在 [数据库](https://www.sqlite.org) 数据库及其全文搜索功能为内存搜索提供了动力。\r\n\r\n## 用法\r\n\r\n两个环境变量控制数据库的位置和文件名。\r\n\r\n`DATABASE_NAME`：使用默认位置，但使用自定义数据库文件名。例如， `my_custom_db.sqlite`.\r\n\r\n`DATABASE_PATH`：指定db文件的完整路径（忽略 `DATABASE_NAME`).例如， `/Users/your_name/.db/my_db.sqlite`.\r\n\r\n### 码头工人\r\n\r\n使用docker时，您必须创建一个持久卷来存储数据库（如果需要，高级用户可以从他们的文件系统挂载一个文件夹）。跑 `docker volume create knowledgebase` 要设置它，请在您的 `claude_desktop_config.json` 如下所示。\r\n\r\n如果你想在docker中使用自定义数据库文件，你必须使用 `DATABASE_PATH` 并使用以下命令将其传递给docker命令 `--env` arg。例如（将这些字符串放入 `args` 在图像名称之前的配置数组）， `\"--env\", \"DATABASE_PATH=/db/my_db.sqlite\"`.\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"knowledgebase\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--interactive\",\r\n        \"--rm\",\r\n        \"--volume\", \"knowledgebase:/db\",\r\n        \"mbcrawfo/knowledge-base-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n\r\n```\r\n\r\n### 使用dotnet-cli在本地运行\r\n\r\n1. 你需要 [.Net 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0).\r\n1. 克隆此存储库。\r\n1. 导航到终端中的仓库并运行 `dotnet build`.\r\n1. 将下面的配置添加到 `claude_desktop_config.json` （如果您遇到错误，请尝试指定dotnetcli的完整路径）。\r\n\r\n在本地运行时，默认数据库位置位于Application Data目录中。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"knowledgebase\": {\r\n      \"command\": \"dotnet\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--project\", \"/full/path/to/repo/src/KnowledgeBaseServer/KnowledgeBaseServer.csproj\",\r\n        \"--no-restore\",\r\n        \"--no-build\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n\r\n```\r\n\r\n## 鼓励\r\n\r\n服务器包括一个“常规内存使用情况”提示，告诉LLM如何使用内存。但是，您可能希望使用自定义提示，以更具体地了解您的使用情况。\r\n\r\n## 发展\r\n\r\n您可以将该应用程序与 `--init-db` 用于创建或升级数据库以进行测试的参数。在KnowledgeBaseServer项目目录中，运行 `dotnet run -- --init-db /path/to/db.sqlite`.\r\n",
+ "config": {
+  "knowledgebase": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--interactive",
+    "--rm",
+    "--volume",
+    "knowledgebase:/db",
+    "mbcrawfo/knowledge-base-server"
+   ],
+   "env": {}
+  }
+ }
+}

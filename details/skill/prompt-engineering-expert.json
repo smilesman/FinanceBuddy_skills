@@ -1,0 +1,12 @@
+{
+ "id": "prompt-engineering-expert",
+ "kind": "skill",
+ "name": "prompt-engineering-expert",
+ "fingerprint_md5": "bf8fb3b9f0b937212278130dda7a6367",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# Prompt Engineering Expert Skill\r\n\r\nThis skill equips Claude with deep expertise in prompt engineering, custom instructions 设计, and prompt optimization. It provides comprehensive guidance on crafting effective AI prompts, designing agent instructions, and iteratively improving prompt performance.\r\n\r\n## Capabilities\r\n\r\n- **Prompt Writing Best Practices**: Expert guidance on 清空, direct prompts with proper structure and formatting\r\n- **Custom Instructions 设计**: Creating effective system prompts and custom instructions for AI agents\r\n- **Prompt Optimization**: Analyzing, refining, and improving existing prompts for better performance\r\n- **Advanced Techniques**: Chain-of-thought prompting, few-shot 示例, XML tags, role-based prompting\r\n- **Evaluation & Testing**: Developing 测试 cases and 成功 criteria for prompt evaluation\r\n- **Anti-patterns Recognition**: Identifying and correcting common prompt engineering mistakes\r\n- **Context Management**: Optimizing token 用法 and context window management\r\n- **Multimodal Prompting**: Guidance on vision, embeddings, and file-based prompts\r\n\r\n## Use Cases\r\n\r\n- Refining vague or ineffective prompts\r\n- Creating specialized system prompts for specific domains\r\n- Designing custom instructions for AI agents and skills\r\n- Optimizing prompts for consistency and reliability\r\n- Teaching prompt engineering best practices\r\n- Debugging prompt performance issues\r\n- Creating prompt templates for reusable workflows",
+ "config": {}
+}

@@ -1,0 +1,30 @@
+{
+ "id": "403",
+ "kind": "mcp",
+ "name": "resolume",
+ "fingerprint_md5": "a7375df80a22e4304592b836b98d652e",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Resolume MCP\r\n\r\n\r\nMCP服务器 [Resolume竞技场和大道](https://resolume.com)公开206个工具，涵盖构图控制、播放、高级输出管理和显示恢复，因此AI助手可以通过REST、WebSocket和OSC操作Resolume。\r\n\r\n为现场制作而建。与配对 [grandMA2 MCP](https://github.com/drohi-r/grandma2-mcp), [MADRIX MCP](https://github.com/drohi-r/madrix-mcp), [配套MCP](https://github.com/drohi-r/companion-mcp)，以及 [超越MCP](https://github.com/drohi-r/beyond-mcp) 完全由人工智能驱动的节目控制。\r\n\r\n## 它做什么\r\n\r\n|区域|你得到了什么|\r\n|------|-------------|\r\n| **成分控制** |层、剪辑、列、组、组——获取快照、触发播放、管理媒体、批处理操作|\r\n| **高级输出** |通过REST API和XML检查进行屏幕和切片管理。备份、差异、重命名、重新路由、扭曲对齐|\r\n| **回放和监控** |传输控制、参数订阅、状态轮询、显示就绪审计|\r\n| **效果** |在合成、图层、组和剪辑范围内添加、删除、移动、重命名效果|\r\n| **安全** |16次破坏性行动被封锁 `confirm_destructive=True`原子XML写入。具有抗崩溃能力的民意调查|\r\n\r\n## 快速启动\r\n\r\n```bash\r\n# Clone and install\r\ngit clone https://github.com/drohi-r/resolume-mcp && cd resolume-mcp\r\nuv sync\r\n\r\n# Run the server (connects to Resolume on localhost:8080)\r\nuv run python -m resolume_mcp\r\n```\r\n\r\n确保Resolume Arena或Avenue在启用REST API的情况下运行（首选项→ OSC/HTTP→ HTTP API）。\r\n\r\n对于远程控制：\r\n\r\n- 使用局域网或WireGuard，而不是公共互联网\r\n- 集 `RESOLUME_HOST` 到远程机器\r\n- 将该主机包含在 `RESOLUME_ALLOWED_HOSTS`\r\n\r\n## 配置\r\n\r\n服务器从环境变量中读取配置。所有这些国家都对当地发展有合理的默认。\r\n\r\n|变量|默认值|描述|\r\n|----------|---------|-------------|\r\n| `RESOLUME_HOST` | `127.0.0.1` |资源实例IP|\r\n| `RESOLUME_HTTP_PORT` | `8080` |HTTP API端口|\r\n| `RESOLUME_OSC_PORT` | `7000` |OSC侦听器端口|\r\n| `RESOLUME_ALLOWED_HOSTS` | `127.0.0.1,localhost,::1` |目标主机的逗号分隔的列表。集 `*` 允许任何。 |\r\n| `RESOLUME_USE_HTTPS` | `false` |对API调用使用HTTPS(`true`, `yes`, `1`) |\r\n| `RESOLUME_DOCUMENTS_ROOT` | `~/Documents/Resolume Arena` |资源文档路径|\r\n| `RESOLUME_ADVANCED_OUTPUT_XML` | `~/Documents/Resolume Arena/Preferences/AdvancedOutput.xml` |高级输出XML路径|\r\n| `RESOLUME_SLICES_XML` | `~/Documents/Resolume Arena/Preferences/slices.xml` |切片XML路径|\r\n\r\n## 建筑\r\n\r\n```mermaid\r\ngraph TD\r\n    A[\"Resolume MCP Server\r\n`resolume_mcp`\r\n206 tools · safety gate\"] --> B\r\n    A --> C\r\n    A --> D\r\n    B[\"REST Client\r\nComposition · clips · layers · effects\"] --> E\r\n    C[\"WebSocket Client\r\nParameter subscriptions · state polling\"] --> E\r\n    D[\"OSC Client\r\nTransport control\"] --> E\r\n    E[\"Resolume Arena / Avenue\r\nHTTP API on port 8080\"]\r\n\r\n    F[\"Advanced Output Engine\r\nXML inspection · atomic writes · backup\"] -.-> A\r\n    G[\"Safety Gate\r\n16 destructive ops gated behind confirm\"] -.-> A\r\n\r\n    style A fill:#1a1a2e,stroke:#9B59FF,color:#fff\r\n    style B fill:#1a1a2e,stroke:#9B59FF,color:#fff\r\n    style C fill:#1a1a2e,stroke:#9B59FF,color:#fff\r\n    style D fill:#1a1a2e,stroke:#9B59FF,color:#fff\r\n    style E fill:#1a1a2e,stroke:#0f3460,color:#fff\r\n    style F fill:#0f3460,stroke:#0f3460,color:#fff\r\n    style G fill:#0f3460,stroke:#0f3460,color:#fff\r\n```\r\n\r\n## 克劳德桌面\r\n\r\n将此添加到您的Claude Desktop配置中(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"resolume\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/resolume-mcp\", \"python\", \"-m\", \"resolume_mcp\"],\r\n      \"env\": {\r\n        \"RESOLUME_HOST\": \"127.0.0.1\",\r\n        \"RESOLUME_HTTP_PORT\": \"8080\",\r\n        \"RESOLUME_ALLOWED_HOSTS\": \"127.0.0.1,localhost,::1\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## VS代码/光标\r\n\r\n添加 `.vscode/mcp.json` 在您的项目中：\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"resolume\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/resolume-mcp\", \"python\", \"-m\", \"resolume_mcp\"],\r\n      \"env\": {\r\n        \"RESOLUME_HOST\": \"127.0.0.1\",\r\n        \"RESOLUME_HTTP_PORT\": \"8080\",\r\n        \"RESOLUME_ALLOWED_HOSTS\": \"127.0.0.1,localhost,::1\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 法典\r\n\r\n创建一个 `codex.json` MCP配置文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"resolume\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/resolume-mcp\", \"python\", \"-m\", \"resolume_mcp\"],\r\n      \"env\": {\r\n        \"RESOLUME_HOST\": \"127.0.0.1\",\r\n        \"RESOLUME_HTTP_PORT\": \"8080\",\r\n        \"RESOLUME_ALLOWED_HOSTS\": \"127.0.0.1,localhost,::1\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后使用以下命令运行Codex：\r\n\r\n```bash\r\ncodex --mcp-config codex.json\r\n```\r\n\r\n## 技能\r\n\r\n该服务器包括7种操作员技能——常见现场表演场景的结构化工作流程：\r\n\r\n|技能|何时使用|\r\n|-------|-------------|\r\n| `playback-prep-and-busking` |为直播或操作员切换准备Resolume|\r\n| `advanced-output-setup` |为节目设置屏幕、切片和路线|\r\n| `output-routing-festival` |为节日或宾客更换钻机而快速重新安排路线|\r\n| `output-warp-alignment` |对齐屏幕几何图形和切片扭曲|\r\n| `festival-recovery-fast` |在时间压力下恢复演出|\r\n| `show-recovery-and-triage` |诊断传输、输出或层问题|\r\n| `deck-control-and-inspection` |管理甲板快照、审计和参数|\r\n\r\n## 安全模型\r\n\r\n- **读取操作** （快照、审计、参数获取）：始终安全，无需确认\r\n- **破坏性行动** （清除、断开、删除）：需要 `confirm_destructive=True`\r\n- **主机分配**：仅 `127.0.0.1`, `localhost`，以及 `::1` 默认情况下是允许的。通过以下方式显式添加LAN主机 `RESOLUME_ALLOWED_HOSTS`.Set `*` 允许任何主机。\r\n- **高级输出XML写入**：atomic（临时文件+重命名）以防止损坏\r\n- **轮询循环**：崩溃恢复--如果Resolume变得无法访问，则返回上次已知的状态\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install and sync dependencies\r\nuv sync\r\n\r\n# Run tests\r\nuv run python -m pytest -v\r\n```\r\n\r\n## 许可证\r\n\r\n[Apache 2.0](LICENSE)\r\n",
+ "config": {
+  "resolume": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "/path/to/resolume-mcp",
+    "python",
+    "-m",
+    "resolume_mcp"
+   ],
+   "env": {
+    "RESOLUME_HOST": "127.0.0.1",
+    "RESOLUME_HTTP_PORT": "8080",
+    "RESOLUME_ALLOWED_HOSTS": "127.0.0.1,localhost,::1"
+   }
+  }
+ }
+}

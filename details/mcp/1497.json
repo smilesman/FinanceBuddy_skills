@@ -1,0 +1,24 @@
+{
+ "id": "1497",
+ "kind": "mcp",
+ "name": "image-placeholder",
+ "fingerprint_md5": "b4916536a8551758190caa456b3be15f",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP图像占位符服务器\r\n\r\n这是一个模型上下文协议（MCP）服务器，它提供了一个从不同提供商生成占位符图像的工具。\r\n\r\n## 特性\r\n\r\n- 从支持的提供商生成占位符图像\r\n- 支持两个图像提供程序：\r\n  - [`placehold`](https://placehold.co/)：提供简单的占位符图像\r\n  - [`lorem-picsum`](https://picsum.photos/)：提供真实图像作为占位符图像\r\n- 验证输入参数\r\n- 返回图像URL以供立即使用\r\n\r\n## 需求\r\n\r\n- Python 3.9+\r\n- `uv` 包管理器\r\n\r\n## 安装\r\n\r\n1. 克隆此存储库\r\n1. [设置MCP服务器的配置](#configuration)\r\n\r\n## 用法\r\n\r\n服务器公开了一个工具：\r\n\r\n### `image_placeholder`\r\n\r\n根据指定的参数生成占位符图像URL。\r\n\r\n**参数：**\r\n\r\n- `provider`：要使用的图像提供程序(`placehold` 或 `lorem-picsum`)\r\n- `width`：图像的宽度（1-10000）\r\n- `height`：图像的高度（1-10000）\r\n\r\n**退货：**\r\n\r\n- 生成图像的URL字符串\r\n\r\n**示例用法：**\r\n\r\n```python\r\n# Generate a 300x200 placeholder image\r\nurl = image_placeholder(provider=\"placehold\", width=300, height=200)\r\n\r\n# Generate a 500px square lorem-picsum image\r\nurl = image_placeholder(provider=\"lorem-picsum\", width=500)\r\n```\r\n\r\n## 配置\r\n\r\n### 要将此服务器连接到Claude for Desktop，请执行以下操作：\r\n\r\n1. 将以下内容添加到您的 `claude_desktop_config.json`:\r\n   ```json\r\n   {\r\n       \"mcpServers\": {\r\n           \"image-placeholder\": {\r\n               \"command\": \"uv\",\r\n               \"args\": [\r\n                   \"--directory\",\r\n                   \"/ABSOLUTE/PATH/TO/PROJECT\",\r\n                   \"run\",\r\n                   \"main.py\"\r\n               ]\r\n           }\r\n       }\r\n   }\r\n   ```\r\n1. 重新启动桌面版的Claude\r\n\r\n### 要将此服务器连接到Cursor，请执行以下操作：\r\n\r\n1. 打开光标设置\r\n1. 前往 `Features` 章节\r\n1. 向下滚动到 `MCP Servers` 章节\r\n1. 点击 `Add new MCP server` 按钮\r\n1. 输入以下信息：\r\n   - 姓名： `image-placeholder`\r\n   - 类型： `command`\r\n   - 服务器URL: `uv --directory /ABSOLUTE/PATH/TO/PROJECT run main.py`\r\n1. 点击 `Add ↵` 按钮\r\n\r\n## 故障排除\r\n\r\n如果未检测到刀具，请使用绝对路径 `uv` 命令，例如。\r\n\r\n```\r\n/ABSOLUTE/PATH/TO/uv --directory /ABSOLUTE/PATH/TO/PROJECT run main.py\r\n```\r\n\r\n## 示例用法和输出（光标）\r\n\r\n提示：\r\n\r\n```\r\nCreate a new directory named \"example\" and a file named output.html.\r\n\r\nThen create a single modern looking page using tailwindcss: https://unpkg.com/@tailwindcss/browser@4\r\n\r\nShow a nice header, content, and footer, showing a photo gallery.\r\n\r\nSave this into output.html\r\n```\r\n\r\n\r\n输出：\r\n[示例输出（光标）](example/output.html)\r\n\r\n## 许可证\r\n\r\n[MIT许可证](LICENSE)\r\n",
+ "config": {
+  "image-placeholder": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/ABSOLUTE/PATH/TO/PROJECT",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

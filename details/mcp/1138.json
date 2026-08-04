@@ -1,0 +1,30 @@
+{
+ "id": "1138",
+ "kind": "mcp",
+ "name": "mssql-6",
+ "fingerprint_md5": "5433ac7acc6841b3abaf032f01fab066",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# MSSQL MCP服务器\r\n\r\nMSSQL MCP服务器是 **模型上下文协议（MCP）服务器** 实现与以下对象的安全和结构化交互 **Microsoft SQL Server（MSSQL）** 数据库。它允许AI助手：\r\n\r\n- 列出可用表格\r\n- 读取表格内容\r\n- 使用受控访问执行SQL查询\r\n\r\n这确保了更安全的数据库探索、严格的权限执行和数据库交互的日志记录。\r\n\r\n## 特性\r\n\r\n- **安全MSSQL数据库访问** 通过环境变量\r\n- **受控查询执行** 具有错误处理功能\r\n- **表列表和数据检索**\r\n- **综合录井** 用于监视查询和操作\r\n\r\n## 安装\r\n\r\n```bash\r\npip install mssql-mcp-server\r\n```\r\n\r\n## 配置\r\n\r\n设置以下环境变量以配置数据库访问：\r\n\r\n```bash\r\nMSSQL_DRIVER=mssql_driver\r\nMSSQL_HOST=localhost\r\nMSSQL_USER=your_username\r\nMSSQL_PASSWORD=your_password\r\nMSSQL_DATABASE=your_database\r\n#optional\r\nTrustServerCertificate=yes\r\nTrusted_Connection=no\r\n```\r\n\r\n## 用法\r\n\r\n### 使用克劳德桌面\r\n\r\n与整合 **克劳德桌面**，将此配置添加到 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mssql\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"path/to/mssql_mcp_server\",\r\n        \"run\",\r\n        \"mssql_mcp_server\"\r\n      ],\r\n      \"env\": {\r\n        \"MSSQL_DRIVER\": \"mssql_driver\",\r\n        \"MSSQL_HOST\": \"localhost\",\r\n        \"MSSQL_USER\": \"your_username\",\r\n        \"MSSQL_PASSWORD\": \"your_password\",\r\n        \"MSSQL_DATABASE\": \"your_database\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 作为独立服务器运行\r\n\r\n```bash\r\n# Install dependencies\r\npip install -r requirements.txt\r\n\r\n# Run the server\r\npython -m mssql_mcp_server\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/yourusername/mssql_mcp_server.git\r\ncd mssql_mcp_server\r\n\r\n# Set up a virtual environment\r\npython -m venv venv\r\nsource venv/bin/activate  # On Windows: venv\\Scripts\\activate\r\n\r\n# Install development dependencies\r\npip install -r requirements-dev.txt\r\n\r\n# Run tests\r\npytest\r\n```\r\n\r\n## 安全考虑\r\n\r\n- **使用专用MSSQL用户** 拥有最低限度的特权。\r\n- **从不使用root凭据** 或完整的行政账户。\r\n- **限制数据库访问** 只进行必要的操作。\r\n- **启用日志记录和审核** 用于安全监控。\r\n- **定期审查权限** 以确保最低权限访问。\r\n\r\n## 安全最佳实践\r\n\r\n对于安全设置：\r\n\r\n1. **创建专用MSSQL用户** 具有受限权限。\r\n1. **避免硬编码凭据**--请改用环境变量。\r\n1. **限制访问** 仅限于必要的表格和操作。\r\n1. **启用SQL Server日志记录和监视** 审计。\r\n1. **定期检查数据库访问** 以防止未经授权的访问。\r\n\r\n有关详细说明，请参阅 **[MSSQL安全配置指南](https://github.com/JexinSam/mssql_mcp_server/blob/main/SECURITY.md)**.\r\n\r\n⚠️ **重要：** 始终遵循 **最小特权原则** 配置数据库访问时。\r\n\r\n## 许可证\r\n\r\n该项目根据 **MIT许可证**。请参阅 `LICENSE` 文件以获取详细信息。\r\n\r\n## 贡献\r\n\r\n我们欢迎捐款！贡献：\r\n\r\n1. 分叉存储库。\r\n1. 创建要素分支： `git checkout -b feature/amazing-feature`\r\n1. 提交您的更改： `git commit -m 'Add amazing feature'`\r\n1. 推到分支： `git push origin feature/amazing-feature`\r\n1. 打开A **拉取请求**.\r\n\r\n______________________________________________________________________\r\n\r\n### 需要帮助？\r\n\r\n如有任何疑问或问题，请随时打开GitHub **[问题](https://github.com/JexinSam/mssql_mcp_server/issues)** 或者联系维护人员。\r\n",
+ "config": {
+  "mssql": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "path/to/mssql_mcp_server",
+    "run",
+    "mssql_mcp_server"
+   ],
+   "env": {
+    "MSSQL_DRIVER": "mssql_driver",
+    "MSSQL_HOST": "localhost",
+    "MSSQL_USER": "your_username",
+    "MSSQL_PASSWORD": "your_password",
+    "MSSQL_DATABASE": "your_database"
+   }
+  }
+ }
+}

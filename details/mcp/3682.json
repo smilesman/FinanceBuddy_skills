@@ -1,0 +1,27 @@
+{
+ "id": "3682",
+ "kind": "mcp",
+ "name": "web-search-5",
+ "fingerprint_md5": "207d922721f991b0d641cab79d699772",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp网络搜索\r\n\r\n\r\n使用的Web搜索MCP服务器 [勇敢搜索API](https://brave.com/search/api/) 建于 [FastMCP](https://gofastmcp.com/).\r\n\r\n## 特性\r\n\r\n- **5搜索工具** -网络、新闻、图片、视频和建议\r\n- **丰富的过滤功能** -国家、语言、新鲜度、安全搜索\r\n- **流式HTTP传输** -部署为远程MCP服务器\r\n- **免费套餐可用** -2000次查询/月\r\n\r\n## 工具\r\n\r\n### `web_search`\r\n\r\n在网上搜索信息。\r\n\r\n```python\r\nweb_search(query=\"Python asyncio tutorial\")\r\nweb_search(query=\"climate change\", freshness=\"pw\", country=\"us\")\r\n```\r\n\r\n### `news_search`\r\n\r\n搜索最近的新闻文章。\r\n\r\n```python\r\nnews_search(query=\"AI regulations\")\r\nnews_search(query=\"tech layoffs\", freshness=\"pd\")\r\n```\r\n\r\n### `image_search`\r\n\r\n搜索图像。\r\n\r\n```python\r\nimage_search(query=\"sunset over mountains\")\r\nimage_search(query=\"modern architecture\", safe_search=\"strict\")\r\n```\r\n\r\n### `video_search`\r\n\r\n搜索视频。\r\n\r\n```python\r\nvideo_search(query=\"Python tutorial for beginners\")\r\nvideo_search(query=\"cooking pasta\", freshness=\"pm\")\r\n```\r\n\r\n### `suggest`\r\n\r\n获取搜索查询建议/自动完成。\r\n\r\n```python\r\nsuggest(query=\"how to\")\r\nsuggest(query=\"python\", count=10)\r\n```\r\n\r\n## 参数\r\n\r\n### 公共参数\r\n\r\n|参数|类型|说明|\r\n|-----------|------|-------------|\r\n| `query` |str |搜索查询（必填）|\r\n| `count` |int |结果数（1-20，默认值：10）|\r\n| `country` |str |国家代码（例如“us”、“gb”、“de”）|\r\n| `search_lang` |str |语言代码（例如“en”、“de”、“fr”）|\r\n| `safe_search` |str |内容过滤器：“关闭”、“中等”、“严格”|\r\n\r\n### 新鲜度过滤器\r\n\r\n按时间筛选结果：\r\n\r\n|价值|含义|\r\n|-------|---------|\r\n| `pd` |过去一天|\r\n| `pw` |上周|\r\n| `pm` |上个月|\r\n| `py` |过去一年|\r\n\r\n## 安装\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/agentic-forge/mcp-web-search.git\r\ncd mcp-web-search\r\n\r\n# Install dependencies\r\nuv sync\r\n```\r\n\r\n## 配置\r\n\r\n从获取API密钥 [勇敢搜索API](https://brave.com/search/api/).\r\n\r\n设置环境变量：\r\n\r\n```bash\r\nexport BRAVE_API_KEY=\"your-api-key-here\"\r\n```\r\n\r\n或者创建一个 `.envrc.local` 文件：\r\n\r\n```bash\r\nexport BRAVE_API_KEY=\"your-api-key-here\"\r\n```\r\n\r\n## 运行服务器\r\n\r\n### HTTP传输（建议用于远程访问）\r\n\r\n```bash\r\n# Default: HTTP on port 8001\r\nuv run python -m forge_mcp_web_search\r\n\r\n# Custom port\r\nuv run python -m forge_mcp_web_search --port 3000\r\n```\r\n\r\n服务器将在 `http://localhost:8001/mcp`\r\n\r\n### STDIO传输（适用于本地MCP客户端）\r\n\r\n```bash\r\nuv run python -m forge_mcp_web_search --stdio\r\n```\r\n\r\n## MCP客户端配置\r\n\r\n### 克劳德桌面版\r\n\r\n添加到 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"web-search\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"python\", \"-m\", \"forge_mcp_web_search\", \"--stdio\"],\r\n      \"cwd\": \"/path/to/mcp-web-search\",\r\n      \"env\": {\r\n        \"BRAVE_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 远程HTTP服务器\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"web-search\": {\r\n      \"url\": \"http://localhost:8001/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用Anvil进行测试\r\n\r\n使用 [锻造铁砧](https://github.com/agentic-forge/forge-anvil) 要测试服务器，请执行以下操作：\r\n\r\n```bash\r\n# Start the server\r\nexport BRAVE_API_KEY=\"your-api-key\"\r\nuv run python -m forge_mcp_web_search\r\n\r\n# In another terminal\r\ncd /path/to/forge-anvil\r\nexport ANVIL_SERVER=http://localhost:8001/mcp\r\n\r\n# List tools\r\nanvil list-tools\r\n\r\n# Search the web\r\nanvil call web_search --json-args '{\"query\": \"Python tutorial\"}'\r\n\r\n# Search for news\r\nanvil call news_search --json-args '{\"query\": \"AI news\", \"freshness\": \"pd\"}'\r\n\r\n# Get suggestions\r\nanvil call suggest --arg query=\"how to\"\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dev dependencies\r\nuv sync --group dev\r\n\r\n# Run tests\r\nuv run pytest\r\n\r\n# Run tests with coverage\r\nuv run pytest --cov\r\n\r\n# Type checking\r\nuv run basedpyright\r\n\r\n# Linting\r\nuv run ruff check .\r\n\r\n# Install pre-commit hooks\r\nuv run pre-commit install\r\n```\r\n\r\n## API费率限制\r\n\r\n|层级|费率|每月限额|成本|\r\n|------|------|---------------|------|\r\n|免费人工智能|1个请求/秒|2000个查询|0美元|\r\n|基础人工智能|20个请求/秒|2000万次查询|5/1k美元|\r\n|Pro AI | 50个要求/秒|无限制| 9/1k美元|\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "web-search": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "python",
+    "-m",
+    "forge_mcp_web_search",
+    "--stdio"
+   ],
+   "env": {
+    "BRAVE_API_KEY": "your-api-key"
+   }
+  }
+ }
+}

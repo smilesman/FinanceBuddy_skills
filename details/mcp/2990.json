@@ -1,0 +1,18 @@
+{
+ "id": "2990",
+ "kind": "mcp",
+ "name": "wind_mcp",
+ "fingerprint_md5": "bec4a136e2653854e50a08e8eb6fc7da",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# Wind MCP Server: 让大模型拥有 Wind API能力\r\n\r\n本项目是一个实现了 [Model Context Protocol](https://modelcontextprotocol.io/introduction) (MCP) 标准的工具服务器。\r\n\r\n**其唯一目标是：将强大的 [WindPy](https://www.wind.com.cn/newsite/html/data_wds.html) 金融数据接口，封装成可被大语言模型 (LLM) 直接调用的标准化工具。**\r\n\r\n通过本项目，任何安装了 Wind 金融终端的桌面客户端，都可以通过 MCP 的方式，让大模型（如 Cherry Studio, Cursor 内置的 AI）直接理解和操作 Wind API，查询实时金融数据、执行复杂的日期计算，就像一个专业的金融分析师。\r\n\r\n## 可用工具 (Available Tools)\r\n\r\n本服务器为大模型提供了以下即插即用的工具，使其能够与 Wind API 交互。\r\n\r\n### 基础工具\r\n\r\n| 工具名称 | 功能描述 |\r\n| :--- | :--- |\r\n| `get_today_date(fmt)` | 获取服务器当前日期，可指定格式。 |\r\n| `search_windpy_doc(query)` | 在核心 WindPy 函数文档中进行关键词搜索，帮助模型理解API用法。 |\r\n\r\n### Wind 数据工具\r\n\r\n| 工具名称 | 功能描述 |\r\n| :--- | :--- |\r\n| `wind_wsd(...)` | **（核心）获取日时间序列数据。** 用于查询多个标的在一段时间内的历史日线行情、财务等数据。 |\r\n| `wind_wss(...)` | **（核心）获取日截面数据。** 用于查询多个标的在特定日期的快照数据，如最新价、市盈率等。 |\r\n| `wind_wses(...)` | 获取板块成分股在一段时间内的序列数据。 |\r\n| `wind_tdays(...)` | 获取指定区间内的交易日历。 |\r\n| `wind_tdaysoffset(...)` | 根据一个基准日期，计算向前或向后偏移指定交易日后的日期。 |\r\n| `wind_tdayscount(...)` | 计算一个日期区间内包含的交易日数量。 |\r\n\r\n---\r\n\r\n## 设置与运行\r\n\r\n### 1. 环境准备\r\n\r\n确保您的 Windows 机器上已安装 **Wind金融终端** 并能正常登录。然后，安装 Python 依赖：\r\n\r\n```bash\r\npip install -r requirements.txt\r\n```\r\n\r\n### 2. 启动服务\r\n\r\n在项目根目录下，运行以下命令启动 MCP 服务器：\r\n\r\n```bash\r\npython src/wind_mcp_direct_server.py --host 0.0.0.0 --port 8888\r\n```\r\n*   `--host 0.0.0.0` 允许局域网内的其他设备访问。\r\n*   `--port 8888` 您可以根据需要修改端口号。\r\n\r\n### 3. 客户端配置\r\n\r\n在任何兼容 MCP 标准的客户端（如 **Cherry Studio**, **Cursor** 等）中添加如下 JSON 配置，即可开始使用。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"wind_mcp\": {\r\n      \"url\": \"http://localhost:<port>/mcp/\",\r\n      \"transport\": \"streamable-http\"\r\n    }\r\n  }\r\n}\r\n```\r\n> **注意**: 请将 `<port>` 替换为实际运行服务器的 port 地址。\r\n\r\n\r\n## 鸣谢 (Acknowledgements)\r\n\r\n本项目基于以下优秀的开源项目构建，特此感谢：\r\n-   **[FastMCP](https://github.com/jlowin/fastmcp)**: 提供了轻量、高效的 Model Context Protocol 服务器实现。\r\n\r\n## 主要功能\r\n\r\n- **MCP 标准实现**：作为一个标准的 MCP 服务器，可以无缝对接到任何兼容的客户端或框架。\r\n- **简易的管理脚本**：提供 Shell 脚本，方便在 macOS上部署和管理 Wind 服务。\r\n- **清晰的项目结构**：代码、测试、文档和配置分离，易于理解和维护。\r\n\r\n## 目录结构\r\n\r\n项目已经为您重构为更清晰、更标准的结构：\r\n\r\n```\r\n.\r\n├── .gitignore          # Git忽略文件配置\r\n├── README.md           # 项目主说明文档\r\n├── requirements.txt    # Python依赖库\r\n├── config/             # 存放配置文件\r\n│   └── com.wind.mcpserver.plist # (macOS) launchd服务配置示例\r\n├── docs/               # 存放详细的补充文档\r\n│   ├── README_WindPy_MCP.md\r\n│   ├── 调用WindPy.md\r\n│   └── 调用示例.md\r\n├── logs/               # 存放日志文件 (此目录被.gitignore忽略)\r\n├── scripts/            # 存放管理和工具脚本\r\n│   └── manage_wind_service.sh # (macOS) 服务管理脚本\r\n├── src/                # 核心源代码\r\n│   └── wind_mcp_direct_server.py # 核心代理服务程序\r\n└── tests/              # 测试用例\r\n    ├── test_cn_indicators.py\r\n    ├── test_date_functions.py\r\n    ├── test_simple.py\r\n    └── test_wind_client.py\r\n```\r\n\r\n本项目采用 [MIT](LICENSE) 许可证。\r\n",
+ "config": {
+  "wind_mcp": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:<port>/mcp/"
+  }
+ }
+}

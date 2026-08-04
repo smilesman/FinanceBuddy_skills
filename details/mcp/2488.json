@@ -1,0 +1,23 @@
+{
+ "id": "2488",
+ "kind": "mcp",
+ "name": "dash-api",
+ "fingerprint_md5": "2f2b03edbeeb197dfe12cf280eb7285a",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp服务器dash\r\n\r\n一个模型上下文协议（MCP）服务器，提供与 [冲撞](https://kapeli.com/dash) 文档浏览器API。\r\n\r\nDash 8是必需的。您可以在以下网址下载Dash 8https://blog.kapeli.com/dash-8.\r\n\r\nmcp名称：io.github。Kapeli/dash mcp服务器\r\n\r\n[https://glama.ai/mcp/servers/@Kapeli/dash-mcp-server](https://glama.ai/mcp/servers/@Kapeli/dash-mcp-server)\r\n\r\n## 概述\r\n\r\nDash MCP服务器提供直接从macOS文档浏览器Dash访问和搜索文档的工具。MCP客户端可以：\r\n\r\n- 列出已安装的文档集\r\n- 跨文档集和代码片段搜索\r\n- 从搜索结果加载文档页面\r\n- 启用特定文档集的全文搜索\r\n\r\n### 通知\r\n\r\n这是一项正在进行的工作。欢迎提出任何建议！\r\n\r\n## 工具\r\n\r\n1. **list_installed_docsets**\r\n   - 列出Dash中已安装的所有文档集\r\n1. **搜索文档**\r\n   - 跨文档集和片段搜索\r\n1. **load_documentation_page**\r\n   - 从加载文档页面 `load_url` 返回由 `search_documentation`\r\n1. **enable_docset_fts**\r\n   - 允许对特定文档集进行全文搜索\r\n\r\n## 需求\r\n\r\n- macOS（Dash应用程序需要）\r\n- [冲撞](https://kapeli.com/dash) 安装\r\n- Python 3.11.4或更高版本\r\n- 紫外线\r\n\r\n## 配置\r\n\r\n### 使用uvx\r\n\r\n```bash\r\nbrew install uv\r\n```\r\n\r\n#### 在 `claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n      \"dash-api\": {\r\n          \"command\": \"uvx\",\r\n          \"args\": [\r\n              \"--from\",\r\n              \"git+https://github.com/Kapeli/dash-mcp-server.git\",\r\n              \"dash-mcp-server\"\r\n          ]\r\n      }\r\n  }\r\n}\r\n```\r\n\r\n#### 在 `Claude Code`\r\n\r\n```bash\r\nclaude mcp add dash-api -- uvx --from \"git+https://github.com/Kapeli/dash-mcp-server.git\" \"dash-mcp-server\"\r\n```\r\n",
+ "config": {
+  "dash-api": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/Kapeli/dash-mcp-server.git",
+    "dash-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

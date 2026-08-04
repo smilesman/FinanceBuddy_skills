@@ -1,0 +1,24 @@
+{
+ "id": "3257",
+ "kind": "mcp",
+ "name": "weather",
+ "fingerprint_md5": "749d7945fa6c1f779459000ac7b17b45",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 气象MCP服务器\r\n\r\n一个基本的模型上下文协议（MCP）服务器，提供从马来西亚官方开放数据门户网站的开放API检索的天气信息。此服务器使LLM能够获取天气预报、警报、与洪水相关的水位和地震报告。\r\n\r\nAPI文件： [data.gov.my](https://developer.data.gov.my/)\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n1. 获取水位条件\r\n\r\n   - 检索与指定地区或州的洪水警报相关的水位状况。\r\n     如果同时提供地区和州，则以地区为准。\r\n     如果未指定地区或州，请为该字段使用空字符串。\r\n\r\n   - Args：\r\n\r\n     - district：指定州内检索洪水预警条件的地区名称。\r\n     - state：马来西亚检索洪水预警条件的州的名称。\r\n\r\n1. 获取_学习\r\n\r\n   - 检索在指定日期范围内发布的一般天气警报。\r\n\r\n   - Args：\r\n\r\n     - datetime_start：最早的时间戳，格式为 `YYYY-MM-DD HH:MM:SS` （含）从中检索天气警报。如果省略，则默认为当前日期。\r\n     - datetime_end：最新时间戳，格式为 `YYYY-MM-DD HH:MM:SS` （含）停止检索天气警报。如果省略，则默认为当前日期。\r\n\r\n1. get_weather_forecast\r\n\r\n   - 检索给定日期范围内特定位置的天气预报。\r\n\r\n   - Args：\r\n\r\n     - location_name：检索预测的位置的名称或标识符。\r\n     - date_start：开始检索天气预报的最早日期（包括首尾两天）。如果省略，则默认为当前日期。\r\n     - date_end：停止检索天气预报的最新日期（包括首尾两天）。如果省略，则默认为当前日期。\r\n\r\n1. 地震新闻\r\n\r\n   - 获取指定日期范围内给定地点的地震新闻。\r\n\r\n   - Args：\r\n\r\n     - 地点：地震发生地点的名称或标识符。\r\n     - date_start：开始搜索地震新闻的最早日期（包括首尾两天）。如果省略，则默认为当前日期。\r\n     - date_end：停止搜索地震新闻的最新日期（含）。如果省略，则默认为当前日期。\r\n\r\n## Claude桌面配置\r\n\r\n将以下内容添加到 `claude_desktop_config.json` 文件。有关更多信息，请参阅 [适用于Claude桌面用户](https://modelcontextprotocol.io/quickstart/user).\r\n\r\n### 使用 `uv`\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"weather\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"weather-my-mcp\",\r\n                \"run\",\r\n                \"weather.py\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n### 使用Docker\r\n\r\n1. 创建docker镜像\r\n\r\n   ```bash\r\n   docker build . --tag weather-my-mcp\r\n   ```\r\n\r\n1. 编辑 `claude_desktop_config.json` 文件如下：\r\n\r\n   ```json\r\n   {\r\n       \"mcpServers\": {\r\n           \"weather\": {\r\n               \"command\": \"docker\",\r\n               \"args\": [\r\n                   \"run\",\r\n                   \"-i\",\r\n                   \"--rm\",\r\n                   \"weather-my-mcp\"\r\n               ]\r\n           }\r\n       }\r\n   }\r\n   ```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "weather-my-mcp",
+    "run",
+    "weather.py"
+   ],
+   "env": {}
+  }
+ }
+}

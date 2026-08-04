@@ -1,0 +1,21 @@
+{
+ "id": "180",
+ "kind": "mcp",
+ "name": "dice",
+ "fingerprint_md5": "0c1f0fd2f4e740347e6f301118092c7b",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Dice MCP服务器\r\n\r\n用于跨多个游戏系统滚动TRPG骰子的模型上下文协议（MCP）服务器。\r\n\r\n## 快速开始\r\n\r\n### uvx（推荐）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dice\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"roleplaying-dice-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> 配置：macOS `~/Library/Application Support/Claude/claude_desktop_config.json` /窗户 `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n### pip/Docker\r\n\r\n```bash\r\npip install roleplaying-dice-mcp\r\nroleplaying-dice-mcp\r\n```\r\n\r\n```bash\r\ndocker build -t dice-mcp-server . && docker run -i dice-mcp-server\r\n```\r\n\r\n## 工具\r\n\r\n|工具|目的|关键参数|\r\n|------|---------|------------|\r\n| `roll_dice` |使用标准符号（NdM+X，kh/kl，dF）掷骰子| `notation`, `advantage`, `bonus_dice`, `target`, `degrees` |\r\n| `roll_pool` |骰子池成功计数（WoD、Shadowrun）| `pool`, `target`, `explode`, `count_ones` |\r\n| `reroll` |用相同的参数重新滚动最后一卷|--|\r\n| `get_history` |检索最近的滚动日志| `limit` |\r\n| `clear_history` |清除滚动历史记录|--|\r\n\r\n看 [内容.md](CONTEXT.md) 用于系统特定的参数映射和不变量。\r\n\r\n______________________________________________________________________\r\n\r\n## 参数参考\r\n\r\n### `roll_dice`\r\n\r\n|参数|类型|默认值|说明|\r\n|-----------|------|---------|-------------|\r\n| `notation` |字符串| *必需的* |骰子表达式： `1d20+5`, `4d6kh3`, `4dF+2`, `1d100` |\r\n| `advantage` bool的。 `false` |滚动d20两次，取更高的（仅限1d20）|\r\n| `disadvantage` bool的。 `false` |滚动d20两次，取较低的（仅1d20）|\r\n| `bonus_dice` |int| `0` |CoC奖励骰子（0–2，仅1d100）-额外十个，保持最低|\r\n| `penalty_dice` |int| `0` |CoC惩罚骰子（0–2，仅1d100）-额外的十分，保持最高|\r\n| `target` |int|--|DC/AC/技能值用于成功检查|\r\n| `target_mode` |enum| `\"at_least\"` | `\"at_least\"` （D&D：≥）或 `\"at_most\"` （CoC：≤）|\r\n| `critical` bool的。 `false` |Nat 20/1检测。随着 `degrees=\"pf2e\"`，偏移度±1步|\r\n| `degrees` |枚举|--| `\"coc\"` / `\"pf2e\"` / `\"pbta\"` --启用学位计算|\r\n\r\n### `roll_pool`\r\n\r\n|参数|类型|默认值|说明|\r\n|-----------|------|---------|-------------|\r\n| `pool` |int| *必需的* |骰子数量（1-50）|\r\n| `sides` |int| `10` |每个模具的侧面|\r\n| `target` |int| `8` |成功的最小值（≥）|\r\n| `explode` bool的。 `false` |重新滚动到最大值|\r\n| `double_on` |int|--|在该值或更高值下加倍成功（必须≥target）|\r\n| `count_ones` bool的。 `false` |启用僵尸/故障检测|\r\n\r\n### `get_history`\r\n\r\n|参数|类型|默认值|说明|\r\n|-----------|------|---------|-------------|\r\n| `limit` |int| `10` |要检索的最近卷数（1-100）|\r\n\r\n## 系统覆盖范围\r\n\r\n|系统|覆盖范围|使用的主要功能|\r\n|--------|----------|-------------------|\r\n|D&D 5e|95%|符号、优势、关键、目标、4d6kh3|\r\n|CoC 7e | 85%| d100，加/罚骰子，度数=CoC，最大值|\r\n|PF2e|85%|d20+mod，度数=PF2e，临界（nat 20/1偏移）|\r\n|PbtA|90%|2d6+mod，度数=PbtA|\r\n|死亡率|95%|4dF+mod|\r\n|WoD|90%|滚池、爆炸、计数一（botch）|\r\n|Shadowrun | 85%| roll_pool（d6），计数1（故障）|\r\n|野蛮世界|50%|爆炸性工作，但没有野生死亡或饲养计数|\r\n\r\n## 项目结构\r\n\r\n```\r\n├── server.py              # MCP server — tools & handlers\r\n├── dice_parser.py         # Notation parser (NdM, NdF, kh/kl)\r\n├── history.py             # Roll history manager\r\n├── src/roleplaying_dice_mcp/  # PyPI package\r\n├── tests/test_trpg_scenario.py\r\n├── pyproject.toml\r\n├── Dockerfile\r\n└── README.md\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "dice": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "roleplaying-dice-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

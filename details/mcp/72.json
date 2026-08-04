@@ -1,0 +1,21 @@
+{
+ "id": "72",
+ "kind": "mcp",
+ "name": "bnbot",
+ "fingerprint_md5": "587228f9560627b6bc35154557a9a2c6",
+ "download_count": 0,
+ "category": "网页抓取",
+ "tags": "",
+ "version": "",
+ "readme": "# bnbot mcp服务器\r\n\r\nMCP服务器 [BNBOT Chrome扩展程序](https://chromewebstore.google.com/detail/bnbot-your-ai-growth-agen/haammgigdkckogcgnbkigfleejpaiiln) -通过OpenClaw或Claude Desktop等人工智能助手控制Twitter/X。\r\n\r\n## 建筑\r\n\r\n```\r\nAI Assistant (OpenClaw / Claude Desktop)\r\n    ↓ stdio (MCP protocol)\r\nbnbot-mcp-server (local Node.js process)\r\n    ↓↑ WebSocket (ws://localhost:18900)\r\nBNBOT Chrome Extension\r\n    ↓ DOM operations\r\nTwitter/X\r\n```\r\n\r\n## 设置\r\n\r\n### 1.安装BNBOT Chrome扩展程序\r\n\r\n从Chrome网上应用商店安装。\r\n\r\n### 2.启用OpenClaw集成\r\n\r\n在BNBOT扩展侧栏中，打开 **设置** 并打开 **开爪** 切换。\r\n\r\n### 3.配置您的AI助手\r\n\r\n#### OpenClaw/Claude桌面\r\n\r\n添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bnbot\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"bnbot-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 自定义端口\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bnbot\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"bnbot-mcp-server\", \"--port\", \"9999\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 4.使用它\r\n\r\n问你的AI助手：\r\n\r\n- “删除我的推特时间线”\r\n- “搜索有关AI的推文”\r\n- “发布一条推特，向世界问好”\r\n- “导航到我的书签并抓取它们”\r\n\r\n## 可用工具\r\n\r\n### 刮擦\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `scrape_timeline` |从时间线上删除推文|\r\n| `scrape_bookmarks` |删除书签推文|\r\n| `scrape_search_results` |搜索和抓取结果|\r\n| `scrape_current_view` |删除当前可见的推文|\r\n| `scrape_thread` |从URL中删除推特帖子|\r\n| `account_analytics` |获取账户分析数据|\r\n\r\n### 推文\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `post_tweet` |发布带有可选图片的推文|\r\n| `post_thread` |发布推文|\r\n| `submit_reply` |回复推特|\r\n| `quote_tweet` |引用带有可选评论的推文|\r\n\r\n### 参与\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `like_tweet` |像一条目标推文|\r\n| `retweet` |转发目标推文|\r\n| `follow_user` |关注目标用户|\r\n\r\n### 导航\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `navigate_to_tweet` |转到特定推文|\r\n| `navigate_to_search` |转到搜索页面|\r\n| `navigate_to_bookmarks` |转到书签|\r\n| `navigate_to_notifications` |转到通知|\r\n| `navigate_to_following` |转到以下时间线|\r\n| `return_to_timeline` |返回时间线|\r\n\r\n### 状态\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_extension_status` |检查分机连接|\r\n| `get_current_page_info` |获取当前页面信息|\r\n\r\n### 内容\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `fetch_wechat_article` |获取并提取微信文章内容|\r\n| `fetch_tiktok_video` |获取TikTok元数据并在本地下载视频|\r\n| `fetch_xiaohongshu_note` |获取小红书笔记内容和元数据|\r\n\r\n### 文章\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `open_article_editor` |通过稳定的流程打开X文章编辑器|\r\n| `fill_article_title` |填写文章标题字段|\r\n| `fill_article_body` |填充文章正文(`plain` / `markdown` / `html`) |\r\n| `upload_article_header_image` |上传文章标题图片|\r\n| `publish_article` |发表文章（或保留草稿）|\r\n| `create_article` |端到端文章创建流程|\r\n\r\n## 测试\r\n\r\n使用MCP检查器直接测试工具：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector npx bnbot-mcp-server\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "bnbot": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "bnbot-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

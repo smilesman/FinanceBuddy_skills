@@ -1,0 +1,27 @@
+{
+ "id": "1013",
+ "kind": "mcp",
+ "name": "couchbase-2",
+ "fingerprint_md5": "fd9f9c3c3c8d9b13aad72e44112a9913",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 🗄️ LLM的Couchbase MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，使LLM能够直接与Capella集群上的Couchbase数据库交互。查询bucket，执行CRUD操作，执行N1QL查询，并通过自然语言无缝管理数据。\r\n\r\n## 🚀 快速开始\r\n\r\n1. **先决条件**\r\n\r\n   - Node.js 16或更高版本\r\n   - Capella上正在运行的Couchbase实例\r\n   - Claude桌面应用程序\r\n\r\n1. **安装**\r\n\r\n   Couchbase MCP服务器可以通过两种方式安装：\r\n\r\n   ### 选项1：使用NPX（推荐）\r\n\r\n   最快的入门方法是使用NPX：\r\n\r\n   ```bash\r\n   npx -y @couchbasedatabase/couchbase-mcp\r\n   ```\r\n\r\n   ### 选项2：手动安装\r\n\r\n   如果您更喜欢手动克隆和运行项目：\r\n\r\n   ```bash\r\n   # Clone the repository\r\n   git clone https://github.com/Aniket310101/MCP-Server-Couchbase.git\r\n   cd MCP-Server-Couchbase\r\n\r\n   # Install dependencies\r\n   npm install\r\n\r\n   # Build the project\r\n   npm run build\r\n   ```\r\n\r\n1. **Claude桌面集成**\r\n\r\n   将此配置添加到您的Claude Desktop配置文件中：\r\n\r\n   **视窗**: `%APPDATA%/Claude/claude_desktop_config.json`\\\r\n   **MacOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n   ### 选项1：带软件包安装\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"couchbase\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\"-y\", \"@couchbasedatabase/couchbase-mcp\"],\r\n         \"env\": {\r\n           \"COUCHBASE_URL\": \"<COUCHBASE CONNECTION STRING>\",\r\n           \"COUCHBASE_BUCKET\": \"<BUCKET NAME>\",\r\n           \"COUCHBASE_USERNAME\": \"<COUCHBASE USERNAME>\",\r\n           \"COUCHBASE_PASSWORD\": \"<COUCHBASE PASSWORD>\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n   ### 选项2：手动安装\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"couchbase\": {\r\n         \"command\": \"node\",\r\n         \"args\": [\"path/to/MCP-Server-Couchbase/dist/index.js\"],\r\n         \"env\": {\r\n           \"COUCHBASE_URL\": \"<COUCHBASE CONNECTION STRING>\",\r\n           \"COUCHBASE_BUCKET\": \"<BUCKET NAME>\",\r\n           \"COUCHBASE_USERNAME\": \"<COUCHBASE USERNAME>\",\r\n           \"COUCHBASE_PASSWORD\": \"<COUCHBASE PASSWORD>\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. **验证连接**\r\n\r\n   - 重新启动克劳德桌面\r\n   - Couchbase MCP服务器工具现在应该可以在您的对话中使用了\r\n\r\n## 📝 可用工具\r\n\r\n### 基本操作\r\n\r\n- `query`：执行N1QL查询\r\n- `listBuckets`：列出可用桶\r\n\r\n### 范围管理\r\n\r\n- `createScope`：在bucket中创建新作用域\r\n- `deleteScope`：删除现有作用域\r\n- `listScopes`：列出bucket中的所有作用域\r\n\r\n### 收集管理\r\n\r\n- `createCollection`：在作用域中创建新集合\r\n- `dropCollection`：从作用域中删除集合\r\n\r\n### 文档操作\r\n\r\n- `createDocument`：创建新文档\r\n- `getDocument`：按ID检索文档\r\n- `updateDocument`：更新现有文档\r\n- `deleteDocument`：按ID删除文档\r\n- `bulkCreateDocuments`：一次创建多个文档\r\n\r\n### 索引管理\r\n\r\n- `createIndex`：在指定字段上创建新索引\r\n- `createPrimaryIndex`：在集合上创建主索引\r\n- `listIndexes`：列出bucket中的所有索引\r\n- `dropIndex`：删除现有索引\r\n\r\n每个工具都支持可选 `collection` 和 `scope` 用于定位特定数据容器的参数。\r\n\r\n## 🔒 安全考虑\r\n\r\n- 始终对敏感凭据使用环境变量\r\n- 考虑在反向代理后运行服务器以供生产使用\r\n- 根据需要实施适当的访问控制和身份验证\r\n\r\n## 📚 例子\r\n\r\n以下是使用MCP服务器与Claude进行交互的一些示例：\r\n\r\n1. 列出所有桶：\r\n\r\n   ```\r\n   Could you show me all available buckets in the database?\r\n   ```\r\n\r\n1. 创建范围和集合：\r\n\r\n   ```\r\n   Create a new scope called \"users\" and a collection called \"profiles\" in it\r\n   ```\r\n\r\n1. 查询文档：\r\n\r\n   ```\r\n   Find all users who signed up in the last 30 days\r\n   ```\r\n\r\n1. 创建文档：\r\n\r\n   ```\r\n   Create a new user document with name \"John Doe\" and email \"john@example.com\"\r\n   ```\r\n\r\n## 🤝 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 🛡️ 安全评估徽章（MseeP.ai）\r\n",
+ "config": {
+  "couchbase": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@couchbasedatabase/couchbase-mcp"
+   ],
+   "env": {
+    "COUCHBASE_URL": "<COUCHBASE CONNECTION STRING>",
+    "COUCHBASE_BUCKET": "<BUCKET NAME>",
+    "COUCHBASE_USERNAME": "<COUCHBASE USERNAME>",
+    "COUCHBASE_PASSWORD": "<COUCHBASE PASSWORD>"
+   }
+  }
+ }
+}

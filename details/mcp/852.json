@@ -1,0 +1,24 @@
+{
+ "id": "852",
+ "kind": "mcp",
+ "name": "senso",
+ "fingerprint_md5": "afbff192018fce0d657bf5b427ec68f5",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Senso API MCP 服务器\r\n\r\nSenso API的模型上下文协议（MCP）服务器实现，允许Claude通过Claude Desktop与您的Senso知识库进行交互。\r\n\r\n此服务器使Claude能够：\r\n\r\n- 将原始内容添加到您的知识库中\r\n- 搜索现有内容\r\n- 根据您的知识库生成新内容\r\n\r\n## 先决条件\r\n\r\n- Python 3.12或更高版本\r\n- [紫外线](https://github.com/astral-sh/uv) -快速Python包安装程序和解析器\r\n- Claude桌面应用程序\r\n\r\n## 安装\r\n\r\n1. 克隆此存储库：\r\n\r\n   ```bash\r\n   git clone git@github.com:AI-Template-SDK/api-mcp-server.git\r\n   cd api-mcp-server\r\n   ```\r\n\r\n1. 使用创建虚拟环境并安装依赖项 `uv`:\r\n\r\n   ```bash\r\n   # Create and activate virtual environment\r\n   uv venv\r\n\r\n   # On macOS/Linux\r\n   source .venv/bin/activate\r\n\r\n   # On Windows\r\n   .venv\\Scripts\\activate\r\n\r\n   # Install dependencies from pyproject.toml\r\n   uv pip install -e .\r\n   ```\r\n\r\n## 配置\r\n\r\n### API密钥\r\n\r\n服务器使用Senso API密钥进行身份验证。您需要在中编辑API密钥 `server.py` 文件：\r\n\r\n1. 打开 `server.py` 在文本编辑器中\r\n1. 找到线路： `API_KEY = \"tgr_YOUR_API_KEY\"`\r\n1. 将其替换为您自己的Senso API密钥\r\n\r\n### Claude桌面配置\r\n\r\n要将此MCP服务器与Claude Desktop一起使用，您需要将其添加到Claude的配置中：\r\n\r\n1. 查找或创建Claude Desktop配置文件：\r\n\r\n   - 在 macOS 上：\r\n\r\n     ```bash\r\n     mkdir -p ~/Library/Application\\ Support/Claude\r\n     code ~/Library/Application\\ Support/Claude/claude_desktop_config.json\r\n     ```\r\n\r\n   - 在Windows上：\r\n\r\n     ```powershell\r\n     if (-not (Test-Path $env:AppData\\Claude)) { mkdir $env:AppData\\Claude }\r\n     code $env:AppData\\Claude\\claude_desktop_config.json\r\n     ```\r\n\r\n1. 将Senso MCP服务器配置添加到文件中：\r\n\r\n   ```json\r\n   {\r\n       \"mcpServers\": {\r\n           \"senso\": {\r\n               \"command\": \"uv\",\r\n               \"args\": [\r\n                   \"--directory\",\r\n                   \"/ABSOLUTE/PATH/TO/api-mcp-server\",\r\n                   \"run\",\r\n                   \"server.py\"\r\n               ]\r\n           }\r\n       }\r\n   }\r\n   ```\r\n\r\n   对于Windows，请使用适当的路径格式：\r\n\r\n   ```json\r\n   {\r\n       \"mcpServers\": {\r\n           \"senso\": {\r\n               \"command\": \"uv\",\r\n               \"args\": [\r\n                   \"--directory\",\r\n                   \"C:\\\\ABSOLUTE\\\\PATH\\\\TO\\\\api-mcp-server\",\r\n                   \"run\",\r\n                   \"server.py\"\r\n               ]\r\n           }\r\n       }\r\n   }\r\n   ```\r\n\r\n   > ⚠️ **重要**：将路径替换为克隆存储库的绝对路径。\r\n\r\n1. 重新启动Claude Desktop以应用更改。\r\n\r\n## 与Claude一起使用MCP工具\r\n\r\n设置服务器并配置Claude Desktop后，您可以通过自然语言交互使用这些工具：\r\n\r\n### 添加内容\r\n\r\n问克劳德：\r\n\r\n```\r\nPlease add this information to my knowledge base:\r\nTitle: Introduction to MCP\r\nSummary: A brief overview of the Model Context Protocol\r\nText: The Model Context Protocol (MCP) allows large language models to interact with external tools and data sources. It enables Claude to perform actions like retrieving information, accessing files, and executing operations through a standardized interface.\r\n```\r\n\r\n### 搜索内容\r\n\r\n问克劳德：\r\n\r\n```\r\nCan you search my knowledge base for information about \"MCP\"?\r\n```\r\n\r\n### 生成内容\r\n\r\n问克劳德：\r\n\r\n```\r\nUsing my knowledge base, please generate a tutorial about AI assistants and save it to my knowledge base.\r\n```\r\n\r\n## 故障排除\r\n\r\n### 检查日志\r\n\r\n如果您遇到问题，请查看Claude Desktop日志：\r\n\r\n- macOS： `~/Library/Logs/Claude/mcp-server-senso.log`\r\n- 窗户： `%APPDATA%\\Claude\\Logs\\mcp-server-senso.log`\r\n\r\n### 常见问题\r\n\r\n- **Claude中没有显示工具**：确保Claude Desktop已重新启动，配置文件格式正确。\r\n- **API关键问题**：如果您需要更新API密钥，请直接在 `server.py` 文件。\r\n- **路径问题**：确保在Claude配置中使用了绝对路径，而不是相对路径。\r\n\r\n### 更新uv\r\n\r\n如果您遇到以下问题 `uv`，确保您拥有最新版本：\r\n\r\n```bash\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 许可证\r\n\r\n[MIT许可证](LICENSE)\r\n\r\n______________________________________________________________________\r\n\r\n专为集成而设计 [感觉 API](https://sdk.senso.ai)\r\n",
+ "config": {
+  "senso": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/ABSOLUTE/PATH/TO/api-mcp-server",
+    "run",
+    "server.py"
+   ],
+   "env": {}
+  }
+ }
+}

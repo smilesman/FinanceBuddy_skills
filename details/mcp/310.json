@@ -1,0 +1,25 @@
+{
+ "id": "310",
+ "kind": "mcp",
+ "name": "minesweeper",
+ "fingerprint_md5": "8233e0e72000fae87e4d39e0c6400bdb",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 扫雷舰mcp（stdio）\r\n\r\n使用Rails8上运行的Minesweeper Web/AAPI **stdio MCP服务器** 是。\\\r\n作为工具从MCP主机（如Claude Code/Claude Desktop）调用。\r\n\r\n- 起动： `npx minesweeper-mcp`（公开后）\r\n- 通信：stdio（stdout仅限MCP协议/日志仅限stderr）\r\n- 操作：针对Rails的REST API `start/open/flag/chord/end` 呼唤\r\n\r\nAPI [人工智能扫雷艇](https://github.com/geeknees/minesweeper-for-ai)\r\n\r\n______________________________________________________________________\r\n\r\n## 快速开始\r\n\r\n### 1) 必要要件\r\n\r\n- Node.js 22+（推奨: 24+）\r\n- Rails侧的Web/API已启动\r\n\r\n### 2）环境变数\r\n\r\n- `MINESWEEPER_BASE_URL` （必须）： `https://example.com`（推荐无尾斜线）\r\n- `MINESWEEPER_BEARER_TOKEN`（操作系统必需）：Rails侧发行的token\r\n\r\n例:\r\n\r\n```bash\r\nexport MINESWEEPER_BASE_URL=\"https://example.com\"\r\nexport MINESWEEPER_BEARER_TOKEN=\"xxxxxx\"\r\n```\r\n\r\n### 3）本地启动（开发中）\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\nnode dist/index.js\r\n```\r\n\r\n详细： `docs/development.md`\r\n\r\n______________________________________________________________________\r\n\r\n## MCP的设定方法（Host侧）\r\n\r\n在MCP主机（Claude Desktop/Claude Code等）的设置文件中，注册为stdio服务器。\\\r\n在本地移动时 `dist/index.js` 之后由应用程序进行调用。\r\n\r\n### 本地开发（直接启动dist）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"minesweeper\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/ABSOLUTE/PATH/TO/minesweeper-mcp/dist/index.js\"],\r\n      \"env\": {\r\n        \"MINESWEEPER_BASE_URL\": \"http://localhost:3000\",\r\n        \"MINESWEEPER_BEARER_TOKEN\": \"YOUR_TOKEN\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 发布后（npx启动）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"minesweeper\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"github:geeknees/minesweeper-mcp\"],\r\n      \"env\": {\r\n        \"MINESWEEPER_BASE_URL\": \"https://example.com\",\r\n        \"MINESWEEPER_BEARER_TOKEN\": \"YOUR_TOKEN\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> 配置文件的位置和重新装入方法请按照所使用的MCP主机文档进行操作。\r\n\r\n______________________________________________________________________\r\n\r\n## 文档\r\n\r\n- MCP工具参考： `docs/tools.md`\r\n- 开发指南： `docs/development.md`\r\n- Rails API概述： `docs/api.md`\r\n- 背景文章： `docs/minesweeper-mcp-article.md`\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "minesweeper": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "github:geeknees/minesweeper-mcp"
+   ],
+   "env": {
+    "MINESWEEPER_BASE_URL": "https://example.com",
+    "MINESWEEPER_BEARER_TOKEN": "YOUR_TOKEN"
+   }
+  }
+ }
+}

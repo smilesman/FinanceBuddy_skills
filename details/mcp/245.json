@@ -1,0 +1,26 @@
+{
+ "id": "245",
+ "kind": "mcp",
+ "name": "intruder",
+ "fingerprint_md5": "dba77c8c62981df92481f5c8906914a6",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 入侵者MCP\r\n\r\n让像Claude和Cursor这样的MCP客户端控制 [入侵者](https://www.intruder.io/)。有关更多信息和示例用例，请参阅 [我们的博客文章](https://www.intruder.io/blog/claude-intruder-mcp#intruder-mcp-use-cases).\r\n\r\n## 安装\r\n\r\n有三种方法可以使用MCP服务器：\r\n\r\n- 通过 [铁匠铺](https://smithery.ai/server/@intruder-io/intruder-mcp)\r\n- 使用Python在本地计算机上\r\n- 在Docker容器中\r\n\r\n所有这些方法都要求您提供入侵者API密钥。要生成密钥，请参见 [文件](https://developers.intruder.io/docs/creating-an-access-token).\r\n\r\n### 史密瑟里\r\n\r\n按照以下说明操作 [铁匠铺](https://smithery.ai/server/@intruder-io/intruder-mcp).\r\n\r\n### 本地运行\r\n\r\n安装 [紫外线](https://github.com/astral-sh/uv) 如果它还不存在，则克隆此存储库并从根目录运行以下操作：\r\n\r\n```bash\r\nuv venv\r\nuv pip install -e .\r\n```\r\n\r\n然后，将以下内容添加到MCP客户端配置中，确保填写API密钥，并更新克隆此存储库的路径：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"intruder\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"path/to/intruder-mcp/intruder_mcp\",\r\n        \"run\",\r\n        \"server.py\"\r\n      ],\r\n      \"env\": {\r\n        \"INTRUDER_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 在容器中运行\r\n\r\n将以下内容添加到MCP客户端配置中，确保填写API密钥：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"intruder\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"container\",\r\n        \"run\",\r\n        \"--interactive\",\r\n        \"--rm\",\r\n        \"--init\",\r\n        \"--env\",\r\n        \"INTRUDER_API_KEY=<your-api-key>\",\r\n        \"ghcr.io/intruder-io/intruder-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "intruder": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "path/to/intruder-mcp/intruder_mcp",
+    "run",
+    "server.py"
+   ],
+   "env": {
+    "INTRUDER_API_KEY": "your-api-key"
+   }
+  }
+ }
+}

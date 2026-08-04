@@ -1,0 +1,22 @@
+{
+ "id": "314",
+ "kind": "mcp",
+ "name": "mobai",
+ "fingerprint_md5": "cd097122ad5d37fc4c4cbbfa6eedd1e7",
+ "download_count": 0,
+ "category": "移动端自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# MobAI MCP服务器\r\n\r\n[](https://www.npmjs.com/package/mobai-mcp)\r\n[](https://opensource.org/licenses/Apache-2.0)\r\n\r\nMCP（模型上下文协议）服务器 [墨白](https://mobai.run) --人工智能驱动的移动设备自动化。让AI助手（Claude Code、Cursor、Windsurf、Cline和其他MCP兼容工具）通过单个DSL优先接口控制Android和iOS设备、模拟器和仿真器。\r\n\r\n## 运作原理\r\n\r\n所有设备交互都通过一个主要工具进行批处理： **`execute_dsl`**服务器接受一个JSON脚本，该脚本描述了一系列带有谓词、断言、等待和条件分支的操作，而不是公开数十个细粒度的工具（点击、滑动、键入……）。这可以降低往返次数，并在服务器端编码重试/失败策略。\r\n\r\n一小部分配套工具可处理设备发现、屏幕截图、应用程序管理和运行 `.mob` 测试文件。\r\n\r\n## 先决条件\r\n\r\n- Node.js 18+\r\n- [MobAI桌面应用](https://mobai.run) 在上本地运行（HTTP API `127.0.0.1:8686`)\r\n- 连接的Android或iOS设备、模拟器或仿真器\r\n\r\n## 安装\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add mobai -- npx -y mobai-mcp\r\n```\r\n\r\n### 光标\r\n\r\n添加 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mobai\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mobai-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德桌面版\r\n\r\n添加 `~/Library/Application Support/Claude/claude_desktop_config.json` （macOS）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mobai\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mobai-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Windsurf/Cline/其他MCP客户\r\n\r\n服务器使用stdio——使用客户端的通用MCP配置：\r\n\r\n```json\r\n{\r\n  \"command\": \"npx\",\r\n  \"args\": [\"-y\", \"mobai-mcp\"]\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### 设备管理\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `list_devices` |列出所有已连接的Android和iOS设备|\r\n| `get_device` |获取特定设备的详细信息|\r\n| `start_bridge` |在设备上启动自动化桥（交互前需要）|\r\n| `stop_bridge` |停止自动化桥|\r\n\r\n### 截图\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `get_screenshot` |LLM视觉分析的快速、低质量屏幕截图（可能会缩小；响应包括比例因子）|\r\n| `save_screenshot` |用于报告、调试或共享的全质量PNG到磁盘|\r\n\r\n### 应用\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `list_apps` |列出设备上已安装的应用程序|\r\n| `install_app` |安装 `.apk` 或 `.ipa` 从本地文件路径|\r\n| `uninstall_app` |按捆绑包ID/包名称卸载应用程序|\r\n| `debug_app` |在调试模式下启动应用程序，并将stdout/stderr写入日志文件|\r\n\r\n### 自动化\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `execute_dsl` | **主要工具。** 执行一批DSL步骤：点击、键入、滑动、观察、断言、网络自动化、指标、屏幕录制等。 |\r\n\r\n### 测试管理\r\n\r\n测试是 `.mob` 项目目录中磁盘上的文件。您可以使用助手的文件系统工具直接读取、写入和编辑它们——MobAI会实时监视UI的更改和更新。MCP只需要用于发现项目和运行测试。\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `test_get_active` |获取活动测试项目目录及其 `.mob` 案例|\r\n| `test_list_projects` |列出所有已知的测试项目目录及其 `.mob` 案例|\r\n| `test_run` |跑a `.mob` 设备上的测试用例(`project_dir` + `case_path` + `device_id`，可选 `params` 为了 `${name}` 替代）|\r\n\r\n## 资源\r\n\r\n阅读这些 **之前** 尝试任何设备交互——它们描述了DSL模式、操作集、谓词、故障策略和 `.mob` 语法。\r\n\r\n|URI |目的|\r\n|---|---|\r\n| `mobai://reference/device-automation` |如何控制设备——指南、所有DSL操作、谓词和故障策略|\r\n| `mobai://reference/testing` |测试工作流程、规则、错误修复和 `.mob` 脚本语法|\r\n\r\n## 示例\r\n\r\n打开iOS设置应用程序，导航到Wi-Fi，并验证切换是否存在：\r\n\r\n```json\r\n{\r\n  \"version\": \"0.2\",\r\n  \"steps\": [\r\n    {\"action\": \"open_app\", \"bundle_id\": \"com.apple.Preferences\"},\r\n    {\"action\": \"wait_for\", \"predicate\": {\"text\": \"Settings\"}, \"timeout_ms\": 3000},\r\n    {\"action\": \"tap\", \"predicate\": {\"text_contains\": \"Wi-Fi\"}},\r\n    {\"action\": \"wait_for\", \"predicate\": {\"type\": \"switch\"}, \"timeout_ms\": 3000},\r\n    {\"action\": \"assert_exists\", \"predicate\": {\"type\": \"switch\"}},\r\n    {\"action\": \"observe\", \"include\": [\"ui_tree\"]}\r\n  ]\r\n}\r\n```\r\n\r\n将此作为 `commands` 参数（JSON字符串） `execute_dsl` 随着a `device_id` 从 `list_devices`.\r\n\r\n## 故障排除\r\n\r\n**“连接被拒绝”/“无法访问MobAI桌面应用程序”** -确保MobAI桌面应用程序已安装并运行，API可在 `http://127.0.0.1:8686`。如果您还没有，请从下载并安装 [https://mobai.run/download](https://mobai.run/download).\r\n\r\n**“桥未运行”** --呼叫 `start_bridge` 第一。iOS网桥可能需要一分钟才能启动。\r\n\r\n**屏幕截图不可见** — `get_screenshot` 保存到 `/tmp/mobai/screenshots/` 默认情况下，返回文件路径。使用助手的文件读取功能查看它们。数字用户线路 `observe` 从响应中提取屏幕截图并保存到同一目录。\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/MobAI-App/mobai-mcp.git\r\ncd mobai-mcp\r\nnpm install\r\nnpm run build\r\nnode dist/index.js\r\n```\r\n\r\n## 许可证\r\n\r\nApache 2.0——请参阅 [许可证](LICENSE).\r\n",
+ "config": {
+  "mobai": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mobai-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

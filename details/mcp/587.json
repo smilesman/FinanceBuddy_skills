@@ -1,0 +1,21 @@
+{
+ "id": "587",
+ "kind": "mcp",
+ "name": "bioinformatics",
+ "fingerprint_md5": "c9153d8b64d6c5e7f48d4ce97a3ada01",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 生物信息学mcp服务器\r\n\r\n**人工智能代理的生物信息学和生命科学数据** --通过NCBI和UniProt进行基因搜索、蛋白质结构、临床变异、PubMed文献和DNA序列。\r\n\r\n\r\n> **不需要API密钥。** 10个工具，涵盖6个数据源（NCBI基因、临床变量、分类学、PubMed、序列、UniProt）。\r\n\r\n## 快速开始\r\n\r\n```bash\r\npip install bioinformatics-mcp-server\r\n```\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bioinformatics\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"bioinformatics-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 你能做什么？\r\n\r\n**问你的AI代理一些事情，比如：**\r\n\r\n- *“搜索与癌症相关的基因”*\r\n- *“已知BRCA1有哪些临床变异？”*\r\n- *“查找PubMed最近关于CRISPR基因编辑的论文”*\r\n- *“从UniProt获取人胰岛素的蛋白质结构”*\r\n- *“这种生物属于什么物种？”*\r\n\r\n## 10工具\r\n\r\n### NCBI（5种工具）\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `search_genes` |按符号、名称或功能搜索基因|\r\n| `get_gene_details` |NCBI基因ID的完整基因信息|\r\n| `search_clinvar_variants` |临床变异和突变|\r\n| `get_taxonomy` |生物分类学|\r\n| `get_ncbi_sequence` |DNA/蛋白质序列（FASTA/GenBank）|\r\n\r\n### UniProt（2个工具）\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `search_proteins` |按名称、基因或生物体搜索蛋白质|\r\n| `get_protein_details` |UniProt登录的蛋白质详细信息|\r\n\r\n### PubMed（3个工具）\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `search_pubmed` |搜索生物医学文献|\r\n| `get_pubmed_abstract` |PubMed文章的完整摘要|\r\n| `get_pubmed_citations` |引用特定出版物的文章|\r\n\r\n## 相关服务器\r\n\r\n- [医疗数据mcp服务器](https://pypi.org/project/medical-data-mcp-server/) -世界卫生组织健康数据\r\n- [交叉引用学术mcp服务器](https://pypi.org/project/crossref-academic-mcp-server/) --通过Crossref发表学术论文\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "bioinformatics": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "bioinformatics-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

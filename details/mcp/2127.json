@@ -1,0 +1,24 @@
+{
+ "id": "2127",
+ "kind": "mcp",
+ "name": "baidu-map",
+ "fingerprint_md5": "c613efd88bd8d88a9f4fe401298c0111",
+ "download_count": 0,
+ "category": "地图服务",
+ "tags": "",
+ "version": "",
+ "readme": "[中文](./README_zh.md)|英语\r\n\r\n## 🚀 引言\r\n\r\n**百度地图MCP服务器** 是一个完全符合MCP标准的开源基于位置的服务（LBS）解决方案，为开发人员和人工智能代理提供了一套全面的地理空间API和工具。作为中国第一家支持 [模型上下文协议（MCP）](https://modelcontextprotocol.io/introduction)百度地图MCP服务器弥合了大型语言模型（LLM）、人工智能代理和现实世界位置数据和服务之间的差距。\r\n\r\n借助百度地图MCP服务器，您可以轻松地为您的应用程序、LLM和代理提供高级地图、地理编码、POI搜索、路线规划、天气、交通等功能，所有这些都可以通过标准化、开发人员友好的MCP界面来实现。\r\n\r\n**主要特点：**\r\n\r\n- **完全支持MCP协议：** 与任何符合MCP标准的代理、LLM或平台无缝集成。\r\n- **丰富的LBS功能：** 地理编码、反向地理编码、POI搜索、路线规划（驾驶、步行、骑自行车、公交）、天气、IP位置、实时交通等。\r\n- **跨平台SDK：** 官方Python和TypeScript SDK，易于CLI和云部署。\r\n- **企业级数据：** 由百度地图权威、最新的地理空间数据提供支持。\r\n- **高性能和稳定性：** 建议使用SSE（服务器发送事件）访问，以实现低延迟和高可靠性。\r\n- **开源和可扩展：** MIT授权，易于定制和扩展。\r\n\r\n无论您是在构建旅行助手、物流平台、智慧城市解决方案，还是基于LLM的代理，百度地图MCP服务器都能提供您所需的基本地理空间情报和工具。\r\n\r\nMCP服务器架构支持：\r\n\r\n- **无缝AI集成**：允许LLM和代理自然地理解和处理位置数据\r\n- **情境理解**：为更智能的决策提供丰富的地理空间背景\r\n- **标准化接口**：遵循MCP原则的一致API设计，便于集成\r\n- **可扩展的实施**：适用于任何规模的项目，从小型应用程序到企业解决方案\r\n\r\n无论您是在构建导航应用程序、交付服务、智慧城市解决方案，还是在增强具有位置感知的人工智能代理，百度地图MCP服务器都能为您提供成功所需的工具和基础设施。\r\n\r\n## 🛠️ 支持的工具和API\r\n\r\n百度地图MCP服务器提供以下符合MCP的API（工具）：\r\n\r\n|工具名称|描述|\r\n|--------------------------|----------------------------------------------------------------------------------------------|\r\n| `map_geocode` |将地址转换为地理坐标。                                                   |\r\n| `map_reverse_geocode` |从坐标中获取地址、地区和POI信息。                                         |\r\n| `map_search_places` |按关键字、类型、地区或半径搜索全局POI。                               |\r\n| `map_place_details` |通过POI的唯一ID获取POI的详细信息|\r\n| `map_directions_matrix` |为多个起点/目的地（驾驶、步行、骑自行车）进行批量路线规划。         |\r\n| `map_directions` |规划两点之间的路线（开车、步行、骑自行车、公交）。                        |\r\n| `map_weather` |按地区或坐标查询实时和预报天气。                              |\r\n| `map_ip_location` |通过IP地址定位城市和坐标。                                                  |\r\n| `map_road_traffic` |查询道路或地区的实时交通状况。                                    |\r\n| `map_poi_extract`\\*|从自由文本中提取POI信息（需要高级权限）。                             |\r\n\r\n> \\*一些高级功能需要额外的权限。看 [授权](#authorization) 了解详情。\r\n\r\n所有API都遵循MCP协议，可以从任何符合MCP的客户端、LLM或代理平台调用。\r\n\r\n## ⚡ 快速开始\r\n\r\n### 1.获取API密钥\r\n\r\n在注册并创建服务器端API密钥（AK） [百度地图开放平台](https://lbsyun.baidu.com/apiconsole/key).\r\n**确保启用“MCP（SSE）”服务以获得最佳性能。**\r\n\r\n### 2.Python集成\r\n\r\n安装SDK：\r\n\r\n```bash\r\npip install mcp-server-baidu-maps\r\n```\r\n\r\n**以脚本形式运行：**\r\n\r\n```bash\r\npython -m mcp_server_baidu_maps\r\n```\r\n\r\n**在MCP客户端中配置（例如，Claude、Cursor）：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"baidu-maps\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"-m\", \"mcp_server_baidu_maps\"],\r\n      \"env\": {\r\n        \"BAIDU_MAPS_API_KEY\": \"\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.Node.js/TypeScript集成\r\n\r\n安装：\r\n\r\n```bash\r\nnpm install @baidumap/mcp-server-baidu-map\r\n```\r\n\r\n**在MCP客户端中配置：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"baidu-map\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@baidumap/mcp-server-baidu-map\"\r\n      ],\r\n      \"env\": {\r\n        \"BAIDU_MAP_API_KEY\": \"\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 4.推荐：使用SSE实现低延迟、稳定访问\r\n\r\n看 [SSE快速入门](https://lbsyun.baidu.com/faq/api?title=mcpserver/quickstart).\r\n\r\n### 5.更多平台\r\n\r\n- **克劳德/代理人/千帆AppBuilder**：参见 [README_zh.md](./README_zh.md) 详细的集成指南和高级配置。\r\n\r\n______________________________________________________________________\r\n\r\n## 🚀 高级用例\r\n\r\n- **旅行计划助理：**\\\r\n  使用 `map_search_places`, `map_directions`，以及 `map_weather` 建立一个代理，规划最佳观光路线，检查天气，并推荐POI。\r\n\r\n- **批处理路线矩阵：**\\\r\n  使用 `map_directions_matrix` 以计算物流或交付优化的多条路线和持续时间。\r\n\r\n- **文本到 POI 提取：**\\\r\n  使用 `map_poi_extract` 从用户输入或旅行记录中提取POI（需要高级权限）。\r\n\r\n- **实时交通和天气感知导航：**\\\r\n  合并 `map_road_traffic` 和 `map_weather` 提供动态、情境感知的旅行建议。\r\n\r\n- **与Claude、Qianfan、AppBuilder集成：**\\\r\n  将百度地图MCP服务器无缝连接到LLM和代理框架，用于自然语言地理空间推理。\r\n\r\n**看 [README_zh.md](./README_zh.md) 有关更详细的中文文档、配置和示例。**\r\n\r\n______________________________________________________________________\r\n\r\n## ⛰️ 高级教程\r\n\r\n- [地理编码API指南](https://lbsyun.baidu.com/index.php?title=webapi/guide/webservice-geocoding)\r\n- [POI 搜索 API 指南](https://lbsyun.baidu.com/index.php?title=webapi/guide/webservice-placeapi)\r\n- [路线规划API指南](https://lbsyun.baidu.com/index.php?title=webapi/direction-api)\r\n- [MCP集成指南](https://lbsyun.baidu.com/index.php?title=mcp/guide)\r\n- [SDK开发指南](https://lbsyun.baidu.com/index.php?title=mcp/sdk)\r\n\r\n## 👩‍👩‍👧‍👦 贡献者\r\n\r\n## 🌟 明星历史\r\n\r\n## 📄 许可证\r\n\r\n[MIT](./LICENSE) ©百度地图\r\n",
+ "config": {
+  "baidu-map": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@baidumap/mcp-server-baidu-map"
+   ],
+   "env": {
+    "BAIDU_MAP_API_KEY": "<YOUR_API_KEY>"
+   }
+  }
+ }
+}

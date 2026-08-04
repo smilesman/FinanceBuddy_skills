@@ -1,0 +1,22 @@
+{
+ "id": "2651",
+ "kind": "mcp",
+ "name": "papers-mcp",
+ "fingerprint_md5": "5d62dd76b38c2d823edf2c0fab97adb2",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP论文\r\n\r\n\r\n一个MCP服务器，用于搜索、提取和探索具有引文感知排名的学术论文。\r\n\r\n- 使用Lucene查询语法搜索arXiv\r\n- 将纸张内容提取为带有数学、数字和表格的干净Markdown\r\n- 使用地点、年份过滤器和分页进行引文排名搜索\r\n- 引文图遍历与相关论文发现\r\n\r\n## 安装\r\n\r\n### 克劳德代码\r\n\r\n```sh\r\nclaude mcp add papers-mcp -- npx papers-mcp\r\n```\r\n\r\n### 克劳德桌面/光标/风帆\r\n\r\n添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"papers-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"papers-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n配置文件位置：\r\n\r\n- 克劳德桌面： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- 光标： `~/.cursor/mcp.json`\r\n- 风浪： `~/.codeium/windsurf/mcp_config.json`\r\n\r\n## 工具\r\n\r\n### `resolve-arxiv-id`\r\n\r\n按标题、作者或Lucene查询搜索arXiv以解析论文ID。\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `query` |string |是|论文标题、作者姓名或arXiv搜索查询|\r\n\r\n支持arXiv Lucene样式的字段前缀： `ti:`, `au:`, `abs:`, `cat:`, `all:`.\r\n\r\n### `extract-paper`\r\n\r\n将纸张内容提取为干净的Markdown，并保留数学符号。\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `arxivId` |string | Yes | arXiv ID（例如。， `1706.03762`) |\r\n| `level` |enum |否| `abstract`, `body` （默认）， `appendix`，或 `all` |\r\n\r\n### `search-papers`\r\n\r\n搜索具有引文排名结果的论文，包括引文计数、地点、年份和arXiv ID（如果可用）。需要 `BRIGHTDATA_API_TOKEN`.\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `query` |string |是|搜索查询|\r\n| `yearLow` |number |否|最早出版年份|\r\n| `yearHigh` |number | No |最新出版年份|\r\n| `sortByDate` |boolean |否|按日期而不是相关性排序|\r\n| `start` |number | No |分页偏移量（0、10、20、…）|\r\n\r\n### `find-citing-papers`\r\n\r\n按簇ID查找引用给定论文的论文（来自 `search-papers` 结果）。需要 `BRIGHTDATA_API_TOKEN`.\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `clusterId` |string |是|来自的群集ID `search-papers` 结果|\r\n| `start` |number | No |分页偏移量（0、10、20、…）|\r\n\r\n### `find-related-papers`\r\n\r\n通过论文ID查找与主题相关的论文（来自 `search-papers` 结果）。需要 `BRIGHTDATA_API_TOKEN`.\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `paperId` |string |是|纸张ID来自 `search-papers` 结果|\r\n| `start` |number | No |分页偏移量（0、10、20、…）|\r\n\r\n## 环境变量\r\n\r\n|变量|必需|由使用|\r\n|----------|----------|---------|\r\n| `BRIGHTDATA_API_TOKEN` |用于引文搜索工具| `search-papers`, `find-citing-papers`, `find-related-papers` |\r\n\r\n要在MCP配置中设置它，请添加 `env` 块：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"papers-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"papers-mcp\"],\r\n      \"env\": {\r\n        \"BRIGHTDATA_API_TOKEN\": \"your-token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "papers-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "papers-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

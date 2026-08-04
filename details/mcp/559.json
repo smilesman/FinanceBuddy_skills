@@ -1,0 +1,27 @@
+{
+ "id": "559",
+ "kind": "mcp",
+ "name": "accurlex",
+ "fingerprint_md5": "158a4412a4db1311a47052cce971afe0",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# accurLex MCP Server\r\n\r\n## Overview\r\n\r\naccurLex MCP Server 是一个面向中国法律工作流的 MCP 服务，支持法律问答、合同审查、法律文书生成等能力。通过 MCP（Model Context Protocol）协议，可在 VS Code Copilot、Claude Desktop、Cursor、Windsurf、OpenClaw 等 AI 客户端中使用。\r\n\r\n- **npm 包名：** `accurlex-mcp-server`\r\n- **npm 页面：** https://www.npmjs.com/package/accurlex-mcp-server\r\n- **官网：** https://accurlex.com\r\n\r\n## 前置条件\r\n\r\n- **Node.js ≥ 18** — 运行 `node --version` 确认。无需 clone 代码，无需手动安装依赖。\r\n\r\n## 快速开始\r\n\r\n### 1. 配置 MCP\r\n\r\n根据你使用的 AI 客户端，将以下配置添加到对应位置：\r\n\r\n**VS Code Copilot** — 在工作区**根目录**创建 `.vscode/settings.json`：\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"accurlex\": {\r\n        \"type\": \"stdio\",\r\n        \"command\": \"npx\",\r\n        \"args\": [\"-y\", \"accurlex-mcp-server\"],\r\n        \"env\": {\r\n          \"ACCURLEX_PROXY_BASE_URL\": \"https://accurlex.com\",\r\n          \"ACCURLEX_API_BASE_URL\": \"https://accurlex.com/index.php\",\r\n          \"ACCURLEX_BILLING_PHONE\": \"你的注册手机号\",\r\n          \"ACCURLEX_BEARER_TOKEN\": \"登录后获取的JWT令牌\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**Claude Desktop** — 编辑 `%APPDATA%\\Claude\\claude_desktop_config.json`（Windows）或 `~/Library/Application Support/Claude/claude_desktop_config.json`（macOS）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"accurlex\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"accurlex-mcp-server\"],\r\n      \"env\": {\r\n        \"ACCURLEX_PROXY_BASE_URL\": \"https://accurlex.com\",\r\n        \"ACCURLEX_API_BASE_URL\": \"https://accurlex.com/index.php\",\r\n        \"ACCURLEX_BILLING_PHONE\": \"你的注册手机号\",\r\n        \"ACCURLEX_BEARER_TOKEN\": \"登录后获取的JWT令牌\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**Cursor** — 在项目根目录创建 `.cursor/mcp.json`，格式同 Claude Desktop。\r\n\r\n**Windsurf** — 在项目根目录创建 `.windsurf/mcp.json`，格式同 Claude Desktop。\r\n\r\n**OpenClaw** — 使用与 Claude Desktop 相同的 stdio MCP 配置结构。\r\n\r\n> ⚠️ **Windows 上如果遇到 `npx` 找不到的问题，将 `\"command\"` 改为 `\"npx.cmd\"`。**\r\n\r\n### 2. 重启客户端\r\n\r\n- VS Code：`Ctrl+Shift+P` → `Developer: Reload Window`\r\n- Claude Desktop：完全退出并重新打开\r\n- Cursor / Windsurf：重启编辑器\r\n\r\n### 3. 验证安装\r\n\r\n在 AI 对话中发送以下消息测试（免费配额，需已配置 `ACCURLEX_BILLING_PHONE`）：\r\n\r\n> \"劳动合同试用期最长不能超过多久？\"\r\n\r\n如果 AI 调用了 `accurlex_legal_qa` 工具并返回了法律分析，说明安装成功。\r\n\r\n### 4. 配置登录信息（账户查询、付费功能）\r\n\r\n使用前，请先到 https://accurlex.com 注册账号，将手机号填入客户端配置的 `ACCURLEX_BILLING_PHONE` 字段。\r\n\r\n如果需要账户查询，可在 AI 对话中说：\r\n\r\n> \"帮我登录 accurLex，手机号 138xxxx1234，密码 xxx\"\r\n\r\n登录成功后，将返回的 `ACCURLEX_BEARER_TOKEN` 添加到客户端配置的 `env` 字段中，然后重启客户端。\r\n\r\n说明：\r\n\r\n- `ACCURLEX_BILLING_PHONE` 是注册手机号，所有工具（login/extract 除外）均需要\r\n- `ACCURLEX_BEARER_TOKEN` 是 JWT 令牌，**所有付费工具和账户查询均需要**（法律问答、合同审查、文书生成、账户状态）\r\n\r\n> ⚠️ **从 v0.4.0 起，`ACCURLEX_BEARER_TOKEN` 是必填项。** 未配置时调用付费工具会返回错误提示。请先通过 `accurlex_login` 工具登录获取令牌。\r\n\r\n## 可用功能\r\n\r\n| 功能 | 工具名 | 计费 | 预期耗时 |\r\n|------|--------|------|---------|\r\n| 法律问答（免费配额，需注册） | `accurlex_legal_qa` (deep) | 免费 | 10-30 秒 |\r\n| 法律问答（专业） | `accurlex_legal_qa` (expert) | 扣点 | 10-30 秒 |\r\n| 合同审查 | `accurlex_contract_review` | 扣点 | 1-3 分钟 |\r\n| 法律文书生成 | `accurlex_draft_document` | 扣点 | 1-2 分钟 |\r\n| 查询账户余额 | `accurlex_get_account_status` | 免费 | 1-3 秒 |\r\n| 提取文件文本 | `accurlex_extract_text_from_file` | 免费 | <1 秒 |\r\n\r\n## 详细文档\r\n\r\n完整的工具参数、工作流、错误处理和平台特定的故障排查指南，请参阅 [.github/MrPunchLeonardo/accurLex-legal-assistant-skill/blob/main/accurlex_skill/SKILL.md](https://github.com/MrPunchLeonardo/accurLex-legal-assistant-skill/blob/main/accurlex_skill/SKILL.md)。\r\n\r\n## 常见问题\r\n\r\n| 问题 | 解决方案 |\r\n|------|---------|\r\n| 工具未出现在 AI 对话中 | 确认配置文件路径正确（VS Code 必须在工作区**根目录**的 `.vscode/settings.json`），然后重启客户端 |\r\n| `tool_unavailable` 错误 | 环境变量未设置，检查 `env` 字段中的 `ACCURLEX_PROXY_BASE_URL`、`ACCURLEX_API_BASE_URL`、`ACCURLEX_BILLING_PHONE` |\r\n| `ENOENT` / `npx` 找不到 | Node.js 未安装或未在 PATH 中，Windows 上尝试将 `command` 改为 `npx.cmd` |\r\n| 合同审查“超时” | 合同审查正常需要 1-3 分钟，请耐心等待 |\r\n| JWT 令牌过期 | 重新调用 `accurlex_login`，更新配置中的 `ACCURLEX_BEARER_TOKEN`，重启客户端 |\r\n\r\n## Contributing\r\n\r\nContributions are welcome. Please follow the standard Git workflow.\r\n\r\n## License\r\n\r\nMIT License. See the LICENSE file for more details.\r\n",
+ "config": {
+  "accurlex": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "accurlex-mcp-server"
+   ],
+   "env": {
+    "ACCURLEX_PROXY_BASE_URL": "https://accurlex.com",
+    "ACCURLEX_API_BASE_URL": "https://accurlex.com/index.php",
+    "ACCURLEX_BILLING_PHONE": "你的注册手机号",
+    "ACCURLEX_BEARER_TOKEN": "登录后获取的JWT令牌"
+   }
+  }
+ }
+}

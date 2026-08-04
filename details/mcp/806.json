@@ -1,0 +1,24 @@
+{
+ "id": "806",
+ "kind": "mcp",
+ "name": "pixelforge",
+ "fingerprint_md5": "7eaaf3f11bda348d4ba5f0071ea5ceac",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 像素放大mcp\r\n\r\nMCP服务器，使用Google Gemini伪造像素艺术精灵和游戏资产——生成、裁剪、分割和处理，所有这些都来自你的人工智能助手。\r\n\r\n## 特性\r\n\r\n- **人工智能发电** --通过Google Gemini显示精灵、动画、背景、缩略图\r\n- **智能后处理** --背景移除、自动裁剪、像素缩小、方形填充\r\n- **雪碧片分割** --自动检测纸张并将其分割成单独的帧\r\n- **风格预设** --霓虹灯，复古，游戏男孩，打喷嚏，干净\r\n- **纯PNG管道** --零依赖PNG编码器/解码器，无原生模块\r\n- **参考匹配** --传递现有的精灵以匹配视觉风格\r\n\r\n## 安装\r\n\r\n### 克劳德代码（CLI）\r\n\r\n```bash\r\nclaude mcp add pixelforge npx pixelforge-mcp@latest \\\r\n  --env GEMINI_API_KEY=your-api-key\r\n```\r\n\r\n### 克劳德代码（插件）\r\n\r\n```bash\r\n/plugin marketplace add freema/pixelforge-mcp\r\n/plugin install pixelforge-mcp\r\n```\r\n\r\n重新启动Claude Code以加载MCP服务器（请检查 `/mcp`).\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pixelforge\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"pixelforge-mcp@latest\"],\r\n      \"env\": {\r\n        \"GEMINI_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 手册（任何MCP客户端）\r\n\r\n添加到您的 `.mcp.json` 或等效配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pixelforge\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"pixelforge-mcp@latest\"],\r\n      \"env\": {\r\n        \"GEMINI_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 需求\r\n\r\n- Node.js>=20\r\n- [Google Gemini API密钥](https://aistudio.google.com/apikey)\r\n\r\n## 工具\r\n\r\n### `forge_sprite`\r\n\r\n通过自动后处理（裁剪、背景图像删除、缩小比例、方形填充）生成单像素艺术精灵。\r\n\r\n```\r\n\"Generate a green slime enemy sprite, 48px, retro style\"\r\n```\r\n\r\n**必修的：** `description`, `outputPath`\r\n**可选：** `size` （默认值：48）， `style`, `background`, `aspect`, `square`, `model`, `references`\r\n\r\n### `forge_animation`\r\n\r\n将动画帧生成为子画面，然后自动拆分为单独的帧PNG。\r\n\r\n```\r\n\"Animate a slime bouncing, 4 frames\"\r\n```\r\n\r\n**必修的：** `description`, `action`, `outputPrefix`\r\n**可选：** `frames` （默认值：3）， `frameDescriptions`, `names`, `size`, `style`, `model`, `references`\r\n\r\n### `forge_background`\r\n\r\n生成完整的游戏背景——无裁剪，按原样输出图像。\r\n\r\n```\r\n\"Deep space background with stars and nebula, 16:9\"\r\n```\r\n\r\n**必修的：** `description`, `outputPath`, `aspect`\r\n**可选：** `style`, `model`\r\n\r\n### `forge_thumbnail`\r\n\r\n生成游戏缩略图/屏幕截图。通过 `references` 为了与你的精灵在视觉上保持一致。\r\n\r\n```\r\n\"Space shooter scene with player ship vs alien rows\"\r\n```\r\n\r\n**必修的：** `description`, `outputPath`\r\n**可选：** `references`, `aspect` （默认值：4:3）， `style`, `model`\r\n\r\n### `process_sprite`\r\n\r\n对现有的PNG进行后处理——背景移除、自动裁剪、子画面分割。\r\n\r\n```\r\n\"Split this sprite sheet into individual frames\"\r\n```\r\n\r\n**必修的：** `inputPath`\r\n**可选：** `outputPath`, `split`, `names`, `threshold`, `square`, `padding`, `skipCrop`, `skipTransparent`\r\n\r\n### `optimize_sprite`\r\n\r\n使用面积平均（不是模糊的双线性）将超大AI图像缩小到真正的像素艺术分辨率。\r\n\r\n```\r\n\"Optimize this 1024px image down to 48px pixel art\"\r\n```\r\n\r\n**必修的：** `inputPath`, `size`\r\n**可选：** `outputPath`, `removeBackground`, `square`\r\n\r\n> 完整参数文档：请参阅 [docs/tools.md](docs/tools.md)\r\n\r\n## 模型\r\n\r\n|别名|型号ID|备注|\r\n|-------|----------|-------|\r\n| `nano-banana`, `banana` |纳米香蕉专业预览| **默认** --最适合像素艺术|\r\n| `flash`, `gemini-flash` |gemini-3.1闪光图像回顾|快速、可靠|\r\n| `pro`, `gemini-pro` |gemini3-pro-image-review |最佳质量|\r\n| `25`, `gemini-25` |gemini-2.5-flash-image |稳定回退|\r\n\r\n## 提示\r\n\r\n### `pixel_art_guide`\r\n\r\n内置MCP提示，具有全面的像素艺术生成指南——提示规则、风格提示、尺寸建议和最佳实践。\r\n\r\n## 许可证\r\n\r\nMIT——见 [许可证](LICENSE)\r\n\r\n______________________________________________________________________\r\n\r\n建造于 [托马斯·格拉斯尔](https://tomasgrasl.cz)\r\n",
+ "config": {
+  "pixelforge": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "pixelforge-mcp@latest"
+   ],
+   "env": {
+    "GEMINI_API_KEY": "your-api-key"
+   }
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "codex-review",
+ "kind": "skill",
+ "name": "codex-review",
+ "fingerprint_md5": "07be1793bd121cb7efe19911e14dd64a",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "# codex-review\r\n\r\n## 概述\r\n\r\n专业的代码审查，自动生成 CHANGELOG，与 Codex AI 集成\r\n\r\n## 何时使用\r\n\r\n- 当您需要在提交前进行专业代码审查时\r\n- 当您需要自动生成 CHANGELOG 时\r\n- 当审查大规模重构时\r\n\r\n## 安装\r\n\r\n```bash\r\nnpx skills add -g BenedictKing/codex-review\r\n```\r\n\r\n## 分步指南\r\n\r\n1. 使用上述命令安装 skill\r\n2. 确保已安装 Codex CLI\r\n3. 使用 `/codex-review` 或自然语言触发器\r\n\r\n## 示例\r\n\r\n有关示例，请参见 [GitHub Repository](https://github.com/BenedictKing/codex-review)。\r\n\r\n## 最佳实践\r\n\r\n- 将 CHANGELOG.md 保存在项目根目录\r\n- 使用 conventional commit 消息\r\n\r\n## 故障排除\r\n\r\n有关故障排除指南，请参见 GitHub 仓库。\r\n\r\n## 相关 Skills\r\n\r\n- context7-auto-research, tavily-web, exa-search, firecrawl-scraper",
+ "config": {}
+}

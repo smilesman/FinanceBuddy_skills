@@ -1,0 +1,24 @@
+{
+ "id": "821",
+ "kind": "mcp",
+ "name": "pure.md",
+ "fingerprint_md5": "1c432d75553d8aef5048496154688f44",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# pure.md MCP服务器\r\n\r\n\r\n欢迎使用模型上下文协议（MCP）服务器 [pure.md](https://pure.md).\r\n\r\n\r\n[pure.md](https://pure.md) 让您的脚本、API、应用程序、代理等以markdown格式可靠地访问web内容——只需在任何URL前加上前缀 `pure.md/`.\r\n它避免了机器人检测，并为SPA渲染JavaScript，可以将HTML、PDF、图像等转换为纯markdown。与markdown内容的CDN一样，它全局缓存对同一资源的未来请求的响应，从而减轻了源web服务器的压力。\r\n\r\n**如果没有puremd-mcp，本地代理可能无法获取web内容。** puremd-mcp教像Cursor、Windsurf和Claude Desktop这样的mcp客户端如何采用pure.md的功能，为他们提供网络解锁和搜索功能。\r\n\r\npuremd-mcp附带了两个工具：\r\n\r\n- `unblock-url` -从网页中提取标记而不会被阻止\r\n- `search-web` -在网络上搜索查询，并将结果连接到markdown中\r\n\r\n这 [模型上下文协议](https://modelcontextprotocol.io/introduction)由Anthropic开发的，是一个开放标准，使人工智能系统能够与工具生态系统无缝交互。有了它，像Cursor、Windsurf和Claude Desktop这样的MCP客户端可以学习如何使用各种API和其他功能。\r\n\r\n## 认证\r\n\r\n生成API密钥是一个可选步骤，可以解锁更高的速率限制。如果您想匿名使用pure.md MCP服务器，只需设置您的 `PUREMD_API_KEY` 值为空字符串(`\"\"`).\r\n\r\n1. 在以下网址注册新帐户 [pure.md](https://pure.md) --注册是免费的！\r\n1. 在仪表板中，生成一个新的API令牌\r\n1. 复制令牌，并将其用于 `PUREMD_API_KEY` MCP客户端配置文件中的值（见下文）\r\n\r\n## 客户端配置\r\n\r\n### 光标\r\n\r\n将以下内容添加到您的 `~/.cursor/mcp.json` 文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pure.md\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"puremd-mcp\"],\r\n      \"env\": {\r\n        \"PUREMD_API_KEY\": \"<TOKEN>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 帆板运动\r\n\r\n将以下内容添加到您的 `./codeium/windsurf/model_config.json` 文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pure.md\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"puremd-mcp\"],\r\n      \"env\": {\r\n        \"PUREMD_API_KEY\": \"<TOKEN>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德桌面\r\n\r\n将以下内容添加到您的 `~/Library/Application\\ Support/Claude/claude_desktop_config.json` 文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pure.md\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"puremd-mcp\"],\r\n      \"env\": {\r\n        \"PUREMD_API_KEY\": \"<TOKEN>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装puremd-mcp for Claude Desktop [史密瑟里](https://smithery.ai/server/@puremd/puremd-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @puremd/puremd-mcp --client claude\r\n```\r\n",
+ "config": {
+  "pure.md": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "puremd-mcp"
+   ],
+   "env": {
+    "PUREMD_API_KEY": "<TOKEN>"
+   }
+  }
+ }
+}

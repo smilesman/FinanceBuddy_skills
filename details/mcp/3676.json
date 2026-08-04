@@ -1,0 +1,22 @@
+{
+ "id": "3676",
+ "kind": "mcp",
+ "name": "web-scout",
+ "fingerprint_md5": "3e3707435b85128779a58ca7cc31a34c",
+ "download_count": 0,
+ "category": "数据抓取",
+ "tags": "",
+ "version": "",
+ "readme": "# Web Scout MCP Server\r\n\r\n\r\nAn MCP server for web search using DuckDuckGo and content extraction, with support for multiple URLs and memory optimizations.\r\n\r\n\r\n## ✨ 特点\r\n\r\n- 🔍 看起来像放大镜的符号，通常用于表示搜索、查看细节或调查的意思。 **DuckDuckGo 搜索**快速且注重隐私的网页搜索功能\r\n- 📄（文件或纸张的象征，具体翻译需结合上下文，如“文件”、“纸张”等） **内容提取**从网页中提取干净、易读的文本\r\n- 🚀 表情符号“🚀”在中文中通常被翻译为“火箭”或直接用该表情符号表示，它常用来表示快速前进、发展迅速或充满活力和动力的事物。在没有具体上下文的情况下，可以简单地将其理解为“火箭”或保持原样使用该表情符号。 **并行处理**支持同时从多个URL提取内容\r\n- 💾 代表软盘的符号，可翻译为“软盘”或在某些语境下简化为“磁盘”。 **内存优化**智能内存管理，防止应用程序崩溃\r\n- ⏱️（时钟图标，通常表示时间或倒计时） **速率限制**智能请求限速以避免API阻塞\r\n- 🛡️ 译为中文是“盾牌”。这个符号通常用来表示保护、防御或安全的概念。 **错误处理**强大的错误处理机制，确保可靠运行\r\n\r\n## 📦 安装\r\n\r\n### 通过Smithery进行安装\r\n\r\n通过（某种方式）自动为Claude Desktop安装Web Scout [“Smithery”可以翻译为“铁匠铺”或“锻造工坊”。这个词汇来源于对“smith”（铁匠）的扩展，指的是进行金属加工、锻造等工作的场所](https://smithery.ai/server/@pinkpixel-dev/web-scout-mcp)：\r\n\r\n```bash\r\nnpx -y @smithery/cli install @pinkpixel-dev/web-scout-mcp --client claude\r\n```\r\n\r\n### 全球部署/安装\r\n\r\n```bash\r\nnpm install -g @pinkpixel/web-scout-mcp\r\n```\r\n\r\n### 本地安装\r\n\r\n```bash\r\nnpm install @pinkpixel/web-scout-mcp\r\n```\r\n\r\n## 🚀 使用方法\r\n\r\n### 命令行\r\n\r\n全局安装后，运行：\r\n\r\n```bash\r\nweb-scout-mcp\r\n```\r\n\r\n### 使用MCP客户端\r\n\r\n将此添加到您的MCP客户端中 `config.json` （Claude Desktop、Cursor 等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"web-scout\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@pinkpixel/web-scout-mcp@latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 环境变量\r\n\r\n设定 `WEB_SCOUT_DISABLE_AUTOSTART=1` 在嵌入包并调用时设置环境变量 `createServer()` 你自己。默认情况下，运行已发布的入口点（例如 `node dist/index.js` 或者 `npx @pinkpixel/web-scout-mcp`) 自动启动stdio传输。\r\n\r\n## 🧰 工具\r\n\r\n服务器提供以下MCP工具：\r\n\r\n### 🔍 DuckDuckGo网页搜索\r\n\r\n使用DuckDuckGo搜索引擎发起网页搜索查询，并返回结构清晰的搜索结果列表。\r\n\r\n**输入：**\r\n\r\n- `query` (字符串)：搜索查询字符串\r\n- `maxResults` （数字，可选）：要返回的最大结果数量（默认：10）\r\n\r\n**示例：**\r\n\r\n```json\r\n{\r\n  \"query\": \"latest advancements in AI\",\r\n  \"maxResults\": 5\r\n}\r\n```\r\n\r\n**输出：**\r\n一个包含标题、网址和摘要的格式化搜索结果列表。\r\n\r\n### 📄 UrlContentExtractor（URL内容提取器）\r\n\r\n从网页中抓取并提取干净、可读的内容，同时移除脚本、样式和导航等不必要的元素。\r\n\r\n**输入：**\r\n\r\n- `url`一个单一的URL字符串或URL字符串的数组\r\n\r\n**示例（单个URL）：**\r\n\r\n```json\r\n{\r\n  \"url\": \"https://example.com/article\"\r\n}\r\n```\r\n\r\n**示例（多个URL）：**\r\n\r\n```json\r\n{\r\n  \"url\": [\r\n    \"https://example.com/article1\",\r\n    \"https://example.com/article2\"\r\n  ]\r\n}\r\n```\r\n\r\n**输出：**\r\n从指定的URL提取文本内容。\r\n\r\n## 🛠️ 开发\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/pinkpixel-dev/web-scout-mcp.git\r\ncd web-scout-mcp\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build\r\nnpm run build\r\n\r\n# Run\r\nnpm start\r\n```\r\n\r\n## 📚 文档\r\n\r\n如需获取有关该项目的更多详细信息，请查阅以下资源：\r\n\r\n- [\\`OVERVIEW.md\\` 翻译成中文是：\\`概述.md\\`](OVERVIEW.md) - 技术概述与架构\r\n- [CONTRIBUTING.md 翻译为中文是：“贡献指南/贡献说明文件”。这个文件通常用于说明如何为某个项目或组织做出贡献，包括贡献的流程、规范、要求等](CONTRIBUTING.md) - 对贡献者的指南\r\n- [CHANGELOG.md 翻译成中文是“变更日志文件（Markdown 格式）”](CHANGELOG.md) - 版本历史和更改\r\n\r\n## 📋 要求\r\n\r\n- Node.js 版本 >= 18.0.0\r\n- npm 或 yarn\r\n\r\n## 📄 许可证\r\n\r\n这个项目遵循以下许可协议 [Apache 2.0 许可证](LICENSE)。\r\n\r\nMade with ❤️ by Pink Pixel\r\n\r\n  ✨ Dream it, Pixel it ✨\r\n",
+ "config": {
+  "web-scout": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@pinkpixel/web-scout-mcp@latest"
+   ],
+   "env": {}
+  }
+ }
+}

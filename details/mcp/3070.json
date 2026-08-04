@@ -1,0 +1,28 @@
+{
+ "id": "3070",
+ "kind": "mcp",
+ "name": "dssat",
+ "fingerprint_md5": "33ac5172218225d522a65bddb348f0a8",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# DSSAT MCP服务器——克劳德桌面集成\r\n\r\n将Claude Desktop连接到DSSAT MCP服务器，直接从聊天中下载输入、运行实验和收集输出。\r\n\r\n## 快速开始\r\n\r\n### 1） 安装克劳德桌面\r\n\r\n- **窗户：** [下载](https://claude.ai/download) 安装官方Windows应用程序，然后登录。\r\n\r\n- **Ubuntu/Debian（社区构建）：** 使用 [社区回购](https://github.com/aaddrick/claude-desktop-debian.git) `aaddrick/claude-desktop-debian` 安装a `.deb`/`.AppImage`，或从源代码构建：\r\n\r\n  ```bash\r\n  git clone https://github.com/aaddrick/claude-desktop-debian.git\r\n  cd claude-desktop-debian\r\n  ./build.sh\r\n  sudo dpkg -i ./claude-desktop_*.deb\r\n\r\n  # If you encounter dependency issues:\r\n  sudo apt --fix-broken install\r\n  ```\r\n\r\n**配置路径：**\r\n\r\n- **窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n- **Linux：** `~/.config/Claude/claude_desktop_config.json`\r\n\r\n  提示：您还可以从以下位置打开配置 **设置→ 开发者→ 编辑配置** 在克劳德桌面。\r\n\r\n### 2） 添加MCP配置\r\n\r\n将下面的JSON粘贴到您的配置文件中。 **仅替换令牌值**保持其他一切不变。代币将根据要求提供。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dssat\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"mcp-remote\",\r\n        \"https://dev.mcp.crops.qvantum.scio.services/mcp\",\r\n        \"--allow-http\",\r\n        \"--header\",\r\n        \"Authorization: Bearer ${ACCESS_TOKEN}}\"\r\n      ],\r\n      \"env\": {\r\n        \"ACCESS_TOKEN\": \"\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> 如果您的配置调用 `npx`，确保安装了Node.js和npm。\r\n\r\n### 3） 使用Claude Desktop\r\n\r\n- 重新启动Claude Desktop（或重新加载开发人员配置）。\r\n- 打开新聊天。Claude Desktop将自动发现MCP服务器并列出可用工具。\r\n- 使用下面的示例提示运行典型的DSSAT工作流。\r\n\r\n### 工具（高级描述）\r\n\r\n- **下载files_from_s3** --将DSSAT输入文件（例如SOIL.SOL、\\*.WTH、\\*.MZX）从S3下载到本地工作文件夹中，并验证是否存在。\r\n- **run_dssat_实验** --使用工作文件夹中的指定实验文件（FileX）运行DSSAT，并捕获日志/摘要。\r\n- **上传和收集输出文件** --将工作文件夹存档，上传到S3，返回输出的预签名URL，并执行清理。\r\n\r\n## 示例提示（粘贴到Claude Desktop中）\r\n\r\n```\r\nI want to run a DSSAT experiment. Check the list of tools to find the correct tool input format. First download and save to folder CUSTOM_EXPERIMENT the following files from S3: SOIL.SOL, UFGA8201.WTH, UFGA8201.MZX. Next execute the experiment with the experiment file UFGA8201.MZX. Then, upload the file to S3 in order to collect the output files.\r\n```\r\n",
+ "config": {
+  "dssat": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-remote",
+    "https://dev.mcp.crops.qvantum.scio.services/mcp",
+    "--allow-http",
+    "--header",
+    "Authorization: Bearer ${ACCESS_TOKEN}}"
+   ],
+   "env": {
+    "ACCESS_TOKEN": "<REPLACE_WITH_YOUR_ACCESS_TOKEN>"
+   }
+  }
+ }
+}

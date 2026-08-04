@@ -1,0 +1,12 @@
+{
+ "id": "go-review",
+ "kind": "skill",
+ "name": "go-review",
+ "fingerprint_md5": "7ef7db6aa4186ce0e8021e6f31cac568",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "## Go review guidelines\r\n\r\nThis 项目 uses Go for the CLI (`cmd/cog/`, `pkg/`) and `tools/`l`ls/`/`ls/`).\r\n\r\n### What linters already catch (skip these)\r\n\r\ngolangci-lint runs errcheck, gocritic, gosec, govet, ineffassign, misspell,\r\nrevive, staticcheck, and unused. Don't flag issues these 将会 catch.\r\n\r\n### What 迁移到 look for\r\n\r\n**错误 handling**\r\n\r\n- Errors returned but not checked or silently discarded\r\n- User-facing errors 应该 use `pkg/errors.CodedError` with 错误 codes\r\n- Generic 错误 wrapping that loses context (`fmt.Errorf(\"failed\")` with no `%w`)`%w``%w__COD__CO`%w`___E_2__\r\n\r\n**Imports**\r\n\r\n- 应该 be three groups: stdlib, third-party, internal (`github.com/replicate/cog/pkg/...`)\r\n- Only flag if actually wrong, not cosmetic reordering\r\n\r\n**Testing**\r\n\r\n- 必须 use `testify/require` for fatal assertions and `testif__CODE_1__/ass__CODE_2__al\r\n- No raw __COD`t.Fatal`Fatal`_CODE_2_`Errorf`Errorf`\r\n- Prefer table-driven tests for similar cases\r\n- Prefer specific assertions (`Equal`_CODE`NoError``) o__CODE_`DE_`D__CODE`/`_l`/`/`False`\r\n\r\n**并发**\r\n\r\n- Goroutine leaks (no 清理 路径, missing context cancellation)\r\n- Shared state without 同步\r\n- Channel misuse (sends on closed channels, unbuffered channels in wrong contexts)\r\n\r\n**Docker/container patterns**\r\n\r\n- The CLI uses the Docker Go SDK. 监视 for leaked clients, unclosed 响应 bodies\r\n- Dockerfile generation is in `pkg/dockerfile/` -- 模板 injection risks\r\n\r\n**架构**\r\n\r\n- 命令 belong in `pkg/cli/`, business logic in `pkg/`\r\n- Config parsing/validation in `pkg/config/`\r\n- Don't mix CLI concerns with 库 logic",
+ "config": {}
+}

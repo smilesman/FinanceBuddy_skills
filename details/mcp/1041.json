@@ -1,0 +1,32 @@
+{
+ "id": "1041",
+ "kind": "mcp",
+ "name": "elasticsearch-mcp-server-2",
+ "fingerprint_md5": "b8c036f4e6bfdeca71ebf9a441cc92fc",
+ "download_count": 0,
+ "category": "NoSQL 数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# Elasticsearch MCP服务器\r\n\r\n此存储库包含用于研究和评估的实验功能，尚未投入生产。\r\n\r\n使用模型上下文协议（MCP）直接从任何MCP客户端（如Claude Desktop）连接到Elasticsearch数据。\r\n\r\n此服务器使用模型上下文协议将代理连接到您的Elasticsearch数据。它允许您通过自然语言对话与Elasticsearch索引进行交互。\r\n\r\n## 可用工具\r\n\r\n- `list_indices`：列出所有可用的Elasticsearch索引\r\n- `get_mappings`：获取特定Elasticsearch索引的字段映射\r\n- `search`：使用提供的查询DSL执行Elasticsearch搜索。支持突出显示、查询分析和查询解释。\r\n- `get_shards`：获取所有或特定索引的分片信息\r\n\r\n## 先决条件\r\n\r\n- Elasticsearch实例\r\n- Elasticsearch身份验证凭据（API密钥或用户名/密码）\r\n- Docker（或OCI运行时）\r\n- MCP客户端（如克劳德桌面）\r\n\r\n## 演示\r\n\r\n\r\n## 安装和设置\r\n\r\n### 使用Docker\r\n\r\n1. **配置MCP客户端**\r\n\r\n   - 打开您的MCP客户端。请参阅 [MCP客户端列表](https://modelcontextprotocol.io/clients)，这里我们正在配置Claude Desktop。\r\n   - 首选 **设置>开发人员>MCP服务器**\r\n   - 点击 `Edit Config` 并添加具有以下配置的新MCP服务器：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"elasticsearch-mcp-server\": {\r\n         \"command\": \"docker\",\r\n         \"args\": [\r\n           \"run\", \"--rm\", \"-i\",\r\n           \"-e\", \"ES_URL\",\r\n           \"-e\", \"ES_API_KEY\",\r\n           \"docker.elastic.co/mcp/elasticsearch\", \"stdio\"\r\n         ],\r\n         \"env\": {\r\n           \"ES_URL\": \"<your-elasticsearch-url>\",\r\n           \"ES_API_KEY\": \"<your-api-key>\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. **开始对话**\r\n\r\n   - 在MCP客户端中打开新对话\r\n   - MCP服务器应自动连接\r\n   - 现在，您可以询问有关Elasticsearch数据的问题\r\n\r\n### 使用已发布的NPM包\r\n\r\n1. **配置MCP客户端**\r\n\r\n   - 打开您的MCP客户端。请参阅 [MCP客户端列表](https://modelcontextprotocol.io/clients)，这里我们正在配置Claude Desktop。\r\n   - 首选 **设置>开发人员>MCP服务器**\r\n   - 点击 `Edit Config` 并添加具有以下配置的新MCP服务器：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"elasticsearch-mcp-server\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\r\n           \"-y\",\r\n           \"@elastic/mcp-server-elasticsearch\"\r\n         ],\r\n         \"env\": {\r\n           \"ES_URL\": \"<your-elasticsearch-url>\",\r\n           \"ES_API_KEY\": \"<your-api-key>\",\r\n           \"OTEL_LOG_LEVEL\": \"none\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. **开始对话**\r\n\r\n   - 在MCP客户端中打开新对话\r\n   - MCP服务器应自动连接\r\n   - 现在，您可以询问有关Elasticsearch数据的问题\r\n\r\n### 配置选项\r\n\r\nElasticsearch MCP服务器支持配置选项以连接到您的Elasticsearch:\r\n\r\n> \\[！注意\\]\r\n> 您必须提供API密钥或用户名和密码进行身份验证。\r\n\r\n|环境变量|描述|必填|\r\n|----------------------|-----------------------------------------------------------------------|----------|\r\n| `ES_URL` |您的Elasticsearch实例URL |是|\r\n| `ES_API_KEY` |用于身份验证的Elasticsearch API密钥|否|\r\n| `ES_USERNAME` |用于基本身份验证的Elasticsearch用户名|否|\r\n| `ES_PASSWORD` |用于基本身份验证的Elasticsearch密码|否|\r\n| `ES_CA_CERT` |Elasticsearch SSL/TLS的自定义CA证书路径|否|\r\n| `ES_SSL_SKIP_VERIFY` |设置为“1”或“true”以跳过SSL证书验证|否|\r\n| `ES_PATH_PREFIX` |Elasticsearch实例的路径前缀在非根路径上公开|否|\r\n| `ES_VERSION` |服务器假定Elasticsearch 9.x。设置为 `8` 目标Elasticsearch 8.x |否|\r\n\r\n### 在当地发展\r\n\r\n> \\[！注意\\]\r\n> 如果要修改或扩展MCP服务器，请按照以下本地开发步骤进行操作。\r\n\r\n1. **使用正确的Node.js版本**\r\n\r\n   ```bash\r\n   nvm use\r\n   ```\r\n\r\n1. **再进行**\r\n\r\n   ```bash\r\n   npm install\r\n   ```\r\n\r\n1. **构建项目**\r\n\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n1. **在Claude桌面应用程序中本地运行**\r\n\r\n   - 打开 **克劳德桌面应用程序**\r\n   - 首选 **设置>开发人员>MCP服务器**\r\n   - 点击 `Edit Config` 并添加具有以下配置的新MCP服务器：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"elasticsearch-mcp-server-local\": {\r\n         \"command\": \"node\",\r\n         \"args\": [\r\n           \"/path/to/your/project/dist/index.js\"\r\n         ],\r\n         \"env\": {\r\n           \"ES_URL\": \"your-elasticsearch-url\",\r\n           \"ES_API_KEY\": \"your-api-key\",\r\n           \"OTEL_LOG_LEVEL\": \"none\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. **使用MCP检查器进行调试**\r\n\r\n   ```bash\r\n   ES_URL=your-elasticsearch-url ES_API_KEY=your-api-key npm run inspector\r\n   ```\r\n\r\n   这将启动MCP检查器，允许您调试和分析请求。您应该看到：\r\n\r\n   ```bash\r\n   Starting MCP inspector...\r\n   Proxy server listening on port 3000\r\n\r\n   🔍 MCP Inspector is up and running at http://localhost:5173 🚀\r\n   ```\r\n\r\n## 贡献\r\n\r\n我们欢迎社区的贡献！有关如何捐款的详细信息，请参阅 [贡献指南](/docs/CONTRIBUTING.md).\r\n\r\n## 示例问题\r\n\r\n> \\[！提示\\]\r\n> 以下是您可以使用MCP客户端尝试的一些自然语言查询。\r\n\r\n- “我的Elasticsearch集群中有哪些索引？”\r\n- “显示‘products’索引的字段映射。”\r\n- “查找上个月所有超过500美元的订单。”\r\n- “哪些产品获得了最多的五星评价？”\r\n\r\n## 运作原理\r\n\r\n1. MCP客户端分析您的请求，并确定需要哪些Elasticsearch操作。\r\n1. MCP服务器执行这些操作（列出索引、获取映射、执行搜索）。\r\n1. MCP客户端处理结果，并以用户友好的格式呈现。\r\n\r\n## 安全最佳实践\r\n\r\n> \\[！警告\\]\r\n> 避免使用集群管理员权限。创建范围有限的API专用密钥，并在索引级别应用细粒度访问控制，以防止未经授权的数据访问。\r\n\r\n您可以创建一个具有最低权限的Elasticsearch API专用密钥来控制对数据的访问：\r\n\r\n```\r\nPOST /_security/api_key\r\n{\r\n  \"name\": \"es-mcp-server-access\",\r\n  \"role_descriptors\": {\r\n    \"mcp_server_role\": {\r\n      \"cluster\": [\r\n        \"monitor\"\r\n      ],\r\n      \"indices\": [\r\n        {\r\n          \"names\": [\r\n            \"index-1\",\r\n            \"index-2\",\r\n            \"index-pattern-*\"\r\n          ],\r\n          \"privileges\": [\r\n            \"read\",\r\n            \"view_index_metadata\"\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\n此项目根据Apache许可证2.0获得许可。\r\n\r\n## 故障排除\r\n\r\n- 确保您的MCP配置正确。\r\n- 验证您的Elasticsearch URL是否可以从您的计算机访问。\r\n- 请检查您的身份验证凭据（API密钥或用户名/密码）是否具有必要的权限。\r\n- 如果将SSL/TLS与自定义CA一起使用，请验证证书路径是否正确以及文件是否可读。\r\n- 查看终端输出中的错误消息。\r\n\r\n如果您遇到问题，请随时在GitHub存储库上打开问题。\r\n",
+ "config": {
+  "elasticsearch-mcp-server": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "-e",
+    "ES_URL",
+    "-e",
+    "ES_API_KEY",
+    "docker.elastic.co/mcp/elasticsearch",
+    "stdio"
+   ],
+   "env": {
+    "ES_URL": "<your-elasticsearch-url>",
+    "ES_API_KEY": "<your-api-key>"
+   }
+  }
+ }
+}

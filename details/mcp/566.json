@@ -1,0 +1,24 @@
+{
+ "id": "566",
+ "kind": "mcp",
+ "name": "aidocx",
+ "fingerprint_md5": "ddeb4a5315f2e3212b03b833c7652c3f",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# aidocx mcp服务器\r\n\r\nMCP（模型上下文协议）服务器 [AiDocX](https://aidocx.ai) --人工智能驱动的文档管理平台。\r\n\r\n直接从Claude Desktop、Claude Code和其他MCP兼容客户端等AI助手创建、上传和管理业务文档和演示文稿。\r\n\r\n**支持的文档类型：** 合同、建议书、报价单、简历、商业计划、报告、公函、采购订单、手册/SOP等。\r\n\r\n**演示甲板：** 使用AI将任何文本内容转换为专业设计的幻灯片。\r\n\r\n## 快速开始\r\n\r\n### 1.获取API密钥\r\n\r\n注册地址： [应用程序.aidocx.ai](https://app.aidocx.ai) 并前往 **设置>API密钥** 生成您的凭据。\r\n\r\n### 2.配置您的AI客户端\r\n\r\n#### 克劳德桌面\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"aidocx\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"aidocx-mcp-server\"],\r\n      \"env\": {\r\n        \"AIDOCX_API_KEY\": \"ak_xxxxxxxx\",\r\n        \"AIDOCX_API_SECRET\": \"your_secret_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add aidocx \\\r\n  -e AIDOCX_API_KEY=ak_xxxxxxxx \\\r\n  -e AIDOCX_API_SECRET=your_secret_here \\\r\n  -- npx aidocx-mcp-server\r\n```\r\n\r\n### 3.开始使用\r\n\r\n问你的AI助手：\r\n\r\n- “请签订NDA合同”（Draft an NDA contract）\r\n- “制作报价单”（Create a quotion）\r\n- “请填写简历”（Create a resume）\r\n- “请制作提案”（Create a proposal）\r\n- “给我看我的文档列表”（Show my documents）\r\n- “请用AI分析这个文档”（Analyze this document with AI）\r\n- “请用这篇文章创建一个IR甲板”（Create an IR deck from this article）\r\n- “给我看看我的甲板列表”（Show my decks）\r\n- “给我换一下这个甲板的名字”（Rename this deck）\r\n\r\n## 可用工具\r\n\r\n### 文档管理\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `create_document` |创建新文档（合同、提案、报价、简历、报告等）——自动生成PDF|\r\n| `upload_document` |上传PDF或Office文件（DOC、DOCX、HWP、XLS、XLSX、PPT、PPTX）|\r\n| `list_documents` |列出具有可选分页的文档|\r\n| `get_document` |获取文档详细信息和提取的文本|\r\n| `delete_document` |删除文档|\r\n| `search_documents` |使用文本查询、日期过滤器和分页搜索文档|\r\n| `analyze_document` |基于AI的文档分析，具有风险评分和洞察力|\r\n\r\n### 文件夹管理\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_folders` |列出文件夹|\r\n| `create_folder` |创建新文件夹|\r\n| `delete_folder` |删除文件夹（可选择包含所有内容）|\r\n\r\n### 演示甲板\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `create_deck` |使用AI从文本内容创建演示文稿（深色/浅色主题，16:9幻灯片）|\r\n| `list_decks` |列出带有文件夹过滤和分页功能的演示文稿|\r\n| `get_deck` |获取甲板细节和完整幻灯片设计JSON|\r\n| `edit_deck` |编辑甲板标题、文件夹或幻灯片设计组件|\r\n| `delete_deck` |删除一个幻灯片及其所有幻灯片设计|\r\n\r\n## 文档类型\r\n\r\n|类型|示例|\r\n|------|----------|\r\n| `contract` |服务协议、保密协议、雇佣合同|\r\n| `proposal` |项目建议书、咨询建议书|\r\n| `quotation` |报价、成本估算|\r\n| `plan` |项目计划、战略文件|\r\n| `business-plan` |投资者推介商业计划|\r\n| `report` |分析报告、审计报告|\r\n| `official-letter` |正式信函、通知、请求|\r\n| `resume` |简历、简历、求职信|\r\n| `purchase-order` |采购订单、交货单|\r\n| `manual` |SOP、用户手册、指南|\r\n\r\n## 工作流程\r\n\r\n### 文件\r\n\r\n1. **AI生成文档** ->电话 `create_document` ->PDF是在AiDocX中创建的\r\n1. **打开URL** 工具返回以查看、下载或共享\r\n1. **对于合同：** 打开签名工作区URL以放置签名字段并发送给签名者\r\n\r\n### 演示甲板\r\n\r\n1. **提供文本内容** （文章、笔记、数据）->通话 `create_deck` ->AI生成多幻灯片\r\n1. **打开编辑器URL** 预览、自定义幻灯片和调整设计\r\n1. **分享** 带观众的甲板或根据需要导出\r\n\r\n## 安全\r\n\r\n- **API证书** 通过以下方式传输 `X-API-Key` 和 `X-API-Secret` 仅限HTTPS上的标头\r\n- **从未记录凭据** -MCP服务器不将API密钥写入stdout、文件或任何持久存储\r\n- **按密钥速率限制** 在服务器端强制执行（取决于计划：30-600需求/分钟）\r\n- **所有输入均已验证** 具有严格的模式——ID的UUID格式、文本字段的长度限制、有界分页\r\n- **API密钥可以旋转或撤销** 随时从“设置”>“API密钥”\r\n- **每个密钥都有一个可选的过期时间** （7d/30d/90d/never）--对CI/CD或共享环境使用短期密钥\r\n- **破坏性行动** （删除文档/文件组/文件夹）需要人工智能助理的明确确认\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `AIDOCX_API_KEY` |是| API密钥（以开头 `ak_`) |\r\n| `AIDOCX_API_SECRET` |是| API机密（64字符十六进制）|\r\n| `AIDOCX_API_URL` |没有| API基本URL（默认值： `https://api.aidocx.ai`) |\r\n| `AIDOCX_APP_URL` |否|应用程序基本URL（默认值： `https://app.aidocx.ai`) |\r\n\r\n## 更新日志\r\n\r\n### v0.5.0\r\n\r\n- 添加了5个演示文稿工具： `create_deck`, `list_decks`, `get_deck`, `edit_deck`, `delete_deck`\r\n- 添加 `PUT` 对API客户端的方法支持\r\n- 加强所有工具的输入验证（UUID格式、长度限制、有界分页）\r\n\r\n### v0.4.1\r\n\r\n- 工具重命名：合约->文档，以获得更广泛的文档类型支持\r\n- 通过可操作的指导改进了错误消息\r\n\r\n### v0.4.0\r\n\r\n- 添加 `search_documents` 和 `analyze_document` 工具\r\n- 添加文件夹管理工具\r\n\r\n### v0.1.0\r\n\r\n- 首次发布，包含文档CRUD和上传\r\n\r\n## 链接\r\n\r\n- [AiDocX网站](https://aidocx.ai)\r\n- [AiDocX应用程序](https://app.aidocx.ai)\r\n- [MCP协议](https://modelcontextprotocol.io)\r\n",
+ "config": {
+  "aidocx": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "aidocx-mcp-server"
+   ],
+   "env": {
+    "AIDOCX_API_KEY": "ak_xxxxxxxx",
+    "AIDOCX_API_SECRET": "your_secret_here"
+   }
+  }
+ }
+}

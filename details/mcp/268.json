@@ -1,0 +1,34 @@
+{
+ "id": "268",
+ "kind": "mcp",
+ "name": "llm-jukebox",
+ "fingerprint_md5": "3715ee31e1e4befc3d5386e18d448f3b",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# LLM自动存储塔MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，使LLM能够搜索、下载和播放YouTube音乐。\r\n\r\n## 特性\r\n\r\n- **YouTube音乐搜索**：按艺术家、歌曲标题、专辑或任何搜索查询查找音乐视频\r\n- **音频下载**：下载YouTube视频并将其转换为高质量的MP3文件\r\n- **音频播放**：模特可以启动和停止歌曲\r\n- **异步操作**：具有进度跟踪功能的非阻塞下载和搜索\r\n- **日志记录**：调试级日志记录到文件和stderr\r\n\r\n### 安装\r\n\r\n- **获取文件**：克隆仓库或下载并解压缩zip\r\n- **获取FFMPEG**：确保你有ffmpeg。在窗口中打开终端并键入 `winget install ffmpeg`，在Ubuntu或Debian中 `sudo apt install ffmpeg`\r\n- **加载具有工具功能的模型**：确保你有一个经过培训的模型来正确处理工具。Qwen 3和Gemma 3是不错的选择。\r\n- **创建JSON条目**：在LM Studio中，单击开发人员模式，然后单击程序、工具和集成，安装按钮旁边的箭头，以及编辑mcp.json。在mcpServers下添加以下条目：\r\n\r\n```json\r\n\"llm-jukebox\": {\r\n  \"command\": \"uv\",\r\n  \"args\": [\r\n\t\"run\",\r\n\t\"--with\",\r\n\t\"fastmcp\",\r\n\t\"--with\",\r\n\t\"yt-dlp\",\r\n\t\"--with\",\r\n\t\"tinydb\",\r\n\t\"--with\",\r\n\t\"pygame\",\r\n\t\"fastmcp\",\r\n\t\"run\",\r\n\t\"c:/path/to/llm-jukebox/server.py\"\r\n  ],\r\n  \"env\": {\r\n\t\"DOWNLOAD_PATH\": \"c:/path/to/downloads\"\r\n  }\r\n}\r\n```\r\n\r\n确保更改路径以适应存储库所在的路径以及下载的位置。\r\n\r\n如果没有其他条目，完整的JSON应该看起来像这样：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"llm-jukebox\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n\t\t\"run\",\r\n\t\t\"--with\",\r\n\t\t\"fastmcp\",\r\n\t\t\"--with\",\r\n\t\t\"yt-dlp\",\r\n\t\t\"--with\",\r\n\t\t\"tinydb\",\r\n\t\t\"--with\",\r\n\t\t\"pygame\",\r\n\t\t\"fastmcp\",\r\n\t\t\"run\",\r\n        \"c:/users/user/llm-jukebox/server.py\"\r\n      ],\r\n      \"env\": {\r\n        \"DOWNLOAD_PATH\": \"c:/users/user/downloads\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n单击“保存”按钮或按Ctrl+S。如果它有效，您应该能够将滑块设置为打开llm自动存储塔。\r\n\r\n现在你可以让法学硕士为你选一首歌！\r\n\r\n## 法律考虑\r\n\r\n此工具用于您有权下载的内容的个人使用。用户有责任遵守：\r\n\r\n- YouTube的服务条款\r\n- 当地版权法\r\n- 内容创作者的权利\r\n\r\n始终尊重知识产权，考虑通过官方渠道支持艺术家。\r\n\r\n## 信用\r\n\r\n播放工具改编自https://github.com/Here-and-Tomorrow-LLC/audio-player-mcp（MIT许可）\r\n",
+ "config": {
+  "llm-jukebox": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--with",
+    "fastmcp",
+    "--with",
+    "yt-dlp",
+    "--with",
+    "tinydb",
+    "--with",
+    "pygame",
+    "fastmcp",
+    "run",
+    "c:/users/user/llm-jukebox/server.py"
+   ],
+   "env": {
+    "DOWNLOAD_PATH": "c:/users/user/downloads"
+   }
+  }
+ }
+}

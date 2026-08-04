@@ -1,0 +1,21 @@
+{
+ "id": "539",
+ "kind": "mcp",
+ "name": "winsight",
+ "fingerprint_md5": "9b4a36b1111c4a9077ccabe25b7970b4",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# WinSight MCP\r\n\r\nmcp名称：io.github。TheoEwzZer/winsight\r\n\r\nWindows屏幕捕获MCP服务器——让Claude Code看到您的Windows桌面。\r\n\r\nWinSight是一个 [主控程序](https://modelcontextprotocol.io) 允许Claude Code捕获您的屏幕、管理窗口和在windows上启动应用程序的服务器。\r\n\r\n## 特性\r\n\r\n- **截图** 全屏、特定区域或特定窗口\r\n- **窗口捕获** 使用Win32 `PrintWindow` API-捕获真实的窗口内容，即使它位于其他窗口后面\r\n- **列出并检查** 打开窗口和监视器（标题、位置、大小、状态、分辨率）\r\n- **控制窗口** --移动、调整大小、最小化、最大化、恢复和聚焦\r\n- **发射** 应用程序并等待其窗口\r\n\r\n## 需求\r\n\r\n- **Windows 10/11**\r\n- **Python 3.10+**\r\n\r\n## 快速开始\r\n\r\n### 选项1:uvx（推荐）\r\n\r\n无需安装--直接运行：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"winsight\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"winsight-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n将此添加到您的项目 `.mcp.json` 或 `~/.claude/claude_desktop_config.json`.\r\n\r\n### 选项2:pip安装\r\n\r\n```bash\r\npip install winsight-mcp\r\n```\r\n\r\n然后配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"winsight\": {\r\n      \"command\": \"winsight-mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 选项3：来源\r\n\r\n```bash\r\ngit clone https://github.com/TheoEwzZer/WinSight-MCP.git\r\ncd WinSight-MCP\r\nuv sync\r\n```\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"winsight\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"/path/to/WinSight-MCP\", \"run\", \"winsight-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### 截图\r\n\r\n|工具|说明|\r\n| ------------------- | ----------------------------------------------------------------------- |\r\n| `take_screenshot` |捕获全屏或特定监视器|\r\n| `screenshot_window` |按标题捕获特定窗口（即使在其他窗口后面也有效）|\r\n| `screenshot_region` |捕捉屏幕的矩形区域|\r\n\r\n### 窗口管理\r\n\r\n|工具|说明|\r\n| ----------------- | ----------------------------------------------------------- |\r\n| `list_windows` |列出所有带有可选标题过滤器的可见窗口|\r\n| `get_window_info` |获取窗口的详细信息（位置、大小、状态）|\r\n| `focus_window` |把窗户带到前台|\r\n| `resize_window` |将窗口调整为特定尺寸|\r\n| `move_window` |将窗口移动到特定位置|\r\n| `minimize_window` |将窗口最小化到任务栏|\r\n| `maximize_window` |最大化窗口以填充屏幕|\r\n| `restore_window` |将最小化或最大化窗口恢复到正常状态|\r\n| `wait_for_window` |等待窗口出现（带超时的自适应轮询）|\r\n\r\n### 系统\r\n\r\n|工具|说明|\r\n| ------------------ | ------------------------------------------------------------- |\r\n| `list_monitors` |列出所有具有分辨率、位置和主标志的监视器|\r\n| `open_application` |启动应用程序，并可选择等待其窗口|\r\n\r\n## 例子\r\n\r\n连接MCP服务器后，您可以向Claude Code询问以下问题：\r\n\r\n- “截取我的屏幕截图”\r\n- “列出所有打开的窗口”\r\n- “捕获记事本窗口”\r\n- “打开计算器并截图”\r\n- “聚焦Chrome窗口”\r\n- “将应用程序窗口大小调整为800x600并截图”\r\n- “将窗口移到左上角”\r\n- “我有什么显示器？”\r\n\r\n## 测试\r\n\r\n该项目有112个测试，涵盖所有模块。测试使用Win32 API的模拟，因此它们可以在任何平台上运行。\r\n\r\n### 运行测试\r\n\r\n```bash\r\nuv run pytest\r\n```\r\n\r\n### 测试结构\r\n\r\n```text\r\ntests/\r\n  conftest.py              # Shared fixtures and Win32 stubs\r\n  test_types.py            # TypedDict definitions validation\r\n  test_screenshot.py       # Screen/region/window capture (mss, Win32 DC)\r\n  test_window_manager.py   # Window listing, find, focus, resize, move, min/max/restore\r\n  test_process_manager.py  # Application launch and window polling\r\n  test_server.py           # MCP tool registration and integration\r\n```\r\n\r\n### 添加测试\r\n\r\n1. 在匹配中加入新的测试 `test_.py` 文件\r\n1. 使用来自的共享装置 `conftest.py` (`sample_window_info`, `mcp_server`, `fake_png_bytes`)\r\n1. 模拟Win32 API `@patch(\"winsight_mcp..win32gui\")` --永远不要在测试中调用真正的Win32函数\r\n1. 对于服务器集成测试，请使用 `_call` 调用工具和 `_text` 提取字符串结果\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "winsight": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "winsight-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

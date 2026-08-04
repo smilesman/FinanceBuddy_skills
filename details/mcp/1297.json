@@ -1,0 +1,28 @@
+{
+ "id": "1297",
+ "kind": "mcp",
+ "name": "todos",
+ "fingerprint_md5": "3786e32eea6bb3f08207ce92f61f725e",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# @suabase/mcp服务器postgrest\r\n\r\n这是一个MCP服务器 [PostgREST](https://postgrest.org).它允许LLM通过REST API在您的应用程序上执行CRUD操作。\r\n\r\n此服务器可与Supabase项目（运行PostgREST）和任何独立的PostgREST服务器配合使用。\r\n\r\n## 工具\r\n\r\n以下工具可用：\r\n\r\n### `postgrestRequest`\r\n\r\n向执行HTTP请求 [配置](#usage) PostgREST服务器。它接受以下论点：\r\n\r\n- `method`：要使用的HTTP方法（例如。 `GET`, `POST`, `PATCH`, `DELETE`)\r\n- `path`：查询路径（例如。 `/todos?id=eq.1`)\r\n- `body`：请求体（for `POST` 和 `PATCH` 请求：\r\n\r\n它从PostgREST服务器返回JSON响应，包括以下内容的选定行 `GET` 请求和更新的行 `POST` 和 `PATCH` 请求：\r\n\r\n### `sqlToRest`\r\n\r\n将SQL查询转换为等效的PostgREST语法（作为方法和路径）。对于LLM难以转换为有效PostgREST语法的复杂查询非常有用。\r\n\r\n请注意，PostgREST只支持SQL的一个子集，因此并非所有查询都会转换。看 [`sql-to-rest`](https://github.com/supabase-community/sql-to-rest) 了解更多详情。\r\n\r\n它接受以下论点：\r\n\r\n- `sql`：要转换的SQL查询。\r\n\r\n它返回一个包含以下内容的对象 `method` 和 `path` 请求的属性。LLM然后可以使用 `postgrestRequest` 执行请求的工具。\r\n\r\n## 用法\r\n\r\n### 使用克劳德桌面\r\n\r\n[克劳德桌面版](https://claude.ai/download) 是支持模型上下文协议的流行LLM客户端。您可以将PostgREST服务器连接到Claude Desktop，通过自然语言命令查询数据库。\r\n\r\n您可以通过Claude Desktop的配置文件将MCP服务器添加到Claude Desktop：\r\n\r\n- macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n- 窗户：`%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n添加您的Supabase项目 _（或任何PostgREST服务器）_ 在Claude Desktop中，将以下配置添加到 `mcpServers` 配置文件中的对象：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"todos\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@supabase/mcp-server-postgrest@latest\",\r\n        \"--apiUrl\",\r\n        \"https://your-project-ref.supabase.co/rest/v1\",\r\n        \"--apiKey\",\r\n        \"your-anon-key\",\r\n        \"--schema\",\r\n        \"public\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 配置\r\n\r\n- `apiUrl`：PostgREST端点的基本URL\r\n\r\n- `apiKey`：用于身份验证的API密钥 _（可选）_\r\n\r\n- `schema`：为API提供服务的Postgres模式（例如。 `public`).请注意，任何非公共模式都必须从PostgREST手动公开。\r\n\r\n### 程序化（自定义MCP客户端）\r\n\r\n如果您正在构建自己的MCP客户端，则可以使用首选传输以编程方式连接到PostgREST服务器。这 [MCP-SDK](https://github.com/modelcontextprotocol/typescript-sdk) 提供内置 [标准](https://modelcontextprotocol.io/docs/concepts/transports#standard-input-output-stdio) 和 [上海证券交易所](https://modelcontextprotocol.io/docs/concepts/transports#server-sent-events-sse) 运输。我们还提供 [`StreamTransport`](../mcp-utils#streamtransport) 如果您希望直接连接到内存中的MCP服务器，或者通过自己的基于流的传输管道连接。\r\n\r\n#### 安装\r\n\r\n```bash\r\nnpm i @supabase/mcp-server-postgrest\r\n```\r\n\r\n```bash\r\nyarn add @supabase/mcp-server-postgrest\r\n```\r\n\r\n```bash\r\npnpm add @supabase/mcp-server-postgrest\r\n```\r\n\r\n#### 示例\r\n\r\n以下示例使用 [`StreamTransport`](../mcp-utils#streamtransport) 以在MCP客户端和服务器之间直接连接。\r\n\r\n```ts\r\nimport { Client } from '@modelcontextprotocol/sdk/client/index.js';\r\nimport { StreamTransport } from '@supabase/mcp-utils';\r\nimport { createPostgrestMcpServer } from '@supabase/mcp-server-postgrest';\r\n\r\n// Create a stream transport for both client and server\r\nconst clientTransport = new StreamTransport();\r\nconst serverTransport = new StreamTransport();\r\n\r\n// Connect the streams together\r\nclientTransport.readable.pipeTo(serverTransport.writable);\r\nserverTransport.readable.pipeTo(clientTransport.writable);\r\n\r\nconst client = new Client(\r\n  {\r\n    name: 'MyClient',\r\n    version: '0.1.0',\r\n  },\r\n  {\r\n    capabilities: {},\r\n  }\r\n);\r\n\r\nconst supabaseUrl = 'https://your-project-ref.supabase.co'; // http://127.0.0.1:54321 for local\r\nconst apiKey = 'your-anon-key'; // or service role, or user JWT\r\nconst schema = 'public'; // or any other exposed schema\r\n\r\nconst server = createPostgrestMcpServer({\r\n  apiUrl: `${supabaseUrl}/rest/v1`,\r\n  apiKey,\r\n  schema,\r\n});\r\n\r\n// Connect the client and server to their respective transports\r\nawait server.connect(serverTransport);\r\nawait client.connect(clientTransport);\r\n\r\n// Call tools, etc\r\nconst output = await client.callTool({\r\n  name: 'postgrestRequest',\r\n  arguments: {\r\n    method: 'GET',\r\n    path: '/todos',\r\n  },\r\n});\r\n```\r\n",
+ "config": {
+  "todos": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@supabase/mcp-server-postgrest@latest",
+    "--apiUrl",
+    "https://your-project-ref.supabase.co/rest/v1",
+    "--apiKey",
+    "your-anon-key",
+    "--schema",
+    "public"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "2053",
+ "kind": "mcp",
+ "name": "stock-price-checker",
+ "fingerprint_md5": "b1da34f6b3f79b2351938c923a279c2b",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 股票价格MCP服务器\r\n\r\n一个模型上下文协议（MCP）服务器，提供来自雅虎财经的实时股价数据。此服务器与Claude Desktop集成，允许您在对话中直接查询当前股票价格。\r\n\r\n## 特性\r\n\r\n- 雅虎财经的实时股价数据\r\n- Docker化，易于部署\r\n- 与Claude Desktop兼容\r\n- 支持主要股票品种（AAPL、GOOGL、MSFT、TSLA等）\r\n- 返回当前价格、变化、日高/低和交易量\r\n\r\n## 快速开始\r\n\r\n### 1.构建Docker镜像\r\n\r\n```bash\r\n# Clone or navigate to the project directory\r\ncd stock-price-mcp\r\n\r\n# Build the Docker image\r\ndocker build -t stock-price-mcp:latest .\r\n```\r\n\r\n### 2.测试服务器\r\n\r\n直接用Docker测试MCP服务器：\r\n\r\n```bash\r\n# Test initialization\r\necho '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"initialize\",\"params\":{}}' | docker run -i --rm stock-price-mcp:latest\r\n\r\n# Test tools list\r\necho '{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"tools/list\"}' | docker run -i --rm stock-price-mcp:latest\r\n\r\n# Test getting Apple stock price\r\necho '{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"tools/call\",\"params\":{\"name\":\"get_stock_price\",\"arguments\":{\"symbol\":\"AAPL\"}}}' | docker run -i --rm stock-price-mcp:latest\r\n\r\n# Test other stocks\r\necho '{\"jsonrpc\":\"2.0\",\"id\":4,\"method\":\"tools/call\",\"params\":{\"name\":\"get_stock_price\",\"arguments\":{\"symbol\":\"GOOGL\"}}}' | docker run -i --rm stock-price-mcp:latest\r\n```\r\n\r\n### 3.配置克劳德桌面\r\n\r\n#### 选项A：使用提供的配置文件\r\n\r\n从以下位置复制配置 `config/mcp-config.json` 到您的Claude Desktop配置：\r\n\r\n**Claude桌面配置的位置：**\r\n\r\n- **macOS：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- **Linux：** `~/.config/Claude/claude_desktop_config.json`\r\n\r\n**复制内容：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"stock-price-checker\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"stock-price-mcp:latest\"\r\n      ],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 选项B：添加到现有配置\r\n\r\n如果您已经配置了其他MCP服务器，请添加 `stock-price-checker` 部分到您现有的 `mcpServers` 对象。\r\n\r\n### 4.重新启动克劳德桌面\r\n\r\n更新配置后，完全退出并重新启动Claude Desktop以使更改生效。\r\n\r\n## 用法\r\n\r\n配置后，您可以用自然语言向Claude询问股票价格：\r\n\r\n- “苹果目前的股价是多少？”\r\n- “给我GOOGL的价格”\r\n- “给我看看特斯拉的股价”\r\n- “微软现在的交易价格是多少？”\r\n\r\n## 支持的股票代码\r\n\r\n该服务器适用于雅虎财经上可用的任何有效股票代码，包括：\r\n\r\n- **技术：** AAPL、GOOGL、MSFT、TSLA、NVDA、META、AMZN\r\n- **财务：** JPM、BAC、WFC、GS\r\n- **医疗保健：** JNJ、PFE、UNH、ABBV\r\n- **还有更多。..**\r\n\r\n## 项目结构\r\n\r\n```\r\nstock-price-mcp/\r\n├── main.go              # MCP server implementation\r\n├── go.mod               # Go module file\r\n├── Dockerfile           # Multi-stage Docker build\r\n├── docker-compose.yml   # Docker Compose configuration\r\n├── config/\r\n│   └── mcp-config.json  # Claude Desktop configuration\r\n└── README.md           # This file\r\n```\r\n\r\n## 发展\r\n\r\n### 本地开发（无Docker）\r\n\r\n```bash\r\n# Build locally\r\ngo build -o stock-price-mcp\r\n\r\n# Test locally\r\necho '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}' | ./stock-price-mcp\r\n```\r\n\r\n### 使用Docker Compose\r\n\r\n```bash\r\n# Start the service\r\ndocker-compose up -d\r\n\r\n# View logs\r\ndocker-compose logs -f stock-price-mcp\r\n\r\n# Stop the service\r\ndocker-compose down\r\n```\r\n\r\n## 故障排除\r\n\r\n### 常见问题\r\n\r\n1. **Claude Desktop中“无可用工具”**\r\n\r\n   - 确保Docker镜像已构建： `docker build -t stock-price-mcp:latest .`\r\n   - 验证Claude Desktop配置是否正确\r\n   - 完全重新启动克劳德桌面\r\n\r\n1. **“无法获取数据”错误**\r\n\r\n   - 检查互联网连接\r\n   - 验证股票代码是否有效\r\n   - 雅虎财经可能会暂时阻止请求\r\n\r\n1. **Docker构建失败**\r\n\r\n   - 确保你的Dockerfile中有Go 1.21+\r\n   - 检查所有文件是否都在正确的目录中\r\n\r\n### 测试配置\r\n\r\n验证您的配置是否正常工作：\r\n\r\n```bash\r\n# Test that Docker can run the image\r\ndocker run --rm stock-price-mcp:latest --help\r\n\r\n# Test JSON-RPC communication\r\ndocker run -i --rm stock-price-mcp:latest < config/test-request.json\r\n```\r\n\r\n## 技术细节\r\n\r\n- **语言：** 转到1.25+\r\n- **协议：** 基于stdio的JSON-RPC 2.0\r\n- **数据来源：** 雅虎财经API\r\n\r\n## 许可证\r\n\r\n本项目按原样提供，供教育和个人使用。\r\n\r\n## 贡献\r\n\r\n请随时提交问题和增强请求。\r\n",
+ "config": {
+  "stock-price-checker": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "stock-price-mcp:latest"
+   ],
+   "env": {}
+  }
+ }
+}

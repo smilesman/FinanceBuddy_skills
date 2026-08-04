@@ -1,0 +1,21 @@
+{
+ "id": "1700",
+ "kind": "mcp",
+ "name": "routine",
+ "fingerprint_md5": "8bb0008f4109c13d58e3b221a87522fe",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 常规模型上下文协议（MCP）服务器\r\n\r\n这是惯例 [模型上下文协议（MCP）](https://modelcontextprotocol.io) 服务器。\r\n\r\n## 用法\r\n\r\n1. 跑吧 [常规](https://routine.co/download) MCP服务器工作的应用程序。\r\n1. 使用以下命令运行此MCP服务器 `npx routine-mcp-server` 或者在您最喜欢的MCP客户端中配置它。\r\n\r\n### 克劳德桌面\r\n\r\n关于Claude Desktop，请参阅https://modelcontextprotocol.io/quickstart/user\r\n\r\n特别是你的文件 `claude_desktop_config.json` 应该看起来像这样：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"routine\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"routine-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nyarn\r\n\r\n# Build the project\r\nyarn build\r\n```\r\n\r\n然后安装MCP服务器：\r\n\r\n- 命令：完整路径 `node` 可执行\r\n- 参数：完整路径 `./dist/index.js`\r\n\r\n### 克劳德桌面\r\n\r\n关于Claude Desktop，请参阅https://modelcontextprotocol.io/quickstart/user\r\n\r\n特别是你的文件 `claude_desktop_config.json` 应该看起来像这样：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"routine\": {\r\n      \"command\": \"/absolute/path/to/bin/node\",\r\n      \"args\": [\"/absolute/path/to/mcp-server/dist/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 运行MCP服务器（开发）\r\n\r\n```bash\r\n# Start the server\r\nyarn start\r\n```\r\n\r\n服务器按照MCP协议通过stdin/stdout进行通信。您可以通过向其stdin发送JSON请求并从stdout读取响应来与它交互。\r\n",
+ "config": {
+  "routine": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "routine-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

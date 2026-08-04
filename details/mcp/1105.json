@@ -1,0 +1,23 @@
+{
+ "id": "1105",
+ "kind": "mcp",
+ "name": "mcp-server-oracle",
+ "fingerprint_md5": "dbda5efdede4b5ac3fa369748955e296",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp服务器oracle\r\n\r\n访问oracle的模型上下文协议服务器\r\n\r\n\r\n## 德莫斯\r\n\r\nhttps://github.com/user-attachments/assets/dc4e377b-4efb-43e6-85fa-93ed852fe21f\r\n\r\n## 快速启动\r\n\r\n要在Claude Desktop应用程序中尝试此操作，请将其添加到您的Claude配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-server-oracle\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"mcp-server-oracle\"\r\n      ],\r\n      \"env\": {\r\n        \"ORACLE_CONNECTION_STRING\": \"username/password@hostname:password/service_name\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 先决条件\r\n\r\n- UV（包装经理）\r\n- Python 3.12+\r\n- 克劳德桌面\r\n\r\n### 安装\r\n\r\n#### Claude桌面配置\r\n\r\n将服务器配置添加到Claude Desktop配置文件中：\r\n\r\n**MacOS**: `~/Library/Application\\ Support/Claude/claude_desktop_config.json`\\\r\n**视窗**: `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n## 贡献\r\n\r\n1. 从以下位置分叉存储库 [mcp服务器oracle](https://github.com/hdcola/mcp-server-oracle)\r\n1. 创建功能分支\r\n1. 提交您的更改\r\n1. 推到分支\r\n1. 打开拉取请求\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "mcp-server-oracle": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-server-oracle"
+   ],
+   "env": {
+    "ORACLE_CONNECTION_STRING": "username/password@hostname:password/service_name"
+   }
+  }
+ }
+}

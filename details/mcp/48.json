@@ -1,0 +1,24 @@
+{
+ "id": "48",
+ "kind": "mcp",
+ "name": "arch-tools",
+ "fingerprint_md5": "71a1ae232e46558a1918b20c2177e990",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# Arch工具+克劳德桌面——2分钟内64个AI工具\r\n\r\n让Claude Desktop访问64个生产工具：网络抓取、人工智能生成、加密数据、OCR、浏览器自动化、电子邮件等。\r\n\r\n## 快速设置（2分钟）\r\n\r\n**第一步：** 安装MCP服务器\r\n\r\n```bash\r\nnpx @deesmo/arch-tools-mcp\r\n```\r\n\r\n**第二步：** 添加到Claude桌面配置（Linux上的~/.config/Claude/Claude_Desktop_config.json，Mac上的~/库/应用程序支持/Claude/claide_Desktop \\_config.json）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"arch-tools\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@deesmo/arch-tools-mcp\"],\r\n      \"env\": {\r\n        \"ARCH_TOOLS_API_KEY\": \"arch_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**步骤3：** 在获取免费API密钥 [archtools.dev](https://archtools.dev) --100个积分，无需信用卡。\r\n\r\n**步骤4：** 重新启动克劳德桌面。所有64个工具都会自动显示。\r\n\r\n## 克劳德现在能做什么\r\n\r\n- “废弃TechCrunch并总结前5个故事”\r\n- “获取比特币的当前价格和加密货币恐惧和贪婪指数”\r\n- “提取此PDF中的所有文本：\\[URL\\]”\r\n- “截取archtools.dev的屏幕截图”\r\n- “验证是否support@archtools.dev是一个真实的电子邮件地址”\r\n- “为我的网站URL生成二维码”\r\n\r\n## 全部64个工具\r\n\r\n|类别|示例|\r\n|----------|---------|\r\n|网络|网络抓取、搜索网络、截图、提取页面|\r\n|AI | AI生成（Claude/GPT-4/Grok/Gemini）、总结、情绪分析|\r\n|加密货币|加密货币价格、加密货币新闻、加密货币恐惧贪婪、加密货币市值|\r\n|文件|ocr提取、提取pdf、html到markdown|\r\n|实用程序|电子邮件验证、生成哈希、二维码、货币转换、时区转换|\r\n|更多|语义搜索、新闻搜索、域名检查、手机验证，+35更多|\r\n\r\n完整工具列表： [archtools.dev/docs](https://archtools.dev/docs)\r\n\r\n## x402付款（适用于自主代理）\r\n\r\n人工智能代理可以在Base、Ethereum、Solana、Polygon上使用USDC支付每笔交易-无需API密钥。看 [archtools.dev/x402指南](https://archtools.dev/x402-guide).\r\n\r\n## 链接\r\n\r\n- 网站：https://archtools.dev\r\n- 文件：https://archtools.dev/docs\r\n- 游乐场：https://archtools.dev/playground\r\n- github：https://github.com/Deesmo/Arch-AI-Tools\r\n- 社区：https://github.com/Deesmo/Arch-AI-Tools/discussions\r\n- npm：https://www.npmjs.com/package/@deesmo/arch工具mcp\r\n",
+ "config": {
+  "arch-tools": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@deesmo/arch-tools-mcp"
+   ],
+   "env": {
+    "ARCH_TOOLS_API_KEY": "arch_your_key_here"
+   }
+  }
+ }
+}

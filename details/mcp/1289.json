@@ -1,0 +1,31 @@
+{
+ "id": "1289",
+ "kind": "mcp",
+ "name": "supabase",
+ "fingerprint_md5": "094ef1d4143ee31453401d949ddb32bf",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Supabase MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，提供与Supabase数据库交互的工具。该服务器使AI助手能够通过标准化的界面执行数据库操作。\r\n\r\n注意：创建此Supabase MCP服务器是为了演示我的AI IDE编码工作流程。这仍然是一项正在进行的工作，我将在未来的视频中详细介绍 [频道](https://youtube.com/@ColeMedin).\r\n\r\n## 特性\r\n\r\n- **读取表行**：通过可选的筛选、分页和列选择从Supabase表中查询数据\r\n- **创建表记录**：在Supabase表中插入新记录\r\n- **更新表格记录**：根据筛选器修改辅助数据库表中的现有记录\r\n- **删除表记录**：根据筛选器从Supabase表中删除记录\r\n\r\n## 先决条件\r\n\r\n- Docker或Docker桌面\r\n- 辅助账户和项目\r\n\r\n## 安装\r\n\r\n1. 克隆存储库：\r\n   ```bash\r\n   git clone https://github.com/coleam00/supabase-mcp.git\r\n   cd supabase-mcp\r\n   ```\r\n\r\n### Docker设置\r\n\r\n1. 构建Docker镜像：\r\n   ```bash\r\n   docker build -t mcp/supabase .\r\n   ```\r\n\r\n## 用法\r\n\r\n### 使用Docker作为MCP服务器运行\r\n\r\nSupabase MCP服务器可以使用模型上下文协议与AI助手集成。\r\n\r\n1. 在您的MCP配置中包含以下配置（在Claude Desktop、Windsurf等中）\r\n\r\n一定要先按照安装步骤构建容器！\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"supabase\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"--rm\", \"-i\", \"-e\", \"SUPABASE_URL\", \"-e\", \"SUPABASE_SERVICE_KEY\", \"mcp/supabase\"],\r\n      \"env\": {\r\n        \"SUPABASE_URL\": \"YOUR-SUPABASE-URL\",\r\n        \"SUPABASE_SERVICE_KEY\": \"YOUR-SUPABASE-SERVICE-ROLE-KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n2. 替换 `YOUR-SUPABASE-URL` 和 `YOUR-SUPABASE-SERVICE-ROLE-KEY` 使用您的实际Supabase凭据。\r\n\r\n1. AI助手现在可以使用提供的工具通过MCP服务器访问Supabase数据库。\r\n\r\n有关模型上下文协议的更多信息，请访问 [模型上下文协议.io](https://modelcontextprotocol.io).\r\n\r\n### 可用工具\r\n\r\n#### 读取表行\r\n\r\n```python\r\nread_table_rows(\r\n    table_name: str,\r\n    columns: Optional[List[str]] = None,\r\n    filters: Optional[Dict[str, Any]] = None,\r\n    limit: Optional[int] = None,\r\n    offset: Optional[int] = None\r\n)\r\n```\r\n\r\n例子：\r\n\r\n```python\r\n# Read active users\r\nread_table_rows(\r\n    table_name=\"users\",\r\n    columns=[\"id\", \"name\", \"email\"],\r\n    filters={\"is_active\": True},\r\n    limit=10,\r\n    offset=0\r\n)\r\n```\r\n\r\n#### 创建表记录\r\n\r\n```python\r\ncreate_table_records(\r\n    table_name: str,\r\n    records: Union[Dict[str, Any], List[Dict[str, Any]]]\r\n)\r\n```\r\n\r\n例子：\r\n\r\n```python\r\n# Create a new user\r\ncreate_table_records(\r\n    table_name=\"users\",\r\n    records={\r\n        \"name\": \"John Doe\",\r\n        \"email\": \"john@example.com\",\r\n        \"is_active\": True\r\n    }\r\n)\r\n```\r\n\r\n#### 更新表格记录\r\n\r\n```python\r\nupdate_table_records(\r\n    table_name: str,\r\n    updates: Dict[str, Any],\r\n    filters: Dict[str, Any]\r\n)\r\n```\r\n\r\n例子：\r\n\r\n```python\r\n# Update user status\r\nupdate_table_records(\r\n    table_name=\"users\",\r\n    updates={\"status\": \"premium\"},\r\n    filters={\"is_active\": True}\r\n)\r\n```\r\n\r\n#### 删除表记录\r\n\r\n```python\r\ndelete_table_records(\r\n    table_name: str,\r\n    filters: Dict[str, Any]\r\n)\r\n```\r\n\r\n例子：\r\n\r\n```python\r\n# Delete inactive users\r\ndelete_table_records(\r\n    table_name=\"users\",\r\n    filters={\"is_active\": False}\r\n)\r\n```\r\n\r\n## 发展\r\n\r\n### 项目结构\r\n\r\n```\r\nsupabase-mcp/\r\n├── supabase_mcp/\r\n│   ├── __init__.py\r\n│   ├── server.py              # Main MCP server implementation\r\n│   └── tests/                 # Unit tests\r\n├── Dockerfile                 # Docker configuration for MCP server\r\n├── example_mcp_config.json    # Example MCP configuration\r\n├── requirements.txt           # Python dependencies\r\n├── .env.example               # Example environment variables\r\n├── README.md                  # Project documentation\r\n├── PLANNING.md                # Project planning\r\n└── TASKS.md                   # Task tracking\r\n```\r\n\r\n### 运行测试\r\n\r\n```bash\r\npytest supabase_mcp/tests/\r\n```\r\n\r\n## 模型上下文协议集成\r\n\r\nSupabase MCP服务器实现 [模型上下文协议](https://modelcontextprotocol.io)，它允许AI助手以标准化的方式与Supabase数据库进行交互。\r\n\r\n### 运作原理\r\n\r\n1. MCP服务器公开了用于数据库操作（读取、创建、更新、删除）的工具\r\n1. AI助手使用stdio传输连接到MCP服务器\r\n1. AI助手可以调用工具来执行数据库操作\r\n1. MCP服务器处理与Supabase的通信并返回结果\r\n\r\n### MCP配置\r\n\r\n这 `example_mcp_config.json` 该文件显示了如何配置AI助手以使用Supabase MCP服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"supabase\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"--rm\", \"-i\", \"-e\", \"SUPABASE_URL\", \"-e\", \"SUPABASE_SERVICE_KEY\", \"mcp/supabase\"],\r\n      \"env\": {\r\n        \"SUPABASE_URL\": \"YOUR-SUPABASE-URL\",\r\n        \"SUPABASE_SERVICE_KEY\": \"YOUR-SUPABASE-SERVICE-ROLE-KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n此配置告诉人工智能助手：\r\n\r\n- 使用Docker运行MCP服务器\r\n- 将Supabase凭据作为环境变量传递\r\n- 要使用 `mcp/supabase` Docker镜像\r\n\r\n### 使用AI助手\r\n\r\n支持模型上下文协议的AI助手可以使用此服务器：\r\n\r\n1. 从Supabase表中查询数据\r\n1. 将新记录插入表中\r\n1. 更新现有记录\r\n1. 删除记录\r\n\r\n助理将有权访问上述“可用工具”部分中记录的工具。\r\n\r\n## 环境变量\r\n\r\n|变量|描述|\r\n|----------|-------------|\r\n| `SUPABASE_URL` |您的Supabase项目的URL|\r\n| `SUPABASE_SERVICE_KEY` |Supabase身份验证的服务角色密钥|\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。\r\n",
+ "config": {
+  "supabase": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "-e",
+    "SUPABASE_URL",
+    "-e",
+    "SUPABASE_SERVICE_KEY",
+    "mcp/supabase"
+   ],
+   "env": {
+    "SUPABASE_URL": "YOUR-SUPABASE-URL",
+    "SUPABASE_SERVICE_KEY": "YOUR-SUPABASE-SERVICE-ROLE-KEY"
+   }
+  }
+ }
+}

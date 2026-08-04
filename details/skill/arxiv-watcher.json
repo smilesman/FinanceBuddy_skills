@@ -1,0 +1,12 @@
+{
+ "id": "arxiv-watcher",
+ "kind": "skill",
+ "name": "arxiv-watcher",
+ "fingerprint_md5": "dad5f8690039b22d87cac028220178f1",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# ArXiv Watcher\r\n\r\n此技能与 ArXiv API 交互以查找和总结最新研究论文。\r\n\r\n## 能力\r\n\r\n- **搜索**：通过关键词、作者或类别查找论文。\r\n- **总结**：获取摘要并提供简洁的总结。\r\n- **保存到记忆**：自动将总结的论文记录到 `memory/RESEARCH_LOG.md` 以供长期追踪。\r\n- **深入分析**：如果需要，在 PDF 链接上使用 `web_fetch` 以提取更多详情。\r\n\r\n## 工作流\r\n\r\n1. 使用 `scripts/search_arxiv.sh \"<query>\"` 获取 XML 结果。\r\n2. 解析 XML（查找 `<entry>`、`<title>`、`<summary>` 和 `<link title=\"pdf\">`）。\r\n3. 向用户展示发现。\r\n4. **强制**：将任何讨论过的论文的标题、作者、日期和摘要追加到 `memory/RESEARCH_LOG.md`。使用格式：\r\n   ```markdown\r\n   ### [YYYY-MM-DD] TITLE_OF_PAPER\r\n   - **Authors**: Author List\r\n   - **Link**: ArXiv Link\r\n   - **Summary**: Brief summary of the paper and its relevance.\r\n   ```\r\n\r\n## 示例\r\n\r\n- \"Busca los últimos papers sobre LLM reasoning en ArXiv.\"\r\n- \"Dime de qué trata el paper con ID 2512.08769.\"\r\n- \"Hazme un resumen de las novedades de hoy en ArXiv sobre agentes.\"\r\n\r\n## 资源\r\n\r\n- `scripts/search_arxiv.sh`: 直接 API 访问脚本。",
+ "config": {}
+}

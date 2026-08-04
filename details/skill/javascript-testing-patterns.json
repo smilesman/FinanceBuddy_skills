@@ -1,0 +1,12 @@
+{
+ "id": "javascript-testing-patterns",
+ "kind": "skill",
+ "name": "javascript-testing-patterns",
+ "fingerprint_md5": "48767f91a3d0eb0afa00036c47ae018e",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# JavaScript Testing Patterns\r\n\r\nComprehensive guide for implementing robust testing strategies in JavaScript/TypeScript applications using modern testing frameworks and best practices.\r\n\r\n## 何时使用此技能\r\n\r\n- Setting up 测试 infrastructure for new projects\r\n- Writing 单位 tests for functions and classes\r\n- Creating integration tests for APIs and services\r\n- Implementing end-迁移到-end tests for user flows\r\n- Mocking external 依赖 and APIs\r\n- Testing React, Vue, or other 前端 components\r\n- Implementing 测试-driven development (TDD)\r\n- Setting up continuous testing in CI/CD pipelines\r\n\r\n## 何时不使用此技能\r\n\r\n- The 任务 is unrelated 迁移到 javascript testing patterns\r\n- You 需要 a different domain or tool outside this scope\r\n\r\n## 指令\r\n\r\n- Clarify goals, constraints, and required inputs.\r\n- Apply relevant best practices and 验证 outcomes.\r\n- Provide actionable steps and verification.\r\n- If detailed 示例 are required, open `resources/implementation-playbook.md`.\r\n\r\n## 资源\r\n\r\n- `resources/implementation-playbook.md` for detailed patterns and 示例.\r\n\r\n## 限制\r\n- Use this skill only when the 任务 clearly matches the scope described above.\r\n- Do not treat the 输出 as a substitute for environment-specific validation, testing, or expert review.\r\n- 停止 and ask for clarification if required inputs, permissions, safety boundaries, or 成功 criteria are missing.",
+ "config": {}
+}

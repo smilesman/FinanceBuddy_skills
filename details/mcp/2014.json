@@ -1,0 +1,24 @@
+{
+ "id": "2014",
+ "kind": "mcp",
+ "name": "nory",
+ "fingerprint_md5": "50ea54417651532d4b259e09cc6f9077",
+ "download_count": 0,
+ "category": "支付服务",
+ "tags": "",
+ "version": "",
+ "readme": "# Nory MCP服务器\r\n\r\n**赋予任何AI代理支付的能力。**\r\n\r\nNory MCP服务器使AI代理和助手能够使用x402协议进行即时小额支付。为人工智能代理成为消费者的未来而构建。\r\n\r\n## 这是什么？\r\n\r\n这是一个 [模型上下文协议（MCP）](https://modelcontextprotocol.io/) 服务器，让像克劳德这样的人工智能助手能够：\r\n\r\n- 检查钱包余额\r\n- 直接付款\r\n- 通过自动x402支付处理访问付费API\r\n- 发现支持x402的服务\r\n- 查看付款记录\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install @nory/mcp-server\r\n```\r\n\r\n或者克隆并在本地构建：\r\n\r\n```bash\r\ngit clone https://github.com/nory/mcp-server\r\ncd mcp-server\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n## 配置\r\n\r\n### 适用于克劳德桌面\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"nory\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@nory/mcp-server\"],\r\n      \"env\": {\r\n        \"NORY_WALLET_KEY\": \"your-wallet-private-key\",\r\n        \"NORY_API_URL\": \"https://api.noryx402.com\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n添加到您的项目 `.mcp.json`:\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"nory\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@nory/mcp-server\"],\r\n      \"env\": {\r\n        \"NORY_WALLET_KEY\": \"${NORY_WALLET_KEY}\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### `nory_check_balance`\r\n\r\n检查您当前的钱包余额。\r\n\r\n```\r\n\"Check my Nory wallet balance\"\r\n```\r\n\r\n### `nory_pay`\r\n\r\n直接向钱包地址付款。\r\n\r\n```\r\n\"Pay 5 USDC to GkXn9...abc with memo 'Thanks!'\"\r\n```\r\n\r\n### `nory_x402_request`\r\n\r\n向启用x402的API发出HTTP请求。自动处理付款协商。\r\n\r\n```\r\n\"Use Nory to fetch data from https://api.noryx402.com/data/crypto\"\r\n```\r\n\r\n### `nory_discover_services`\r\n\r\n查找您可以付费的支持x402的服务。\r\n\r\n```\r\n\"What x402 services are available for AI tasks?\"\r\n```\r\n\r\n### `nory_payment_history`\r\n\r\n查看您最近的付款历史记录。\r\n\r\n```\r\n\"Show me my last 10 Nory transactions\"\r\n```\r\n\r\n## x402的工作原理\r\n\r\n1. **请求** -代理向启用x402的端点发出HTTP请求\r\n1. **402响应** -服务器返回带有付款详细信息的HTTP 402\r\n1. **支付** -代理通过Nory创建签名交易\r\n1. **结算** -交易在Solana上确认不到1秒\r\n1. **访问** -代理使用付款证明重试请求，得到响应\r\n\r\n当您使用时，所有这些都会自动发生 `nory_x402_request`.\r\n\r\n## 示例用法\r\n\r\n### 访问付费API\r\n\r\n```\r\nUser: \"Use Nory to get the latest crypto prices from the premium data feed\"\r\n\r\nClaude: I'll use the Nory x402 payment system to access this paid API.\r\n[Calls nory_x402_request with url=\"https://api.noryx402.com/data/crypto\"]\r\n\r\nResult: Successfully paid 0.0001 USDC and received the data...\r\n```\r\n\r\n### 任务前检查余额\r\n\r\n```\r\nUser: \"Before we start, check how much I have in my Nory wallet\"\r\n\r\nClaude: [Calls nory_check_balance]\r\n\r\nYour Nory wallet (GkXn...abc) has:\r\n- 100.00 USDC\r\n- 1.50 SOL\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|描述|必填|\r\n|----------|-------------|----------|\r\n| `NORY_WALLET_KEY` |您的Solana钱包私钥|是|\r\n| `NORY_API_URL` |Nory API端点（默认值：https://api.noryx402.com)|没有|\r\n\r\n## 安全\r\n\r\n- **无监护权的**：你的钥匙永远不会离开你的机器\r\n- **支出限额**：配置最大交易金额\r\n- **审计日志**：所有交易都在本地记录\r\n\r\n## 为什么是Nory？\r\n\r\n- **亚秒级定居点** 在索拉纳\r\n- **亚分付款** 启用\r\n- **HTTP本机** -与任何API合作\r\n- **多链** -茄、茄、蓼、Arbitrum等\r\n- **为AI打造** -专为自主代理设计\r\n\r\n## 链接\r\n\r\n- [Nory网站](https://noryx402.com)\r\n- [x402协议规范](https://noryx402.com/docs/x402)\r\n- [API文档](https://noryx402.com/docs/api)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "nory": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@nory/mcp-server"
+   ],
+   "env": {
+    "NORY_WALLET_KEY": "your-wallet-private-key",
+    "NORY_API_URL": "https://api.noryx402.com"
+   }
+  }
+ }
+}

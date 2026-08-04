@@ -1,0 +1,33 @@
+{
+ "id": "1137",
+ "kind": "mcp",
+ "name": "mssql-5",
+ "fingerprint_md5": "d7f32e823e538e7e9778e2fa3028ba44",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# MSSQL MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，使Claude等LLM能够通过自然语言与Microsoft SQL server数据库进行交互。\r\n\r\n## 特性\r\n\r\n- 🔍 使用自然语言查询SQL Server数据库\r\n- 📊 读取、插入、更新和删除数据\r\n- 🏗️ 创建和管理表和索引\r\n- 🔒 使用可选只读模式进行安全连接处理\r\n- ⚡ 使用tsx直接执行TypeScript-无需构建步骤\r\n\r\n## 快速开始\r\n\r\n### 选项1：直接从GitHub使用npx（推荐）\r\n\r\n无需安装！只需配置Claude Desktop：\r\n\r\n#### 视窗\r\n\r\n增添 `%APPDATA%\\Claude\\claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mssql\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"cmd\",\r\n      \"args\": [\"/c\", \"npx\", \"-y\", \"github:EvilPhatBoi/McpSqlServer\"],\r\n      \"env\": {\r\n        \"SERVER_NAME\": \"your-server.database.windows.net\",\r\n        \"DATABASE_NAME\": \"your-database\",\r\n        \"SQL_USERNAME\": \"your-username\",\r\n        \"SQL_PASSWORD\": \"your-password\",\r\n        \"PORT\": \"1433\",\r\n        \"ENCRYPT\": \"true\",\r\n        \"TRUST_SERVER_CERTIFICATE\": \"false\",\r\n        \"CONNECTION_TIMEOUT\": \"30\",\r\n        \"READONLY\": \"false\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### macOS/Linux\r\n\r\n增添 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mssql\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"github:EvilPhatBoi/McpSqlServer\"],\r\n      \"env\": {\r\n        \"SERVER_NAME\": \"your-server.database.windows.net\",\r\n        \"DATABASE_NAME\": \"your-database\",\r\n        \"SQL_USERNAME\": \"your-username\",\r\n        \"SQL_PASSWORD\": \"your-password\",\r\n        \"PORT\": \"1433\",\r\n        \"ENCRYPT\": \"true\",\r\n        \"TRUST_SERVER_CERTIFICATE\": \"false\",\r\n        \"CONNECTION_TIMEOUT\": \"30\",\r\n        \"READONLY\": \"false\",\r\n        \"DEBUG\": \"false\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**关于旧式SQL Server的注意事项：** 如果您在使用较旧的SQL Server版本时遇到SSL/TLS连接问题，请尝试：\r\n\r\n- `\"ENCRYPT\": \"false\"` 禁用TLS/SSL加密\r\n- `\"TRUST_SERVER_CERTIFICATE\": \"true\"` 信任自签名证书\r\n- `\"CONNECTION_TIMEOUT\": \"60\"` 对于较慢的连接，则为更高\r\n- `\"DEBUG\": \"true\"` 查看详细的连接日志\r\n\r\n### 选项2：克隆并在本地运行\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/EvilPhatBoi/McpSqlServer.git\r\ncd McpSqlServer\r\n```\r\n\r\n2. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n3. 创建 `.env` 文件：\r\n\r\n```bash\r\ncp .env.example .env\r\n# Edit .env with your database credentials\r\n```\r\n\r\n4. 配置Claude Desktop以指向您的本地安装：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mssql\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"C:/path/to/McpSqlServer/src/index.ts\"],\r\n      \"env\": {\r\n        \"SERVER_NAME\": \"your-server.database.windows.net\",\r\n        \"DATABASE_NAME\": \"your-database\",\r\n        \"SQL_USERNAME\": \"your-username\",\r\n        \"SQL_PASSWORD\": \"your-password\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|描述|默认值|\r\n|----------|-------------|---------|\r\n| `SERVER_NAME` |SQL Server主机名|必填|\r\n| `DATABASE_NAME` |数据库名称|必填|\r\n| `SQL_USERNAME` |SQL用户名|必填|\r\n| `SQL_PASSWORD` |SQL密码|必填|\r\n| `PORT` |SQL Server端口| `1433` |\r\n| `ENCRYPT` |启用TLS/SSL加密| `true` |\r\n| `TRUST_SERVER_CERTIFICATE` |信任自签名证书| `false` |\r\n| `CONNECTION_TIMEOUT` |连接超时（秒）| `30` |\r\n| `READONLY` |启用只读模式| `false` |\r\n| `DEBUG` |启用调试日志记录| `false` |\r\n\r\n## 使用示例\r\n\r\n配置后，您可以使用Claude中的自然语言与数据库交互：\r\n\r\n- “向我展示来自纽约的所有客户”\r\n- 创建一个名为products的表，其中包含id、名称和价格列\r\n- “将id为5的产品的价格更新为29.99”\r\n- “列出数据库中的所有表”\r\n- “描述订单表的结构”\r\n\r\n## 发展\r\n\r\n### 使用tsx在本地运行：\r\n\r\n```bash\r\nnpm run start  # Run the server\r\nnpm run dev    # Run with watch mode\r\n```\r\n\r\n### 类型检查：\r\n\r\n```bash\r\nnpm run typecheck\r\n```\r\n\r\n## 安全说明\r\n\r\n- 永不承诺 `.env` 具有真实凭据的文件\r\n- 使用只读模式(`READONLY=true`)安全生产\r\n- 服务器需要WHERE子句进行更新，以防止意外的大规模更新\r\n- 考虑使用特定于环境的凭据\r\n\r\n## 故障排除\r\n\r\n### 连接问题\r\n\r\n- 确保您的SQL Server允许远程连接\r\n- 检查SQL Server端口的防火墙规则（默认1433，或您的自定义port设置）\r\n- 验证凭据和服务器名称\r\n- 通过设置启用调试日志记录 `DEBUG=true` 在环境变量中\r\n\r\n### SSL/TLS连接问题\r\n\r\n- 对于不支持现代TLS的旧SQL Server版本，请设置 `ENCRYPT=false`\r\n- 如果使用自签名证书，请设置 `TRUST_SERVER_CERTIFICATE=true`\r\n- 对于连接超时问题，请增加 `CONNECTION_TIMEOUT` 60或以上\r\n- 检查SQL Server是否接受Node.js支持的TLS版本\r\n\r\n### 调试模式\r\n\r\n要启用详细的日志记录以进行故障排除，请执行以下操作：\r\n\r\n```json\r\n\"env\": {\r\n  \"DEBUG\": \"true\",\r\n  // ... other environment variables\r\n}\r\n```\r\n\r\n### 身份验证错误\r\n\r\n- 此服务器使用SQL身份验证，而不是Windows身份验证\r\n- 确保服务器上启用了SQL身份验证\r\n- 检查SQL用户是否具有适当的权限\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "mssql": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "github:EvilPhatBoi/McpSqlServer"
+   ],
+   "env": {
+    "SERVER_NAME": "your-server.database.windows.net",
+    "DATABASE_NAME": "your-database",
+    "SQL_USERNAME": "your-username",
+    "SQL_PASSWORD": "your-password",
+    "PORT": "1433",
+    "ENCRYPT": "true",
+    "TRUST_SERVER_CERTIFICATE": "false",
+    "CONNECTION_TIMEOUT": "30",
+    "READONLY": "false",
+    "DEBUG": "false"
+   }
+  }
+ }
+}

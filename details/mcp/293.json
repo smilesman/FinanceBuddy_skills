@@ -1,0 +1,22 @@
+{
+ "id": "293",
+ "kind": "mcp",
+ "name": "mcp-ytb-server",
+ "fingerprint_md5": "4b4fd14f0e029aa3420985cacab06012",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp_ytb_server（视频管道mcp）\r\n\r\n一个基于Go的MCP（stdio）服务器，提供视频处理管道：下载（yt-dlp）、修剪/合并/编码（ffmpeg）、字幕（yt-dlp/耳语）、效果和导出。\r\n\r\n代表：https://github.com/j4flmao/mcp_ytb_server\r\n\r\n## 需求\r\n\r\n- `yt-dlp` （必填）\r\n- `ffmpeg` + `ffprobe` （必填）\r\n- `whisper` / `whisper.cpp` （可选；仅在使用Whisper字幕生成工具时需要）\r\n\r\n## 安装\r\n\r\n### 选项1：通过运行 `npx` （推荐；无需Go）\r\n\r\n此仓库在\\[npm/\\]中包含一个npm包装器(file:///d:/mcp_ytb_server/npm)所以终端用户只需要Node.js+ `npx`.\r\n\r\nClaude桌面配置（Windows示例）：\r\n\r\n- 配置文件路径： `%APPDATA%\\\\Claude\\\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-ytb-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@mcp_ytb/mcp_ytb_server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n可选配置（手动）：\r\n\r\n- 在Claude Desktop中，您可以添加 `env` 物体下 `mcp-ytb-server` 设置默认值（例如输出目录、默认质量、Cookie）。\r\n- 在提示中，您还可以覆盖每次调用（例如“保存到D:\\\\视频”或“使用Cookie文件…”）。\r\n\r\n对于 `npx` 发布，将二进制文件放置在：\r\n\r\n- `npm/bin/windows-amd64/video-mcp.exe`\r\n- `npm/bin/linux-amd64/video-mcp`\r\n- `npm/bin/darwin-amd64/video-mcp`\r\n- `npm/bin/darwin-arm64/video-mcp`\r\n\r\n### 选项2：使用预构建的二进制文件（高级）\r\n\r\n- 从GitHub Release下载适用于您操作系统的正确二进制文件，并将其放置在稳定的路径中。\r\n\r\n### 选项3：从源代码构建（高级；需要Go）\r\n\r\n```powershell\r\ncd D:\\mcp_ytb_server\r\ngo test ./...\r\ngo build -o .\\video-mcp.exe .\r\n```\r\n\r\n## Claude桌面配置\r\n\r\n配置文件（Windows）：\r\n\r\n- `%APPDATA%\\\\Claude\\\\claude_desktop_config.json`\r\n\r\n示例配置使用 `.exe` 二进制（可选）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-ytb-server\": {\r\n      \"command\": \"D:\\\\\\\\mcp_ytb_server\\\\\\\\video-mcp.exe\",\r\n      \"args\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n更新配置后重新启动Claude Desktop（完全退出并重新打开）。\r\n\r\n## 环境变量\r\n\r\n- `VIDEO_MCP_OUTPUT_DIR`：默认输出目录（可选）\r\n- `VIDEO_MCP_TEMP_DIR`：temp目录（可选）\r\n- `VIDEO_MCP_YTDLP_PATH`：路径 `yt-dlp` （默认值： `yt-dlp`)\r\n- `VIDEO_MCP_FFMPEG_PATH`：路径 `ffmpeg` （默认值： `ffmpeg`)\r\n- `VIDEO_MCP_FFPROBE_PATH`：路径 `ffprobe` （默认值： `ffprobe`)\r\n- `VIDEO_MCP_QUALITY`：默认下载质量（默认值： `best`)\r\n- `VIDEO_MCP_COOKIE_BROWSER`：浏览器用于yt-dlp浏览器cookie提取（例如。 `chrome`, `firefox`, `none`)\r\n- `VIDEO_MCP_COOKIE_FILE`：路径 `cookies.txt` （网景格式）；优先于浏览器Cookie\r\n\r\n## Cookie（YouTube登录/年龄门）\r\n\r\n有两种选择：\r\n\r\n- 集 `VIDEO_MCP_COOKIE_FILE` 因此，所有请求都使用 `cookies.txt` 默认情况下（可选）。\r\n- 在提示中，明确指定cookie文件路径；这 `download_video` 工具支架 `cookie_file` （可选，每次通话）。\r\n\r\n## 快速样品\r\n\r\n参见\\[PROMPTS.md\\](file:///d:/mcp_ytb_server/PROMPTS.md)用于测试复制/粘贴提示。\r\n\r\n## 主要工具\r\n\r\n- `download_video`：从URL（yt-dlp）下载视频/音频\r\n- `get_video_info`：从URL获取元数据\r\n- `download_subtitles`, `list_subtitles`：通过yt-dlp字幕\r\n- `trim_video`, `cut_and_keep`, `merge_clips`, `split_video`\r\n- `mute_audio`, `replace_audio`, `normalize_audio`\r\n- `add_fade`, `add_watermark`, `blur_region`, `zoom_effect`, `color_grade`\r\n- `export_video`, `generate_thumbnail`, `get_file_info`\r\n\r\n## 快速故障排除\r\n\r\n- Windows Media Player无法播放该文件：您可能遇到编解码器问题（AV1/VP9/HEVC）。使用 `export_video` 以重新编码为MP4 H.264/AAC。\r\n- 登录/年龄门控视频：配置Cookie（请参阅Cookie部分）。\r\n- Claude没有看到更新的工具：完全退出Claude Desktop（系统托盘）并重新打开。\r\n",
+ "config": {
+  "mcp-ytb-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@mcp_ytb/mcp_ytb_server"
+   ],
+   "env": {}
+  }
+ }
+}

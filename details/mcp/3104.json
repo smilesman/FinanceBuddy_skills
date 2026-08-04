@@ -1,0 +1,28 @@
+{
+ "id": "3104",
+ "kind": "mcp",
+ "name": "garmin-2",
+ "fingerprint_md5": "10e9970f0398a87a2d0476672aaa9da8",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# Garmin MCP服务器\r\n\r\n此模型上下文协议（MCP）服务器连接到Garmin Connect，并将您的健身和健康数据暴露给Claude和其他兼容MCP的客户端。\r\n\r\n## 特性\r\n\r\n- 列出最近的活动\r\n- 获取详细的活动信息\r\n- 访问健康指标（步数、心率、睡眠）\r\n- 查看车身成分数据\r\n\r\n## 设置\r\n\r\n### 本地开发\r\n\r\n1. 在新环境中安装所需的软件包：\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n### 远程部署（铁路）\r\n\r\n想要远程托管此MCP服务器并从Poke等AI助手访问它吗？请参阅：\r\n\r\n- **[SETUP_GUIDE.md](SETUP_GUIDE.md)** -快速入门指南\r\n- **[铁路_部署.md](RAILWAY_DEPLOYMENT.md)** -详细的部署说明\r\n- **快速部署：** 跑 `./deploy_to_railway.sh` （需要铁路CLI）\r\n\r\n## 运行服务器\r\n\r\n### 配置\r\n\r\n您的Garmin Connect凭据是从环境变量中读取的：\r\n\r\n- `GARMIN_EMAIL`：您的Garmin Connect电子邮件地址\r\n- `GARMIN_EMAIL_FILE`：包含您的Garmin Connect电子邮件地址的文件路径\r\n- `GARMIN_PASSWORD`：您的Garmin Connect密码\r\n- `GARMIN_PASSWORD_FILE`：包含Garmin Connect密码的文件路径\r\n\r\n基于文件的秘密在某些环境中很有用，例如在Docker容器中。请注意，您不能同时设置这两个 `GARMIN_EMAIL` 和 `GARMIN_EMAIL_FILE`，同样，您不能同时设置这两个 `GARMIN_PASSWORD` 和 `GARMIN_PASSWORD_FILE`.\r\n\r\n### 使用克劳德桌面\r\n\r\n1. 在Claude Desktop中创建配置：\r\n\r\n编辑您的Claude Desktop配置文件：\r\n\r\n- macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n添加此服务器配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"garmin\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--python\",\r\n        \"3.12\",\r\n        \"--from\",\r\n        \"git+https://github.com/Taxuspt/garmin_mcp\",\r\n        \"garmin-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"GARMIN_EMAIL\": \"YOUR_GARMIN_EMAIL\",\r\n        \"GARMIN_PASSWORD\": \"YOUR_GARMIN_PASSWORD\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n将路径替换为服务器文件的绝对路径。\r\n\r\n2. 重新启动克劳德桌面\r\n\r\n### 与MCP检查员一起\r\n\r\n对于测试，您可以从项目根目录使用MCP检查器：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv run garmin-mcp\r\n```\r\n\r\n## 用法示例\r\n\r\n在Claude中连接后，您可以提出以下问题：\r\n\r\n- “显示我最近的活动”\r\n- “我昨晚睡得怎么样？”\r\n- “我昨天走了几步？”\r\n- “显示我最近跑步的详细信息”\r\n\r\n## 安全说明\r\n\r\n## 故障排除\r\n\r\n如果您遇到登录问题：\r\n\r\n1. 验证您的凭据是否正确\r\n1. 检查Garmin Connect是否需要额外验证\r\n1. 确保garminconnect包是最新的\r\n\r\n有关其他问题，请查看Claude Desktop日志：\r\n\r\n- macOS： `~/Library/Logs/Claude/mcp-server-garmin.log`\r\n- 窗户： `%APPDATA%\\Claude\\logs\\mcp-server-garmin.log`\r\n\r\n### Garming Connect一次性代码\r\n\r\n如果您的帐户中启用了一次性代码，则需要先在命令行登录，在交互式cli中设置令牌。\r\n\r\n该应用程序需要环境变量GARMIN_EMAIL或GARMIN_EMAIL_FILE。您可以使用以下命令将这些存储在文件中。\r\n\r\n```bash\r\necho \"your_email@example.com\" > ~/.garmin_email\r\necho \"your_password\" > ~/.garmin_password\r\nchmod 600 ~/.garmin_email ~/.garmin_password\r\n```\r\n\r\n然后，您可以手动运行登录脚本。\r\n\r\n```bash\r\nGARMIN_EMAIL_FILE=~/.garmin_email GARMIN_PASSWORD_FILE=~/.garmin_password uvx --python 3.12 --from git+https://github.com/Taxuspt/garmin_mcp garmin-mcp\r\n```\r\n\r\n你可能会看到\r\n\r\n```bash\r\nGarmin Connect MFA required. Please check your email/phone for the code.\r\nEnter MFA code: XXXXXX\r\nOauth tokens stored in '~/.garminconnect' directory for future use. (first method)\r\n\r\nOauth tokens encoded as base64 string and saved to '~/.garminconnect_base64' file for future use. (second method)\r\n```\r\n\r\n在cli上设置令牌后，您可以在Claude中使用以下内容，而不需要env变量，因为Oauth令牌已经设置。\r\n\r\n```bash\r\n\"garmin\": {\r\n  \"command\": \"uvx\",\r\n  \"args\": [\r\n    \"--python\",\r\n    \"3.12\",\r\n    \"--from\",\r\n    \"git+https://github.com/Taxuspt/garmin_mcp\",\r\n    \"garmin-mcp\"\r\n  ]\r\n}\r\n```\r\n",
+ "config": {
+  "garmin": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--python",
+    "3.12",
+    "--from",
+    "git+https://github.com/Taxuspt/garmin_mcp",
+    "garmin-mcp"
+   ],
+   "env": {
+    "GARMIN_EMAIL": "YOUR_GARMIN_EMAIL",
+    "GARMIN_PASSWORD": "YOUR_GARMIN_PASSWORD"
+   }
+  }
+ }
+}

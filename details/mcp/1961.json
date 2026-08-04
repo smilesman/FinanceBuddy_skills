@@ -1,0 +1,23 @@
+{
+ "id": "1961",
+ "kind": "mcp",
+ "name": "jupiter-mcp-server",
+ "fingerprint_md5": "44577d6c9f1a586dae3d704fc6f7e191",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# Jupiter MCP服务器\r\n\r\n该存储库包含一个模型上下文协议（MCP）服务器，该服务器为Claude提供访问Jupiter的Portfolio API和Price API的权限。该服务器使Claude能够查看投资组合头寸，跟踪质押的JUP代币，并在Solana区块链上获取实时代币价格。\r\n\r\n## 概述\r\n\r\nMCP服务器向Claude公开了几个工具：\r\n\r\n### 投资组合工具\r\n\r\n- `jupiter_get_positions`：获取投资组合头寸，包括钱包余额、质押头寸、流动性池、农业、金库、贷款等\r\n- `jupiter_get_staked_jup`：获取有关质押JUP代币和取消质押头寸的信息\r\n- `jupiter_get_platforms`：获取与Jupiter投资组合跟踪集成的所有DeFi平台的列表\r\n\r\n### 价格工具\r\n\r\n- `jupiter_get_price`：获取一个或多个代币的当前价格，包括美元价格、24小时价格变化和代币小数\r\n\r\n## API实现\r\n\r\n此服务器使用Jupiter API：\r\n\r\n- **投资组合API v1** (`https://api.jup.ag/portfolio/v1`)用于投资组合跟踪和分析\r\n- **价格API v3** (`https://api.jup.ag/price/v3`)用于实时代币定价\r\n\r\n两个API都需要来自的API密钥 [木星之门](https://portal.jup.ag/).\r\n\r\n## 先决条件\r\n\r\n- Node.js（v16或更高版本）\r\n- Claude桌面应用程序\r\n- Jupiter API密钥-通过获取您的密钥 [https://portal.jup.ag/](https://portal.jup.ag/)\r\n\r\n## 安装\r\n\r\n### 来自npm（推荐）\r\n\r\n```bash\r\n# Install globally\r\nnpm install -g jupiter-mcp-server\r\n\r\n# Or use with npx\r\nnpx jupiter-mcp-server\r\n```\r\n\r\n### 来源\r\n\r\n1. 克隆此存储库：\r\n\r\n   ```bash\r\n   git clone https://github.com/quanghuynguyen1902/jupiter-mcp-server.git\r\n   cd jupiter-mcp-server\r\n   ```\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   npm ci\r\n   ```\r\n\r\n1. 构建项目：\r\n\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n1. 全局安装（可选）：\r\n\r\n   ```bash\r\n   npm install -g ./\r\n   ```\r\n\r\n## 配置\r\n\r\n### 配置Claude桌面\r\n\r\n要配置Claude Desktop以使用此MCP服务器，请执行以下操作：\r\n\r\n1. 打开克劳德桌面\r\n\r\n1. 导航到Claude Desktop配置文件：\r\n\r\n   - macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - 窗户： `%APPDATA%\\\\Claude\\\\claude_desktop_config.json`\r\n   - Linux： `~/.config/Claude/claude_desktop_config.json`\r\n\r\n1. 添加MCP服务器配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"jupiter-mcp-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"jupiter-mcp-server\"],\r\n      \"env\": {\r\n        \"JUPITER_API_KEY\": \"your_jupiter_api_key_from_portal\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果您已从源代码安装并希望运行本地版本，请使用：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"jupiter-mcp-server\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"/path/to/your/jupiter-mcp-server/build/index.js\"\r\n      ],\r\n      \"env\": {\r\n        \"JUPITER_API_KEY\": \"your_jupiter_api_key_from_portal\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 环境变量描述\r\n\r\n- **JUPITER_API_键** （必需）：您的Jupiter API密钥来自 [https://portal.jup.ag/](https://portal.jup.ag/)\r\n\r\n### 替代方案：使用.env文件\r\n\r\n如果你直接运行服务器（而不是通过Claude Desktop），你可以创建一个 `.env` 根目录中的文件：\r\n\r\n```\r\nJUPITER_API_KEY=your_jupiter_api_key_from_portal\r\n```\r\n\r\n### 本地运行\r\n\r\n```bash\r\n# If installed globally\r\njupiter-mcp-server\r\n\r\n# If installed from source\r\nnode build/index.js\r\n\r\n# Using npx\r\nnpx jupiter-mcp-server\r\n```\r\n\r\n## 用法\r\n\r\n配置后，重新启动Claude Desktop。克劳德现在可以使用木星投资组合和价格工具。你可以要求克劳德：\r\n\r\n### 投资组合运营\r\n\r\n1. 查看投资组合头寸：\r\n\r\n   ```\r\n   Show me the portfolio for address YOUR_WALLET_ADDRESS\r\n   ```\r\n\r\n1. 检查打桩JUP：\r\n\r\n   ```\r\n   How much JUP is staked for address YOUR_WALLET_ADDRESS?\r\n   ```\r\n\r\n1. 列出可用平台：\r\n\r\n   ```\r\n   What platforms are supported for portfolio tracking?\r\n   ```\r\n\r\n### 价格操作\r\n\r\n4. 获取代币价格：\r\n\r\n   ```\r\n   What's the current price of SOL and USDC?\r\n   ```\r\n\r\n1. 获取多种代币价格：\r\n\r\n   ```\r\n   Get prices for these tokens: So11111111111111111111111111111111111111112,EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v\r\n   ```\r\n\r\n## 故障排除\r\n\r\n### API身份验证问题\r\n\r\n如果您遇到401未经授权的错误：\r\n\r\n1. 验证您的 `JUPITER_API_KEY` 在环境变量中正确设置\r\n1. 确保您的API密钥有效-您可以从 [https://portal.jup.ag/](https://portal.jup.ag/)\r\n1. 检查API键周围是否没有任何额外的空格或引号\r\n\r\n## 发展\r\n\r\n### 添加新工具\r\n\r\n要向MCP服务器添加新工具，请执行以下操作：\r\n\r\n1. 在中定义工具 `src/tools.ts`\r\n1. 在相应的处理程序文件中创建处理程序函数\r\n1. 将处理程序添加到 `handlers` 对象在 `src/tools.ts`\r\n\r\n### 建筑\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n### 测试\r\n\r\n```bash\r\nnpm test\r\n```\r\n\r\n### 发布到npm\r\n\r\n请确保您已登录到npm：\r\n\r\n```bash\r\nnpm login\r\n```\r\n\r\n然后发布包：\r\n\r\n```bash\r\nnpm publish\r\n```\r\n\r\n要发布新版本，请先更新package.json中的版本：\r\n\r\n```bash\r\nnpm version patch  # or minor, or major\r\nnpm publish\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "jupiter-mcp-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "jupiter-mcp-server"
+   ],
+   "env": {
+    "JUPITER_API_KEY": "your_jupiter_api_key_from_portal"
+   }
+  }
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "id": "2616",
+ "kind": "mcp",
+ "name": "mediawiki-mcp-server",
+ "fingerprint_md5": "870a91b2020c2e8aaa5b06a6d51a6b09",
+ "download_count": 0,
+ "category": "知识库检索",
+ "tags": "",
+ "version": "",
+ "readme": "<b>过时的。请使用https://github.com/ProfessionalWiki/MediaWiki-MCP-Server相反！</b>\r\n\r\n# MediaWiki MCP服务器🚀\r\n\r\n\r\n提供与维基百科API无缝交互的MCP服务器。此工具允许您使用LLM搜索和检索维基百科内容🤖!\r\n\r\n<https://github.com/user-attachments/assets/b5d9c5f3-a60e-48ea-8b4b-f1a7524d4fbb>\r\n\r\n## 特性✨\r\n\r\n- 🔍 使用可自定义的wiki网站搜索wiki页面。例如wikipedia.org、fandom.com、wiki.gg等！\r\n- 📖 检索详细页面内容\r\n\r\n## 用法💻\r\n\r\n1. 确保您的设备上安装了uv。\r\n1. 在客户端中配置：\r\n\r\n服务器默认使用 <https://en.wikipedia.org/>。此外，您还可以让服务器搜索其他维基网站！\r\n\r\n要查看wiki网站是否与此服务器兼容，请检查它是否使用MediaWiki软件（通常由网站底部的图标显示）。\r\n\r\n进一步检查并找到端点（通常是网站的域名，如 <https://mediawiki.org/>)，在浏览器中转到baseurl/rest.php/v1/page进行检查（如 <https://noita.wiki.gg/rest.php/v1/page>)看看输出是否正确。如果没有，请在基本URL中添加“/w”，然后重试。\r\n\r\n然后，将此端点设置为--base-url：\r\n\r\n\r\n可用传输：stdio（默认），可流式传输http(http://localhost/mcp)，以及苏格兰和南方能源公司(http://localhost/sse).所有选项请参见-h。\r\n\r\n```bash\r\nuvx mediawiki-mcp-server --h\r\nusage: main.py [-h] [--base-url BASE_URL] [--http] [--sse] [--port PORT]\r\n\r\nMediaWiki MCP Server\r\n\r\noptions:\r\n  -h, --help           show this help message and exit\r\n  --base-url BASE_URL  Base URL for the MediaWiki API (default: https://en.wikipedia.org/w/``)\r\n  --http               Run server as streamable-http (instead of stdio)\r\n  --sse                Run server as sse-http (instead of stdio)\r\n  --port PORT          Default port for http transport (default: 8000)\r\n\r\n```\r\n\r\nJSON配置示例：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mediawiki-mcp-server\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"mediawiki-mcp-server\",\r\n        \"--base-url\", \"https://example.com/\"\r\n      ],\r\n      \"env\": {\r\n        \"HTTP_PROXY\": \"http://example.com:port\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者，如果您想从源代码运行此服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mediawiki-mcp-server\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--directory\",\r\n        \"mediawiki-mcp-server\",\r\n        \"path/to/project/src/mediawiki_mcp_server\",\r\n        \"--base-url\", \"https://example.com/\"\r\n      ],\r\n      \"env\": {\r\n        \"HTTP_PROXY\": \"http://example.com:port\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 支持的工具🛠\r\n\r\n### 搜索\r\n\r\n- `query`：搜索词（最好简短且重点突出）\r\n- `limit`：要返回的最大结果数（默认值：5）\r\n\r\n### 获取页面\r\n\r\n- `title`：要检索的维基百科页面的确切标题\r\n\r\n## 发展👨‍💻\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv run mediawiki-mcp-server\r\n```\r\n\r\n以下是一些可能有所帮助的文档：\r\n\r\n- <https://www.mediawiki.org/api/rest_v1/>\r\n\r\n## 贡献🤝\r\n\r\n此服务器正在开发中。欢迎投稿！请随时提交问题和拉取请求。\r\n\r\n## 相关项目♥️\r\n\r\n- [樱桃工作室](https://github.com/CherryHQ/cherry-studio)：支持多个LLM提供程序的桌面客户端。支持MCP。\r\n",
+ "config": {
+  "mediawiki-mcp-server": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mediawiki-mcp-server",
+    "--base-url",
+    "https://example.com/"
+   ],
+   "env": {
+    "HTTP_PROXY": "http://example.com:port"
+   }
+  }
+ }
+}

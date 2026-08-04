@@ -1,0 +1,24 @@
+{
+ "id": "3634",
+ "kind": "mcp",
+ "name": "serper-search-2",
+ "fingerprint_md5": "3a763ccbb02d6487efceec112afbec2e",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 服务器搜索和报废MCP服务器\r\n\r\n\r\n一个基于类型脚本的MCP服务器，使用Serper API提供网络搜索和网页抓取功能。此服务器与Claude Desktop集成，可实现强大的网络搜索和内容提取功能。\r\n\r\n[https://glama.ai/mcp/servers/5zk327i0pj](https://glama.ai/mcp/servers/5zk327i0pj)\r\n\r\n## 特性\r\n\r\n### 工具\r\n\r\n- `google_search` -通过Serper API进行网络搜索\r\n\r\n  - 丰富的搜索结果，包括有机结果、知识图谱、“人们也问”和相关搜索\r\n  - 支持地区和语言定位\r\n  - 位置、分页、时间过滤器和自动更正的可选参数\r\n  - 支持高级搜索运算符：\r\n    - `site`：将结果限制到特定域\r\n    - `filetype`：仅限于特定文件类型（例如“pdf”、“doc”）\r\n    - `inurl`：搜索URL中包含单词的页面\r\n    - `intitle`：搜索标题中有单词的页面\r\n    - `related`：查找类似网站\r\n    - `cache`：查看特定URL的Google缓存版本\r\n    - `before`：YYYY-MM-DD格式的日期\r\n    - `after`：YYYY-MM-DD格式的日期\r\n    - `exact`：精确短语匹配\r\n    - `exclude`：要从搜索结果中排除的术语\r\n    - `or`：替代术语（OR运算符）\r\n\r\n- `scrape` -从网页中提取内容\r\n\r\n  - 获取纯文本和可选的markdown内容\r\n  - 包括JSON-LD和头部元数据\r\n  - 保留文档结构\r\n\r\n## 需求\r\n\r\n- Node.js>=18\r\n- Serper API密钥（设置为 `SERPER_API_KEY` 环境变量）\r\n\r\n## 发展\r\n\r\n安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n对于自动重建的开发：\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n运行测试：\r\n\r\n```bash\r\nnpm test                  # Run all tests\r\nnpm run test:watch       # Run tests in watch mode\r\nnpm run test:coverage    # Run tests with coverage\r\nnpm run test:integration # Run integration tests\r\n```\r\n\r\n### 环境变量\r\n\r\n创建一个 `.env` 根目录中的文件：\r\n\r\n```\r\nSERPER_API_KEY=your_api_key_here\r\n```\r\n\r\n### 调试\r\n\r\n由于MCP服务器通过stdio进行通信，调试可能具有挑战性。我们建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector)，可作为包脚本使用：\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n检查器将提供一个URL，用于访问浏览器中的调试工具。\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Serper Search and Scrape for Claude Desktop [铁匠铺](https://smithery.ai/server/@marcopesani/mcp-server-serper):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @marcopesani/mcp-server-serper --client claude\r\n```\r\n\r\n### 克劳德桌面版\r\n\r\n在以下位置添加服务器配置：\r\n\r\n- MacOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- 窗户： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"serper-search\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"serper-search-scrape-mcp-server\"],\r\n      \"env\": {\r\n        \"SERPER_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克莱恩\r\n\r\n1. 打开Cline扩展设置\r\n1. 打开“MCP服务器”选项卡\r\n1. 点击“配置MCP服务器”\r\n1. 添加服务器配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"github.com/marcopesani/mcp-server-serper\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"serper-search-scrape-mcp-server\"],\r\n      \"env\": {\r\n        \"SERPER_API_KEY\": \"your_api_key_here\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": [\"google_search\", \"scrape\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n其他Cline配置选项：\r\n\r\n- `disabled`：设置为 `false` 启用服务器\r\n- `autoApprove`：每次使用不需要明确批准的工具列表\r\n\r\n### 光标\r\n\r\n1. 打开光标设置\r\n1. 打开“功能”设置\r\n1. 在“MCP服务器”部分，单击“添加新的MCP服务器”\r\n1. 选择一个名称，然后选择“命令”作为“类型”\r\n1. 在“命令”字段中，输入以下内容：\r\n\r\n```\r\nenv SERPER_API_KEY=your_api_key_here npx -y serper-search-scrape-mcp-server\r\n```\r\n\r\n### 码头工人\r\n\r\n您还可以使用Docker运行服务器。首先，建立形象：\r\n\r\n```bash\r\ndocker build -t mcp-server-serper .\r\n```\r\n\r\n然后使用您的Serper API密钥运行容器：\r\n\r\n```bash\r\ndocker run -e SERPER_API_KEY=your_api_key_here mcp-server-serper\r\n```\r\n\r\n或者，如果您在 `.env` 文件：\r\n\r\n```bash\r\ndocker run --env-file .env mcp-server-serper\r\n```\r\n\r\n对于开发，您可能希望将源代码装载为卷：\r\n\r\n```bash\r\ndocker run -v $(pwd):/app --env-file .env mcp-server-serper\r\n```\r\n\r\n注意：一定要更换 `your_api_key_here` 使用您的实际Serper API密钥。\r\n",
+ "config": {
+  "serper-search": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "serper-search-scrape-mcp-server"
+   ],
+   "env": {
+    "SERPER_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

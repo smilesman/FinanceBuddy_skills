@@ -1,0 +1,21 @@
+{
+ "id": "6",
+ "kind": "mcp",
+ "name": "ableton-2",
+ "fingerprint_md5": "c5e9b1a1441db85b2f96f361344e1fbc",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "Rust MCP服务器，使AI助手能够通过OSC控制Ableton Live。\r\n\r\n[](https://github.com/christopherwxyz/remix-mcp/actions/workflows/ci.yml)\r\n[](https://remix-docs.pages.dev)\r\n\r\n📖 **[文档](https://remix-docs.pages.dev)**\r\n\r\n## 特性\r\n\r\n- **266工具** 用于全面的Ableton Live控制\r\n- **实时OSC** 通过 [AbletonOSC](https://github.com/ideoforms/AbletonOSC)\r\n- **自动安装程序** AbletonOSC远程脚本\r\n- **跨平台** （macOS、Windows、Linux）\r\n\r\n## 快速开始\r\n\r\n### 1.安装混音mcp\r\n\r\n**通过紫外线** （推荐，需要 [紫外线](https://docs.astral.sh/uv/)):\r\n\r\n```bash\r\nuvx remix-mcp install\r\n```\r\n\r\n**下载二进制文件** 从 [发布](https://github.com/christopherwxyz/remix-mcp/releases)\r\n\r\n**从源代码构建：**\r\n\r\n```bash\r\ngit clone --recursive https://github.com/christopherwxyz/remix-mcp\r\ncd remix-mcp\r\ncargo build --release\r\n```\r\n\r\n### 2.安装AbletonOSC\r\n\r\n```bash\r\nremix-mcp install\r\n```\r\n\r\n然后在Ableton Live中：\r\n\r\n1. 重新启动Ableton Live\r\n1. 打开 **偏好** （Cmd+、/Ctrl+、）\r\n1. 首选 **链接/节奏/MIDI**\r\n1. 在...之下 **控制表面**，选择 **AbletonOSC**\r\n\r\n您应该看到： `AbletonOSC: Listening for OSC on port 11000`\r\n\r\n### 3.添加MCP服务器\r\n\r\n**克劳德桌面：**\r\n\r\n1. 打开克劳德桌面设置>开发人员\r\n1. 单击编辑配置打开 `claude_desktop_config.json`\r\n1. 添加服务器配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ableton\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"remix-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n4. 重新启动克劳德桌面\r\n\r\n**克劳德代码：**\r\n\r\n```bash\r\nclaude mcp add ableton -- uvx remix-mcp\r\n```\r\n\r\n## 用法\r\n\r\n问克劳德这样的问题：\r\n\r\n- “使用Drift创建MIDI曲目并添加混响”\r\n- “将速度设置为128 BPM”\r\n- “创建4杆鼓图案”\r\n- “在所选曲目中添加琶音”\r\n- “在浏览器中搜索低音”\r\n\r\n请参阅 [文档](https://remix-docs.pages.dev/examples) 更多示例。\r\n\r\n## 工具\r\n\r\n|类别|计数|示例|\r\n|----------|-------|----------|\r\n|运输|10| `play`, `stop`, `record`, `set_tempo` |\r\n|曲目|59| `create_midi_track`, `set_track_volume`, `arm_track` |\r\n|剪辑| 65| `fire_clip`, `create_clip`, `add_midi_notes` |\r\n|场景|19| `fire_scene`, `create_scene`, `duplicate_scene` |\r\n|设备|10| `list_devices`, `set_device_parameter` |\r\n|歌曲| 56| `undo`, `redo`, `set_loop`, `get_quantization` |\r\n|视图|8| `select_track`, `select_clip`, `select_device` |\r\n|线索点数|5| `list_cue_points`, `jump_to_cue_point` |\r\n|浏览器|29| `load_instrument`, `load_audio_effect`, `search_browser` |\r\n|应用程序|4| `get_version`, `get_application_view` |\r\n|MIDI映射|1| `get_midi_map_addresses` |\r\n\r\n## 建筑\r\n\r\n```\r\nClaude/Client <--stdio/JSON-RPC--> remix-mcp <--UDP/OSC--> AbletonOSC <--> Ableton Live\r\n```\r\n\r\n## 命令行界面\r\n\r\n```bash\r\nremix-mcp serve              # Start MCP server (default)\r\nremix-mcp install            # Install AbletonOSC Remote Script\r\nremix-mcp install --force    # Reinstall\r\nremix-mcp status             # Check installation\r\n```\r\n\r\n## 故障排除\r\n\r\n**MIDI曲目没有声音？**\r\n取样器需要装载样品。使用 `load_default_instrument` 加载Drift（一种立即工作的合成器）。\r\n\r\n**连接超时？**\r\n\r\n1. 检查Ableton Live是否正在运行\r\n1. 验证是否在“首选项”>“链接/节奏/MDI”中启用了AbletonOSC\r\n1. 确保端口11000/11001空闲\r\n\r\n**AbletonOSC不在控制面列表中？**\r\n\r\n1. 跑 `remix-mcp install`\r\n1. 重新启动Ableton Live\r\n\r\n## 发展\r\n\r\n请参阅 [贡献指南](https://remix-docs.pages.dev/contributing) 发展指南。\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 致谢\r\n\r\n- [AbletonOSC](https://github.com/ideoforms/AbletonOSC) 丹尼尔·琼斯\r\n",
+ "config": {
+  "ableton": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "remix-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

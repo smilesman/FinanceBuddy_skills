@@ -1,0 +1,12 @@
+{
+ "id": "powershell-reliable-1.0.0",
+ "kind": "skill",
+ "name": "powershell-reliable-1.0.0",
+ "fingerprint_md5": "",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# powershell-reliable-1.0.0\n\n在Windows上可靠执行PowerShell命令。避免使用&&，处理参数解析，从会话中断中恢复，确保跨会话连续性。",
+ "config": {}
+}

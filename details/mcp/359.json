@@ -1,0 +1,22 @@
+{
+ "id": "359",
+ "kind": "mcp",
+ "name": "playwright-12",
+ "fingerprint_md5": "9b63e38f9001a12736ee75160528f71c",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 剧作家MCP项目\r\n\r\n一个演示Playwright MCP服务器与Jenkins管道使用的项目。\r\n\r\n## 先决条件\r\n\r\n- Node.js已安装在您的计算机上。\r\n- npm（节点包管理器）随Node.js一起提供。\r\n\r\n## 安装\r\n\r\n1. 克隆存储库：\r\n\r\n   ```\r\n   git clone https://github.com/vikaskumarprofessional92/playwright-mcp-project.git\r\n   cd playwright-mcp-project\r\n   ```\r\n\r\n1. 安装依赖项：\r\n\r\n   ```\r\n   npm install\r\n   ```\r\n\r\n1. 设置Playwright MCP服务器：\r\n\r\n   - 确保在您的 `settings.json` 如下：\r\n     ```json\r\n     {\r\n       \"mcpServers\": {\r\n         \"playwright\": {\r\n           \"command\": \"npx\",\r\n           \"args\": [\r\n             \"@playwright/mcp@latest\",\r\n             \"--vision\"\r\n           ]\r\n         }\r\n       }\r\n     }\r\n     ```\r\n\r\n## 运行测试\r\n\r\n要运行测试，请使用以下命令：\r\n\r\n```\r\nnpx playwright test\r\n```\r\n\r\n## 测试规范\r\n\r\n测试规范可以在 `src/tests/example.spec.ts` 文件。此文件包含一个测试套件，其中包括一个用于打开浏览器并导航到Google.ca网站的测试用例。\r\n\r\n## Jenkins集成\r\n\r\n该项目包括用于持续集成的Jenkins管道配置。管道配置为：\r\n\r\n- 安装依赖项\r\n- 运行测试\r\n- 生成并发布测试报告\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。\r\n",
+ "config": {
+  "playwright": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@playwright/mcp@latest",
+    "--vision"
+   ],
+   "env": {}
+  }
+ }
+}

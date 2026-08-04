@@ -1,0 +1,12 @@
+{
+ "id": "afrexai-api-docs",
+ "kind": "skill",
+ "name": "afrexai-api-docs",
+ "fingerprint_md5": "d600d0418f54bb1292b119f934e882c9",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# API 文档生成器\r\n\r\n从端点描述生成生产就绪的 API 文档。输出 OpenAPI 3.0、markdown 参考文档和 SDK 快速入门指南。\r\n\r\n## 用法\r\n\r\n描述你的 API 端点，本技能生成：\r\n\r\n1. **OpenAPI 3.0 规范** — 机器可读，可导入 Swagger/Postman\r\n2. **Markdown 参考** — 带示例的人类可读端点文档\r\n3. **SDK 快速入门** — 供开发者复制粘贴的集成指南\r\n\r\n## 说明\r\n\r\n当用户描述 API 端点（路由、方法、参数、响应）时：\r\n\r\n1. 生成完整的 OpenAPI 3.0 YAML 规范\r\n2. 创建 markdown 文档，包含：\r\n   - 认证部分\r\n   - 每个端点：方法、路径、描述、参数表、请求/响应示例\r\n   - 错误代码参考\r\n   - 速率限制说明\r\n3. 生成快速入门指南，包含 curl 示例和常用语言代码片段（Python、JavaScript、Go）\r\n\r\n### 输出格式\r\n\r\n```yaml\r\n# openapi.yaml — 完整的 OpenAPI 3.0 规范\r\n```\r\n\r\n```markdown\r\n# API Reference — 人类可读文档\r\n```\r\n\r\n```markdown\r\n# Quickstart Guide — 集成示例\r\n```\r\n\r\n### 质量标准\r\n- 每个端点都必须有请求 AND 响应示例\r\n- 使用真实的示例数据，而不是 \"string\" 或 \"example\"\r\n- 包含错误响应（400、401、403、404、500）\r\n- 记录分页、过滤和排序模式\r\n- 注明破坏性变更和版本控制策略\r\n\r\n## 技巧\r\n- 粘贴你的路由文件或控制器代码以自动提取\r\n- 支持 REST、GraphQL（schema-first）和 gRPC（proto-first）\r\n- 与 CI/CD 结合，在每次部署时自动生成文档\r\n\r\n---\r\n\r\n由 [AfrexAI](https://afrexai-cto.github.io/context-packs/) 构建 — 为快速交付团队提供的 AI 驱动业务工具。",
+ "config": {}
+}

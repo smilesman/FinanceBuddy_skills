@@ -1,0 +1,29 @@
+{
+ "id": "2903",
+ "kind": "mcp",
+ "name": "meta-ads-2",
+ "fingerprint_md5": "cd137c32aacf222c21579a44c2f94e55",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 元广告MCP服务器\r\n\r\n将Claude Desktop连接到Meta Marketing API的MCP（模型上下文协议）服务器。通过与Claude的自然对话，管理您的Facebook和Instagram广告活动、阅读绩效分析、创建活动并获取自动报告。\r\n\r\n## 你能做什么\r\n\r\n- **阅读分析**：活动、广告集和广告级别性能指标\r\n- **创建活动**：完整活动→ 广告集→ 广告创建工作流程\r\n- **管理活动**：暂停/激活活动，更新预算\r\n- **受众洞察**：按年龄、性别、国家、平台分列的业绩\r\n- **自动报告**：每周绩效报告及建议\r\n- **广告文案**：生成广告创意并将其直接推送到Meta\r\n\r\n## 先决条件\r\n\r\n### 1.元开发者帐户和应用程序\r\n\r\n1. 首选 [面向开发人员的Meta](https://developers.facebook.com/)\r\n1. 创建新应用程序→ 选择 **“其他”** → **“商业”** 类型\r\n1. 添加 **API营销** 将产品添加到您的应用程序\r\n1. 首选 **应用设置→ Basic** 并记下您的应用ID和应用密码\r\n\r\n### 2.访问令牌\r\n\r\n开发/测试：\r\n\r\n1. 首选 [图形API资源管理器](https://developers.facebook.com/tools/explorer/)\r\n1. 选择您的应用程序\r\n1. 点击 **“生成访问令牌”**\r\n1. 添加权限： `ads_management`, `ads_read`, `pages_read_engagement`\r\n1. 复制令牌\r\n\r\n对于生产（长期代币）：\r\n\r\n1. 将短期令牌替换为长期令牌：\r\n\r\n```bash\r\ncurl -X GET \"https://graph.facebook.com/v21.0/oauth/access_token?grant_type=fb_exchange_token&client_id=YOUR_APP_ID&client_secret=YOUR_APP_SECRET&fb_exchange_token=YOUR_SHORT_TOKEN\"\r\n```\r\n\r\n### 3.广告账号ID\r\n\r\n查找您的广告帐户ID:\r\n\r\n- 首选 [广告管理器](https://www.facebook.com/adsmanager)\r\n- 请查看URL： `act_XXXXXXXXXX` 是您的帐户ID\r\n- 或转到“业务设置”→ 广告账户\r\n\r\n### 4.在应用程序中添加广告帐户\r\n\r\n**重要步骤** （经常错过）：\r\n\r\n1. 在Meta应用程序设置中，转到 **高级设置**\r\n1. 在...之下 **广告账户**，添加您的广告帐户ID\r\n1. 确保您的开发人员帐户上的电子邮件已添加到Business Manager中\r\n\r\n## 安装\r\n\r\n### 使用紫外线（推荐）\r\n\r\n```bash\r\n# Clone/download the project\r\ncd meta-ads-mcp\r\n\r\n# Create virtual environment and install\r\nuv venv\r\nsource .venv/bin/activate   # macOS/Linux\r\n# .venv\\Scripts\\activate    # Windows\r\n\r\nuv pip install -e .\r\n```\r\n\r\n### 使用pip\r\n\r\n```bash\r\ncd meta-ads-mcp\r\npip install -e .\r\n```\r\n\r\n## 配置\r\n\r\n### 1.设置环境变量\r\n\r\n复制 `.env.example` 到 `.env` 并填写您的凭据：\r\n\r\n```bash\r\ncp .env.example .env\r\n```\r\n\r\n```env\r\nMETA_APP_ID=123456789\r\nMETA_APP_SECRET=abc123def456\r\nMETA_ACCESS_TOKEN=EAAxxxxxxx...\r\nMETA_AD_ACCOUNT_ID=act_123456789\r\n```\r\n\r\n### 2.配置克劳德桌面\r\n\r\n编辑您的Claude Desktop配置文件：\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"meta-ads\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/ABSOLUTE/PATH/TO/meta-ads-mcp\",\r\n        \"run\",\r\n        \"meta-ads-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"META_APP_ID\": \"your_app_id\",\r\n        \"META_APP_SECRET\": \"your_app_secret\",\r\n        \"META_ACCESS_TOKEN\": \"your_access_token\",\r\n        \"META_AD_ACCOUNT_ID\": \"act_your_account_id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**替代** （如果使用pip安装）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"meta-ads\": {\r\n      \"command\": \"meta-ads-mcp\",\r\n      \"env\": {\r\n        \"META_APP_ID\": \"your_app_id\",\r\n        \"META_APP_SECRET\": \"your_app_secret\",\r\n        \"META_ACCESS_TOKEN\": \"your_access_token\",\r\n        \"META_AD_ACCOUNT_ID\": \"act_your_account_id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. 重新启动克劳德桌面\r\n\r\n## 使用示例\r\n\r\n### 检查活动绩效\r\n\r\n> “显示我的Meta广告系列上周的表现”\r\n> “在过去的30天里，哪场竞选的ROAS最好？”\r\n> “按年龄段细分我的顶级竞选活动”\r\n\r\n### 创建活动\r\n\r\n> “为Kibbar针对美国和印度的开发人员创建新的流量活动，预算为每天20美元”\r\n> “使用此副本设置广告：\\[您的副本\\]指向kibbar.com”\r\n\r\n### 管理活动\r\n\r\n> “暂停名为“夏季促销”的活动”\r\n> “将我表现最佳的广告集的每日预算增加到50美元”\r\n\r\n### 获取报告\r\n\r\n> “生成包含受众细分的每周绩效报告”\r\n> “比较本周与上周的表现”\r\n\r\n### 优化\r\n\r\n> “分析我的广告系列，告诉我在哪里浪费钱”\r\n> “我应该根据CPA增加哪些广告集的预算？”\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_campaign_performance` |具有灵活日期范围的活动级别指标|\r\n| `get_adset_performance` |广告系列中的广告集细分|\r\n| `get_ad_performance` |个人广告级别性能数据|\r\n| `list_campaigns` |列出所有具有状态筛选的活动|\r\n| `create_campaign` |创建新活动|\r\n| `create_adset` |创建具有定位功能的广告集|\r\n| `create_ad` |用创意内容创建广告|\r\n| `update_status` |暂停/激活/存档任何广告对象|\r\n| `update_budget` |调整活动或广告集的预算|\r\n| `generate_performance_report` |每日细分的综合报告|\r\n| `get_audience_breakdown` |按人口统计/平台划分的受众洞察|\r\n| `upload_ad_image` |上传广告创意图片|\r\n\r\n## 可用提示\r\n\r\n|提示|描述|\r\n|--------|-------------|\r\n| `analyze_campaign_performance` |深入分析并提出优化建议|\r\n| `create_campaign_workflow` |逐步指导活动创建|\r\n| `weekly_report` |全面的每周绩效报告|\r\n\r\n## 安全说明\r\n\r\n- 永远不要承诺你的 `.env` 文件或访问令牌\r\n- 使用长期代币进行生产，但定期轮换\r\n- 默认情况下，服务器在PAUSED状态下创建活动（花钱前可以安全查看）\r\n- 所有写操作都需要显式参数——Claude不会意外修改内容\r\n\r\n## 故障排除\r\n\r\n**“缺少Meta API凭据”**\r\n→ 检查是否在Claude Desktop配置中设置了所有4个环境变量\r\n\r\n**“OAuth访问令牌无效”**\r\n→ 您的令牌已过期。从Graph API资源管理器生成一个新的\r\n\r\n**“找不到广告帐户”**\r\n→ 确保您的帐户ID以开头 `act_` 并在“高级设置”中添加到您的应用程序中\r\n\r\n**“权限被拒绝”**\r\n→ 检查您的令牌是否具有 `ads_management` 和 `ads_read` 权限\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "meta-ads": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/ABSOLUTE/PATH/TO/meta-ads-mcp",
+    "run",
+    "meta-ads-mcp"
+   ],
+   "env": {
+    "META_APP_ID": "your_app_id",
+    "META_APP_SECRET": "your_app_secret",
+    "META_ACCESS_TOKEN": "your_access_token",
+    "META_AD_ACCOUNT_ID": "act_your_account_id"
+   }
+  }
+ }
+}

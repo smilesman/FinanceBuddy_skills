@@ -1,0 +1,24 @@
+{
+ "id": "381",
+ "kind": "mcp",
+ "name": "pokemon",
+ "fingerprint_md5": "4603aa8b23171d94838d49e110d5db49",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 口袋妖怪MCP服务器\r\n\r\n一个MCP服务器，连接到人工智能代理，并赋予他们玩口袋妖怪游戏的能力。\r\n\r\n## 设置\r\n\r\n### 1.启动venv\r\n\r\n```bash\r\nuv venv\r\nsource .venv/bin/activate\r\n```\r\n\r\n### 2.安装依赖项\r\n\r\n如果项目使用 `pyproject.toml`:\r\n\r\n```bash\r\nuv pip install .\r\n```\r\n\r\n如果项目使用 `requirements.txt`:\r\n\r\n```bash\r\nuv pip install -r requirements.txt\r\n```\r\n\r\n## MCP客户端配置\r\n\r\n将以下内容添加到MCP客户端配置JSON中：\r\n\r\n### 光标配置\r\n\r\n- 转到光标设置>工具和MCP>新建MCP服务器\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pokemon\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"uv\",\r\n        \"--directory\",\r\n        \"path_to_root_directory\",\r\n        \"run\",\r\n        \"main.py\"\r\n      ],\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 开放代码配置\r\n\r\n- 在 `.config/opencode/config.json` 或 `~/.config/opencode/opencode.json`\r\n\r\n```json\r\n{\r\n    \"mcp\": {\r\n      \"pokemon\": {\r\n        \"type\": \"local\",\r\n        \"command\": [\r\n          \"uv\",\r\n          \"--directory\",\r\n          \"path_to_root_directory\",\r\n          \"run\",\r\n          \"main.py\"\r\n        ],\r\n        \"enabled\": true,\r\n        \"timeout\": 30000\r\n      }\r\n    }\r\n}\r\n```\r\n\r\n### 反重力配置\r\n\r\n- 在 `.gemini/antigravity/mcp_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pokemon\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"path_to_root_directory\",\r\n        \"run\",\r\n        \"main.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `path_to_root_directory` 具有到项目根的绝对路径。\r\n",
+ "config": {
+  "pokemon": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "path_to_root_directory",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

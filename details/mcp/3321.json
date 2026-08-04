@@ -1,0 +1,22 @@
+{
+ "id": "3321",
+ "kind": "mcp",
+ "name": "america-law-graph",
+ "fingerprint_md5": "aa9c1b83d70b3c030cfb59ae1b9aba21",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 美国法律图谱——MCP服务器\r\n\r\n直接从Claude、Cursor或任何与MCP兼容的AI代理处搜索所有50个州、南加州大学和联邦法规中的529000多个美国法规部分。\r\n\r\n## 安装\r\n\r\n```bash\r\nnpx america-law-graph\r\n```\r\n\r\n或添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"america-law-graph\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"america-law-graph\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具（11）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_legislation` |通过模糊匹配按名称或关键字搜索法规|\r\n| `find_relevant_law` |对与描述相关的法规进行语义搜索|\r\n| `traverse_graph` |浏览特定作品的引文图|\r\n| `get_act_structure` |获取法规的完整结构（章节、章节）|\r\n| `get_related_acts` |通过交叉引用和修订查找相关法规|\r\n| `get_risk_surface` |分析哪些法规适用于业务描述|\r\n| `semantic_search` |529K个嵌入部分的矢量相似性搜索|\r\n| `search_within_work` |特定法规中的全文搜索|\r\n| `get_recent_changes` |按管辖区分列的最新立法变化|\r\n| `compare_jurisdictions` |比较不同州对某一主题的监管方式|\r\n| `get_doctrinal_lineage` |追踪法院如何随着时间的推移引用法规|\r\n\r\n## 免费层\r\n\r\n每天100次API调用，不需要密钥。对于更高的限制，请在获取API密钥 [americalawgraph.ai/pricing](https://americalawgraph.ai/pricing).\r\n\r\n## 例子\r\n\r\n问克劳德：\r\n\r\n- “加利福尼亚州的哪些就业法适用于远程工作者？”\r\n- “比较加利福尼亚州和德克萨斯州的隐私法规”\r\n- “创办金融科技公司的法律要求是什么？”\r\n- “查找纽约所有与房东-租客纠纷有关的法规”\r\n\r\n## 链接\r\n\r\n- 网站： [美国地图](https://americalawgraph.ai)\r\n- npm： [美国法律图](https://www.npmjs.com/package/america-law-graph)\r\n- 史密斯利： [@维斯塔拉/美国法律图](https://smithery.ai/server/@vestara/america-law-graph)\r\n- MCP官方登记处： [io.github.edgardomunoznajar/美国法律](https://registry.modelcontextprotocol.io/servers/io.github.edgardomunoznajar/america-law-graph)\r\n\r\n## 数据覆盖\r\n\r\n- 529386条法规\r\n- 5164项工程（法规、准则、条例）\r\n- 487528个交叉引用（已解析360K）\r\n- 50个州+哥伦比亚特区+联邦（USC+CFR）\r\n- 99.9%的部分进行语义嵌入\r\n\r\n## 许可证\r\n\r\n专有的。免费套餐可供个人使用。\r\n",
+ "config": {
+  "america-law-graph": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "america-law-graph"
+   ],
+   "env": {}
+  }
+ }
+}

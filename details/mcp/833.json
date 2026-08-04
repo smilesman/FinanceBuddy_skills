@@ -1,0 +1,24 @@
+{
+ "id": "833",
+ "kind": "mcp",
+ "name": "redakto",
+ "fingerprint_md5": "2c17b0ecb24d45a87168128e5a5ea246",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# edito应用程序mcp服务器\r\n\r\nMCP（模型上下文协议）服务器 [编辑](https://redakto.demo.calgo-lab.de) 应用 [API](https://redakto.demo.calgo-lab.de/api/docs)，为德语文本的命名实体识别和假名化提供工具。\r\n\r\n## MCP服务器配置示例\r\n\r\n为了与Claude Desktop或其他MCP兼容客户端集成，请将其添加到MCP服务器相关的配置文件中（例如。 `claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Redakto\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@sksdotsauravs/redakto-app-mcp-server\"],\r\n      \"env\": {\r\n        \"REDAKTO_API_URL\": \"https://redakto.demo.calgo-lab.de\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用Claude Desktop\r\n\r\n1. 配置Claude Desktop以使用此MCP服务器：\r\n\r\n   - 打开克劳德桌面\r\n   - 点击 **菜单图标** （三条水平线）在左上角\r\n   - 点击 **文件** → **设置。..**\r\n   - 转到开发人员→ 编辑配置\r\n   - 将以下内容添加到您的 `claude_desktop_config.json`:\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"Redakto\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\"-y\", \"@sksdotsauravs/redakto-app-mcp-server\"],\r\n         \"env\": {\r\n           \"REDAKTO_API_URL\": \"https://redakto.demo.calgo-lab.de\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. 重新启动克劳德桌面\r\n\r\n1. 在新对话中，通过单击“搜索和工具”图标并选择“Redakto”来启用MCP服务器，并查看可用工具的列表。\r\n\r\n1. 现在，您可以让Claude处理德语文本，例如：\r\n\r\n   - “检测以下文本中的私人实体：\\[德语文本\\]”\r\n   - “提取此德语文章中提到的所有位置：\\[德语文本\\]”\r\n   - “从以下德语文档中提取所有人名：\\[德语文本\\]”\r\n   - “生成此敏感文本的3个假名变体：\\[德语文本\\]”\r\n\r\n## 概述\r\n\r\n此MCP服务器允许大型语言模型（如Claude）访问Redakto API进行德语文本处理。当与LLM集成时，它使模型能够：\r\n\r\n- 检测德语文本中的命名实体（人、日期、位置等）\r\n- 生成敏感文本的假名版本\r\n- 支持多种NER模型和实体集\r\n- 使用细粒度或粗粒度实体分类处理文本\r\n\r\n## 可用工具\r\n\r\n### get_entity_set_ids\r\n\r\n- 返回可用于处理的实体集\r\n- 无需参数\r\n\r\n### get_supported_model_id\r\n\r\n- 返回特定实体集支持的NER和NER-PG模型\r\n- \\[GET\\]查询参数：\r\n  - `entity_set_id` （必填）：实体集标识符\r\n\r\n### get_entity_set_details\r\n\r\n- 返回实体集的详细信息\r\n- \\[GET\\]查询参数：\r\n  - `entity_set_id` （必填）：实体集标识符\r\n\r\n### get_supported_model_details\r\n\r\n- 返回特定模型的详细信息\r\n- \\[GET\\]查询参数：\r\n  - `entity_set_id` （必填）：实体集标识符\r\n  - `model_id` （必填）：型号标识符\r\n\r\n### 检测事件\r\n\r\n- 检测德语文本中的命名实体\r\n- \\[POST\\]请求正文参数：\r\n  - `entity_set_id` （必填）：设置使用的实体\r\n  - `model_id` （必填）：使用NER模型\r\n  - `fine_grained` （必需）：启用细粒度实体分类\r\n  - `input_texts` （必填）：要处理的德语文本字符串数组\r\n\r\n### 检测与仿真\r\n\r\n- 检测命名实体并生成假名版本\r\n- \\[POST\\]请求正文参数：\r\n  - `entity_set_id` （必填）：设置使用的实体\r\n  - `model_id` （必填）：使用NER模型\r\n  - `fine_grained` （必需）：启用细粒度实体分类\r\n  - `input_texts` （必填）：要处理的德语文本字符串数组\r\n  - `repeat_count` （可选）：要生成的假名变体数量（默认值：1）\r\n\r\n## 发展\r\n\r\n### 先决条件\r\n\r\n- Node.js≥20\r\n- 访问Redakto API实例\r\n- `REDAKTO_API_URL` 环境变量集\r\n\r\n### 设置\r\n\r\n1. **克隆此存储库：**\r\n\r\n   ```bash\r\n   git clone https://github.com/calgo-lab/redakto-app-mcp-server.git\r\n   cd redakto-app-mcp-server\r\n   ```\r\n\r\n1. **安装依赖项：**\r\n\r\n   ```bash\r\n   npm install\r\n   ```\r\n\r\n1. **项目简介：**\r\n\r\n   ```bash\r\n   npm run lint\r\n   ```\r\n\r\n1. **构建项目：**\r\n\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n1. **运行集成测试：**\r\n\r\n   ```bash\r\n   npm test\r\n   ```\r\n\r\n   这将针对Redakto API测试所有可用的工具。\r\n\r\n## 更新日志\r\n\r\n### 1.0.0\r\n\r\n- 初始版本具有完整的实体检测和假名支持\r\n- 支持多种NER模型和实体集\r\n- 与Claude和MCP兼容的客户端集成\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "redakto": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@sksdotsauravs/redakto-app-mcp-server"
+   ],
+   "env": {
+    "REDAKTO_API_URL": "https://redakto.demo.calgo-lab.de"
+   }
+  }
+ }
+}

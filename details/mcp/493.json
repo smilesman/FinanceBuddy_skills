@@ -1,0 +1,24 @@
+{
+ "id": "493",
+ "kind": "mcp",
+ "name": "ticketmaster",
+ "fingerprint_md5": "7bf44e59f6a616b778b51d02cb4a76dd",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Ticketmaster的MCP服务器\r\n\r\n[](https://smithery.ai/server/mcp-server-ticketmaster)\r\n\r\n模型上下文协议服务器，提供通过Ticketmaster Discovery API发现事件、场所和景点的工具。\r\n\r\n[](https://glama.ai/mcp/servers/u91gv8f3on)\r\n\r\n## 特性\r\n\r\n- 使用灵活的过滤功能搜索活动、场地和景点：\r\n  - 关键字搜索\r\n  - 事件的日期范围\r\n  - 地点（城市、州、国家）\r\n  - 特定场地搜索\r\n  - 特定景点搜索\r\n  - 事件分类/类别\r\n- 输出格式：\r\n  - 用于编程的结构化JSON数据\r\n  - 供直接使用的人类可读文本\r\n- 综合数据包括：\r\n  - 姓名和ID\r\n  - 日期和时间（活动）\r\n  - 价格范围（活动）\r\n  - 网址\r\n  - 图像\r\n  - 地点和地址（场馆）\r\n  - 分类（景点）\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的mcp服务器ticketmaster [史密瑟里](https://smithery.ai/server/mcp-server-ticketmaster):\r\n\r\n```bash\r\nnpx -y @smithery/cli install mcp-server-ticketmaster --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\nnpx -y install @delorenj/mcp-server-ticketmaster\r\n```\r\n\r\n## 配置\r\n\r\n服务器需要Ticketmaster API密钥。您可以通过以下方式获得：\r\n\r\n1. 去https://developer.ticketmaster.com/\r\n1. 创建帐户或登录\r\n1. 转到您帐户中的“我的应用程序”\r\n1. 创建新应用程序以获取API密钥\r\n\r\n在MCP设置文件中设置API密钥：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ticketmaster\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@delorenj/mcp-server-ticketmaster\"],\r\n      \"env\": {\r\n        \"TICKETMASTER_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n服务器提供了一个名为 `search_ticketmaster` 接受：\r\n\r\n### 所需参数\r\n\r\n- `type`：搜索类型（“事件”、“地点”或“景点”）\r\n\r\n### 可选参数\r\n\r\n- `keyword`：搜索词\r\n- `startDate`：YYYY-MM-DD格式的开始日期（用于事件）\r\n- `endDate`：YYYY-MM-DD格式的结束日期（用于事件）\r\n- `city`：城市名称\r\n- `stateCode`：州代码（例如“NY”）\r\n- `countryCode`：国家代码（例如“美国”）\r\n- `venueId`：特定会场ID\r\n- `attractionId`：特定景点ID\r\n- `classificationName`：活动类别（例如，“体育”、“音乐”）\r\n- `format`：输出格式（“json”或“text”，默认为“json”）\r\n\r\n### 例子\r\n\r\n#### 结构化JSON输出（默认）\r\n\r\n```\r\n<use_mcp_tool>\r\n<server_name>ticketmaster</server_name>\r\n<tool_name>search_ticketmaster</tool_name>\r\n<arguments>\r\n{\r\n  \"type\": \"event\",\r\n  \"keyword\": \"concert\",\r\n  \"startDate\": \"2025-02-01\",\r\n  \"endDate\": \"2025-02-28\",\r\n  \"city\": \"New York\",\r\n  \"stateCode\": \"NY\"\r\n}\r\n</arguments>\r\n</use_mcp_tool>\r\n```\r\n\r\n#### 人类可读文本输出\r\n\r\n```\r\n<use_mcp_tool>\r\n<server_name>ticketmaster</server_name>\r\n<tool_name>search_ticketmaster</tool_name>\r\n<arguments>\r\n{\r\n  \"type\": \"event\",\r\n  \"keyword\": \"concert\",\r\n  \"startDate\": \"2025-02-01\",\r\n  \"endDate\": \"2025-02-28\",\r\n  \"city\": \"New York\",\r\n  \"stateCode\": \"NY\",\r\n  \"format\": \"text\"\r\n}\r\n</arguments>\r\n</use_mcp_tool>\r\n```\r\n\r\n## 发展\r\n\r\n1. 克隆存储库\r\n1. 复制示例环境文件：\r\n   ```bash\r\n   cp .env.example .env\r\n   ```\r\n1. 将Ticketmaster API密钥添加到 `.env`\r\n1. 安装依赖项：\r\n   ```bash\r\n   npm install\r\n   ```\r\n1. 构建项目：\r\n   ```bash\r\n   npm run build\r\n   ```\r\n1. 与检验员一起测试：\r\n   ```bash\r\n   npm run inspector\r\n   ```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。对于重大更改，请先打开一个问题来讨论您想要更改的内容。\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 详细信息文件\r\n",
+ "config": {
+  "ticketmaster": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@delorenj/mcp-server-ticketmaster"
+   ],
+   "env": {
+    "TICKETMASTER_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

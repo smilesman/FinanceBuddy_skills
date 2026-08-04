@@ -1,0 +1,26 @@
+{
+ "id": "1059",
+ "kind": "mcp",
+ "name": "google-analytics",
+ "fingerprint_md5": "18315200422e13fb3711c9125bc5beae",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 谷歌分析MCP服务器\r\n\r\n\r\n用于访问Google Analytics 4（GA4）数据的MCP服务器实现，使用模型上下文协议构建\r\nTypeScript SDK。\r\n\r\n## 特性\r\n\r\n- 通过可定制的维度获取页面浏览量指标\r\n- 随着时间的推移跟踪活跃用户和新用户\r\n- 分析特定事件及其指标\r\n- 监控用户行为指标（会话持续时间、跳出率）\r\n- 为所有查询灵活选择日期范围\r\n\r\n## 先决条件\r\n\r\n- Node.js 20或更高版本\r\n- 谷歌分析4属性。\r\n- Google Cloud项目 **分析数据API** 启用。\r\n- 具有访问API的凭据的服务帐户。\r\n\r\n## 设置和配置\r\n\r\n要使用此服务器，您需要使用Google Analytics配置身份验证。这是使用服务帐户完成的。\r\n\r\n### 1.启用Google Analytics Data API\r\n\r\n1. 转到 [谷歌云控制台](https://console.cloud.google.com/).\r\n1. 选择要使用的项目。\r\n1. 在导航菜单中，转到 **API和服务>库**.\r\n1. 搜索 **“谷歌分析数据API”** 并启用它。\r\n\r\n### 2.创建服务帐户\r\n\r\n1. 在Google Cloud控制台中，导航到 **IAM和管理>服务帐户**.\r\n1. 点击 **“创建服务帐户”**.\r\n1. 为服务帐户命名（例如“GA4 MCP服务器”）。\r\n1. 点击 **“创建并继续”**.\r\n1. 您可以跳过授予服务帐户对项目的访问权限。\r\n1. 点击 **“完成”**.\r\n1. 找到您刚刚创建的服务帐户，然后单击下面的三个点 **“行动”**.\r\n1. 选择 **“管理密钥”**那么 **“添加密钥”>“创建新密钥”**.\r\n1. 选择 **对象符号** 作为密钥类型，然后单击 **“创建”**。将下载包含凭据的JSON文件。\r\n\r\n### 3.授予服务帐户访问Google Analytics的权限\r\n\r\n1. 打开 [谷歌分析](https://analytics.google.com/).\r\n1. 导航到 **管理员** GA4财产的一部分。\r\n1. 上下 **财产** 列，单击 **物业出入管理**.\r\n1. 点击 **\"+\"** 按钮添加新用户。\r\n1. 在 **“电子邮件地址”** 字段，粘贴 `client_email` 从您下载的JSON凭据文件中。\r\n1. 分配 **“查看器”** 角色。您不需要通知用户。\r\n1. 点击 **“添加”**.\r\n\r\n### 4.设置环境变量\r\n\r\n服务器需要以下环境变量：\r\n\r\n- `GOOGLE_CLIENT_EMAIL`：The `client_email` 从您的服务帐户JSON文件。\r\n- `GOOGLE_PRIVATE_KEY`：The `private_key` 从您的服务帐户JSON文件。\r\n- `GA_PROPERTY_ID`：您的Google Analytics 4属性ID。\r\n\r\n您可以在您的环境中设置它们或使用 `.env` 文件。\r\n\r\n```bash\r\nexport GOOGLE_CLIENT_EMAIL=\"your-service-account@your-project.iam.gserviceaccount.com\"\r\nexport GOOGLE_PRIVATE_KEY=\"-----BEGIN PRIVATE KEY-----\\nYOUR_PRIVATE_KEY\\n-----END PRIVATE KEY-----\\n\"\r\nexport GA_PROPERTY_ID=\"your_property_id\"\r\n```\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Google Analytics Server for Claude Desktop [史密瑟里](https://smithery.ai/server/mcp-server-google-analytics):\r\n\r\n```bash\r\nnpx -y @smithery/cli install mcp-server-google-analytics --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\nnpm install -g mcp-server-google-analytics\r\n```\r\n\r\n或者直接与npx一起使用：\r\n\r\n```bash\r\nnpx mcp-server-google-analytics\r\n```\r\n\r\n## 用法\r\n\r\n### 启动服务器\r\n\r\n```bash\r\npnpm start\r\n```\r\n\r\n### Claude桌面中的配置\r\n\r\n将此添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"google-analytics\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-server-google-analytics\"],\r\n      \"env\": {\r\n        \"GOOGLE_CLIENT_EMAIL\": \"your-service-account@project.iam.gserviceaccount.com\",\r\n        \"GOOGLE_PRIVATE_KEY\": \"your-private-key\",\r\n        \"GA_PROPERTY_ID\": \"your-ga4-property-id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用功能\r\n\r\n### runReport\r\n\r\n运行灵活的报告以获取分析数据。\r\n\r\n**输入：**\r\n\r\n```json\r\n{\r\n  \"startDate\": \"2024-01-01\",\r\n  \"endDate\": \"2024-01-31\",\r\n  \"dimensions\": [{ \"name\": \"country\" }, { \"name\": \"city\" }],\r\n  \"metrics\": [{ \"name\": \"activeUsers\" }, { \"name\": \"newUsers\" }],\r\n  \"dimensionFilter\": {\r\n    \"filter\": {\r\n      \"fieldName\": \"country\",\r\n      \"stringFilter\": {\r\n        \"value\": \"United States\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 获取页面浏览量\r\n\r\n获取特定日期范围的页面浏览量指标：\r\n\r\n```json\r\n{\r\n  \"startDate\": \"2024-01-01\",\r\n  \"endDate\": \"2024-01-31\",\r\n  \"dimensions\": [\"page\", \"country\"] // Optional\r\n}\r\n```\r\n\r\n### GetActiveUsers\r\n\r\n获取活跃用户指标：\r\n\r\n```json\r\n{\r\n  \"startDate\": \"2024-01-01\",\r\n  \"endDate\": \"2024-01-31\"\r\n}\r\n```\r\n\r\n### get事件\r\n\r\n获取事件指标：\r\n\r\n```json\r\n{\r\n  \"startDate\": \"2024-01-01\",\r\n  \"endDate\": \"2024-01-31\",\r\n  \"eventName\": \"purchase\" // Optional\r\n}\r\n```\r\n\r\n### getUserBehavior\r\n\r\n获取用户行为指标：\r\n\r\n```json\r\n{\r\n  \"startDate\": \"2024-01-01\",\r\n  \"endDate\": \"2024-01-31\"\r\n}\r\n```\r\n\r\n## 安全考虑\r\n\r\n- **最小特权**：仅在Google Analytics中授予服务帐户“查看器”角色。\r\n- **密钥管理**：确保您的服务帐户密钥文件安全，不要在客户端代码中公开它。\r\n- **环境变量**：使用环境变量存储敏感信息，如客户端电子邮件、私钥和属性ID。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请阅读我们的 [贡献指南](CONTRIBUTING.md) 有关我们行为准则的详细信息，以及\r\n提交pull请求的过程。\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "google-analytics": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-server-google-analytics"
+   ],
+   "env": {
+    "GOOGLE_CLIENT_EMAIL": "your-service-account@project.iam.gserviceaccount.com",
+    "GOOGLE_PRIVATE_KEY": "your-private-key",
+    "GA_PROPERTY_ID": "your-ga4-property-id"
+   }
+  }
+ }
+}

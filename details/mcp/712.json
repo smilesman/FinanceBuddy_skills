@@ -1,0 +1,18 @@
+{
+ "id": "712",
+ "kind": "mcp",
+ "name": "leonardo-ai",
+ "fingerprint_md5": "940aeb5f9c2f477a82de7f294a7cb0f7",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# 🎨 Leonardo AI MCP服务器\r\n\r\n遥控器 [模型上下文协议（MCP）](https://modelcontextprotocol.io) 服务器 [莱昂纳多.ai](https://leonardo.ai)，由 [维塞尔](https://vercel.com).\r\n\r\n生成图像、管理模型、检查生成状态、升级、创建变体——所有这些都可以通过MCP从Cursor、Claude Desktop、VS Code或任何兼容MCP的客户端完成。\r\n\r\n## ✨ 功能/工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `generate_image` |使用Leonardo AI生成图像。支持模型选择、尺寸、样式预设、炼金术、PhotoReal和超模式。自动完成投票。 |\r\n| `get_generation` |按ID获取生成作业的状态和结果|\r\n| `list_models` |列出所有可用的Leonardo AI平台模型，包括ID、名称和描述|\r\n| `get_user_generations` |为用户获取最新一代作业|\r\n| `get_user_info` |获取经过身份验证的用户的信息（用户名、令牌、配额）|\r\n| `create_variation` |创建现有图像的变体、外绘、内绘或解压缩|\r\n| `upscale_image` |将生成的图像放大到更高的分辨率|\r\n| `delete_generation` |永久删除一代及其图像|\r\n\r\n## 🚀 部署到Vercel\r\n\r\n### 一键部署\r\n\r\n\r\n### 手动部署\r\n\r\n1. **分叉/克隆** 这个仓库\r\n1. **导入** 它在 [维塞尔](https://vercel.com/new)\r\n1. **设置环境变量** `LEONARDO_API_KEY` 使用Leonardo AI API密钥\r\n1. **启用流体计算** 在Vercel项目设置中实现最佳性能\r\n1. **部署** --您的MCP服务器将在 `https://your-project.vercel.app/mcp`\r\n\r\n## 🔑 获取Leonardo AI API密钥\r\n\r\n1. 首选 [莱昂纳多.ai](https://app.leonardo.ai)\r\n1. 注册/登录\r\n1. 在您的设置中导航到API访问\r\n1. 生成API密钥\r\n\r\n## 🔌 连接您的MCP客户端\r\n\r\n### 光标\r\n\r\n添加到光标MCP设置(`.cursor/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"leonardo-ai\": {\r\n      \"url\": \"https://your-project.vercel.app/mcp\",\r\n      \"headers\": {\r\n        \"x-leonardo-api-key\": \"YOUR_LEONARDO_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"leonardo-ai\": {\r\n      \"url\": \"https://your-project.vercel.app/mcp\",\r\n      \"headers\": {\r\n        \"x-leonardo-api-key\": \"YOUR_LEONARDO_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### VS代码（GitHub副本）\r\n\r\n添加到您的VS Code MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"leonardo-ai\": {\r\n        \"url\": \"https://your-project.vercel.app/mcp\",\r\n        \"headers\": {\r\n          \"x-leonardo-api-key\": \"YOUR_LEONARDO_API_KEY\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **注：** 您还可以设置 `LEONARDO_API_KEY` 作为Vercel上的环境变量，而不是将其作为标头传递。如果设置了env-var，则标头是可选的。\r\n\r\n## 🛠 本地开发\r\n\r\n```bash\r\n# Install dependencies\r\npnpm install\r\n\r\n# Set your API key\r\ncp .env.example .env\r\n# Edit .env and add your LEONARDO_API_KEY\r\n\r\n# Start local dev server\r\npnpm dev\r\n```\r\n\r\nMCP服务器将在 `http://localhost:3000/mcp`.\r\n\r\n## 📁 项目结构\r\n\r\n```\r\n├── api/\r\n│   ├── server.ts           # MCP server with all tool definitions\r\n│   └── leonardo-client.ts  # Leonardo AI REST API client\r\n├── public/\r\n│   └── index.html          # Landing page\r\n├── package.json\r\n├── tsconfig.json\r\n├── vercel.json             # Vercel deployment config\r\n├── .env.example\r\n└── README.md\r\n```\r\n\r\n## 📋 API密钥选项\r\n\r\n服务器按照以下顺序解析Leonardo API密钥：\r\n\r\n1. **`x-leonardo-api-key` 头球** --由MCP客户端传递（建议用于多用户设置）\r\n1. **`LEONARDO_API_KEY` env变量** --在Vercel项目设置中设置（对单个用户更简单）\r\n\r\n## 🧪 示例用法\r\n\r\n连接后，您可以在MCP客户端中使用自然语言：\r\n\r\n- *“以电影风格生成山上日落的图像”*\r\n- *“列出可用的Leonardo AI模型”*\r\n- *“让我看看我最近几代人”*\r\n- *“升级上次生成的图像”*\r\n- *“创建图像xyz的变体”*\r\n\r\n## 📝 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "leonardo-ai": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://your-project.vercel.app/mcp"
+  }
+ }
+}

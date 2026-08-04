@@ -1,0 +1,27 @@
+{
+ "id": "1148",
+ "kind": "mcp",
+ "name": "mysql-10",
+ "fingerprint_md5": "2d87b8781b9bfd25fddb86da746a9d5f",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP MySQL Lens（可译为“MCP MySQL 查看器”或根据具体上下文调整为更贴切的名称）\r\n\r\n一个模型上下文协议（MCP）服务器，使Claude Desktop能够直接与MySQL数据库进行交互。该服务器允许Claude通过自然语言查询、分析和管理您的MySQL数据库。\r\n\r\n## 特点/特性\r\n\r\n- 🔍 看起来像是一个放大镜的符号，常用于表示搜索、观察或查看细节，直接翻译可能无具体含义，可理解为“放大镜”或“仔细查看”。 **查询执行**直接在Claude桌面运行SQL查询\r\n- 📊（表格图标，无实际文字含义，可理解为“图表”或“数据表格”的象征） **模式检查**探索数据库结构、表以及表之间的关系\r\n- 🔄 翻译为中文是：循环（或旋转） **数据分析**分析并可视化数据模式\r\n- 🛡️ 译为中文是“护盾”或“防御”。这个符号通常用来表示保护、防御或屏障的概念。 **安全运营**内置数据库操作的安全保障措施\r\n- 🚀 火箭/快速上升/飞速发展（根据上下文可灵活翻译） **轻松设置**通过环境变量进行简单配置\r\n\r\n## 先决条件\r\n\r\n- [Claude Desktop（可译为“Claude桌面版”）](https://claude.ai/download) 安装\r\n- Node.js（v16或更高版本）\r\n- MySQL 服务器（版本5.7或更高）\r\n- 安装 npm\r\n- 具有适当权限的有效MySQL凭据\r\n\r\n## NPM 链接\r\n\r\n访问 npm 包 [mcp-mysql-lens 翻译为中文可以是“MCP MySQL 透镜”或“MCP MySQL 查看器”，具体取决于上下文和该工具的实际功能。在这里，“lens”通常指的是用于查看、分析或操作数据的工具或界面，因此“透镜”或“查看器”都是合适的翻译](https://www.npmjs.com/package/mcp-mysql-lens)\r\n\r\n## 安装\r\n\r\n### 1. 安装MCP服务器\r\n\r\n```bash\r\nnpm install -g mcp-mysql-lens\r\n```\r\n\r\n### 2. 配置Claude桌面版\r\n\r\n将此配置添加到您的Claude桌面配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mysql\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-mysql-lens\"\r\n      ],\r\n      \"env\": {\r\n        \"MYSQL_HOST\": \"<YOUR_MYSQL_HOST>\",\r\n        \"MYSQL_PORT\": \"<YOUR_MYSQL_PORT>\",\r\n        \"MYSQL_USER\": \"<YOUR_MYSQL_USERNAME>\",\r\n        \"MYSQL_PASSWORD\": \"<YOUR_MYSQL_PASSWORD>\",\r\n        \"MYSQL_DATABASE\": \"<YOUR_MYSQL_DEFAULT_DB>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**配置文件位置：**\r\n\r\n- **macOS（苹果电脑操作系统）**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **Windows**： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- **Linux（发音为“林克斯”）**: `~/.config/Claude/claude_desktop_config.json`\r\n\r\n### 3. 重启Claude桌面版\r\n\r\n保存配置后，重启Claude Desktop以使更改生效。\r\n\r\n## 配置参数\r\n\r\n| 参数 | 描述 | 默认值 | 是否必需 |\r\n|-----------|-------------|---------|----------|\r\n| `MYSQL_HOST` | MySQL 服务器主机名 | - | 是 |\r\n| `MYSQL_PORT` | MySQL 服务器端口 | `3306` | 是 |\r\n| `MYSQL_USER` | 数据库用户名 | - | 是 |\r\n| `MYSQL_PASSWORD` | 数据库密码 | - | 是 |\r\n| `MYSQL_DATABASE` | 默认连接的数据库 | - | 是 |\r\n\r\n## 使用示例\r\n\r\n配置完成后，您可以通过Claude Desktop与您的MySQL数据库进行交互：\r\n\r\n### 查询数据\r\n\r\n```\r\n\"Show me all users from the users table\"\r\n\"What are the top 10 products by sales?\"\r\n\"Find all orders from the last 30 days\"\r\n```\r\n\r\n### 分析模式\r\n\r\n```\r\n\"What tables are in my database?\"\r\n\"Describe the structure of the customers table\"\r\n\"Show me the relationships between tables\"\r\n```\r\n\r\n### 数据分析\r\n\r\n```\r\n\"Calculate the average order value by month\"\r\n\"Find duplicate records in the products table\"\r\n\"Show me user registration trends\"\r\n```\r\n\r\n## 安全最佳实践\r\n\r\n⚠️（警告符号，无具体文字含义，通常表示注意或警告） **重要的安全考量因素：**\r\n\r\n1. **使用只读凭据**为数据分析任务创建一个具有只读权限的专用MySQL用户\r\n\r\n1. **永远不要提交凭证**别犯下 `claude_desktop_config.json` 将包含实际凭据的文件提交到版本控制系统中\r\n\r\n1. **使用环境变量**对于生产环境，请考虑使用环境变量替换\r\n\r\n1. **限制数据库访问**仅授予Claude访问其工作所需的特定数据库的权限\r\n\r\n1. **使用强密码**确保你的MySQL密码既强且唯一\r\n\r\n1. **启用SSL/TLS**对于远程连接，始终使用SSL/TLS加密\r\n\r\n1. **定期审计**定期监控数据库访问日志\r\n\r\n## 故障排除\r\n\r\n### 连接问题\r\n\r\n**问题**“无法连接到 MySQL 服务器”\r\n\r\n- 验证MySQL服务器是否正在运行： `systemctl status mysql` (Linux) 或检查服务 (Windows)\r\n- 检查主机和端口是否正确\r\n- 确保防火墙允许在MySQL端口（默认3306）上的连接\r\n- 验证凭据是否正确\r\n\r\n**问题**“用户访问被拒绝”\r\n\r\n- 确认用户名和密码是否正确\r\n- 检查用户是否具有适当的权限： `SHOW GRANTS FOR 'your_user'@'localhost';`\r\n- 验证用户能否从指定主机连接\r\n\r\n### 配置问题\r\n\r\n**问题**Claude Desktop 没有显示 MySQL 服务器\r\n\r\n- 确保配置文件位于正确的位置\r\n- 检查JSON语法是否有效（使用JSON验证器）\r\n- 更改后重启Claude桌面版\r\n- 检查Claude Desktop日志中的错误\r\n\r\n### 性能问题\r\n\r\n**问题**查询速度很慢\r\n\r\n- 为频繁查询的列添加适当的索引\r\n- 优化复杂查询\r\n- 考虑增加MySQL连接超时时间\r\n- 检查数据库服务器资源（CPU、内存）\r\n\r\n## 局限性\r\n\r\n- **查询超时**长时间运行的查询可能会超时（默认：30秒）\r\n- **结果大小**大型结果集可能会被截断\r\n- **写操作**目前不支持\r\n- **并发连接**受限于MySQL服务器的max_connections设置\r\n\r\n## 做出贡献\r\n\r\n欢迎贡献！请随时提交拉取请求。\r\n\r\n1. 为该仓库创建分支（或“克隆该仓库”）\r\n1. 创建你的特性分支（`git checkout -b feature/AmazingFeature`)\r\n1. 提交您的更改（`git commit -m 'Add some AmazingFeature'`)\r\n1. 推送到分支（`git push origin feature/AmazingFeature`)\r\n1. 提交一个拉取请求\r\n\r\n## 许可证\r\n\r\n这个项目遵循MIT许可证授权——详见 [许可证](LICENSE) 详情请查阅文件。\r\n\r\n## 致谢\r\n\r\n- 建立在 [模型上下文协议](https://modelcontextprotocol.io)\r\n- 由……提供支持/驱动 [克劳德](https://claude.ai) 由Anthropic公司开发\r\n- 由……提供的MySQL连接器 [mysql2（通常指MySQL的Node.js驱动库，全称可能为mysql2或类似名称，用于在Node.js环境中连接和操作MySQL数据库）](https://github.com/sidorares/node-mysql2)\r\n- 受……的启发 [dpflucas MySQL 服务器](https://github.com/dpflucas/mysql-mcp-server)\r\n\r\n______________________________________________________________________\r\n",
+ "config": {
+  "mysql": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-mysql-lens"
+   ],
+   "env": {
+    "MYSQL_HOST": "<YOUR_MYSQL_HOST>",
+    "MYSQL_PORT": "<YOUR_MYSQL_PORT>",
+    "MYSQL_USER": "<YOUR_MYSQL_USERNAME>",
+    "MYSQL_PASSWORD": "<YOUR_MYSQL_PASSWORD>",
+    "MYSQL_DATABASE": "<YOUR_MYSQL_DEFAULT_DB>"
+   }
+  }
+ }
+}

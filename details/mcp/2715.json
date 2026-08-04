@@ -1,0 +1,25 @@
+{
+ "id": "2715",
+ "kind": "mcp",
+ "name": "seo-mcp",
+ "fingerprint_md5": "b13211e993c2b02c057ab46e0a90459d",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# SEO MCP\r\n\r\n基于Ahrefs数据的MCP（模型控制协议）SEO工具服务。包括反向链接分析、关键字研究、流量估计等功能。\r\n\r\n[中文](./README_CN.md)\r\n\r\n## 概述\r\n\r\n该服务提供了一个API来从Ahrefs检索SEO数据。它处理整个过程，包括解决验证码、身份验证和数据检索。缓存结果以提高性能并降低API成本。\r\n\r\n> 此MCP服务仅用于教育目的。请不要滥用它。这个项目的灵感来自 `@哥飞社群`.\r\n\r\n## 特性\r\n\r\n- 🔍 反向链接分析\r\n\r\n  - 获取任何域的详细反向链接数据\r\n  - 查看域评级、锚文本和链接属性\r\n  - 过滤教育和政府领域\r\n\r\n- 🎯 关键词研究\r\n\r\n  - 从种子关键字生成关键字创意\r\n  - 获取关键字难度分数\r\n  - 查看搜索量和趋势\r\n\r\n- 📊 流量分析\r\n\r\n  - 估计网站流量\r\n  - 查看交通历史和趋势\r\n  - 分析热门页面和国家分布\r\n  - 跟踪关键字排名\r\n\r\n- 🚀 性能优化\r\n\r\n  - 使用CapSolver自动求解验证码\r\n  - 响应缓存\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Python 3.10或更高版本\r\n- CapSolver帐户和API密钥([在这里注册](https://dashboard.capsolver.com/passport/register?inviteCode=1dTH7WQSfHD0))\r\n\r\n### 从PyPI安装\r\n\r\n```bash\r\npip install seo-mcp\r\n```\r\n\r\n或使用 `uv`:\r\n\r\n```bash\r\nuv pip install seo-mcp\r\n```\r\n\r\n### 手动安装\r\n\r\n1. 克隆存储库：\r\n\r\n   ```bash\r\n   git clone https://github.com/cnych/seo-mcp.git\r\n   cd seo-mcp\r\n   ```\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   pip install -e .\r\n   # Or\r\n   uv pip install -e .\r\n   ```\r\n\r\n1. 设置CapSolver API键：\r\n\r\n   ```bash\r\n   export CAPSOLVER_API_KEY=\"your-capsolver-api-key\"\r\n   ```\r\n\r\n## 用法\r\n\r\n### 运行服务\r\n\r\n您可以通过以下方式运行该服务：\r\n\r\n#### 在游标IDE中使用\r\n\r\n在光标设置中，切换到MCP选项卡，单击 `+Add new global MCP server` 按钮，然后输入：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"SEO MCP\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--python\", \"3.10\", \"seo-mcp\"],\r\n      \"env\": {\r\n        \"CAPSOLVER_API_KEY\": \"CAP-xxxxxx\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您还可以创建 `.cursor/mcp.json` 项目根目录中的文件，内容相同。\r\n\r\n### api参考\r\n\r\n该服务提供以下MCP工具：\r\n\r\n#### `get_backlinks_list(domain: str)`\r\n\r\n获取域名的反向链接。\r\n\r\n**参数：**\r\n\r\n- `domain` （string）：要分析的域（例如“example.com”）\r\n\r\n**退货：**\r\n\r\n```json\r\n{\r\n  \"overview\": {\r\n    \"domainRating\": 76,\r\n    \"backlinks\": 1500,\r\n    \"refDomains\": 300\r\n  },\r\n  \"backlinks\": [\r\n    {\r\n      \"anchor\": \"Example link\",\r\n      \"domainRating\": 76,\r\n      \"title\": \"Page title\",\r\n      \"urlFrom\": \"https://referringsite.com/page\",\r\n      \"urlTo\": \"https://example.com/page\",\r\n      \"edu\": false,\r\n      \"gov\": false\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n#### `keyword_generator(keyword: str, country: str = \"us\", search_engine: str = \"Google\")`\r\n\r\n生成关键字创意。\r\n\r\n**参数：**\r\n\r\n- `keyword` （string）：种子关键字\r\n- `country` （string）：国家代码（默认：“us”）\r\n- `search_engine` （string）：搜索引擎（默认：“Google”）\r\n\r\n**退货：**\r\n\r\n```json\r\n[\r\n  {\r\n    \"keyword\": \"Example keyword\",\r\n    \"volume\": 1000,\r\n    \"difficulty\": 45,\r\n    \"cpc\": 2.5\r\n  }\r\n]\r\n```\r\n\r\n#### `get_traffic(domain_or_url: str, country: str = \"None\", mode: str = \"subdomains\")`\r\n\r\n获取流量估计。\r\n\r\n**参数：**\r\n\r\n- `domain_or_url` （string）：要分析的域或URL\r\n- `country` （字符串）：国家筛选器（默认值：“无”）\r\n- `mode` （string）：分析模式（“子域”或“精确”）\r\n\r\n**退货：**\r\n\r\n```json\r\n{\r\n  \"traffic_history\": [...],\r\n  \"traffic\": {\r\n    \"trafficMonthlyAvg\": 50000,\r\n    \"costMontlyAvg\": 25000\r\n  },\r\n  \"top_pages\": [...],\r\n  \"top_countries\": [...],\r\n  \"top_keywords\": [...]\r\n}\r\n```\r\n\r\n#### `keyword_difficulty(keyword: str, country: str = \"us\")`\r\n\r\n获取关键字难度分数。\r\n\r\n**参数：**\r\n\r\n- `keyword` （string）：要分析的关键字\r\n- `country` （string）：国家代码（默认：“us”）\r\n\r\n**退货：**\r\n\r\n```json\r\n{\r\n  \"difficulty\": 45,\r\n  \"serp\": [...],\r\n  \"related\": [...]\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n发展：\r\n\r\n```bash\r\ngit clone https://github.com/cnych/seo-mcp.git\r\ncd seo-mcp\r\nuv sync\r\n```\r\n\r\n## 运作原理\r\n\r\n1. 用户通过MCP发送请求\r\n1. 该服务使用CapSolver解决Cloudflare旋转栅门验证码问题\r\n1. 该服务从Ahrefs获取身份验证令牌\r\n1. 该服务检索请求的SEO数据\r\n1. 服务处理并返回格式化的结果\r\n\r\n## 故障排除\r\n\r\n- **CapSolver API密钥错误**：检查 `CAPSOLVER_API_KEY` 环境变量\r\n- **速率限制**：减少请求频率\r\n- **没有结果**：Ahrefs可能不会为该域编制索引\r\n- **其他问题**：参见 [GitHub存储库](https://github.com/cnych/seo-mcp)\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅许可证文件\r\n",
+ "config": {
+  "seo-mcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--python",
+    "3.10",
+    "seo-mcp"
+   ],
+   "env": {
+    "CAPSOLVER_API_KEY": "CAP-xxxxxx"
+   }
+  }
+ }
+}

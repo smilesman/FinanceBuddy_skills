@@ -1,0 +1,24 @@
+{
+ "id": "639",
+ "kind": "mcp",
+ "name": "educhain",
+ "fingerprint_md5": "80bdcebb12d9b96e48b06d2ed0922d56",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 📚 克劳德桌面版EduChain MCP服务器\r\n\r\n这个项目是由人工智能驱动的 **MCP（模型上下文协议）服务器** 使用 [教育链](https://github.com/satvik314/educhain) 图书馆。它与 **克劳德桌面** 并提供生成教育内容的工具，例如：\r\n\r\n- ✅ 多项选择题（MCQ）\r\n- ✅ 课程计划\r\n- ✅ 闪卡\r\n\r\n______________________________________________________________________\r\n\r\n## ⚙️ 特性\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `generate_mcqs` |根据主题生成多项选择题|\r\n| `generate_lesson_plan` |创建结构化的课程计划|\r\n| `generate_flashcards` |制作学习问答抽认卡|\r\n\r\n______________________________________________________________________\r\n\r\n## 🚀 安装说明\r\n\r\n> 这些步骤将指导您安装所有内容并使用Claude Desktop运行服务器。\r\n\r\n______________________________________________________________________\r\n\r\n### 🧰 步骤1：安装 `uv` （如果还没有）\r\n\r\n```bash\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n### 🐍 步骤2：创建并激活虚拟环境\r\n\r\n```bash\r\nuv venv\r\nsource .venv/bin/activate\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n### 📦 步骤3：安装EduChain（从本地GitHub仓库）\r\n\r\n```bash\r\nuv pip install -e /absolute/path/to/educhain-main\r\n```\r\n\r\n如果你还没有，先克隆 [EduChain GitHub仓库](https://github.com/satvik314/educhain):\r\n然后执行步骤3\r\n\r\n> 例子：\r\n>\r\n> ```bash\r\n> uv pip install -e /Users/kunal/Desktop/github/educhain-main\r\n> ```\r\n\r\n______________________________________________________________________\r\n\r\n### 📦 步骤4：安装MCP+httpx\r\n\r\n```bash\r\nuv add \"mcp[cli]\" httpx\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n### 🧠 步骤5：添加您的API密钥 `server.py`\r\n\r\n在……里面 `server.py`，将此行替换为您的实际密钥：\r\n\r\n```python\r\nos.environ[\"OPENAI_API_KEY\"] = \"sk-...\"  # ← Your OpenAI API key here\r\n```\r\n\r\n> ⚠️ 不建议用于生产，但可用于测试/提交。\r\n\r\n______________________________________________________________________\r\n\r\n## ▶️ 运行服务器\r\n\r\n确保您位于项目文件夹中，并且虚拟环境已激活。\r\n\r\n然后运行：\r\n\r\n```bash\r\nuv run server.py\r\n```\r\n\r\n如果成功，您将看到：\r\n\r\n```\r\n✅ EduChain MCP FastMCP server is starting...\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 💻 Claude桌面配置\r\n\r\n更新您的 `claude_desktop_config.json` 这样地：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"educhain\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/ABSOLUTE/PATH/TO/PARENT/FOLDER/eduMcp\",\r\n        \"run\",\r\n        \"server.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动Claude Desktop以重新加载配置。\r\n\r\n______________________________________________________________________\r\n\r\n## 💬 克劳德提示示例\r\n\r\n```text\r\nUse the `generate_mcqs` tool to create 3 questions on \"Photosynthesis\".\r\n\r\nUse the `generate_lesson_plan` tool for \"Newton's Laws of Motion\".\r\n\r\nUse the `generate_flashcards` tool to make flashcards on \"The Solar System\".\r\n```\r\n\r\n使用 [教育链](https://github.com/satvik314/educhain) +克劳德。\r\n",
+ "config": {
+  "educhain": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/ABSOLUTE/PATH/TO/PARENT/FOLDER/eduMcp",
+    "run",
+    "server.py"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "id": "2804",
+ "kind": "mcp",
+ "name": "deeprecall",
+ "fingerprint_md5": "d4febfc89daea66cd247b5c136a306b5",
+ "download_count": 0,
+ "category": "商业工具",
+ "tags": "",
+ "version": "",
+ "readme": "# DeepRecall MCP服务器\r\n\r\n\r\n通过 [模型上下文协议](https://modelcontextprotocol.io).\r\n\r\n搜索来自美国消费品安全委员会、美国食品药品监督管理局、欧盟安全门、英国OPSS、加拿大卫生部、经合组织、RappelConso和ACCC的120000多种召回产品。\r\n\r\n## 快速开始\r\n\r\n### 使用托管服务器（推荐）\r\n\r\n添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"deeprecall\": {\r\n      \"url\": \"https://mcp.deeprecall.io/mcp\",\r\n      \"headers\": {\r\n        \"X-API-Key\": \"dr_live_your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n适用于： **光标**, **克劳德桌面**, **帆板运动**，以及任何兼容MCP的客户端。\r\n\r\n> **需要API密钥** -更换 `dr_live_your_api_key_here` 用你的钥匙。看 [API访问](#api-access) 在......下面\r\n\r\n### 服务托管\r\n\r\n```bash\r\ngit clone https://github.com/adrida/deeprecall-mcp\r\ncd deeprecall-mcp\r\npip install -r requirements.txt\r\nDEEPRECALL_API_KEY=your_key python server.py --http\r\n```\r\n\r\n## 工具\r\n\r\n### `search_recalls`\r\n\r\n通过文本和/或图像搜索召回产品。\r\n\r\n```\r\n\"Search for baby cribs with drop-side rails\"\r\n\"Find recalls matching this stroller image\"\r\n\"Check if this toy has been recalled in the EU\"\r\n```\r\n\r\n**参数：**\r\n|名称|类型|必填|描述|\r\n|------|------|----------|-------------|\r\n| `content_description` |string |否\\*|产品描述|\r\n| `image_urls` |string\\[\\]|否\\*|产品图片URL（1-10）|\r\n| `filter_by_data_sources` |string\\[\\]|否|按代理机构筛选|\r\n| `top_k` |int |否|结果（1-100，默认值：10）|\r\n\r\n\\*至少一个 `content_description` 或 `image_urls` 必修的。\r\n\r\n### `get_data_sources`\r\n\r\n列出可用的监管机构（免费，无API密钥）。\r\n\r\n## 数据源\r\n\r\n|ID|机构|地区|\r\n|----|--------|--------|\r\n| `us_cpsc` |美国消费品安全委员会|\r\n| `us_fda` |美国食品和药物管理局|\r\n| `safety_gate` |欧盟安全门（RAPEX）|欧洲|\r\n| `uk_opss` |英国产品安全与标准办公室|\r\n| `canada_recalls` |加拿大卫生部|\r\n| `oecd` |经合组织全球回顾|国际|\r\n| `rappel_conso` |RappelConso |法国|\r\n| `accc_recalls` |ACCC |澳大利亚|\r\n\r\n## 配置\r\n\r\n|变量|默认值|描述|\r\n|----------|---------|-------------|\r\n| `DEEPRECALL_API_KEY` |-|托管API的API密钥|\r\n| `DEEPRECALL_API_URL` | `https://api.deeprecall.io` |API终点|\r\n| `PORT` | `8000` |HTTP服务器端口|\r\n| `ALLOWED_HOSTS` | `localhost,127.0.0.1` |允许的主机标头|\r\n\r\n## 码头工人\r\n\r\n```bash\r\ndocker build -t deeprecall-mcp .\r\ndocker run -p 8000:8000 -e DEEPRECALL_API_KEY=your_key deeprecall-mcp\r\n```\r\n\r\n## UCP集成\r\n\r\n此MCP服务器专为 [通用商业协议（UCP）](https://ucp.dev) 集成，为代理商务提供产品安全层。\r\n\r\n```\r\nAgent Intent → Product Discovery → DeepRecall Safety Check → Checkout Decision\r\n```\r\n\r\n看 [ucp/capability.json](ucp/capability.json) 对于UCP能力定义。\r\n\r\n## API访问\r\n\r\n> **备注**：DeepRecall目前处于 **封闭测试**.API访问权限可用于：\r\n>\r\n> - Beta测试人员（受邀）\r\n> - 企业客户\r\n>\r\n> [联系我们](mailto:contact@deeprecall.io) 加入测试计划。\r\n\r\n### 定价（Beta）\r\n\r\n|层级|搜索|访问|\r\n|------|----------|--------|\r\n| **测试员** |100/月|通过邀请|\r\n| **商业** |自定义限额|联系销售人员|\r\n| **企业** |无限|专属支持|\r\n\r\n### API密钥格式\r\n\r\nAPI密钥以 `dr_live_` （生产）或 `dr_test_` （沙盒）。\r\n\r\n```\r\ndr_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n```\r\n\r\n### 获取您的密钥\r\n\r\n1. [联系我们](mailto:contact@deeprecall.io) 请求访问\r\n1. 一旦获得批准，通过电子邮件接收您的密钥\r\n1. 安全存储（永远不要承诺版本控制）\r\n\r\n企业咨询： **contact@deeprecall.io**\r\n\r\n## 链接\r\n\r\n- **托管MCP**: https://mcp.deeprecall.io/mcp\r\n- **REST API**: https://api.deeprecall.io\r\n- **文档**: https://docs.deeprecall.io\r\n- **MCP注册表**: [register.modelcontextprotocol.io](https://registry.modelcontextprotocol.io)\r\n\r\n## 许可证\r\n\r\nApache 2.0-请参阅 [许可证](LICENSE)\r\n",
+ "config": {
+  "deeprecall": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.deeprecall.io/mcp"
+  }
+ }
+}

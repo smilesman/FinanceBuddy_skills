@@ -1,0 +1,26 @@
+{
+ "id": "3653",
+ "kind": "mcp",
+ "name": "tavily",
+ "fingerprint_md5": "b150ed6ea1c3d151e9a54190845d9c48",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP TAVILY搜索\r\n\r\n一种模型上下文协议（MCP）服务器，通过数据提供搜索。\r\n\r\n## 快速启动\r\n\r\n安装\r\n\r\n```sh\r\ngo install github.com/y7ut/mcp-tavily-search@latest\r\n```\r\n\r\n将config添加到mcp配置文件中。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tavily\": {\r\n      \"command\": \"mcp-tavily-search\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"tvly-*******************\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tavily\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"docker.ijiwei.com/mcp/mcp-tavily-search:latest\",\r\n        \"run\",\r\n        \"tvly-*******************\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或调试\r\n\r\n```sh\r\nnpx @modelcontextprotocol/inspector mcp-tavily-search run tvly-xxxxxxxxxx\r\n\r\nnpx --no-cache @modelcontextprotocol/inspector docker run --rm -i mcp-tavily-search:latest run tvly-xxxxx\r\n```\r\n\r\n## 工具\r\n\r\n### 搜索_新闻\r\n\r\n| **参数** | **类型** | **默认值** | **描述** | **必需** |\r\n|------------------|------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|\r\n| `keyword` | `string` |N/A|要搜索的关键字。|是|\r\n| `days` | `number` | `7` |搜索的天数。默认值为7天。|没有|\r\n| `limit` | `number` | `5` |要返回的新闻文章数。默认值为5。|没有|\r\n| `search_depth` | `string` | `\"basic\"` |搜索的深度。这可能是 `\"basic\"` 或 `\"advanced\"`默认值为 `\"basic\"`。|没有|\r\n| `topic` | `string` | `\"news\"` |搜索的主题。选项包括 `\"general\"` （未处理的页面）或 `\"news\"` （高质量新闻）。默认值为 `\"news\"`。|没有|\r\n",
+ "config": {
+  "tavily": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "docker.ijiwei.com/mcp/mcp-tavily-search:latest",
+    "run",
+    "tvly-*******************"
+   ],
+   "env": {}
+  }
+ }
+}

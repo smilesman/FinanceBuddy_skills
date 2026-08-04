@@ -1,0 +1,18 @@
+{
+ "id": "2057",
+ "kind": "mcp",
+ "name": "stripe",
+ "fingerprint_md5": "7c0b19e6854a04d98539013ec0f84467",
+ "download_count": 0,
+ "category": "支付服务",
+ "tags": "",
+ "version": "",
+ "readme": "# 条纹MCP集成\r\n\r\nClaude Code技能，用于通过模型上下文协议（MCP）与Stripe支付基础设施集成。\r\n\r\n## 概述\r\n\r\n此技能使Claude能够直接与Stripe API交互：\r\n\r\n- 客户管理\r\n- 订阅处理\r\n- 发票操作\r\n- 产品目录管理\r\n- 文档搜索\r\n\r\n## 安装\r\n\r\n### 方法1:远程HTTP（推荐）\r\n\r\n添加 `~/.claude/settings.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"stripe\": {\r\n      \"type\": \"http\",\r\n      \"url\": \"https://mcp.stripe.com/v1/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 方法2：本地npm\r\n\r\n```bash\r\nnpm install -g @stripe/mcp\r\nclaude mcp add stripe -- npx -y @stripe/mcp\r\n```\r\n\r\n### 方法3：项目配置\r\n\r\n创建 `.mcp.json` 在您的项目中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"stripe\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@stripe/mcp\"],\r\n      \"env\": {\r\n        \"STRIPE_SECRET_KEY\": \"${STRIPE_SECRET_KEY}\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n安装后，通过自然语言与Stripe交互：\r\n\r\n```\r\n\"Create a customer with email user@example.com\"\r\n\"List all my Stripe products\"\r\n\"Search Stripe docs for subscription billing\"\r\n\"Cancel subscription sub_xxx\"\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|描述|\r\n|----------|-------------|\r\n| `STRIPE_SECRET_KEY` |您的Stripe API密钥|\r\n| `STRIPE_WEBHOOK_SECRET` |Webhook签名密钥|\r\n\r\n## 文档\r\n\r\n- [技能.md](SKILL.md) -完整的技能参考\r\n- [docs/webhooks.md](docs/webhooks.md) -Webhook安全模式\r\n- [docs/testing.md](docs/testing.md) -测试指南\r\n\r\n## 资源\r\n\r\n- [条纹MCP文档](https://docs.stripe.com/mcp)\r\n- [Stripe API参考](https://docs.stripe.com/api)\r\n- [Stripe命令行界面](https://docs.stripe.com/cli)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "stripe": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.stripe.com/v1/sse"
+  }
+ }
+}

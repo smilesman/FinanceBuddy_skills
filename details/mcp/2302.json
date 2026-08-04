@@ -1,0 +1,21 @@
+{
+ "id": "2302",
+ "kind": "mcp",
+ "name": "sb-ogc-api",
+ "fingerprint_md5": "0d14826d5a2b1c5391a3a504b069f523",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# SB OGC MCP — Claude 的 Studio 可用移动数据\r\n\r\nMCP服务器，允许Claude通过Studio Bereikbaar的OGC API访问荷兰移动数据。\r\n\r\n## 你得到了什么\r\n\r\nClaude Desktop的13个工具：\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `list_collections` |列出15个数据集（边界、NRM网络、人口统计）|\r\n| `describe_collection` |获取集合的架构/属性|\r\n| `list_processes` |列出7个分析过程|\r\n| `get_features` |使用过滤器获取GeoJSON功能|\r\n| `search_boundaries` | 查找市/区/社区/pc4 by name |\r\n| `run_odin_query` |ODIN旅游调查分析（20年，模式划分，趋势）|\r\n| `run_odin_compare` |并排比较两个位置|\r\n| `run_modal_split` |生成模态分割图（返回PNG图像）|\r\n| `run_odin_spider` |起点-终点愿望线（GeoJSON）|\r\n| `run_odin_profile` |7集群移动性分析|\r\n| `run_odin_spider_profile` |往返市政府的旅行者的人口统计数据|\r\n| `run_accessibility_map` |BOP可访问性图（返回PNG图像）|\r\n\r\n## 为同事设置\r\n\r\n### 1.安装程序uv（简单）\r\n\r\n```bash\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n### 2.配置器Claude Desktop\r\n\r\n打开 `~/Library/Application Support/Claude/claude_desktop_config.json` 并添加：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sb-ogc-api\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"sb-ogc-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.Herstart克劳德桌面\r\n\r\n工具会自动出现。尝试 ：\r\n\r\n> “Studio 可访问哪些数据集？”\r\n\r\n> “展示阿姆斯特丹的模式分裂”\r\n\r\n> “比较鹿特丹和乌得勒支的交通方式”\r\n\r\n> “显示自行车前往海牙超市的地图”\r\n\r\n## 数据\r\n\r\n所有数据均来自 `tools.studiobereikbaar.nl/oapi` （OGC API）：\r\n\r\n- **奥丁** --哥伦比亚广播公司旅行调查，20年（2004-2023），约300万次旅行，由罗兰·卡格丰富\r\n- **NRM** --国家交通模型网络（2022+4未来情景）\r\n- **CBS边界** — 市， 区， 附近， pc4， 省\r\n- **国际收支平衡表** --无障碍地图（移动移动性）\r\n- **V500** --5亿人口+城市化网格\r\n",
+ "config": {
+  "sb-ogc-api": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "sb-ogc-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "openclaw-skill-scanner",
+ "kind": "skill",
+ "name": "openclaw-skill-scanner",
+ "fingerprint_md5": "cf103bc32eb535402d96552c2bb77332",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "# Skill Scanner\r\n\r\n**Name:** skill-scanner\r\n**Version:** 1.0.0\r\n**Author:** vrtlly.us\r\n**Category:** Security\r\n\r\n## 描述\r\n\r\n在安装前后扫描 ClawHub skills 中的恶意模式。检测 base64 payloads、reverse shells、数据外泄、加密挖矿、混淆 URL 等。\r\n\r\n## 用法\r\n\r\n### 扫描所有已安装 skills\r\n```bash\r\npython3 scanner.py\r\n```\r\n\r\n### 扫描特定 skill\r\n```bash\r\npython3 scanner.py --skill <skill-name>\r\n```\r\n\r\n### 扫描特定文件\r\n```bash\r\npython3 scanner.py --file <path-to-file>\r\n```\r\n\r\n### 安装前扫描 (download → scan → report → cleanup)\r\n```bash\r\npython3 scanner.py --pre-install <clawhub-slug>\r\n```\r\n\r\n### JSON 输出\r\n```bash\r\npython3 scanner.py --json\r\npython3 scanner.py --skill <name> --json\r\n```\r\n\r\n### 安全安装 hook\r\n```bash\r\nbash install-hook.sh <clawhub-slug>\r\nbash install-hook.sh <clawhub-slug> --force\r\n```\r\n\r\n## 检测模式\r\n\r\n| 类别 | 捕获内容 |\r\n|---|---|\r\n| Base64 payloads | exec/bash/eval 附近的长 base64 字符串 |\r\n| Pipe to shell | `curl ... \\| bash`, `wget ... \\| sh` |\r\n| Raw IP 连接 | `http://1.2.3.4` 风格 URL |\r\n| 危险函数 | `eval()`, `exec()`, `os.system()`, `subprocess(shell=True)` |\r\n| 隐藏文件 | 在意外位置创建 dotfile |\r\n| Env 外泄 | 读取 `.env`、API keys 发送到外部 |\r\n| 混淆 URL | rentry.co, pastebin, hastebin redirectors |\r\n| 虚假依赖 | 引用不存在的包 |\r\n| 数据外泄端点 | webhook.site, requestbin 等 |\r\n| 加密挖矿 | xmrig, stratum, mining pool 引用 |\r\n| 密码存档 | 带密码保护的 zip/tar 下载 |\r\n\r\n## 风险评分\r\n\r\n- **0-29 (Green):** 干净 — 未发现可疑模式\r\n- **30-69 (Yellow):** 可疑 — 使用前审查警告\r\n- **70-100 (Red):** 危险 — 可能恶意，不要安装\r\n\r\n## 文件\r\n\r\n- `scanner.py` — 主扫描引擎\r\n- `install-hook.sh` — 安全安装包装器\r\n- `whitelist.json` — 已知良好和已知不良 skill 列表\r\n- `report-template.md` — Markdown 报告模板",
+ "config": {}
+}

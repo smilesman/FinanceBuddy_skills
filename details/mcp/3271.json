@@ -1,0 +1,24 @@
+{
+ "id": "3271",
+ "kind": "mcp",
+ "name": "weather-22",
+ "fingerprint_md5": "29fa91eddf746f482e590584b9bade5e",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP气象服务器\r\n\r\n## 描述\r\n\r\n这是一个使用Python MCP SDK创建的天气MCP服务器。\r\n\r\n## 工具\r\n\r\n暴露的工具：\r\n\r\n- 获取警报\r\n- 获取预测\r\n\r\n## 使用UV运行MCP服务器\r\n\r\n首先，让我们安装uv并设置我们的Python项目和环境：\r\n\r\nMac/linux： `curl -LsSf https://astral.sh/uv/install.sh | sh`\r\n\r\n窗户：`powershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"`\r\n\r\n第二，创建虚拟环境并激活它：\r\n\r\n1. `uv venv`\r\n1. `.venv\\Scripts\\activate`\r\n\r\n如果需要手动添加依赖关系： `uv add mcp[cli] httpx`\r\n\r\n## 运行MCP服务器\r\n\r\n运行： `uv run weather.py`\r\n\r\n## 将MCP服务器与Claude桌面主机连接：\r\n\r\n1. 使用文本编辑器打开配置文件：\r\n   Mac/Linux：\r\n   `code ~/Library/Application\\ Support/Claude/claude_desktop_config.json`\r\n   窗户：\r\n   `code $env:AppData\\Claude\\claude_desktop_config.json`\r\n\r\n1. 在mcpServers密钥中添加服务器：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"weather\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"/ABSOLUTE/PATH/TO/PARENT/FOLDER/weather\",\r\n                \"run\",\r\n                \"weather.py\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n确保更新天气MCP服务器的绝对路径。\r\n\r\n保存文件，然后重新启动Claude for Desktop App，您应该能够在工具列表中看到天气工具。\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/ABSOLUTE/PATH/TO/PARENT/FOLDER/weather",
+    "run",
+    "weather.py"
+   ],
+   "env": {}
+  }
+ }
+}

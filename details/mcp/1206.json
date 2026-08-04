@@ -1,0 +1,34 @@
+{
+ "id": "1206",
+ "kind": "mcp",
+ "name": "polardb-supabase",
+ "fingerprint_md5": "1cb336a3c7b7a7a06a743a1f250b2b89",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# PolarDB Supabase MCP服务器\r\n\r\n> 将您的PolarDB Supabase实例连接到Cursor、Claude、Windsurf和其他AI助手。\r\n\r\n这 [模型上下文协议](https://modelcontextprotocol.io/introduction) （MCP）规范了大型语言模型（LLM）与Supabase等外部服务的通信方式。该服务器将AI助手直接与您的PolarDB Supabase项目连接，并允许他们执行管理表、获取配置和查询数据等任务。\r\n\r\n## 先决条件\r\n\r\n你需要在你的机器上安装Node.js。您可以通过运行以下命令来检查：\r\n\r\n```shell\r\nnode -v\r\n```\r\n\r\n如果你没有安装Node.js，你可以从以下网址下载 [nodejs.org](https://nodejs.org/).\r\n\r\n## 设置\r\n\r\n### 1.获取您的PolarDB凭据\r\n\r\n您需要从PolarDB实例中获取以下内容：\r\n\r\n- **API URL**：您的PolarDB实例端点（例如。， `http://your-host:port`)\r\n- **服务角色密钥**：用于数据库操作，并作为边缘功能/秘密的回退身份验证\r\n- **仪表板用户名/密码** （可选）：用于边缘功能、机密管理和类型生成（如果未提供，将使用服务角色密钥）\r\n\r\n### 2.配置您的MCP客户端\r\n\r\n配置您的MCP客户端（如Cursor）以使用此服务器。大多数MCP客户端将配置存储为JSON。\r\n\r\n#### 选项1：使用npx（推荐-不需要本地构建）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"polardb-supabase\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"polardb-supabase-mcp\",\r\n        \"--api-url\",\r\n        \"http://your-polardb-supabase-host:port\",\r\n        \"--service-role-key\",\r\n        \"your-service-role-key\",\r\n        \"--anon-key\",\r\n        \"your-anon-key\",\r\n        \"--dashboard-username\",\r\n        \"your-dashboard-username\",\r\n        \"--dashboard-password\",\r\n        \"your-dashboard-password\",\r\n        \"--project-ref\",\r\n        \"default\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 选项2：使用本地构建\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"polardb-supabase\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"/path/to/supabase-mcp/packages/mcp-server-supabase/dist/transports/stdio.js\",\r\n        \"--api-url\",\r\n        \"http://your-polardb-supabase-host:port\",\r\n        \"--service-role-key\",\r\n        \"your-service-role-key\",\r\n        \"--anon-key\",\r\n        \"your-anon-key\",\r\n        \"--dashboard-username\",\r\n        \"your-dashboard-username\",\r\n        \"--dashboard-password\",\r\n        \"your-dashboard-password\",\r\n        \"--project-ref\",\r\n        \"default\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n将占位符值替换为实际的PolarDB凭据。\r\n\r\n## 安全\r\n\r\n在运行MCP服务器之前，我们建议您阅读我们的 [安全最佳实践](#security-risks) 了解将LLM连接到PolarDB项目的风险以及如何减轻这些风险。\r\n\r\n### 只读模式\r\n\r\n要将服务器限制为只读查询，请设置 `--read-only` 标志：\r\n\r\n```shell\r\nnode /path/to/supabase-mcp/packages/mcp-server-supabase/dist/transports/stdio.js --read-only\r\n```\r\n\r\n我们建议您默认启用此功能。这可以防止对数据库进行写入操作，包括创建或删除边缘函数机密。\r\n\r\n## 工具\r\n\r\nLLM可以使用以下工具：\r\n\r\n### 数据库\r\n\r\n- `list_tables`：列出指定架构中的所有表\r\n- `execute_sql`：执行数据库中的原始SQL\r\n\r\n### 发展\r\n\r\n- `get_project_url`：获取项目的API URL\r\n- `get_anon_key`：获取项目的匿名API密钥\r\n\r\n### 边缘功能\r\n\r\n- `list_edge_functions`：列出项目中的所有边函数\r\n- `get_edge_function`：获取特定边函数的详细信息\r\n- `deploy_edge_function`：将新的边缘功能部署到项目中\r\n\r\n### 边缘功能的秘密\r\n\r\n- `list_ef_secrets`：列出所有边缘函数机密（加密值）。\r\n- `create_ef_secrets`：创建或更新边缘函数机密（支持批处理；值已加密）。\r\n- `delete_ef_secrets`：删除边缘函数机密（支持批量删除）。\r\n\r\n**备注**：机密管理支持两种身份验证方法：首选仪表板身份验证（用户名/密码），但也可以使用服务角色密钥。秘密在存储时会自动加密。\r\n\r\n### AI提示\r\n\r\n- `get_best_practices`：列出所有可用的Supabase AI提示和开发指南\r\n\r\n## 资源\r\n\r\n- [模型上下文协议](https://modelcontextprotocol.io/introduction)：了解有关MCP的更多信息\r\n- [PolarDB数据库文档](https://help.aliyun.com/zh/polardb/polardb-for-postgresql/ai-supabase-application)：了解更多关于PolarDB功能的信息\r\n\r\n## 许可证\r\n\r\n该项目在Apache 2.0下获得许可。看 [许可证](./LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "polardb-supabase": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "polardb-supabase-mcp",
+    "--api-url",
+    "http://your-polardb-supabase-host:port",
+    "--service-role-key",
+    "your-service-role-key",
+    "--anon-key",
+    "your-anon-key",
+    "--dashboard-username",
+    "your-dashboard-username",
+    "--dashboard-password",
+    "your-dashboard-password",
+    "--project-ref",
+    "default"
+   ],
+   "env": {}
+  }
+ }
+}

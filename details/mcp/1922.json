@@ -1,0 +1,18 @@
+{
+ "id": "1922",
+ "kind": "mcp",
+ "name": "finance-spirit",
+ "fingerprint_md5": "f3e4f482ebf134c1ed84463b2de7dd82",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "由专业的全球金融数据服务提供商——深圳市原点参数信息技术有限公司开发的“上市公司财报数据精灵”，核心功能为：\r\n- 支持查询中国大陆、中国香港、中国台湾、美国、日本、韩国及新加坡等地的上市公司的年报数据。\r\n- 查询的数据类型包括资产负债表、现金流量表、利润表、综合收益表的会计科目。\r\n- 支持查询由深圳市原点参数信息技术有限公司计算的多种综合财务指标数据。\r\n\r\n## 适用场景：\r\n**场景一 ：**\r\n股票投资者在选择投资标的过程中，可通过原点MCP服务获取标的企业的财务状况，辅助投资者对投资标的进行基本面分析以及发掘新的投资标的。\r\n\r\n**场景二 ：**\r\n金融分析师在撰写行业报告时，可批量查询多家上市公司的财务报表，进行横向对比分析，为报告提供数据支持。\r\n\r\n**场景三：**\r\n产业研究员在做产业分析过程中，可以查询产业链上各国的上市公司财务数据及财务指标，对产业链上中下游各个环节的成本、费用、盈利能力进行分析，从而分析产业链环节的风险与机遇。\r\n\r\n## MCP工具列表：\r\n- get_data_in_CHN：获取中国大陆上市公司的财务数据；\r\n- get_data_in_HKG：获取中国香港上市公司的财务数据；\r\n- get_data_in_TWN：获取中国台湾上市公司的财务数据；\r\n- get_data_in_USA：获取美国上市公司的财务数据；\r\n- get_data_in_JPN：获取日本上市公司的财务数据；\r\n- get_data_in_SGP：获取新加坡上市公司的财务数据；\r\n- get_data_in_KOR：获取韩国上市公司的财务数据。\r\n\r\n## 常见问题解答\r\n**Q ：支持什么MCP协议？**\r\n\r\nA ：目前支持 SSE 协议。\r\n\r\n**Q ：使用上市公司财报数据精灵MCP服务是否需要付费？**\r\n\r\nA ：目前服务暂无需付费，请持续关注平台通知，后续我们会根据平台规范以及业务需求，制定合理的服务策略。\r\n\r\n**Q ：如何获得体验授权码？**\r\n\r\nA ：您可以发送申请邮件到 whcao@originp.com ，向原点参数申请授权码。\r\n\r\n**Q ：一次可以查询多个年份的财报数据吗？**\r\n\r\nA ：每次只能查询 1 个年份的数据，如果涉及多个年份需要分多次调用工具查询。\r\n\r\n## 使用教程\r\n\r\n### 使用前准备\r\n使用之前，需要发送申请邮件到 whcao@originp.com 获得授权码，通过授权码您才能调用原点 MCP。\r\n\r\n### 连接MCP server\r\n**SSE方式接入**\r\n\r\n以 cursor 客户端为例，操作步骤如下：\r\n####  第一步：配置mcp-server\r\n\r\n在 mcp.json 中填写JSON配置：\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"finance-spirit\": {\r\n            \"type\":\"sse\",\r\n            \"url\":\"https://mcp.originp.com/mcp\",\r\n            \"headers\":{\r\n                \"Authorization\": \"替换为从原点参数官方申请的以Bearer 开头的授权码\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n#### 第二步：查看 MCP server 是否连接接成功\r\n若 cursor 的设置 - MCP Tools 中， finance-spirit 的连接状态显示为绿色，说明连接成功。\r\n连接成功后可以看到原点 MCP 的各个工具的用法描述（功能、入参、返回数据格式描述等）。\r\n\r\n#### 第三步：MCP Server 正常，选择交互模式为 Agent 开始使用。\r\n可参照【典型的查询举例】，以便快速体验。\r\n\r\n\r\n### 典型的查询举例\r\n用户可以通过公司名称或股票代码，指定 4 位数字的财报年份，查询特定年份的财务数据。公司名称和股票代码至少填写一个。例如以下5个查询示例：\r\n\r\n1. 特斯拉（TSLA）2024年利润情况\r\n\r\n2. 中国平安 (02318)2024年度的财报分析\r\n\r\n3. 苹果公司 AAPL 近3年的利润表对比\r\n\r\n4. 联发科（2454）2024年盈利状况\r\n\r\n5. 新加坡航空近两年的财务状况分析\r\n\r\n\r\n### 特别说明：\r\n1. 切勿将申请的授权码提供给他人。\r\n2. 除 Cursor 外，若您使用其他支持 MCP 协议的客户端软件 Cherry Studio、Trae、DeepChat、Visual Studio Code、[MCP的Python SDK](https://github.com/modelcontextprotocol/python-sdk)等，也能访问原点参数上市公司财报数据精灵 MCP。\r\n",
+ "config": {
+  "finance-spirit": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.originp.com/mcp"
+  }
+ }
+}

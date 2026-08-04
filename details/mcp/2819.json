@@ -1,0 +1,24 @@
+{
+ "id": "2819",
+ "kind": "mcp",
+ "name": "expense-tracker-2",
+ "fingerprint_md5": "25f645e67aae10c93915018496ba86a5",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 费用跟踪MCP服务器\r\n\r\n用于跟踪费用的模型上下文协议（MCP）服务器，由以下组件构建 `fastmcp`.\r\n\r\n## 特性\r\n\r\n此服务器提供工具来管理本地SQLite数据库中的费用(`expenses.db`)并通过资源公开类别。\r\n\r\n### 工具\r\n\r\n- **`add_expense`**：添加新费用。\r\n  - 论据： `date` （YYYY-MM-DD）， `amount`, `category`, `subcategory` （可选）， `note` （可选）。\r\n- **`list_expenses`**：列出日期范围内的费用。\r\n  - 论据： `start_date`, `end_date`.\r\n- **`summarize`**：按类别汇总费用。\r\n  - 论据： `start_date`, `end_date`, `category` （可选过滤器）。\r\n- **`edit_expense`**：编辑现有费用。\r\n  - 论据： `id`, `date`, `amount`, `category`, `subcategory`, `note`.\r\n- **`delete_expense`**：按ID删除支出。\r\n  - 论据： `id`.\r\n- **`add_credit`**：将信用添加到用户帐户（默认用户）。\r\n  - 论据： `amount`, `user_name` （可选，默认值=“默认”）。\r\n\r\n### 资源\r\n\r\n- **`expense://categories`**：返回以下内容 `categories.json`.\r\n\r\n## 先决条件\r\n\r\n- Python>=3.12\r\n- `uv` （建议用于依赖关系管理）\r\n\r\n## 安装与使用\r\n\r\n### 使用 `uv` （推荐）\r\n\r\n您可以直接使用以下命令运行服务器 `uv`:\r\n\r\n```bash\r\nuv run main.py\r\n```\r\n\r\n### 手动安装\r\n\r\n1. 创建虚拟环境：\r\n\r\n   ```bash\r\n   python -m venv .venv\r\n   source .venv/bin/activate  # On Windows: .venv\\Scripts\\activate\r\n   ```\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   pip install fastmcp\r\n   ```\r\n\r\n1. 运行服务器：\r\n\r\n   ```bash\r\n   python main.py\r\n   ```\r\n\r\n## Claude桌面配置\r\n\r\n将以下内容添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"expense-tracker\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--with\",\r\n        \"fastmcp\",\r\n        \"c:\\\\Users\\\\LOQ\\\\Downloads\\\\ExpenseTracker_MCP_Server\\\\main.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n*注意：将路径更新为 `main.py` 以匹配您的本地路径。*\r\n",
+ "config": {
+  "expense-tracker": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--with",
+    "fastmcp",
+    "c:\\Users\\LOQ\\Downloads\\ExpenseTracker_MCP_Server\\main.py"
+   ],
+   "env": {}
+  }
+ }
+}

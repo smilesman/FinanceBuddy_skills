@@ -1,0 +1,21 @@
+{
+ "id": "2509",
+ "kind": "mcp",
+ "name": "duckduckgo",
+ "fingerprint_md5": "6bad62cd07ace31b941d63ba8f703b6f",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# DuckDuckGo MCP服务器\r\n\r\n为DuckDuckGo网络搜索实现模型上下文协议（MCP）的Node.js服务器。\r\n\r\n## 特性\r\n\r\n- 使用DuckDuckGo进行网络搜索。\r\n\r\n## API\r\n\r\n### 工具\r\n\r\n- **搜索**\r\n  - 使用DuckDuckGo搜索网络。\r\n  - 输入： `query` （字符串）\r\n  - 返回一个结果数组\r\n\r\n## 使用Claude Desktop\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n### UVX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"duckduckgo\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"ddg-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 码头工人\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"duckduckgo\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"ashdev/duckduckgo-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "duckduckgo": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "ddg-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

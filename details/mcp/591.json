@@ -1,0 +1,24 @@
+{
+ "id": "591",
+ "kind": "mcp",
+ "name": "blogburst",
+ "fingerprint_md5": "e710eca572ac13052bf260ea1e473483",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# BlogBurst MCP服务器\r\n\r\n官方 [模型上下文协议](https://modelcontextprotocol.io) 服务器 [BlogBurst](https://blogburst.ai) --您的自主AI社交媒体营销代理。\r\n\r\n自然聊天以生成内容，管理自动驾驶的每日发布，跟踪分析，并发布到9个平台。\r\n\r\n## 特性\r\n\r\n- **AI营销代理** --聊天可以自然地做任何事情：生成内容、检查分析、管理自动驾驶，所有这些都在一次对话中完成\r\n- **自动驾驶** --自主的每日发布代理，按计划生成、评论和发布内容\r\n- **博客生成** --从主题生成完整的博客文章\r\n- **内容再利用** --将URL或文本转换为平台就绪的社交媒体帖子\r\n- **平台内容** --为9个平台（Twitter、LinkedIn、Reddit、Bluesky、Threads、Telegram、Discord、TikTok、YouTube）生成优化内容\r\n- **热门话题** --发现HackerNews、Reddit、谷歌趋势、产品搜索上的热门话题\r\n- **标题头脑风暴** --人工智能驱动的多回合标题创意\r\n- **汽车出版** --直接发布到连接的平台（Bluesky、Telegram、Discord）\r\n\r\n## 快速开始\r\n\r\n### 1.获取API密钥\r\n\r\n注册地址： [blogburst.ai](https://blogburst.ai) 并从获取您的免费API密钥 [仪表板>API键](https://blogburst.ai/dashboard/api-keys).\r\n\r\n### 2.在Claude Desktop中配置\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"blogburst\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"blogburst-mcp-server\"],\r\n      \"env\": {\r\n        \"BLOGBURST_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.使用它\r\n\r\n问克劳德：\r\n\r\n- “写一篇关于远程工作效率的博客文章”\r\n- 将这篇文章转化为推特和领英帖子：https://example.com/article\"\r\n- “现在人工智能的趋势是什么？”\r\n- “打开自动驾驶，每天在Bluesky和推特上发布3条帖子”\r\n- “我的帖子本周表现如何？”\r\n- “将此发布到我的Bluesky和Telegram”\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `agent_chat` |与你的人工智能营销代理聊天——通过对话处理一切|\r\n| `generate_blog` |从一个主题生成一篇完整的博客文章|\r\n| `repurpose_content` |将URL或文本转换为社交媒体帖子|\r\n| `generate_platform_content` |从主题生成特定于平台的内容|\r\n| `get_trending_topics` |按利基和来源发现热门话题|\r\n| `brainstorm_titles` |人工智能驱动的标题头脑风暴对话|\r\n| `publish_content` |发布到互联平台（Bluesky、Telegram、Discord）|\r\n| `get_auto_pilot_status` |检查自动驾驶状态和配置|\r\n| `configure_auto_pilot` |启用/禁用自动驾驶，设置频率和平台|\r\n| `run_auto_pilot_now` |立即触发自动驾驶运行|\r\n| `get_connected_platforms` |检查哪些平台已连接|\r\n| `get_usage` |检查API使用情况和限制|\r\n\r\n## 支持的平台\r\n\r\n|平台|自动发布|内容样式|\r\n|----------|:---:|---------------|\r\n|推特/X✅ 是|带钩子的线程（280个字符/推特）|\r\n|蓝调|✅ 是|简短真实帖子（300个字符）|\r\n|电报|✅ 是|格式丰富的广播|\r\n|不和|✅ 是|社区友好型公告|\r\n|Reddit |仅复制|讨论帖子+子版块建议|\r\n|TikTok |仅限复制|挂钩+脚本+字幕+标签|\r\n|YouTube |仅复制|标题+描述+脚本+标签|\r\n|LinkedIn |即将推出|专业见解+标签|\r\n|Threads |即将发布|对话帖子|\r\n\r\n**重要**：要自动发布，请先在以下位置连接您的平台 [仪表板>连接](https://blogburst.ai/dashboard/connections).Twitter/X是一键OAuth——需要5秒。\r\n\r\n## 定价\r\n\r\n免费计划：50代/月。看 [blogburst.ai/定价](https://blogburst.ai/pricing) Pro计划。\r\n\r\n## 链接\r\n\r\n- [BlogBurst网站](https://blogburst.ai)\r\n- [API 文档](https://api.blogburst.ai/docs)\r\n- [推特/X](https://x.com/BlogBurstAI)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "blogburst": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "blogburst-mcp-server"
+   ],
+   "env": {
+    "BLOGBURST_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

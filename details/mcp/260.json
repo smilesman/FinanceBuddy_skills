@@ -1,0 +1,23 @@
+{
+ "id": "260",
+ "kind": "mcp",
+ "name": "league-data-mcp",
+ "fingerprint_md5": "9b16453e77e869cd6b7cc00460ca6bb4",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 联盟数据MCP\r\n\r\n模型上下文协议（MCP）服务器，通过Riot Games API提供对英雄联盟游戏数据的访问。\r\n\r\n## 特性\r\n\r\n- **玩家PUUID查找**：使用游戏名称和标记行获取玩家的PUUID\r\n- **比赛历史记录列表**：使用可选筛选检索玩家的比赛列表\r\n- **匹配详细信息**：获取详细的比赛信息，包括统计数据和比赛数据\r\n- **比赛摘要列表**：使用玩家特定的上下文获取截断的比赛数据（针对大型数据集进行了优化）\r\n\r\n## 先决条件\r\n\r\n- Python 3.13+\r\n- Riot Games API密钥（从 [Riot开发者门户](https://developer.riotgames.com/))\r\n- MCP兼容客户端（如克劳德桌面）\r\n\r\n## 安装\r\n\r\n### 方法1：从PyPI安装（推荐）\r\n\r\n```bash\r\npip install league-data-mcp\r\n```\r\n\r\n### 方法2：使用uvx安装\r\n\r\n```bash\r\nuvx install league-data-mcp\r\n```\r\n\r\n### 方法3：开发安装\r\n\r\n1. **克隆存储库**\r\n\r\n   ```bash\r\n   git clone https://github.com/syy674998887/league-data-mcp.git\r\n   cd league-data-mcp\r\n   ```\r\n\r\n1. **安装依赖项**\r\n\r\n   ```bash\r\n   uv sync\r\n   ```\r\n\r\n1. **设置环境变量**\r\n\r\n   ```bash\r\n   export API=\"Your Riot API key here\"\r\n   ```\r\n\r\n## 配置\r\n\r\n### 适用于克劳德桌面/樱桃工作室等。\r\n\r\n4. **配置MCP客户端**\r\n   将服务器配置添加到MCP客户端：\r\n   ```json\r\n   {\r\n   \"mcpServers\": {\r\n      \"League-Data-MCP\": {\r\n         \"command\": \"uvx\",\r\n         \"args\": [\"league-data-mcp@latest\"],\r\n         \"env\": {\r\n         \"API\": \"Your Riot API key here\"\r\n         }\r\n      }\r\n   }\r\n   }\r\n   ```\r\n\r\n## 可用工具\r\n\r\n### `get_puuid`\r\n\r\n通过游戏名称和标记行获取玩家PUUID（支持批量查询）。\r\n\r\n**参数：**\r\n\r\n- `players` （List\\[dict\\]）：玩家字典列表 `game_name` 和 `tag_line` 钥匙\r\n\r\n**例子：**\r\n\r\n```python\r\nget_puuid([\r\n    {\"game_name\": \"Faker\", \"tag_line\": \"KR1\"},\r\n    {\"game_name\": \"Untargetable\", \"tag_line\": \"666\"}\r\n])\r\n```\r\n\r\n### `get_match_list`\r\n\r\n按PUUID获取玩家的比赛列表。\r\n\r\n**参数：**\r\n\r\n- `puuid` （str）：玩家的PUUID\r\n- `type` （str，可选）：匹配类型过滤器（正常、排名等）\r\n- `count` （str，可选）：要返回的匹配数\r\n\r\n**例子：**\r\n\r\n```python\r\nget_match_list(\r\n    puuid=\"Player's Puuid\",\r\n    type=\"ranked\",\r\n    count=\"20\"\r\n)\r\n```\r\n\r\n### `get_match_detail`\r\n\r\n通过匹配ID获取详细的匹配数据。\r\n\r\n**参数：**\r\n\r\n- `match_id` （str）：匹配ID（例如，“NA1_5354690210”）\r\n\r\n**例子：**\r\n\r\n```python\r\nget_match_detail(match_id=\"NA1_5354690210\")\r\n```\r\n\r\n### `get_match_summary`\r\n\r\n获取具有玩家特定上下文的多场比赛（最多10场比赛）的截断比赛摘要。\r\n\r\n**参数：**\r\n\r\n- `match_ids` （List\\[str\\]）：匹配ID列表\r\n- `game_name` （str）：玩家的游戏名称，用于搜索其他上下文\r\n\r\n**例子：**\r\n\r\n```python\r\nget_match_summary(\r\n    match_ids=[\"NA1_5354690210\", \"NA1_5354690211\"],\r\n    game_name=\"Faker\"\r\n)\r\n```\r\n\r\n## 速率限制\r\n\r\n服务器遵守Riot Games API速率限制。如果遇到速率限制问题，请考虑实现额外的重试逻辑或请求限制。\r\n\r\n## 错误处理\r\n\r\n服务器包括全面的错误处理：\r\n\r\n- API错误记录为状态代码和错误消息\r\n- 捕获并记录网络故障\r\n- 无效请求返回 `None` 价值观\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。\r\n\r\n## 免责声明\r\n\r\n该项目与Riot Games无关。英雄联盟是Riot Games，股份有限公司的商标。\r\n\r\n## 支持\r\n\r\n对于问题和疑问：\r\n\r\n- 检查 [Riot Games API文档](https://developer.riotgames.com/)\r\n- 在此打开一个问题 [仓库](https://github.com/syy674998887/league-data-mcp)\r\n",
+ "config": {
+  "league-data-mcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "league-data-mcp@latest"
+   ],
+   "env": {
+    "API": "Your Riot API key here"
+   }
+  }
+ }
+}

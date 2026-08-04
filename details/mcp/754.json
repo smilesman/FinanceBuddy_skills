@@ -1,0 +1,21 @@
+{
+ "id": "754",
+ "kind": "mcp",
+ "name": "mind-map",
+ "fingerprint_md5": "09f3deed6f953d4df67b4d4ebc7d9bea",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# mind-map-mcp\r\n\r\n一个用于生成思维导图的 MCP (Model Context Protocol) 服务器。\r\n\r\n## 功能特性\r\n\r\n- 🧠 根据文本内容自动生成思维导图\r\n- 🔗 返回可访问的思维导图图片链接\r\n- 🚀 支持 CodeBuddy、Cursor、Qoder 等 MCP 客户端\r\n- 🌐 基于 Coze API 的强大思维导图生成能力\r\n\r\n## 创新点\r\n首次使用 Coze 作为核心工作流制作MCP：\r\n- 无需考虑报错。报错可以直接通过 Coze 找到对应原因\r\n- 逻辑处理。可以任意修改 Coze 的工作流，更新发布即可，无需重新修改mcp\r\n- 已于维护\r\n\r\n## 安装\r\n\r\n### 通过 NPM 安装\r\n\r\n```bash\r\nnpm install -g @lucianaib/mind-map-mcp\r\n```\r\n\r\n### 通过 npx 直接使用\r\n\r\n```bash\r\nnpx @lucianaib/mind-map-mcp\r\n```\r\n\r\n## 配置\r\n\r\n### 在 CodeBuddy、 Qoder中配置\r\n\r\n1. 打开 CodeBuddy 设置\r\n2. 找到 MCP 服务器配置\r\n3. 添加新的服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mind-map\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@lucianaib/mind-map-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\n### 在 Cursor 中配置\r\n\r\n1. 打开 Cursor 设置 (Ctrl/Cmd + ,)\r\n2. 搜索 \"MCP\"\r\n3. 在 MCP 服务器配置中添加：\r\n\r\n```json\r\n{\r\n  \"mind-map\": {\r\n    \"command\": \"npx\",\r\n    \"args\": [\"@lucianaib/mind-map-mcp\"]\r\n  }\r\n}\r\n```\r\n\r\n## 使用方法\r\n\r\n配置完成后，你可以在支持 MCP 的工具中使用以下功能：\r\n\r\n### 生成思维导图\r\n\r\n```\r\n用 MCP 帮我生成一个关于\"分布式系统架构\"的思维导图\r\n```\r\n\r\n\r\n或者直接调用工具：\r\n\r\n```\r\n使用 generate_mindmap 工具，内容为：\"机器学习的基本概念和应用\"\r\n```\r\n\r\n## 可用工具\r\n\r\n### generate_mindmap\r\n\r\n根据输入内容生成思维导图。\r\n\r\n**参数：**\r\n- `content` (string, 必需): 要转换为思维导图的内容描述\r\n\r\n**返回：**\r\n- 思维导图的图片链接\r\n- 生成状态信息\r\n\r\n## 开发\r\n\r\n### 本地开发\r\n\r\n1. 克隆仓库：\r\n```bash\r\ngit clone git@github.com:OnePieceLwc/mind-map-mcp.git\r\ncd mind-map-mcp\r\n```\r\n\r\n2. 安装依赖：\r\n```bash\r\nnpm install\r\n```\r\n\r\n3. 构建项目：\r\n```bash\r\nnpm run build\r\n```\r\n\r\n4. 启动开发模式：\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n### 项目结构\r\n\r\n```\r\nMind-map-mcp/\r\n├── src/\r\n│   └── index.ts          # 主要的 MCP 服务器代码\r\n├── dist/                 # 编译后的 JavaScript 文件\r\n├── package.json          # 项目配置\r\n├── tsconfig.json         # TypeScript 配置\r\n└── README.md            # 项目说明\r\n```\r\n\r\n## API 说明\r\n\r\n本工具使用 Coze API 来生成思维导图。API 详情：\r\n\r\n- **端点**: `https://api.coze.cn/v1/workflow/run`\r\n- **方法**: POST\r\n- **认证**: Bearer Token\r\n- **返回**: 思维导图图片链接\r\n\r\n## 故障排除\r\n\r\n### 常见问题\r\n\r\n1. **\"未知工具\" 错误**\r\n   - 确保 MCP 服务器正确配置\r\n   - 检查工具名称是否正确 (`generate_mindmap`)\r\n\r\n2. **API 请求失败**\r\n   - 检查网络连接\r\n   - 确认 API 服务状态\r\n\r\n3. **中文编码问题**\r\n   - 本工具已处理中文编码，支持中文内容输入\r\n\r\n### 调试模式\r\n\r\n启动时会在 stderr 输出调试信息，可以通过查看日志来诊断问题。\r\n\r\n## 许可证\r\n\r\nMIT License\r\n\r\n## 贡献\r\n\r\n欢迎提交 Issue 和 Pull Request！\r\n",
+ "config": {
+  "mind-map": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@lucianaib/mind-map-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

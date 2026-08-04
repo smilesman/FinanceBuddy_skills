@@ -1,0 +1,12 @@
+{
+ "id": "find-stl",
+ "kind": "skill",
+ "name": "find-stl",
+ "fingerprint_md5": "f6130ae8ebfd4119eb338cb9eb9ddc87",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# 查找-stl\r\n\r\nThis skill provides a deterministic 管道:\r\n- 搜索 Printables for models\r\n- select a candidate\r\n- 下载 模型 文件\r\n- 写入 a `manifest.json` (source URL, 作者, 许可证 id, 文件, hashes)\r\n\r\n## 快速开始\r\n\r\n### 搜索\r\n\r\n```bash\r\npython3 scripts/find_stl.py search \"iphone 15 pro dock\" --limit 10\r\n```\r\n\r\n### 获取\r\n\r\n```bash\r\npython3 scripts/find_stl.py fetch 1059554 --outdir out/models\r\n```\r\n\r\nBy default, 获取 downloads **all 模型 文件** (a ZIP pack) when available.\r\n\r\n## 注意\r\n\r\n- Printables 下载 links are time-limited; this script resolves them via Printables GraphQL (`getDownloadLink`).\r\n- Always preserve 许可证 + attribution in the manifest.\r\n\r\n## 资源\r\n\r\n- `scripts/find_stl.py`",
+ "config": {}
+}

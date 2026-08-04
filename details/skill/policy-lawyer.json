@@ -1,0 +1,12 @@
+{
+ "id": "policy-lawyer",
+ "kind": "skill",
+ "name": "policy-lawyer",
+ "fingerprint_md5": "da165ec064ab919e44e83b0752b475cd",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# Policy Lawyer\r\n\r\n## 概述\r\n\r\n`policy-lawyer` is built around the curated policy notebook at `refe`refe`ences/policies.md`` CLI (`cripts/policy_la`scripts/policy_lawyer.py``\r\n\r\n- `--list-topics` 迁移到 列表 every policy heading.\r\n- `--topic <name>` 迁移到 显示 the section that matches a topic (case-insensitive).\r\n- `--keyword <term>` 迁移到 搜索 all policies for a given keyword.\r\n- `--policy-file <path>` 迁移到 point at a different policy document when comparing workspaces.\r\n\r\nUse this skill when you 需要 迁移到 remind yourself of the community standards before drafting announcements or when a question lands that needs an authoritative policy quote.\r\n\r\n## CLI 用法\r\n\r\n- `python3 skills/policy-lawyer/scripts/policy_lawyer.py --list-topics` prints every section defined under `## <Section Name>` in the policy 参考.`## <Section Name>``## <Section Name>``## <Section Name>`\r\n- `--topic \"Tone\"` prints the tone guidelines exactly as written so you 可以 quote them during calm reminders.\r\n- `--keyword security` (or any other keyword) shows the matching lines across all sections so you 可以 quickly see where that topic is governed.\r\n- Supply `--policy-file /path/to/repo/references/policies.md` when you want 迁移到 interrogate a 复制 of the playbook from another workspace.\r\n\r\n## Sample 命令\r\n\r\n```bash\r\npython3 skills/policy-lawyer/scripts/policy_lawyer.py --topic Tone\r\npython3 skills/policy-lawyer/scripts/policy_lawyer.py --keyword data --policy-file ../other-workspace/references/policies.md\r\n```\r\n\r\nThe first 命令 prints the tone section; the second searches for \"data\" inside another workspace's policies and prints each matching snippet.\r\n\r\n## 参考\r\n\r\n- `references/policies.md` is the curated policy playbook that lists tone, data, collaboration, and security rules.\r\n\r\n## 资源\r\n\r\n- **GitHub:** https://github.com/CrimsonDevil333333/policy-lawyer\r\n- **ClawHub:** https://www.clawhub.ai/skills/policy-lawyer",
+ "config": {}
+}

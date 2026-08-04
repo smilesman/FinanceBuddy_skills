@@ -1,0 +1,21 @@
+{
+ "id": "869",
+ "kind": "mcp",
+ "name": "steam-review-mcp",
+ "fingerprint_md5": "74118efccf6e557b5d99bb75ecb40a31",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 蒸汽审查MCP\r\n\r\n**英语** | [中文](./README.zh.md)\r\n\r\n使用模型上下文协议（MCP）访问Steam游戏评论。\r\n\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@fenxer/steam-review-mcp\">\r\n</a>\r\n\r\n## 特性\r\n\r\n帮助LLM检索Steam游戏评论和信息：\r\n\r\n- 获取游戏评论（正面/负面计数、评论分数、评论内容等）\r\n- 获取游戏基本信息（名称、详细描述）\r\n- 分析游戏评论并总结利弊\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Steam Review for Claude Desktop [铁匠铺](https://smithery.ai/server/@fenxer/steam-review-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @fenxer/steam-review-mcp --client claude\r\n```\r\n\r\n直接用npx运行它：\r\n\r\n```bash\r\nnpx steam-review-mcp\r\n```\r\n\r\n或添加：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"steam-review-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"steam-review-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n### 工具\r\n\r\n此MCP服务提供 `get_steam_review` 该工具通过传递Steam游戏应用程序ID来检索评论和游戏信息。\r\n\r\n有关更多详细信息，请查看Steamwork API： [用户评论-获取列表](https://partner.steamgames.com/doc/store/getreviews)\r\n\r\n返回的数据包含两部分：\r\n\r\n1. `game_reviews`:\r\n\r\n   - `success`：查询是否成功\r\n   - `review_score`：复习分数\r\n   - `review_score_desc`：复习分数描述\r\n   - `total_positive`：正面评价总数\r\n   - `total_negative`：负面评论总数\r\n   - `reviews`：所有评论文本内容（不含其他元数据）\r\n\r\n1. `game_info`:\r\n\r\n   - `name`：游戏名称\r\n   - `detailed_description`：详细的游戏描述\r\n\r\n### 提示\r\n\r\n#### 总结评论\r\n\r\n对游戏进行整体评测分析，总结游戏的优缺点。\r\n\r\n##### 参数\r\n\r\n- `appid` （必填）：Steam游戏ID，例如。， `570` （Dota 2）\r\n\r\n#### 近期评论分析\r\n\r\n用于分析最近的游戏评论，总结游戏的当前状态和玩家反馈。\r\n\r\n##### 参数\r\n\r\n- `appid` （必填）：Steam游戏ID，例如。， `570` （Dota 2）\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build project\r\nnpm run build\r\n\r\n# Run service\r\nnpm start\r\n```\r\n",
+ "config": {
+  "steam-review-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "steam-review-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

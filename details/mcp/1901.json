@@ -1,0 +1,22 @@
+{
+ "id": "1901",
+ "kind": "mcp",
+ "name": "dolar",
+ "fingerprint_md5": "62af0da9c68425f3d387ea7e61ab75ef",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# 多拉·麦克普\r\n\r\n**AI代理商的阿根廷汇率。**\r\n\r\n\r\nMCP服务器，使AI代理能够通过以下方式实时访问阿根廷汇率 [美元API](https://dolarapi.com)美元蓝、官方、MEP、CCL、加密货币——加上货币转换和点差计算器。\r\n\r\n不需要API密钥。\r\n\r\n[npm](https://www.npmjs.com/package/@dan1d/dolar-mcp) | [GitHub](https://github.com/dan1d/dolar-mcp)\r\n\r\n______________________________________________________________________\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dolar\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@dan1d/dolar-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add dolar -- npx -y @dan1d/dolar-mcp\r\n```\r\n\r\n### 光标\r\n\r\n添加 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dolar\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@dan1d/dolar-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 帆板运动\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dolar\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@dan1d/dolar-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> 配置后，询问您的AI助手以下问题： *“今天蓝色美元多少钱？”* 或 *“将100美元蓝色转换为ARS”* 或 *“蓝色和黑色之间的差距是多少？”*\r\n\r\n______________________________________________________________________\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_all_dollars` |获取所有美元汇率：blue，official，bolsa（MEP），contado con liqui（CCL），cripto，mayorista和tarjeta。返回买入/卖出价格。 |\r\n| `get_dollar` |获取特定美元类型的汇率。类型： `blue`, `oficial`, `bolsa`, `contadoconliqui`, `cripto`, `mayorista`, `tarjeta`. |\r\n| `get_all_currencies` |获取所有外币汇率vs ARS（欧元、巴西雷亚尔、UYU、CLP等）。 |\r\n| `get_currency` |获取特定外币与ARS的汇率。 |\r\n| `convert` |在ARS和任何货币或美元类型之间转换金额。至少一侧必须是ARS。支持 `use_buy` 买入率标志。 |\r\n| `get_spread` |计算两种美元类型之间的价差（差异），例如蓝色与非官方。返回绝对点差和百分比点差。 |\r\n\r\n______________________________________________________________________\r\n\r\n## 示例提示\r\n\r\n- “给我所有的美元报价”\r\n- “今天蓝色美元多少钱？”\r\n- “兑换500美元蓝色比索”\r\n- “军官和蓝色之间有什么差距？”\r\n- “欧元多少钱？”\r\n- 转换 1000 EUR 为 ARS\r\n\r\n______________________________________________________________________\r\n\r\n## 程序化使用\r\n\r\n```bash\r\nnpm install @dan1d/dolar-mcp\r\n```\r\n\r\n```typescript\r\nimport { createDolarTools } from \"@dan1d/dolar-mcp\";\r\n\r\nconst dolar = createDolarTools();\r\n\r\n// Get all dollar rates\r\nconst rates = await dolar.tools.get_all_dollars();\r\n\r\n// Get blue dollar specifically\r\nconst blue = await dolar.tools.get_dollar({ type: \"blue\" });\r\n\r\n// Convert 100 USD blue to ARS\r\nconst converted = await dolar.tools.convert({\r\n  amount: 100,\r\n  from: \"blue\",\r\n});\r\n\r\n// Calculate spread between oficial and blue\r\nconst spread = await dolar.tools.get_spread({\r\n  type_a: \"oficial\",\r\n  type_b: \"blue\",\r\n});\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 数据源\r\n\r\n所有数据均来自 [美元API](https://dolarapi.com)，一个免费的公开API阿根廷汇率。无需身份验证。数据实时更新。\r\n\r\n______________________________________________________________________\r\n\r\n## LATAM MCP工具包的一部分\r\n\r\n|服务器|它做什么|\r\n|--------|-------------|\r\n| [CobroYa](https://github.com/dan1d/mercadopago-tool) |Mercado Pago支付——创建链接、搜索支付、退款|\r\n| [市场化MCP](https://github.com/dan1d/mercadolibre-mcp) |MercadoLibre市场——搜索产品、类别、趋势|\r\n| **DolarAPI MCP** |阿根廷汇率-蓝色，官方，CCL，加密货币，转换|\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\n[MIT](./LICENSE) --by [丹麦1d](https://dan1d.dev/)\r\n",
+ "config": {
+  "dolar": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@dan1d/dolar-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

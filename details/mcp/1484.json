@@ -1,0 +1,21 @@
+{
+ "id": "1484",
+ "kind": "mcp",
+ "name": "grype",
+ "fingerprint_md5": "9157a8faeb839a7f5ea3368bb1c81feb",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Grype MCP服务器\r\n\r\n[](https://pypi.org/project/grype-mcp/)\r\n[](https://pypi.org/project/grype-mcp/)\r\n[](https://opensource.org/licenses/Apache-2.0)\r\n\r\n**为Grype漏洞扫描程序锚定MCP服务器**\r\n\r\n整合 [Gype](https://github.com/anchore/grype) 通过模型上下文协议（MCP）直接将漏洞扫描到人工智能辅助开发工作流程中。\r\n\r\n## 🚀 快速开始\r\n\r\n### 安装\r\n\r\n使用uvx安装（推荐）：\r\n\r\n```bash\r\nuvx grype-mcp\r\n```\r\n\r\n或者使用pipx：\r\n\r\n```bash\r\npipx install grype-mcp\r\n```\r\n\r\n或者使用pip：\r\n\r\n```bash\r\npip install grype-mcp\r\n```\r\n\r\n### MCP客户端设置\r\n\r\n#### 克劳德桌面\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"grype\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"grype-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 其他MCP客户端\r\n\r\n对于其他MCP兼容客户端，请使用以下命令添加服务器：\r\n\r\n- 命令： `uvx`\r\n- Args： `[\"grype-mcp\"]`\r\n\r\n开始使用Grype的漏洞扫描功能！\r\n\r\n## 🛠️ 可用工具\r\n\r\nGrype MCP服务器为AI助手提供以下工具：\r\n\r\n### 系统管理\r\n\r\n- **`find_grype`** -检查是否安装了Grype并获取版本信息\r\n- **`update_grype`** -安装或更新Grype至最新版本\r\n- **`get_db_info`** -获取漏洞数据库状态和版本信息\r\n- **`update_db`** -更新漏洞数据库\r\n\r\n### 漏洞扫描\r\n\r\n- **`scan_dir`** -扫描项目目录以查找漏洞\r\n- **`scan_purl`** -使用PURL格式扫描特定包（例如。， `pkg:npm/lodash@4.17.20`)\r\n- **`scan_image`** -扫描容器图像以查找漏洞\r\n\r\n### 脆弱性研究\r\n\r\n- **`search_vulns`** -按CVE、包名或CPE搜索漏洞数据库\r\n- **`get_vuln_details`** -获取特定CVE的详细信息\r\n\r\n## 💡 示例用法\r\n\r\n配置后，您可以询问：\r\n\r\n- *“检查Grype是否已安装且为最新版本”*\r\n- *“扫描我的项目目录以查找漏洞”*\r\n- *“是pkg:npm吗/lodash@4.17.20脆弱的？\"*\r\n- *“扫描nginx：最新Docker镜像”*\r\n- *“搜索Log4j漏洞”*\r\n- *“获取有关CVE-2021-44228的详细信息”*\r\n\r\n## 🔧 需求\r\n\r\n- **Python 3.10+**\r\n- **Gype** （可通过安装 `update_grype` 工具）\r\n- **码头工人** （可选，用于集装箱图像扫描）\r\n\r\n如果Grype尚未可用，MCP服务器可以使用 `update_grype` 工具。\r\n\r\n## 📋 支持的扫描目标\r\n\r\n- **目录** -扫描整个项目及其所有依赖项\r\n- **容器图像** -来自任何注册表的Docker镜像\r\n- **包URL** -PURL格式的单个包装\r\n  - npm： `pkg:npm/package@version`\r\n  - python `pkg:pypi/package@version`\r\n  - 去： `pkg:golang/package@version`\r\n  - Java `pkg:maven/group/artifact@version`\r\n  - 还有更多的生态系统\r\n\r\n## 🏗️ 建筑\r\n\r\nMCP服务器充当AI助手和Grype之间的桥梁：\r\n\r\n```\r\nAI Assistant ↔ MCP Server ↔ Grype CLI ↔ Vulnerability Database\r\n```\r\n\r\n- **零修改** 必须填写Grype\r\n- **结构化JSON响应** 针对AI消费进行了优化\r\n- **全面的错误处理** 有帮助的信息\r\n- **自动工具管理** 便于设置\r\n\r\n## 🤝 贡献\r\n\r\n我们欢迎捐款！请参阅：\r\n\r\n- [贡献.md](CONTRIBUTING.md) -贡献指南\r\n- [开发.md](DEVELOPING.md) -开发设置\r\n- [代码_OF_CONDUCT.md](CODE_OF_CONDUCT.md) -社区标准\r\n\r\n## 📄 许可证\r\n\r\n根据Apache许可证2.0版授权。看 [许可证](LICENSE) 了解详情。\r\n\r\n## 🔗 相关项目\r\n\r\n- [Gype](https://github.com/anchore/grype) -容器映像和文件系统的漏洞扫描程序\r\n- [目的](https://github.com/anchore/syft) -SBOM生成工具\r\n- [模型上下文协议](https://modelcontextprotocol.io/) -AI助手集成的开放协议\r\n- [锚企业](https://anchore.com/platform) -商用SBOM驱动的安全平台\r\n\r\n## 📞 支持\r\n\r\n- [GitHub问题](https://github.com/anchore/grype-mcp/issues) -Bug报告和功能请求\r\n- [锚定社区话语](https://anchore.com/discourse/) -社区支持和讨论\r\n- [文档](https://github.com/anchore/grype-mcp#readme) -完整文档\r\n\r\n______________________________________________________________________\r\n\r\n**由以下材料制成❤️ 由Anchore团队为人工智能辅助开发社区提供**\r\n",
+ "config": {
+  "grype": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "grype-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

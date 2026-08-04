@@ -1,0 +1,25 @@
+{
+ "id": "2754",
+ "kind": "mcp",
+ "name": "trieve-mcp-server",
+ "fingerprint_md5": "f2e332ff81e0a105daaba34bf1b032f2",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# trieve mcp服务器\r\n\r\n\r\n一种模型上下文协议（MCP）服务器，提供用于与Trieve API交互的代理工具。该服务器使AI代理能够通过标准化的界面搜索Trieve数据集并与之交互。\r\n\r\n## 特性\r\n\r\n- 使用语义搜索在Trieve数据集中搜索\r\n- 列出和访问数据集信息\r\n- 支持环境变量和命令行参数\r\n- 使用TypeScript构建，实现类型安全和更好的开发人员体验\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Trieve for Claude Desktop [史密瑟里](https://smithery.ai/server/trieve-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install trieve-mcp-server --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\nnpm install trieve-mcp-server\r\n```\r\n\r\n## 配置\r\n\r\n复制 `.env.dist` 文件到 `.env` 并填写您的Trieve凭据：\r\n\r\n```bash\r\ncp .env.dist .env\r\n```\r\n\r\n所需的环境变量：\r\n\r\n- `TRIEVE_API_KEY`：dashboard.Trieve.ai中的Trieve API密钥\r\n- `TRIEVE_ORGANIZATION_ID`：您在dashboard.Trieve.ai上的组织ID\r\n\r\n可选环境变量：\r\n\r\n- `TRIEVE_DATASET_ID`：要使用的特定数据集ID（如果未通过CLI提供）\r\n\r\n命令行参数（覆盖环境变量）：\r\n\r\n```bash\r\ntrieve-mcp-server --api-key <your-api-key> --org-id <your-org-id> [--dataset-id <dataset-id>]\r\n```\r\n\r\n## 用法\r\n\r\n### 启动服务器\r\n\r\n```bash\r\ntrieve-mcp-server\r\n```\r\n\r\n### 可用工具\r\n\r\n#### 搜索\r\n\r\n搜索指定的Trieve数据集。\r\n\r\n参数：\r\n\r\n- `query` （string）：搜索查询\r\n- `datasetId` （string）：要搜索的数据集的ID\r\n- `searchType` （字符串，可选）：“语义”（默认）、“全文”、“混合”或“bm25”\r\n- `filters` （对象，可选）：高级过滤选项\r\n- `highlightOptions` （对象，可选）：自定义结果突出显示\r\n- `page` （数字，可选）：页码，默认1\r\n- `pageSize` （数字，可选）：每页结果，默认值为10\r\n\r\n例子：\r\n\r\n```json\r\n{\r\n  \"query\": \"example search query\",\r\n  \"datasetId\": \"your-dataset-id\",\r\n  \"searchType\": \"semantic\",\r\n  \"page\": 1,\r\n  \"pageSize\": 10\r\n}\r\n```\r\n\r\n### 可用资源\r\n\r\n服务器以以下URI格式将Trieve数据集作为资源公开：\r\n\r\n- `trieve://datasets/{dataset-id}`\r\n\r\n## 使用Claude Desktop\r\n\r\nTrieve MCP服务器支持MCP与 [克劳德桌面](https://modelcontextprotocol.io/quickstart/user)。将以下内容放入您的Claude桌面 `claude_desktop_config.json`.\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"trieve-mcp-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"trieve-mcp-server@latest\"],\r\n      \"env\": {\r\n        \"TRIEVE_API_KEY\": \"$TRIEVE_API_KEY\",\r\n        \"TRIEVE_ORGANIZATION_ID\": \"$TRIEVE_ORGANIZATION_ID\",\r\n        \"TRIEVE_DATASET_ID\": \"$TRIEVE_DATASET_ID\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n注意：代替环境变量， `--api-key`, `--org-id`，以及 `--dataset-id` 可以用作命令行参数。\r\n\r\n一旦Claude Desktop启动，与以下内容相对应的附件将可用 [Trieve组织可用的数据集](https://docs.trieve.ai/guides/create-organizations-and-dataset)。这些可用于选择数据集。之后，开始与Claude聊天，并询问有关数据集的信息。Claude将根据需要使用搜索来过滤和分解查询，并可能根据您的任务进行多个查询。\r\n\r\n## 发展\r\n\r\n### 设置\r\n\r\n1. 克隆存储库\r\n1. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n3. 复制 `.env.dist` 向 `.env` 并配置您的凭据\r\n1. 构建项目：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n### 脚本\r\n\r\n- `npm run build`：构建TypeScript项目\r\n- `npm run watch`：观察变化并重建\r\n- `npm run test`：运行测试\r\n- `npm run inspector`：运行MCP检查器进行调试\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "trieve-mcp-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "trieve-mcp-server@latest"
+   ],
+   "env": {
+    "TRIEVE_API_KEY": "$TRIEVE_API_KEY",
+    "TRIEVE_ORGANIZATION_ID": "$TRIEVE_ORGANIZATION_ID",
+    "TRIEVE_DATASET_ID": "$TRIEVE_DATASET_ID"
+   }
+  }
+ }
+}

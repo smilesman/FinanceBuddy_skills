@@ -1,0 +1,25 @@
+{
+ "id": "582",
+ "kind": "mcp",
+ "name": "awslabs.nova-canvas-mcp-server",
+ "fingerprint_md5": "19058b46939aa1051a6db1076472123f",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 亚马逊Nova Canvas MCP服务器\r\n\r\n> **⚠️ 弃用通知**：此服务器已弃用，将不再接收更新。请使用 [`bedrock-image-mcp-server`](https://github.com/kalleeh/bedrock-image-mcp-server) 相反，它包括所有Nova Canvas工具以及稳定扩散3.5、放大和图像编辑。看 [迁移指南](https://github.com/awslabs/mcp/blob/main/docs/migration-nova-canvas.md) 了解详情。\r\n\r\n\r\n使用Amazon Nova Canvas生成图像的MCP服务器\r\n\r\n## 特性\r\n\r\n### 基于文本的图像生成\r\n\r\n- 使用以下命令从文本提示中创建图像 `generate_image`\r\n- 可定制的尺寸（320-4096px）、质量选项和负面提示\r\n- 支持在单个请求中生成多个图像（1-5个）\r\n- 可调参数，如cfg_scale（1.1-10.0）和种子代\r\n\r\n### 彩色引导图像生成\r\n\r\n- 使用以下命令生成具有特定调色板的图像 `generate_image_with_colors`\r\n- 定义多达10个十六进制颜色值来影响图像风格和情绪\r\n- 与基于文本的生成相同的自定义选项\r\n\r\n### 工作空间集成\r\n\r\n- 通过自动文件夹创建将图像保存到用户指定的工作区目录\r\n\r\n### AWS身份验证\r\n\r\n- 使用AWS配置文件安全访问Amazon Nova Canvas服务\r\n\r\n## 先决条件\r\n\r\n1. 安装 `uv` 从 [星体](https://docs.astral.sh/uv/getting-started/installation/) 或 [GitHub自述](https://github.com/astral-sh/uv#installation)\r\n1. 使用以下命令安装Python `uv python install 3.10`\r\n1. 设置AWS凭据以访问Amazon Bedrock和Nova Canvas\r\n   - 您需要一个启用了Amazon Bedrock和Amazon Nova Canvas的AWS帐户\r\n   - 使用配置AWS凭据 `aws configure` 或环境变量\r\n   - 确保您的IAM角色/用户有权使用Amazon Bedrock和Nova Canvas\r\n\r\n## 安装\r\n\r\n|Kiro|光标|VS代码|\r\n|:----:|:------:|:-------:|\r\n|  |  |  |\r\n\r\n在MCP客户端配置中配置MCP服务器（例如，对于Kiro，编辑 `~/.kiro/settings/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"awslabs.nova-canvas-mcp-server\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"awslabs.nova-canvas-mcp-server@latest\"],\r\n      \"env\": {\r\n        \"AWS_PROFILE\": \"your-aws-profile\",\r\n        \"AWS_REGION\": \"us-east-1\",\r\n        \"FASTMCP_LOG_LEVEL\": \"ERROR\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Windows安装\r\n\r\n对于Windows用户，MCP服务器配置格式略有不同：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"awslabs.nova-canvas-mcp-server\": {\r\n      \"disabled\": false,\r\n      \"timeout\": 60,\r\n      \"type\": \"stdio\",\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"tool\",\r\n        \"run\",\r\n        \"--from\",\r\n        \"awslabs.nova-canvas-mcp-server@latest\",\r\n        \"awslabs.nova-canvas-mcp-server.exe\"\r\n      ],\r\n      \"env\": {\r\n        \"FASTMCP_LOG_LEVEL\": \"ERROR\",\r\n        \"AWS_PROFILE\": \"your-aws-profile\",\r\n        \"AWS_REGION\": \"us-east-1\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或docker成功后 `docker build -t awslabs/nova-canvas-mcp-server .`:\r\n\r\n```file\r\n# fictitious `.env` file with AWS temporary credentials\r\nAWS_ACCESS_KEY_ID=ASIAIOSFODNN7EXAMPLE\r\nAWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\r\nAWS_SESSION_TOKEN=AQoEXAMPLEH4aoAH0gNCAPy...truncated...zrkuWJOgQs8IZZaIv2BXIa2R4Olgk\r\n```\r\n\r\n```json\r\n  {\r\n    \"mcpServers\": {\r\n      \"awslabs.nova-canvas-mcp-server\": {\r\n        \"command\": \"docker\",\r\n        \"args\": [\r\n          \"run\",\r\n          \"--rm\",\r\n          \"--interactive\",\r\n          \"--env\",\r\n          \"AWS_REGION=us-east-1\",\r\n          \"--env\",\r\n          \"FASTMCP_LOG_LEVEL=ERROR\",\r\n          \"--env-file\",\r\n          \"/full/path/to/file/above/.env\",\r\n          \"awslabs/nova-canvas-mcp-server:latest\"\r\n        ],\r\n        \"env\": {},\r\n        \"disabled\": false,\r\n        \"autoApprove\": []\r\n      }\r\n    }\r\n  }\r\n```\r\n\r\n注意：您的凭据需要从主机刷新\r\n\r\n### 通过史密瑟里安装\r\n\r\n通过以下方式自动安装适用于Claude Desktop的Amazon Nova Canvas MCP服务器 [史密瑟里](https://smithery.ai/server/@awslabs/nova-canvas-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @awslabs/nova-canvas-mcp-server --client claude\r\n```\r\n\r\n### AWS身份验证\r\n\r\nMCP服务器使用中指定的AWS配置文件 `AWS_PROFILE` 环境变量。如果未提供，则默认为AWS配置文件中的“默认”配置文件。\r\n\r\n```json\r\n\"env\": {\r\n  \"AWS_PROFILE\": \"your-aws-profile\",\r\n  \"AWS_REGION\": \"us-east-1\"\r\n}\r\n```\r\n\r\n确保AWS配置文件具有访问Amazon Bedrock和Amazon Nova Canvas的权限。MCP服务器使用指定的配置文件创建boto3会话，以向AWS服务进行身份验证。您的AWS IAM凭据保留在您的本地计算机上，严格用于使用Amazon Bedrock模型API。\r\n",
+ "config": {
+  "awslabs.nova-canvas-mcp-server": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "awslabs.nova-canvas-mcp-server@latest"
+   ],
+   "env": {
+    "AWS_PROFILE": "your-aws-profile",
+    "AWS_REGION": "us-east-1",
+    "FASTMCP_LOG_LEVEL": "ERROR"
+   }
+  }
+ }
+}

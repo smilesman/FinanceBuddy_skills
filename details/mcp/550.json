@@ -1,0 +1,22 @@
+{
+ "id": "550",
+ "kind": "mcp",
+ "name": "youtube-controller",
+ "fingerprint_md5": "b8a25b3f990bb6a1ec3e7409b2f3bf76",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# YouTube控制器MCP\r\n\r\n使用模型上下文协议（MCP）直接从AI代理控制您的YouTube体验。\r\n\r\n该项目由两部分组成：\r\n\r\n1. **Chrome 扩展**：在浏览器中运行以控制YouTube选项卡。\r\n1. **MCP服务器**：通过Socket.io将您的AI代理（如Claude Desktop、Cursor等）连接到扩展。\r\n\r\n## 特性\r\n\r\n- **遥控器**：播放、暂停和切换播放。\r\n- **导航**：寻找特定时间，播放下一个视频。\r\n- **搜索**：搜索视频并按ID播放。\r\n- **状态监测**：获取当前播放状态（时间、音量、视频信息）。\r\n- **智能连接**：自动连接到活动的YouTube选项卡。\r\n\r\n## 安装\r\n\r\n### 1.安装扩展\r\n\r\n1. 下载最新版本 `.zip` 从 [发布页面](../../releases) （如果可用）或从源代码构建。\r\n1. 解压缩文件。\r\n1. 打开浏览器并转到 `chrome://extensions`.\r\n1. 启用 **开发者模式** 在右上角。\r\n1. 点击 **装载时未包装** 并选择解压缩的文件夹（它应该包含 `manifest.json`).\r\n1. 打开YouTube选项卡以初始化连接。\r\n\r\n### 2.运行MCP服务器\r\n\r\n您可以直接使用以下命令运行MCP服务器 `npx` 无需安装任何东西：\r\n\r\n```bash\r\nnpx local-ytb-controller-mcp\r\n```\r\n\r\n或者将其添加到代理的配置中（例如。， `claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube-controller\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"local-ytb-controller-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\nMCP服务器向您的AI代理公开以下工具：\r\n\r\n|工具名称|描述|\r\n| :---------------- | :------------------------------------------------------ |\r\n| `open_youtube` |在新标签页中打开YouTube|\r\n| `search_youtube` |在YouTube上搜索视频。                           |\r\n| `play_video` |继续播放当前视频。                     |\r\n| `play_video_id` |按ID播放特定视频|\r\n| `pause_video` |暂停当前视频。                                |\r\n| `toggle_playback` |在播放和暂停之间切换。                          |\r\n| `next_video` |跳到下一个视频。                                 |\r\n| `seek_video` |查找特定时间（以秒为单位）。                   |\r\n| `get_state` |获取当前播放状态（时间、音量、标题等）。 |\r\n\r\n## 发展\r\n\r\n### 先决条件\r\n\r\n- Node.js\r\n\r\n### 从源代码构建\r\n\r\n1. **克隆仓库**:\r\n\r\n   ```bash\r\n   git clone https://github.com/your-username/youtube-controller.git\r\n   cd youtube-controller\r\n   ```\r\n\r\n1. **安装依赖项**:\r\n\r\n   ```bash\r\n   npm install\r\n   # or\r\n   bun install\r\n   ```\r\n\r\n1. **构建一切**:\r\n\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n   - 扩建工程将建成 `dist/`.\r\n   - MCP服务器将用于 `mcp/build/`.\r\n\r\n### 地方发展\r\n\r\n- **扩展**:\r\n\r\n  ```bash\r\n  npm run dev\r\n  ```\r\n\r\n  加载 `dist` 文件夹中 `chrome://extensions`.\r\n\r\n- **MCP服务器**:\r\n\r\n  ```bash\r\n  npm run server\r\n  ```\r\n\r\n  这将在本地运行MCP服务器进行测试。\r\n\r\n## 故障排除\r\n\r\n- **扩展未连接**：确保MCP服务器正在运行，并且您打开了YouTube选项卡。刷新YouTube选项卡。\r\n- **“套接字连接失败”**：扩展尝试连接到 `http://localhost:3000`。确保端口3000可用。\r\n",
+ "config": {
+  "youtube-controller": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "local-ytb-controller-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

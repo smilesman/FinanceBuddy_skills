@@ -1,0 +1,12 @@
+{
+ "id": "gemini-image-remix",
+ "kind": "skill",
+ "name": "gemini-image-remix",
+ "fingerprint_md5": "8e67c3a43c7873cd55a58cdd0df9915b",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Gemini Image Remix\r\n\r\n一个用于文本到图像生成和复杂图像到图像混音的多功能工具。默认情况下，它使用 **Gemini 2.5 Flash Image** 实现快速、高质量的结果。它还支持 **Gemini 3.0 Pro (Nano Banana Pro)** 等旗舰模型，用于高级艺术任务。\r\n\r\n## 生成图像\r\n\r\n从文本提示创建令人惊叹的视觉效果。\r\n\r\n```bash\r\nuv run {baseDir}/scripts/remix.py --prompt \"a cybernetic owl in a neon forest\" --filename \"owl.png\"\r\n```\r\n\r\n## 混音/修改图像\r\n\r\n使用一个或多个参考图像来指导生成。非常适合风格迁移、背景更改或角色修改。\r\n\r\n```bash\r\nuv run {baseDir}/scripts/remix.py --prompt \"change the art style to a pencil sketch\" --filename \"sketch.png\" -i \"original.png\"\r\n```\r\n\r\n## 多图像合成\r\n\r\n将多达 14 张不同图像的元素组合成一个连贯的场景。\r\n\r\n```bash\r\nuv run {baseDir}/scripts/remix.py --prompt \"place the character from image 1 into the environment of image 2\" --filename \"result.png\" -i \"character.png\" -i \"env.png\"\r\n```\r\n\r\n## 高级模型选择\r\n\r\n切换到 **Nano Banana Pro** 等高级模型以进行高保真工作。\r\n\r\n```bash\r\nuv run {baseDir}/scripts/remix.py --model \"gemini-3-pro-image-preview\" --prompt \"highly detailed oil painting of a dragon\" --filename \"dragon.png\"\r\n```\r\n\r\n## 选项\r\n\r\n- `--prompt`, `-p`: 图像描述或具体的编辑说明。\r\n- `--filename`, `-f`: 生成的 PNG 的输出路径。\r\n- `--input-image`, `-i`: 输入图像的路径（最多可重复 14 次）。\r\n- `--resolution`, `-r`: `1K`（默认）、`2K` 或 `4K`。\r\n- `--aspect-ratio`, `-a`: 输出宽高比（例如，`1:1`、`16:9`、`9:16`、`4:3`、`3:4`）。\r\n- `--model`, `-m`: 要使用的模型（默认为 `gemini-2.5-flash-image`）。支持：`gemini-2.5-flash-image`、`gemini-3-pro-image-preview`。\r\n- `--api-key`, `-k`: Gemini API key（默认为 `GEMINI_API_KEY` 环境变量）。",
+ "config": {}
+}

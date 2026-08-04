@@ -1,0 +1,23 @@
+{
+ "id": "515",
+ "kind": "mcp",
+ "name": "valorant-analyzer",
+ "fingerprint_md5": "c1cafd74bd61fa6ba1b89d1d0c00bca0",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Valorant MCP服务器\r\n\r\n公开Valorant匹配分析工具的MCP（模型上下文协议）服务器。将其连接到Claude（或任何兼容MCP的客户端），以获取和分析球员统计数据、比赛历史、代理表现等。\r\n\r\n由...驱动 [Henrik的非正式Valorant API](https://docs.henrikdev.xyz/valorant/general).\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_player_info` |获取Riot ID的基本帐户信息|\r\n| `get_match_history` |最近的比赛历史记录，包括您和队友的统计数据（默认情况下是有竞争力的；也支持无等级、死亡竞赛、快速比赛、扣球、premier）|\r\n| `get_match_details` |特定比赛的完整细分。 `summary` 视图（默认）：每位玩家统计数据、球队总数、击杀名单、回合结果、经济。 `narrative` 视图：带命名地图区域（A站点、中、B长等）和事件标签（条目、第一血液、交易、轮换）的逐轮时间线|\r\n| `get_agent_stats` |每个代理的汇总统计数据：胜率、平均KDA、平均得分|\r\n| `get_map_stats` |按地图汇总的统计数据：胜率、平均得分|\r\n| `get_weapon_stats` |武器使用统计：每件武器击杀数、使用百分比|\r\n| `get_rank_progression` |当前排名、elo、峰值排名和季节历史|\r\n\r\n## 设置\r\n\r\n### 先决条件\r\n\r\n- [紫外线](https://docs.astral.sh/uv/) 包管理器：\r\n  ```bash\r\n  curl -LsSf https://astral.sh/uv/install.sh | sh\r\n  ```\r\n  （Windows： `powershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"`)\r\n- A. [Henrik API密钥](https://api.henrikdev.xyz/dashboard/)\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add valorant-analyzer -e HENRIK_API_KEY=your-key-here -- uvx valorant-mcp\r\n```\r\n\r\n### 克劳德桌面\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- **Linux**: `~/.config/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"valorant-analyzer\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"valorant-mcp\"],\r\n      \"env\": {\r\n        \"HENRIK_API_KEY\": \"your-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 本地开发\r\n\r\n```bash\r\ngit clone https://github.com/SeijiMatsumoto/valorant-mcp.git\r\ncd valorant-mcp\r\nuv sync\r\n```\r\n\r\n创建一个 `.env` 项目根目录中的文件：\r\n\r\n```\r\nHENRIK_API_KEY=your-api-key-here\r\n```\r\n\r\n### 运行服务器\r\n\r\n```bash\r\nuv run valorant-mcp\r\n```\r\n\r\n### 使用MCP检查员进行测试\r\n\r\n```bash\r\nmcp dev src/valorant_mcp/server.py\r\n```\r\n\r\n### 运行测试\r\n\r\n```bash\r\nuv run pytest src/valorant_mcp/tests/ -v\r\n```\r\n\r\n## 技术栈\r\n\r\n- [MCP Python SDK（FastMCP）](https://github.com/modelcontextprotocol/python-sdk) --服务器框架\r\n- [httpx](https://www.python-httpx.org/) --异步HTTP客户端\r\n- [派丹蒂克](https://docs.pydantic.dev/) --数据验证\r\n- [紫外线](https://docs.astral.sh/uv/) --包管理\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "valorant-analyzer": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "valorant-mcp"
+   ],
+   "env": {
+    "HENRIK_API_KEY": "your-key-here"
+   }
+  }
+ }
+}

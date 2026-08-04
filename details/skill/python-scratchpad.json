@@ -1,0 +1,12 @@
+{
+ "id": "python-scratchpad",
+ "kind": "skill",
+ "name": "python-scratchpad",
+ "fingerprint_md5": "f655094f1c35c2b652f1c07e2610e4b8",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Python Scratchpad\r\n\r\nUse this skill when the task benefits from a short Python script instead of pure reasoning.\r\n\r\nThis skill is especially useful for:\r\n- arithmetic and unit conversions\r\n- validating regexes or parsing logic\r\n- transforming JSON, CSV, or small text payloads\r\n- checking assumptions with a small reproducible script\r\n\r\n环境要求:\r\n- The agent 应该 have access 迁移到 `execute_code`.\r\n\r\nWorkflow:\r\n1. If the task needs computation or a repeatable transformation, activate this skill.\r\n2. If you 需要 示例, call `read_skill_file` for `refere`refere`ces/示例.md`\r\n3. 写入 a short Python script for the exact task.\r\n4. Prefer `execute_code`.\r\n5. Use the script 输出 in the final answer.\r\n6. Keep scripts small and task-specific.\r\n\r\nRules:\r\n1. Prefer standard library Python.\r\n2. 打印 only the values you 需要.\r\n3. Do not invent outputs without running the script.\r\n4. If `execute_code` is not available, say exactly: `No `No `ython execution tool is configured for this agent.`\r\n5. Do not claim there is a generic execution-environment problem unless a tool call actually returned such an 错误.\r\n\r\nExpected behavior:\r\n- Explain the 结果 briefly after using the script.\r\n- Include the computed value or transformed 输出 in the final answer.",
+ "config": {}
+}

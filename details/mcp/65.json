@@ -1,0 +1,18 @@
+{
+ "id": "65",
+ "kind": "mcp",
+ "name": "bandcamp",
+ "fingerprint_md5": "6f63c89788011abf67582c09ad3b9476",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Bandcamp MCP\r\n\r\n用于Bandcamp音乐发现和研究的MCP服务器。在Render（免费层）上部署并与Claude一起使用。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `bandcamp_search` |搜索专辑、艺术家、曲目、标签|\r\n| `bandcamp_get_album` |获取专辑详细信息，包括曲目列表、标签、积分、定价|\r\n| `bandcamp_get_artist` |获取艺术家信息、简介、唱片目录、链接|\r\n| `bandcamp_get_track` |通过歌词获取曲目详细信息|\r\n| `bandcamp_browse_tag` |按流派/标签浏览音乐|\r\n| `bandcamp_discover` |按流派、格式、流行度发现新音乐|\r\n\r\n## 部署以渲染\r\n\r\n1. 分叉此回购\r\n1. 首选 [渲染仪表板](https://dashboard.render.com/select-repo?type=blueprint)\r\n1. 选择您的分叉仓库\r\n1. 点击 **应用** -用途 `render.yaml` 自动地\r\n\r\n不需要环境变量。\r\n\r\n## 配置Claude\r\n\r\n添加 `~/.mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bandcamp\": {\r\n      \"url\": \"https://your-app.onrender.com/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动克劳德代码以激活。\r\n\r\n## 示例用法\r\n\r\n```\r\n\"Search for Aphex Twin on Bandcamp\"\r\n\"Find new ambient albums\"\r\n\"Get info about this album: https://artist.bandcamp.com/album/...\"\r\n\"Discover top electronic vinyl releases\"\r\n```\r\n\r\n## 热门标签\r\n\r\n`ambient`, `electronic`, `synthwave`, `vaporwave`, `lofi`, `techno`, `house`, `shoegaze`, `post-punk`, `indie-rock`, `dark-ambient`, `drone`, `noise`, `chiptune`, `lo-fi-hip-hop`\r\n\r\n## 本地开发\r\n\r\n```bash\r\npython -m venv venv\r\nsource venv/bin/activate\r\npip install -r requirements.txt\r\npython -m src.server_remote\r\n```\r\n\r\n服务器在上运行 `http://localhost:8000`\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "bandcamp": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://your-app.onrender.com/sse"
+  }
+ }
+}

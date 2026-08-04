@@ -1,0 +1,23 @@
+{
+ "id": "1193",
+ "kind": "mcp",
+ "name": "opendal",
+ "fingerprint_md5": "bcd3af65123c1f91f0bc46f846995fb6",
+ "download_count": 0,
+ "category": "数据库与数据",
+ "tags": "",
+ "version": "",
+ "readme": "# Apache OpenDAL™模型上下文协议服务器\r\n\r\n一种模型上下文协议（MCP）服务器实现，通过以下方式提供对各种存储服务的访问 [Apache OpenDAL™](https://opendal.apache.org/).\r\n\r\n\r\n## 特性\r\n\r\n- 无缝访问多种存储服务，包括S3、Azure Blob存储、Google云存储等\r\n- 列出存储服务中的文件和目录\r\n- 通过自动文本/二进制检测读取文件内容\r\n- 基于环境变量的配置\r\n\r\n## 安装\r\n\r\n```shell\r\npip install mcp-server-opendal\r\n```\r\n\r\n## 使用Claude Desktop\r\n\r\n添加以下内容 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"opendal\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"mcp-server-opendal\"\r\n      ],\r\n      \"env\": {\r\n        \"YOUR_ENV_VAR\": \"YOUR_ENV_VALUE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n它要求 `uv` 安装在您的机器上。检查 [官方文件](https://docs.astral.sh/uv/getting-started/installation/) 用于安装指南。\r\n\r\n## 环境变量\r\n\r\n通过设置环境变量来配置存储服务。每个服务都需要一个前缀和特定的配置选项。\r\n\r\n例如，要配置别名为“mys3”的S3服务：\r\n\r\n```\r\nOPENDAL_MYS3_TYPE=s3\r\nOPENDAL_MYS3_BUCKET=mybucket\r\nOPENDAL_MYS3_REGION=us-east-1\r\nOPENDAL_MYS3_ENDPOINT=http://localhost:9000\r\nOPENDAL_MYS3_ACCESS_KEY_ID=myaccesskey\r\nOPENDAL_MYS3_SECRET_ACCESS_KEY=mysecretkey\r\n```\r\n\r\n然后你可以使用类似的工具 `read` 和 `list` 随着 `mys3://path/to/file`.\r\n\r\n`mcp-server-opendal` 也将从以下位置加载 `.env`.\r\n\r\n## 发展\r\n\r\n```shell\r\nnpx @modelcontextprotocol/inspector \\\r\n  uv run mcp-server-opendal\r\n```\r\n",
+ "config": {
+  "opendal": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-server-opendal"
+   ],
+   "env": {
+    "YOUR_ENV_VAR": "YOUR_ENV_VALUE"
+   }
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "521",
+ "kind": "mcp",
+ "name": "vrchat-mcp",
+ "fingerprint_md5": "ba38ca165037483a029b90bbaaf795ba",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://badge.fury.io/js/vrchat-mcp) [](https://opensource.org/licenses/MIT)\r\n\r\n[日本语](./README.ja.md) | [韩语](./README.ko.md)\r\n\r\n该项目是一个模型上下文协议（MCP）服务器，用于与VRChat API交互。它允许您使用标准化协议从VRChat检索各种信息。\r\n\r\n[](https://youtu.be/0MRxhzlFCkw)\r\n\r\n[](https://glama.ai/mcp/servers/u763zoyi5a)\r\n\r\n## 概述\r\n\r\nVRChat MCP服务器提供了一种以结构化方式访问VRChat的API端点的方式。它支持广泛的功能，包括用户身份验证、检索用户和朋友信息、访问化身和世界数据等。\r\n\r\n## 用法\r\n\r\n要启动服务器，请确保设置了必要的环境变量：\r\n\r\n```bash\r\nexport VRCHAT_USERNAME=your_username\r\nexport VRCHAT_AUTH_TOKEN=your_auth_token\r\n```\r\n\r\n> \\[！注意\\]\r\n>\r\n> #### 如何获得授权令牌\r\n>\r\n> 您可以使用以下命令登录并获取身份验证令牌：\r\n>\r\n> ```\r\n> $ npx vrchat-auth-token-checker\r\n>\r\n> VRChat Username: your-username\r\n> Password: ********\r\n>\r\n> # If 2FA is enabled\r\n> 2FA Code: 123456\r\n>\r\n> # Success output\r\n> Auth Token: authcookie-xxxxx\r\n> ```\r\n>\r\n> [命令源代码](https://github.com/sawa-zen/vrchat-auth-token-checker)\r\n>\r\n> **请小心处理获得的令牌，因为它的寿命很长**\r\n\r\n然后，运行以下命令：\r\n\r\n```bash\r\nnpx vrchat-mcp\r\n```\r\n\r\n这将启动MCP服务器，允许您通过定义的工具与VRChat API进行交互。\r\n\r\n## 使用Claude Desktop\r\n\r\n要将此MCP服务器与Claude Desktop一起使用，您不需要运行 `npx vrchat-mcp` 手动。相反，请将以下配置添加到您的Claude Desktop配置文件中：\r\n\r\n- MacOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"vrchat-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"vrchat-mcp\"],\r\n      \"env\": {\r\n        \"VRCHAT_USERNAME\": \"your-username\",\r\n        \"VRCHAT_AUTH_TOKEN\": \"your-auth-token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后，像往常一样启动Claude Desktop。如果必须使用nodenv或nvm，则可能需要指定 `npx` 命令。\r\n\r\n## 可用工具\r\n\r\n此模型上下文协议服务器提供以下VRChat相关工具：\r\n\r\n### 与用户相关\r\n\r\n- vrchat_get_friends_list：获取好友列表\r\n- vrchat_send_friend_request：发送好友请求\r\n\r\n### 阿凡达相关\r\n\r\n- vrchat_search_avatars：搜索头像\r\n- vrchat_select_avatar：选择并切换到特定头像\r\n\r\n### 世界相关\r\n\r\n- vrchat_search_worlds：搜索世界\r\n- vrchat_list_favorited_worlds：获取收藏的世界列表\r\n\r\n### 实例相关\r\n\r\n- vrchat_create_instance：创建一个新实例\r\n- vrchat_get_instance：获取特定实例的信息\r\n\r\n### 集团相关\r\n\r\n- vrchat_search_groups：搜索组\r\n- vrchat_join_group：加入群组\r\n\r\n### 收藏相关\r\n\r\n- vrchat_list_favorites：获取收藏夹列表\r\n- vrchat_add_favorite：添加新收藏夹\r\n- vrchat_list_favorite_groups：获取收藏组列表\r\n\r\n### 邀请相关\r\n\r\n- vrchat_list_invite_messages：获取邀请消息列表\r\n- vrchat_request_invite：请求邀请\r\n- vrchat_get_invite_message：获取特定的邀请消息\r\n\r\n### 通知相关\r\n\r\n- vrchat_get_ntifications：获取通知列表\r\n\r\n## 调试\r\n\r\n首先，构建项目：\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n由于MCP服务器在stdio上运行，调试可能具有挑战性。为了获得最佳的调试体验，我们强烈建议使用MCP检查器。\r\n\r\n您可以使用以下命令通过npm启动MCP检查器：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector \"./dist/main.js\"\r\n```\r\n\r\n确保环境变量配置正确。\r\n\r\n启动后，检查器将显示一个URL，您可以在浏览器中访问该URL以开始调试。\r\n\r\n## 出版\r\n\r\n要发布包的新版本，请执行以下步骤：\r\n\r\n1. 从主分支中提取最新代码\r\n\r\n   ```bash\r\n   git checkout main\r\n   git pull origin main\r\n   ```\r\n\r\n1. 构建包\r\n\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n1. 发布到npm\r\n\r\n   ```bash\r\n   npm publish\r\n   ```\r\n\r\n1. 将更改推送到远程存储库\r\n\r\n   ```bash\r\n   git push origin main --tags\r\n   ```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请分叉存储库，并提交任何改进或错误修复的拉取请求。\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。有关详细信息，请参阅LICENSE文件。\r\n",
+ "config": {
+  "vrchat-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "vrchat-mcp"
+   ],
+   "env": {
+    "VRCHAT_USERNAME": "your-username",
+    "VRCHAT_AUTH_TOKEN": "your-auth-token"
+   }
+  }
+ }
+}

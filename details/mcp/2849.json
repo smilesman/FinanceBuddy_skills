@@ -1,0 +1,22 @@
+{
+ "id": "2849",
+ "kind": "mcp",
+ "name": "genlayer",
+ "fingerprint_md5": "04f5faa1986510ef54fddb826b0ba337",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# GenLayer MCP服务器\r\n\r\n\r\n用于生成复杂数据的综合MCP（模型上下文协议）服务器\r\n具有AI原生区块链功能的GenLayer智能合约。\r\n\r\n## ⚠️ 免责声明\r\n\r\n**该项目是为了测试\r\n组合能力 [鹅](https://github.com/block/goose) 和\r\n[克劳德代码](https://github.com/anthropics/claude-code).** 这已经\r\nvibecomed，所以要注意这一点。可能会出现错误或不一致。\r\n\r\n## 🌟 概述\r\n\r\nGenLayer是第一个支持AI的原生区块链 **智能\r\n合同** -智能合约可以：\r\n\r\n- 🧠 **过程自然语言** 指令和人类可读要求\r\n- 🌐 **访问实时网络数据** 没有外部神谕\r\n- 🤖 **处理非确定性操作** 通过乐观民主\r\n  共识\r\n- 🔍 **利用大型语言模型** （LLMs）用于复杂的推理和\r\n  决策\r\n- 📊 **执行语义搜索** 内置矢量存储\r\n- ⚖️ **就人工智能输出达成共识** 运用等效原理\r\n\r\n此MCP服务器提供用于生成各种类型的GenLayer的工具\r\n智能合约——从基本的存储合约到复杂的\r\n预测市场、人工智能驱动的预言机等，旨在使\r\n开发人员在构建、测试和\r\n部署智能合约。\r\n\r\n## 🚀 安装与使用\r\n\r\n### 使用Claude代码快速设置\r\n\r\n**添加MCP服务器** （无需安装）：只需在中运行此命令\r\n克劳德代码：\r\n\r\n```bash\r\nclaude mcp add genlayer -- npx -y genlayer-mcp\r\n```\r\n\r\n### 替代IDE设置\r\n\r\n对于支持MCP的其他IDE：\r\n\r\n**直接与npx一起使用** （无需安装）：添加到您的MCP\r\n配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"genlayer\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"genlayer-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🌐 GenLayer资源\r\n\r\n### 文档\r\n\r\n- 📖 [GenLayer文档](https://docs.genlayer.com/) -完整的开发人员\r\n  文档\r\n- 🎓\r\n  [智能合约指南](https://docs.genlayer.com/developers/intelligent-contracts/introduction) -\r\n  学习构建智能合约\r\n- 🔧\r\n  [GenLayer命令行界面](https://docs.genlayer.com/developers/intelligent-contracts/tools/genlayer-cli) -\r\n  命令行开发工具\r\n- ⚡\r\n  [快速入门指南](https://docs.genlayer.com/developers/intelligent-contracts/your-first-contract) -\r\n  快速入门\r\n\r\n### 工具和平台\r\n\r\n- 🖥️ [GenLayer工作室](https://studio.genlayer.com/) -基于浏览器的开发\r\n  环境\r\n- 📦\r\n  [GenLayer JS SDK](https://docs.genlayer.com/developers/decentralized-applications/genlayer-js) -\r\n  JavaScript/TypeScript SDK\r\n- 🐍\r\n  [开发包](https://docs.genlayer.com/developers/intelligent-contracts/tooling-setup) -\r\n  Python开发工具\r\n\r\n### 社区\r\n\r\n- 💬 [不和谐社区](https://discord.gg/8Jm4v89VAu) -加入开发者\r\n  社区\r\n- 📱 [电报](https://t.me/genlayer) -实时讨论\r\n- 🐙 [GitHub](https://github.com/genlayerlabs) -开源存储库\r\n- 🐦 [推特](https://twitter.com/genlayer) -最新消息和更新\r\n\r\n### 示例和教程\r\n\r\n- 📋\r\n  [合同示例](https://docs.genlayer.com/developers/intelligent-contracts/examples/storage) -\r\n  现实世界中的合同示例\r\n- 🎯\r\n  [用例想法](https://docs.genlayer.com/developers/intelligent-contracts/ideas) -\r\n  为您的项目提供灵感\r\n- 🏗️\r\n  [项目锅炉板](https://docs.genlayer.com/developers/decentralized-applications/project-boilerplate) -\r\n  初学者模板\r\n\r\n## 🛠️ 发展\r\n\r\n我们欢迎捐款！以下是如何开始：\r\n\r\n### 开发设置\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/albert-mr/genlayer-mcp-server.git\r\ncd genlayer-mcp-server\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Run in development mode with auto-reload\r\nnpm run dev\r\n\r\n# Run tests during development\r\nnpm run test:watch\r\n\r\n# Type checking\r\nnpm run lint\r\n\r\n# Full validation\r\nnpm run validate\r\n```\r\n\r\n## 📄 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件\r\n了解详情。\r\n\r\n## 社区与支持\r\n\r\n- 🐛 **错误报告**:\r\n  [GitHub问题](https://github.com/albert-mr/genlayer-mcp-server/issues)\r\n- 💬 **社区支持**: [Discord 的中文翻译是“不和谐”或“纷争”。](https://discord.gg/8Jm4v89VAu)\r\n- 📱 **实时聊天**: [电报](https://t.me/genlayer)\r\n\r\n______________________________________________________________________\r\n\r\n**内置于❤️ GenLayer生态系统**\r\n\r\n_这不是官方的GenLayer存储库。这是一个维护的社区\r\n项目。_\r\n",
+ "config": {
+  "genlayer": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "genlayer-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "3307",
+ "kind": "mcp",
+ "name": "zomato-mcp",
+ "fingerprint_md5": "21dd88e8a733e2bc57f0a24f5fa4be0a",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# Zomato MCP服务器\r\n\r\n满足您点餐需求的mcp服务器。\r\n\r\n## 支持的功能\r\n\r\n- 🔎 **餐厅探索** -根据您的位置和喜好查找附近的餐馆。\r\n- 📒 **菜单浏览** -浏览包含价格、描述和评级的详细菜单。\r\n- 🛒 **购物车创建** -将商品添加到购物车并轻松定制订单。\r\n- 🥗 **食品订购** -通过订单跟踪支持无缝下单。\r\n- 💳 **二维码支付** -使用二维码集成完成安全支付。\r\n\r\n## 安装指南\r\n\r\n> ⚠️ **OAuth重定向URI警告**：目前，我们只将以下用于OAuth身份验证的重定向URI列入白名单。请联系我们，让您的客户：\r\n>\r\n> - `claude://claude.ai/settings/connectors`\r\n> - `https://chatgpt.com/connector_platform_oauth_redirect`\r\n> - `https://claude.ai/api/mcp/auth_callback`\r\n> - `https://insiders.vscode.dev/redirect`\r\n> - `https://oauth.pstmn.io/v1/callback`\r\n> - `https://vscode.dev/redirect`\r\n\r\n### 在Claude上安装\r\n\r\n 使用连接器（需要订阅claude）\r\n\r\n1. 打开克劳德\r\n1. 转到设置->连接器->添加自定义连接器\r\n1. 使用URL： `https://mcp-server.zomato.com/mcp`\r\n1. 保存并重新启动Claude\r\n\r\n 使用手动配置（免费计划提供）\r\n\r\n1. 打开克劳德\r\n1. 转到设置->开发人员->编辑配置\r\n1. 打开 `claude_desktop_config.json` 在文本编辑器中。\r\n1. 添加以下配置：\r\n   ```json\r\n   {\r\n   \t\"mcpServers\": {\r\n   \t\t\"zomato-mcp\": {\r\n   \t\t\"command\": \"npx\",\r\n   \t\t\t\"args\": [\r\n   \t\t\t\t\"mcp-remote\",\r\n   \t\t\t\t\"https://mcp-server.zomato.com/mcp\"\r\n   \t\t\t]\r\n   \t\t}\r\n   \t}\r\n   }\r\n   ```\r\n\r\n### 在VsCode中安装\r\n\r\n一键安装\r\n\r\n手动安装\r\n\r\n将此添加到您的 `mcp.json` 文件。\r\n\r\n```json\r\n{\r\n\t\"servers\": {\r\n\t\t\"zomato-mcp-server\": {\r\n\t\t\t\"url\": \"https://mcp-server.zomato.com/mcp\",\r\n\t\t\t\"type\": \"http\"\r\n\t\t}\r\n\t},\r\n}\r\n```\r\n\r\n## 示例提示\r\n\r\n从这些示例提示开始，探索Zomato MCP服务器可以做什么：\r\n\r\n- “向我展示我附近评价最高的餐厅”\r\n- “在3公里内找到披萨店”\r\n- “给我看看我所在地区的素食餐厅”\r\n- “将2个来自多明诺兹的玛格丽特披萨添加到我的购物车”\r\n- “点我常喝的咖啡”\r\n- “从上次订单重新订购”\r\n- “从附近的餐馆点一份带烤饼的黄油鸡”\r\n\r\n## 免责声明\r\n\r\n- 出于安全和法律考虑，我们目前不允许在Zomato MCP上构建任何第三方应用程序。请联系我们进行任何整合讨论。\r\n\r\n- 这仅用于测试目的，Zomato不承担因MCP集成错误/不起作用而可能产生的任何和所有责任。\r\n",
+ "config": {
+  "zomato-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://mcp-server.zomato.com/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

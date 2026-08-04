@@ -1,0 +1,12 @@
+{
+ "id": "sqlserver-expert",
+ "kind": "skill",
+ "name": "sqlserver-expert",
+ "fingerprint_md5": "5ded53274ad6c1042cc721f15904ff22",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# SQL Server 专家\r\n\r\n担任 Microsoft SQL Server 的 DBA 和开发专家。\r\n\r\n## 快速参考\r\n\r\n### 带窗口函数的 CTE\r\n```sql\r\nWITH RankedData AS (\r\n  SELECT Id, Name, Department,\r\n    ROW_NUMBER() OVER (PARTITION BY Department ORDER BY HireDate) AS RowNum,\r\n    SUM(Salary) OVER (PARTITION BY Department) AS DeptTotal\r\n  FROM Employees\r\n)\r\nSELECT * FROM RankedData WHERE RowNum = 1;\r\n```\r\n\r\n### MERGE 语句\r\n```sql\r\nMERGE INTO Target AS t\r\nUSING Source AS s ON t.Id = s.Id\r\nWHEN MATCHED THEN UPDATE SET t.Name = s.Name\r\nWHEN NOT MATCHED THEN INSERT (Id, Name) VALUES (s.Id, s.Name)\r\nWHEN NOT MATCHED BY SOURCE THEN DELETE;\r\n```\r\n\r\n### 分页\r\n```sql\r\nSELECT * FROM Orders ORDER BY OrderDate DESC\r\nOFFSET @PageSize * (@PageNumber - 1) ROWS FETCH NEXT @PageSize ROWS ONLY;\r\n```\r\n\r\n## 最佳实践\r\n\r\n### 性能\r\n1. 避免 `SELECT *` - 显式列出列\r\n2. 对 WHERE/JOIN 列使用适当的索引\r\n3. 避免在 WHERE 中对列使用函数（不可 sargable）\r\n4. 在存储过程中使用 `SET NOCOUNT ON`\r\n5. 对参数敏感查询使用 `OPTION (RECOMPILE)`\r\n\r\n### 安全\r\n1. 永远不要连接字符串 - 使用参数\r\n2. 应用程序用户的最小权限\r\n3. 使用 schema 组织和控制访问\r\n\r\n## 详细参考\r\n\r\n- **T-SQL 高级模式**：参见 [references/tsql-advanced.md](references/tsql-advanced.md)\r\n- **.NET Core 集成**：参见 [references/dotnet-integration.md](references/dotnet-integration.md)\r\n- **性能调优与死锁**：参见 [references/performance.md](references/performance.md)\r\n- **变更数据捕获 (CDC)**：参见 [references/cdc.md](references/cdc.md)\r\n- **系统查询与元数据**：参见 [references/system-queries.md](references/system-queries.md)",
+ "config": {}
+}

@@ -1,0 +1,24 @@
+{
+ "id": "1903",
+ "kind": "mcp",
+ "name": "ens",
+ "fingerprint_md5": "c9a6a1e659b34f054748912cd5df7430",
+ "download_count": 0,
+ "category": "金融与商业",
+ "tags": "",
+ "version": "",
+ "readme": "# ENS MCP 服务器\r\n\r\n以太坊名称服务（ENS）的MCP服务器，使Claude能够与ENS系统交互，以解析名称、检查可用性、检索记录等。\r\n\r\nnpm包：https://www.npmjs.com/package/mcp-server-ens\r\n\r\n## 工具\r\n\r\n### 解析名称\r\n\r\n将ENS名称解析为以太坊地址\r\n\r\n- **所需输入：**\r\n  - `name` （string）：要解析的ENS名称（例如，“vitalik.eth”）\r\n- **退货：** 相应的以太坊地址或错误消息\r\n\r\n### 反向查找\r\n\r\n获取以太坊地址的ENS名称\r\n\r\n- **所需输入：**\r\n  - `address` （string）：要查找的以太坊地址\r\n- **退货：** 对应的ENS名称或未找到名称的指示\r\n\r\n### 获取文本记录\r\n\r\n获取ENS名称的文本记录\r\n\r\n- **所需输入：**\r\n  - `name` （string）：要查询的ENS名称\r\n  - `key` （string）：要查找的记录键（例如，“电子邮件”、“网址”、“头像”、“描述”、“推特”等）\r\n- **退货：** 指定文本记录的值或未找到记录的指示\r\n\r\n### 检查可用性\r\n\r\n检查ENS名称是否可供注册\r\n\r\n- **所需输入：**\r\n  - `name` （string）：要检查的ENS名称\r\n- **退货：** 可用性状态和所有者信息（如果已注册）\r\n\r\n### 获取所有记录\r\n\r\n获取ENS名称的所有可用信息\r\n\r\n- **所需输入：**\r\n  - `name` （string）：要查询的ENS名称\r\n- **退货：** 全面的信息，包括解析器地址、文本记录、地址、内容哈希、所有权和过期详细信息\r\n\r\n### 获取子域\r\n\r\n获取ENS名称的子域\r\n\r\n- **所需输入：**\r\n  - `name` （string）：要查询子域的ENS名称\r\n- **退货：** 包含所有者信息的子域列表\r\n\r\n### 获取名称历史记录\r\n\r\n获取ENS名称的历史记录\r\n\r\n- **所需输入：**\r\n  - `name` （string）：要检查历史记录的ENS名称\r\n- **退货：** 与名称相关的历史事件，包括传输、解析器更改和注册事件\r\n\r\n### 获取注册价格\r\n\r\n获取注册ENS名称的价格\r\n\r\n- **所需输入：**\r\n  - `name` （string）：要检查价格的ENS名称\r\n- **可选输入：**\r\n  - `duration` （数字，默认值：1）：注册期限（年）\r\n- **退货：** 注册价格明细，包括底价、溢价和总价\r\n\r\n## 设置\r\n\r\n### 先决条件\r\n\r\n- Node.js（v16或更高版本）\r\n- npm或纱线\r\n- 访问以太坊RPC提供商（公共或私有）\r\n\r\n### 安装\r\n\r\n1. 克隆存储库或创建新项目：\r\n\r\n```bash\r\ngit clone https://github.com/JustaName-id/ens-mcp-server\r\n```\r\n\r\n2. 安装依赖项：\r\n\r\n```bash\r\nnpm i\r\n```\r\n\r\n3. 配置以太坊提供商：\r\n   创建一个 `.env` 项目根目录中的文件包含以下内容（可选）：\r\n\r\n```\r\nPROVIDER_URL=https://your-provider-url.com,https://your-backup-provider.com\r\n```\r\n\r\n如果没有指定提供程序，服务器将使用这些默认值：\r\n\r\n- https://eth.drpc.org\r\n- https://eth.llamarpc.com\r\n- https://ethereum.publicnode.com\r\n- https://rpc.ankr.com/eth\r\n\r\n## 使用Claude Desktop\r\n\r\n将以下内容添加到您的 `claude_desktop_config.json`:\r\n\r\n### 使用npx\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ens\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"mcp-server-ens\"\r\n      ],\r\n      \"env\": {\r\n        \"PROVIDER_URL\": \"https://your-provider-url.com,https://your-backup-provider.com\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用本地脚本\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ens\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"/path/to/your/server.js\"\r\n      ],\r\n      \"env\": {\r\n        \"PROVIDER_URL\": \"https://your-provider-url.com,https://your-backup-provider.com\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用Claude代码\r\n\r\n```bash\r\nclaude mcp add ens -- npx -y mcp-server-ens\r\n```\r\n\r\n使用自定义提供商：\r\n\r\n```bash\r\nclaude mcp add ens -e PROVIDER_URL=\"https://your-provider-url.com\" -- npx -y mcp-server-ens\r\n```\r\n\r\n验证它是否已连接：\r\n\r\n```bash\r\nclaude mcp list\r\n```\r\n\r\n## 错误处理\r\n\r\n服务器为各种场景实现了强大的错误处理：\r\n\r\n- 连接到以太坊提供商时发生网络错误\r\n- ENS名称或以太坊地址无效\r\n- ENS特定错误\r\n- 一般操作错误\r\n\r\n所有错误都被标准化为用户友好的消息，同时保留了调试的技术细节。\r\n\r\n## 出版\r\n\r\n要发布为npm包：\r\n\r\n```bash\r\nnpm publish --access public\r\n```\r\n\r\n## 故障排除\r\n\r\n如果遇到错误：\r\n\r\n- 验证您的以太坊提供商是否正常工作且可访问\r\n- 检查您正在查询的ENS名称的格式是否正确\r\n- 确保您拥有最新版本的ENS库\r\n- 尝试在PROVIDER_URL环境变量中使用逗号分隔多个提供程序\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "ens": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-server-ens"
+   ],
+   "env": {
+    "PROVIDER_URL": "https://your-provider-url.com,https://your-backup-provider.com"
+   }
+  }
+ }
+}

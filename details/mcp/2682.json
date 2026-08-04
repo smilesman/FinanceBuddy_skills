@@ -1,0 +1,22 @@
+{
+ "id": "2682",
+ "kind": "mcp",
+ "name": "research",
+ "fingerprint_md5": "207e7a22237c5be02f7de0ae64713c42",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# 使用MCP搜索学术论文\r\n\r\n该项目展示了模型上下文协议（MCP）架构，其中服务器提供学术论文搜索功能，客户端在聊天机器人界面中连接到多个MCP服务器。\r\n\r\n## 项目概述\r\n\r\n此应用程序包括：\r\n\r\n1. **MCP服务器(`ResearchServer.py`)**：提供搜索和探索arXiv学术论文的工具、资源和提示。\r\n1. **MCP客户端(`MCPChatbotWithMultipleServers.py`)**：一个聊天机器人界面，可以连接到多个MCP服务器并使用它们的工具、资源和提示。\r\n\r\n## 特性\r\n\r\n### MCP服务器\r\n\r\n- 🔍 **搜索论文**：按主题搜索arXiv的学术论文\r\n- 📋 **提取信息**：获取特定论文的详细信息\r\n- 📂 **浏览资源**：通过基于URI的资源查看论文主题和内容\r\n- 📝 **鼓励**：为研究任务生成结构化提示\r\n\r\n### MCP客户端\r\n\r\n- 🤖 **聊天机器人界面**：MCP服务器的自然语言接口\r\n- 🌐 **多服务器支持**：同时连接到多个MCP服务器\r\n- 🧰 **资源导航**：浏览论文主题 `@` 命令\r\n- ⚡ **迅速执行**：使用以下命令运行预定义提示 `/` 命令\r\n\r\n## 先决条件\r\n\r\n- Python 3.9+\r\n- Node.js（用于MCP检查器）\r\n\r\n## 安装\r\n\r\n1. 克隆此存储库：\r\n\r\n```powershell\r\ngit clone https://github.com/Prajapdh/arxiv_mcp_server.git\r\ncd arxiv_mcp_server\r\n```\r\n\r\n2. 安装依赖项：\r\n\r\n```powershell\r\npip install -r requirements.txt\r\n```\r\n\r\n3. 创建一个 `.env` 使用您的Anthropic API密钥文件：\r\n\r\n```\r\nANTHROPIC_API_KEY=your_api_key_here\r\n```\r\n\r\n4. 在中配置服务器 `server_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"research\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"ResearchServer.py\"],\r\n      \"env\": null\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 运行MCP服务器\r\n\r\n### 使用stdio传输运行（默认）\r\n\r\n```powershell\r\nuv run ResearchServer.py\r\n```\r\n\r\n### 使用MCP检查器进行调试\r\n\r\n```powershell\r\nnpx @modelcontextprotocol/inspector uv run ResearchServer.py\r\n```\r\n\r\n## 运行MCP客户端\r\n\r\n```powershell\r\nuv run MCPChatbotWithMultipleServers.py\r\n```\r\n\r\n## 聊天机器人命令\r\n\r\n- **定期查询**：键入任何文本与助手聊天\r\n- **`@folders`**：列出所有可用的论文主题文件夹\r\n- **`@<topic>`**：浏览特定主题的论文\r\n- **`/prompts`**：列出所有可用提示\r\n- **`/prompt <name> <arg1=value1>`**：使用参数执行特定提示\r\n- **`exit`**：退出聊天机器人\r\n\r\n## 服务器功能\r\n\r\n### 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_papers` |基于主题搜索arXiv论文|\r\n| `extract_info` |获取特定论文的详细信息|\r\n\r\n### 资源\r\n\r\n|资源|描述|\r\n|----------|-------------|\r\n| `papers://folders` |列出所有可用的主题文件夹|\r\n| `papers://{topic}` |获取特定主题论文的详细信息|\r\n\r\n### 鼓励\r\n\r\n|提示|描述|\r\n|--------|-------------|\r\n| `generate_search_prompt` |生成提示，让Claude查找和讨论学术论文|\r\n\r\n## 项目结构\r\n\r\n```\r\nDeepLearning MCP tutorial/\r\n├── MCPChatbotWithMultipleServers.py  # Multi-server MCP client\r\n├── ResearchServer.py                 # ArXiv paper search MCP server\r\n├── server_config.json                # Server connection configuration\r\n├── requirements.txt                  # Project dependencies\r\n├── papers/                           # Directory for storing paper information\r\n│   └── {topic}/                      # Topic-specific directories\r\n│       └── papers_info.json          # Stored paper metadata\r\n└── README.md                         # This file\r\n```\r\n\r\n## 了解MCP\r\n\r\n模型上下文协议（MCP）是将大型语言模型（LLM）连接到外部工具和资源的标准。在本项目中：\r\n\r\n- MCP服务器公开工具（功能）、资源（数据源）和提示（模板）\r\n- MCP客户端连接到这些服务器，并使LLM能够使用它们的功能\r\n- 通信通过stdio（用于本地）或SSE（用于网络）进行\r\n\r\n## 扩展项目\r\n\r\n- 添加更多具有不同功能的MCP服务器\r\n- 实施其他纸张分析工具\r\n- 添加对其他学术数据库的支持\r\n- 为研究数据创建可视化工具\r\n\r\n## 故障排除\r\n\r\n- 如果遇到连接错误，请在启动客户端之前确保服务器正在运行\r\n- 对于SSE传输问题，请检查端口可用性或切换到stdio传输\r\n- 验证在.env文件中正确设置了Anthropic API密钥\r\n\r\n## 许可证\r\n\r\n[MIT许可证](LICENSE)\r\n",
+ "config": {
+  "research": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "ResearchServer.py"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "602",
+ "kind": "mcp",
+ "name": "claude-reader",
+ "fingerprint_md5": "9c5ef1b3338ed09931979d5c4eaa17e5",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# 克劳德读者\r\n\r\n大多数读者将人工智能视为事后的想法——一个附加的聊天机器人。克劳德读者是不同的。它给了克劳德 **直接访问您正在阅读的内容** 通过MCP，你可以突出显示一段话并问“这是什么意思？”，在整个库中搜索一个半熟的想法，或者让克劳德导航到它引用的确切段落。它将阅读转化为对话。\r\n\r\n\r\n## 特性\r\n\r\n- **EPUB和PDF支持** 具有自动章节检测功能-仅适用于您拥有的无DRM书籍\r\n- **Apple Books集成** 在macOS上（可选）\r\n- **全文搜索** 所有书籍（FTS5）\r\n- **简历阅读** 从你上一个职位开始\r\n- **拖放式重新排序** 你的阅读清单\r\n- **实时高亮显示** 当克劳德指出段落时，通过苏格兰证券交易所\r\n\r\n## 快速开始\r\n\r\n需要 [紫外线](https://docs.astral.sh/uv/) Python 3.10+。\r\n\r\n```bash\r\ngit clone https://github.com/JasonBates/claude-reader.git\r\ncd claude-reader\r\nuv run server.py\r\n```\r\n\r\n打开 [本地主机：8123](http://localhost:8123).导入一本书并开始阅读。\r\n\r\n## 与克劳德一起阅读\r\n\r\nClaude Reader包含一个MCP服务器，可让Claude直接访问您的阅读内容。选择一段文字并按 `Cmd+Shift+C` 把它发给克劳德，或者问问你在读什么。\r\n\r\n> “你觉得我刚才强调的这段话怎么样？”\r\n>\r\n> “你能总结一下第三章的主要论点吗？”\r\n>\r\n> “作者首先在哪里介绍了意识的概念？”\r\n\r\n### 设置\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"claude-reader\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"mcp_server.py\"],\r\n      \"cwd\": \"/path/to/claude-reader\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动Claude Desktop，然后用以下命令启动阅读器 `uv run server.py`.\r\n\r\n### MCP工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_current_chapter` |当前在浏览器中打开的章节|\r\n| `get_highlight` |通过Cmd+Shift+C发送的文本|\r\n| `get_books` |列出图书馆的所有书籍|\r\n| `get_book_info` |图书元数据和章节索引|\r\n| `get_chapter` |按书脊索引检索任何章节|\r\n| `search_book` |书中的全文搜索|\r\n| `search_library` |在所有书籍中进行全文搜索|\r\n| `goto` |将阅读器导航到特定位置|\r\n| `highlight_in_chapter` |导航并突出显示特定句子|\r\n| `highlight_sentences` |突出显示当前章节中的句子|\r\n| `clear_highlights` |清除读者的所有亮点|\r\n\r\n## 导入书籍\r\n\r\n你的 **macOS上的Apple图书库** 当您打开web UI时，会自动扫描。可用的EPUB和PDF出现在库中——单击任何标题即可导入。DRM保护的书籍会自动跳过。\r\n\r\n读一本书 [古登堡计划](https://www.gutenberg.org/) 或其他来源，先将其添加到Apple Books，然后从那里导入。\r\n\r\n## 项目结构\r\n\r\n```\r\nclaude-reader/\r\n├── server.py              # Entry point (port 8123)\r\n├── mcp_server.py          # MCP server for Claude Desktop\r\n├── app/\r\n│   ├── config.py          # Configuration & shared state\r\n│   ├── database.py        # SQLite + Turso sync layer\r\n│   ├── search.py          # FTS5 full-text search\r\n│   ├── routes/\r\n│   │   ├── views.py       # HTML pages\r\n│   │   ├── api.py         # JSON API\r\n│   │   ├── actions.py     # Form actions (import, delete)\r\n│   │   └── sse.py         # Server-Sent Events\r\n│   └── services/\r\n│       ├── library.py     # Book loading & caching\r\n│       ├── epub.py        # EPUB parsing\r\n│       ├── pdf.py         # PDF parsing\r\n│       └── apple_books.py # macOS integration\r\n├── static/                # CSS and JavaScript\r\n└── templates/             # Jinja2 HTML templates\r\n```\r\n\r\n## 测试\r\n\r\n```bash\r\nuv run pytest                    # All tests\r\nuv run pytest -m \"not slow\"      # Skip slow tests\r\nuv run pytest tests/test_api.py  # Specific file\r\n```\r\n\r\n## 基于\r\n\r\n分叉自 [业力/读者3](https://github.com/karpathy/reader3) 与Claude集成、PDF支持、全文搜索和模块化架构。\r\n\r\n## 法律声明\r\n\r\nClaude Reader设计用于 **DRM免费书籍** 您有阅读和处理的合法权利。这包括公共领域的作品、开放获取出版物、无DRM购买以及您创建或有权使用的书籍。该软件会自动跳过受DRM保护的文件。\r\n\r\n本项目不促进、鼓励或支持规避数字版权管理或版权保护。\r\n\r\n## 免责声明\r\n\r\n这是一个独立的个人项目 **与Anthropic无关、不受Anthropics认可或赞助**“Claude”指的是Anthropic的人工智能助手，读者可以通过公共MCP协议与之集成。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "claude-reader": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "mcp_server.py"
+   ],
+   "env": {}
+  }
+ }
+}

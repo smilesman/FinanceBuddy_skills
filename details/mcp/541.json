@@ -1,0 +1,24 @@
+{
+ "id": "541",
+ "kind": "mcp",
+ "name": "wotblitz",
+ "fingerprint_md5": "50dfda2d31a5e3cf404e5697d9bc3661",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# WoT闪电战MCP服务器\r\n\r\nMCP服务器，使AI能够访问真实的《坦克世界闪电战》游戏数据。问你的AI任何关于坦克、地图、装备的问题——它直接从游戏文件中获取真实数据。\r\n\r\n## 这是干什么用的？\r\n\r\nMCP（模型上下文协议）允许AI助手连接到外部数据源。该服务器读取《魔兽争霸：闪电战》游戏文件，并将所有数据暴露给人工智能，所以你可以问这样的问题：\r\n\r\n- “狙击的最佳8级介质是什么？”\r\n- “比较IS-7和E100”\r\n- “矿山上的灌木丛在哪里？”\r\n- “我应该在轻型坦克上使用什么船员技能？”\r\n\r\n人工智能会得到实际的游戏数据来回答，而不是猜测。\r\n\r\n## 可用数据\r\n\r\n- **800+个油箱** -属性、模块、炮弹、装甲、迷彩值\r\n- **30+地图** -产卵、灌木/树木/岩石/建筑位置、迷你地图图像\r\n- **设备、消耗品、供应品**\r\n- **船员技能** 实际奖金价值\r\n- **伪装** 隐形奖金\r\n\r\n## 设置\r\n\r\n添加到您的Claude Desktop配置（或任何兼容MCP的客户端）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"wotblitz\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"wotblitz-mcp\"],\r\n      \"env\": {\r\n        \"WOTB_GAME_PATH\": \"C:/Program Files (x86)/Steam/steamapps/common/World of Tanks Blitz/Data\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n点 `WOTB_GAME_PATH` 转到游戏的“数据”文件夹。\r\n\r\n## 工具\r\n\r\n**坦克**\r\n\r\n- `get_tank` -特定坦克的统计数据（模糊搜索有效）\r\n- `search_tanks` -按国家/级别/类别/类型/名称筛选\r\n- `compare_tanks` -并排比较\r\n- `analyze_matchup` -1v1详细细分\r\n\r\n**地图**\r\n\r\n- `list_maps` -所有带有生成点的地图\r\n- `get_map` -地形数据（灌木丛、树木、岩石、建筑物、墙壁、捕捉点）\r\n- `get_map_image` -自上而下的小地图\r\n\r\n**物品**\r\n\r\n- `list_equipment`\r\n- `list_consumables`\r\n- `list_provisions`\r\n\r\n**船员**\r\n\r\n- `list_crew_skills` -按油箱等级过滤\r\n\r\n**迷彩**\r\n\r\n- `list_camouflages` -按国家/类型/名称筛选\r\n- `get_camouflage` -具有额外价值的特定迷彩\r\n- `get_camo_bonus` -每个油箱等级的奖金表\r\n\r\n**其他**\r\n\r\n- `list_nations`\r\n- `analyze_match` -地图上的团队竞争分析\r\n\r\n## 运作原理\r\n\r\n读取DVPL文件（LZ4压缩），解析SC2场景文件以获取地图几何体，解码DDS纹理以获取小地图。全部来自您的本地游戏安装。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "wotblitz": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "wotblitz-mcp"
+   ],
+   "env": {
+    "WOTB_GAME_PATH": "C:/Program Files (x86)/Steam/steamapps/common/World of Tanks Blitz/Data"
+   }
+  }
+ }
+}

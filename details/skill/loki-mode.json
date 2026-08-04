@@ -1,0 +1,12 @@
+{
+ "id": "loki-mode",
+ "kind": "skill",
+ "name": "loki-mode",
+ "fingerprint_md5": "dc729ced8dce46e157ecb8f1129596d2",
+ "download_count": 0,
+ "category": "日志分析",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\nLoki 日志系统的架构设计模式，包括单机、分布式、多租户等部署模式的选型与配置指南。",
+ "config": {}
+}

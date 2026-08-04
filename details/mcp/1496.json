@@ -1,0 +1,22 @@
+{
+ "id": "1496",
+ "kind": "mcp",
+ "name": "image-extractor",
+ "fingerprint_md5": "04c03883b9fc2aec40ecfc505e53973c",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP图像提取器\r\n\r\nMCP服务器，用于提取图像并将其转换为base64以进行LLM分析。\r\n\r\n此MCP服务器为AI助手提供工具，以：\r\n\r\n- 从本地文件中提取图像\r\n- 从URL中提取图像\r\n- 处理base64编码的图像\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@ifmelate/mcp-image-extractor\">\r\n  \r\n</a>\r\n\r\n它在Cursor中的外观：\r\n\r\n\r\n适用案例：\r\n\r\n- 分析剧作家测试结果：截图\r\n\r\n## 安装\r\n\r\n### 推荐：在mcp.json中使用npx（最简单）\r\n\r\n安装此MCP服务器的推荐方法是直接在您的 `.cursor/mcp.json` 文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"image-extractor\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"mcp-image-extractor\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n这种方法：\r\n\r\n- 自动安装最新版本\r\n- 不需要全局安装\r\n- 在不同环境中可靠工作\r\n\r\n### 替代方案：本地路径安装\r\n\r\n如果您更喜欢使用软件包的本地安装，可以克隆存储库并指向构建的文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"image-extractor\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/full/path/to/mcp-image-extractor/dist/index.js\"],\r\n      \"disabled\": false\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\n# Clone and install \r\ngit clone https://github.com/ifmelate/mcp-image-extractor.git\r\ncd mcp-image-extractor\r\nnpm install\r\nnpm run build\r\nnpm link\r\n```\r\n\r\n这将使 `mcp-image-extractor` 全球可用的命令。\r\n\r\n然后在中配置 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"image-extractor\": {\r\n      \"command\": \"mcp-image-extractor\",\r\n      \"disabled\": false\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **Cursor用户的故障排除**：如果您看到“创建客户端失败”错误，请尝试上述本地路径安装方法，或确保您使用的是可执行文件的正确路径。\r\n\r\n## 可用工具\r\n\r\n### extract_image_from_file\r\n\r\n从本地文件中提取图像并将其转换为base64。\r\n\r\n参数：\r\n\r\n- `file_path` （必需）：本地映像文件的路径\r\n\r\n**注：** 所有图像都会自动调整为LLM分析的最佳尺寸（最大512x512），以限制base64输出的大小并优化上下文窗口的使用。\r\n\r\n### extract_image_from_url\r\n\r\n从URL中提取图像并将其转换为base64。\r\n\r\n参数：\r\n\r\n- `url` （必填）：要提取的图像的URL\r\n\r\n**注：** 所有图像都会自动调整为LLM分析的最佳尺寸（最大512x512），以限制base64输出的大小并优化上下文窗口的使用。\r\n\r\n### extract_image_from_base64\r\n\r\n处理base64编码的图像以进行LLM分析。\r\n\r\n参数：\r\n\r\n- `base64` （必填）：Base64编码图像数据\r\n- `mime_type` （可选，默认：“image/png”）：图像的MIME类型\r\n\r\n**注：** 所有图像都会自动调整为LLM分析的最佳尺寸（最大512x512），以限制base64输出的大小并优化上下文窗口的使用。\r\n\r\n## 示例用法\r\n\r\n以下是一个如何使用Claude工具的示例：\r\n\r\n```\r\nPlease extract the image from this local file: images/photo.jpg\r\n```\r\n\r\n克劳德将自动使用 `extract_image_from_file` 加载和分析图像内容的工具。\r\n\r\n```\r\nPlease extract the image from this URL: https://example.com/image.jpg\r\n```\r\n\r\n克劳德将自动使用 `extract_image_from_url` 用于获取和分析图像内容的工具。\r\n\r\n## 码头工人\r\n\r\n使用Docker构建和运行：\r\n\r\n```bash\r\ndocker build -t mcp-image-extractor .\r\ndocker run -p 8000:8000 mcp-image-extractor\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "image-extractor": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-image-extractor"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "hwc-infra",
+ "kind": "skill",
+ "name": "hwc-infra",
+ "fingerprint_md5": "5bd98e7a8869db93a4b00ed28550257b",
+ "download_count": 0,
+ "category": "基础设施",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\n华为云基础设施运维管理，涵盖 ECS 实例、VPC 网络、OBS 存储、安全组等核心服务的配置与运维。",
+ "config": {}
+}

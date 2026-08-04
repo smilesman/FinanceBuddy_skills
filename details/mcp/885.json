@@ -1,0 +1,24 @@
+{
+ "id": "885",
+ "kind": "mcp",
+ "name": "thoughtproof",
+ "fingerprint_md5": "bf42cb9d8acc4e14104a44a59fff04dc",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 深思熟虑的mcp\r\n\r\n\r\nMCP服务器 [思想证明](https://thoughtproof.ai) --用对抗性多模型共识验证AI推理。\r\n\r\n3-4位法学硕士（Grok、Gemini、DeepSeek、Sonnet）独立评估每一项索赔。一位专门的红队模特对他们的判决进行了批评。合成器（Sonnet）对所有东西进行称重并返回 **允许**, **块**，或 **不确定** 有信心得分和反对意见。\r\n\r\n## 快速开始\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"thoughtproof\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"thoughtproof-mcp\"],\r\n      \"env\": {\r\n        \"THOUGHTPROOF_API_KEY\": \"tp_op_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n使用 **克劳德桌面版**, **光标**, **帆板运动**, **克莱恩**，以及任何兼容MCP的客户端。\r\n\r\n## 工具\r\n\r\n### `verify_claim`\r\n\r\n在采取行动之前，核实任何索赔或人工智能生成的推理。\r\n\r\n|参数|类型|默认值|说明|\r\n|-----------|------|---------|-------------|\r\n| `claim` |字符串| *（必填）* |要验证的文本|\r\n| `stakeLevel` | `low` / `medium` / `high` / `critical` | `medium` |风险水平——风险越高，验证越深入|\r\n| `domain` | `financial` / `medical` / `legal` / `code` / `general` | `general` |用于专门验证的域上下文|\r\n| `speed` | `fast` / `standard` / `deep` | `standard` |验证深度|\r\n\r\n### `check_agent_score`\r\n\r\n在ERC-8004注册表中查找代理的综合信任评分。\r\n\r\n|参数|类型|说明|\r\n|-----------|------|-------------|\r\n| `agentId` |string |要查找的代理ID|\r\n| `domain` |string |可选域筛选器|\r\n\r\n## 示例\r\n\r\n在Claude Desktop或Cursor中，只需问：\r\n\r\n> “验证声明：GPT-5在MMLU Pro上达到95%的准确率”\r\n\r\n工具返回：\r\n\r\n```\r\n⚠️ UNCERTAIN (42% confidence)\r\n\r\nClaim: \"GPT-5 achieves 95% accuracy on MMLU-Pro\"\r\n\r\nObjections:\r\n- Insufficient public benchmark data to confirm\r\n- Historical accuracy claims have been overstated\r\n- MMLU-Pro methodology has known ceiling effects\r\n\r\n⚡ 3.2s | Adversarial Multi-Model Consensus\r\n```\r\n\r\n## 运作原理\r\n\r\n```\r\nYour AI Agent\r\n    │\r\n    ▼\r\n┌──────────────────┐\r\n│  thoughtproof-mcp │  ← MCP Server (this package)\r\n└──────────────────┘\r\n    │\r\n    ▼\r\n┌──────────────────┐\r\n│  ThoughtProof API │  ← api.thoughtproof.ai (RV)\r\n└──────────────────┘\r\n    │\r\n    ▼\r\n┌───────────────────────────────────────────┐\r\n│  Stage 1: Independent Evaluation       │\r\n│  3–4 LLMs (Grok, Gemini, DeepSeek,     │\r\n│  Sonnet) each examine the claim         │\r\n│                                         │\r\n│  Stage 2: Red-Team Critique             │\r\n│  1 dedicated model challenges all       │\r\n│  initial verdicts                        │\r\n│                                         │\r\n│  Stage 3: Synthesis                     │\r\n│  Sonnet weighs verdicts + critique      │\r\n│  → final decision                       │\r\n└───────────────────────────────────────────┘\r\n    │\r\n    ▼\r\n  ALLOW / BLOCK / UNCERTAIN\r\n  + confidence % + objections\r\n```\r\n\r\n## 定价\r\n\r\n|速度|型号|每次验证成本|\r\n|-------|--------|-----------------------|\r\n|快速|2|0.008美元|\r\n|标准|4|0.02美元|\r\n|深度|5+|0.08美元|\r\n\r\n支付：API密钥（运营商账户）或x402小额支付（以美元为基础）。\r\n\r\n## API密钥\r\n\r\n在获取操作员API密钥 [深思熟虑](https://thoughtproof.ai).如果没有密钥，验证将自动使用x402微支付。\r\n\r\n## 配置\r\n\r\n|环境变量|默认值|描述|\r\n|---------------------|---------|-------------|\r\n| `THOUGHTPROOF_API_KEY` | *（无）* |操作员API密钥|\r\n| `THOUGHTPROOF_BASE_URL` | `https://api.thoughtproof.ai` |API基本URL|\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/ThoughtProof/thoughtproof-mcp.git\r\ncd thoughtproof-mcp\r\nnpm install\r\nnpm run build\r\nnpm test\r\nnpm run dev          # Run with tsx (hot reload)\r\nnpm run inspect      # Test with MCP Inspector\r\n```\r\n\r\n## 相关\r\n\r\n- [思想证明](https://thoughtproof.ai) --AI代理的决策验证\r\n- [锅cli](https://github.com/ThoughtProof/pot-cli) --用于推理验证的CLI\r\n- [ERC-8004](https://eips.ethereum.org/EIPS/eip-8004) --自治代理注册表\r\n\r\n## 许可证\r\n\r\nMIT-- [思想证明](https://thoughtproof.ai)\r\n",
+ "config": {
+  "thoughtproof": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "thoughtproof-mcp"
+   ],
+   "env": {
+    "THOUGHTPROOF_API_KEY": "tp_op_your_key_here"
+   }
+  }
+ }
+}

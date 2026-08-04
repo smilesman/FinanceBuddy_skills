@@ -1,0 +1,12 @@
+{
+ "id": "port-check",
+ "kind": "skill",
+ "name": "port-check",
+ "fingerprint_md5": "a034353e7ce0ee4130ee1bf93aafe78d",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "# port-检查 Plugin\r\n检查 if a remote TCP port is open.\r\n## 用法\r\n- `port check tcp google.com 80` → OPEN\r\n- `port check tcp localhost 8080` → CLOSED",
+ "config": {}
+}

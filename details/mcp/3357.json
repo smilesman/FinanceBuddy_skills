@@ -1,0 +1,21 @@
+{
+ "id": "3357",
+ "kind": "mcp",
+ "name": "bilibili-search",
+ "fingerprint_md5": "f3c01eb09f594628aa850f5cc81af6d0",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Bilibili MCP\r\n\r\n\r\n## 简介\r\n这是一个基于 Model Context Protocol (MCP) 的 B站视频搜索服务器。该服务器提供了简单的 API 接口，允许用户搜索 B站 的视频内容。提供LangChain调用示例、测试脚本。\r\n\r\n## 鸣谢\r\n- LangChain 示例代码参考自 [mcp-langchain-ts-client](https://github.com/isaacwasserman/mcp-langchain-ts-client)\r\n\r\n## 功能特点\r\n- 搜索B站视频内容简介列表\r\n- 获取B站热门内容(综合热门、入站必刷、排行榜、全站音乐榜)\r\n- 获取B站视频详情信息（支持BV号或AV号）\r\n- 获取UP主信息（基本信息、粉丝数、关注数等）\r\n- 番剧时间表（时间范围内的番剧播出信息）\r\n\r\n## 系统要求\r\n- Node.js >= 20.12.0\r\n## AI工具使用配置\r\n以Trae为例\r\n\r\n\r\n## npm package\r\n感谢[HQHC](https://github.com/HQHC)发布的npm包\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bilibili-search\": {\r\n    \"command\": \"npx\",\r\n    \"args\": [\"bilibili-mcp-js\"],\r\n    \"description\": \"B站视频搜索 MCP 服务，可以在AI应用中搜索B站视频内容。\"\r\n    }\r\n  }\r\n}\r\n```\r\n## 本地编译使用\r\n>需要编译之后才可以使用.\r\n先npm run build然后这里改成你build之后的dist文件夹路径，\"args\": [\"d:\\\\your-path\\\\bilibili-mcp-js\\\\dist\\\\index.js\"]\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bilibili-search\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"d:\\\\your-path\\\\bilibili-mcp-js\\\\dist\\\\index.js\"],\r\n      \"description\": \"B站视频搜索 MCP 服务，可以在AI应用中搜索B站视频内容。\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 快速开始\r\n> 如果要运行langchain例子，请先配置llm模型，修改.\\example.ts文件。\r\n```javascript\r\nconst llm = new ChatOpenAI({\r\n  modelName: \"gpt-4o-mini\",\r\n  temperature: 0,\r\n  openAIApiKey: \"your_api_key\", // 替换成你模型的密钥\r\n  configuration: {\r\n    baseURL: \"https://www.api.com/v1\", // 替换成你模型的API地址\r\n  },\r\n});\r\n```\r\n\r\nbun:\r\n\r\n```bash\r\n# 安装依赖\r\nbun i\r\n# stdio 模式\r\nbun index.ts\r\n# streamable http 模式\r\nTRANSPORT=remote bun index.ts\r\nTRANSPORT=remote PORT=8888 bun index.ts\r\n# 测试脚本\r\nbun test.js\r\n# MCP Inspector\r\nbun run inspector\r\n# 运行langchain例子\r\nbun build:bun\r\nbun example.ts\r\n```\r\n\r\nnpm:\r\n\r\n```bash\r\n# 安装依赖\r\nnpm i\r\n# stdio 模式\r\nnpm run start\r\n# streamable http 模式\r\nTRANSPORT=remote npm run start\r\nTRANSPORT=remote PORT=8888 npm run start\r\n# 测试脚本\r\nnpm run test\r\n# MCP Inspector\r\nnpm run inspector\r\n# 运行langchain例子\r\nnpm run build\r\nnode dist/example.js\r\n```\r\n\r\n## 截图\r\n\r\n\r\n## Hosted deployment\r\n\r\nA hosted deployment is available on [Fronteir AI](https://fronteir.ai/mcp/34892002-bilibili-mcp-js).\r\n",
+ "config": {
+  "bilibili-search": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "bilibili-mcp-js"
+   ],
+   "env": {}
+  }
+ }
+}

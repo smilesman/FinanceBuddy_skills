@@ -1,0 +1,21 @@
+{
+ "id": "2048",
+ "kind": "mcp",
+ "name": "smoothsend",
+ "fingerprint_md5": "6d57a56d66606fe050cb7d945c2f4f67",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# @平滑发送/mcp\r\n\r\n\r\n用于平滑发送的MCP（模型上下文协议）服务器。在Cursor、Claude Desktop、Windsurf和其他MCP兼容工具中启用AI助手，以帮助开发人员在Aptos上集成无气体事务。\r\n\r\n## 它做什么\r\n\r\n配置后，编辑器中的AI助手可以：\r\n\r\n- 回答有关SmoothSend SDK和API的问题\r\n- 为任何用例生成集成代码\r\n- 根据您的交易量估算每月的信贷成本\r\n- 查找Aptos主网代币地址（USDC、USDT、WBTC、USDe、USD1）\r\n- 调出任何部分的完整文档（安装、快速入门、示例、计费）\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g @smoothsend/mcp\r\n```\r\n\r\n或者直接使用npx运行（无需安装）：\r\n\r\n```bash\r\nnpx @smoothsend/mcp\r\n```\r\n\r\n## 配置\r\n\r\n### 光标\r\n\r\n增添 `~/.cursor/mcp.json` （或你的项目 `.cursor/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"smoothsend\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@smoothsend/mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德桌面版\r\n\r\n增添 `~/Library/Application Support/Claude/claude_desktop_config.json` （macOS）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"smoothsend\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@smoothsend/mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 帆板运动\r\n\r\n增添 `~/.codeium/windsurf/mcp_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"smoothsend\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@smoothsend/mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_docs` |获取某个部分的文档： `overview`, `installation`, `quickstart`, `api-reference`, `examples`, `billing` |\r\n| `estimate_credits` |估计每月给予的学分 `gas_used`, `gas_unit_price`, `apt_price_usd`，以及 `volume` |\r\n| `get_token_address` |获取Aptos主网资产地址 `USDC`, `USDT`, `WBTC`, `USDe`, `USD1` |\r\n| `get_code_snippet` |获取代码片段： `wallet-adapter-setup`, `script-composer-usdc`, `fee-preview`, `error-handling`, `testnet-setup` |\r\n\r\n## 资源\r\n\r\n资源是AI助手可以直接阅读的文档页面：\r\n\r\n|URI|内容|\r\n|-----|---------|\r\n| `smoothsend://docs/overview` |概述、快速入门、定价|\r\n| `smoothsend://docs/installation` |安装指南|\r\n| `smoothsend://docs/quickstart` |逐步快速入门|\r\n| `smoothsend://docs/api-reference` |API完整参考|\r\n| `smoothsend://docs/examples` |真实世界的代码示例|\r\n| `smoothsend://docs/billing` |定价和信用详情|\r\n\r\n## 示例提示\r\n\r\n配置后，尝试询问您的AI助手：\r\n\r\n- *“如何将SmoothSend添加到我的Next.js应用程序中？”*\r\n- *“演示如何在用户不需要APT的情况下发送USDC”*\r\n- *“我的dApp每月进行约5000次合约通话，每次200次加油。SmoothSend的费用是多少？”*\r\n- *Aptos主网上的USDC资产地址是什么*\r\n- *“当点数用完时，我如何处理SmoothSend错误？”*\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build TypeScript\r\nnpm run build\r\n\r\n# Type check\r\nnpm run typecheck\r\n\r\n# Run locally\r\nnode dist/index.js\r\n```\r\n\r\n## 链接\r\n\r\n- 仪表板：https://dashboard.smoothsend.xyz\r\n- 文件：https://docs.smoothsend.xyz\r\n- npm：https://www.npmjs.com/package/@平滑发送/sdk\r\n",
+ "config": {
+  "smoothsend": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@smoothsend/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

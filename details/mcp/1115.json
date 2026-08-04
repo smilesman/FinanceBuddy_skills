@@ -1,0 +1,26 @@
+{
+ "id": "1115",
+ "kind": "mcp",
+ "name": "memory-2",
+ "fingerprint_md5": "9a647fac12a414b6bafde4c38a848303",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Neo4j内存服务器\r\n\r\n一个模型上下文协议（MCP）服务器，使用具有统一架构的Neo4j图形数据库为AI助手提供持久、智能的内存功能\r\n\r\n## 它做什么\r\n\r\n此服务器使AI助手能够：\r\n\r\n- **记住** -将记忆存储为具有观察和元数据的互连知识节点\r\n- **搜索** -使用语义向量搜索、精确匹配和图遍历查找相关记忆\r\n- **连接** -通过批处理操作和交叉引用在内存之间创建有意义的关系\r\n- **组织** -使用不同的数据库按项目分离内存\r\n- **进化** -使用时间元数据和关系网络跟踪知识如何随时间发展\r\n\r\n## 特性\r\n\r\n### 核心能力\r\n\r\n- 🧠 **图形存储器** -记忆是节点，关系是边缘，观察是内容\r\n- 🔍 **统一搜索** -语义向量、精确匹配、通配符和图遍历在一个工具中\r\n- 🔗 **智能关系** -具有强度、源跟踪和时间元数据的类型化连接\r\n- 📊 **多数据库** -具有即时切换功能的孤立项目上下文\r\n\r\n### 高级操作\r\n\r\n- ⚡ **批量操作** -使用localId在单个请求中创建具有关系的多个内存\r\n- 🎯 **上下文控制** -响应详细级别：最小（列表）、完整（完整数据）、仅关系\r\n- 📅 **时间查询** -按任何时间字段上的相对日期（“7d”、“30d”）或绝对日期过滤\r\n- 🌐 **图的遍历** -使用深度控制在任何方向上导航网络\r\n\r\n### 建筑\r\n\r\n- 🚀 **MCP本地** -与Claude Desktop和MCP客户端无缝集成\r\n- 💾 **永久存储** -带有GDS插件的Neo4j图形数据库，用于矢量运算\r\n- ⚠️ **零回退** -显式错误可实现可靠调试，无无声故障\r\n\r\n## 技术亮点\r\n\r\n- 基于Neo4j构建，用于可扩展的图形操作\r\n- 使用句子变换器的向量嵌入（384维）\r\n- 采用领域驱动设计的干净架构\r\n- 支持GDS插件进行高级矢量操作（必要）\r\n- **统一架构** -4个全面的工具，用于完成内存操作\r\n\r\n## 快速开始\r\n\r\n```bash\r\nnpm install @sylweriusz/mcp-neo4j-memory-server\r\n```\r\n\r\n添加到Claude桌面配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"memory\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@sylweriusz/mcp-neo4j-memory-server\"],\r\n      \"env\": {\r\n        \"NEO4J_URI\": \"bolt://localhost:7687\",\r\n        \"NEO4J_USERNAME\": \"neo4j\", \r\n        \"NEO4J_PASSWORD\": \"your-password\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## Neo4j设置\r\n\r\n### 工作设置：DozerDB与GDS插件\r\n\r\n对于数据库，使用DozerDB和图形数据科学插件，GDS不仅是推荐的，而且是必要的：\r\n\r\n有关当前的安装说明，请参阅：https://dozerdb.org/\r\n\r\n示例设置：\r\n\r\n```bash\r\n# Run DozerDB container with latest version\r\ndocker run \\\r\n    -p 7474:7474 -p 7687:7687 \\\r\n    -v $HOME/neo4j/data:/data \\\r\n    -v $HOME/neo4j/logs:/logs \\\r\n    -v $HOME/neo4j/plugins:/plugins \\\r\n    --env NEO4J_AUTH=neo4j/password \\\r\n    --env NEO4J_dbms_security_procedures_unrestricted='gds.*' \\\r\n    graphstack/dozerdb:latest\r\n\r\n# Install GDS plugin - see dozerdb.org for current instructions\r\n\r\n# Verify GDS plugin works\r\n# In Neo4j Browser (http://localhost:7474):\r\n# RETURN gds.similarity.cosine([1,2,3], [2,3,4]) as similarity\r\n```\r\n\r\n## 统一工具\r\n\r\n服务器提供 **4个统一的MCP工具** 与Claude自动集成：\r\n\r\n- `memory_store` -在一次操作中通过观察和直接关系创建记忆\r\n- `memory_find` -具有语义搜索、直接ID查找、日期过滤和图遍历的统一搜索/检索\r\n- `memory_modify` -全面的修改操作（更新、删除、观察、关系）\r\n- `database_switch` -为隔离环境切换数据库上下文\r\n\r\n## 存储结构\r\n\r\n```json\r\n{\r\n  \"id\": \"dZ$abc123\",\r\n  \"name\": \"Project Alpha\", \r\n  \"memoryType\": \"project\",\r\n  \"metadata\": {\"status\": \"active\", \"priority\": \"high\"},\r\n  \"observations\": [\r\n    {\"id\": \"dZ$obs456\", \"content\": \"Started development\", \"createdAt\": \"2025-06-08T10:00:00Z\"}\r\n  ],\r\n  \"related\": {\r\n    \"ancestors\": [{\"id\": \"dZ$def789\", \"name\": \"Initiative\", \"relation\": \"PART_OF\", \"distance\": 1}],\r\n    \"descendants\": [{\"id\": \"dZ$ghi012\", \"name\": \"Task\", \"relation\": \"INCLUDES\", \"distance\": 1}]\r\n  }\r\n}\r\n```\r\n\r\n## 系统提示\r\n\r\n### 最简单的使用记忆工具，以下通常就足够了。\r\n\r\n```\r\n## Memory Tool Usage\r\n- Store all memory for this project in database: 'project-database-name'\r\n- Use MCP memory tools exclusively for storing project-related information\r\n- Begin each session by:\r\n  1. Switching to this project's database\r\n  2. Searching memory for data relevant to the user's prompt\r\n\r\n```\r\n\r\n## 故障排除\r\n\r\n**矢量搜索问题：**\r\n\r\n- 检查日志 `[VectorSearch] GDS Plugin detected`\r\n- GDS插件需要DozerDB设置（请参阅Neo4j设置部分）\r\n\r\n**连接问题：**\r\n\r\n- 验证Neo4j是否正在运行： `docker ps`\r\n- 测试连接： `curl http://localhost:7474`\r\n- 检查环境变量中的凭据\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "memory": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@sylweriusz/mcp-neo4j-memory-server"
+   ],
+   "env": {
+    "NEO4J_URI": "bolt://localhost:7687",
+    "NEO4J_USERNAME": "neo4j",
+    "NEO4J_PASSWORD": "your-password"
+   }
+  }
+ }
+}

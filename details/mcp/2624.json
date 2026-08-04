@@ -1,0 +1,23 @@
+{
+ "id": "2624",
+ "kind": "mcp",
+ "name": "moodtrip",
+ "fingerprint_md5": "ee3eae098a7ca62eefe033ad355af864",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# MoodTrip酒店搜索技巧\r\n\r\nClaude AI通过搜索、比较、评估和预订酒店的技能 [MoodTrip.ai](https://moodtrip.ai) MCP服务器。\r\n\r\n## 它的作用\r\n\r\n此技能与 `https://api.moodtrip.ai/api/mcp-http` 并赋予克劳德（或任何MCP兼容代理）以下能力：\r\n\r\n- **搜索酒店** 按目的地、日期、预算和自然语言（“屋顶酒吧的浪漫之旅”）\r\n- **比较** 酒店与评级、价格和设施并排\r\n- **查看评论** 基于人工智能的情绪分析\r\n- **探索房间** 通过描述或照片上传\r\n- **跟踪定价趋势** 适用于城市和特定酒店\r\n- **移交预订** 通过moodtrip.ai的直接预订链接\r\n\r\n## 涵盖的工具\r\n\r\n|工具|目的|\r\n|------|---------|\r\n| `searchHotelsWithRates` |使用实时定价进行搜索|\r\n| `searchHotelsSemanticQuery` |人工智能驱动的自然语言搜索|\r\n| `quickHotelSearch` |简化单人间搜索|\r\n| `findHotels` |浏览不含价格的酒店|\r\n| `getHotelDetails` |完整的酒店信息+可选价格|\r\n| `getHotelReviews` |客人评价+情绪分析|\r\n| `askHotelQuestion` |关于特定酒店的人工智能问答|\r\n| `searchRooms` |视觉/文本室搜索|\r\n| `summarizeResults` |搜索结果的AI摘要|\r\n| `getHotelPriceIndex` |酒店价格趋势|\r\n| `getCityPriceIndex` |市级价格走势|\r\n| `relaxConstraints` |扩大失败的搜索范围|\r\n\r\n加上3个可选的代理生成器工具(`build_booking_link`, `search`, `fetch`).\r\n\r\n## 安装\r\n\r\n### 选项1：ClawHub\r\n\r\n直接从以下来源导入 [技能商店](https://clawhub.com) --搜索 `moodtrip-hotel-search`.\r\n\r\n### 方案2：克劳德项目\r\n\r\n复制以下内容 `SKILL.md` 在Claude项目的自定义说明中。\r\n\r\n### 选项3:.skill文件\r\n\r\n下载 `moodtrip-hotel-search.skill` 从 [发布](../../releases) 并将其导入克劳德。\r\n\r\n## MCP 服务器\r\n\r\n- **端点**: `https://api.moodtrip.ai/api/mcp-http`\r\n- **协议**：MCP流式HTTP（JSON-RPC 2.0）\r\n- **认证**：公开用于搜索（不需要API密钥）。OAuth 2.1可选用于会话跟踪。\r\n- **预订**：基于链接的切换--用户在moodtrip.ai上完成预订\r\n\r\n## 快速开始\r\n\r\n无需设置。MCP服务器处于活动状态，可以自由调用进行搜索操作。\r\n\r\n若要从Claude Desktop连接，请添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"moodtrip\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-remote\", \"https://api.moodtrip.ai/api/mcp-http\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 交互示例\r\n\r\n**按价格搜索：**\r\n\r\n> “给我找5月1日至4日巴黎的酒店，价格低于200美元/晚”\r\n\r\n**语义搜索：**\r\n\r\n> “特拉维夫带屋顶酒吧的浪漫精品酒店”\r\n\r\n**酒店深潜：**\r\n\r\n> “告诉我更多关于第二家酒店的信息——评论、照片，早餐包括在内吗？”\r\n\r\n**价格情报：**\r\n\r\n> “什么时候去伦敦最便宜？”\r\n\r\n## 数据源\r\n\r\n酒店库存、定价和评论由提供 [LiteAPI](https://www.liteapi.travel/).\r\n\r\n## 许可证\r\n\r\nMIT-0（无需署名）\r\n\r\n## 链接\r\n\r\n- [MoodTrip.ai](https://moodtrip.ai)\r\n- [MCP协议](https://modelcontextprotocol.io)\r\n- [技能商店](https://clawhub.com)\r\n",
+ "config": {
+  "moodtrip": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-remote",
+    "https://api.moodtrip.ai/api/mcp-http"
+   ],
+   "env": {}
+  }
+ }
+}

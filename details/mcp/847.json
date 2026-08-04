@@ -1,0 +1,24 @@
+{
+ "id": "847",
+ "kind": "mcp",
+ "name": "scoopd",
+ "fingerprint_md5": "46cb2a0e6908188d16630318ee067ed1",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Scoopd MCP服务器\r\n\r\n由人工智能驱动的Instagram竞争对手情报——直接在克劳德身上。\r\n\r\n分析任何公共Instagram帐户：内容策略、挂钩、参与差距、品牌声音、发布模式。无需离开人工智能聊天，即可获得完整的9节战略报告。\r\n\r\n## 快速开始\r\n\r\n### 选项1：第ai条（网络）\r\n\r\n1. 注册地址： [独家专业](https://scoopd.pro) （免费，无信用卡）\r\n1. 首选 **API密钥** → 创建密钥\r\n1. 在第ai条中： **设置→ 连接器→ 添加自定义连接器**\r\n   - 姓名： `Scoopd`\r\n   - 网址： `https://mcp.scoopd.pro/mcp`\r\n1. 使用您的API密钥授权\r\n1. 开始分析： *“分析@cristiano的Instagram策略”*\r\n\r\n### 选项2：克劳德代码（CLI）\r\n\r\n克劳德代码使用 `.mcp.json` 项目级或 `~/.claude.json` 用于全局MCP配置。\r\n\r\n**项目级别** --创建 `.mcp.json` 在项目根目录中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"scoopd\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"scoopd-mcp-server\"],\r\n      \"env\": {\r\n        \"SCOOPD_API_KEY\": \"YOUR_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**或全球** --运行终端：\r\n\r\n```bash\r\nclaude mcp add scoopd -- npx -y scoopd-mcp-server\r\n```\r\n\r\n然后设置API密钥：\r\n\r\n```bash\r\nexport SCOOPD_API_KEY=\"sk_live_your_key_here\"\r\n```\r\n\r\n**替代方案：远程URL模式** （如果您的Claude Code版本支持）：\r\n\r\n添加 `~/.claude/settings.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"scoopd\": {\r\n      \"type\": \"url\",\r\n      \"url\": \"https://mcp.scoopd.pro/mcp\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer YOUR_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **注：** Claude Code主要支持基于stdio的MCP服务器（本地进程）。如果 `type: \"url\"` 方法在您的版本中不起作用，请使用 `npx` 上面的方法通过stdio在本地运行服务器。\r\n\r\n### 选项3:Claude桌面应用程序\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"scoopd\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"scoopd-mcp-server\"],\r\n      \"env\": {\r\n        \"SCOOPD_API_KEY\": \"YOUR_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n保存后重新启动Claude Desktop。\r\n\r\n## 可用工具\r\n\r\n|工具|描述|积分|\r\n|------|-------------|---------|\r\n| `scoopd_analyze_account` |完整的9节竞争对手分析|1|\r\n| `scoopd_get_report` |按ID |0检索已保存的报告|\r\n| `scoopd_list_reports` |列出您的所有报告|0|\r\n| `scoopd_my_usage` |检查计划和剩余分析|0|\r\n\r\n## 报告章节\r\n\r\n1. **帐户快照** --关注者、参与率、利基\r\n1. **DNA含量** --主题、格式、内容支柱\r\n1. **吊钩分析** --打开带有有效性评级的钩子\r\n1. **差距分析** --未开发的内容机会\r\n1. **情绪** --观众基调与社区力量\r\n1. **话题标签** --热门标签和推荐\r\n1. **顶尖人才** --具有参与度分析的最佳卷轴\r\n1. **品牌声音** --个性、语调、标志性短语\r\n1. **发布模式** --最佳日子，一致性得分\r\n\r\n## 定价\r\n\r\n|计划|价格|分析/月|功能|\r\n|------|-------|-------------|----------|\r\n|免费|0美元|3 |完整的9节报告|\r\n|创建者| 19美元/月| 25 |+PDF/CSV导出|\r\n|专业版| 49美元/月|100 |+比较，观察名单|\r\n|代理| 149美元/月|无限制|+白标，追踪|\r\n\r\n## 示例提示\r\n\r\n- *“分析@garyvee的内容策略”*\r\n- *“@hubspot在他们的卷轴上使用了什么钩子？”*\r\n- *“比较@nike和@adidas的Instagram策略”*\r\n- *“显示本月剩余的分析”*\r\n- *“调出我上次的报告”*\r\n\r\n## 建筑\r\n\r\n```\r\nClaude (any client)\r\n    ↓ MCP protocol\r\nScoopd MCP Server (stdio or HTTP)\r\n    ↓ HTTPS API calls\r\nscoopd.pro API (/api/analyze, /api/jobs, etc.)\r\n    ↓\r\nWorker (yt-dlp + GPT-4o analysis)\r\n    ↓\r\n9-section report → returned to Claude\r\n```\r\n\r\n**远程模式** (`TRANSPORT=http`)：在以下位置作为HTTP服务器运行 `https://mcp.scoopd.pro/mcp`。由Claude.ai连接器使用。\r\n\r\n**本地模式** (`TRANSPORT=stdio`，默认）：作为子进程运行。Claude Code和Claude Desktop通过以下方式使用 `npx`.\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/scoopd/scoopd-mcp-server\r\ncd scoopd-mcp-server\r\nnpm install\r\nnpm run dev    # Watch mode with hot reload\r\nnpm run build  # Production build\r\n```\r\n\r\n### 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `SCOOPD_API_KEY` |是（stdio）|您的Scoopd API密钥|\r\n| `TRANSPORT` |没有| `stdio` （默认）或 `http` |\r\n| `PORT` |无|HTTP端口（默认值：3100）|\r\n\r\n### MCP检验员测试\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector node dist/index.js\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "scoopd": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "scoopd-mcp-server"
+   ],
+   "env": {
+    "SCOOPD_API_KEY": "YOUR_API_KEY"
+   }
+  }
+ }
+}

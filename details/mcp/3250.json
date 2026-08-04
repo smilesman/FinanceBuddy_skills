@@ -1,0 +1,26 @@
+{
+ "id": "3250",
+ "kind": "mcp",
+ "name": "uk-schools",
+ "fingerprint_md5": "1b1b8dbfb6d35ed6cdac0595c955df5b",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 英国学校MCP服务器\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io) 该服务器为人工智能助手提供从官方政府来源访问英国学校综合数据的权限。\r\n\r\n## 特性\r\n\r\n- 按名称、邮政编码或地方当局搜索学校（GIAS批量数据）\r\n- 获取详细的学校信息（类型、阶段、年龄范围、容量、联系方式）\r\n- 使用距离排序（Postcodes.io地理编码）查找邮政编码附近的学校\r\n- 并排比较学校\r\n- 浏览和查询23+DfE教育数据集（缺席、排除、表现、SEND、录取、劳动力、资金、目的地等）\r\n- 一步式数据集发现：为任何教育主题找到合适的数据集\r\n- 从管理信息数据中获取Ofsted的检查等级和判断\r\n- Ofsted检查报告的链接\r\n\r\n## 数据源\r\n\r\n|来源|类型|身份验证|它提供了什么|\r\n|--------|------|------|-----------------|\r\n| [贾斯](https://get-information-schools.service.gov.uk/) |批量CSV（每日）|无|所有约6.5万所学校：名称、URN、类型、阶段、地址、容量、学生、班主任、特殊教育需求等。 |\r\n| [邮政编码.io](https://postcodes.io/) |REST JSON API |无|用于集水区搜索的英国邮政编码地理编码（lat/lng）|\r\n| [探索教育统计](https://explore-education-statistics.service.gov.uk/) |REST JSON API |无| DfE发布：性能表、缺席、排除、应用程序和优惠、员工|\r\n| [教育标准局](https://reports.ofsted.gov.uk/) |月度Excel+报告链接|无|检查等级、判断区域、日期和报告URL|\r\n\r\n## 安装\r\n\r\n### 使用紫外线（推荐）\r\n\r\n```bash\r\ngit clone https://github.com/yourusername/uk-schools-mcp.git\r\ncd uk-schools-mcp\r\nuv sync --all-extras\r\nuv run python -m uk_schools_mcp.server\r\n```\r\n\r\n### 使用pip\r\n\r\n```bash\r\npip install mcp httpx polars pydantic openpyxl\r\n```\r\n\r\n## 使用Claude Desktop\r\n\r\n添加到您的Claude Desktop配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"uk-schools\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/uk-schools-mcp\",\r\n        \"run\",\r\n        \"python\",\r\n        \"-m\",\r\n        \"uk_schools_mcp.server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### `search_schools`\r\n\r\n使用GIAS数据按名称、邮政编码或地方当局搜索英国学校。\r\n\r\n**例子：** “查找米尔顿凯恩斯的小学”\r\n\r\n### `get_school_details`\r\n\r\n通过URN获取特定学校的全面详细信息，包括Ofsted报告和GIAS页面的链接。\r\n\r\n**例子：** “显示URN 109825的详细信息”\r\n\r\n### `find_schools_near_postcode`\r\n\r\n查找英国邮政编码半径范围内的学校，按距离排序。使用Postcodes.io对学校位置进行地理编码和GIAS数据。\r\n\r\n**例子：** “查找MK9 3BZ 2公里范围内的所有小学”\r\n\r\n### `compare_schools`\r\n\r\nURN并排比较多所学校。\r\n\r\n**例子：** 将学校与URNs 109825、110234和110567进行比较\r\n\r\n### `search_education_statistics`\r\n\r\n在DfE探索教育统计目录中搜索有关学校表现、缺勤、排除、申请和录取、劳动力等的出版物。\r\n\r\n**例子：** “搜索有关缺课的出版物”\r\n\r\n### `get_publication_datasets`\r\n\r\n列出DfE发布的可用数据集（之后使用 `search_education_statistics`).\r\n\r\n### `get_dataset_metadata`\r\n\r\n获取DfE数据集的可用筛选器、指标、地理级别和时间段。在查询之前，发现可用的数据和要使用的ID是必不可少的。\r\n\r\n**例子：** “数据集ds-123有哪些过滤器和指标？”\r\n\r\n### `query_dataset`\r\n\r\n使用特定指标、过滤器、时间段和地理级别查询DfE Explore Education Statistics数据集。允许访问学校层面的缺勤、排除、表现、入学、劳动力等数据。\r\n\r\n**例子：** “查询2023学年国家级缺勤数据集”\r\n\r\n### `get_ofsted_ratings`\r\n\r\n通过URN获取Ofsted对学校的检查评级和成绩。返回每个检查领域（教育质量、行为和态度、个人发展、领导力和管理）的总体有效性等级和成绩，以及检查日期、类型和以前的成绩。\r\n\r\n**例子：** “获取URN 109825的Ofsted评级”\r\n\r\n### `list_ees_topics`\r\n\r\n列出英国教育部探索教育统计API中所有23个可用的教育数据主题，按类别组织（绩效、福利、人口统计、招生、劳动力、金融、目的地、早期）。\r\n\r\n### `discover_dataset`\r\n\r\n自动查找给定教育主题的出版物和数据集。用一次呼叫取代手动4步工作流。返回可用于的数据集ID `get_dataset_metadata` 和 `query_dataset`.\r\n\r\n**例子：** “查找主题‘缺席’的数据集”或“查找SEND数据”\r\n\r\n**可用主题：** `absence`, `exclusions`, `ks2_performance`, `gcse_performance`, `a_level_performance`, `applications_offers`, `workforce`, `sen`, `school_pupils_characteristics`, `free_school_meals`, `school_capacity`, `admission_appeals`, `destinations`, `children_looked_after`, `children_in_need`, `mat_performance`, `school_funding`, `la_school_expenditure`, `further_education`, `early_years`, `early_years_foundation`, `neet`, `elective_home_education`\r\n\r\n## 发展\r\n\r\n### 设置\r\n\r\n```bash\r\ngit clone https://github.com/yourusername/uk-schools-mcp.git\r\ncd uk-schools-mcp\r\nuv sync --all-extras\r\nuv run pytest\r\nuv run ruff check src/ tests/\r\n```\r\n\r\n### 项目结构\r\n\r\n```\r\nuk-schools-mcp/\r\n├── src/\r\n│   └── uk_schools_mcp/\r\n│       ├── server.py           # MCP server + tool handlers\r\n│       └── clients/\r\n│           ├── gias.py         # GIAS bulk CSV client\r\n│           ├── postcodes.py    # Postcodes.io geocoding client\r\n│           ├── ees.py          # Explore Education Statistics API client\r\n│           └── ofsted.py       # Ofsted report URL helper\r\n├── tests/\r\n│   └── test_server.py\r\n├── NEXT_STEPS.md               # Roadmap for additional data sources\r\n└── pyproject.toml\r\n```\r\n\r\n### GIAS数据如何工作\r\n\r\n首次使用时，服务器从以下位置下载每日GIAS批量CSV（约65k所学校，约30MB）：\r\n\r\n```\r\nhttps://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata{YYYYMMDD}.csv\r\n```\r\n\r\nCSV在本地缓存在 `~/.cache/uk-schools-mcp/` 每天刷新。所有搜索和查找操作都使用极点对缓存数据进行快速过滤。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！看 [NEXT_STEPS.md](NEXT_STEPS.md) 对于计划中的增强功能。\r\n\r\n## 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件。\r\n\r\n## 致谢\r\n\r\n基于以下数据构建：\r\n\r\n- 教育部（DfE）-GIAS和探索教育统计\r\n- 教育标准办公室（Ofsted）-检查报告\r\n- [邮政编码.io](https://postcodes.io/) -开源英国邮政编码地理编码\r\n",
+ "config": {
+  "uk-schools": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/uk-schools-mcp",
+    "run",
+    "python",
+    "-m",
+    "uk_schools_mcp.server"
+   ],
+   "env": {}
+  }
+ }
+}

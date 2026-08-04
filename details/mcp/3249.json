@@ -1,0 +1,22 @@
+{
+ "id": "3249",
+ "kind": "mcp",
+ "name": "uk-ons",
+ "fingerprint_md5": "9ce486d0a6675c677f48b0d2c9c11bd7",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 英国ONS MCP服务器\r\n\r\nA. **Model 上下文 协议（MCP）服务器** for accessing the UK Office for National Statistics (ONS) Beta API.\\\r\n直接从与MCP兼容的助理那里获取英国政府的官方统计数据——人口统计、经济和社会数据，无需API密钥。\r\n\r\n______________________________________________________________________\r\n\r\n## 特性\r\n\r\n- **直接ONS访问** –无身份验证，无令牌\r\n- **浏览和搜索** 每个已发布的数据集\r\n- **灵活的查询** –按地理、时间等过滤观察结果。\r\n- **流行的数据集快捷方式** CPIH、地区GDP、福祉等\r\n- **时间序列和区域比较** 内置\r\n- **100%MCP-SDK TypeScript** 具有强大的错误处理能力\r\n\r\n______________________________________________________________________\r\n\r\n## 安装\r\n\r\n```bash\r\n# Global install\r\nnpm install -g uk_ons_mcp_server\r\n\r\n# Or one‑off run\r\nnpx uk_ons_mcp_server\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 用法（克劳德桌面）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"uk-ons\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"uk_ons_mcp_server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 可用工具\r\n\r\n|工具|目的|\r\n|------|---------|\r\n| `list_datasets` |所有数据集的分页列表|\r\n| `get_dataset` |单个数据集的元数据|\r\n| `search_datasets` |按关键字搜索|\r\n| `get_observation` |使用尺寸过滤器提取观测值|\r\n| `get_latest_data` |最新数据的便利包装|\r\n\r\n______________________________________________________________________\r\n\r\n## 常用数据集ID\r\n\r\n|ID |它是什么|\r\n|----|------------|\r\n| `cpih01` |CPIH（英国通货膨胀）|\r\n| `regional-gdp-by-year` |地区GDP|\r\n| `wellbeing-local-authority` |个人健康|\r\n| `trade` |英国贸易统计|\r\n| `weekly-deaths-region` |每周死亡人数|\r\n\r\n______________________________________________________________________\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/dwain-barnes/uk_ons_mcp_server.git\r\ncd uk_ons_mcp_server\r\nnpm install\r\nnpm run build   # compile TypeScript\r\nnpm start       # production\r\nnpm run dev     # watch & reload\r\n```\r\n\r\n测试和脱绒：\r\n\r\n```bash\r\nnpm test\r\nnpm run lint\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 贡献\r\n\r\n1. Fork → 分支→ 提交\r\n1. `git push` 并打开一个PR\r\n1. 请遵循中的编码风格 **src/**\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\nMIT——见 `LICENSE`.\r\n\r\n______________________________________________________________________\r\n\r\n> **免责声明**\\\r\n> 这个项目是 **非官方的** 未得到英国的认可 办公室 for 国家 统计。数据使用仍受ONS条款的约束。\r\n",
+ "config": {
+  "uk-ons": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "uk_ons_mcp_server"
+   ],
+   "env": {}
+  }
+ }
+}

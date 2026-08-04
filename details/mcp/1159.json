@@ -1,0 +1,30 @@
+{
+ "id": "1159",
+ "kind": "mcp",
+ "name": "mysql-20",
+ "fingerprint_md5": "503be897c2c1c2c938f8c7c732dc1a37",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# MySQL MCP服务器\r\n\r\n一种模型上下文协议（MCP）实现，可实现与MySQL数据库的安全交互。该服务器组件促进了AI应用程序（主机/客户端）和MySQL数据库之间的通信，通过受控界面使数据库探索和分析更安全、更结构化。\r\n\r\n> **备注**MySQL MCP Server并非设计为独立服务器，而是作为AI应用程序和MySQL数据库之间的通信协议实现。\r\n\r\n## 特性\r\n\r\n- 将可用MySQL表作为资源列出\r\n- 读取表格内容\r\n- 使用正确的错误处理执行SQL查询\r\n- 通过环境变量保护数据库访问\r\n- 综合录井\r\n\r\n## 安装\r\n\r\n### 手动安装\r\n\r\n```bash\r\npip install mysql-mcp-server\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装MySQL MCP Server for Claude Desktop [史密瑟里](https://smithery.ai/server/mysql-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install mysql-mcp-server --client claude\r\n```\r\n\r\n## 配置\r\n\r\n设置以下环境变量：\r\n\r\n```bash\r\nMYSQL_HOST=localhost     # Database host\r\nMYSQL_PORT=3306         # Optional: Database port (defaults to 3306 if not specified)\r\nMYSQL_USER=your_username\r\nMYSQL_PASSWORD=your_password\r\nMYSQL_DATABASE=your_database\r\n```\r\n\r\n## 用法\r\n\r\n### 使用克劳德桌面\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mysql\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\", \r\n        \"path/to/mysql_mcp_server\",\r\n        \"run\",\r\n        \"mysql_mcp_server\"\r\n      ],\r\n      \"env\": {\r\n        \"MYSQL_HOST\": \"localhost\",\r\n        \"MYSQL_PORT\": \"3306\",\r\n        \"MYSQL_USER\": \"your_username\",\r\n        \"MYSQL_PASSWORD\": \"your_password\",\r\n        \"MYSQL_DATABASE\": \"your_database\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用Visual Studio代码\r\n\r\n将此添加到您的 `mcp.json`:\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n      \"mysql\": {\r\n            \"type\": \"stdio\",\r\n            \"command\": \"uvx\",\r\n            \"args\": [\r\n                \"--from\",\r\n                \"mysql-mcp-server\",\r\n                \"mysql_mcp_server\"\r\n            ],\r\n      \"env\": {\r\n        \"MYSQL_HOST\": \"localhost\",\r\n        \"MYSQL_PORT\": \"3306\",\r\n        \"MYSQL_USER\": \"your_username\",\r\n        \"MYSQL_PASSWORD\": \"your_password\",\r\n        \"MYSQL_DATABASE\": \"your_database\"\r\n      }\r\n  }\r\n}\r\n```\r\n\r\n注意：需要安装uv才能正常工作\r\n\r\n### 使用MCP检查器进行调试\r\n\r\n虽然MySQL MCP Server不打算独立运行或直接从Python的命令行运行，但您可以使用MCP检查器对其进行调试。\r\n\r\nMCP检查器提供了一种方便的方法来测试和调试您的MCP实现：\r\n\r\n```bash\r\n# Install dependencies\r\npip install -r requirements.txt\r\n# Use the MCP Inspector for debugging (do not run directly with Python)\r\n```\r\n\r\nMySQL MCP服务器旨在与Claude Desktop等人工智能应用程序集成，不应直接作为独立的Python程序运行。\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/yourusername/mysql_mcp_server.git\r\ncd mysql_mcp_server\r\n# Create virtual environment\r\npython -m venv venv\r\nsource venv/bin/activate  # or `venv\\Scripts\\activate` on Windows\r\n# Install development dependencies\r\npip install -r requirements-dev.txt\r\n# Run tests\r\npytest\r\n```\r\n\r\n## 安全考虑\r\n\r\n- 从不提交环境变量或凭据\r\n- 使用具有最低所需权限的数据库用户\r\n- 考虑实施查询白名单以供生产使用\r\n- 监控并记录所有数据库操作\r\n\r\n## 安全最佳实践\r\n\r\n此MCP实现需要数据库访问才能运行。为了安全起见：\r\n\r\n1. **创建专用MySQL用户** 具有最低权限\r\n1. **从不使用root凭据** 或管理账户\r\n1. **限制数据库访问** 只进行必要的操作\r\n1. **启用日志记录** 出于审计目的\r\n1. **定期安全审查** 数据库访问\r\n\r\n看 [MySQL安全配置指南](https://github.com/designcomputer/mysql_mcp_server/blob/main/SECURITY.md) 有关以下内容的详细说明：\r\n\r\n- 创建受限MySQL用户\r\n- 设置适当的权限\r\n- 监控数据库访问\r\n- 安全最佳实践\r\n\r\n⚠️ 重要提示：在配置数据库访问时，始终遵循最小权限原则。\r\n\r\n## 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件。\r\n\r\n## 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建功能分支(`git checkout -b feature/amazing-feature`)\r\n1. 提交您的更改(`git commit -m 'Add some amazing feature'`)\r\n1. 推到分支(`git push origin feature/amazing-feature`)\r\n1. 打开拉取请求\r\n",
+ "config": {
+  "mysql": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "path/to/mysql_mcp_server",
+    "run",
+    "mysql_mcp_server"
+   ],
+   "env": {
+    "MYSQL_HOST": "localhost",
+    "MYSQL_PORT": "3306",
+    "MYSQL_USER": "your_username",
+    "MYSQL_PASSWORD": "your_password",
+    "MYSQL_DATABASE": "your_database"
+   }
+  }
+ }
+}

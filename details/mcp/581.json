@@ -1,0 +1,22 @@
+{
+ "id": "581",
+ "kind": "mcp",
+ "name": "automanus",
+ "fingerprint_md5": "2225fe445ed3fc355bd6a0acc193ac80",
+ "download_count": 0,
+ "category": "翻译与语言",
+ "tags": "",
+ "version": "",
+ "readme": "# @automanus/mcp服务器\r\n\r\n\r\n**通过Claude Desktop、Cursor或任何兼容MCP的AI工具立即创建AI销售代理。**\r\n\r\nAutoManus MCP Server允许您在几秒钟内构建和部署AI销售聊天机器人到WhatsApp和Webchat，所有这些都可以从您最喜欢的AI编码助手完成。\r\n\r\n## 特性\r\n\r\n- **即时代理创建** -只要说“为\\[公司\\]创建一个销售代理”，就完成了\r\n- **汽车网站研究** -分析公司网站并自动填充知识库\r\n- **WhatsApp+网络聊天** -代理立即部署到两个通道\r\n- **无需代码** -完全通过自然语言与Claude/Cursor一起工作\r\n- **免费层** -100个免费信用点即可开始，无需信用卡\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的Claude Desktop配置文件中：\r\n\r\n- **macOS：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"automanus\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@automanus/mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动Claude Desktop，然后尝试：\r\n\r\n> “为Stripe创建人工智能销售代理”\r\n\r\n### 光标\r\n\r\n添加 `~/.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"automanus\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@automanus/mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码（CLI）\r\n\r\n添加 `~/.claude/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"automanus\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@automanus/mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法示例\r\n\r\n安装后，只需自然地与Claude交谈：\r\n\r\n```\r\n\"Create a sales agent for my startup TechCo using techco.com as the knowledge source\"\r\n```\r\n\r\n```\r\n\"Build an AI sales chatbot for Vercel\"\r\n```\r\n\r\n```\r\n\"I need a customer service bot for my cleaning business at sparkclean.com\"\r\n```\r\n\r\n克劳德将：\r\n\r\n1. 索取您的电子邮件（发送代理索赔链接）\r\n1. 自动研究网站\r\n1. 使用知识库创建代理\r\n1. 部署到WhatsApp和网络聊天\r\n1. 向您发送一封电子邮件，其中包含管理所有内容的链接\r\n\r\n## 认证\r\n\r\n**无需配置！** Claude在创建代理时会要求您提供电子邮件。\r\n\r\n### 可选：预配置电子邮件\r\n\r\n如果您想跳过电子邮件提示：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"automanus\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@automanus/mcp-server\"],\r\n      \"env\": {\r\n        \"AUTOMANUS_EMAIL\": \"your-email@example.com\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 可选：API密钥（适用于现有用户）\r\n\r\n使用API密钥，可直接在您的帐户下创建代理：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"automanus\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@automanus/mcp-server\"],\r\n      \"env\": {\r\n        \"AUTOMANUS_API_KEY\": \"ak_your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n从获取API密钥 [automanus.io/dashboard/settings/api](https://automanus.io/dashboard/settings/api).\r\n\r\n## 所得\r\n\r\n创建代理时，您将收到：\r\n\r\n|特性|描述|\r\n|---------|-------------|\r\n| **AI销售代理** |对公司网站内容进行培训|\r\n| **WhatsApp号码** |客户聊天的共享链接|\r\n| **网络聊天小部件** |为您的网站嵌入代码|\r\n| **知识库** |从网站研究中自动填充|\r\n| **仪表板访问** |管理、培训和定制您的代理|\r\n\r\n## 用例\r\n\r\n- **销售团队** -在WhatsApp和网站上全天候确认潜在客户\r\n- **初创企业** -无需雇佣即可添加AI客户服务\r\n- **机构** -在几分钟内为客户构建聊天机器人\r\n- **电子商务** -自动回答产品问题\r\n- **软件即服务** -处理试用用户的问题和演示\r\n\r\n## 定价\r\n\r\n|计划|积分|功能|\r\n|------|---------|----------|\r\n| **自由** |100 | WhatsApp+网络聊天，基本知识库|\r\n| **启动器** |1000/mo |优先支持，分析|\r\n| **专业版** |5000/mo|自定义品牌，API访问|\r\n\r\n## 链接\r\n\r\n- [📺 观看演示](https://www.youtube.com/watch?v=4Mdzehq4ghg&list=PLE9hy4A7ZTmpGq7GHf5tgGFWh2277AeDR)\r\n- [文档](https://automanus.io/docs/mcp)\r\n- [仪表盘](https://automanus.io/dashboard)\r\n- [API 参考](https://automanus.io/docs/api)\r\n- [GitHub](https://github.com/automanus-io/mcp-server)\r\n- [npm包](https://www.npmjs.com/package/@automanus/mcp-server)\r\n\r\n## 社区\r\n\r\n- [Discord 的中文翻译是“不和谐”或“纷争”。](https://discord.com/invite/tGsJ2nJH69) -获取帮助、分享反馈并与其他用户联系\r\n- [GitHub问题](https://github.com/automanus-io/mcp-server/issues) -报告错误\r\n- 电子邮件：hello@automanus.io\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "automanus": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@automanus/mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

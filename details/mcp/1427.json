@@ -1,0 +1,22 @@
+{
+ "id": "1427",
+ "kind": "mcp",
+ "name": "everything",
+ "fingerprint_md5": "f55b0164dd7067d336cb9c329de69564",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 所有MCP服务器\r\n\r\n**[建筑](docs/architecture.md)\r\n| [项目结构](docs/structure.md)\r\n| [启动过程](docs/startup.md)\r\n| [服务器特性](docs/features.md)\r\n| [扩展点](docs/extension.md)\r\n| [运作原理](docs/how-it-works.md)**\r\n\r\n此MCP服务器尝试执行MCP协议的所有功能。它不是一个有用的服务器，而是MCP客户端构建者的测试服务器。它实现了提示、工具、资源、采样等，以展示MCP的功能。\r\n\r\n## 工具、资源、提示和其他功能\r\n\r\n注册的MCP原语和演示的其他协议功能的完整列表可以在 [服务器特性](docs/features.md) 文件。\r\n\r\n## 使用Claude Desktop（使用 [标准输入输出传输](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#stdio))\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"everything\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@modelcontextprotocol/server-everything\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n在Windows上，使用 `cmd /c` 发射 `npx`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"everything\": {\r\n      \"command\": \"cmd\",\r\n      \"args\": [\r\n        \"/c\",\r\n        \"npx\",\r\n        \"-y\",\r\n        \"@modelcontextprotocol/server-everything\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用VS代码\r\n\r\n为了快速安装，请使用下面的一键安装按钮之一。..\r\n\r\n[](https://insiders.vscode.dev/redirect/mcp/install?name=everything&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40modelcontextprotocol%2Fserver-everything%22%5D%7D) [](https://insiders.vscode.dev/redirect/mcp/install?name=everything&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40modelcontextprotocol%2Fserver-everything%22%5D%7D&quality=insiders)\r\n\r\n[](https://insiders.vscode.dev/redirect/mcp/install?name=everything&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22--rm%22%2C%22mcp%2Feverything%22%5D%7D) [](https://insiders.vscode.dev/redirect/mcp/install?name=everything&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22--rm%22%2C%22mcp%2Feverything%22%5D%7D&quality=insiders)\r\n\r\n对于手动安装，您可以使用以下方法之一配置MCP服务器：\r\n\r\n**方法1：用户配置（推荐）**\r\n将配置添加到用户级MCP配置文件中。打开命令选项板(`Ctrl + Shift + P`)然后跑 `MCP: Open User Configuration`。这将打开您的用户 `mcp.json` 您可以在其中添加服务器配置的文件。\r\n\r\n**方法2：工作空间配置**\r\n或者，您可以将配置添加到名为的文件中 `.vscode/mcp.json` 在您的工作空间中。这将允许您与他人共享配置。\r\n\r\n> 有关VS Code中MCP配置的更多详细信息，请参阅 [官方VS Code MCP文档](https://code.visualstudio.com/docs/copilot/customization/mcp-servers).\r\n\r\n#### NPX\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"everything\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-everything\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n在Windows上，使用：\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"everything\": {\r\n      \"command\": \"cmd\",\r\n      \"args\": [\"/c\", \"npx\", \"-y\", \"@modelcontextprotocol/server-everything\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 从源代码运行 [HTTP+SSE传输](https://modelcontextprotocol.io/specification/2024-11-05/basic/transports#http-with-sse) （已弃用 [2025-03-26](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports))\r\n\r\n```shell\r\ncd src/everything\r\nnpm install\r\nnpm run start:sse\r\n```\r\n\r\n## 从源代码运行 [可流式HTTP传输](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http)\r\n\r\n```shell\r\ncd src/everything\r\nnpm install\r\nnpm run start:streamableHttp\r\n```\r\n\r\n## 作为已安装的软件包运行\r\n\r\n### 安装\r\n\r\n```shell\r\nnpm install -g @modelcontextprotocol/server-everything@latest\r\n```\r\n\r\n### 运行默认（stdio）服务器\r\n\r\n```shell\r\nnpx @modelcontextprotocol/server-everything\r\n```\r\n\r\n### 或者明确指定stdio\r\n\r\n```shell\r\nnpx @modelcontextprotocol/server-everything stdio\r\n```\r\n\r\n### 运行SSE服务器\r\n\r\n```shell\r\nnpx @modelcontextprotocol/server-everything sse\r\n```\r\n\r\n### 运行可流式传输的HTTP服务器\r\n\r\n```shell\r\nnpx @modelcontextprotocol/server-everything streamableHttp\r\n```\r\n",
+ "config": {
+  "everything": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@modelcontextprotocol/server-everything"
+   ],
+   "env": {}
+  }
+ }
+}

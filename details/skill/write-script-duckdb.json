@@ -1,0 +1,12 @@
+{
+ "id": "write-script-duckdb",
+ "kind": "skill",
+ "name": "write-script-duckdb",
+ "fingerprint_md5": "98b3d6ba18b088aad4dbd188e7abcce7",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "## CLI 命令\r\n\r\n将脚本放置在文件夹中。编写完成后，告知用户可以运行：\r\n- `wmill script generate-metadata` - 生成 .script.yaml 和 .lock 文件\r\n- `wmill sync push` - 部署到 Windmill\r\n\r\n不要自己运行这些命令。相反，应告知用户他们应该运行这些命令。\r\n\r\n使用 `wmill resource-type list --schema` 来发现可用的资源类型。\r\n\r\n# DuckDB\r\n\r\n参数通过注释定义，并使用 `$name` 语法：\r\n\r\n```sql\r\n-- $name (text) = default\r\n-- $age (integer)\r\nSELECT * FROM users WHERE name = $name AND age > $age;\r\n```\r\n\r\n## Ducklake 集成\r\n\r\n附加 Ducklake 以进行数据湖操作：\r\n\r\n```sql\r\n-- Main ducklake\r\nATTACH 'ducklake' AS dl;\r\n\r\n-- Named ducklake\r\nATTACH 'ducklake://my_lake' AS dl;\r\n\r\n-- Then query\r\nSELECT * FROM dl.schema.table;\r\n```\r\n\r\n## 外部数据库连接\r\n\r\n使用资源连接到外部数据库：\r\n\r\n```sql\r\nATTACH '$res:path/to/resource' AS db (TYPE postgres);\r\nSELECT * FROM db.schema.table;\r\n```\r\n\r\n## S3 文件操作\r\n\r\n从 S3 存储读取文件：\r\n\r\n```sql\r\n-- Default storage\r\nSELECT * FROM read_csv('s3:///path/to/file.csv');\r\n\r\n-- Named storage\r\nSELECT * FROM read_csv('s3://storage_name/path/to/file.csv');\r\n\r\n-- Parquet files\r\nSELECT * FROM read_parquet('s3:///path/to/file.parquet');\r\n\r\n-- JSON files\r\nSELECT * FROM read_json('s3:///path/to/file.json');\r\n```",
+ "config": {}
+}

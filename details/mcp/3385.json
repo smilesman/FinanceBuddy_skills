@@ -1,0 +1,18 @@
+{
+ "id": "3385",
+ "kind": "mcp",
+ "name": "companyprospect",
+ "fingerprint_md5": "cc39b286518ecdb1d7675c68f164e0a6",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 公司展望MCP服务器\r\n\r\nCompanyProspect API的模型上下文协议（MCP）服务器，其中每个用户提供自己的API密钥。\r\n\r\n## Claude桌面设置\r\n\r\n由于Claude Desktop无法通过SSE连接正确传递URL查询参数，请将您的API密钥嵌入URL路径：\r\n\r\n### 1.部署到Vercel\r\n\r\n```bash\r\ngit push origin main\r\n```\r\n\r\n### 2.获取贵公司潜在客户密钥\r\n\r\n登录到 [公司前景](https://companyprospect.co/account) 并在浏览器控制台中运行以下命令：\r\n\r\n```javascript\r\ndocument.cookie.split(';').find(c => c.trim().startsWith('AUTH_API_KEY='))?.split('=')[1]\r\n```\r\n\r\n### 3.配置克劳德桌面\r\n\r\n查找您的Claude Desktop配置文件：\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- **Linux**: `~/.config/Claude/claude_desktop_config.json`\r\n\r\n使用API密钥添加配置 **在URL路径中**:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"companyprospect\": {\r\n      \"url\": \"https://companyprospect-mcp.vercel.app/abcd123xxx\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `abcd123xxx` 使用您的实际完整CompanyProspect API密钥。\r\n\r\n### 4.重新启动克劳德桌面\r\n\r\n关闭并重新打开Claude Desktop以使更改生效。\r\n\r\n## 运作原理\r\n\r\n- **基于路径的API密钥**：您的API密钥嵌入在URL路径中（例如。， `/abcd123xxx`)\r\n- **每用户身份验证**：每个用户配置自己的API密钥\r\n- **没有共享凭据**：服务器上没有环境变量或共享密钥\r\n- **克劳德桌面兼容**：路径段通过SSE连接保留\r\n\r\n## 可用工具\r\n\r\n### 公司_提前打字\r\n\r\n按名称搜索公司：\r\n\r\n```\r\n\"Search for Microsoft\"\r\n```\r\n\r\n### 查找竞争对手\r\n\r\n根据公司和关键字查找竞争对手：\r\n\r\n```\r\n\"Find competitors of Microsoft in cloud computing\"\r\n```\r\n\r\n## 故障排除\r\n\r\n### 检查Vercel日志\r\n\r\n1. 转到Vercel仪表板→ 函数→ Logs\r\n1. 寻找 `[DEBUG]` 信息：\r\n   - `[DEBUG] Found API Key in path: /nm_9xxx***` -好！正在接收API密钥\r\n   - `[DEBUG] POST: NO API Key FOUND!` -API密钥未到达服务器\r\n\r\n### 常见问题\r\n\r\n**“需要身份验证”错误：**\r\n\r\n- 请确保API密钥在URL路径中，而不是作为查询参数\r\n- 格式： `https://companyprospect-mcp.vercel.app/abcd123xxx`\r\n- 不是： `https://companyprospect-mcp.vercel.app?api_key=abcd123xxx`\r\n\r\n**连接失败：**\r\n\r\n- 请确保您使用的是完整的API密钥，而不是截断的密钥\r\n- 配置更改后重新启动Claude Desktop\r\n\r\n## 基于网络的Claude\r\n\r\n如果在web浏览器而不是桌面应用程序中使用Claude，请尝试：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"companyprospect\": {\r\n      \"url\": \"https://companyprospect-mcp.vercel.app?api_key=abcd123xxx\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 安全说明\r\n\r\n- API密钥在Claude的配置文件中可见\r\n- 每个用户都管理自己的API密钥\r\n- 服务器上没有存储密钥\r\n- 密钥仅在会话期间使用\r\n\r\n## 地方发展\r\n\r\n```bash\r\n# Install dependencies\r\npip install -r requirements.txt\r\n\r\n# Test locally with your API key\r\nexport API_KEY=abcd123xxx\r\nvercel dev\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "companyprospect": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://companyprospect-mcp.vercel.app/abcd123xxx"
+  }
+ }
+}

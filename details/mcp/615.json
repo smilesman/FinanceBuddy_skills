@@ -1,0 +1,26 @@
+{
+ "id": "615",
+ "kind": "mcp",
+ "name": "crew-research",
+ "fingerprint_md5": "49886961319964a4badc1496483e6f6f",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP 多智能体深度研究员\r\n\r\n一个基于CrewAI构建的复杂多智能体研究系统，该系统融合了模型上下文协议（MCP）的强大功能与智能网页搜索能力。此系统协调三个专门的AI智能体，共同进行全面的研究、分析和内容创作。\r\n\r\n## 🎯 概述\r\n\r\nMCP多智能体深度研究者旨在通过协作式的多智能体工作流程，将简单的研究查询转化为全面且结构清晰的报告。该系统利用LinkUp搜索API进行标准和深度网络搜索，确保获取最新且最相关的信息。\r\n\r\n### 主要特点\r\n\r\n- **多智能体协作**三名专业人员按顺序工作，以达到最佳效果\r\n- **MCP 集成**通过模型上下文协议展示研究能力\r\n- **高级网页搜索**使用LinkUp API进行全面的网络研究\r\n- **智能分析**先进的事实核查与综合分析能力\r\n- **专业输出**可直接出版的Markdown报告，附有正确引用\r\n- **灵活部署**可以独立运行或作为MCP服务器运行\r\n\r\n## 🤖 代理架构\r\n\r\n### 1. 网络搜索代理\r\n\r\n**角色**高级网页研究专家及信息发现专家\r\n\r\n- 使用LinkUp API进行全面的网络研究\r\n- 为话题的不同方面制定战略性搜索查询\r\n- 从多个可靠来源收集信息\r\n- 为所有来源记录文档，包含完整URL和元数据\r\n- 利用标准搜索和深度搜索功能\r\n\r\n### 2. 研究分析师代理\r\n\r\n**角色**高级研究分析师与战略情报综合分析师\r\n\r\n- 将原始研究数据转化为可操作的情报\r\n- 进行严格的事实核查和来源验证\r\n- 识别模式、趋势和关键见解\r\n- 将复杂信息综合成结构化叙述\r\n- 保持分析的完整性和客观性\r\n\r\n### 3. 技术写作代理\r\n\r\n**角色**高级技术传播专家及内容策略师\r\n\r\n- 创作出引人入胜、易于理解且结构专业的内容\r\n- 将复杂的分析转化为清晰、引人入胜的叙述\r\n- 确保格式正确、引用规范、符合展示标准\r\n- 在保持科学严谨性的前提下，优化内容以提高可读性\r\n\r\n## 🚀 快速入门\r\n\r\n### 先决条件\r\n\r\n- Python 版本大于等于 3.10 且小于 3.14\r\n- LinkUp API密钥（用于网页搜索功能）\r\n- OpenAI API密钥（用于大型语言模型功能）\r\n\r\n### 安装\r\n\r\n1. **安装UV包管理器** （如果尚未安装）：\r\n\r\n   ```bash\r\n   pip install uv\r\n   ```\r\n\r\n1. **克隆项目并导航至项目目录**:\r\n\r\n   ```bash\r\n   cd mcp_multi_agent_deep_researcher\r\n   ```\r\n\r\n1. **安装依赖项**:\r\n\r\n   ```bash\r\n   crewai install\r\n   ```\r\n\r\n   或者使用紫外线手动操作：\r\n\r\n   ```bash\r\n   uv sync\r\n   ```\r\n\r\n1. **设置环境变量**：\r\n   创建一个 `.env` 项目根目录中的文件：\r\n\r\n   ```env\r\n   OPENAI_API_KEY=your_openai_api_key_here\r\n   LINKUP_API_KEY=your_linkup_api_key_here\r\n   ```\r\n\r\n### 运行系统\r\n\r\n#### 独立执行\r\n\r\n```bash\r\n# Run with default query\r\ncrewai run\r\n```\r\n\r\nMCP服务器暴露了一个 `crew_research` 一个可以用于任何研究查询的工具。\r\n\r\n## 📋 使用示例\r\n\r\n### 基础研究查询\r\n\r\n```python\r\nfrom mcp_multi_agent_deep_researcher.main import main\r\n\r\nresult = main(\"What are the latest developments in quantum computing?\")\r\nprint(result)\r\n```\r\n\r\n### 通过 CrewAI 进行自定义查询\r\n\r\n```python\r\nfrom mcp_multi_agent_deep_researcher.crew import McpMultiAgentDeepResearcher\r\n\r\ncrew = McpMultiAgentDeepResearcher()\r\nresult = crew.crew().kickoff(inputs={'query': 'AI ethics in healthcare applications'})\r\n```\r\n\r\n### MCP工具使用\r\n\r\n当作为MCP服务器运行时，系统会暴露：\r\n\r\n- **工具**： `crew_research`\r\n- **参数**： `query` (字符串) - 研究问题或主题\r\n- **退货**全面的Markdown研究报告\r\n\r\n## 🛠️ 配置\r\n\r\n### 代理配置（`config/agents.yaml`）\r\n\r\n根据您的特定研究需求，定制代理角色、目标和背景故事。\r\n\r\n### 任务配置（`config/tasks.yaml`）\r\n\r\n修改任务描述和预期输出，以调整研究工作流程。\r\n\r\n### 搜索配置\r\n\r\nLinkUp搜索工具支持：\r\n\r\n- **标准搜索**快速，广泛覆盖\r\n- **深度搜索**全面、细致的调查\r\n- **多种输出类型**搜索结果，来源答案，结构化数据\r\n\r\n## 📊 输出结构\r\n\r\n该系统生成包含以下内容的综合报告：\r\n\r\n1. **执行摘要** - 关键发现概览\r\n1. **主要内容** - 按主题组织的详细分析\r\n1. **关键见解** - 重要的影响和模式\r\n1. **结论** - 可操作的收获和建议\r\n1. **参考文献来源** - 完整引用并附上网址\r\n\r\n## 🔑 API密钥设置\r\n\r\n### LinkUp API\r\n\r\n1. 在……注册 [LinkUp（可译为“连接通”或根据具体语境译为其他更贴切的名称，但此处保留原英文形式以体现品牌或专有名词的特性）](https://linkup.so)\r\n1. 从仪表板获取您的API密钥\r\n1. 添加到 `.env` 按（作为）文件处理 `LINKUP_API_KEY`\r\n\r\n### OpenAI API\r\n\r\n1. 从以下位置获取您的API密钥： [OpenAI平台](https://platform.openai.com)\r\n1. 添加到 `.env` 文件作为 `OPENAI_API_KEY`\r\n\r\n## 🤝 集成\r\n\r\n### Cursor IDE 集成\r\n\r\n要使用Cursor IDE连接此MCP服务器，请按照以下步骤操作：\r\n\r\n一 **使用UV实现更优的依赖管理**：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"crew-research\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"python\", \"src/mcp_multi_agent_deep_researcher/mcp_server.py\"],\r\n      \"cwd\": \"/path/to/mcp_multi_agent_deep_researcher\",\r\n      \"env\": {\r\n        \"OPENAI_API_KEY\": \"your_openai_api_key_here\",\r\n        \"LINKUP_API_KEY\": \"your_linkup_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n该工具将自动：\r\n\r\n- 进行全面的网络研究\r\n- 分析并综合研究结果\r\n- 生成一份专业的研究报告\r\n- 提供正确引用的来源\r\n\r\n## 📚 依赖项\r\n\r\n关键依赖项包括：\r\n\r\n- `crewai[tools]` - 多智能体框架\r\n- `linkup-sdk` - 网络搜索功能\r\n- `mcp` - 模型上下文协议支持\r\n- `pydantic` - 数据验证和序列化\r\n\r\n**使用CrewAI和协作型AI代理的力量，满怀爱意地构建而成。**\r\n",
+ "config": {
+  "crew-research": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "python",
+    "src/mcp_multi_agent_deep_researcher/mcp_server.py"
+   ],
+   "env": {
+    "OPENAI_API_KEY": "your_openai_api_key_here",
+    "LINKUP_API_KEY": "your_linkup_api_key_here"
+   }
+  }
+ }
+}

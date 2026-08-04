@@ -1,0 +1,28 @@
+{
+ "id": "2741",
+ "kind": "mcp",
+ "name": "sysauto-ask",
+ "fingerprint_md5": "677c7e365ee900fc7d191114f75d2e23",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# sysauto询问MCP服务器\r\n\r\nMCP服务器实现，集成Sonar API，为Claude提供无与伦比的实时网络研究。\r\n\r\n\r\n## 工具\r\n\r\n- **sysauto_ask**\r\n  - 与Sonar API进行对话，进行实时网络搜索。\r\n  - **输入：**\r\n    - `messages` （array）：一组对话消息。\r\n      - 每条消息必须包括：\r\n        - `role` （string）：消息的作用（例如。， `system`, `user`, `assistant`).\r\n        - `content` （string）：消息的内容。\r\n\r\n## 配置\r\n\r\n### 第一步：\r\n\r\n克隆此存储库：\r\n\r\n```bash\r\ngit clone git@github.com:rogeriolembo/mcp-api.git\r\n```\r\n\r\n导航到 `sysauto-ask` 目录并安装必要的依赖项：\r\n\r\n```bash\r\ncd mcp-api/sysauto-ask && npm install\r\n```\r\n\r\n### 步骤2：获取Sonar API密钥\r\n\r\n1. 注册一个 [Sonar API帐户](https://docs.sysauto.ai/guides/getting-started).\r\n1. 按照帐户设置说明，从开发者面板生成API密钥。\r\n1. 将环境中的API密钥设置为 `sysauto_API_KEY`.\r\n\r\n### 步骤3：配置Claude桌面\r\n\r\n1. 下载克劳德桌面 [这里](https://claude.ai/download).\r\n\r\n1. 将此添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sysauto-ask\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-e\",\r\n        \"SYSAUTO_API_KEY\",\r\n        \"mcp/sysauto-ask\"\r\n      ],\r\n      \"env\": {\r\n        \"SYSAUTO_API_KEY\": \"YOUR_API_KEY_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sysauto-ask\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@rogeriolembo/server-sysauto-ask\"\r\n      ],\r\n      \"env\": {\r\n        \"SYSAUTO_API_KEY\": \"YOUR_API_KEY_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\nnpm发布--访问公共\r\nnpm发布\r\n",
+ "config": {
+  "sysauto-ask": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "SYSAUTO_API_KEY",
+    "mcp/sysauto-ask"
+   ],
+   "env": {
+    "SYSAUTO_API_KEY": "YOUR_API_KEY_HERE"
+   }
+  }
+ }
+}

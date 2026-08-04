@@ -1,0 +1,12 @@
+{
+ "id": "reviewing-oracle-to-postgres-migration",
+ "kind": "skill",
+ "name": "reviewing-oracle-to-postgres-migration",
+ "fingerprint_md5": "d649e7a47457000a1bd38c2ecba0778d",
+ "download_count": 0,
+ "category": "Oracle",
+ "tags": "",
+ "version": "",
+ "readme": "# Oracle 到 PostgreSQL 数据库迁移\r\n\r\n根据 `references/` 文件夹中记录的已知 Oracle/PostgreSQL 行为差异，揭示迁移风险并验证迁移工作。\r\n\r\n## 何时使用\r\n\r\n1. **规划** — 在开始存储过程、触发器、查询或 refcursor 客户端的迁移工作之前。识别哪些参考见解适用，以便提前解决风险。\r\n2. **验证** — 迁移工作完成后，确认每个适用的见解都已得到解决，并且集成测试涵盖了新的 PostgreSQL 语义。\r\n\r\n## 工作流程\r\n\r\n确定任务类型：\r\n\r\n**正在规划迁移？** 遵循风险评估工作流程。\r\n**正在验证已完成的工作？** 遵循验证工作流程。\r\n\r\n### 风险评估工作流程（规划）\r\n\r\n```\r\n风险评估：\r\n- [ ] 步骤 1：确定迁移范围\r\n- [ ] 步骤 2：筛选每个见解的适用性\r\n- [ ] 步骤 3：记录风险和推荐操作\r\n```\r\n\r\n**步骤 1：确定迁移范围**\r\n\r\n列出受影响的数据库对象（存储过程、触发器、查询、视图）以及调用它们的应用程序代码。\r\n\r\n**步骤 2：筛选每个见解的适用性**\r\n\r\n查看 [references/REFERENCE.md](references/REFERENCE.md) 中的参考索引。对于每个条目，确定迁移范围是否包含受该见解影响的模式。仅当见解可能相关时才阅读完整的参考文件。\r\n\r\n**步骤 3：记录风险和推荐操作**\r\n\r\n对于每个适用的见解，记录具体风险和参考文件中的推荐修复模式。标记任何需要设计决策的见解（例如，是否保留 Oracle 的空字符串作为 NULL 语义或采用 PostgreSQL 行为）。\r\n\r\n### 验证工作流程（迁移后）\r\n\r\n```\r\n验证：\r\n- [ ] 步骤 1：映射迁移工件\r\n- [ ] 步骤 2：交叉检查适用见解\r\n- [ ] 步骤 3：验证集成测试覆盖率\r\n- [ ] 步骤 4：把控结果\r\n```\r\n\r\n**步骤 1：映射迁移工件**\r\n\r\n识别迁移的对象并总结变更集。\r\n\r\n**步骤 2：交叉检查适用见解**\r\n\r\n对于 [references/REFERENCE.md](references/REFERENCE.md) 中的每个参考，确认行为或测试要求在迁移工作中得到确认和解决。\r\n\r\n**步骤 3：验证集成测试覆盖率**\r\n\r\n确认测试覆盖了适用见解中强调的愉快路径和失败场景（异常、排序、refcursor 消耗、并发事务、时间戳等）。\r\n\r\n**步骤 4：把控结果**\r\n\r\n返回一个检查清单，断言每个适用的见解都已得到解决，迁移脚本已运行，集成测试通过。",
+ "config": {}
+}

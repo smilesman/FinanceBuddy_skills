@@ -1,0 +1,21 @@
+{
+ "id": "278",
+ "kind": "mcp",
+ "name": "marvel-rivals",
+ "fingerprint_md5": "f79d1cbb8aa63391c905afefa40bb429",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP漫威竞争对手\r\n\r\n一种模型上下文协议（MCP）服务器，通过标准化接口提供对漫威竞争对手游戏数据的访问。\r\n\r\n## 安装\r\n\r\n```bash\r\nnpx @aimaginationlab/marvel-rivals-mcp\r\n```\r\n\r\n## 用法\r\n\r\n### 使用克劳德桌面\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"marvel-rivals\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@aimaginationlab/marvel-rivals-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 可用工具\r\n\r\n- `listHeroes` -获取所有漫威对手英雄的列表\r\n- `getHeroAbilities` -为特定英雄获取技能\r\n- `getHeroInfo` -获取英雄的详细信息\r\n- `getHeroSkins` -为特定英雄获取皮肤\r\n- `listSkins` -获取所有可用皮肤\r\n- `listAchievements` -获取所有成就\r\n- `searchAchievement` -按名称搜索成就\r\n- `listItems` -获取所有项目\r\n- `getItemsByType` -按类型获取项目（命名、MVP、EMOTE、喷雾）\r\n- `listMaps` -获取所有游戏地图\r\n- `filterMaps` -按类型过滤地图\r\n- `getPlayerProfile` -获取玩家资料信息\r\n- `searchPlayer` -按用户名搜索玩家\r\n- `getPlayerMatchHistory` -获取球员比赛历史记录\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "marvel-rivals": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@aimaginationlab/marvel-rivals-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

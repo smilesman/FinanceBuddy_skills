@@ -1,0 +1,22 @@
+{
+ "id": "517",
+ "kind": "mcp",
+ "name": "vercel-mcp",
+ "fingerprint_md5": "8db21d2cb63947c5e43e4151f7d108d6",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Vercel MCP服务器\r\n\r\n部署在Vercel上的模型控制协议（MCP）服务器，提供\r\n骰子滚动工具。\r\n\r\n## 入门指南\r\n\r\n### 地方发展\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   npm install\r\n   ```\r\n\r\n1. 运行开发服务器：\r\n\r\n   ```bash\r\n   npm run dev\r\n   ```\r\n\r\n1. 您的MCP服务器将在 `http://localhost:3000/api/mcp`\r\n\r\n### 部署到Vercel\r\n\r\n1. 将代码推送到GitHub存储库\r\n1. 将您的存储库连接到Vercel\r\n1. 一键部署\r\n1. 您的MCP服务器将在\r\n   `https://your-project.vercel.app/api/mcp`\r\n\r\n## 可用工具\r\n\r\n### roll_dice\r\n\r\n滚动N面模具并返回结果。\r\n\r\n**参数：**\r\n\r\n- `sides` （number）：模具上的边数（最少2个）\r\n\r\n**示例响应：**\r\n\r\n```json\r\n{\r\n  \"content\": [\r\n    {\r\n      \"type\": \"text\",\r\n      \"text\": \"🎲 You rolled a 4!\"\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n## 连接到MCP主机\r\n\r\n### 克劳德桌面\r\n\r\n将以下内容添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"vercel-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"@modelcontextprotocol/server-fetch\",\r\n        \"https://your-project.vercel.app/api/mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n在Cursor中，您可以通过以下方式通过MCP设置连接到MCP服务器\r\n添加：\r\n\r\n- 服务器URL: `https://your-project.vercel.app/api/mcp`\r\n\r\n## 测试\r\n\r\n您可以通过向端点发出HTTP请求来测试MCP服务器。这\r\n服务器通过HTTP接受MCP协议消息。\r\n\r\n## 项目结构\r\n\r\n```text\r\nvercel-mcp/\r\n├── app/\r\n│   └── api/\r\n│       └── mcp/\r\n│           └── route.ts    # MCP handler implementation\r\n├── package.json\r\n├── next.config.js\r\n├── tsconfig.json\r\n└── README.md\r\n```\r\n\r\n## 后续步骤\r\n\r\n- 为您的MCP服务器添加更多工具\r\n- 自定义骰子滚动工具\r\n- 在Vercel上部署到生产环境\r\n- 连接到您最喜欢的MCP主机（Claude、Cursor等）\r\n",
+ "config": {
+  "vercel-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@modelcontextprotocol/server-fetch",
+    "https://your-project.vercel.app/api/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

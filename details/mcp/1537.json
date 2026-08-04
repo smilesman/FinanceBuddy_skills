@@ -1,0 +1,22 @@
+{
+ "id": "1537",
+ "kind": "mcp",
+ "name": "llms-txt-explorer",
+ "fingerprint_md5": "837db320d429210ef2f74491e9943cba",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP LLMS.txt资源管理器\r\n\r\n<a href=\"https://glama.ai/mcp/servers/lhyj3pva0z\">\r\n  \r\n</a>\r\n\r\n[](https://smithery.ai/server/@thedaviddias/mcp-llms-txt-explorer)\r\n\r\n用于使用llms.txt文件浏览网站的模型上下文协议服务器。此服务器可帮助您发现和分析实现llms.txt标准的网站。\r\n\r\n## 特性\r\n\r\n### 资源\r\n\r\n- 检查网站上的llms.txt和llms-full.txt文件\r\n- 解析并验证llms.txt文件内容\r\n- 访问合规网站的结构化数据\r\n\r\n### 工具\r\n\r\n- `check_website` -检查网站是否有llms.txt文件\r\n  - 将域URL作为输入\r\n  - 返回文件位置和验证状态\r\n- `list_websites` -列出包含llms.txt文件的已知网站\r\n  - 返回有关合规网站的结构化数据\r\n  - 支持按文件类型过滤（llms.txt/llms full.txt）\r\n\r\n## 发展\r\n\r\n安装依赖项：\r\n\r\n```bash\r\npnpm install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\npnpm run build\r\n```\r\n\r\n对于自动重建的开发：\r\n\r\n```bash\r\npnpm run watch\r\n```\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的mcp llms txt资源管理器 [史密瑟里](https://smithery.ai/server/@thedaviddias/mcp-llms-txt-explorer):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @thedaviddias/mcp-llms-txt-explorer --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n要使用此服务器，请执行以下操作：\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/thedaviddias/mcp-llms-txt-explorer.git\r\ncd mcp-llms-txt-explorer\r\n\r\n# Install dependencies\r\npnpm install\r\n\r\n# Build the server\r\npnpm run build\r\n```\r\n\r\n### 使用Claude Desktop进行配置\r\n\r\n要与Claude Desktop一起使用，请添加服务器配置：\r\n\r\n在MacOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"llms-txt-explorer\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/llms-txt-explorer/build/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n对于npx用法，您可以使用：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"llms-txt-explorer\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@thedaviddias/mcp-llms-txt-explorer\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 调试\r\n\r\n由于MCP服务器通过stdio进行通信，调试可能具有挑战性。我们建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector)，可作为包脚本使用：\r\n\r\n```bash\r\npnpm run inspector\r\n```\r\n\r\n检查器将提供一个URL，用于访问浏览器中的调试工具。\r\n\r\n## 许可证\r\n\r\n此项目在MIT许可证下获得许可——有关详细信息，请参阅许可证文件。\r\n",
+ "config": {
+  "llms-txt-explorer": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@thedaviddias/mcp-llms-txt-explorer"
+   ],
+   "env": {}
+  }
+ }
+}

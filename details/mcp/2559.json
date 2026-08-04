@@ -1,0 +1,22 @@
+{
+ "id": "2559",
+ "kind": "mcp",
+ "name": "greasyfork",
+ "fingerprint_md5": "b6e7546cd0fce7832a9ed6e35740168e",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp-greasyfork脚本\r\n\r\n用于搜索的mcp服务器 [油腻的叉子](https://greasyfork.org) 并获取用户脚本源代码。使您的编码代理能够访问数千个用户脚本——tampermonkey、greasemonkey、violentmonkey脚本——作为丰富的上下文。\r\n\r\n## 它的作用\r\n\r\n两个工具：\r\n\r\n### 搜索脚本\r\n\r\n按关键字搜索油腻叉。并行接受多达10个搜索查询，同时获取所有结果页面（信号量为10），按脚本id进行重复数据消除。以TSV表的形式返回结果，包括id、名称、描述、安装计数、评级、日期和代码url。每次通话最多显示1000个结果。\r\n\r\n### 获取脚本详细信息\r\n\r\n获取油腻的fork脚本url，并获取完整的元数据和完整的javascript源代码。返回一个格式化的markdown报告，其中包含元数据头和围栏代码块。\r\n\r\n## 运作原理\r\n\r\n- 抓取油腻的fork搜索结果页面（通过正则表达式进行HTML解析 `data-script-*` 属性）\r\n- 与并发控制并行获取所有分页页面\r\n- 跨多个搜索查询对脚本进行重复数据消除\r\n- 通过油腻的fork-jsonapi获取脚本元数据，并从代码url获取源代码\r\n- 不需要api密钥或令牌——油腻分叉是完全公开的\r\n\r\n## 安装\r\n\r\n添加到您的mcp配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"greasyfork\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-greasyfork-scripts\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### 搜索脚本\r\n\r\n|参数|类型|必需|描述|\r\n|-----------|------|----------|-------------|\r\n| `queries` |string\\[\\]| yes | 1-10个搜索关键字，每个关键字独立搜索|\r\n\r\n返回TSV，包括以下列：ID、名称、描述、每日安装量、总安装量、评级、已创建、已更新、版本、链接、代码URL\r\n\r\n### 获取脚本详细信息\r\n\r\n|参数|类型|必需|描述|\r\n|-----------|------|----------|-------------|\r\n| `script_urls` |string\\[\\]|是| 1-10个油腻的fork脚本url|\r\n\r\n返回带有元数据头和完整源代码的markdown。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "greasyfork": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-greasyfork-scripts"
+   ],
+   "env": {}
+  }
+ }
+}

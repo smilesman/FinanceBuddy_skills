@@ -1,0 +1,24 @@
+{
+ "id": "1200",
+ "kind": "mcp",
+ "name": "pervasive-sql",
+ "fingerprint_md5": "b0cb257b87d3e23b71628c887f72d614",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# 通用SQL MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，提供通过ODBC与普适SQL数据库交互的工具。\r\n\r\n## 先决条件\r\n\r\n1. **通用ODBC驱动程序** -必须在Windows系统上安装和配置\r\n1. **DSN配置** -通过ODBC数据源管理器创建系统或用户DSN\r\n1. **Node.js** -版本18或更高版本\r\n1. **Visual Studio生成工具** -编译所需 `odbc` 本机模块（C++工作负载）\r\n\r\n## 安装\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build the project\r\nnpm run build\r\n```\r\n\r\n### 故障排除 `odbc` 安装\r\n\r\n如果 `npm install` 失败，出现C++/MMSBuild错误：\r\n\r\n1. 安装 [Visual Studio生成工具](https://visualstudio.microsoft.com/visual-cpp-build-tools/)\r\n1. 选择“用C++进行桌面开发”工作负载\r\n1. 重新启动终端并重试 `npm install`\r\n\r\n## 用法\r\n\r\n### 环境变量（推荐）\r\n\r\n设置默认DSN，这样您就不需要在每次工具调用时都指定它：\r\n\r\n```powershell\r\n$env:PERVASIVE_DSN = \"YourPervasiveDsnName\"\r\n```\r\n\r\n### 运行服务器\r\n\r\n**开发模式：**\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n**生产方式：**\r\n\r\n```bash\r\nnpm run build\r\nnpm start\r\n```\r\n\r\n## MCP主机配置\r\n\r\n### 适用于Cursor/Claude桌面\r\n\r\n添加到MCP设置JSON：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pervasive-sql\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"C:\\\\Repos\\\\pervasive-mcp\\\\dist\\\\index.js\"],\r\n      \"env\": {\r\n        \"PERVASIVE_DSN\": \"YourPervasiveDsnName\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用npx和tsx进行开发：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pervasive-sql\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"C:\\\\Repos\\\\pervasive-mcp\\\\src\\\\index.ts\"],\r\n      \"env\": {\r\n        \"PERVASIVE_DSN\": \"YourPervasiveDsnName\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 连接与测试\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `test_connection` |验证数据库连接并返回连接信息|\r\n\r\n### 询问\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `query` |执行任意SQL（SELECT、INSERT、UPDATE、DELETE等）|\r\n| `execute_batch` |按顺序执行多个SQL语句|\r\n| `get_table_sample` |从表中快速获取行示例|\r\n| `get_row_count` |使用可选的WHERE子句计算表中的行数|\r\n\r\n### 架构发现\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_tables` |使用ODBC元数据列出表/视图|\r\n| `describe_table` |获取表的列详细信息|\r\n| `get_primary_keys` |获取表的主键列|\r\n| `get_foreign_keys` |获取外键关系|\r\n| `get_indexes` |获取表的索引信息|\r\n\r\n### 数据库元数据\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_catalogs` |列出可用的数据库目录|\r\n| `get_schemas` |列出可用架构|\r\n| `get_type_info` |获取支持的SQL数据类型|\r\n| `get_table_statistics` |获取基数和统计信息|\r\n\r\n### 存储过程\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_stored_procedures` |列出存储过程|\r\n| `get_procedure_columns` |获取程序参数|\r\n| `execute_procedure` |执行存储过程|\r\n\r\n## 刀具参数\r\n\r\n所有工具都接受这些可选连接参数：\r\n\r\n- `dsn` -ODBC DSN名称（回退到 `PERVASIVE_DSN` 任何人）\r\n- `username` -数据库用户名（如果需要）\r\n- `password` -数据库密码（如果需要）\r\n\r\n## 例子\r\n\r\n### 测试连接\r\n\r\n```\r\nUse test_connection to verify I can connect to the database\r\n```\r\n\r\n### 列出所有表格\r\n\r\n```\r\nUse list_tables to show me all tables in the database\r\n```\r\n\r\n### 描述一张桌子\r\n\r\n```\r\nUse describe_table with table \"CUSTOMERS\" to show the column structure\r\n```\r\n\r\n### 运行查询\r\n\r\n```\r\nUse query with sql \"SELECT TOP 10 * FROM CUSTOMERS WHERE STATUS = 'A'\"\r\n```\r\n\r\n### 获取行数\r\n\r\n```\r\nUse get_row_count with table \"ORDERS\" and where \"ORDER_DATE > '2024-01-01'\"\r\n```\r\n\r\n### 执行存储过程\r\n\r\n```\r\nUse execute_procedure with procedure \"sp_GetCustomerOrders\" and parameters [\"CUST001\"]\r\n```\r\n\r\n## 安全说明\r\n\r\n- 连接凭据可以通过每次工具调用或环境变量传递\r\n- 服务器在本地运行，并通过stdio进行通信（无网络暴露）\r\n- 谨慎对待 `query` 和 `execute_batch` 工具-它们可以运行任何SQL，包括DELETE/DROP\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "pervasive-sql": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "tsx",
+    "C:\\Repos\\pervasive-mcp\\src\\index.ts"
+   ],
+   "env": {
+    "PERVASIVE_DSN": "YourPervasiveDsnName"
+   }
+  }
+ }
+}

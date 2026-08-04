@@ -1,0 +1,24 @@
+{
+ "id": "93",
+ "kind": "mcp",
+ "name": "chess",
+ "fingerprint_md5": "9e1045abb762db3d4b08a0e90e14feaa",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Chess.com MCP服务器\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io/introduction/introduction) （MCP）服务器。\r\n\r\n这通过标准化的MCP接口提供了对Chess.com玩家数据、游戏记录和其他公共信息的访问，允许AI助手搜索和分析国际象棋信息。\r\n\r\nhttps://github.com/user-attachments/assets/3b33361b-b604-465c-9f6a-3699b6907757\r\n\r\n## 特性\r\n\r\n- \\[x\\] 访问玩家资料、统计数据和游戏记录\r\n- \\[x\\] 按日期和玩家搜索游戏\r\n- \\[x\\] 检查玩家在线状态\r\n- \\[x\\] 获取俱乐部和冠名球员的信息\r\n- \\[x\\] 无需身份验证（使用Chess.com的公共API）\r\n- \\[x\\] Docker容器化支持\r\n- \\[x\\] 为AI助手提供交互式工具\r\n\r\n工具列表是可配置的，因此您可以选择要向MCP客户端提供哪些工具。\r\n\r\n## 用法\r\n\r\n### Docker（推荐）\r\n\r\n最简单的下棋方法 [克劳德桌面](https://claude.ai/desktop) 正在使用Docker。如果你没有安装Docker，你可以从 [Docker官方网站](https://www.docker.com/get-started/).\r\n\r\n编辑您的Claude Desktop配置文件：\r\n\r\n- 雨衣： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- 窗户： `%APPDATA%/Claude/claude_desktop_config.json`\r\n- Linux： `~/.config/Claude/claude_desktop_config.json`\r\n\r\n然后添加以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chess\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"pab1it0/chess-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用UV运行\r\n\r\n或者，您可以直接使用UV运行服务器。编辑您的Claude Desktop配置文件（上面列出的位置）并添加服务器配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chess\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"<full path to chess-mcp directory>\",\r\n        \"run\",\r\n        \"src/chess_mcp/main.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> 注意：如果你看到 `Error: spawn uv ENOENT` 在……里面 [克劳德桌面](https://claude.ai/desktop)，您可能需要指定到的完整路径 `uv` 或设置环境变量 `NO_UV=1` 在配置中。\r\n\r\n## 发展\r\n\r\n欢迎投稿！如果您有任何建议或改进，请打开问题或提交拉取请求。\r\n\r\n此项目使用 [`uv`](https://github.com/astral-sh/uv) 管理依赖关系。安装 `uv` 按照您平台的说明进行操作：\r\n\r\n```bash\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n然后，您可以创建一个虚拟环境，并使用以下命令安装依赖项：\r\n\r\n```bash\r\nuv venv\r\nsource .venv/bin/activate  # On Unix/macOS\r\n.venv\\Scripts\\activate     # On Windows\r\nuv pip install -e .\r\n```\r\n\r\n### 测试\r\n\r\n该项目包括一个测试套件，可确保功能并帮助防止回归。\r\n\r\n使用pytest运行测试：\r\n\r\n```bash\r\n# Install development dependencies\r\nuv pip install -e \".[dev]\"\r\n\r\n# Run the tests\r\npytest\r\n\r\n# Run with coverage report\r\npytest --cov=src --cov-report=term-missing\r\n```\r\n\r\n## 可用工具\r\n\r\n### 玩家信息\r\n\r\n- `get_player_profile` -从Chess.com获取玩家资料\r\n- `get_player_stats` -从Chess.com获取玩家的统计数据\r\n- `is_player_online` -检查玩家当前是否在Chess.com上在线\r\n- `get_titled_players` -从Chess.com获取有头衔的玩家列表\r\n\r\n### 游戏\r\n\r\n- `get_player_current_games` -在Chess.com上获取玩家正在进行的游戏\r\n- `get_player_games_by_month` -从Chess.com获取特定月份的玩家游戏\r\n- `get_player_game_archives` -在Chess.com上获取玩家每月可用的游戏档案列表\r\n- `download_player_games_pgn` -从Chess.com下载特定月份所有游戏的PGN文件\r\n\r\n### 俱乐部\r\n\r\n- `get_club_profile` -在Chess.com上获取俱乐部信息\r\n- `get_club_members` -在Chess.com上获取俱乐部会员\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n______________________________________________________________________\r\n",
+ "config": {
+  "chess": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "pab1it0/chess-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "3282",
+ "kind": "mcp",
+ "name": "weather-32",
+ "fingerprint_md5": "8b27c474bc6baff96be87b2bf5c95321",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# WeatherAPI MCP服务器\r\n\r\n使用WeatherAPI提供当前天气和空气质量数据的MCP服务器。\r\n\r\n## 特性\r\n\r\n- 获取任何城市的当前天气数据\r\n- 空气质量信息（可选）\r\n- 天气资源的动态URI支持\r\n- 与n8n、Claude桌面应用程序、Windsurf IDE、Cursor IDE和其他MCP客户端轻松集成\r\n\r\n## 入门指南\r\n\r\n### 获取WeatherAPI密钥\r\n\r\n1. 首选 [WeatherAPI.com 网站](https://www.weatherapi.com)\r\n1. 注册一个免费帐户\r\n1. 登录后，转到您的仪表板\r\n1. 从“API密钥”部分复制您的API密钥\r\n\r\n### MCP配置\r\n\r\n将以下配置添加到Windsurf MCP配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@swonixs/weatherapi-mcp\"],\r\n      \"env\": {\r\n        \"WEATHER_API_KEY\": \"YOUR_API_KEY_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `YOUR_API_KEY_HERE` 使用您从WeatherAPI.com获得的API密钥。\r\n\r\n### 工具\r\n\r\n#### get_weather\r\n\r\n获取指定城市的当前天气数据。\r\n\r\n参数：\r\n\r\n- `location` （string）：城市名称\r\n\r\n示例响应：\r\n\r\n```json\r\n{\r\n  \"location\": \"London\",\r\n  \"country\": \"United Kingdom\",\r\n  \"temp_c\": 15.0,\r\n  \"condition\": \"Partly cloudy\",\r\n  \"humidity\": 71,\r\n  \"wind_kph\": 14.4,\r\n  \"air_quality\": {\r\n    \"co\": 230.3,\r\n    \"no2\": 13.5,\r\n    \"o3\": 52.9,\r\n    \"pm2_5\": 8.5,\r\n    \"pm10\": 12.1,\r\n    \"us-epa-index\": 1\r\n  }\r\n}\r\n```\r\n\r\n### 仓库\r\n\r\n[WeatherAPI MCP服务器](https://github.com/swonixs/weatherapi-mcp)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@swonixs/weatherapi-mcp"
+   ],
+   "env": {
+    "WEATHER_API_KEY": "YOUR_API_KEY_HERE"
+   }
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "SQLBot-skills-main",
+ "kind": "skill",
+ "name": "SQLBot-skills-main",
+ "fingerprint_md5": "",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# SQLBot-skills-main\n\n管理 SQLBot 工作空间、数据源、问答流程和仪表盘，包括列出和切换工作空间或数据源上下文、对数据源提问、列出仪表盘、查看仪表盘详情以及导出为 JPG/PNG 或 PDF。",
+ "config": {}
+}

@@ -1,0 +1,18 @@
+{
+ "id": "3292",
+ "kind": "mcp",
+ "name": "weather-mcp-server-3",
+ "fingerprint_md5": "d49be4d2904cbd006a3e83dc0de0c9e5",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# Weather API MCP Server\r\n\r\n[报告错误](https://github.com/ezh0v/weather-mcp-server/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml) | [请求功能](https://github.com/ezh0v/weather-mcp-server/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.yml)\r\n\r\n一个轻量级的模型上下文协议（MCP）服务器，使像Claude这样的AI助手能够检索并解释实时天气数据。\r\n\r\n## 在Claude桌面版上安装\r\n\r\n要在Claude Desktop中使用您的MCP服务器，请将其添加到您的Claude配置中：\r\n\r\n#### 1. 本地模式\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather-mcp-server\": {\r\n      \"command\": \"/path/to/weather-mcp-server\",\r\n      \"env\": {\r\n        \"WEATHER_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您可以在个人账户中获取API密钥 [WeatherAPI（天气应用程序编程接口）](https://www.weatherapi.com/my/)。\r\n\r\n#### 2. 远程模式\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather-mcp-server\": {\r\n      \"url\": \"http://host:port/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 从源代码构建\r\n\r\n你可以使用 `go` 在（指定位置）构建二进制文件 `cmd/github-mcp-server` 目录。\r\n\r\n```shell\r\ngo build -o weather-mcp-server ./cmd/weather-mcp-server\r\n```\r\n\r\n## 使用MCP与Docker容器\r\n\r\n#### 1. 构建Docker镜像：\r\n\r\n```shell\r\ndocker build -t weather-mcp-server .\r\n```\r\n\r\n#### 2. 运行Docker容器：\r\n\r\n```shell\r\ndocker run -e WEATHER_API_KEY=your-api-key -d --name weather-mcp-server -p 8000:8000 weather-mcp-server\r\n```\r\n\r\n替换 `your-api-key` 根据你的实际情况 [WeatherAPI（天气应用程序编程接口）](https://www.weatherapi.com/my/) API密钥。\r\n\r\n## 工具\r\n\r\n- **当前天气** - 获取某个城市的当前天气\r\n\r\n  - `city`城市名称（字符串，必填）\r\n\r\n## 项目结构\r\n\r\n该项目被组织成几个关键目录：\r\n\r\n```shell\r\n├── cmd\r\n│   └── weather-mcp-server\r\n├── internal\r\n│   └── server\r\n│       ├── handlers # MCP handlers\r\n│       ├── services # Business logic layer\r\n│       │   ├── core # Core application logic\r\n│       │   └── mock # Mock services for testing\r\n│       ├── tools # MCP tools\r\n│       └── view # Templates for displaying messages\r\n└── pkg\r\n```\r\n\r\n## 测试\r\n\r\n如果你正在添加新功能，请务必为它们编写测试。\r\n\r\n#### 1. 安装mockgen工具：\r\n\r\n```shell\r\ngo install go.uber.org/mock/mockgen@latest\r\n```\r\n\r\n参见安装指南 [go.uber.org/mock 翻译为中文是：“Uber 的 Go 语言 mock 包”](https://github.com/uber-go/mock?tab=readme-ov-file#installation)。\r\n\r\n#### 2. 使用以下命令生成模拟文件：\r\n\r\n```shell\r\nmake generate-mocks\r\n```\r\n\r\n#### 3. 运行单元测试：\r\n\r\n```shell\r\nmake run-tests\r\n```\r\n\r\n## 贡献；助力\r\n\r\n欢迎随时提交问题或发送包含改进的拉取请求。提前感谢您的帮助！\r\n\r\n请遵循 [贡献指南](.github/CONTRIBUTING.md).\r\n\r\n## 许可证\r\n\r\n这台MCP服务器已获得以下授权/许可： [MIT许可证](LICENSE)。\r\n",
+ "config": {
+  "weather-mcp-server": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://host:port/sse"
+  }
+ }
+}

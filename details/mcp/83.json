@@ -1,0 +1,24 @@
+{
+ "id": "83",
+ "kind": "mcp",
+ "name": "browser-use",
+ "fingerprint_md5": "a65b9b2fbcedc7178e740db9dd338301",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP浏览器代理\r\n\r\n[](https://smithery.ai/server/@ashley-ha/mcp-manus)\r\n\r\n建在AGI House MCP黑客马拉松上\r\n\r\n[](https://glama.ai/mcp/servers/@ashley-ha/mcp-manus)\r\n\r\n## 概述\r\n\r\n此项目是一个浏览器自动化代理，它使用模型上下文协议（MCP）来启用浏览器交互。它通过我们的MCP服务器提供了Claude和浏览器自动化功能之间的无缝集成。\r\n\r\n感谢Browser Use的浏览器代理功能为我们的MCP服务器供电！\r\n\r\n## 系统要求\r\n\r\n- macOS（达尔文24.2.0）\r\n- Python 3.12或更高版本\r\n- `uv` 包管理器\r\n- 谷歌Chrome浏览器（在运行任务之前，请确保您的浏览器已关闭。)\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面浏览器自动化代理 [史密瑟里](https://smithery.ai/server/@ashley-ha/mcp-manus):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @ashley-ha/mcp-manus --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone <repository-url>\r\ncd mcp\r\n```\r\n\r\n2. 使用以下命令设置Python环境 `uv`:\r\n\r\n```bash\r\nuv venv\r\nsource .venv/bin/activate\r\nuv sync\r\n```\r\n\r\n## 配置\r\n\r\n### Claude桌面配置\r\n\r\n创建或修改您的Claude Desktop配置文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"browser-use\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/ABSOLUTE/PATH/TO/mcp\",\r\n        \"run\",\r\n        \"browser-use.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/ABSOLUTE/PATH/TO/browser-use` 带有项目目录的绝对路径。\r\n\r\n### 浏览器配置\r\n\r\n该代理已配置为使用具有以下默认设置的Google Chrome：\r\n\r\n- 非无头开发模式\r\n- 窗口大小：1280x1100\r\n- 禁用安全功能进行测试\r\n- 录制路径：。/tmp/录制\r\n\r\n## 特性\r\n\r\n- 通过MCP工具实现浏览器自动化\r\n- 状态管理和规划能力\r\n- 交互式元素检测和操作\r\n- 可配置的浏览器上下文\r\n- 日志记录和调试支持\r\n\r\n## 用法\r\n\r\n代理提供两个主要工具：\r\n\r\n1. `get_planner_state`：检索当前浏览器状态和计划上下文\r\n1. `execute_actions`：在浏览器中执行计划的操作\r\n\r\n## 发展\r\n\r\n### 日志记录\r\n\r\n该项目使用Python的内置日志记录，配置如下：\r\n\r\n- 所有日志都指向stderr\r\n- 自定义格式： `%(levelname)-8s [%(name)s] %(message)s`\r\n- 根记录器级别：信息\r\n- 第三方记录器级别：警告\r\n\r\n### 项目结构\r\n\r\n- `browser-use.py`：主要入口点和服务器实现\r\n- `tmp/recordings`：浏览器会话录制目录\r\n- 通过以下方式管理依赖关系 `uv`\r\n\r\n## 贡献\r\n\r\n该项目是在AGI House MCP黑客马拉松期间建造的。欢迎投稿！\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n版权所有（c）2025哈载云\r\n\r\n特此免费授予任何获得本软件和相关文档文件（“软件”）副本的人在不受限制的情况下处理软件的权限，包括但不限于使用、复制、修改、合并、发布、分发、再许可和/或销售软件副本的权利，以及允许获得软件的人这样做，但须符合以下条件：\r\n\r\n上述版权声明和本许可声明应包含在软件的所有副本或实质部分中。\r\n\r\n软件按“原样”提供，不提供任何明示或暗示的保证，包括但不限于适销性、特定用途适用性和非侵权性的保证。在任何情况下，作者或版权持有人均不对因软件或软件的使用或其他交易而产生或与之相关的任何索赔、损害赔偿或其他责任承担责任，无论是在合同、侵权或其他诉讼中。\r\n",
+ "config": {
+  "browser-use": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/ABSOLUTE/PATH/TO/mcp",
+    "run",
+    "browser-use.py"
+   ],
+   "env": {}
+  }
+ }
+}

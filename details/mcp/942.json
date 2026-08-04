@@ -1,0 +1,22 @@
+{
+ "id": "942",
+ "kind": "mcp",
+ "name": "youtube-mcp-server",
+ "fingerprint_md5": "f10c24a383a7813d951e9d2d31bef26c",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# 🎬 YouTube MCP服务器：Cloudflare Workers上的远程MCP\r\n\r\n强大的模型上下文协议（MCP）服务器，为AI助手提供全面的YouTube分析和频道管理功能。使用TypeScript构建，部署在Cloudflare Workers上，并使用 [谷歌OAuth](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-google-oauth).\r\n\r\n## ✨ 特性\r\n\r\n### 📊 **YouTube分析**\r\n\r\n- **渠道绩效**：收入、浏览量、用户增长、参与度指标\r\n- **视频分析**：对保留率和流量来源进行深入的性能分析\r\n- **观众洞察**：人口统计、地理、设备使用和查看模式\r\n- **热门内容**：根据观看次数、收入或参与度确定表现最佳的视频\r\n\r\n### 🎯 **内容战略工具**\r\n\r\n- **趋势分析**：基于当前趋势的人工智能内容建议\r\n- **竞争对手情报**：分析竞争对手渠道，找出内容差距\r\n- **性能优化**：基于渠道数据的建议\r\n\r\n### 🔍 **YouTube数据访问**\r\n\r\n- **视频搜索**：使用高级过滤功能在YouTube上查找视频\r\n- **频道信息**：获取详细的频道统计数据和最近上传的内容\r\n- **视频详细信息**：全面的元数据、统计数据和参与度数据\r\n\r\n## 🛠️ 快速开始\r\n\r\n### 先决条件\r\n\r\n- 上传内容的YouTube频道\r\n- 启用YouTube API的谷歌云控制台项目\r\n- Cloudflare Workers帐户\r\n\r\n### 1.克隆和安装\r\n\r\n```bash\r\ngit clone https://github.com/lauragift21/youtube-mcp-server.git\r\ncd youtube-mcp-server\r\nnpm install\r\n```\r\n\r\n### 2.配置OAuth\r\n\r\n1. **创建Google OAuth凭据**:\r\n\r\n   - 首选 [谷歌云控制台](https://console.cloud.google.com/)\r\n   - 启用YouTube Data API v3和YouTube Analytics API\r\n   - 创建OAuth 2.0凭据（Web应用程序）\r\n   - 添加重定向URI: `https://your-worker.workers.dev/callback`\r\n\r\n1. **设置环境变量**:\r\n\r\n   ```bash\r\n   npx wrangler secret put GOOGLE_OAUTH_CLIENT_ID\r\n   npx wrangler secret put GOOGLE_OAUTH_CLIENT_SECRET\r\n   npx wrangler secret put COOKIE_ENCRYPTION_KEY\r\n   ```\r\n\r\n您可以为生成一个随机字符串 `COOKIE_ENCRYPTION_KEY`\r\n\r\n### 3.部署\r\n\r\n```bash\r\nnpx wrangler deploy\r\n```\r\n\r\n### 连接到克劳德桌面\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube-mcp-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-remote\",\r\n        \"https://your-deployment.workers.dev/sse\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 连接到Cloudflare AI游乐场\r\n\r\n您可以从Cloudflare AI Playground连接您的MCP服务器，这是一个远程MCP客户端：\r\n\r\n- 首选https://playground.ai.cloudflare.com/\r\n- 输入您部署的MCP服务器URL（远程MCP服务器authless。<your-account>.eworkers.dv/sse）\r\n- 现在，您可以直接在操场上使用MCP工具！\r\n\r\n## 🔧 可用工具\r\n\r\n### 分析工具\r\n\r\n- `youtube_getChannelAnalytics` -获取渠道性能指标\r\n- `youtube_analyzeVideoPerformance` -深入了解视频表演\r\n- `youtube_getTopVideos` -查找性能最佳的内容\r\n- `youtube_getAudienceDemographics` -了解你的观众\r\n\r\n### 内容战略工具\r\n\r\n- `youtube_suggestContentIdeas` -基于AI的主题建议\r\n- `youtube_analyzeCompetitors` -竞争分析和基准测试\r\n\r\n### 数据工具\r\n\r\n- `youtube_searchVideos` -使用高级过滤器搜索YouTube\r\n- `youtube_getVideoDetails` -获取全面的视频信息\r\n- `youtube_getChannelInfo` -渠道概述和统计\r\n- `youtube_getChannelVideos` -最近从任何频道上传的内容\r\n\r\n## 💡 查询示例\r\n\r\n使用Claude Desktop尝试以下问题：\r\n\r\n### **📈 渠道分析**\r\n\r\n> *“显示我过去30天的YouTube频道表现”*\r\n\r\n### **🎯 内容策略**\r\n\r\n> *“我应该制作一个关于人工智能/技术领域下一步的视频吗？”*\r\n\r\n> *“分析我的竞争对手，向我展示我错过的内容机会”*\r\n\r\n### **👥 观众洞察**\r\n\r\n> *“谁是我的观众？显示人口统计和地理数据”*\r\n\r\n## 🏗️ 建筑\r\n\r\n```\r\n┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐\r\n│   Claude Desktop │────│  MCP Server      │────│ YouTube APIs    │\r\n│   (MCP Client)   │    │  (Cloudflare)    │    │ (Google)        │\r\n└─────────────────┘    └──────────────────┘    └─────────────────┘\r\n                                │\r\n                       ┌──────────────────┐\r\n                       │  OAuth Provider  │\r\n                       │  (Google Auth)   │\r\n                       └──────────────────┘\r\n```\r\n\r\n### 关键组件\r\n\r\n- **MCP服务器**：处理工具请求和API通信\r\n- **OAuth提供者**：管理Google身份验证和令牌刷新\r\n- **YouTube数据API**：公共视频和频道信息\r\n- **YouTube分析API**：私人渠道分析和收入数据\r\n\r\n## 🔗 链接\r\n\r\n- **[模型上下文协议](https://modelcontextprotocol.io/)** -了解MCP\r\n- **[YouTube数据API](https://developers.google.com/youtube/v3)** -YouTube API文档\r\n- **[Cloudflare员工](https://workers.cloudflare.com/)** -无服务器部署平台\r\n- **[克劳德桌面](https://claude.ai/desktop)** -支持MCP的AI助手\r\n\r\n______________________________________________________________________\r\n\r\n**内置于❤️ 靠近 [个人礼物](https://github.com/lauragift21) |由MCP和Cloudflare Workers提供技术支持**\r\n",
+ "config": {
+  "youtube-mcp-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://your-deployment.workers.dev/sse"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "376",
+ "kind": "mcp",
+ "name": "plex-2",
+ "fingerprint_md5": "cbbaf2f12832f648ecb146406c1710bf",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp综合体\r\n\r\nPlex Media server的MCP服务器，专注于媒体发现、搜索、库管理和播放控制。24个专为与Claude和其他LLM代理一起使用而设计的粒度工具。\r\n\r\n## 先决条件\r\n\r\n- Python 3.14+\r\n- [紫外线](https://docs.astral.sh/uv/)\r\n- 跑步 [Plex媒体服务器](https://www.plex.tv/)\r\n- Plex身份验证令牌\r\n\r\n## 设置\r\n\r\n### 1.获取您的Plex令牌\r\n\r\n查找Plex令牌的最简单方法：\r\n\r\n1. 登录到…… [Plex Web应用程序](https://app.plex.tv)\r\n1. 浏览到任何媒体项目并单击 **显示简介** （或 **...** > **显示简介**)\r\n1. 点击 **查看XML** 在左下角\r\n1. 在URL栏中，找到 `X-Plex-Token=` 参数——这是你的令牌\r\n\r\n或者，检查 [Plex支持文章](https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/) 对于其他方法。\r\n\r\n### 2.安装\r\n\r\n```bash\r\ncd mcp-plex\r\nuv sync\r\n```\r\n\r\n### 3.配置环境变量\r\n\r\n在运行服务器之前设置这些：\r\n\r\n```bash\r\nexport PLEX_SERVER_URL=\"http://your-plex-server:32400\"\r\nexport PLEX_TOKEN=\"your_plex_token\"\r\n```\r\n\r\n### 4.测试连接\r\n\r\n```bash\r\nuv run mcp-plex-server\r\n```\r\n\r\n服务器在启动时连接到您的Plex服务器并验证令牌。如果连接失败，请检查您的服务器URL和令牌是否正确。\r\n\r\n## 克劳德桌面/Claude代码配置\r\n\r\n添加到您的MCP服务器配置中。如果从PyPI安装：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"plex\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-plex-server\"],\r\n      \"env\": {\r\n        \"PLEX_SERVER_URL\": \"http://your-plex-server:32400\",\r\n        \"PLEX_TOKEN\": \"your_plex_token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者，如果从本地克隆运行：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"plex\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"/path/to/mcp-plex\", \"run\", \"mcp-plex-server\"],\r\n      \"env\": {\r\n        \"PLEX_SERVER_URL\": \"http://your-plex-server:32400\",\r\n        \"PLEX_TOKEN\": \"your_plex_token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### 发现\r\n\r\n|工具|参数|说明|\r\n|------|-----------|-------------|\r\n| `search_media` | `query`, `media_type=\"\"`, `limit=20` |搜索所有图书馆。可选类型过滤器：“电影”、“节目”、“剧集”、“艺术家”、“专辑”、“曲目”。 |\r\n| `get_recently_added` | `limit=20`, `library_name=\"\"` |最近添加的媒体，可选择过滤到库中。 |\r\n| `get_on_deck` | `limit=10` |继续观看/下一集列表。 |\r\n\r\n### 图书馆浏览\r\n\r\n|工具|参数|说明|\r\n|------|-----------|-------------|\r\n| `get_libraries` |（无）|列出所有具有类型和项目计数的库节。 |\r\n| `get_library_contents` | `library_name`, `sort=\"titleSort\"`, `limit=50` |浏览库。按标题、添加日期、年份或评级排序。 |\r\n| `get_media_details` | `rating_key` |一个项目的完整细节：摘要、流派、演员、导演、评级。 |\r\n| `get_library_stats` | `library_name=\"\"` |一个或所有库的项目计数和统计数据。 |\r\n\r\n### 节目\r\n\r\n|工具|参数|说明|\r\n|------|-----------|-------------|\r\n| `get_seasons` | `rating_key` |列出电视节目的季节。 |\r\n| `get_episodes` | `rating_key`, `season_number=0` |列出剧集（全部或按季）。 |\r\n\r\n### 集合\r\n\r\n|工具|参数|说明|\r\n|------|-----------|-------------|\r\n| `get_collections` | `library_name` |列出库中的集合（包括智能/常规类型）。 |\r\n| `get_collection_items` | `rating_key` |获取收藏详细信息及其包含的所有项目。 |\r\n| `create_collection` | `library_name`, `title`, `rating_keys` |从特定项目创建常规集合。 |\r\n| `create_smart_collection` | `library_name`, `title`, `filters`, `libtype=\"\"`, `sort=\"\"`, `limit=0` |创建智能（基于过滤器）自动更新集合。 |\r\n| `edit_collection` | `rating_key`, `title=\"\"`, `summary=None`, `sort_order=\"\"`, `mode=\"\"` |编辑集合元数据（标题、摘要、排序、显示模式）。 |\r\n| `add_to_collection` | `rating_key`, `item_rating_keys` |将项目添加到常规收藏中。 |\r\n| `remove_from_collection` | `rating_key`, `item_rating_keys` |从常规收藏中删除项目。 |\r\n| `delete_collection` | `rating_key` |删除收藏集（不影响媒体项目）。 |\r\n\r\n### 播放列表\r\n\r\n|工具|参数|说明|\r\n|------|-----------|-------------|\r\n| `get_playlists` |（无）|列出服务器上的所有播放列表。 |\r\n| `get_playlist_items` | `rating_key` |获取播放列表中的项目。 |\r\n\r\n### 观察状态\r\n\r\n|工具|参数|说明|\r\n|------|-----------|-------------|\r\n| `mark_watched` | `rating_key` |将电影、剧集或曲目标记为已完全观看。 |\r\n| `mark_unwatched` | `rating_key` |将项目标记为未监视，重置进度。 |\r\n| `remove_from_continue_watching` | `rating_key` |从“继续观看/在甲板上”中删除电影或剧集。 |\r\n| `set_playback_progress` | `rating_key`, `progress_ms` |以毫秒为单位设置播放位置（必须大于0）。 |\r\n\r\n### 管理\r\n\r\n|工具|参数|说明|\r\n|------|-----------|-------------|\r\n| `scan_library` | `library_name` |触发后台库扫描。 |\r\n\r\n## 发展\r\n\r\n```bash\r\nuv run mcp-plex-server              # Run the server\r\nuv run ruff check src/       # Lint\r\nuv run ruff format src/      # Format\r\nuv run pyright src/          # Type check\r\n```\r\n\r\n### 预提交钩子\r\n\r\n此项目使用 [左钩](https://github.com/evilmartians/lefthook) 用于预提交检查。安装时使用 `brew install lefthook` （或参见 [其他安装方法](https://github.com/evilmartians/lefthook/blob/master/docs/install.md))那么：\r\n\r\n```bash\r\nlefthook install\r\n```\r\n",
+ "config": {
+  "plex": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-plex-server"
+   ],
+   "env": {
+    "PLEX_SERVER_URL": "http://your-plex-server:32400",
+    "PLEX_TOKEN": "your_plex_token"
+   }
+  }
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "id": "2416",
+ "kind": "mcp",
+ "name": "article-mcp",
+ "fingerprint_md5": "2f69a0af88cf984aa893e5636a9768a7",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# Article MCP 文献搜索服务器\r\n\r\n\r\n基于 FastMCP v2.13+ 的异步文献搜索工具，集成 Europe PMC、PubMed、arXiv、CrossRef、OpenAlex 等数据源。\r\n\r\n## 快速开始\r\n\r\n```bash\r\n# 安装\r\nuvx article-mcp\r\n\r\n# 或本地开发\r\ngit clone https://github.com/gqy20/article-mcp.git && cd article-mcp\r\nuv sync\r\nuv run python -m article_mcp\r\n```\r\n\r\n## 配置\r\n\r\n### Claude Desktop\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"article-mcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"article-mcp\"],\r\n      \"env\": {\r\n        \"EASYSCHOLAR_SECRET_KEY\": \"your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n`EASYSCHOLAR_SECRET_KEY` 为可选项，访问 [EasyScholar](https://www.easyscholar.cc) 注册获取。\r\n\r\n### Cherry Studio\r\n\r\n同上，如遇 Unicode 问题添加 `env: {\"PYTHONIOENCODING\": \"utf-8\"}`\r\n\r\n## 5 个核心工具\r\n\r\n| 工具 | 功能 | 数据源 | 主要参数 |\r\n|------|------|--------|----------|\r\n| `search_literature` | 多源文献搜索 | Europe PMC, PubMed, arXiv, CrossRef, OpenAlex | `keyword`, `max_results` |\r\n| `get_article_details` | 获取文献详情（支持参数容错） | Europe PMC, CrossRef, OpenAlex, arXiv, PubMed | `identifier`, `id_type`, `sources` |\r\n| `get_references` | 获取参考文献 | Europe PMC, CrossRef, PubMed | `identifier`, `max_results` |\r\n| `get_literature_relations` | 文献关系分析 | Europe PMC, PubMed, CrossRef, OpenAlex | `identifiers`, `relation_types` |\r\n| `get_journal_quality` | 期刊质量评估 | EasyScholar, OpenAlex | `journal_name`, `include_metrics` |\r\n\r\n## 数据源说明\r\n\r\n### Europe PMC\r\n- **内容**：生物医学文献全文、摘要\r\n- **限制**：1 req/s\r\n- **用途**：搜索、全文获取、参考文献\r\n\r\n### PubMed\r\n- **内容**：生物医学文献摘要\r\n- **限制**：无严格限制\r\n- **用途**：搜索补充\r\n\r\n### arXiv\r\n- **内容**：预印本论文\r\n- **限制**：3 req/request\r\n- **用途**：预印本搜索\r\n\r\n### CrossRef\r\n- **内容**：跨出版社元数据\r\n- **限制**：50 req/s\r\n- **用途**：参考文献查询\r\n\r\n### OpenAlex\r\n- **内容**：开放学术图谱\r\n- **限制**：无限制\r\n- **用途**：引用关系、h 指标\r\n\r\n### EasyScholar\r\n- **内容**：期刊质量指标\r\n- **限制**：建议配置密钥\r\n- **用途**：影响因子、分区\r\n\r\n## 使用示例\r\n\r\n```json\r\n// 搜索（默认使用 Europe PMC + PubMed）\r\n{\"keyword\": \"machine learning\", \"max_results\": 10}\r\n\r\n// 指定数据源搜索\r\n{\"keyword\": \"cancer\", \"sources\": [\"europe_pmc\", \"arxiv\"]}\r\n\r\n// 获取全文\r\n{\"pmcid\": \"PMC1234567\"}\r\n\r\n// 获取指定章节\r\n{\"pmcid\": \"PMC1234567\", \"sections\": [\"methods\", \"results\"]}\r\n\r\n// 批量获取\r\n{\"pmcid\": [\"PMC123\", \"PMC456\"]}\r\n\r\n// 获取参考文献（默认 Europe PMC + CrossRef）\r\n{\"identifier\": \"10.1038/nature12373\", \"max_results\": 20}\r\n\r\n// 文献关系分析\r\n{\"identifiers\": \"10.1038/nature12373\", \"relation_types\": [\"references\", \"similar\"]}\r\n\r\n// 期刊质量（EasyScholar + OpenAlex 双源）\r\n{\"journal_name\": \"Nature\", \"include_metrics\": [\"impact_factor\", \"h_index\"]}\r\n```\r\n\r\n## 参数容错特性\r\n\r\n`get_article_details` 工具会自动修正以下格式错误：\r\n\r\n| 输入 | 自动修正为 |\r\n|------|-----------|\r\n| `\"pmcid\": \"[\\\"a\\\", \\\"b\\\"]\"` | `[\"a\", \"b\"]` |\r\n| `\"sections\": \"methods\"` | `[\"methods\"]` |\r\n\r\n## API 限制汇总\r\n\r\n| API | 限制 | 用途 |\r\n|-----|------|------|\r\n| Europe PMC | 1 req/s | 全文、参考文献 |\r\n| Crossref | 50 req/s | 参考文献 |\r\n| arXiv | 3 req/request | 预印本 |\r\n| OpenAlex | 无限制 | 引用关系、指标 |\r\n| EasyScholar | 建议配置密钥 | 期刊质量 |\r\n\r\n## 故障排除\r\n\r\n| 问题 | 解决方案 |\r\n|------|---------|\r\n| `cannot import 'hdrs' from 'aiohttp'` | `uv sync --upgrade` |\r\n| MCP 服务器启动失败 | 检查配置中的路径是否使用绝对路径 |\r\n| API 请求失败 | 检查网络连接 |\r\n| 期刊质量数据缺失 | 配置 `EASYSCHOLAR_SECRET_KEY` |\r\n\r\n## 许可证\r\n\r\nMIT License\r\n",
+ "config": {
+  "article-mcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "article-mcp"
+   ],
+   "env": {
+    "EASYSCHOLAR_SECRET_KEY": "your_key_here"
+   }
+  }
+ }
+}

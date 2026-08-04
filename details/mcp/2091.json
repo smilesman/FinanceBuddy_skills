@@ -1,0 +1,24 @@
+{
+ "id": "2091",
+ "kind": "mcp",
+ "name": "zenmoney",
+ "fingerprint_md5": "3a1c8f0f7231a93013d0efc6b193f46f",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 曾金钱公司\r\n\r\nMCP服务器 [ZenMoney](https://zenmoney.ru) --从任何兼容MCP的AI客户端（Claude Desktop、Cursor等）访问您的个人财务数据。\r\n\r\n## 特性\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `sync_data` |与ZenMoney同步数据（先运行）|\r\n| `list_accounts` |列出钱包、卡和现金账户|\r\n| `list_categories` |按层次列出支出/收入类别|\r\n| `list_merchants` |列出已知的商家/收款人|\r\n| `list_transactions` |列出并过滤最近的交易|\r\n| `add_expense` |添加费用交易记录|\r\n| `add_income` |添加收入交易|\r\n| `add_transfer` |账户间转账（包括跨币种）|\r\n| `suggest_category` |获取收款人的自动建议类别|\r\n\r\n## 先决条件\r\n\r\n- Node.js>=18\r\n- A. [ZenMoney](https://zenmoney.ru) 账户\r\n- 来自的API令牌 [Zerro.app/令牌](https://zerro.app/token)\r\n\r\n## 快速开始\r\n\r\n无需克隆或构建——只需添加到MCP客户端配置中：\r\n\r\n### 克劳德桌面版\r\n\r\n添加 `~/Library/Application Support/Claude/claude_desktop_config.json` （macOS）或 `%APPDATA%\\Claude\\claude_desktop_config.json` （Windows）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"zenmoney\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"zenmoney-mcp\"],\r\n      \"env\": {\r\n        \"ZENMONEY_TOKEN\": \"your_token_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n添加 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"zenmoney\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"zenmoney-mcp\"],\r\n      \"env\": {\r\n        \"ZENMONEY_TOKEN\": \"your_token_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add zenmoney -- npx -y zenmoney-mcp\r\n```\r\n\r\n替换 `your_token_here` 您的令牌来自 [Zerro.app/令牌](https://zerro.app/token).\r\n\r\n### 克劳德桌面（MCPB捆绑包）\r\n\r\n如果您更喜欢不编辑JSON的一键安装，请构建一个 `.mcpb` 将其捆绑并拖动到Claude Desktop中→ 设置→ 扩展名：\r\n\r\n```bash\r\nnpm install\r\nnpm run pack:mcpb\r\n# → dist/zenmoney-mcp-<version>.mcpb\r\n```\r\n\r\n安装时，Claude Desktop将提示您输入ZenMoney代币（存储在操作系统钥匙链中）。\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone https://github.com/a-tarasoff/zenmoney-mcp.git\r\ncd zenmoney-mcp\r\nnpm install\r\nnpm run build\r\ncp .env.example .env  # add your token\r\n```\r\n\r\n## 用法\r\n\r\n配置后，开始对话并要求您的AI客户端：\r\n\r\n1. **先同步** --“同步我的ZenMoney数据”\r\n1. **浏览** --“显示我的帐户”、“列出我的类别”\r\n1. **查询** --“显示过去7天的支出”，“列出1月1日至31日的交易”，“我在杂货上花了多少钱？”\r\n1. **添加交易记录** --“今天加500卢布的咖啡费”\r\n1. **转移** --“将1000美元从支票转账到欧元卡，收到920欧元”\r\n\r\n## 贡献\r\n\r\nPR欢迎！对于bug或功能请求，请随时打开问题。\r\n\r\n## 许可证\r\n\r\n[MIT](LICENSE)\r\n",
+ "config": {
+  "zenmoney": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "zenmoney-mcp"
+   ],
+   "env": {
+    "ZENMONEY_TOKEN": "your_token_here"
+   }
+  }
+ }
+}

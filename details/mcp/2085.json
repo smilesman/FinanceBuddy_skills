@@ -1,0 +1,21 @@
+{
+ "id": "2085",
+ "kind": "mcp",
+ "name": "yahoo-finance-2",
+ "fingerprint_md5": "1e642318a0867ea827ba5a31909cd240",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP雅虎财经\r\n\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io) 用于与雅虎财经互动的(MCP)服务器。该服务器提供获取定价、公司信息等工具。\r\n\r\n> 请注意 `mcp-yahoo-finance` 目前正处于初期开发阶段。随着我继续开发和改进服务器，其功能和可用工具可能会发生变化并进行扩展。\r\n\r\n## 安装\r\n\r\n你无需手动安装 `mcp-yahoo-finance` 如果你使用 [`uv`](https://docs.astral.sh/uv/)我们会使用 [`uvx`](https://docs.astral.sh/uv/guides/tools/) 直接运行 `mcp-yahoo-finance`。\r\n\r\n如果你只是想使用MCP服务器，我建议采用这种方法。\r\n\r\n### 使用 pip\r\n\r\n使用 `pip`。\r\n\r\n```sh\r\npip install mcp-yahoo-finance\r\n```\r\n\r\n### 使用 Git\r\n\r\n你也可以在将仓库克隆到你的机器后安装该包。\r\n\r\n```sh\r\ngit clone git@github.com:maxscheijen/mcp-yahoo-finance.git\r\ncd mcp-yahoo-finance\r\nuv sync\r\n```\r\n\r\n## 配置\r\n\r\n### Claude Desktop（可译为“Claude桌面版”）\r\n\r\n把这个加到你的（列表/计划/内容等）里 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"yahoo-finance\": {\r\n            \"command\": \"uvx\",\r\n            \"args\": [\"mcp-yahoo-finance\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n你也可以使用 Docker：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"yahoo-finance\": {\r\n            \"command\": \"docker\",\r\n            \"args\": [\"run\", \"-i\", \"--rm\", \"IMAGE\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n### VSCode（Visual Studio Code，简称VSCode）\r\n\r\n把这个加到你的（列表/计划/等）里 `.vscode/mcp.json`：\r\n\r\n```json\r\n{\r\n    \"servers\": {\r\n        \"yahoo-finance\": {\r\n            \"command\": \"uvx\",\r\n            \"args\": [\"mcp-yahoo-finance\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 问题示例\r\n\r\n1. “苹果的股价是多少？”\r\n1. “苹果和谷歌的股票价格有什么不同？”\r\n1. “2024年1月1日至2025年1月1日期间，苹果公司的股价变化了多少？”\r\n1. “AAPL的期权到期日有哪些可用选项？”\r\n1. “给我显示一下AAPL在2024年1月19日到期的期权链”\r\n1. “特斯拉的看涨期权和看跌期权是什么？”\r\n\r\n## 构建\r\n\r\nDocker：\r\n\r\n```sh\r\ndocker build -t [IMAGE] .\r\n```\r\n\r\n## 使用MCP Inspector进行测试\r\n\r\n```sh\r\nnpx @modelcontextprotocol/inspector uv run mcp-yahoo-finance\r\n```\r\n",
+ "config": {
+  "yahoo-finance": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-yahoo-finance"
+   ],
+   "env": {}
+  }
+ }
+}

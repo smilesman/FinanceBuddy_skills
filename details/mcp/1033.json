@@ -1,0 +1,23 @@
+{
+ "id": "1033",
+ "kind": "mcp",
+ "name": "duckdb",
+ "fingerprint_md5": "46d04c189dadaa55d6c5b8ead27545be",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp服务器duckdb\r\n\r\n\r\nDuckDB的模型上下文协议（MCP）服务器实现，通过MCP工具提供数据库交互功能。\r\n让LLM分析它会很有趣。DuckDB适用于本地分析。\r\n\r\n## 概述\r\n\r\n此服务器允许通过模型上下文协议与DuckDB数据库进行交互，允许进行查询、表创建和模式检查等数据库操作。\r\n\r\n## 组件\r\n\r\n### 资源\r\n\r\n目前，没有实现自定义资源。\r\n\r\n### 提示\r\n\r\n目前，没有实现自定义提示。\r\n\r\n### 工具\r\n\r\n服务器实现了以下数据库交互工具：\r\n\r\n- **怎么翻译**：在DuckDB数据库上执行任何SQL查询\r\n  - **输入**: `query` （string）-任何有效的DuckDB SQL语句\r\n  - **输出**：查询结果为文本（或CREATE/INSERT等操作的成功消息）\r\n\r\n> \\[！注意\\]\r\n> 服务器提供单一的统一 `query` 函数而不是单独的专用函数，因为现代LLM可以为任何数据库操作（SELECT、CREATE TABLE、JOIN等）生成适当的SQL，而不需要单独的端点。\r\n\r\n> \\[！注意\\]\r\n> 当服务器在中运行时 `readonly` 在模式下，强制执行DuckDB的本机只读保护。\r\n> 这确保了语言模型（LLM）无法执行任何写入操作（CREATE、INSERT、UPDATE、DELETE），从而保持数据完整性并防止意外更改。\r\n\r\n## 配置\r\n\r\n### 所需参数\r\n\r\n- **db路径** （string）：DuckDB数据库文件的路径\r\n  - 如果数据库文件和父目录不存在，服务器将自动创建它们\r\n  - 如果 `--readonly` 如果指定了数据库文件，但数据库文件不存在，服务器将无法启动，并出现错误\r\n\r\n### 可选参数\r\n\r\n- **--只读**：以只读模式运行服务器（默认值： `false`)\r\n  - **描述**：设置此标志后，服务器将以只读模式运行。这意味着：\r\n    - DuckDB数据库将通过以下方式打开 `read_only=True`，防止任何写入操作。\r\n    - 如果指定的数据库文件不存在 **不会** 被创造出来。\r\n    - **安全利益**：防止语言模型（LLM）执行任何写入操作，确保数据库保持不变。\r\n  - **参考**：有关DuckDB中只读连接的更多详细信息，请参阅 [DuckDB Python API文档](https://duckdb.org/docs/api/python/dbapi.html#read_only-connections).\r\n- **--保持联系**：重复使用单个DuckDB连接模式（默认： `false`)\r\n  - **描述**：设置此标志后，Re在整个服务器生命周期内使用单个DuckDB连接。启用TEMP对象和稍快的查询，但可以对文件进行独占锁定。\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装适用于Claude Desktop的DuckDB服务器 [史密瑟里](https://smithery.ai/server/mcp-server-duckdb):\r\n\r\n```bash\r\nnpx -y @smithery/cli install mcp-server-duckdb --client claude\r\n```\r\n\r\n### Claude桌面集成\r\n\r\n在Claude Desktop的配置文件中配置MCP服务器：\r\n\r\n#### MacOS\r\n\r\n地点： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n#### 视窗\r\n\r\n地点： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"duckdb\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"mcp-server-duckdb\",\r\n        \"--db-path\",\r\n        \"~/mcp-server-duckdb/data/data.db\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n- 注： `~/mcp-server-duckdb/data/data.db` 应替换为DuckDB数据库文件的实际路径。\r\n\r\n## 发展\r\n\r\n### 先决条件\r\n\r\n- Python与 `uv` 包管理器\r\n- DuckDB Python包\r\n- MCP服务器依赖关系\r\n\r\n### 调试\r\n\r\n由于MCP服务器基于stdio的通信，调试MCP服务器可能具有挑战性。我们建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector) 为了获得最佳的调试体验。\r\n\r\n#### 使用MCP检查器\r\n\r\n1. 使用npm安装检查器：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv --directory ~/codes/mcp-server-duckdb run mcp-server-duckdb --db-path ~/mcp-server-duckdb/data/data.db\r\n```\r\n\r\n2. 在浏览器中打开提供的URL以访问调试界面\r\n\r\n检查员提供以下内容的可见性：\r\n\r\n- 请求/响应通信\r\n- 工具执行\r\n- 服务器状态\r\n- 错误消息\r\n",
+ "config": {
+  "duckdb": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-server-duckdb",
+    "--db-path",
+    "~/mcp-server-duckdb/data/data.db"
+   ],
+   "env": {}
+  }
+ }
+}

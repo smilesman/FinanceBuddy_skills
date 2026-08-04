@@ -1,0 +1,33 @@
+{
+ "id": "2252",
+ "kind": "mcp",
+ "name": "mcp-server-vanmoof",
+ "fingerprint_md5": "df3f747ab809eb5d99cd3dc6e9d5c821",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 🚲VanMoof MCP服务器\r\n\r\nVanMoof MCP服务器实现了 [MCP规范](https://modelcontextprotocol.io) 在人工智能代理和关键的VanMoof服务之间建立无缝连接，如VanMoof客户数据，包括自行车详细信息、VanMoof骑手城市、骑手偏好和每周骑行。\r\n\r\n## 🎯 概述\r\n\r\n### ✨ 您可以使用VanMoof MCP服务器做什么？\r\n\r\nVanMoof MCP服务器为您的代理提供VanMoof骑手上下文。以下是一些很酷的提示，您可以尝试：\r\n\r\n### 🔍 探索您的客户数据\r\n\r\n- “请给我我的VanMoof自行车的详细信息。”\r\n- “我的VanMoof自行车叫什么名字？”\r\n- “我的VanMoof自行车的车架号是多少？”\r\n- “我的VanMoof自行车是什么颜色的？”\r\n\r\n### 🏙️ 城市骑行\r\n\r\n- “VanMoof在世界上哪些城市被追踪？”\r\n- “创建一个荷兰城市表，用经度和纬度列跟踪VanMoof游乐设施”\\\r\n  “检索荷兰跟踪VanMoof游乐设施的城市列表，并将其格式化为包含经度和纬度列的表。”\r\n\r\n### ⚙️ 您的骑手偏好\r\n\r\n- “获取我的VanMoof骑手偏好”\r\n- “我的VanMoof骑手偏好中配置了哪个城市？”\r\n\r\n### 🚲 探索您的VanMoof游乐设施\r\n\r\n- “在我的VanMoof上给我2025-03-25的每周骑行统计数据”\r\n- “我在VanMoof自行车上的最高速度是多少？”\r\n- “我骑VanMoof自行车的时间最长是多久？”\r\n- “本周的城市统计数据是什么？”\r\n- “本周世界自行车统计数据是什么？”\r\n- “将世界统计数据与城市统计数据进行比较。你能得出什么结论？”\r\n- “将我的每周VanMoof骑行统计数据与城市和世界自行车统计数据进行比较。将结果存储在降价表中以供比较。”\r\n\r\n## 🛠️ 当前支持的工具\r\n\r\n- get_customer_data：从VanMoof自主用户检索客户数据\r\n- get_vanmoof_citys:从vanmoof API检索城市数据列表。\r\n- get_rider_preferences：从VanMoof自主用户那里检索骑手偏好。\r\n- get_rides_summary：从VanMoof自主用户处检索总乘车次数摘要。\r\n- get_rides_for_week（date_in_week:str=“”）：从VanMoof自主用户那里检索特定周的乘车情况。\r\n- get_city_rides_theweek：检索本周VanMoof骑手的城市骑行总数摘要。\r\n- get_world_rides_this week：检索本周VanMoof骑手的全球骑行汇总。\r\n\r\n## 🔌 入门指南\r\n\r\n### 安装Python\r\n\r\nVanMoof MCP服务器需要Python。如果尚未安装，请按照说明进行操作 [这里](https://wiki.python.org/moin/BeginnersGuide/Download).\r\n\r\n### 安装uv\r\n\r\n同时安装 [紫外线](https://docs.astral.sh/uv/)这是一个用Rust编写的非常快的Python包和项目管理器。遵循指示 [这里](https://docs.astral.sh/uv/#installation) 安装uv。\r\n\r\n### 克隆MCP-SERVER-VANMOOF Github仓库。\r\n\r\n在终端中运行以下命令：\r\n\r\n```pwsh\r\ngit clone https://github.com/stefanstranger/mcp-server-vanmoof\r\n```\r\n\r\n### 测试和调试VanMoof MCP服务器\r\n\r\nMCP检查器是用于测试和调试MCP服务器的开发人员工具。\r\n\r\n在本地调试和测试之前，请使用您的VanMoof凭据配置.env文件。\r\n\r\n将.env示例文件重命名为.env，并配置您的VanMoof凭据。\r\n\r\n运行以下命令以测试和调试VanMoof MCP服务器：\r\n\r\n```bash\r\nmcp dev c:\\github\\mcp-server-vanmoof\\server.py\r\n```\r\n\r\n配置以下参数：\r\n\r\n运行--使用mcp\\[cli\\]--使用请求--使用tzlocal mcp运行c://github//mcp-server vanmoof//server.py\r\n\r\n启动MCP检查器后，在Web浏览器中显示VANMOF_USERNAME和VANMOO_PASSWORD的环境参数。\r\n\r\n#### 启动MCP检查器\r\n\r\n有两种方法可以启动MCP检查器：\r\n\r\n- 使用MCP CLI启动\r\n- 使用npx@modelcontextprotocol/inspector启动\r\n\r\n如果安装带有cli选项（如uv add“mcp\\[cli\\]”）的SDK，则可以使用mcp cli。要启动MCP检查器，请运行MCP-dev。\r\n\r\n如果你想在主机中启动Python环境后，使用npx启动MCP检查器运行。:\r\n\r\n```bash\r\n npx @modelcontextprotocol/inspector uv run --with mcp[cli] --with requests --with tzlocal mcp run c://github//mcp-server-vanmoof//server.py -e VANMOOF_USERNAME=john.doe@outlook.com -e VANMOOF_PASSWORD=[very secret password]\r\n```\r\n\r\n## 🔧 设置\r\n\r\n### 使用Claude Desktop\r\n\r\n将以下内容添加到claude_desktop_config.json文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-server-vanmoof\": {\r\n            \"type\": \"stdio\",\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n              \"run\",\r\n              \"--with\",\r\n              \"mcp[cli]\",\r\n              \"--with\",\r\n              \"requests\",\r\n              \"--with\",\r\n              \"tzlocal\",\r\n              \"mcp\",\r\n              \"run\",\r\n              \"C:\\\\Github\\\\mcp-server-vanmoof\\\\server.py\"\r\n            ],\r\n            \"env\": {\r\n              \"VANMOOF_USERNAME\": \"john.doe@outlook.com\",\r\n              \"VANMOOF_PASSWORD\": \"[VanMoof user account password]\"\r\n            }\r\n        }\r\n  }\r\n}\r\n```\r\n\r\n## 🛡️ 安全说明\r\n\r\n您的VanMoof凭据以纯文本形式存储在MCP客户端配置中。不要与他人分享这些！！\r\n\r\n## 参考文献\r\n\r\n- [创建无构建配置的模型上下文协议（MCP）服务器项目](https://github.com/modelcontextprotocol/create-python-server)\r\n- [MCP检查员](https://github.com/modelcontextprotocol/inspector)\r\n",
+ "config": {
+  "mcp-server-vanmoof": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--with",
+    "mcp[cli]",
+    "--with",
+    "requests",
+    "--with",
+    "tzlocal",
+    "mcp",
+    "run",
+    "C:\\Github\\mcp-server-vanmoof\\server.py"
+   ],
+   "env": {
+    "VANMOOF_USERNAME": "john.doe@outlook.com",
+    "VANMOOF_PASSWORD": "[VanMoof user account password]"
+   }
+  }
+ }
+}

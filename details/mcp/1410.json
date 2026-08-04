@@ -1,0 +1,22 @@
+{
+ "id": "1410",
+ "kind": "mcp",
+ "name": "devcontainers",
+ "fingerprint_md5": "aa18ff2042f00c26e63b918dee8a7bf6",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp开发容器\r\n\r\nMCP Devcontainers是一个模型上下文协议（MCP）服务器，它提供了与 [devcontainers cli](https://github.com/devcontainers/cli).\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@crunchloop/mcp-devcontainers\">\r\n  \r\n</a>\r\n\r\n## 依赖项\r\n\r\n此服务器需要 **码头工人** 在您的系统上安装并运行，因为它由 [devcontainers cli](https://github.com/devcontainers/cli) 构建和管理开发容器。\r\n\r\n- [Docker安装指南](https://docs.docker.com/get-docker/)\r\n\r\n使用MCP Devcontainers服务器不需要其他依赖关系。\r\n\r\n## 用法\r\n\r\nMCP服务器的配置因您使用的客户端而异。作为参考，这是您使用Claude Desktop配置它的方式。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"devcontainers\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@crunchloop/mcp-devcontainers\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## MCP传输\r\n\r\n目前，只有 `stdio` 运输已经实施。\r\n\r\n## 工具\r\n\r\n|工具|工作空间文件夹|输出文件路径|命令|描述|\r\n| ---------------------------------- | ----------------------------------------------- | -------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\r\n| **devcontainer_up** |工作区文件夹的路径（字符串，必填）|写入输出日志的路径（string，可选）|N/A|在指定的工作区文件夹中启动或初始化devcontainer环境。<br>使用此选项可确保devcontainer正在运行并准备好执行开发任务。                                                   |\r\n| **devcontainer_run_user_命令** |工作区文件夹的路径（字符串，必填）|写入输出日志的路径（string，可选）|N/A|运行用户定义的 `postCreateCommand` 和 `postStartCommand` devcontainer中指定工作区文件夹的脚本。<br>使用此选项在devcontainer启动后执行安装或初始化命令。 |\r\n| **devcontainerexec** |工作区文件夹的路径（string，必需）|写入输出日志的路径（字符串，可选）|要执行的命令（string\\[\\]，必需）||在devcontainer中为指定的工作区文件夹执行任意shell命令。<br>使用此选项在devcontainer上下文中运行自定义命令或脚本。                                          |                  |\r\n\r\n## 许可证\r\n\r\n根据MIT许可证发布。请参阅 [许可证](./LICENSE) 文件以获取更多详细信息。\r\n",
+ "config": {
+  "devcontainers": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@crunchloop/mcp-devcontainers"
+   ],
+   "env": {}
+  }
+ }
+}

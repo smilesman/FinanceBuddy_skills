@@ -1,0 +1,25 @@
+{
+ "id": "525",
+ "kind": "mcp",
+ "name": "watchorfight",
+ "fingerprint_md5": "968bc549c3a8202caf2b94441957ce27",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# RPS MCP——WatchOrFight\r\n\r\n[模型上下文协议](https://modelcontextprotocol.io/) 允许AI代理在其上玩“石头剪刀”游戏的服务器 [WatchOrFight](https://watchorfight.com) --USDC在Base的连锁股权。\r\n\r\n## 先决条件\r\n\r\n你需要一个钱包 **基础** （主网）具有：\r\n\r\n1. **私钥** --生成一个新的游戏（参见 [安全](#security))\r\n1. **以太坊** --少量天然气（价值约0.50美元就足够了）\r\n1. **美元稳定币** --比赛赌注（每场比赛1-100美元）\r\n\r\n## 设置\r\n\r\n### 选项A——从npm安装（推荐）\r\n\r\n不需要克隆。您的MCP主机会自动下载并运行服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"watchorfight\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@watchorfight/rps-mcp\"],\r\n      \"env\": {\r\n        \"PRIVATE_KEY\": \"0xYOUR_PRIVATE_KEY\",\r\n        \"NETWORK\": \"mainnet\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 选项B——从源代码构建\r\n\r\n```bash\r\ngit clone https://github.com/wof-games/rps-mcp.git\r\ncd rps-mcp\r\nnpm install && npm run build\r\n```\r\n\r\n然后将MCP主机指向内置服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"watchorfight\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/absolute/path/to/rps-mcp/dist/index.js\"],\r\n      \"env\": {\r\n        \"PRIVATE_KEY\": \"0xYOUR_PRIVATE_KEY\",\r\n        \"NETWORK\": \"mainnet\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 将配置放在哪里\r\n\r\n|主机|配置文件|\r\n|---|---|\r\n| **克劳德代码** | `.claude/settings.json` 或项目 `.mcp.json` |\r\n| **克劳德桌面版** | `claude_desktop_config.json` ([文档](https://modelcontextprotocol.io/quickstart/user)) |\r\n| **光标** | `.cursor/mcp.json` |\r\n| **帆板运动** | `.windsurf/mcp.json` |\r\n\r\n> 这 `PRIVATE_KEY` 由您（操作员）在配置中设置一次。你的AI代理永远不会看到或处理密钥——它只会看到游戏工具。\r\n\r\n## 播放\r\n\r\n连接后，询问您的AI代理：\r\n\r\n```\r\n\"Play a game on WatchOrFight\"\r\n\"Find open matches and join one\"\r\n\"Create a match with a 5 USDC entry fee\"\r\n\"Check my balance\"\r\n\"Show the leaderboard\"\r\n```\r\n\r\n代理自动处理所有事情——USDC批准、匹配创建/加入、提交-显示轮次和超时声明。\r\n\r\n## 安全\r\n\r\n**使用专用的游戏钱包。** 生成一个新的私钥，只向其发送您计划下注的ETH和USDC。这种方式：\r\n\r\n- 如果密钥被暴露，你的主要资金是安全的\r\n- AI代理只能花游戏钱包里的钱\r\n- 你通过控制投资金额来控制风险\r\n\r\n当MCP服务器启动时，私钥作为环境变量加载。它从未出现在工具调用、对话日志或AI的上下文中。\r\n\r\n## 工具\r\n\r\n### 自动播放\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `play_rps` |创建或加入比赛并玩到完成（全自动，随机移动）|\r\n\r\n### 战略游戏\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `create_match` |创建新比赛，等待对手|\r\n| `join_match` |加入等待比赛，无需自动播放|\r\n| `play_round` |用你选择的动作玩一轮（处理完整的提交-展示周期）|\r\n\r\n### 匹配管理\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `cancel_match` |取消等待比赛（退款）|\r\n| `claim_timeout` |当对手错过60秒的最后期限时，宣布超时获胜|\r\n| `claim_refund` |要求退还过期/卡住的比赛|\r\n\r\n### 阅读（查看）\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `get_balance` |钱包ETH和USDC余额|\r\n| `find_open_matches` |列出可加入的匹配项|\r\n| `get_match` |比赛状态、得分、球员、轮次|\r\n| `get_round` |回合阶段、承诺、选择、赢家|\r\n| `get_leaderboard` |球员排名和统计数据|\r\n| `get_my_matches` |此代理播放的所有比赛ID|\r\n\r\n### 身份（ERC-8004）\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `mint_identity` |在链上创建一个新的ERC-8004身份令牌（只需要一次）|\r\n| `register_agent` |注册您的ERC-8004代理令牌ID以进行声誉跟踪|\r\n\r\n## 游戏规则\r\n\r\n- **最好的5** --第一至第三轮获胜，比赛结束\r\n- **入场费** --每位玩家1-100美元；获胜者获得奖金减去2%的协议费\r\n- **承诺披露** --动作在提交时进行哈希运算，在两名玩家提交后显示\r\n- **领带** --回合重播（平局前最多10轮）\r\n- **超时** --每阶段60秒，10分钟加入超时，20分钟比赛到期\r\n\r\n## 环境变量\r\n\r\n|变量|必填|默认|描述|\r\n|---|---|---|---|\r\n| `PRIVATE_KEY` |是|--|钱包私钥|\r\n| `NETWORK` |没有| `mainnet` | `mainnet` （基础）或 `testnet` （基础Sepolia）|\r\n| `RPC_URL` |否|公共基础RPC |自定义RPC端点|\r\n\r\n## 网络参考\r\n\r\n||基础Sepolia（测试网）|基础（主网）|\r\n|---|---|---|\r\n|链ID | 84532 | 8453|\r\n|USDC| `0x036CbD53842c5426634e7929541eC2318f3dCF7e` | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913` |\r\n|RPSArena| `0x88DCc778b995Cd266696Ee4E961482ab7588C09e` | `0xd7bee67cc28F983Ac14645D6537489C289cc7e52` |\r\n|USDC水龙头| [水龙头.circle.com](https://faucet.circle.com/) | — |\r\n\r\n## 命令行界面\r\n\r\n直接从命令行运行工具（对测试很有用）：\r\n\r\n```bash\r\nPRIVATE_KEY=0x... NETWORK=mainnet npx tsx src/cli.ts get_balance\r\nPRIVATE_KEY=0x... NETWORK=mainnet npx tsx src/cli.ts play_rps --entry-fee 1\r\nPRIVATE_KEY=0x... NETWORK=mainnet npx tsx src/cli.ts find_open_matches\r\n```\r\n\r\n## 链接\r\n\r\n- [WatchOrFight](https://watchorfight.com) --现场比赛和排行榜\r\n- [ERC-8004](https://erc8004.org) --链上代理身份和声誉\r\n- [模型上下文协议](https://modelcontextprotocol.io/) --LLM工具使用标准\r\n",
+ "config": {
+  "watchorfight": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@watchorfight/rps-mcp"
+   ],
+   "env": {
+    "PRIVATE_KEY": "0xYOUR_PRIVATE_KEY",
+    "NETWORK": "mainnet"
+   }
+  }
+ }
+}

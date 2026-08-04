@@ -1,0 +1,28 @@
+{
+ "id": "953",
+ "kind": "mcp",
+ "name": "ytmp3-mcp",
+ "fingerprint_md5": "165736470916f33ce0292886c21b6af3",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "<p align=\"center\">\r\n</p>\r\n\r\n> 一个模型上下文协议（MCP）服务器，让你的人工智能下载YouTube音频和搜索视频——由 `yt-dlp` 和 `ffmpeg`，作为Docker镜像发布。\r\n\r\n______________________________________________________________________\r\n\r\n## 它做什么\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `download_audio` |从任何YouTube URL下载MP3格式的音频。支持时间范围剪裁。 |\r\n| `search_videos` |搜索YouTube并返回标题、频道、持续时间和网址|\r\n\r\n更多工具即将推出。\r\n\r\n______________________________________________________________________\r\n\r\n## 需求\r\n\r\n- [Docker 桌面版](https://www.docker.com/products/docker-desktop/) --Docker使用\r\n- Node.js 18+——直接通过npm/npx运行\r\n- `yt-dlp` 和 `ffmpeg` 安装在您的系统上——用于npm使用\r\n\r\n______________________________________________________________________\r\n\r\n### 重要\r\n\r\n如果您想下载播放列表，请将以下内容保留为“系统提示”\r\n\r\n```\r\nWhen a tool returns a list of video URLs, you MUST immediately call download_audio for each URL one by one without asking for confirmation or summarizing. Do not stop until every URL has been passed to download_audio.\r\n```\r\n\r\n## Docker（推荐，无需设置）\r\n\r\n### 1.拉取图像\r\n\r\n```bash\r\ndocker pull piyush9969/ytmp3-mcp:latest\r\n```\r\n\r\n### 2.添加到MCP客户端配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ytmp3-mcp\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\", \"--rm\", \"-i\",\r\n        \"-v\", \"/Users/yourname/Downloads:/downloads\",\r\n        \"-e\", \"DOWNLOADS_DIR=/downloads\",\r\n        \"piyush9969/ytmp3-mcp:latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**更新操作系统的卷路径：**\r\n\r\n|OS |卷路径|\r\n|----|-------------|\r\n|Mac| `/Users/yourname/Downloads:/downloads` |\r\n|Linux| `/home/yourname/Downloads:/downloads` |\r\n|窗户| `C:/Users/yourname/Downloads:/downloads` |\r\n\r\n______________________________________________________________________\r\n\r\n## 从源代码构建（Docker）\r\n\r\n如果你想自己构建图像而不是拉：\r\n\r\n```bash\r\ngit clone https://github.com/miteoshi/ytmp3-mcp.git\r\ncd ytmp3-mcp\r\ndocker build -t ytmp3-mcp .\r\n```\r\n\r\n然后使用相同的 `mcp.json` 如上所述，但替换图像名称：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ytmp3-mcp\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\", \"--rm\", \"-i\",\r\n        \"-v\", \"/Users/yourname/Downloads:/downloads\",\r\n        \"-e\", \"DOWNLOADS_DIR=/downloads\",\r\n        \"ytmp3-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 直接通过npm运行（无Docker）\r\n\r\n需要 `yt-dlp` 和 `ffmpeg` 安装在您的计算机上：\r\n\r\n**雨衣：**\r\n\r\n```bash\r\nbrew install yt-dlp ffmpeg\r\n```\r\n\r\n**窗户：**\r\n\r\n```bash\r\nwinget install yt-dlp ffmpeg\r\n```\r\n\r\n**Linux：**\r\n\r\n```bash\r\nsudo apt install ffmpeg\r\npip install yt-dlp\r\n```\r\n\r\n然后克隆并安装：\r\n\r\n```bash\r\ngit clone https://github.com/miteoshi/ytmp3-mcp.git\r\ncd ytmp3-mcp\r\nnpm install\r\n```\r\n\r\n添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ytmp3-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"tsx\",\r\n        \"/path/to/ytmp3-mcp/src/index.mts\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/path/to/ytmp3-mcp` 使用克隆仓库的实际路径。\r\n\r\n______________________________________________________________________\r\n\r\n## LM Studio配置位置\r\n\r\n`Settings → LLM → MCP Servers → Edit config`\r\n\r\n______________________________________________________________________\r\n\r\n## 用法\r\n\r\n一旦连接，只需自然地与您的法学硕士交谈：\r\n\r\n```\r\nDownload the audio from https://www.youtube.com/watch?v=...\r\n```\r\n\r\n```\r\nDownload only 1:00 to 2:30 from https://www.youtube.com/watch?v=...\r\n```\r\n\r\n```\r\nSearch YouTube for \"baby keem new music\"\r\n```\r\n\r\n下载的文件将显示在您的 `~/Downloads` 文件夹，以视频标题命名。\r\n\r\n### 支持的剪辑时间格式\r\n\r\n|格式|示例|\r\n|--------|---------|\r\n| `MM:SS` | `1:30` |\r\n| `HH:MM:SS` | `00:01:30` |\r\n|秒数| `90s` |\r\n\r\n______________________________________________________________________\r\n\r\n## 运作原理\r\n\r\n```\r\nLLM client\r\n    └── MCP call\r\n            └── docker run  (or npx tsx)\r\n                    └── yt-dlp + ffmpeg\r\n                            └── ~/Downloads\r\n```\r\n\r\n每次工具调用都会生成一个新进程，运行命令并退出。没有持久容器，没有后台进程。\r\n\r\n______________________________________________________________________\r\n\r\n添加更多功能。。\r\n",
+ "config": {
+  "ytmp3-mcp": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "-v",
+    "/Users/yourname/Downloads:/downloads",
+    "-e",
+    "DOWNLOADS_DIR=/downloads",
+    "piyush9969/ytmp3-mcp:latest"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "id": "107",
+ "kind": "mcp",
+ "name": "chrome-control",
+ "fingerprint_md5": "724b7d06c2fb1849198db2aaa63e7def",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# Chrome MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，通过Chrome DevTools协议（CDP）提供对Chrome浏览器实例的细粒度控制。\r\n\r\n## 先决条件\r\n\r\n- [包子](https://bun.sh/) （推荐）或Node.js（v14或更高版本）\r\n- 启用远程调试的Chrome浏览器\r\n\r\n## 设置\r\n\r\n### 安装Bun\r\n\r\n1. 安装Bun（如果尚未安装）：\r\n\r\n```bash\r\n# macOS, Linux, or WSL\r\ncurl -fsSL https://bun.sh/install | bash\r\n\r\n# Windows (using PowerShell)\r\npowershell -c \"irm bun.sh/install.ps1 | iex\"\r\n\r\n# Alternatively, using npm\r\nnpm install -g bun\r\n```\r\n\r\n2. 在启用远程调试的情况下启动Chrome：\r\n\r\n   ```bash\r\n   # macOS\r\n   /Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --remote-debugging-port=9222\r\n\r\n   # Windows\r\n   start chrome --remote-debugging-port=9222\r\n\r\n   # Linux\r\n   google-chrome --remote-debugging-port=9222\r\n   ```\r\n\r\n1. 安装依赖项：\r\n\r\n```bash\r\nbun install\r\n```\r\n\r\n4. 启动服务器：\r\n\r\n```bash\r\nbun start\r\n```\r\n\r\n对于热重载开发：\r\n\r\n```bash\r\nbun dev\r\n```\r\n\r\n默认情况下，服务器将在端口3000上启动。您可以通过设置 `PORT` 环境变量。\r\n\r\n## 配置Roo代码以使用此MCP服务器\r\n\r\n要将此Chrome MCP服务器与Roo代码一起使用：\r\n\r\n1. 打开Roo代码设置\r\n\r\n1. 导航到MCP设置配置文件：\r\n\r\n   - macOS： `~/Library/Application Support/Code/User/globalStorage/rooveterinaryinc.roo-cline/settings/cline_mcp_settings.json`\r\n   - 窗户： `%APPDATA%\\Code\\User\\globalStorage\\rooveterinaryinc.roo-cline\\settings\\cline_mcp_settings.json`\r\n   - Linux： `~/.config/Code/User/globalStorage/rooveterinaryinc.roo-cline/settings/cline_mcp_settings.json`\r\n\r\n1. 将以下配置添加到 `mcpServers` 对象：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chrome-control\": {\r\n      \"url\": \"http://localhost:3000/sse\",\r\n      \"disabled\": false,\r\n      \"alwaysAllow\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n4. 保存文件并重新启动Roo Code以应用更改。\r\n\r\n1. 现在，您可以使用Roo Code中的Chrome MCP工具来控制浏览器。\r\n\r\n## 可用工具\r\n\r\n服务器提供以下浏览器控制工具：\r\n\r\n### 导航\r\n\r\n导航到特定的URL。\r\n\r\n参数：\r\n\r\n- `url` （string）：要导航到的URL\r\n\r\n### 点击\r\n\r\n单击特定坐标。\r\n\r\n参数：\r\n\r\n- `x` （数字）：X坐标\r\n- `y` （数字）：Y坐标\r\n\r\n### 类型\r\n\r\n在当前焦点处键入文本。\r\n\r\n参数：\r\n\r\n- `text` （string）：要键入的文本\r\n\r\n### 双击\r\n\r\n在页面信息中按索引单击元素。\r\n\r\n参数：\r\n\r\n- `selector` （string）：元素索引（例如，第一个元素为“0”）\r\n\r\n### getText\r\n\r\n使用CSS选择器获取元素的文本内容。\r\n\r\n参数：\r\n\r\n- `selector` （string）：用于查找元素的CSS选择器\r\n\r\n### getPageInfo\r\n\r\n获取页面的语义信息，包括交互元素和文本节点。\r\n\r\n### getPageState\r\n\r\n获取当前页面状态，包括URL、标题、滚动位置和视口大小。\r\n\r\n## 用法\r\n\r\n服务器使用SSE传输实现模型上下文协议。连接到服务器：\r\n\r\n- SSE 端点 ： `http://localhost:3000/sse`\r\n- 消息端点： `http://localhost:3000/message?sessionId=...`\r\n\r\n当与Roo Code一起使用时，MCP设置文件中的配置将自动处理连接。\r\n\r\n## 发展\r\n\r\n要在热重新加载的开发模式下运行服务器，请执行以下操作：\r\n\r\n```bash\r\nbun dev\r\n```\r\n\r\n这使用Bun的内置监视模式在文件更改时自动重新启动服务器。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "chrome-control": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:3000/sse"
+  }
+ }
+}

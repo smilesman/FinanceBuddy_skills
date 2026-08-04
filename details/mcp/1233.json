@@ -1,0 +1,22 @@
+{
+ "id": "1233",
+ "kind": "mcp",
+ "name": "postgres-33",
+ "fingerprint_md5": "58efc19155a2d50d706e82e17ddfd48e",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# PostgreSQL MCP服务器\r\n\r\nPostgreSQL模型上下文协议（MCP）服务器的实现。启用只读SQL查询执行和数据库架构信息检索。\r\n\r\n## 特性\r\n\r\n- **怎么翻译**：执行只读SQL查询\r\n- **list表格**：获取数据库中的表列表\r\n- **getTableSchema**：获取指定表的架构信息\r\n\r\n## 安装\r\n\r\n### 来自npm\r\n\r\n```bash\r\nnpm install -g @daitasu/postgres-mcp\r\n```\r\n\r\n### 来源\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/daitasu/postgres-mcp.git\r\ncd postgres-mcp\r\n\r\n# Install dependencies\r\npnpm install\r\n\r\n# Build\r\npnpm run build\r\n```\r\n\r\n## 配置\r\n\r\n### 使用npx（推荐）\r\n\r\n添加到您的Claude Desktop或MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@daitasu/postgres-mcp\", \"postgresql://user:password@localhost:5432/database\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用全局安装\r\n\r\n如果全局安装：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"postgres-mcp\",\r\n      \"args\": [\"postgresql://user:password@localhost:5432/database\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用本地安装\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/postgres-mcp/dist/index.js\", \"postgresql://user:password@localhost:5432/database\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 命令行执行\r\n\r\n```bash\r\n# Using npx (no installation required)\r\nnpx @daitasu/postgres-mcp postgresql://user:password@localhost:5432/database\r\n\r\n# Using global installation\r\npostgres-mcp postgresql://user:password@localhost:5432/database\r\n\r\n# Using node directly\r\nnode dist/index.js postgresql://user:password@localhost:5432/database\r\n```\r\n\r\n## 工具使用\r\n\r\n### 1.查询-执行SQL查询\r\n\r\n```\r\nInput: { \"sql\": \"SELECT * FROM users LIMIT 10\" }\r\nOutput: Query results (JSON format)\r\n```\r\n\r\n### 2.listTables-获取表列表\r\n\r\n```\r\nInput: {}\r\nOutput: List of table names\r\n```\r\n\r\n### 3.getTableSchema-获取表模式\r\n\r\n```\r\nInput: { \"tableName\": \"users\" }\r\nOutput: List of column names and data types\r\n```\r\n\r\n## 安全\r\n\r\n- 所有查询都在只读事务中执行\r\n- 无法修改数据\r\n- 自动回滚\r\n\r\n## 发展\r\n\r\n```bash\r\n# Development mode\r\npnpm run dev\r\n\r\n# Tests\r\npnpm test\r\n\r\n# Type checking\r\npnpm run typecheck\r\n\r\n# Lint\r\npnpm run lint\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "postgres": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@daitasu/postgres-mcp",
+    "postgresql://user:password@localhost:5432/database"
+   ],
+   "env": {}
+  }
+ }
+}

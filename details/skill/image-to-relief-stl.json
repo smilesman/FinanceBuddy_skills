@@ -1,0 +1,12 @@
+{
+ "id": "image-to-relief-stl",
+ "kind": "skill",
+ "name": "image-to-relief-stl",
+ "fingerprint_md5": "3be9b90af8207225e5190007977d5fab",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# image-to-relief-stl\r\n\r\n通过将颜色（或灰度）映射到高度，从输入图像生成**水密、可打印的STL**。\r\n\r\n这是一个对编排器友好的工作流：\r\n- 使用**nano-banana-pro**（或任何图像模型）生成**纯色**图像。\r\n- 运行此技能将其转换为**浅浮雕**模型。\r\n\r\n## 实际约束（为了获得良好效果）\r\n\r\n要求图像模型生成：\r\n- **恰好N种纯色**（无渐变）\r\n- **无阴影/无抗锯齿**\r\n- 边缘清晰的大胆形状\r\n\r\n这样分割才可靠。\r\n\r\n## 快速开始（给定图像）\r\n\r\n```bash\r\nbash scripts/image_to_relief.sh input.png --out out.stl \\\r\n  --mode palette \\\r\n  --palette '#000000=3.0,#ffffff=0.0' \\\r\n  --base 1.5 \\\r\n  --pixel 0.4\r\n```\r\n\r\n### 灰度模式\r\n\r\n```bash\r\nbash scripts/image_to_relief.sh input.png --out out.stl \\\r\n  --mode grayscale \\\r\n  --min-height 0.0 \\\r\n  --max-height 3.0 \\\r\n  --base 1.5 \\\r\n  --pixel 0.4\r\n```\r\n\r\n## 输出\r\n\r\n- `out.stl`（ASCII STL）\r\n- 可选的`out-preview.svg`（通过potrace生成的矢量预览；尽力而为）\r\n\r\n## 注意事项\r\n\r\n- 此v0使用**栅格高度场**网格化方法（稳健，无重型CAD依赖）。\r\n- `--pixel`参数控制分辨率（越小=细节越高，STL越大）。",
+ "config": {}
+}

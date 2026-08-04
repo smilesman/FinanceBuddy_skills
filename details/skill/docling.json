@@ -1,0 +1,12 @@
+{
+ "id": "docling",
+ "kind": "skill",
+ "name": "docling",
+ "fingerprint_md5": "86af642ec42fb397687d738a164746e5",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# Docling - 文档与网页内容提取\r\n\r\n用于将文档和网页解析为干净、结构化文本的 CLI 工具。使用 GPU 加速进行 OCR 和 ML 模型。\r\n\r\n## 先决条件\r\n\r\n- 必须安装 `docling` CLI（例如，通过 `pipx install docling`）\r\n- 对于 GPU 支持：具有 CUDA 驱动程序的 NVIDIA GPU\r\n\r\n## 何时使用\r\n\r\n- **从 URL 提取内容** → 使用 docling（而非 web_fetch）\r\n- **搜索信息** → 使用 web_search（Brave）\r\n- **解析 PDF、DOCX、PPTX** → 使用 docling\r\n- **图像上的 OCR** → 使用 docling\r\n\r\n## 快速命令\r\n\r\n### 网页 → Markdown（默认）\r\n```bash\r\ndocling \"<URL>\" --from html --to md\r\n```\r\n输出：在当前目录中创建一个 `.md` 文件（或使用 `--output`）\r\n\r\n### 网页 → 纯文本\r\n```bash\r\ndocling \"<URL>\" --from html --to text --output /tmp/docling_out\r\n```\r\n\r\n### 带 OCR 的 PDF\r\n```bash\r\ndocling \"/path/to/file.pdf\" --ocr --device cuda --output /tmp/docling_out\r\n```\r\n\r\n## 关键选项\r\n\r\n| 选项 | 值 | 描述 |\r\n|--------|--------|-------------|\r\n| `--from` | html, pdf, docx, pptx, image, md, csv, xlsx | 输入格式 |\r\n| `--to` | md, text, json, yaml, html | 输出格式 |\r\n| `--device` | auto, cuda, cpu | 加速器（默认：auto） |\r\n| `--output` | path | 输出目录（推荐：使用受控临时目录） |\r\n| `--ocr` | flag | 为图像/扫描的 PDF 启用 OCR |\r\n| `--tables` | flag | 提取表格（默认：开启） |\r\n\r\n## 安全说明\r\n\r\n⚠️ **除非你信任来源，否则避免使用这些标志：**\r\n- `--enable-remote-services` - 可以将数据发送到远程端点\r\n- `--allow-external-plugins` - 加载第三方代码\r\n- 带有不受信任值的自定义 `--headers` - 可以重定向请求\r\n\r\n## 工作流\r\n\r\n1. **对于网页内容提取**：使用 `docling \"<URL>\" --from html --to text --output /tmp/docling_out`\r\n2. **从指定的输出目录读取输出文件**\r\n3. **读取后清理** 输出目录\r\n\r\n## GPU 支持\r\n\r\nDocling 通过 CUDA（NVIDIA）支持 GPU 加速。验证 CUDA 是否可用：\r\n```bash\r\npython -c \"import torch; print(torch.cuda.is_available())\"\r\n```\r\n\r\n## 完整 CLI 参考\r\n\r\n有关完整选项列表，请参阅 [references/cli-reference.md](references/cli-reference.md)。",
+ "config": {}
+}

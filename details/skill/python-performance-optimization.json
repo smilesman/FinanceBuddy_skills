@@ -1,0 +1,12 @@
+{
+ "id": "python-performance-optimization",
+ "kind": "skill",
+ "name": "python-performance-optimization",
+ "fingerprint_md5": "33c3d50be00afcd1a0b9d98cabf956cf",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Python Performance Optimization\r\n\r\nComprehensive guide 迁移到 profiling, analyzing, and optimizing Python code for better performance, including CPU profiling, memory optimization, and implementation best practices.\r\n\r\n## Use this skill when\r\n\r\n- Identifying performance bottlenecks in Python applications\r\n- Reducing application latency and response times\r\n- Optimizing CPU-intensive operations\r\n- Reducing memory consumption and memory leaks\r\n- Improving database query performance\r\n- Optimizing I/O operations\r\n- Speeding up data processing pipelines\r\n- Implementing high-performance algorithms\r\n- Profiling production applications\r\n\r\n## Do not use this skill when\r\n\r\n- The task is unrelated 迁移到 python performance optimization\r\n- You 需要 a different domain or tool outside this scope\r\n\r\n## Instructions\r\n\r\n- Clarify goals, constraints, and required inputs.\r\n- Apply relevant best practices and 验证 outcomes.\r\n- Provide actionable steps and verification.\r\n- If detailed 示例 are required, open `resources/implementation-playbook.md`.\r\n\r\n## 资源\r\n\r\n- `resources/implementation-playbook.md` for detailed patterns and 示例.\r\n\r\n## Limitations\r\n- Use this skill only when the task clearly matches the scope described above.\r\n- Do not treat the 输出 as a substitute for environment-specific validation, testing, or expert review.\r\n- 停止 and ask for clarification if required inputs, permissions, safety boundaries, or 成功 criteria are missing.",
+ "config": {}
+}

@@ -1,0 +1,18 @@
+{
+ "id": "1982",
+ "kind": "mcp",
+ "name": "mcd-mcp",
+ "fingerprint_md5": "129938b5ff32cb21d81476f2fab7d1d2",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# 什么是麦当劳 MCP 服务？\r\n\r\n* 麦当劳 MCP 服务是一个遵循 Model Context Protocol（MCP）标准的数据交互接口服务，由麦当劳中国提供，面向中国大陆地区（不含港澳台）使用。\r\n* 麦当劳MCP服务现已覆盖四大核心业务接口，为开发者提供麦当劳品牌资讯与会员账号权益的集成支持。目前支持的功能包括活动日历查询、麦麦省优惠券查询与领取等。更多实用工具正在持续开发中，即将陆续上线，敬请期待。\r\n\r\n# 如何使用麦当劳 MCP 服务？\r\n\r\n## 快速开始\r\n\r\n下面介绍如何将 MCP Server 接入到 MCP Client 中，开始使用 MCP 功能。\r\n\r\n麦当劳提供了远程托管的 MCP Server，用户只需在 MCP Client 中配置接入地址和密钥即可使用。\r\n\r\n### 接入地址\r\n\r\n### 传输协议与安全\r\n\r\n使用 Streamable HTTP 协议接入\r\n\r\n为了识别用户身份和权限，需要在请求头中携带 Authorization 字段，格式如下：Authorization: Bearer YOUR_MCP_TOKEN\r\n\r\n### MCP 配置 JSON 示例：\r\n\r\n复制下面的配置，替换 YOUR_MCP_TOKEN 为实际密钥，粘贴到 MCP Client 的 MCP Server 配置中即可。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcd-mcp\": {\r\n      \"type\": \"streamablehttp\",\r\n      \"url\": \"https://mcp.mcd.cn/mcp-servers/mcd-mcp\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer YOUR_MCP_TOKEN\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n###  注意事项：\r\n\r\n- ⚠️当前 MCP Server 目前仅支持 MCP Version 2025-06-18及之前的版本。\r\n- 每个 Token 每分钟最多允许 600 次请求，超过限制会返回 429 错误码，请合理控制请求频率。\r\n- 请确保 MCP Client 支持 Streamable HTTP 协议。\r\n- 请妥善保管 MCP Token，避免泄露给他人。\r\n\r\nMCP Token获取操作详见[麦当劳MCP平台](https://open.mcd.cn/mcp)\r\n\r\n# 麦当劳 MCP 服务的工具列表\r\n\r\n|     **Tool**      |     **Name**     |                       **Description**                        |\r\n| :---------------: | :--------------: | :----------------------------------------------------------: |\r\n| campaign-calender | 活动日历查询工具 | 查询麦当劳中国当月的营销活动日历，返回进行中、往期和未来日期的活动 |\r\n| available-coupons | 麦麦省券列表查询 |            查询用户当前可领取的麦麦省的优惠券列表            |\r\n| auto-bind-coupons |  麦麦省一键领券  | 自动领取麦麦省所有当前可用的麦当劳优惠券。无需指定具体的优惠券和couponId，系统会自动领取用户可领的所有券 |\r\n|    my-coupons     |  我的优惠券查询  | 查询我有哪些可用的优惠券。就像打开麦当劳APP的\\\"我的优惠券\\\"页面，能看到所有可以用来点餐的优惠券列表 |\r\n|   now-time-info   | 获取当前时间信息 |   返回当前的完整时间信息，以便于 LLM 知道当前的时间和日期    |\r\n\r\n# 常见问题解答\r\n\r\nQ：使用麦当劳 MCP 服务是否收费？\r\n\r\nA：不收费\r\n\r\n\r\n# 注意事项\r\n\r\n1. 允许个人以非商业用途复制并使用麦当劳 MCP 平台说明中的示例配置、参数、JSON 或示例代码，并仅限用于实现与麦当劳MCP服务的连接与使用。\r\n2. 使用 麦当劳MCP 服务须遵守麦当劳中国的《使用条款》及《麦当劳MCP 服务规则》，并在申请MCP Token时同意前述条款。\r\n3. 未经书面授权，不得将本说明内容用于商业售卖、付费分发、引流变现或任何暗示官方背书、误导公众的用途；亦不得用于任何违法、违规或黑灰产相关行为。\r\n4. 本说明内容按“现状”提供，不构成任何形式的保证或承诺。\r\n5. 本说明不构成对麦当劳及其关联方商标的任何授权。\r\n6. 请妥善保管您的MCP Token，避免泄露或被他人使用。\r\n\r\n© 2026 McDonald’s. All Rights Reserved.\r\n",
+ "config": {
+  "mcd-mcp": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.mcd.cn/mcp-servers/mcd-mcp"
+  }
+ }
+}

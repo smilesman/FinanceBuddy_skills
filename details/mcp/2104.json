@@ -1,0 +1,26 @@
+{
+ "id": "2104",
+ "kind": "mcp",
+ "name": "alpha-ess",
+ "fingerprint_md5": "89c11e9f417684cff11229fe866e27d8",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# Alpha ESS MCP服务器\r\n\r\n模型上下文协议（MCP）服务器，通过官方的Alpha ESS Open API提供对Alpha ESS太阳能逆变器和电池系统数据的访问。\r\n\r\n## 安装\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n## 配置\r\n\r\n创建一个 `.env` 项目根目录中的文件：\r\n\r\n```env\r\nALPHA_ESS_APP_ID=your_app_id_here\r\nALPHA_ESS_APP_SECRET=your_app_secret_here\r\n```\r\n\r\n获取您的Alpha ESS API证书：\r\n\r\n1. 访问 [https://open.alphaess.com/](https://open.alphaess.com/)\r\n1. 创建开发人员帐户\r\n1. 使用序列号（SN）和校验码添加逆变器系统\r\n1. 获取您的AppID和AppSecret\r\n\r\n## 使用Claude Desktop\r\n\r\n添加到您的Claude Desktop配置文件中：\r\n\r\n**macOS：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"alpha-ess\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"python\",\r\n        \"/path/to/alpha-ess-mcp-server/main.py\"\r\n      ],\r\n      \"env\": {\r\n        \"ALPHA_ESS_APP_ID\": \"your_app_id_here\",\r\n        \"ALPHA_ESS_APP_SECRET\": \"your_app_secret_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 身份验证和系统管理\r\n\r\n- `authenticate_alphaess()` -验证API凭据\r\n- `get_ess_list()` -列出所有已注册的Alpha ESS系统\r\n\r\n### 数据检索\r\n\r\n- `get_alpha_ess_data()` -获取所有系统的全面能源统计数据\r\n- `get_last_power_data(serial?)` -获取实时电力数据快照\r\n- `get_one_day_power_data(query_date, serial?)` -获取特定日期的详细电力数据\r\n- `get_one_date_energy_data(query_date, serial?)` -获取特定日期的能源摘要\r\n\r\n### 电池配置\r\n\r\n- `get_charge_config(serial?)` -获取当前电池充电配置\r\n- `get_discharge_config(serial?)` -获取当前电池放电配置\r\n- `set_battery_charge(enabled, dp1_start, dp1_end, dp2_start, dp2_end, charge_cutoff_soc, serial?)` -配置电池充电计划\r\n- `set_battery_discharge(enabled, dp1_start, dp1_end, dp2_start, dp2_end, discharge_cutoff_soc, serial?)` -配置电池放电计划\r\n\r\n### 参数\r\n\r\n- `serial` （可选）-系统序列号。如果没有提供，如果只有一个系统存在，则自动选择第一个系统\r\n- `query_date` -YYYY-MM-DD格式的日期\r\n- `enabled` -用于启用/禁用配置的布尔值\r\n- `dp1_start/dp1_end, dp2_start/dp2_end` -HH:MM格式的时间段（分钟必须为：00、：15、：30、：45）\r\n- `charge_cutoff_soc/discharge_cutoff_soc` -SOC百分比（0-100）\r\n\r\n## 测试\r\n\r\n```bash\r\nuv run python test_methods.py\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n\r\n## 参考文献\r\n\r\n- [Alpha ESS Open API文档](https://open.alphaess.com/developmentManagement/apiList)\r\n- [alphaess openAPI库](https://github.com/CharlesGillanders/alphaess-openAPI)\r\n- [模型上下文协议](https://modelcontextprotocol.io/)\r\n",
+ "config": {
+  "alpha-ess": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "python",
+    "/path/to/alpha-ess-mcp-server/main.py"
+   ],
+   "env": {
+    "ALPHA_ESS_APP_ID": "your_app_id_here",
+    "ALPHA_ESS_APP_SECRET": "your_app_secret_here"
+   }
+  }
+ }
+}

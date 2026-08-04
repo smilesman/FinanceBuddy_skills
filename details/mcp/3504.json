@@ -1,0 +1,23 @@
+{
+ "id": "3504",
+ "kind": "mcp",
+ "name": "lex",
+ "fingerprint_md5": "316349207b5e9532a2947041d47f806b",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Lex API MCP-英国法律研究\r\n\r\n**介绍Lex API+MCP：为开发者和代理商提供语义搜索API，以访问立法和案例法。完全免费且完全开源。**\r\n\r\n这个API有助于整个人工智能代理生态系统，如Anthropic、微软、OpenAI、Cursor等公司的人工智能代理。无论您是在政府部门、律师事务所、大学研究项目还是法律技术初创公司工作：我们鼓励您进行实验，看看您可以使用Lex API构建什么。\r\n\r\n**API终结点：** https://lex.lab.i.ai.gov.uk/\r\n\r\n______________________________________________________________________\r\n\r\n## Lex是什么？\r\n\r\nLex提供对英国综合法律数据的程序化访问：\r\n\r\n- **219,655** 法案和法定文书（1267年至今，1963年完成）\r\n- **69,910** 法院判决（2001年至今）\r\n- **61,107** 人工智能生成的案例摘要\r\n- **892,210** 立法修正案\r\n- **83,350** 注释\r\n\r\n## 快速开始\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add --transport http lex https://lex.lab.i.ai.gov.uk/mcp\r\n```\r\n\r\n### 克劳德桌面版\r\n\r\n添加到 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"lex\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-remote@latest\", \"https://lex.lab.i.ai.gov.uk/mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **故障排除：“服务器已断开连接”错误**\r\n>\r\n> 如果你看到 `ReferenceError: File is not defined` 在日志中，Claude Desktop正在使用旧的Node.js版本（需要Node 20+）。\r\n>\r\n> **检查您的日志：** `~/Library/Logs/Claude/mcp-server-lex.log`\r\n>\r\n> **修复nvm用户的问题：** 创建一个强制使用正确Node版本的包装脚本：\r\n>\r\n> ```bash\r\n> # Create wrapper script\r\n> mkdir -p ~/.local/bin\r\n> cat > ~/.local/bin/mcp-remote-wrapper << 'EOF'\r\n> #!/bin/bash\r\n> export PATH=\"/opt/homebrew/bin:$PATH\"\r\n> exec /opt/homebrew/bin/npx -y mcp-remote@latest \"$@\"\r\n> EOF\r\n> chmod +x ~/.local/bin/mcp-remote-wrapper\r\n> ```\r\n>\r\n> 然后更新你的配置：\r\n>\r\n> ```json\r\n> {\r\n>   \"mcpServers\": {\r\n>     \"lex\": {\r\n>       \"command\": \"/Users/YOUR_USERNAME/.local/bin/mcp-remote-wrapper\",\r\n>       \"args\": [\"https://lex.lab.i.ai.gov.uk/mcp\"]\r\n>     }\r\n>   }\r\n> }\r\n> ```\r\n>\r\n> 替换 `YOUR_USERNAME` 使用您的实际用户名。\r\n\r\n### 光标/VS代码\r\n\r\n添加到 `.cursor/mcp.json` 或 `.vscode/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"lex\": {\r\n      \"url\": \"https://lex.lab.i.ai.gov.uk/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具（19）\r\n\r\n|类别|工具|\r\n|----------|-------|\r\n| **立法** |search_for_legistration_acts、search_for_Legistration_sections、lookup_legistration、get_legislation_sections，get_legislation _ full_text、proxy_legistration.data|\r\n| **卡塞洛** |search_for_caselaw，search_for_caselaw_section，search_fors_caselaw_by_reference，search_caselaw_by_reference、search_caselaw_summaries、proxy_caselaw_data|\r\n| **解释性说明** |搜索_解释_注释，获取_解释_笔记_by_legislation，获取_分析_注释_by_section|\r\n| **修正案** |搜索_修改，搜索_修改_部分|\r\n| **效用** |get_live_stats_api_stats_get，健康检查集|\r\n\r\n看 [LEX_MCP_TOOLS.md](LEX_MCP_TOOLS.md) 获取完整文档。\r\n\r\n## 查询示例\r\n\r\n```\r\n\"What does the Data Protection Act 2018 say about the right to erasure?\"\r\n\r\n\"Find cases about duty of care in negligence from the Court of Appeal\"\r\n\r\n\"What amendments have been made to the Human Rights Act 1998?\"\r\n\r\n\"Explain section 75 of the Consumer Credit Act\"\r\n```\r\n\r\n看 [LEX_CITIZEN_GUIDE.md](LEX_CITIZEN_GUIDE.md) 70多个实例。\r\n\r\n## 搜索最佳实践\r\n\r\n1. **要具体** -“劳动法庭不公平解雇”>“劳动法”\r\n1. **使用过滤器** -按年份、法院或立法类型筛选\r\n1. **组合检索** -先搜索立法，然后查找相关判例法\r\n1. **检查修改** -立法自颁布以来可能已经过修订\r\n\r\n## 速率限制\r\n\r\n- 每分钟60个请求\r\n- 每个IP每小时1000个请求\r\n\r\n## 数据许可\r\n\r\n|数据|许可证|\r\n|------|---------|\r\n|立法|开放政府许可v3.0|\r\n|判例法|公开司法许可|\r\n\r\n## 重要说明\r\n\r\n- **实验服务** -不适用于生产依赖性\r\n- **LLM转录** -历史立法（1963年之前）使用人工智能提取，在源头进行验证\r\n- **法律信息，而非建议** -就个人法律事务咨询律师\r\n\r\n## 文档\r\n\r\n- [LEX_MCP_TOOLS.md](LEX_MCP_TOOLS.md) -完整的工具参考（19个工具）\r\n- [LEX_CITIZEN_GUIDE.md](LEX_CITIZEN_GUIDE.md) -公民的实际例子\r\n- [技能.md](SKILL.md) -Claude代码技能文件\r\n\r\n## API文档\r\n\r\n- **Swagger用户界面：** https://lex.lab.i.ai.gov.uk/api/docs\r\n- **重新记录：** https://lex.lab.i.ai.gov.uk/api/redoc\r\n- **OpenAPI：** https://lex.lab.i.ai.gov.uk/api/openapi.json\r\n\r\n## 鸣谢\r\n\r\n- **Lex API** 通过 [i.AI（人工智能孵化器）](https://ai.gov.uk/)\r\n- **英国国家档案馆**\r\n- **政府法务部**\r\n- **奥利弗·诺曼** -是谁让这一切成为可能\r\n- **利亚姆·威尔金森**\r\n\r\n如果为公共利益而建设听起来像你的事情，请遵循 [人工智能孵化器](https://ai.gov.uk/) 页面。\r\n\r\n## 许可证\r\n\r\n文档：MIT\r\n\r\n根据来源进行数据许可（开放政府许可证v3.0，开放司法许可证）\r\n",
+ "config": {
+  "lex": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-remote@latest",
+    "https://lex.lab.i.ai.gov.uk/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

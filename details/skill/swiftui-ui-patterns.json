@@ -1,0 +1,12 @@
+{
+ "id": "swiftui-ui-patterns",
+ "kind": "skill",
+ "name": "swiftui-ui-patterns",
+ "fingerprint_md5": "fa900bb33e11225ff7aaef19c91e6944",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# SwiftUI UI 模式\r\n\r\n## 快速开始\r\n\r\n根据你的目标选择路径：\r\n\r\n### 现有项目\r\n\r\n- 确定功能或屏幕以及主要交互模型（列表、详情、编辑器、设置、标签页）。\r\n- 在仓库中使用 `rg \"TabView\\\\(\"` 或类似命令查找附近的示例，然后阅读最接近的 SwiftUI 视图。\r\n- 应用本地约定：优先使用 SwiftUI 原生状态，尽可能保持状态本地化，并对共享依赖项使用环境注入。\r\n- 从 `references/components-index.md` 中选择相关的组件参考并遵循其指南。\r\n- 使用小型、专注的子视图和 SwiftUI 原生数据流构建视图。\r\n\r\n### 新项目脚手架\r\n\r\n- 从 `references/app-scaffolding-wiring.md` 开始，连接 TabView + NavigationStack + sheets。\r\n- 基于提供的骨架添加最小的 `AppTab` 和 `RouterPath`。\r\n- 根据你首先需要的 UI 选择下一个组件参考（TabView、NavigationStack、Sheets）。\r\n- 随着新屏幕的添加扩展路由和 sheet 枚举。\r\n\r\n## 要遵循的一般规则\r\n\r\n- 使用现代 SwiftUI 状态（`@State`、`@Binding`、`@Observable`、`@Environment`）并避免不必要的视图模型。\r\n- 优先组合；保持视图小而专注。\r\n- 使用 async/await 配合 `.task` 和显式的加载/错误状态。\r\n- 仅在编辑旧文件时保持现有的旧模式。\r\n- 遵循项目的格式化程序和样式指南。\r\n- **Sheets**：当状态表示选中的模型时，优先使用 `.sheet(item:)` 而非 `.sheet(isPresented:)`。避免在 sheet 主体内部使用 `if let`。Sheets 应该拥有自己的操作并在内部调用 `dismiss()`，而不是转发 `onCancel`/`onConfirm` 闭包。\r\n\r\n## 新 SwiftUI 视图的工作流\r\n\r\n1. 定义视图的状态及其所有权位置。\r\n2. 识别要通过 `@Environment` 注入的依赖项。\r\n3. 草拟视图层次结构并将重复部分提取到子视图中。\r\n4. 使用 `.task` 实现异步加载，并在需要时使用显式状态枚举。\r\n5. 当 UI 是交互式时添加无障碍标签或标识符。\r\n6. 通过构建验证并在需要时更新使用调用点。\r\n\r\n## 组件参考\r\n\r\n使用 `references/components-index.md` 作为入口点。每个组件参考应包括：\r\n- 意图和最佳适用场景。\r\n- 带有本地约定的最小使用模式。\r\n- 陷阱和性能注意事项。\r\n- 当前仓库中现有示例的路径。\r\n\r\n## Sheet 模式\r\n\r\n### 项目驱动的 sheet（首选）\r\n\r\n```swift\r\n@State private var selectedItem: Item?\r\n\r\n.sheet(item: $selectedItem) { item in\r\n    EditItemSheet(item: item)\r\n}\r\n```\r\n\r\n### Sheet 拥有自己的操作\r\n\r\n```swift\r\nstruct EditItemSheet: View {\r\n    @Environment(\\.dismiss) private var dismiss\r\n    @Environment(Store.self) private var store\r\n\r\n    let item: Item\r\n    @State private var isSaving = false\r\n\r\n    var body: some View {\r\n        VStack {\r\n            Button(isSaving ? \"Saving…\" : \"Save\") {\r\n                Task { await save() }\r\n            }\r\n        }\r\n    }\r\n\r\n    private func save() async {\r\n        isSaving = true\r\n        await store.save(item)\r\n        dismiss()\r\n    }\r\n}\r\n```\r\n\r\n## 添加新的组件参考\r\n\r\n- 创建 `references/<component>.md`。\r\n- 保持简短且可操作；链接到当前仓库中的具体文件。\r\n- 使用新条目更新 `references/components-index.md`。",
+ "config": {}
+}

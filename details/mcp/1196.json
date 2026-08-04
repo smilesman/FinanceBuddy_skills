@@ -1,0 +1,18 @@
+{
+ "id": "1196",
+ "kind": "mcp",
+ "name": "oracle-mcp-server",
+ "fingerprint_md5": "f6931d7b1c842b487f656a2b35061250",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# Oracle MCP服务器\r\n\r\n用于Oracle数据库操作的模型上下文协议（MCP）服务器实现，基于 `spring-ai-mcp-server-webmvc-spring-boot-starter`此服务提供了一组通过MCP与Oracle数据库交互的工具，利用服务器发送事件（SSE）进行实时通信。\r\n\r\n## 特性\r\n\r\n- 列出Oracle数据库中的所有表\r\n- 描述表结构（列、数据类型、约束）\r\n- 执行SQL语句（SELECT、INSERT、UPDATE、DELETE）\r\n- 安全的数据库连接管理\r\n- 通过SSE进行实时通信\r\n- 基于spring的ai mcp服务器webmvc spring启动程序\r\n\r\n## 技术栈\r\n\r\n### 核心依赖关系\r\n\r\n- 弹簧靴3.2.0\r\n- spring-ai-mcp服务器webmvc春季启动启动程序\r\n- Oracle JDBC驱动程序\r\n- 模型上下文协议（MCP）框架\r\n- 龙目\r\n\r\n### 开发工具\r\n\r\n- Java 17\r\n- Maven 3.6+\r\n- Spring Boot测试框架\r\n- JUnit5\r\n\r\n## 入门指南\r\n\r\n### 先决条件\r\n\r\n- JDK 17\r\n- Maven 3.6+\r\n- Oracle数据库实例\r\n- MCP服务器环境\r\n- 光标IDE\r\n\r\n### 配置\r\n\r\n#### 1.数据库配置\r\n\r\n创建或修改 `application.properties` 或 `application.yml` 具有以下设置：\r\n\r\n```yaml\r\noracle:\r\n  connectionString: jdbc:oracle:thin:@//your-oracle-host:1521/your-service-name\r\n  username: your-username\r\n  password: your-password\r\n```\r\n\r\n#### 2.光标MCP配置\r\n\r\n在Cursor IDE中，在以下设置中配置MCP服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"oracle-mcp-server\": {\r\n      \"url\": \"http://{server-ip}:{server-port}/sse\",\r\n      \"enabled\": true\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n此配置：\r\n\r\n- 将MCP服务器名称设置为“oracle MCP服务器”\r\n- 将服务器URL配置为“http://{server ip}:{server port}/sse”\r\n  - 将｛server ip｝替换为服务器的ip地址\r\n  - 将｛服务器端口｝替换为服务器的端口号\r\n- 启用MCP服务器以在Cursor中使用\r\n\r\n### 建设项目\r\n\r\n```bash\r\nmvn clean install\r\n```\r\n\r\n### 运行应用程序\r\n\r\n```bash\r\nmvn spring-boot:run\r\n```\r\n\r\n## API工具\r\n\r\n### 1.列表表工具\r\n\r\n- 姓名： `list_tables`\r\n- 说明：获取Oracle数据库中所有表的列表\r\n- 用法：无需参数\r\n- 返回：以换行符分隔的表名列表\r\n\r\n### 2.描述表格工具\r\n\r\n- 姓名： `describe_table`\r\n- 说明：获取指定表的结构信息\r\n- 参数： `tableName` -要描述的表的名称\r\n- 返回：CSV格式的表结构，包括：\r\n  - 列名\r\n  - 数据类型\r\n  - 无效状态\r\n  - 数据长度\r\n  - 主要关键信息\r\n\r\n### 3.执行SQL工具\r\n\r\n- 姓名： `execute_sql`\r\n- 说明：执行Oracle SQL语句\r\n- 参数： `sql` -要执行的SQL语句\r\n- 退货：\r\n  - 对于SELECT：查询结果的CSV格式\r\n  - 对于INSERT/UPDATE/DELETE：受影响的行数\r\n\r\n## 实现细节\r\n\r\n### 建筑\r\n\r\n```\r\ncom.mcp.oracle/\r\n├── config/\r\n│   └── OracleConfig.java         # Database configuration\r\n├── service/\r\n│   └── OracleService.java        # Core service implementation\r\n└── OracleApplication.java        # Application entry point\r\n```\r\n\r\n### 关键组件\r\n\r\n1. **OracleConfig**\r\n\r\n   - 处理数据库连接配置\r\n   - 使用Spring的@ConfigurationProperties\r\n   - 安全密码管理\r\n\r\n1. **OracleService**\r\n\r\n   - 为数据库操作实施MCP工具\r\n   - 管理数据库连接\r\n   - 处理SQL执行和结果格式化\r\n   - 实现错误处理和日志记录\r\n\r\n1. **连接管理**\r\n\r\n   - 使用Oracle的连接池\r\n   - 实现资源的自动关闭\r\n   - 优雅地处理连接错误\r\n\r\n### 安全考虑\r\n\r\n- 配置中的密码加密\r\n- 连接池管理\r\n- SQL注入预防\r\n- 错误消息清理\r\n\r\n## 测试\r\n\r\n该项目包括全面的单元测试：\r\n\r\n```bash\r\nmvn test\r\n```\r\n\r\n测试覆盖范围包括：\r\n\r\n- 数据库连接\r\n- 表格列表\r\n- 表结构说明\r\n- SQL执行\r\n- 错误处理\r\n\r\n## 错误处理\r\n\r\n该服务实现了稳健的错误处理：\r\n\r\n- 连接失败\r\n- SQL语句无效\r\n- 缺少表/列\r\n- 权限问题\r\n\r\n## 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建功能分支\r\n1. 提交您的更改\r\n1. 推到分支\r\n1. 创建拉取请求\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。\r\n\r\n## 支持\r\n\r\n有关支持和问题，请在存储库中创建问题。\r\n",
+ "config": {
+  "oracle-mcp-server": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://{server-ip}:{server-port}/sse"
+  }
+ }
+}

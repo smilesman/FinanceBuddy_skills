@@ -1,0 +1,22 @@
+{
+ "id": "802",
+ "kind": "mcp",
+ "name": "penrose",
+ "fingerprint_md5": "09551b89e32715c04d49c502878c7837",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 彭罗斯MCP\r\n\r\n基于以下内容构建的图表生成系统 [CMU的彭罗斯发动机](https://penrose.cs.cmu.edu/)，作为CLI工具公开 [主控程序](https://modelcontextprotocol.io/) 服务器。\r\n\r\nPenrose通过受约束的数值优化将数学对象和关系的声明性描述转化为漂亮的SVG图。该项目封装了该引擎，以便LLM代理（在Cursor、Claude Desktop、VS Code等中）和命令行用户可以生成图表，而无需直接学习Penrose的三语言系统。\r\n\r\n## 快速开始\r\n\r\n### 安装\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n### CLI使用情况\r\n\r\n列出可用的图表域：\r\n\r\n```bash\r\nnpx tsx src/cli/penrose-render.ts list-domains\r\n```\r\n\r\n获取有关域的详细信息（类型、谓词、样式、示例）：\r\n\r\n```bash\r\nnpx tsx src/cli/penrose-render.ts domain-info set-theory\r\n```\r\n\r\n渲染图表：\r\n\r\n```bash\r\nnpx tsx src/cli/penrose-render.ts render \\\r\n  -d set-theory \\\r\n  -s venn \\\r\n  -S \"Set A, B, C\r\nSubset(B, A)\r\nSubset(C, A)\r\nDisjoint(B, C)\r\nAutoLabel All\" \\\r\n  -o diagram.svg\r\n```\r\n\r\n使用不同的变体种子作为替代布局：\r\n\r\n```bash\r\nnpx tsx src/cli/penrose-render.ts render \\\r\n  -d set-theory -s venn \\\r\n  -S \"Set A, B\r\nSubset(B, A)\r\nAutoLabel All\" \\\r\n  -v \"seed42\" -o diagram.svg\r\n```\r\n\r\n### MCP服务器（用于LLM代理）\r\n\r\n通过stdio运行MCP服务器：\r\n\r\n```bash\r\nnpx tsx src/mcp/server.ts\r\n```\r\n\r\n#### 光标配置\r\n\r\n添加到光标MCP设置(`.cursor/mcp.json` 或全局设置）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"penrose\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"src/mcp/server.ts\"],\r\n      \"cwd\": \"/path/to/penrose_mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### Claude桌面配置\r\n\r\n添加 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"penrose\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"src/mcp/server.ts\"],\r\n      \"cwd\": \"/path/to/penrose_mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用域名\r\n\r\n|域|描述|样式|\r\n|--------|-------------|--------|\r\n| `set-theory` |具有子集、不相交和相交关系的集合| `venn` （维恩图）， `tree` （防护树）|\r\n| `linear-algebra` |向量空间、向量、正交性| `vectors` （箭头从原点）|\r\n| `graphs` |具有邻接关系的节点和边| `directed` （带箭头）， `undirected` |\r\n| `euclidean-geometry` |点、线段、三角形、角度| `geometry` （经典建筑风格）|\r\n\r\n## MCP工具\r\n\r\n当作为MCP服务器连接时，LLM可以使用以下工具：\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_domains` |列出所有可用的图表域及其样式|\r\n| `get_domain_info` |获取域的类型、谓词、样式和示例|\r\n| `render_diagram` |编译Penrose图并将其渲染为SVG|\r\n\r\n服务器还公开了一个 `penrose_usage_guide` 提示任何MCP客户端都可以获取完整的使用说明。\r\n\r\n## 运作原理\r\n\r\nPenrose使用三种声明性语言：\r\n\r\n1. **领域** --定义存在哪些类型的对象以及可能存在的关系\r\n1. **风格** --定义对象的视觉渲染方式（形状、约束、布局规则）\r\n1. **物质** --声明特定的对象实例及其关系（每个图的输入）\r\n\r\n域+样式对是一个可重用的库。根据图表，物质是唯一会发生变化的东西。该项目捆绑了几个域+样式对，并允许您通过编写（或让LLM编写）Substance程序来生成图表。\r\n\r\n## 创建新域名\r\n\r\n要添加新的图表域，请执行以下操作：\r\n\r\n1. 在下面创建一个目录 `domains/` 使用您的域名\r\n1. 写一个 `.domain` 带有类型和谓词声明的文件\r\n1. 写一个或多个 `.style` 定义视觉映射的文件\r\n1. 添加示例 `.substance` 文件\r\n1. 创建一个 `meta.json` 为文件编制索引\r\n\r\n请参阅现有域以供参考。这 [彭罗斯文件](https://penrose.cs.cmu.edu/docs/tutorial/welcome) 有编写域和样式程序的全面指南。\r\n\r\n## 项目结构\r\n\r\n```\r\nsrc/\r\n  core/\r\n    renderer.ts    -- Penrose compile → optimize → toSVG pipeline\r\n    registry.ts    -- Scans and indexes bundled domain+style pairs\r\n    types.ts       -- Shared TypeScript interfaces\r\n  cli/\r\n    penrose-render.ts  -- CLI entry point\r\n  mcp/\r\n    server.ts          -- MCP server entry point\r\n    tools/             -- MCP tool handlers\r\n    resources/         -- MCP resource handlers\r\ndomains/               -- Bundled domain+style libraries\r\n```\r\n\r\n看 [建筑.md](ARCHITECTURE.md) 详细的技术设计。\r\n\r\n## 路线图\r\n\r\n- \\[\\]带有HTTP传输的Docker容器，用于远程MCP访问\r\n- \\[\\]参数图调整的会话状态（热启动重新优化）\r\n- \\[\\]其他领域：软件架构、ER图、网络拓扑\r\n- \\[\\]用于高性能集成的gRPC网关\r\n- \\[\\]用于交互式图表编辑的Web UI\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 致谢\r\n\r\n建立在 [彭罗斯](https://penrose.cs.cmu.edu/) 作者：卡内基梅隆大学的叶嘉欣、倪、克里格、玛扬、怀斯、奥尔德里奇、阳光和克兰。\r\n\r\n> 叶等著，《彭罗斯：从数学符号到美丽的图表》，ACM翻译。图表。39、4（信号图2020）。\r\n",
+ "config": {
+  "penrose": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "tsx",
+    "src/mcp/server.ts"
+   ],
+   "env": {}
+  }
+ }
+}

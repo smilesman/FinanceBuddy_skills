@@ -1,0 +1,24 @@
+{
+ "id": "3258",
+ "kind": "mcp",
+ "name": "weather-10",
+ "fingerprint_md5": "d12a0b4f2f282efc055543dc01ef1fee",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 🌤️ MCP气象服务器\r\n\r\n模型上下文协议（MCP）服务器，使用 [OpenMeteo API 的](https://open-meteo.com/).\r\n\r\n该服务器允许LLM（如克劳德）使用纬度和经度获取地球上任何位置的准确天气信息。\r\n\r\n## ✨ 特性\r\n\r\n- **当前天气：** 获取实时温度、风速、风向和大气条件。\r\n- **预测：** 获取长达16天的详细小时天气预报（可定制）。\r\n- **不需要API密钥：** 使用免费的OpenMeteo API。\r\n- **使用Python构建：** 轻便快速，使用 `uv`.\r\n\r\n## 🛠️ 工具\r\n\r\n### `get_current_weather`\r\n\r\n获取特定位置的当前天气状况。\r\n\r\n- **论据：**\r\n  - `latitude` （float）：位置的纬度。\r\n  - `longitude` （float）：位置的经度。\r\n- **退货：** 包含温度、风、云量等的JSON字符串。\r\n\r\n### `get_forecast`\r\n\r\n获取每小时的天气预报。\r\n\r\n- **论据：**\r\n  - `latitude` （float）：位置的纬度。\r\n  - `longitude` （float）：位置的经度。\r\n  - `days` （int，可选）：要预测的天数（1-16）。默认为3。\r\n- **退货：** JSON字符串，包含每小时的温度、降水概率和风速。\r\n\r\n## 🚀 安装\r\n\r\n### 先决条件\r\n\r\n- Python 3.10+\r\n- [紫外线](https://github.com/astral-sh/uv) （建议用于依赖关系管理）\r\n\r\n### 设置\r\n\r\n1. **克隆存储库：**\r\n\r\n   ```bash\r\n   git clone https://github.com/BugMentor/mcp-server-weather.git\r\n   cd mcp-server-weather\r\n   ```\r\n\r\n1. **创建并激活虚拟环境：**\r\n\r\n   - *Windows（PowerShell）：*\r\n     ```powershell\r\n     uv venv\r\n     .venv\\Scripts\\activate\r\n     ```\r\n   - *Mac/Linux：*\r\n     ```bash\r\n     uv venv\r\n     source .venv/bin/activate\r\n     ```\r\n\r\n1. **安装依赖项：**\r\n\r\n   ```bash\r\n   uv pip install mcp httpx\r\n   ```\r\n\r\n## 💻 用法\r\n\r\n### 本地运行（MCP检查器）\r\n\r\n您可以使用MCP检查器交互式地测试这些工具。\r\n\r\n```bash\r\nmcp dev server.py\r\n\r\n```\r\n\r\n这将启动一个本地服务器并打开一个web界面，您可以在其中手动检查和执行工具。\r\n\r\n### 连接到克劳德桌面\r\n\r\n要将此服务器与克劳德桌面应用程序一起使用：\r\n\r\n1. 打开或创建您的Claude配置文件：\r\n\r\n- **窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- **雨衣：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n2. 添加以下配置（更新项目的路径）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"C:\\\\Users\\\\matias.magni2\\\\Documents\\\\dev\\\\mine\\\\mcp-server-weather\",\r\n        \"run\",\r\n        \"server.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n\r\n```\r\n\r\n3. 重新启动克劳德桌面。现在你应该看到🔌 表示天气工具已连接的图标。\r\n\r\n## 📝 示例提示\r\n\r\n连接到Claude后，您可以提出以下问题：\r\n\r\n- “伦敦现在的天气怎么样？”\r\n- “明天我在特隆赫姆需要雨伞吗？”\r\n- “比较门多萨和布宜诺斯艾利斯未来3天的预测。”\r\n\r\n## 📄 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "C:\\Users\\matias.magni2\\Documents\\dev\\mine\\mcp-server-weather",
+    "run",
+    "server.py"
+   ],
+   "env": {}
+  }
+ }
+}

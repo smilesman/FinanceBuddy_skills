@@ -1,0 +1,22 @@
+{
+ "id": "1717",
+ "kind": "mcp",
+ "name": "shell-2",
+ "fingerprint_md5": "df1f94a6b031d5acd563cabf1309b37c",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 壳牌mcp\r\n\r\n> 命令执行MCP服务器\r\n\r\n[](https://github.com/kevinwatt/shell-mcp)\r\n[](LICENSE)\r\n\r\n一种MCP服务器实现，为LLM提供安全的shell命令执行功能。\r\n\r\n## 特性\r\n\r\n- **安全执行**：仅列出白名单中的命令和参数\r\n- **资源控制**：内存和CPU使用率监控\r\n- **超时控制**：自动终止长时间运行的命令\r\n- **大小限制**：安全输出尺寸限制\r\n- **MCP集成**：与Claude和其他MCP兼容的LLM配合使用\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install @kevinwatt/shell-mcp\r\n```\r\n\r\n## 配置为 [潜水桌面](https://github.com/OpenAgentPlatform/Dive)\r\n\r\n1. 点击Dive桌面中的“+添加MCP服务器”\r\n1. 复制并粘贴此配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"shell\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@kevinwatt/shell-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具文档\r\n\r\n- **shell_ls、shell_pwd、shell_df等。**\r\n  - 执行白名单shell命令\r\n  - 输入：\r\n    - `command` （string，必填）：要执行的命令\r\n    - `args` （数组，可选）：命令参数\r\n    - `timeout` （数字，可选）：执行超时（毫秒）\r\n\r\n## 使用示例\r\n\r\n要求你的法学硕士：\r\n\r\n```\r\n\"Show current directory using shell_pwd\"\r\n\"List files using shell_ls with -l argument\"\r\n\"Check disk usage using shell_df with -h argument\"\r\n```\r\n\r\n## 手动启动\r\n\r\n如果需要，请手动启动服务器：\r\n\r\n```bash\r\nnpx @kevinwatt/shell-mcp\r\n```\r\n\r\n## 需求\r\n\r\n- Node.js 18+\r\n- MCP兼容LLM服务\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Watch mode\r\nnpm run watch\r\n\r\n# Run tests\r\nnpm test\r\n\r\n# Lint\r\nnpm run lint\r\n```\r\n\r\n## 许可证\r\n\r\n麻省 理工© 戴维 Yen\r\n\r\n## 关键词\r\n\r\n- 主控程序\r\n- 外壳\r\n- 命令\r\n- 克劳德\r\n- 大语言模型\r\n- 自动化\r\n\r\n## 可用命令\r\n\r\n以下shell命令可用：\r\n\r\n|命令|描述|允许的参数|\r\n|------------|-------------------------------------------------------|-------------------------------------|\r\n|ls |列出目录内容|-l、-a、-h、-R、--help、\\*|\r\n|cat|连接并显示文件内容|-n，-b，--help，\\*|\r\n|pwd|显示当前工作目录|无|\r\n|df|显示磁盘使用情况|-h，-T，--help|\r\n|echo |显示文本|任何文本|\r\n|ps |显示进程状态|-e、-f、-u、--help|\r\n|free|显示内存使用情况|-h、-m、-g、--help|\r\n|uptime |显示系统正常运行时间|无|\r\n|date |显示系统日期和时间|+%Y-%m-%d，+%H:%m:%S，--帮助|\r\n|grep|在文件中搜索文本模式|-i、-v、-n、-r、-l、--color、\\*|\r\n|w|显示谁已登录以及他们正在做什么|-h，-s，--no header，--help|\r\n|whois|查询whois域名注册信息|-H，\\*|\r\n|查找|在目录层次结构中搜索文件|-name、-type、-size、-mtime、\\*|\r\n|netstat|网络连接信息|-a、-n、-t、-u、-l、-p、--help|\r\n|lspci |列出PCI设备|-v、-k、-mm、-nn、--help|\r\n|lsusb|列出USB设备|-v、-t、-d、-s、--help|\r\n|dig|DNS查找实用程序|+短、+跟踪、+dnssec@*, *      |\r\n|nslookup |查询DNS记录|-类型=*，-查询=\\*，\\*|\r\n|ip |显示网络设备和接口|地址、链接、路由、邻居、-br、\\*|\r\n|其中|查找二进制文件、源文件和手动文件|-b、-m、-s、\\*|\r\n",
+ "config": {
+  "shell": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@kevinwatt/shell-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

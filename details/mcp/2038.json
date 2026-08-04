@@ -1,0 +1,24 @@
+{
+ "id": "2038",
+ "kind": "mcp",
+ "name": "registrum",
+ "fingerprint_md5": "c89e1c9a04cb051fe14b2c4b1e9126f0",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 注册表MCP服务器\r\n\r\n**不需要Companies House API密钥。** 一个Registerum API密钥可直接在Claude、Cursor和任何兼容MCP的客户机内部为您的人工智能代理提供丰富、缓存的英国公司数据-结构化财务、董事网络和公司简介。\r\n\r\n与要求您在CH开发者门户网站注册并管理自己的费率限制的原始Companies House API包装器不同，Registerum为您处理所有这些：iXBRL文件解析为干净的JSON、24/7d缓存和CH中断时的断路器弹性。\r\n\r\n**5个工具，零样板。** 搜索公司，提取结构化财务数据，列出董事名单，绘制公司网络图。\r\n\r\n______________________________________________________________________\r\n\r\n## 安装\r\n\r\n### 克劳德桌面版\r\n\r\n添加 `~/.claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"registrum\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@registrum/mcp\"],\r\n      \"env\": {\r\n        \"REGISTRUM_API_KEY\": \"reg_live_...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n在获取免费API密钥 [register.co.uk](https://registrum.co.uk) （50个电话/月免费）。\r\n\r\n### 光标\r\n\r\n添加 `.cursor/mcp.json` 在您的项目中，或 `~/.cursor/mcp.json` 全局——与上述格式相同。\r\n\r\n______________________________________________________________________\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_company` |按名称搜索英国公司|\r\n| `get_company` |丰富的公司简介（年龄、逾期标志、SIC描述）|\r\n| `get_financials` |iXBRL文件中的结构化损益+资产负债表|\r\n| `get_directors` |在所有公司拥有完整任命历史的董事|\r\n| `get_network` |通过共享董事连接建立企业网络|\r\n\r\n______________________________________________________________________\r\n\r\n## 示例提示\r\n\r\n> “谁是乐购公司的董事，他们与哪些其他公司有关联？”\r\n\r\n> “获取公司00445790的最新财务信息”\r\n\r\n> “搜索名为‘劳斯莱斯’的公司，并向我显示他们的状态”\r\n\r\n> “将Barratt Developments的总监网络绘制到深度2”\r\n\r\n______________________________________________________________________\r\n\r\n## 计划\r\n\r\n|计划|价格|通话/月|\r\n|------|-------|------------|\r\n|免费| 0英镑|50英镑|\r\n|专业| 49英镑/月|2000|\r\n|企业| 149英镑/月|10000|\r\n\r\n[查看价格→](https://registrum.co.uk/#pricing)\r\n\r\n______________________________________________________________________\r\n\r\n## API 参考\r\n\r\nAPI完整文档，网址： [api.registrum.co.uk/docs](https://api.registrum.co.uk/docs)\r\n\r\n## 支持\r\n\r\n[support@registrum.co.uk](mailto:support@registrum.co.uk)\r\n",
+ "config": {
+  "registrum": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@registrum/mcp"
+   ],
+   "env": {
+    "REGISTRUM_API_KEY": "reg_live_..."
+   }
+  }
+ }
+}

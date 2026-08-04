@@ -1,0 +1,22 @@
+{
+ "id": "163",
+ "kind": "mcp",
+ "name": "coin-flip",
+ "fingerprint_md5": "51eb9ab24198d8787640805ba8f8f015",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 硬币翻转MCP服务器\r\n\r\n一个MCP服务器，使用random.org的随机性API提供真正的随机抛硬币。该服务器通过提供一个工具来生成具有可配置侧的随机结果，从而演示了模型上下文协议。\r\n\r\n## 特性\r\n\r\n### 工具\r\n\r\n- `flip_coin` -翻转硬币，可配置硬币的两面数\r\n  - 可选的 `sides` 参数（默认值：2）\r\n  - 使用random.org中的真正随机性\r\n  - 边缘情况（0、1或负侧）的特殊处理\r\n  - 两面：返回“头部”或“尾部”\r\n  - 3面：返回“头部”、“尾部”或“\\_”\r\n  - 对于n>3边：返回“它落在X边”\r\n\r\n## 发展\r\n\r\n安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n对于自动重建的开发：\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n## 安装\r\n\r\n要与Claude Desktop一起使用，请添加服务器配置：\r\n\r\n在MacOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\\\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"coin-flip\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-coin-flip\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 示例用法\r\n\r\n一旦连接到像Claude Desktop这样的MCP客户端，您就可以使用自然语言与硬币翻转工具进行交互。例如：\r\n\r\n- “抛硬币”\r\n- “滚一个六面模具”\r\n- “给我一个介于1和20之间的随机数”\r\n\r\n服务器将使用random.org中的真实随机性来生成结果。\r\n\r\n## 调试\r\n\r\n由于MCP服务器通过stdio进行通信，调试可能具有挑战性。我们建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector):\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector node build/index.js\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "coin-flip": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@modelcontextprotocol/server-coin-flip"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "1678",
+ "kind": "mcp",
+ "name": "pubchem",
+ "fingerprint_md5": "42be522b1aa436a5ebd8214bf9deba06",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# pubchem mcp服务器\r\n\r\nmcp用于从pubchem API中提取药物基础化学信息。\r\n\r\n## 需求\r\n\r\n- Python 3.10\r\n- `python-dotenv`\r\n- `requests`\r\n- `mcp`\r\n- `uvicorn`\r\n\r\n## 安装\r\n\r\n**安装依赖项（本地）：**\r\n\r\n- 直接从项目目录安装\r\n\r\n```bash\r\ngit clone [project repository URL]\r\ncd [project directory]\r\npip install .\r\n```\r\n\r\n**配置服务器（pypi）：**\r\n\r\n这 `servers_config.json` 遵循与Claude Desktop相同的结构，允许轻松集成多个服务器。\r\n这里有一个例子：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pubchem\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"pubchem_mcp_server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 此MCP的结果\r\n\r\n```json\r\n{\r\n  \"Drug Name\": \"Aspirin\",\r\n  \"CAS Number\": \"50-78-2\",\r\n  \"Molecular Weight\": 180.16,\r\n  \"Molecular Formula\": \"C9H8O4\",\r\n  \"SMILES\": \"CC(=O)OC1=CC=CC=C1C(=O)O\",\r\n  \"Synonyms\": [\r\n    \"2-(Acetyloxy)benzoic Acid\",\r\n    \"Acetylsalicylic Acid\",\r\n    \"Acetysal\",\r\n    \"Acylpyrin\",\r\n    \"Aloxiprimum\",\r\n    \"Aspirin\",\r\n    \"Colfarit\",\r\n    \"Dispril\",\r\n    \"Easprin\"\r\n  ],\r\n  \"InchI Key\": \"BSYNRYMUTXBXSQ-UHFFFAOYSA-N\",\r\n  \"IUPAC Name\": \"2-acetyloxybenzoic acid\",\r\n  \"ATC Code\": \"N02BA01\",\r\n  \"Details Link\": \"https://pubchem.ncbi.nlm.nih.gov/compound/2244\"\r\n}\r\n```\r\n",
+ "config": {
+  "pubchem": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "pubchem_mcp_server"
+   ],
+   "env": {}
+  }
+ }
+}

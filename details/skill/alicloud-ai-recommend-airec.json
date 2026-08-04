@@ -1,0 +1,12 @@
+{
+ "id": "alicloud-ai-recommend-airec",
+ "kind": "skill",
+ "name": "alicloud-ai-recommend-airec",
+ "fingerprint_md5": "f0c3638ab75241e1e1b93b16069ab747",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "Category: service\r\n\r\n# AIRec\r\n\r\n使用阿里云 OpenAPI (RPC) 配合官方 SDK 或 OpenAPI Explorer 管理 AIRec 资源。\r\n\r\n## 工作流\r\n\r\n1) 确认区域、资源标识符和期望的操作。\r\n2) 发现 API 列表和必需参数（见参考）。\r\n3) 使用 SDK 或 OpenAPI Explorer 调用 API。\r\n4) 使用 describe/list API 验证结果。\r\n\r\n## AccessKey 优先级（必须遵循）\r\n\r\n1) 环境变量：`ALICLOUD_ACCESS_KEY_ID` / `ALICLOUD_ACCESS_KEY_SECRET` / `ALICLOUD_REGION_ID`\r\nRegion 策略：`ALICLOUD_REGION_ID` 是可选默认值。如果未设置，为任务决定最合理的区域；如果不清楚，询问用户。\r\n2) 共享配置文件：`~/.alibabacloud/credentials`\r\n\r\n## API 发现\r\n\r\n- 产品代码：`Airec`\r\n- 默认 API 版本：`2020-11-26`\r\n- 使用 OpenAPI 元数据端点列出 API 和获取 schema（见参考）。\r\n\r\n## 高频操作模式\r\n\r\n1) 清单/列表：优先使用 `List*` / `Describe*` API 获取当前资源。\r\n2) 变更/配置：优先使用 `Create*` / `Update*` / `Modify*` / `Set*` API 进行变更。\r\n3) 状态/排查：优先使用 `Get*` / `Query*` / `Describe*Status` API 进行诊断。\r\n\r\n## 最小可执行快速开始\r\n\r\n在调用业务 API 之前使用元数据优先发现：\r\n\r\n```bash\r\npython scripts/list_openapi_meta_apis.py\r\n```\r\n\r\n可选覆盖：\r\n\r\n```bash\r\npython scripts/list_openapi_meta_apis.py --product-code <ProductCode> --version <Version>\r\n```\r\n\r\n该脚本将 API 清单产物写入技能输出目录。\r\n\r\n## 输出策略\r\n\r\n如果需要保存响应或生成的产物，写入：\r\n`output/alicloud-ai-recommend-airec/`\r\n\r\n## 参考\r\n\r\n- Sources: `references/sources.md`",
+ "config": {}
+}

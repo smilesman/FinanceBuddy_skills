@@ -1,0 +1,22 @@
+{
+ "id": "621",
+ "kind": "mcp",
+ "name": "datagouv-nc",
+ "fingerprint_md5": "c56b6be4a6c9753732f82a52dc56c6e1",
+ "download_count": 0,
+ "category": "翻译与语言",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp数据组nc\r\n\r\n> **开源MCP服务器** 对于新喀里多尼亚政府的开放数据API- [data.gouv.nc](https://data.gouv.nc)\r\n\r\n\r\n______________________________________________________________________\r\n\r\n## 关于这个项目\r\n\r\n该项目由 **[真](https://linkedin.com/in/kevyn-wahuzue)**，支持新喀里多尼亚政府发起的开放公共数据进程（https://data.gouv.nc/api/explore/v2.1/console）的。该协议允许通过MCP协议将领土的公共数据连接到现代人工智能助理。这是第一个专用于data.gouv.nc的MCP实现，旨在促进以自然语言利用开放数据。\r\n\r\n**data.gouv.nc** 提供数百个公共数据集（统计、经济、环境、人口、交通等）。该MCP服务器使所有兼容的AI助手（Claude、Cursor、Windsurf和任何MCP客户端）都可以直接访问这些数据，而无需编写一行代码。\r\n\r\n目标很简单： **降低领土开放数据与现代人工智能工具之间的障碍**研究人员、企业家、记者、公职人员和公民可以用自然语言查询这些数据。\r\n\r\n> *该项目是公民和志愿者方法的一部分，支持新喀里多尼亚政府的开放数据政策和人工智能的扩展，以服务于公众利益。*\r\n\r\n______________________________________________________________________\r\n\r\n## ⚡ 30秒内安装\r\n\r\n### 克劳德桌面版\r\n\r\n编辑Claude桌面配置文件（`claude_desktop_config.json`) :\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"datagouv-nc\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-datagouv-nc\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动Claude桌面。仅此而已。\r\n\r\n### 克劳德代码（CLI）\r\n\r\n```bash\r\nclaude mcp add datagouv-nc npx -y mcp-datagouv-nc\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 🛠️ 可用工具\r\n\r\n|输出|描述|\r\n|-------|-------------|\r\n| `list_datasets` |数据集目录中的列表和搜索|\r\n| `get_dataset` |数据集的详细信息（字段、组织、更新日期）|\r\n| `query_records` |使用ODSQL筛选器查询记录|\r\n| `get_facets` |探索可用的主题、组织和类别|\r\n| `get_dataset_facets` |数据集中字段的不同值|\r\n| `get_export_url` |生成完整的CSV导出URL（无记录限制）|\r\n\r\n______________________________________________________________________\r\n\r\n## 💬 你能做什么\r\n\r\n登录后，直接向AI助手提问：\r\n\r\n- *“哪些人口数据集可用？”*\r\n- *“给我2023年努美阿的就业数据”*\r\n- *“列出ISEE发布的所有数据集”*\r\n- *“data.gouv.nc涵盖了哪些数据主题？”*\r\n- *“给我下载公社数据集的完整CSV”*\r\n\r\n______________________________________________________________________\r\n\r\n## 📡 API来源\r\n\r\n- **门户** : [data.gouv.nc](https://data.gouv.nc)\r\n- **端点** : `https://data.gouv.nc/api/explore/v2.1`\r\n- **平台** ：Opendatasoft Explore API v2.1\r\n- **认证** ：无-完全公开的API\r\n- **方法** ：仅获取（只读，零写入）\r\n\r\n______________________________________________________________________\r\n\r\n## 🔧 地方发展\r\n\r\n```bash\r\ngit clone https://github.com/kanakytech/mcp-datagouv-nc\r\ncd mcp-datagouv-nc\r\nnpm install\r\nnpm run build\r\n```\r\n\r\nClaude桌面的本地配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"datagouv-nc\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/chemin/absolu/vers/mcp-datagouv-nc/build/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 🤝 贡献\r\n\r\n欢迎提出问题、建议和拉取请求。这个项目是自愿维持的。\r\n\r\n如果您代表新喀里多尼亚政府或公共机构并希望合作，请随时打开问题或直接联系。\r\n\r\n______________________________________________________________________\r\n\r\n## 📄 许可证\r\n\r\nMIT许可证+署名请求：\r\n如果你使用这个项目，请归功于Kevyn WAHUZUE\r\n（github.com/kanakytech/mcp datagouv-nc）在项目的README文件或学分中的某个地方\\<3\r\n\r\n______________________________________________________________________\r\n\r\n*独立项目，不正式隶属于新喀里多尼亚政府。仅使用data.gouv.nc的公共API。*\r\n\r\n*由开发 [真](https://linkedin.com/in/kevyn-wahuzue) --努美阿，新喀里多尼亚。*\r\n",
+ "config": {
+  "datagouv-nc": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-datagouv-nc"
+   ],
+   "env": {}
+  }
+ }
+}

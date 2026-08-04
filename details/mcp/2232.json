@@ -1,0 +1,26 @@
+{
+ "id": "2232",
+ "kind": "mcp",
+ "name": "korea_weather",
+ "fingerprint_md5": "5d8aeb99be397ede944b738a2f214bcd",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 韩国气象MCP服务器\r\n\r\n本MCP服务器 **气象厅短期预报查询服务API**基于的MCP服务器。\r\n\r\n## 介绍\r\n\r\n**韩国气象MCP服务器**收集气象局的天气信息，通过MCP协议提供给MCP客户端（主机），如Claude或Cursor。\r\n该服务器可以轻松地与利用气象信息的各种应用服务配合使用。\r\n\r\n## 主要功能\r\n\r\n- 气象厅短期预报API联动\r\n- 提供MCP格式的天气信息\r\n\r\n## 安装和使用方法\r\n\r\n### 使用Smithery安装\r\n\r\n1. [data.go.kr](https://www.data.go.kr/)在 **气象厅短期预报API**申请并获得API密钥。\r\n1. 使用以下命令 [史密瑟里](https://smithery.ai/server/@ohhan777/korea_weather)在中安装服务器并在Claude Desktop中注册。\r\n   如果在安装过程中要求输入API密钥，请输入已颁发的密钥。\r\n   ```bash\r\n   npx -y @smithery/cli mcp add ohhan777/korea_weather --client claude\r\n   ```\r\n1. 重新启动Claude Desktop即可使用。\r\n\r\n### 本地开发（Smithery CLI）\r\n\r\n1. 克隆源代码并安装依赖性。\r\n   ```bash\r\n   git clone https://github.com/ohhan777/korea_weather.git\r\n   cd korea_weather\r\n   uv sync\r\n   ```\r\n1. 为环境变量设置API密钥。\r\n   ```bash\r\n   export KOREA_WEATHER_API_KEY=\"발급받은_API_키\"\r\n   ```\r\n1. 运行开发服务器。\r\n   ```bash\r\n   # HTTP 모드로 실행 (http://localhost:8081)\r\n   uv run smithery dev\r\n\r\n   # 또는 Smithery Playground로 대화형 테스트\r\n   uv run smithery playground\r\n   ```\r\n\r\n### 如何直接从GitHub安装\r\n\r\n1. [data.go.kr](https://www.data.go.kr/)在申请气象厅短期预报API使用后，将获得API密钥。\r\n\r\n1. [GitHub](https://github.com/ohhan777/korea_weather)下载并运行源代码。\r\n\r\n   ```\r\n   git clone https://github.com/ohhan777/korea_weather.git\r\n   cd korea_weather\r\n   uv sync\r\n   uv run korea_weather.py\r\n   ```\r\n\r\n1. 在MCP客户机（Host）中注册服务器。\r\n\r\n   - **克劳德桌面**的设置文件通常位于以下路径中：\r\n     `C:\\Users\\[사용자 이름]\\AppData\\Roaming\\Claude\\claude_desktop_config.json`\r\n     （如果文件不存在，则创建新文件）\r\n\r\n   - **光标**在中：顶部的齿轮图标→ **MCP → 添加新的全局MCP服务器** 选择\r\n\r\n   以以下示例中的格式创建配置文件。（根据环境修改目录路径和API密钥）\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"korea_weather\": {\r\n         \"command\": \"uv\",\r\n         \"args\": [\r\n           \"--directory\",\r\n           \"C:\\\\ai\\\\PyProjects\\\\korea_weather\",\r\n           \"run\",\r\n           \"korea_weather.py\"\r\n         ],\r\n         \"env\": {\r\n           \"KOREA_WEATHER_API_KEY\": \"Input Your API Key Here!\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n### 部署到Smithery\r\n\r\n将代码推送到GitHub后， [史密斯·艾/新](https://smithery.ai/new)连接GitHub存储库后，Smithery将自动构建和托管服务器。\r\n\r\n### 提示示例\r\n\r\n```\r\n>> 제주 국제 공항 현재 날씨를 알려줘.\r\n>> 내일 오후에 서울 남대문에 놀러가려고 하는데 우산을 챙겨야할까?\r\n>> 오늘 오후에 세차하기에 괜찮은 날씨일까?\r\n```\r\n\r\n## 依赖性\r\n\r\n`pyproject.toml` 请参见\r\n\r\n## 许可证\r\n\r\n本项目是为内部试验而开发的，无需另行许可，即可自由部署和修改。\r\n\r\n## 咨询\r\n\r\n开发者：韩国航空宇宙研究院吴汉（ohhan@kari.re.kr)\r\n\r\n## 修改历史记录\r\n\r\n- 2026-02:Smithery v4集成- `smithery dev`/`smithery playground` 本地开发支持， `create_server()` 引入工厂模式\r\n- 2026-02:重新设计服务器结构（通用API请求处理、坐标转换缓存），增强MCP工具提示。\r\n- 2026-02: `httpx`/`dotenv` 我们添加了一个基于标准库的HTTP回退路径，以在未安装的环境中运行。\r\n- 2026-02:在离线环境中运行的单元测试（`tests/test_korea_weather.py`）。\r\n",
+ "config": {
+  "korea_weather": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "C:\\ai\\PyProjects\\korea_weather",
+    "run",
+    "korea_weather.py"
+   ],
+   "env": {
+    "KOREA_WEATHER_API_KEY": "Input Your API Key Here!"
+   }
+  }
+ }
+}

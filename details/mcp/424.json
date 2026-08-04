@@ -1,0 +1,21 @@
+{
+ "id": "424",
+ "kind": "mcp",
+ "name": "scrapling-fetch",
+ "fingerprint_md5": "81805c4886267e64c6f9b804f4f1c7e6",
+ "download_count": 0,
+ "category": "网页抓取",
+ "tags": "",
+ "version": "",
+ "readme": "# 刮取mcp\r\n\r\n[](https://opensource.org/licenses/Apache-2.0)\r\n[](https://pypi.org/project/scrapling-fetch-mcp/)\r\n\r\n帮助AI助手从受机器人保护的网站获取内容。使用Scrapling（patchright+curl cffi）绕过反自动化措施，返回干净的HTML或Markdown。\r\n\r\n> 针对文档和参考资料的低容量检索进行了优化。不是为大容量抓取或数据采集而设计的。\r\n\r\n**需求**：Python 3.10+， [紫外线](https://github.com/astral-sh/uv)\r\n\r\n## 克劳德代码技能\r\n\r\n最简单的方法是将其用作Claude Code技能。安装后，当您询问时，Claude将自动获取受机器人保护的URL，无需手动命令。\r\n\r\n**安装到您的项目中** （建议-仅在此项目上下文中加载）：\r\n\r\n```bash\r\ngit clone --depth=1 https://github.com/cyberchitta/scrapling-fetch-mcp /tmp/scrapling-fetch-mcp\r\ncp -r /tmp/scrapling-fetch-mcp/skills/s-fetch .claude/skills/\r\nrm -rf /tmp/scrapling-fetch-mcp\r\n```\r\n\r\n**或为所有项目安装** （加载到任何地方的上下文中）：\r\n\r\n```bash\r\ngit clone --depth=1 https://github.com/cyberchitta/scrapling-fetch-mcp /tmp/scrapling-fetch-mcp\r\ncp -r /tmp/scrapling-fetch-mcp/skills/s-fetch ~/.claude/skills/\r\nrm -rf /tmp/scrapling-fetch-mcp\r\n```\r\n\r\n您第一次调用 `/s-fetch`，克劳德会读\r\n`skills/s-fetch/references/install.md` 并运行一次性设置\r\n（安装该工具并下载浏览器二进制文件）。之后，只是\r\n自然地问：\r\n\r\n```\r\n\"Fetch the docs at https://example.com/api\"\r\n\"Find all mentions of 'authentication' on that page\"\r\n\"Get me the installation instructions from their homepage\"\r\n```\r\n\r\n## 克劳德桌面（MCP服务器）\r\n\r\n如果 `/s-fetch` skill已经安装了该工具，请跳到下面的配置。\r\n\r\n否则，请先安装：\r\n\r\n```bash\r\nuv tool install git+https://github.com/cyberchitta/scrapling-fetch-mcp\r\nuvx --from git+https://github.com/cyberchitta/scrapling-fetch-mcp scrapling install\r\n```\r\n\r\n> **备注**：浏览器安装下载数百MB，必须在首次使用前完成。如果服务器最初超时，请等待几分钟，然后重试。\r\n\r\n将此添加到您的Claude Desktop MCP设置中并重新启动：\r\n\r\n**MacOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\\\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"scrapling-fetch\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"scrapling-fetch-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 运作原理\r\n\r\n克劳德自动使用的两个工具：\r\n\r\n- **页面抓取** --检索具有分页支持的完整页面\r\n- **模式提取** --查找与正则表达式匹配的内容\r\n\r\n三个保护级别，自动升级：\r\n\r\n- **基本的** --快速（1-2s），适用于大多数网站\r\n- **隐秘** --中等（3-8s），无头铬\r\n- **最大隐身** --彻底（10s+），完整的浏览器指纹\r\n\r\n## 局限性\r\n\r\n- 仅文本内容（文档、文章、参考文献）\r\n- 不适用于大容量抓取或需要身份验证的网站\r\n- 性能因站点复杂性和保护级别而异\r\n\r\n## 许可证\r\n\r\nApache 2.0\r\n",
+ "config": {
+  "scrapling-fetch": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "scrapling-fetch-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

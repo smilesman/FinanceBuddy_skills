@@ -1,0 +1,23 @@
+{
+ "id": "1584",
+ "kind": "mcp",
+ "name": "mcp-pdf-reader",
+ "fingerprint_md5": "fdacdd8772ca0d516c5dd3e912af500f",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 启用MCP的PDF阅读器\r\n\r\n模型上下文协议（MCP）服务器公开了一个名为read_pdf的工具来读取单个pdf文档。这已经在Claude Desktop和Ollama的LibreChat上进行了测试。虽然pdf文件没有可读取的最大大小，但传递给模型的令牌数量将是限制因素。\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n#### 视窗\r\n\r\n1. 安装Claude Desktop（或其他启用MCP的AI工具）\r\n\r\n   - 下载 [Claude桌面版](https://claude.ai/download)\r\n   - 按照当前的安装说明进行操作： [安装克劳德桌面](https://support.anthropic.com/en/articles/10065433-installing-claude-for-desktop)\r\n\r\n1. 安装Python 3.10或更高版本：\r\n\r\n   - 从下载最新的Python安装程序 [python.org](https://python.org)\r\n   - 运行安装程序，选中“将Python添加到PATH”\r\n   - 打开命令提示符并使用验证安装 `python --version`\r\n\r\n1. 安装紫外线：\r\n\r\n   - 以管理员身份打开命令提示符\r\n   - 跑 `pip install --user uv`\r\n   - 通过以下方式验证安装 `uv --version`\r\n\r\n#### macOS\r\n\r\n1. 安装Claude Desktop（或其他启用MCP的AI工具）\r\n\r\n   - 下载 [Claude桌面版](https://claude.ai/download)\r\n   - 按照当前的安装说明进行操作： [安装克劳德桌面](https://support.anthropic.com/en/articles/10065433-installing-claude-for-desktop)\r\n\r\n1. 安装Python 3.10或更高版本：\r\n\r\n   - 使用Homebrew： `brew install python`\r\n   - 通过以下方式验证安装 `python3 --version`\r\n\r\n1. 安装紫外线：\r\n\r\n   - 使用Homebrew： `brew install uv`\r\n   - 或者： `pip3 install --user uv`\r\n   - 通过以下方式验证安装 `uv --version`\r\n\r\n## 配置\r\n\r\n将以下内容添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"mcp-pdf-reader\": {\r\n            \"command\": \"uvx\",\r\n            \"args\": [\r\n                \"--from\",\r\n                \"git+https://github.com/karateboss/mcp_pdf_reader@main\",\r\n                \"mcp_pdf_reader\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 归因\r\n\r\n该软件包实现了将pdf文件读取到启用MCP的框架中的能力，由 [安全瑞士云](https://safeswisscloud.com).\r\n\r\n## 贡献\r\n\r\n我们欢迎为改进这些工具做出贡献。请通过我们的存储库提交问题和拉取请求。\r\n\r\n## 支持\r\n\r\n如有疑问和支持：\r\n\r\n1. 查看我们的文档\r\n1. 在我们的存储库中提交问题\r\n",
+ "config": {
+  "mcp-pdf-reader": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/karateboss/mcp_pdf_reader@main",
+    "mcp_pdf_reader"
+   ],
+   "env": {}
+  }
+ }
+}

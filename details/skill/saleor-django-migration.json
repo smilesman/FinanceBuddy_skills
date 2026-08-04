@@ -1,0 +1,12 @@
+{
+ "id": "saleor-django-migration",
+ "kind": "skill",
+ "name": "saleor-django-migration",
+ "fingerprint_md5": "d5c000d1b8d498bd603a326702e56168",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Saleor Django 模式迁移\r\n\r\n## 范围\r\n\r\n此技能处理**仅模式**迁移：CreateModel、AddField、AlterField、RemoveField、AddIndex、AddConstraint 等。它不包括：\r\n- 数据迁移（RunPython、使用数据更改的 RunSQL）\r\n- 异步/后台迁移（celery 任务、post_migrate 信号）\r\n\r\n如果更改需要数据转换，请停止并询问用户。\r\n\r\n## 关键规则\r\n\r\n1. **永远不要手写迁移文件。** 始终让 Django 生成它们。\r\n2. **始终使用 `./manage.py makemigrations`** 生成迁移。\r\n3. **首先激活虚拟环境** — 在任何 manage.py 命令之前运行 `. .venv/bin/activate`。\r\n4. **如果数据库连接失败**，停止并询问用户启动数据库。\r\n\r\n## 工作流程\r\n\r\n### 步骤 1：进行模型更改\r\n\r\n根据需要编辑 Django 模型文件。不要接触任何迁移文件。\r\n\r\n### 步骤 2：生成迁移\r\n\r\n```bash\r\n. .venv/bin/activate && python manage.py makemigrations\r\n```\r\n\r\n如果 Django 询问交互式问题（例如\"您是否将字段 X 重命名为 Y？\"），根据您进行的模型更改回答。\r\n\r\n### 步骤 3：阅读并分析生成的迁移\r\n\r\n阅读每个生成的迁移文件。验证：\r\n- 它只包含模式操作（CreateModel、AddField、AlterField、RemoveField、AddIndex 等）\r\n- 依赖项看起来正确\r\n- 没有意外的操作\r\n\r\n### 步骤 4：应用分离规则\r\n\r\n将以下规则应用于生成的迁移：\r\n\r\n**规则 A — 新模型每个迁移一个模型：**\r\n如果迁移创建了**多个**新模型（多个 `CreateModel` 操作），请拆分它们。分别生成每个：\r\n```bash\r\npython manage.py makemigrations <app>\r\n```\r\n如果 Django 将它们一起生成，删除组合迁移，然后逐个创建模型（将一个模型添加到 models.py，运行 makemigrations，重复）。\r\n\r\n**规则 B — 每个迁移一个字段更改：**\r\n如果迁移在单个模型中更改了**多个**字段（例如，同一模型上的两个 `AddField` 或两个 `AlterField` 操作），请拆分为单独的迁移 — 每个字段一个。删除组合迁移，一次进行一次字段更改，并在每次之后运行 makemigrations。\r\n\r\n**例外（不要拆分）：**\r\n- 一个带有所有字段的 `CreateModel` 是一个操作 — 不要拆分新模型的字段\r\n- Django 需要它们在一起的跨模型依赖（例如 ForeignKey + 相关模型创建）\r\n- 当自动生成在一起时，同一迁移中的字段及其索引/约束是可接受的\r\n\r\n### 步骤 5：验证\r\n\r\n运行检查命令以确认没有待处理的迁移：\r\n```bash\r\npython manage.py makemigrations --check --dry-run\r\n```\r\n\r\n预期输出：`No changes detected` — 意味着所有模型更改都已在迁移中捕获。\r\n\r\n## 错误处理\r\n\r\n| 错误 | 操作 |\r\n|-------|--------|\r\n| `django.db.utils.OperationalError: could not connect` | 询问用户启动数据库 |\r\n| `Conflicting migrations detected` | 停止并让用户决定 |\r\n| `ModuleNotFoundError` | 虚拟环境未激活 — 运行 `. .venv/bin/activate` |\r\n\r\n## 提示\r\n\r\n- 依赖自动生成的迁移来获取正确的时间戳、序列号、依赖项和字段定义。如果必须手动编辑（例如拆分），请重新生成而不是编辑 — 删除迁移，调整 models.py，然后重新运行 makemigrations。\r\n- 拆分时，让 Django 确定新较小迁移之间的依赖关系。\r\n- 在生成之前检查应用程序中的最新现有迁移（`ls saleor/<app>/migrations/ | tail -5`），以便您可以确认新迁移号是连续的。",
+ "config": {}
+}

@@ -1,0 +1,21 @@
+{
+ "id": "2592",
+ "kind": "mcp",
+ "name": "legal-court",
+ "fingerprint_md5": "c5c904066675eafcbceed843f269b69f",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 法院MCP服务器\r\n\r\nMCP服务器，用于法院判决、判例法和法律研究。允许AI代理访问 **3M+美国法院判决** 通过CourtListener和 **欧盟立法** 通过欧元Lex。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_cases` |按关键字搜索3M+美国法院判决|\r\n| `get_case_details` |获取完整的案件细节（法官、引文、意见文本）|\r\n| `search_by_citation` |通过法律引用查找案件（例如“410 U.S.113”）|\r\n| `get_court_info` |关于特定法院的信息|\r\n| `search_judges` |按姓名搜索评委|\r\n| `search_eu_law` |通过EUR Lex搜索欧盟立法和判例法|\r\n\r\n## 安装\r\n\r\n```bash\r\npip install legal-court-mcp-server\r\n```\r\n\r\n## 使用Claude Desktop\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"legal-court\": {\r\n      \"command\": \"legal-court-server\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用uvx（无需安装）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"legal-court\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"legal-court-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 数据源\r\n\r\n- **法庭听众** --3M+美国法院意见的免费开放数据库。不需要API密钥。\r\n- **欧元莱克斯** --欧盟官方法律数据库，包含法规、指令和判例法。\r\n\r\n## 例子\r\n\r\n```\r\nsearch_cases(\"free speech first amendment\")\r\nsearch_cases(\"copyright fair use\", court=\"scotus\")\r\nsearch_by_citation(\"347 U.S. 483\")  # Brown v. Board of Education\r\nget_court_info(\"scotus\")\r\nsearch_judges(\"Ruth Bader Ginsburg\")\r\nsearch_eu_law(\"artificial intelligence regulation\")\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## AiAgentKarl提供的更多MCP服务器\r\n\r\n|类别|服务器|\r\n|----------|---------|\r\n|🔗 区块链| [索拉纳](https://github.com/AiAgentKarl/solana-mcp-server) |\r\n| 🌍 数据| [天气](https://github.com/AiAgentKarl/weather-mcp-server) · [德国](https://github.com/AiAgentKarl/germany-mcp-server) · [农业](https://github.com/AiAgentKarl/agriculture-mcp-server) · [太空](https://github.com/AiAgentKarl/space-mcp-server) · [航空](https://github.com/AiAgentKarl/aviation-mcp-server) · [欧盟公司](https://github.com/AiAgentKarl/eu-company-mcp-server) |\r\n| 🔒 安全| [网络安全](https://github.com/AiAgentKarl/cybersecurity-mcp-server) · [策略网关](https://github.com/AiAgentKarl/agent-policy-gateway-mcp) · [审计跟踪](https://github.com/AiAgentKarl/agent-audit-trail-mcp) |\r\n| 🤖 代理基础设施| [记忆](https://github.com/AiAgentKarl/agent-memory-mcp-server) · [目录](https://github.com/AiAgentKarl/agent-directory-mcp-server) · [中心](https://github.com/AiAgentKarl/mcp-appstore-server) · [声誉](https://github.com/AiAgentKarl/agent-reputation-mcp-server) |\r\n| 🔬 研究| [学术的](https://github.com/AiAgentKarl/crossref-academic-mcp-server) · [LLM基准](https://github.com/AiAgentKarl/llm-benchmark-mcp-server) · [法律](https://github.com/AiAgentKarl/legal-court-mcp-server) |\r\n\r\n[→ 完整目录（40+台服务器）](https://github.com/AiAgentKarl)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "legal-court": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "legal-court-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

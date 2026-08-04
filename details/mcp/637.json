@@ -1,0 +1,18 @@
+{
+ "id": "637",
+ "kind": "mcp",
+ "name": "dynamoi",
+ "fingerprint_md5": "e0920d5824f694357ac3c9c15cfd8a70",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# Dynamoi MCP🎧\r\n\r\n> 让任何支持MCP的AI代理帮助艺术家和唱片公司准备好推广。\r\n\r\n\r\n音乐家、经理人和唱片公司已经有足够的东西可以追赶：Spotify\r\n链接、艺术家页面、活动设置、广告帐户连接、账单检查，\r\n分析和发布说明。\r\n\r\n**Dynamoi MCP让AI代理直接帮助完成这项工作。** 关联代理\r\n可以创建一个免费的智能链接，提取艺术家和活动背景，检查是什么\r\n阻止启动，启动YouTube或Meta连接流，并保留下一个\r\n晋升步骤明确。\r\n\r\n它适用于任何支持远程Streamable HTTP和OAuth的MCP主机：\r\nChatGPT、Claude、Gemini、本地代理运行时、内部标签工具或自定义\r\n自动化。\r\n\r\n```txt\r\nhttps://dynamoi.com/mcp\r\n```\r\n\r\n## ✨ 简短版本\r\n\r\n|当有人问。..|代理人可以帮忙。.. |\r\n| --- | --- |\r\n| 🎧 “为此版本创建一个链接。”|从Spotify创建一个免费的智能链接并返回公共URL|\r\n| 🚦 “为什么此活动还没有准备好？”|检查缺少的设置：账单、平台连接、国家、资产和启动状态。 |\r\n| 📈 “我们现在有什么直播？”|搜索艺术家、智能链接、活动、分析和帐户状态。 |\r\n| 📺 “连接我们的YouTube频道。”|从对话中启动正确的连接流程。 |\r\n| 🚀 “我们可以推广这个吗？”|将免费链接工作流程与托管广告分开，然后指向下一个安全步骤。 |\r\n\r\n## 🎤 这是给谁的\r\n\r\n**艺术家和管理者** 使用Dynamoi MCP创建链接，检查活动设置，\r\n看看在发布推广之前需要注意什么。\r\n\r\n**唱片公司和团队** 可以将Dynamoi连接到内部代理工作流中\r\n活动检查、艺术家查找、报告和发布操作。\r\n\r\n**开发者** 当他们需要公共MCP合同时，可以安装这个包，\r\n托管后的模式、OAuth元数据、传输助手或TypeScript类型\r\nDynamoi服务器。\r\n\r\n## 🔗 智能链接优先\r\n\r\n免费智能链接是客服最容易提供帮助的地方：\r\n\r\n- 将Spotify版本转换为公共登录页面。\r\n- 将艺术家目录导入艺术家中心。\r\n- 立即返回可共享的URL。\r\n- 检查链接状态、分析、主题/设置和发布状态。\r\n- 当用户明确要求时，更新或发布链接。\r\n\r\n这给了艺术家一些有用的东西，也给了推广团队一个\r\n当释放准备就绪时，清洁下一步。\r\n\r\n## 🚦 晋升准备\r\n\r\n在竞选活动开始之前，很多小事情都必须是真实的。Dynamoi MCP\r\n帮助代理回答实际问题：\r\n\r\n|问题| Dynamoi可以检查什么|\r\n| --- | --- |\r\n|“此艺术家准备好了吗？”|帐户访问、艺术家记录、平台状态和缺少的设置。 |\r\n|“此活动可以启动吗？”|准备状态、计费状态、支持的国家/地区、媒体资产和部署状态。 |\r\n|“需要注意什么？”|活动、智能链接、分析和下一步行动。 |\r\n|“我们连接了吗？”|YouTube和Meta连接状态，以及可用的连接启动流。 |\r\n\r\n## 🧠 为任何MCP代理构建\r\n\r\n这是一个通用的MCP服务器，而不是一个单一的聊天产品集成。使用\r\n来自支持远程流式HTTP的任何支持MCP的客户端的托管端点：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dynamoi\": {\r\n      \"url\": \"https://dynamoi.com/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n身份验证通过Dynamoi OAuth运行。用户使用他们的Dynamoi登录\r\n帐户，连接的代理只接收其工具所需的作用域\r\n电话。\r\n\r\n## 🧰 包装使用\r\n\r\n大多数艺术家和唱片公司都这样做 **不** 需要安装任何东西。他们应该连接\r\n托管的MCP服务器。\r\n\r\n安装 `@dynamoi/mcp` 当你针对公共Dynamoi MCP进行构建时\r\n合同：\r\n\r\n```bash\r\nnpm install @dynamoi/mcp\r\n```\r\n\r\n```ts\r\nimport {\r\n  buildProtectedResourceMetadata,\r\n  createDynamoiMcpServer,\r\n  handleMcpHttpRequest,\r\n} from \"@dynamoi/mcp\";\r\n```\r\n\r\n服务器工厂需要一个适配器，将公共MCP合约连接到\r\nDynamoi的私人应用服务：\r\n\r\n```ts\r\nconst server = createDynamoiMcpServer({\r\n  adapter,\r\n  websiteUrl: \"https://dynamoi.com\",\r\n});\r\n```\r\n\r\n`handleMcpHttpRequest` 通过会话提供流式HTTP请求处理\r\n绑定，因此MCP会话不能在经过身份验证的用户之间漂移。\r\n\r\n### 这个包裹里装的是什么\r\n\r\n|包括|目的|\r\n| --- | --- |\r\n|工具模式|Dynamoi公开的公共MCP合约。 |\r\n|提示和资源| Dynamoi特定代理工作流程指南。 |\r\n|受保护的资源元数据|兼容客户端的OAuth发现元数据。 |\r\n|HTTP传输助手|使用会话绑定进行流式HTTP处理。 |\r\n|TypeScript类型|托管服务器代码的集成安全合约。 |\r\n\r\n## 🛡️ 安全模型\r\n\r\nDynamoi MCP是为真正的艺术家和标签工作流程而构建的，因此服务器可以保持\r\n明确代理人可以做什么的界限。\r\n\r\n|安全层|它保护什么|\r\n| --- | --- |\r\n| 🔐 OAuth作用域|代理只能获得用户授予的帐户访问权限。 |\r\n| 👀 只读提示|读取工具标记为只读。 |\r\n| ✍️ 突变描述|编写工具描述它们可能采取的外部行动。 |\r\n| ✅ 用户意图门|启动和活动更新工作流需要明确的用户意图。 |\r\n| 💳 付费流分离|直接付费结账不会暴露给连接的代理。 |\r\n| 🔗 智能链接边界|免费智能链接创建与托管广告发布分开。 |\r\n\r\n## 💬 良好的第一提示\r\n\r\n从任何连接的MCP代理尝试以下操作：\r\n\r\n> 🎧 为此Spotify版本创建智能链接。\r\n\r\n> 🚦 是什么阻止了这场运动的发起？\r\n\r\n> 📈 向我展示需要关注的活动。\r\n\r\n> 📺 帮我连接我的YouTube频道。\r\n\r\n> 🚀 准备好此版本以进行推广。\r\n\r\n## 🔗 链接\r\n\r\n|资源|URL|\r\n| --- | --- |\r\n|网站| <https://dynamoi.com> |\r\n|托管MCP端点| <https://dynamoi.com/mcp> |\r\n|npm包| <https://www.npmjs.com/package/@dynamoi/mcp> |\r\n|存储库| <https://github.com/getDynamoi/mcp> |\r\n|变更日志| [更改日志.md](./CHANGELOG.md) |\r\n",
+ "config": {
+  "dynamoi": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://dynamoi.com/mcp"
+  }
+ }
+}

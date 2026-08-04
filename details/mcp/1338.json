@@ -1,0 +1,21 @@
+{
+ "id": "1338",
+ "kind": "mcp",
+ "name": "applescript_execute",
+ "fingerprint_md5": "e0b0ca51baf5a4ab43cffcbc801d9600",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# AppleScript MCP服务器（双访问：python和node.js）\r\n\r\n[](https://www.npmjs.com/package/@peakmojo/applescript-mcp) [](https://opensource.org/licenses/MIT)\r\n\r\n## 概述\r\n\r\n一个模型上下文协议（MCP）服务器，允许您运行AppleScript代码与Mac交互。此MCP有意设计为简单、直接、直观，并且需要最少的设置。\r\n\r\n我简直不敢相信它有多简单和强大。核心代码是\\<100行代码。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@peakmojo/applescript-mcp\">\r\n  \r\n</a>\r\n\r\nhttps://github.com/user-attachments/assets/b85e63ba-fb26-4918-8e6d-2377254ee388\r\n\r\n## 特性\r\n\r\n- 运行AppleScript以访问Mac应用程序和数据\r\n- 与笔记、日历、通讯录、消息等进行交互\r\n- 使用Spotlight或Finder搜索文件\r\n- 读取/写入文件内容并执行shell命令\r\n- 通过SSH远程执行支持\r\n\r\n## 示例提示\r\n\r\n```\r\nCreate a reminder for me to call John tomorrow at 10am\r\n```\r\n\r\n```\r\nAdd a new meeting to my calendar for Friday from 2-3pm titled \"Team Review\"\r\n```\r\n\r\n```\r\nCreate a new note titled \"Meeting Minutes\" with today's date\r\n```\r\n\r\n```\r\nShow me all files in my Downloads folder from the past week\r\n```\r\n\r\n```\r\nWhat's my current battery percentage?\r\n```\r\n\r\n```\r\nShow me the most recent unread emails in my inbox\r\n```\r\n\r\n```\r\nList all the currently running applications on my Mac\r\n```\r\n\r\n```\r\nPlay my \"Focus\" playlist in Apple Music\r\n```\r\n\r\n```\r\nTake a screenshot of my entire screen and save it to my Desktop\r\n```\r\n\r\n```\r\nFind John Smith in my contacts and show me his phone number\r\n```\r\n\r\n```\r\nCreate a folder on my Desktop named \"Project Files\"\r\n```\r\n\r\n```\r\nOpen Safari and navigate to apple.com\r\n```\r\n\r\n```\r\nTell me how much free space I have on my main drive\r\n```\r\n\r\n```\r\nList all my upcoming calendar events for this week\r\n```\r\n\r\n## 使用Claude Desktop\r\n\r\n### Node.js\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"applescript_execute\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"@peakmojo/applescript-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Python（uvx）\r\n\r\n无需克隆——直接从git仓库运行：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"applescript_execute\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--from\",\r\n        \"git+https://github.com/peakmojo/applescript-mcp\",\r\n        \"mcp-server-applescript\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Python（本地开发）\r\n\r\n对于本地开发，克隆repo并使用 `uv` 从源代码运行：\r\n\r\n```\r\nbrew install uv\r\ngit clone https://github.com/peakmojo/applescript-mcp.git\r\n```\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"applescript_execute\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/your/repo\",\r\n        \"run\",\r\n        \"mcp-server-applescript\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n### 设置\r\n\r\n```bash\r\nbrew install uv\r\nuv sync --dev\r\n```\r\n\r\n### 运行所有检查（并行）\r\n\r\n```bash\r\nuv run check\r\n```\r\n\r\n这将并行运行linting、格式化、类型检查和100%覆盖率的测试。\r\n\r\n### 单个命令\r\n\r\n```bash\r\nuv run lint        # ruff linter\r\nuv run format      # ruff auto-format\r\nuv run typecheck   # pyrefly type checker\r\nuv run test        # pytest with 100% coverage enforcement\r\n```\r\n\r\n## Docker使用\r\n\r\n在Docker容器中运行时，可以使用特殊的主机名 `host.docker.internal` 要连接到Mac主机：\r\n\r\n### 配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"applescript_execute\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"@peakmojo/applescript-mcp\",\r\n        \"--remoteHost\", \"host.docker.internal\",\r\n        \"--remoteUser\", \"yourusername\",\r\n        \"--remotePassword\", \"yourpassword\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n这允许你的Docker容器在Mac主机系统上执行AppleScript。确保：\r\n\r\n1. 您的Mac上已启用SSH（系统设置→ 共享→ 远程登录）\r\n1. 您的用户具有适当的权限\r\n1. 配置中提供了正确的凭据\r\n",
+ "config": {
+  "applescript_execute": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@peakmojo/applescript-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

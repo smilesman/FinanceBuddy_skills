@@ -1,0 +1,12 @@
+{
+ "id": "stash-name-gen",
+ "kind": "skill",
+ "name": "stash-name-gen",
+ "fingerprint_md5": "845610508b4278fe2d71aa26f6a9b6a9",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Stash Namer\r\n\r\n停止将 stash 命名为 \"WIP\" 或留空。此工具会读取你的更改并创建一个有意义 stash 名称。\r\n\r\n**一个命令。零配置。开箱即用。**\r\n\r\n## 快速开始\r\n\r\n```bash\r\nnpx ai-stash-name\r\n```\r\n\r\n## 功能\r\n\r\n- 读取你的已暂存和未暂存更改\r\n- 生成描述性的 stash 名称\r\n- 实际使用该名称运行 git stash\r\n- 不再有神秘的 stash\r\n\r\n## 使用示例\r\n\r\n```bash\r\n# 使用自动生成名称进行 stash\r\nnpx ai-stash-name\r\n\r\n# 预览而不 stash\r\nnpx ai-stash-name --dry-run\r\n```\r\n\r\n## 最佳实践\r\n\r\n- **尽早 stash，经常 stash** - 它是免费的\r\n- **好好命名它们** - 未来的你会感谢你\r\n- **不要囤积 stash** - 应用或丢弃它们\r\n- **Pop，不要 apply** - 除非你还需要保留它\r\n\r\n## 何时使用\r\n\r\n- 快速切换上下文\r\n- 在 pull 之前保存工作\r\n- 试验性更改\r\n- 任何你会使用 git stash 的时候\r\n\r\n## LXGIC Dev Toolkit 的一部分\r\n\r\n这是 LXGIC Studios 构建的 110+ 免费开发者工具之一。没有付费墙，无需注册，免费层没有 API 密钥。只有能用的工具。\r\n\r\n**查找更多：**\r\n- GitHub: https://github.com/LXGIC-Studios\r\n- Twitter: https://x.com/lxgicstudios\r\n- Substack: https://lxgicstudios.substack.com\r\n- Website: https://lxgicstudios.com\r\n\r\n## 要求\r\n\r\n无需安装。直接用 npx 运行。推荐 Node.js 18+。需要 OPENAI_API_KEY 环境变量。\r\n\r\n```bash\r\nnpx ai-stash-name --help\r\n```\r\n\r\n## 工作原理\r\n\r\n运行 git diff 查看你的更改，将 diff 摘要发送给 GPT-4o-mini 以生成描述性名称，然后使用生成的名称运行 git stash push -m。\r\n\r\n## 许可证\r\n\r\nMIT。永久免费。随意使用。\r\n\r\n---\r\n\r\n**Built by LXGIC Studios**\r\n\r\n- GitHub: [github.com/lxgicstudios/stash-name-gen](https://github.com/lxgicstudios/stash-name-gen)\r\n- Twitter: [@lxgicstudios](https://x.com/lxgicstudios)",
+ "config": {}
+}

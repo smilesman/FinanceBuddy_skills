@@ -1,0 +1,22 @@
+{
+ "id": "826",
+ "kind": "mcp",
+ "name": "quickchart-server",
+ "fingerprint_md5": "de64929b3ec912ad05db24f12cf6e1ca",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# quickchart-server MCP服务器\r\n\r\n\r\n<a href=\"https://glama.ai/mcp/servers/y17zluizso\">\r\n</a>\r\n\r\n\r\n一个使用QuickChart.io生成图表的模型上下文协议服务器\r\n\r\n这是一个基于TypeScript的MCP服务器，提供图表生成功能。它允许您通过MCP工具创建各种类型的图表。\r\n\r\n## 概述\r\n\r\n本服务器集成了QuickChart.io的基于URL的图表生成服务，使用Chart.js配置来创建图表图像。用户可以通过提供数据和样式参数来生成各种类型的图表，服务器会将这些参数转换成图表URL或可下载的图像。\r\n\r\n## 功能\r\n\r\n### 工具\r\n\r\n- `generate_chart` 使用QuickChart.io生成图表URL\r\n\r\n  - 支持多种图表类型：柱状图、折线图、饼图、环形图、雷达图、极地面积图、散点图、气泡图、径向仪表图、速度计图\r\n  - 可自定义标签、数据集、颜色和附加选项\r\n  - 返回生成图表的URL\r\n\r\n- `download_chart` 下载图表图像到本地文件\r\n\r\n  - 将图表配置和输出路径作为参数\r\n  - 将图表图像保存到指定位置\r\n\r\n\r\n## 支持的图表类型\r\n\r\n- 条形图：用于比较不同类别的数值\r\n- 折线图：用于展示随时间变化的趋势\r\n- 饼状图：用于显示比例数据\r\n- 甜甜圈图：与饼图相似，但中心为空心\r\n- 雷达图：用于展示多元数据\r\n- 极区图：用于显示具有固定角度扇形段的比例数据\r\n- 散点图：用于展示数据点分布\r\n- 气泡图：用于三维数据可视化\r\n- 径向仪表：用于在范围内显示单个值\r\n- 速度计：用于速度计式数值显示\r\n\r\n## 用法\r\n\r\n### 图表配置\r\n\r\n服务器使用Chart.js配置格式。以下是一个基本示例：\r\n\r\n```javascript\r\n{\r\n  \"type\": \"bar\",\r\n  \"data\": {\r\n    \"labels\": [\"January\", \"February\", \"March\"],\r\n    \"datasets\": [{\r\n      \"label\": \"Sales\",\r\n      \"data\": [65, 59, 80],\r\n      \"backgroundColor\": \"rgb(75, 192, 192)\"\r\n    }]\r\n  },\r\n  \"options\": {\r\n    \"title\": {\r\n      \"display\": true,\r\n      \"text\": \"Monthly Sales\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### URL生成\r\n\r\n服务器将您的配置转换为QuickChart URL：\r\n\r\n```\r\nhttps://quickchart.io/chart?c={...encoded configuration...}\r\n```\r\n\r\n## 开发\r\n\r\n安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n## 安装\r\n\r\n### 安装中\r\n\r\n```bash\r\nnpm install @gongrzhe/quickchart-mcp-server\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动为Claude Desktop安装QuickChart服务器 [Smithery](https://smithery.ai/server/@GongRzhe/Quickchart-MCP-Server)根据上面的信息，执行如下指令：\r\n\r\n```bash\r\nnpx -y @smithery/cli install @gongrzhe/quickchart-mcp-server --client claude\r\n```\r\n\r\n要与Claude Desktop一起使用，请添加服务器配置：\r\n\r\n在MacOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"quickchart-server\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/quickchart-server/build/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n根据上面的信息，执行如下指令：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"quickchart-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@gongrzhe/quickchart-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 文档参考\r\n\r\n- [QuickChart 文档](https://quickchart.io/documentation/)\r\n- [图表类型参考](https://quickchart.io/documentation/chart-types/)\r\n\r\n## 许可证\r\n\r\n这个项目采用MIT许可证授权。\r\n",
+ "config": {
+  "quickchart-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@gongrzhe/quickchart-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

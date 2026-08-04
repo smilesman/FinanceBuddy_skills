@@ -1,0 +1,12 @@
+{
+ "id": "strykr-qa-bot",
+ "kind": "skill",
+ "name": "strykr-qa-bot",
+ "fingerprint_md5": "a3668567b14deb4f253e4f8080bf7dc2",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "# strykr-qa-bot\r\n\r\n用于测试 Strykr (https://app.strykr.ai) 的 QA 自动化技能。\r\n\r\n## 功能\r\n\r\nStrykr AI 金融仪表板的自动化测试：\r\n- 所有页面的预构建测试套件\r\n- Signal card 验证\r\n- AI 响应质量检查\r\n- PRISM API 健康监控\r\n- 已知问题追踪\r\n\r\n## 何时使用\r\n\r\n- 部署后测试 Strykr\r\n- 回归测试\r\n- 监控站点健康\r\n- 验证新功能\r\n\r\n## 用法\r\n\r\n### 运行所有测试\r\n```bash\r\ncd /path/to/strykr-qa-bot\r\nnpm test\r\n```\r\n\r\n### 运行特定套件\r\n```bash\r\nnpm run test:homepage\r\nnpm run test:crypto\r\nnpm run test:stocks\r\nnpm run test:news\r\nnpm run test:events\r\nnpm run test:ai-chat\r\n```\r\n\r\n### 快速 Smoke 测试\r\n```bash\r\nnpm run smoke\r\n```\r\n\r\n### 程序化用法\r\n```typescript\r\nimport { StrykrQABot } from 'strykr-qa-bot';\r\n\r\nconst qa = new StrykrQABot({\r\n  baseUrl: 'https://app.strykr.ai'\r\n});\r\n\r\n// 运行所有套件\r\nconst results = await qa.runAll();\r\n\r\n// 检查特定断言\r\nawait qa.expectSignalCard({ hasPrice: true, hasChart: true });\r\nawait qa.expectAIResponse({ minLength: 200 });\r\n\r\n// 健康检查 API\r\nconst health = await qa.checkPrismEndpoints();\r\n\r\n// 生成报告\r\nconst report = qa.generateReport();\r\n```\r\n\r\n## 测试套件\r\n\r\n| 套件 | 测试 | 备注 |\r\n|-------|-------|-------|\r\n| homepage | 导航、widgets、状态 | 入口点 |\r\n| crypto-signals | 筛选器、cards、actions | 有已知 modal 问题 |\r\n| stock-signals | Asset 筛选器、actions | Stocks/ETFs/Forex |\r\n| news | 路由、分类 | 已知直接 URL 问题 |\r\n| events | 影响筛选器、时间 | 已知直接 URL 问题 |\r\n| ai-chat | 输入、响应 | 质量验证 |\r\n\r\n## 追踪的已知问题\r\n\r\n1. **details-modal-empty** (High) - Modal 打开但内容为空\r\n2. **direct-url-blank-news** (Medium) - /news 直接导航时空白\r\n3. **direct-url-blank-events** (Medium) - /economic-events 空白\r\n4. **events-widget-race-condition** (Low) - 间歇性 widget 加载\r\n\r\n## 配置\r\n\r\n编辑 `strykr-qa.yaml`：\r\n```yaml\r\nbaseUrl: https://app.strykr.ai\r\nbrowser:\r\n  headless: false\r\n  timeout: 30000\r\n```\r\n\r\n## 依赖\r\n\r\n- [web-qa-bot](https://github.com/NextFrontierBuilds/web-qa-bot) (peer dependency)\r\n\r\n## 输出\r\n\r\n测试结果包含：\r\n- Pass/Fail/Known-issue 状态\r\n- 每步截图\r\n- Console 错误捕获\r\n- 计时指标\r\n- Markdown 报告\r\n\r\n## 作者\r\n\r\nNext Frontier (@NextXFrontier)\r\n\r\n## 链接\r\n\r\n- [GitHub](https://github.com/NextFrontierBuilds/strykr-qa-bot)\r\n- [Strykr](https://app.strykr.ai)",
+ "config": {}
+}

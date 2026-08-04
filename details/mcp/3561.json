@@ -1,0 +1,18 @@
+{
+ "id": "3561",
+ "kind": "mcp",
+ "name": "parallel-search",
+ "fingerprint_md5": "6b1fb1e0f6bd893e8acad9f621cf516d",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 并行搜索MCP服务器\r\n\r\n用于并行搜索API的模型上下文协议（MCP）服务器，使用ElysiaJS构建并部署在Vercel上。\r\n\r\n## 特性\r\n\r\n- 🔍 以自然语言为目标的网络搜索\r\n- 🚀 在Vercel无服务器上快速部署\r\n- 🔐 用户提供的API密钥（服务器所有者无需付费）\r\n- 📊 排名，LLM优化结果与引用\r\n- ⚙️ 可定制处理器（基础/专业）\r\n- 🌐 使用ElysiaJS和TypeScript构建\r\n\r\n## 部署\r\n\r\n### 快速部署\r\n\r\n1. 分叉此存储库\r\n1. 连接到Vercel：https://vercel.com/new\r\n1. 部署！\r\n1. 您的MCP服务器将在以下网址提供： `https://your-project.vercel.app/mcp`\r\n\r\n### 地方发展\r\n\r\n```bash\r\n# Install dependencies\r\nbun install\r\n\r\n# Run locally\r\nbun run dev\r\n\r\n# Test with MCP Inspector\r\nnpx @modelcontextprotocol/inspector@latest http://localhost:8000/mcp\r\n```\r\n\r\n## 使用游标\r\n\r\n添加到您的 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"parallel-search\": {\r\n      \"url\": \"https://your-deployment.vercel.app/mcp\",\r\n      \"headers\": {\r\n        \"x-api-key\": \"YOUR_PARALLEL_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**注：** 每个用户都需要他们自己的并行API密钥https://parallel.ai\r\n\r\n## 工具： `parallel_search`\r\n\r\n### 参数\r\n\r\n- `objective` （可选）：自然语言搜索目标\r\n- `search_queries` （可选）：特定查询列表（最多5个）\r\n- `processor` （可选）：“基本”（默认）或“专业”\r\n- `max_results` （可选）：限制结果数量\r\n- `max_chars_per_result` （可选）：控制摘录长度（100-30000）\r\n- `source_policy` （可选）：包括/排除特定域\r\n- `api_key` （可选）：您的并行API密钥（或通过头设置）\r\n\r\n### 示例\r\n\r\n在Cursor/Claude中：\r\n\r\n```\r\nSearch for \"latest developments in quantum computing\" using parallel_search\r\n```\r\n\r\n## API终点\r\n\r\n- `GET /health` -健康检查端点\r\n- `POST /mcp` -MCP协议端点\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nbun install\r\n\r\n# Run development server\r\nbun run dev\r\n\r\n# Build for production\r\nbun run build\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "parallel-search": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://your-deployment.vercel.app/mcp"
+  }
+ }
+}

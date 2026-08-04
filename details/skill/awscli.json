@@ -1,0 +1,12 @@
+{
+ "id": "awscli",
+ "kind": "skill",
+ "name": "awscli",
+ "fingerprint_md5": "d5aec9245ac9ae7feb3f1a97818701ee",
+ "download_count": 0,
+ "category": "云厂商服务",
+ "tags": "",
+ "version": "",
+ "readme": "# AWS CLI Control Skill\r\n\r\n此技能管理 AWS Lightsail 实例。\r\n\r\n## 要求\r\n\r\n- 主机上已安装 AWS CLI\r\n- 已配置 AWS 凭证（IAM 用户或角色）\r\n- 环境变量：\r\n\r\n  - AWS_REGION\r\n  - ALLOWED_INSTANCES\r\n\r\n  ## 环境变量\r\n\r\n此技能需要以下环境变量：\r\n\r\n- AWS_REGION（例如，ap-southeast-1）\r\n- ALLOWED_INSTANCES（逗号分隔列表）\r\n\r\n示例：\r\n\r\nAWS_REGION=ap-southeast-1\r\nALLOWED_INSTANCES=Ubuntu,Binami\r\n\r\n## 可用操作\r\n\r\n### 1. 列出实例\r\n\r\naction: \"list\"\r\n\r\n示例：\r\n{\r\n\"action\": \"list\"\r\n}\r\n\r\n---\r\n\r\n### 2. 重启实例\r\n\r\naction: \"reboot\"  \r\ninstance: \"<instance-name>\"\r\n\r\n示例：\r\n{\r\n\"action\": \"reboot\",\r\n\"instance\": \"Ubuntu-1\"\r\n}\r\n\r\n---\r\n\r\n### 3. 启动实例\r\n\r\naction: \"start\"  \r\ninstance: \"<instance-name>\"\r\n\r\n---\r\n\r\n### 4. 停止实例\r\n\r\naction: \"stop\"  \r\ninstance: \"<instance-name>\"\r\n\r\n---\r\n\r\n## 注意\r\n\r\n- 仅使用结构化 JSON 输入。\r\n- 不要生成 AWS CLI 命令。\r\n- 实例名称必须与现有 Lightsail 实例完全匹配。",
+ "config": {}
+}

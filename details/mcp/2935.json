@@ -1,0 +1,25 @@
+{
+ "id": "2935",
+ "kind": "mcp",
+ "name": "plumise",
+ "fingerprint_md5": "d9d0e41cb4f0714b4302da51565def6c",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "**英语** | [韩语](README.ko.md)\r\n\r\n# @丰满/MCP\r\n\r\n\r\nMCP（模型上下文协议）服务器 [羽毛](https://plumise.com) 块链。展示24个工具，涵盖链查询、钱包操作、代理网络、奖励和人工智能推理，让Claude和其他兼容MCP的人工智能助手直接与链交互。\r\n\r\n## 需求\r\n\r\n- Node.js 18+\r\n- 一个插件RPC API密钥([在这里买一个](https://plug.plumise.com))\r\n- （可选）Plumise钱包私钥——交易（转账、索赔、存款）所需\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面\r\n\r\n添加到您的Claude Desktop配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"plumise\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@plumise/mcp\"],\r\n      \"env\": {\r\n        \"PLUMISE_RPC_URL\": \"https://plug.plumise.com/rpc/YOUR_API_KEY\",\r\n        \"PLUMISE_PRIVATE_KEY\": \"0x...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 直接跑\r\n\r\n```bash\r\nPLUMISE_RPC_URL=https://plug.plumise.com/rpc/YOUR_API_KEY PLUMISE_PRIVATE_KEY=0x... npx @plumise/mcp\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|---|---|---|\r\n| `PLUMISE_RPC_URL` |是|插入RPC端点([拿到钥匙](https://plug.plumise.com)) |\r\n| `PLUMISE_PRIVATE_KEY` |否|钱包私钥（启用交易；没有私钥时为只读）|\r\n| `PLUMISE_NETWORK` |没有| `mainnet` 或 `testnet` （默认值： `mainnet`) |\r\n| `PLUMISE_INFERENCE_API_URL` |否|自定义推断API终结点|\r\n\r\n## 工具\r\n\r\n### 链条（7）\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `get_block` |按编号或 `\"latest\"` |\r\n| `get_transaction` |按哈希计算的交易详细信息|\r\n| `get_transaction_receipt` |带有状态、使用气体和日志的收据|\r\n| `get_block_number` |最新区块高度|\r\n| `get_gas_price` |当前天然气价格|\r\n| `get_chain_info` |综合链信息（chainId、区块、gas）|\r\n| `get_logs` |按地址和块范围筛选的事件日志|\r\n\r\n### 钱包（4）\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `get_balance` |任何地址的PLM余额|\r\n| `transfer` |将PLM发送到某个地址|\r\n| `get_nonce` |地址的交易计数|\r\n| `get_code` |检查地址是否为合同|\r\n\r\n### 代理网络（3）\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `agent_status` |代理地址的注册详细信息|\r\n| `agent_list` |网络上的所有活动代理|\r\n| `network_stats` |全网统计|\r\n\r\n### 奖励（5）\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `pending_reward` |无人认领的奖励余额|\r\n| `claim_reward` |领取累积奖励|\r\n| `reward_history` |过去的索赔事件|\r\n| `epoch_info` |当前历元数和评分权重|\r\n| `contribution` |代理贡献指标（任务、正常运行时间、分数）|\r\n\r\n### 推理（2）\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `inference` |发送AI推理请求|\r\n| `model_status` |可用型号及其状态|\r\n\r\n### 付款（4）\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `inference_balance` |信用余额和当前等级|\r\n| `inference_deposit` |存入PLM以购买推理积分|\r\n| `inference_withdraw` |从贷方余额中提取PLM|\r\n| `estimate_cost` |估计给定输入的推理成本|\r\n\r\n## 资源\r\n\r\nMCP资源提供有关当前状态的结构化、可读的上下文：\r\n\r\n|资源|描述|\r\n|---|---|\r\n| `plumise://network` |网络概述（链信息、活动代理、纪元）|\r\n| `plumise://wallet` |钱包信息（地址、余额、随机数）|\r\n\r\n## 提示\r\n\r\n常见工作流的内置提示模板：\r\n\r\n|提示|描述|\r\n|---|---|\r\n| `network_status` |运行完整的网络健康检查|\r\n| `wallet_overview` |总结钱包财务状况和待定奖励|\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Development mode (with tsx)\r\nnpm run dev\r\n\r\n# Build\r\nnpm run build\r\n\r\n# Run built version\r\nnpm start\r\n```\r\n\r\n## 关于Plumise\r\n\r\nPlumise是一个人工智能原生第1层区块链（chainId 41956），作为geth分叉构建。它引入了链上代理注册、推理支付结算和激励分布式人工智能推理节点的奖励系统。\r\n\r\n- **链**：Plumise主网（链号41956）\r\n- **区块奖励**：10 PLM/块，每4年减半\r\n- **核心库**: [`@plumise/core`](https://www.npmjs.com/package/@plumise/core) （基于维也纳）\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "plumise": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@plumise/mcp"
+   ],
+   "env": {
+    "PLUMISE_RPC_URL": "https://plug.plumise.com/rpc/YOUR_API_KEY",
+    "PLUMISE_PRIVATE_KEY": "0x..."
+   }
+  }
+ }
+}

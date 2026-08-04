@@ -1,0 +1,22 @@
+{
+ "id": "3046",
+ "kind": "mcp",
+ "name": "campertunity",
+ "fingerprint_md5": "03e355db85a3f504529bc0c33221afcc",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# Campertunity人工智能工具\r\n\r\n人工智能工具，用于搜索露营地、查看可用性和预订世界各地的露营地。\r\n\r\n包含 **代理人技能档案** 和一个 **MCP服务器** 用于人工智能驱动的露营地发现。\r\n\r\n## 特工技能档案\r\n\r\n此软件包包括与兼容的技能文件 [开爪](https://openclawlab.com), [克劳德代码](https://claude.ai/claude-code), [法典](https://openai.com/codex)，以及支持SKILL.md格式的其他代理平台。\r\n\r\n安装技能：\r\n\r\n```bash\r\n# OpenClaw\r\nopenclaw skills install campertunity\r\n\r\n# Claude Code / other platforms\r\n# Copy skills/campertunity/SKILL.md to your workspace skills directory\r\n```\r\n\r\n## MCP服务器\r\n\r\n### 快速开始\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"campertunity\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"campertunity-ai-tools@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### API密钥（可选）\r\n\r\n不需要API密钥。对于更高的速率限制，请从获取密钥 [campertunity.com/mcp](https://campertunity.com/mcp):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"campertunity\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"campertunity-ai-tools@latest\"],\r\n      \"env\": {\r\n        \"CAMPERTUNITY_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 列表搜索\r\n\r\n使用过滤器和基于位置的搜索搜索露营地。\r\n\r\n|参数|类型|说明|\r\n|-----------|------|-------------|\r\n| `limit` |number |要返回的结果（默认值：50，最大值：1000）|\r\n| `cursor` |string |来自上一个响应的分页光标|\r\n| `startDate` |string |可用性开始日期（YYYY-MM-DD）|\r\n| `endDate` |string |可用性结束日期（YYYY-MM-DD）|\r\n| `adults` |number |成人人数（默认值：1）|\r\n| `children` |number |子项数（默认值：0）|\r\n| `latitude` |number |中心点纬度|\r\n| `longitude` |number |中心点经度|\r\n| `radius` |number |搜索半径（公里）（默认值：20）|\r\n| `region` |string |地区/州（如果没有lat/lng，则进行地理编码）|\r\n| `city` |string |城市（如果没有lat/lng，则进行地理编码）|\r\n| `country` |string |国家（如果没有lat/lng，则进行地理编码）|\r\n| `countryCode` |string |国家代码，例如“US”、“CA”|\r\n| `filters` |string\\[\\]|要筛选的标签（见下文）|\r\n| `campgroundDescription` |string |自然语言描述|\r\n\r\n### 列表详细信息\r\n\r\n获取特定列表的详细信息。\r\n\r\n|参数|类型|说明|\r\n|-----------|------|-------------|\r\n| `listingId` |string |列表的ID|\r\n\r\n### 上市可用性\r\n\r\n查看营地的可用性，了解具体日期。\r\n\r\n|参数|类型|说明|\r\n|-----------|------|-------------|\r\n| `listingId` |string |列表的ID|\r\n| `siteIds` |string\\[\\]|可选的特定站点ID|\r\n| `startDate` |string |开始日期（YYYY-MM-DD）|\r\n| `endDate` |string |结束日期（YYYY-MM-DD）|\r\n\r\n### 挂牌簿\r\n\r\n获取露营地的预订URL。\r\n\r\n|参数|类型|说明|\r\n|-----------|------|-------------|\r\n| `listingId` |string |列表的ID|\r\n| `startDate` |string |开始日期（YYYY-MM-DD）|\r\n| `endDate` |string |结束日期（YYYY-MM-DD）|\r\n| `adults` |number |成人人数（默认值：1）|\r\n| `children` |number |子项数（默认值：0）|\r\n\r\n## 过滤标签\r\n\r\n**站点类型：** 帐篷、房车、住宿、豪华露营、小屋\r\n\r\n**访问权限：** 驾车、步行、骑马、乘船\r\n\r\n**活动：** 骑自行车、划船、钓鱼、徒步旅行、骑马、划水、风能运动、冲浪、游泳、激流泛舟、野生动物观赏\r\n\r\n**设施：** picnicTable，火，厕所，户外厕所，饮用水，宠物友好，rvHookup，rvSanitation，垃圾桶，淋浴，wifi，残疾人\r\n\r\n**地形：** 海滩、洞穴、沙漠、森林、温泉、湖泊、河流、游泳池、瀑布、小溪\r\n\r\n## 数据通知\r\n\r\n数据从多个来源收集，并通过人工智能进行增强。不要重新分发、缓存或修改数据。始终通过服务器使用实时数据。\r\n\r\n有关更多信息，请访问 [campertunity.com](https://campertunity.com).\r\n",
+ "config": {
+  "campertunity": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "campertunity-ai-tools@latest"
+   ],
+   "env": {}
+  }
+ }
+}

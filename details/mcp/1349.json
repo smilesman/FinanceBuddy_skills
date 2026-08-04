@@ -1,0 +1,26 @@
+{
+ "id": "1349",
+ "kind": "mcp",
+ "name": "base64-encoder",
+ "fingerprint_md5": "a39e4103a212c18cb012d742c0321294",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "# Base64编码解码MCP服务器\r\n\r\n[](https://smithery.ai/server/@liuyazui/base64_server)\r\n[English Version](README_EN.md)\r\n\r\n一个简单高效的MCP服务器，专注于提供Base64编码和解码功能，支持文本和图片的Base64转换。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@liuyazui/base64_server\">\r\n  \r\n</a>\r\n\r\n## 功能特点\r\n\r\n- 文本Base64编码和解码\r\n- 图片Base64编码和解码\r\n- 支持Data URL格式\r\n- 简单易用的API\r\n- 使用uv进行依赖管理\r\n\r\n## 安装\r\n\r\n### 使用uv安装\r\n\r\n```bash\r\n# 创建虚拟环境\r\nuv venv\r\n\r\n# 激活虚拟环境（Linux/macOS）\r\nsource .venv/bin/activate\r\n\r\n# 激活虚拟环境（Windows）\r\n.venv\\Scripts\\activate\r\n\r\n# 安装包（开发模式）\r\nuv pip install -e .\r\n\r\n# 安装带开发依赖的包\r\nuv pip install -e \".[dev]\"\r\n```\r\n\r\n### 安装Smithery\r\n\r\n使用Smithery为Claude桌面安装Base64编码解码MCP服务器，使用以下命令:\r\n\r\n```bash\r\nnpx -y @smithery/cli install @liuyazui/base64_server --client claude\r\n```\r\n\r\n## 使用方法\r\n\r\n### 使用MCP Inspector测试\r\n\r\n```bash\r\n# 使用MCP Inspector测试服务器\r\nuv run mcp dev base64_server.py\r\n```\r\n\r\n### 与MCP client集成\r\n\r\n1. 添加服务器配置：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n        \"base64-encoder\": {\r\n        \"command\": \"uv\",\r\n        \"args\": [\r\n          \"run\",\r\n          \"--with\",\r\n          \"mcp[cli]\",\r\n          \"mcp\",\r\n          \"run\",\r\n          \"[path to base64_server.py]\"\r\n        ]\r\n      }\r\n     }\r\n   }\r\n   ```\r\n\r\n## API参考\r\n\r\n### 工具(Tools)\r\n\r\n- **base64_encode_text(text: str) -> str**：将文本转换为Base64编码\r\n- **base64_decode_text(encoded: str) -> str**：将Base64编码解码为文本\r\n- **base64_encode_image(image_path: str) -> str**：将图片转换为Base64编码\r\n- **base64_decode_image(encoded: str, output_path: str, mime_type: str = \"image/png\") -> str**：将Base64编码解码为图片\r\n\r\n### 资源(Resources)\r\n\r\n- **encode://base64/text/{text}**：获取文本的Base64编码\r\n- **decode://base64/text/{encoded}**：获取Base64编码的解码结果\r\n- **encode://base64/image/{image_path}**：获取图片的Base64编码\r\n- **decode://base64/image/{encoded}**：获取Base64编码的解码图片\r\n\r\n### 提示模板(Prompts)\r\n\r\n- **base64_usage_guide()**: 提供Base64服务的基本使用指南\r\n- **encode_text_prompt(text: str)**: 文本编码提示模板\r\n- **encode_image_prompt(image_path: str)**: 图片编码提示模板\r\n- **error_handling_prompt(error_message: str)**: 错误处理提示模板\r\n\r\n使用示例:\r\n\r\n```python\r\n# 获取使用指南提示\r\nmessages = await client.get_prompt(\"base64_usage_guide\")\r\n\r\n# 获取文本编码提示\r\nmessages = await client.get_prompt(\"encode_text_prompt\", {\"text\": \"Hello World\"})\r\n```\r\n\r\n## 开发\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "base64-encoder": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--with",
+    "mcp[cli]",
+    "mcp",
+    "run",
+    "[path to base64_server.py]"
+   ],
+   "env": {}
+  }
+ }
+}

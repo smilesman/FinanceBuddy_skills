@@ -1,0 +1,21 @@
+{
+ "id": "2090",
+ "kind": "mcp",
+ "name": "yfmcp-2",
+ "fingerprint_md5": "172e726b89711cf9c54d55a486e0a44f",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 雅虎金融MCP服务器\r\n\r\n一个用于雅虎财经的简单MCP服务器 [y融资](https://github.com/ranaroussi/yfinance)此服务器提供一组工具来获取股票数据、新闻和其他财务信息。\r\n\r\n\r\n## 工具\r\n\r\n- **get_ticker_info**\r\n\r\n  - 检索股票数据，包括公司信息、财务、交易指标和治理数据。\r\n  - 输入：\r\n    - `symbol` （string）：股票代码。\r\n\r\n- **get_ticker_news**\r\n\r\n  - 获取与特定股票代码相关的最新新闻文章，包括标题、内容和来源详细信息。\r\n  - 输入：\r\n    - `symbol` （string）：股票代码。\r\n\r\n- **搜索**\r\n\r\n  - 从雅虎财经获取并组织搜索结果，包括股票报价和新闻文章。\r\n  - 输入：\r\n    - `query` （string）：搜索查询（股票代码或公司名称）。\r\n    - `search_type` （string）：要检索的搜索结果类型（选项：“全部”、“引号”、“新闻”）。\r\n\r\n- **get_top**\r\n\r\n  - 获得某个行业的顶级实体（ETF、共同基金、公司、成长型公司或表现良好的公司）。\r\n  - 输入：\r\n    - `sector` （string）：要得到的部门。\r\n    - `top_type` （string）：要检索的顶级公司的类型（选项：“top_etfs”、“top_mutual_funds”、“top_companys”、”top_growth_companys“、”top_performing_companys“）。\r\n    - `top_n` （number，可选）：要检索的顶级实体的数量（默认值为10）。\r\n\r\n- **get_price_history**\r\n\r\n  - 获取指定时间段和时间间隔内给定股票代码的历史价格数据。可以以降价表的形式返回数据，也可以使用mplfinance生成专业的财务图表，包括带有交易量条的烛台图、VWAP覆盖图和交易量概况分析。\r\n  - 输入：\r\n    - `symbol` （string）：股票代码。\r\n    - `period` （字符串，可选）：检索数据的时间段（例如“1d”、“1mo”、“1y”）。默认值为“1mo”。\r\n    - `interval` （字符串，可选）：数据间隔频率（例如“1d”、“1h”、“1m”）。默认值为“1d”。\r\n    - `chart_type` （字符串，可选）：要生成的图表类型。如果未指定，则以降价表的形式返回价格数据。选项：\r\n      - “price_volume”：带音量条的烛台图\r\n      - “vwap”：带有vwap叠加的成交量加权平均价格图\r\n      - “volume_profile”：带有交易量分布的烛台图，按价格水平显示交易量分布（在右侧显示为直方图）\r\n  - 输出：\r\n    - 如果 `chart_type` 未指定：以降价表的形式返回历史价格数据\r\n    - 如果 `chart_type` 指定：返回base64编码的WebP图像，以实现有效的令牌使用\r\n\r\n## 用法\r\n\r\n您可以通过uv（Python包安装程序）、Docker或本地开发使用此MCP服务器。\r\n\r\n### 通过紫外线\r\n\r\n1. [安装uv](https://docs.astral.sh/uv/getting-started/installation/)\r\n1. 将以下配置添加到MCP服务器配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"yfmcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"yfmcp@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 通过Docker\r\n\r\n将以下配置添加到MCP服务器配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"yfmcp\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"narumi/yfinance-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 本地开发\r\n\r\n对于本地开发，请将以下配置添加到MCP服务器配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"yfmcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--directory\",\r\n        \"/path/to/yfinance-mcp\",\r\n        \"yfmcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/path/to/yfinance-mcp` 使用本地存储库的实际路径。\r\n\r\n## 演示聊天机器人\r\n\r\n此存储库包括一个使用以下组件构建的演示聊天机器人 [Chainlit](https://github.com/Chainlit/chainlit) 它为雅虎财经MCP服务器提供了一个对话界面。\r\n\r\n### 特性\r\n\r\n- 用于查询股票信息的交互式聊天界面\r\n- 自动显示财务图表和数据可视化\r\n- 支持OpenAI和LiteLLM后端\r\n- 工具调用与MCP服务器的集成\r\n\r\n### 设置\r\n\r\n1. 安装演示依赖项：\r\n\r\n```bash\r\nuv sync --extra dev\r\n```\r\n\r\n2. 配置环境变量（创建 `.env` 文件）：\r\n\r\n```bash\r\n# For OpenAI\r\nOPENAI_API_KEY=your_openai_api_key\r\nDEFAULT_MODEL=gpt-4.1\r\n\r\n# For LiteLLM (alternative)\r\nLITELLM_API_KEY=your_litellm_api_key\r\nLITELLM_BASE_URL=your_litellm_base_url\r\nDEFAULT_MODEL=gpt-4.1\r\n```\r\n\r\n3. 运行演示：\r\n\r\n```bash\r\nuv run chainlit run demo.py\r\n```\r\n\r\n聊天机器人将在 `http://localhost:8000`.\r\n\r\n### 查询示例\r\n\r\n- “获取AAPL股票信息”\r\n- “显示TSLA最近的新闻”\r\n- “显示过去一个月的NVDA价格历史记录”\r\n- “给我看过去3个月微软的烛台图”\r\n",
+ "config": {
+  "yfmcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "yfmcp@latest"
+   ],
+   "env": {}
+  }
+ }
+}

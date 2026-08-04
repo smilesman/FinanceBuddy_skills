@@ -1,0 +1,24 @@
+{
+ "id": "590",
+ "kind": "mcp",
+ "name": "blendvision",
+ "fingerprint_md5": "7112d71ae544427a610a92cca7f40984",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# BlendVision MCP服务器\r\n\r\n用于BlendVision One API的模型上下文协议（MCP）服务器。该服务器使AI助手能够与BlendVision的视频平台服务进行交互，包括VOD、直播、聊天室和分析。\r\n\r\n## 特性\r\n\r\n### 支持的API类别\r\n\r\n- **视频点播（VOD）**：创建、管理和查询视频内容\r\n- **直播**：管理直播频道和流媒体会话\r\n- **图书馆与档案管理**：上载、更新、下载和管理BlendVision库中的文件\r\n- **剪辑和自动标记**：使用人工智能自动标记创建和管理视频片段\r\n- **会议**：创建和管理视频会议\r\n- **聊天室**：创建和管理实时聊天体验\r\n- **账户和组织**：访问帐户信息和组织详细信息\r\n- **回放**：生成播放令牌并管理访问代码\r\n- **分析**：检索分析、CDN使用情况和流媒体指标\r\n\r\n### 可用工具\r\n\r\n#### VOD工具\r\n\r\n- `list_videos` -列出所有带有过滤选项的视频\r\n- `get_video` -按ID获取视频详细信息\r\n- `create_video` -创建新视频\r\n- `update_video` -更新视频元数据\r\n- `delete_video` -删除视频\r\n- `update_vod_subtitles` -更新VOD视频的字幕\r\n- `create_vod_download` -触发以MP4格式下载VOD格式的播放\r\n- `get_vod_download` -获取VOD下载作业的状态\r\n- `list_vod_downloads` -列出VOD的所有下载作业\r\n\r\n#### 直播工具\r\n\r\n- `list_live_channels` -列出所有直播频道\r\n- `get_live_channel` -按ID获取频道详细信息\r\n- `create_live_channel` -创建新的直播频道\r\n- `update_live_channel` -更新频道设置\r\n- `delete_live_channel` -删除频道\r\n- `start_live` -开始直播\r\n- `stop_live` -停止直播\r\n- `cancel_live_channel` -取消并存档直播\r\n- `archive_live_channel` -永久存档直播流\r\n\r\n#### 库和文件工具\r\n\r\n- `upload_file` -启动文件上传并获取预签名的URL\r\n- `complete_file_upload` -上传零件后完成文件上传会话\r\n- `cancel_file_upload` -取消正在进行的文件上传会话\r\n- `get_file` -按ID获取文件详细信息\r\n- `update_file` -更新文件详细信息（名称、元数据、属性）\r\n- `delete_file` -从库中删除文件\r\n- `download_file` -获取文件的下载链接\r\n\r\n#### 剪辑和自动标记工具\r\n\r\n- `list_clips` -列出特定来源的视频片段\r\n- `get_clip` -按ID获取剪辑详细信息\r\n- `create_clip` -创建新的视频剪辑\r\n- `update_clip` -更新剪辑元数据\r\n- `delete_clip` -删除视频剪辑\r\n- `get_auto_tagging` -获取视频源的自动标记结果\r\n- `create_auto_tagging` -为VOD视频创建自动标记\r\n\r\n#### 会议工具\r\n\r\n- `create_meeting` -使用日程配置创建新会议\r\n- `get_meeting` -按ID获取会议详细信息\r\n- `get_meeting_session_info` -获取会议会话信息和参与者令牌\r\n- `archive_meeting` -存档会议\r\n\r\n#### 聊天室工具\r\n\r\n- `list_chatrooms` -列出所有聊天室\r\n- `get_chatroom` -获取聊天室详细信息\r\n- `create_chatroom` -创建新聊天室\r\n- `send_chatroom_message` -向聊天室发送消息\r\n\r\n#### 帐户和组织工具\r\n\r\n- `get_account` -获取当前帐户信息\r\n- `list_organizations` -列出可访问的组织\r\n- `list_hierarchical_sub_organizations` -列出分层子组织\r\n\r\n#### 播放工具\r\n\r\n- `generate_playback_token` -为内容访问生成令牌\r\n- `list_playback_codes` -列出资源的播放代码\r\n\r\n#### 分析工具\r\n\r\n- `get_analytics` -检索分析报告\r\n- `get_cdn_usage_report` -获取带宽和流量的CDN使用情况报告\r\n- `query_default_usage_charts` -查询具有时间范围的默认使用情况图表\r\n- `get_user_access_chart` -获取用户访问分析图表\r\n- `query_usage_summary` -查询使用情况摘要分析\r\n\r\n## 快速开始\r\n\r\n### 步骤1：安装\r\n\r\n```bash\r\n# Using npx (no installation required)\r\nnpx @blendvision/mcp-server\r\n\r\n# Or install globally\r\nnpm install -g @blendvision/mcp-server\r\n```\r\n\r\n### 步骤2：配置Claude桌面\r\n\r\n编辑您的Claude Desktop配置文件(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n**使用npx（推荐-始终使用最新版本）：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"blendvision\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@blendvision/mcp-server\"],\r\n      \"env\": {\r\n        \"BLENDVISION_API_TOKEN\": \"your_token_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**使用全局安装：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"blendvision\": {\r\n      \"command\": \"blendvision-mcp\",\r\n      \"env\": {\r\n        \"BLENDVISION_API_TOKEN\": \"your_token_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 步骤3：配置Claude代码\r\n\r\n通过命令行手动添加：\r\n\r\n```bash\r\nclaude mcp add --transport stdio --scope user blendvision \\\r\n  -- npx -y @blendvision/mcp-server\r\n```\r\n\r\n然后将您的API令牌设置为环境变量：\r\n\r\n```bash\r\nexport BLENDVISION_API_TOKEN=\"your_token_here\"\r\n```\r\n\r\n## 查询示例\r\n\r\n一旦连接到像Claude这样的MCP客户端，您可以问：\r\n\r\n- “列出我的所有视频”\r\n- “创建一个名为“产品发布”的新直播频道”\r\n- “为视频ID abc123生成播放令牌”\r\n- “显示过去7天的分析”\r\n- “启动xyz789频道的直播”\r\n\r\n## API 参考\r\n\r\n此MCP服务器包装BlendVision One API。有关API的详细文档，请访问：\r\nhttps://developers.blendvision.com/docs/category/bv-one-api\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 联系我们\r\n\r\n获取您的 **API代币** 或者，如果您有任何问题，请联系我们：\r\n\r\n- **电子邮件**: [support@blendvision.com](mailto:support@blendvision.com)\r\n- **网站**: [https://www.blendvision.com](https://www.blendvision.com)\r\n- **API文档**: [https://developers.blendvision.com](https://developers.blendvision.com)\r\n",
+ "config": {
+  "blendvision": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@blendvision/mcp-server"
+   ],
+   "env": {
+    "BLENDVISION_API_TOKEN": "your_token_here"
+   }
+  }
+ }
+}

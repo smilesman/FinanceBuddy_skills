@@ -1,0 +1,23 @@
+{
+ "id": "568",
+ "kind": "mcp",
+ "name": "allyson",
+ "fingerprint_md5": "b441c26953888fb8d215da9befd527c5",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Allyson MCP服务器\r\n\r\n\r\n**Allyson MCP服务器** -AI驱动的动画生成器，使用模型上下文协议（MCP）将静态文件转换为动画SVG组件。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@isaiahbjork/allyson-mcp\">\r\n</a>\r\n\r\n## 🚀 快速开始\r\n\r\n\r\n### 安装并运行npx\r\n\r\n```bash\r\nnpx allyson-mcp --api-key YOUR_API_KEY\r\n```\r\n\r\n## 🔧 配置\r\n\r\n### 命令行选项\r\n\r\n```bash\r\nallyson-mcp [options]\r\n\r\nOptions:\r\n  --api-key <key>     Your Allyson API key (required)\r\n  --help              Show help message\r\n\r\nExamples:\r\n  allyson-mcp --api-key your-api-key-here\r\n  API_KEY=your-key allyson-mcp\r\n```\r\n\r\n### 环境变量\r\n\r\n您还可以将API密钥设置为环境变量：\r\n\r\n```bash\r\nexport API_KEY=your-api-key-here\r\nallyson-mcp\r\n```\r\n\r\n## 🎯 特性\r\n\r\n- **人工智能驱动的动画生成**：将静态图像转换为动画SVG组件\r\n- **MCP协议兼容**：可与任何兼容MCP的AI助手或工具配合使用\r\n- **文件上传支持**：支持各种图像格式（PNG、JPG、SVG等）\r\n- **自定义动画提示**：准确描述你想要什么动画\r\n- **本地文件处理**：从本地文件系统读取文件\r\n- **自动输出生成**：将动画组件保存到指定路径\r\n\r\n## 🛠 可用工具\r\n\r\n### `generate_svg_animation`\r\n\r\n从源文件和动画提示生成动画SVG组件。\r\n\r\n**参数：**\r\n\r\n- `prompt` （string，必填）：要生成的动画的描述\r\n  - 示例：“让角色挥手”\r\n  - 示例：“为球添加弹跳动作”\r\n  - 示例：“为徽标创建旋转效果”\r\n- `svg_path` （string，必填）：源文件的绝对路径\r\n  - 示例：“/path/to/my icon.svg”\r\n- `output_path` （string，必填）：保存动画组件的绝对路径\r\n  - 示例：“/path/to/animated component.tsx”\r\n\r\n**MCP客户端中的示例用法：**\r\n\r\n```json\r\n{\r\n  \"tool\": \"generate_svg_animation\",\r\n  \"arguments\": {\r\n    \"prompt\": \"Make the logo glow and pulse gently\",\r\n    \"svg_path\": \"/Users/john/Desktop/company-logo.svg\",\r\n    \"output_path\": \"/Users/john/project/src/components/AnimatedLogo.tsx\"\r\n  }\r\n}\r\n```\r\n\r\n## 🔌 与AI助手集成\r\n\r\n此MCP服务器旨在与支持模型上下文协议的AI助手配合使用，例如：\r\n\r\n- **克劳德桌面** （带MCP配置）\r\n- **光标IDE** （与MCP集成）\r\n- **自定义AI应用程序** （使用MCP SDK）\r\n\r\n### MCP配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"allyson\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"allyson-mcp\", \"--api-key\", \"YOUR_API_KEY\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 📝 例子\r\n\r\n### 基本动画生成\r\n\r\n```bash\r\n# Start the server\r\nallyson-mcp --api-key your-api-key\r\n\r\n# The AI assistant can now use the tool:\r\n# \"Please animate this logo to have a subtle glow effect\"\r\n# File: /Users/john/logo.svg → /Users/john/animated-logo.tsx\r\n```\r\n\r\n## 🔐 安全\r\n\r\n- **API密钥保护**：您的API密钥被安全地传输到Allyson服务\r\n- **本地文件访问**：仅读取您明确指定的文件\r\n- **无数据存储**：文件被处理，不存储在外部服务器上\r\n- **HTTPS通信**：所有API通信都使用安全的HTTPS\r\n\r\n## 🐛 故障排除\r\n\r\n### 常见问题\r\n\r\n**“需要API密钥”错误**\r\n\r\n```bash\r\n# Solution: Provide API key via flag or environment variable\r\nallyson-mcp --api-key YOUR_KEY\r\n# or\r\nexport API_KEY=YOUR_KEY && allyson-mcp\r\n```\r\n\r\n**“找不到文件”错误**\r\n\r\n```bash\r\n# Make sure to use absolute paths\r\n❌ Wrong: ./image.svg\r\n✅ Correct: /Users/username/project/image.svg\r\n```\r\n\r\n**“无法连接到动画API服务器”错误**\r\n\r\n- 检查您的互联网连接\r\n- 验证您的API密钥是否有效\r\n- 确保Allyson服务可访问\r\n\r\n**权限问题**\r\n\r\n```bash\r\n# Make the file executable if needed\r\nchmod +x node_modules/allyson-mcp/index.js\r\n```\r\n\r\n### 调试模式\r\n\r\n对于调试，您可以检查输出到stderr的服务器日志：\r\n\r\n```bash\r\nallyson-mcp --api-key YOUR_KEY 2> debug.log\r\n```\r\n\r\n## 📋 需求\r\n\r\n- **Node.js**：18.0.0或更高版本\r\n- **API密钥**：有效的Allyson API密钥\r\n- **Internet连接**：API通信所需\r\n\r\n## 🤝 贡献\r\n\r\n我们欢迎捐款！请参阅我们的投稿指南以了解更多详细信息。\r\n\r\n## 📄 许可证\r\n\r\nApache-2.0许可证-有关详细信息，请参阅License文件。\r\n\r\n## 🔗 链接\r\n\r\n- [模型上下文协议](https://modelcontextprotocol.io/)\r\n- [Allyson网站](https://allyson.ai)\r\n- [问题追踪](https://github.com/allyson/mcp/issues)\r\n\r\n## 📞 支持\r\n\r\n- **文档**：查看此README和内联帮助(`--help`)\r\n- **问题**：报告我们的bug [GitHub问题](https://github.com/allyson/mcp/issues)\r\n",
+ "config": {
+  "allyson": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "allyson-mcp",
+    "--api-key",
+    "YOUR_API_KEY"
+   ],
+   "env": {}
+  }
+ }
+}

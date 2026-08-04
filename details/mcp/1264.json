@@ -1,0 +1,24 @@
+{
+ "id": "1264",
+ "kind": "mcp",
+ "name": "s3-mcp-server",
+ "fingerprint_md5": "67a77187ff0c99782bf7d7cdf4f88c21",
+ "download_count": 0,
+ "category": "数据迁移",
+ "tags": "",
+ "version": "",
+ "readme": "# S3模型上下文协议服务器示例\r\n\r\n用于从S3检索PDF等数据的MCP服务器实现。\r\n\r\n### 注： `dev` 分支具有PutObject和CreateBucket的逻辑，作为中提供的默认get操作的扩展\r\n\r\nhttps://github.com/aws-samples/sample-mcp-server-s3\r\n\r\n## 特性\r\n\r\n### 资源\r\n\r\n通过以下方式公开AWS S3数据 **资源**（将这些类似于GET端点；它们用于将信息加载到LLM的上下文中）。目前仅 **可移植文档格式** 支持的文件仅限于 **1000** 物体。\r\n\r\n### 工具\r\n\r\n- **列表Buckets**\r\n  - 返回请求的经过身份验证的发送方拥有的所有bucket的列表\r\n- **列表对象V2**\r\n  - 每次请求时返回bucket中的部分或全部（最多1000个）对象\r\n- **获取对象**\r\n  - 从Amazon S3检索对象。在GetObject请求中，指定对象的完整键名。通用桶-支持虚拟托管样式请求和路径样式请求\r\n\r\n## 配置\r\n\r\n### 设置AWS凭据\r\n\r\n1. 从AWS管理控制台获取AWS访问密钥ID、秘密访问密钥和区域，并使用配置凭据文件 **默认** 配置文件如图所示 [**这里**](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html)\r\n1. 确保这些凭据具有S3的适当读/写权限。\r\n\r\n### 使用Claude Desktop\r\n\r\n#### 克劳德桌面\r\n\r\n在MacOS上： `~/Library/Application\\ Support/Claude/claude_desktop_config.json`\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n\r\n  Development/Unpublished Servers Configuration\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"s3-mcp-server\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/Users/user/generative_ai/model_context_protocol/s3-mcp-server\",\r\n        \"run\",\r\n        \"s3-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\n  Published Servers Configuration\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"s3-mcp-server\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"s3-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\n## 发展\r\n\r\n### 建筑与出版\r\n\r\n准备分发包裹：\r\n\r\n1. 同步依赖关系并更新锁文件：\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n2. 构建包分发：\r\n\r\n```bash\r\nuv build\r\n```\r\n\r\n这将在 `dist/` 目录。\r\n\r\n3. 发布到PyPI：\r\n\r\n```bash\r\nuv publish\r\n```\r\n\r\n注意：您需要通过环境变量或命令标志设置PyPI凭据：\r\n\r\n- 令牌： `--token` 或 `UV_PUBLISH_TOKEN`\r\n- 或用户名/密码： `--username`/`UV_PUBLISH_USERNAME` 和 `--password`/`UV_PUBLISH_PASSWORD`\r\n\r\n### 调试\r\n\r\n由于MCP服务器在stdio上运行，调试可能具有挑战性。为了达到最佳调试效果\r\n经验，我们强烈建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector).\r\n\r\n您可以通过以下方式启动MCP检查器 [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) 使用此命令：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv --directory /Users/user/generative_ai/model_context_protocol/s3-mcp-server run s3-mcp-server\r\n```\r\n\r\n启动后，检查器将显示一个URL，您可以在浏览器中访问该URL以开始调试。\r\n\r\n## 安全\r\n\r\n看 [贡献](CONTRIBUTING.md#security-issue-notifications) 了解更多信息。\r\n\r\n## 参考文献\r\n\r\nhttps://github.com/aws-samples/sample-mcp-server-s3\r\n\r\nhttps://github.com/modelcontextprotocol/servers\r\n",
+ "config": {
+  "s3-mcp-server": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/Users/user/generative_ai/model_context_protocol/s3-mcp-server",
+    "run",
+    "s3-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

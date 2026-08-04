@@ -1,0 +1,21 @@
+{
+ "id": "864",
+ "kind": "mcp",
+ "name": "sommelierx",
+ "fingerprint_md5": "4a7c4ae7f2b78cde2c530386c89d0d07",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# @侍酒师x/mcp服务器\r\n\r\nAI助手的葡萄酒配对智能。将Claude、Cursor、Windsurf或任何兼容MCP的客户端连接到侍酒师级配对算法，该算法将葡萄酒与您的配料、菜肴和食谱相匹配。\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面版\r\n\r\n添加 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sommelierx\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@sommelierx/mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n就是这样，问克劳德 _“什么酒配烤三文鱼？”_ 它将使用Sommelier X来回答。\r\n\r\n### 使用Pro API密钥\r\n\r\n对于配方提取、分组配对和分数细分：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sommelierx\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@sommelierx/mcp-server\"],\r\n      \"env\": {\r\n        \"SOMMELIERX_API_KEY\": \"sk_live_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Cursor/Windsurf/其他MCP客户端\r\n\r\n同样的配置也有效。添加 `command` 和 `args` 到您客户的MCP设置。\r\n\r\n## 可用工具\r\n\r\n|工具|它的作用|层次|\r\n|------|-------------|------|\r\n| `pair_wine_with_ingredients` |查找葡萄酒的成分列表（例如“鲑鱼、柠檬、莳萝”）|免费|\r\n| `pair_wine_with_meal` |查找菜肴名称的葡萄酒（例如“烩饭ai funghi”）|免费|\r\n| `find_meals_for_wine` |寻找与葡萄酒风格搭配的菜肴（例如“巴罗洛”）|免费|\r\n| `search_ingredients` |搜索配料数据库|免费|\r\n| `search_meals` |搜索膳食数据库|免费|\r\n| `pair_wine_with_recipe_url` |从配方URL中提取成分并搭配葡萄酒|专业版|\r\n| `group_pairing` |在多种菜肴中找到最好的葡萄酒（例如3道菜的晚餐）|专业|\r\n\r\n## 认证\r\n\r\nSommelier X支持两种身份验证方法。您可以使用其中任何一个，无需同时配置这两个。\r\n\r\n### 选项1：API密钥（订阅）\r\n\r\n设置 `SOMMELIERX_API_KEY` MCP客户端配置中的环境变量。密钥格式为 `sk_live_...`。您将根据您的级别（免费/专业/企业）获得每月通话津贴。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sommelierx\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@sommelierx/mcp-server\"],\r\n      \"env\": {\r\n        \"SOMMELIERX_API_KEY\": \"sk_live_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n获取API密钥： [api.sommelierx.com](https://api.sommelierx.com).\r\n\r\n### 选项2:x402付款（每次通话付费）\r\n\r\n不需要API密钥。您的AI代理通过以下方式在基础网络上使用USDC支付每次通话费用 [Coinbase x402协议](https://www.x402.org/).当请求缺少API密钥时，服务器返回 `402 Payment Required` 使用支付有效载荷进行响应。x402兼容的代理会自动处理此问题。\r\n\r\n这非常适合：\r\n\r\n- 管理自己钱包的AI代理\r\n- 无需订阅即可按需付费使用\r\n- 代理对代理商务（无人工参与）\r\n\r\n### 定价（每次通话）\r\n\r\n|工具|价格|等级|\r\n|------|-------|------|\r\n| `pair_wine_with_meal` |$0.01 |免费|\r\n| `find_meals_for_wine` |$0.01 |免费|\r\n| `search_ingredients` |$0.005 |免费|\r\n| `search_meals` |$0.005 |免费|\r\n| `pair_wine_with_ingredients` |0.02美元|专业版|\r\n| `pair_wine_with_recipe_url` |0.02美元|专业版|\r\n| `group_pairing` |0.03美元|专业版|\r\n\r\n使用API密钥，调用将从您的层配额中扣除。对于x402，每次通话都按所列价格收费。\r\n\r\n## 对话示例\r\n\r\n**基本配对：**\r\n\r\n> “什么酒与鲑鱼、芦笋和荷兰酱搭配得很好？”\r\n\r\n**反向配对：**\r\n\r\n> “我有一瓶巴罗洛。我该煮什么？”\r\n\r\n**配方URL:**\r\n\r\n> “这个食谱配什么酒？https://www.allrecipes.com/recipe/...\"\r\n\r\n**晚宴：**\r\n\r\n> “我计划吃一顿三道菜的晚餐：凯撒沙拉、羊排和巧克力慕斯。哪种葡萄酒适合所有菜肴？”\r\n\r\n## 运作原理\r\n\r\n1. 你问你的AI助手一个葡萄酒问题\r\n1. 助理调用相应的Sommelier X工具\r\n1. MCP服务器将您的输入转换为结构化的API调用\r\n1. Sommelier x的配对算法（17个食物DNA维度x 19个葡萄酒DNA维度）计算匹配\r\n1. 您将根据真正的侍酒师专业知识获得葡萄酒推荐评分\r\n\r\n### 成分分解\r\n\r\n当你使用 `pair_wine_with_ingredients`，服务器会自动将自然语言成分名称解析为数据库条目。AI助手不需要知道数据库ID，它直接传递成分名称。\r\n\r\n## 配置\r\n\r\n|环境变量|必填|默认|描述|\r\n|---------------------|----------|---------|-------------|\r\n| `SOMMELIERX_API_KEY` |没有用于Pro/Enterprise访问的|--| API密钥。没有钥匙，免费套餐（50次/天）。 |\r\n| `SOMMELIERX_API_URL` |没有| `https://api.sommelierx.com` |API基本URL|\r\n| `SOMMELIERX_LANGUAGE` |没有| `en` |结果的默认语言(`en`, `nl`, `fr`, `de`, `es`, `it`). |\r\n\r\n## API层\r\n\r\n|级别|每日限制|每分钟限制|功能|\r\n|------|------------|------------------|----------|\r\n| **自由** |50个电话|2/min|基本配对、搜索、配料/膳食查找|\r\n| **专业版** （49美元/月）|500次通话|20/min|+配方URL提取、组配对、分数细分|\r\n| **企业** |10000次呼叫|100/min|+自定义限制，SLA|\r\n\r\n获取API密钥： [api.sommelierx.com](https://api.sommelierx.com)\r\n\r\n## API文档\r\n\r\nAPI完整文档可在 [docs.commelierx.com](https://docs.sommelierx.com).\r\n\r\nOpenAPI规范在 `https://api.sommelierx.com/api/v1/openapi.json`.\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\nnpm run dev       # development mode with hot reload\r\nnpm run typecheck # type checking without emit\r\n```\r\n\r\n## 需求\r\n\r\n- Node.js>=18.0.0\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "sommelierx": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@sommelierx/mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

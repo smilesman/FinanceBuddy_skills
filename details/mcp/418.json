@@ -1,0 +1,22 @@
+{
+ "id": "418",
+ "kind": "mcp",
+ "name": "runbook-ai-2",
+ "fingerprint_md5": "ebe1f53bf1471348b88ef9edab607c32",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# Runbook AI MCP服务器\r\n\r\n通过Chrome扩展程序提供浏览器自动化功能的MCP（模型上下文协议）服务器。它允许基于终端的代理，如 **克劳德代码** 通过您的实时浏览器会话与任何网站进行交互。\r\n\r\n部分 [Runbook AI](https://github.com/runbook-ai/runbook-ai.github.io) 生态系统。加入 [不和谐社区](https://discord.gg/SDtXkAKK2B) 提供您的反馈并参与开发！\r\n\r\nhttps://github.com/user-attachments/assets/a43fba64-bc40-4ef6-9840-e100203e2cf5\r\n\r\n## 为什么选择Runbook AI？\r\n\r\n大多数基于浏览器的MCP工具（如 `chrome-devtools-mcp`)在每次浏览器操作后发送整个DOM，从而破坏LLM上下文窗口。\r\n\r\n**Runbook AI是不同的：**\r\n\r\n- **优化上下文：** 它生成了一个高度简化的HTML版本。它去掉了垃圾，但保留了基本的文本和交互元素。它是浓缩的，快速的，不会吃掉你的代币。\r\n- **终极包罗万象：** 如果一个网站没有专用的MCP服务器（如Expedia、LinkedIn或内部工具），这完美地填补了空白。\r\n- **隐私第一：** 它完全在您的浏览器中运行。除了您选择的LLM提供商，没有远程调用。不 `eval()` 或阴暗的脚本（由Chrome扩展沙箱强制执行）。\r\n- **高效导航：** 简化的HTML超越了视口，使滚动和多页任务更加高效。\r\n\r\n## 安装\r\n\r\n### MCP服务器\r\n\r\n添加到MCP设置配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"runbook-ai\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"runbook-ai-mcp@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Chrome 扩展\r\n\r\n安装 [Runbook AI](https://chromewebstore.google.com/detail/runbook-ai/kjbhngehjkiiecaflccjenmoccielojj) Chrome网上商店的扩展程序。\r\n\r\n在从扩展侧面板打开的扩展设置中启用MCP。\r\n\r\n设置LLM API密钥、型号名称、基本URL。建议使用Gemini-3Flash（Gemini-3-Flash-preview）。从获取您的免费API密钥 [谷歌AI工作室](https://aistudio.google.com/).\r\n\r\n默认情况下，该扩展可以访问 *全部* 网站。如果你想限制访问权限，请转到Chrome扩展程序详细信息，并将单个网站添加到网站访问设置中。\r\n\r\n## 用法\r\n\r\n打开Chrome浏览器并保持扩展程序侧面板打开。\r\n\r\n启动MCP服务器（当您的MCP客户端调用时，它将自动启动）。\r\n\r\n## 工具架构\r\n\r\n服务器公开了一个工具：\r\n\r\n### `browser-agent`\r\n\r\n在具有人工智能和自动化功能的Chrome浏览器中运行任务。\r\n\r\n**参数：**\r\n\r\n- `prompt` （string，必填）：AI代理要执行的任务提示\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"name\": \"browser-agent\",\r\n  \"arguments\": {\r\n    \"prompt\": \"Go to google.com and search for 'MCP protocol'\"\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build\r\nnpm run build\r\n\r\n# Run in development mode\r\nnpm run dev\r\n\r\n# Run tests\r\nnpm test\r\n```\r\n\r\n## 建筑\r\n\r\n1. **MCP服务器**：通过stdio与MCP客户端通信\r\n1. **WebSocket服务器**：侦听端口9003上的Chrome扩展程序连接\r\n1. **Chrome 扩展**：执行浏览器自动化任务\r\n\r\n当调用工具时：\r\n\r\n1. MCP客户端通过stdio向MCP服务器发送请求\r\n1. MCP服务器通过WebSocket将请求转发到Chrome扩展程序\r\n1. 扩展执行任务并返回结果\r\n1. 结果被发送回MCP客户端\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时发送PR。\r\n",
+ "config": {
+  "runbook-ai": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "runbook-ai-mcp@latest"
+   ],
+   "env": {}
+  }
+ }
+}

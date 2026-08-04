@@ -1,0 +1,12 @@
+{
+ "id": "agent-wal",
+ "kind": "skill",
+ "name": "agent-wal",
+ "fingerprint_md5": "60cff01179ebf70961c887472f125443",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# Agent WAL（Write-Ahead Log）\r\n\r\n在响应之前将重要状态写入磁盘。防止 #1 agent 失败模式：在压缩期间丢失更正和上下文。\r\n\r\n## 核心规则\r\n\r\n**在响应之前写入。** 如果某件事值得记住，先 WAL 它。\r\n\r\n## 何时 WAL\r\n\r\n| 触发器 | 操作类型 | 示例 |\r\n|---------|------------|---------|\r\n| 用户纠正你 | `correction` | \"No, use Podman not Docker\" |\r\n| 你做出关键决策 | `decision` | \"Using CogVideoX-2B for text-to-video\" |\r\n| 重要分析/结论 | `analysis` | \"WAL/VFM patterns should be core infra not skills\" |\r\n| 状态更改 | `state_change` | \"GPU server SSH key auth configured\" |\r\n| 用户说 \"remember this\" | `correction` | 无论他们说了什么 |\r\n\r\n## 命令\r\n\r\n所有命令通过 `scripts/wal.py`（相对于本技能目录）：\r\n\r\n```bash\r\n# 在响应之前写入\r\npython3 scripts/wal.py append agent1 correction \"Use Podman not Docker for all EvoClaw tooling\"\r\npython3 scripts/wal.py append agent1 decision \"CogVideoX-5B with multi-GPU via accelerate\"\r\npython3 scripts/wal.py append agent1 analysis \"Signed constraints prevent genome tampering\"\r\n\r\n# 工作缓冲区（对话期间批量写入，在压缩前刷新）\r\npython3 scripts/wal.py buffer-add agent1 decision \"Some decision\"\r\npython3 scripts/wal.py flush-buffer agent1\r\n\r\n# Session 开始时：重放丢失的上下文\r\npython3 scripts/wal.py replay agent1\r\n\r\n# 应用重放的条目后\r\npython3 scripts/wal.py mark-applied agent1 <entry_id>\r\n\r\n# 维护\r\npython3 scripts/wal.py status agent1\r\npython3 scripts/wal.py prune agent1 --keep 50\r\n```\r\n\r\n## 集成点\r\n\r\n### Session 开始时\r\n1. 运行 `replay` 以获取未应用的条目\r\n2. 将摘要读入你的上下文\r\n3. 在合并它们后将条目标记为已应用\r\n\r\n### 用户纠正时\r\n1. 使用 action_type `correction` 运行 `append` BEFORE 响应\r\n2. 然后用纠正后的行为响应\r\n\r\n### 预压缩刷新时\r\n1. 运行 `flush-buffer` 以持久化任何缓冲的条目\r\n2. 然后照常写入每日记忆文件\r\n\r\n### 对话期间\r\n对于不太重要的项目，使用 `buffer-add` 批量写入。缓冲区在 `flush-buffer` 时刷新到 WAL（在预压缩期间调用）或手动刷新。\r\n\r\n## 存储\r\n\r\nWAL 文件：`~/clawd/memory/wal/<agent_id>.wal.jsonl`\r\n缓冲区文件：`~/clawd/memory/wal/<agent_id>.buffer.jsonl`\r\n\r\n条目是 append-only JSONL。每个条目：\r\n```json\r\n{\"id\": \"abc123\", \"timestamp\": \"ISO8601\", \"agent_id\": \"agent1\", \"action_type\": \"correction\", \"payload\": \"Use Podman not Docker\", \"applied\": false}\r\n```",
+ "config": {}
+}

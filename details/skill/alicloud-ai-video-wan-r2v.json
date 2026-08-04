@@ -1,0 +1,12 @@
+{
+ "id": "alicloud-ai-video-wan-r2v",
+ "kind": "skill",
+ "name": "alicloud-ai-video-wan-r2v",
+ "fingerprint_md5": "4b591018004eaca03786391effdb4d81",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "Category: provider\r\n\r\n# Model Studio Wan R2V\r\n\r\n使用 Wan R2V 进行参考到视频的生成。这与 i2v（单图生视频）不同。\r\n\r\n## 关键模型名称\r\n\r\n仅使用以下精确的模型字符串：\r\n- `wan2.6-r2v-flash`\r\n\r\n## 前置条件\r\n\r\n- 在虚拟环境中安装 SDK：\r\n\r\n```bash\r\npython3 -m venv .venv\r\n. .venv/bin/activate\r\npython -m pip install dashscope\r\n```\r\n- 在环境中设置 `DASHSCOPE_API_KEY`，或将 `dashscope_api_key` 添加到 `~/.alibabacloud/credentials`。\r\n\r\n## 规范化接口 (video.generate_reference)\r\n\r\n### 请求\r\n- `prompt` (string, required)\r\n- `reference_video` (string | bytes, required)\r\n- `reference_image` (string | bytes, optional)\r\n- `duration` (number, optional)\r\n- `fps` (number, optional)\r\n- `size` (string, optional)\r\n- `seed` (int, optional)\r\n\r\n### 响应\r\n- `video_url` (string)\r\n- `task_id` (string, 异步时)\r\n- `request_id` (string)\r\n\r\n## 异步处理\r\n\r\n- 生产流量优先使用异步提交。\r\n- 以 15-20s 间隔轮询任务结果。\r\n- 当返回 `SUCCEEDED` 或终端失败状态时停止轮询。\r\n\r\n## 本地辅助脚本\r\n\r\n准备规范化请求 JSON 并验证响应 schema：\r\n\r\n```bash\r\n.venv/bin/python skills/ai/video/alicloud-ai-video-wan-r2v/scripts/prepare_r2v_request.py \\\r\n  --prompt \"Generate a short montage with consistent character style\" \\\r\n  --reference-video \"https://example.com/reference.mp4\"\r\n```\r\n\r\n## 输出位置\r\n\r\n- 默认输出：`output/ai-video-wan-r2v/videos/`\r\n- 使用 `OUTPUT_DIR` 覆盖基础目录。\r\n\r\n## 参考\r\n\r\n- `references/sources.md`",
+ "config": {}
+}

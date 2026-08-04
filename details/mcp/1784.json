@@ -1,0 +1,24 @@
+{
+ "id": "1784",
+ "kind": "mcp",
+ "name": "unrealmcp",
+ "fingerprint_md5": "0849632136e17ded1bbf2ddbc4520594",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "<div align=\"center\">\r\n\r\n# 虚幻引擎的模型上下文协议\r\n\r\n<span style=\"color: #555555\">虚幻的mcp</span>\r\n\r\n[](https://opensource.org/licenses/MIT)\r\n[](https://www.unrealengine.com)\r\n[](https://www.python.org)\r\n[](https://github.com/chongdashu/unreal-mcp)\r\n\r\n</div>\r\n\r\n该项目使Cursor、Windsurf和Claude Desktop等AI助手客户端能够使用模型上下文协议（MCP）通过自然语言控制虚幻引擎。\r\n\r\n## ⚠️ 实验状态\r\n\r\n该项目目前处于 **实验性** 国家。API、功能和实现细节可能会发生重大更改。虽然我们鼓励测试和反馈，但请注意：\r\n\r\n- 可能会发生重大变更，恕不另行通知\r\n- 功能可能不完整或不稳定\r\n- 文档可能已过时或缺失\r\n- 目前不建议生产使用\r\n\r\n## 🌟 概述\r\n\r\n虚幻MCP集成提供了通过自然语言控制虚幻引擎的全面工具：\r\n\r\n|类别|功能|\r\n|----------|-------------|\r\n| **演员管理** |•创建和删除演员（立方体、球体、灯光、相机等）<br>•设置演员变换（位置、旋转、比例）<br>•查询演员属性并按姓名查找演员<br>•列出当前级别的所有参与者|\r\n| **蓝图开发** |•使用自定义组件创建新的蓝图类<br>•添加和配置组件（网格、相机、灯光等）<br>•设置组件属性和物理设置<br>•编译蓝图并生成蓝图参与者<br>•为玩家控件创建输入映射|\r\n| **蓝图节点图** |•添加事件节点（BeginPlay、Tick等）<br>•创建函数调用节点并连接它们<br>•添加具有自定义类型和默认值的变量<br>•创建组件和自我引用<br>•查找和管理图中的节点|\r\n| **编辑器控件** |•将视口聚焦于特定演员或位置<br>•控制视口相机方向和距离|\r\n\r\n所有这些功能都可以通过人工智能助手的自然语言命令访问，从而轻松实现虚幻引擎工作流的自动化和控制。\r\n\r\n## 🧩 组件\r\n\r\n### 示例项目（MCPGameProject） `MCPGameProject`\r\n\r\n- 基于空白项目，但添加了UnrealMCP插件。\r\n\r\n### 插件（非读CP） `MCPGameProject/Plugins/UnrealMCP`\r\n\r\n- 用于MCP通信的本地TCP服务器\r\n- 与虚幻编辑器子系统集成\r\n- 实现参与者操作工具\r\n- 处理命令执行和响应处理\r\n\r\n### Python MCP服务器 `Python/unreal_mcp_server.py`\r\n\r\n- 实施于 `unreal_mcp_server.py`\r\n- 管理到C++插件的TCP套接字连接（端口55557）\r\n- 处理命令序列化和响应解析\r\n- 提供错误处理和连接管理\r\n- 从加载和注册工具模块 `tools` 目录\r\n- 使用FastMCP库实现模型上下文协议\r\n\r\n## 📂 目录结构\r\n\r\n- **MCPGameProject/** -虚幻项目示例\r\n\r\n  - **插件/不可读CP/** -C++插件源代码\r\n    - **来源/未读MCP/** -插件源代码\r\n    - **不现实的MCP.uplugin** -插件定义\r\n\r\n- **python** -Python服务器和工具\r\n\r\n  - **工具/** -用于执行器、编辑器和蓝图操作的工具模块\r\n  - **脚本/** -示例脚本和演示\r\n\r\n- **文件/** -全面的文件\r\n\r\n  - 看 [文档/README.md](Docs/README.md) 用于文档索引\r\n\r\n## 🚀 快速入门指南\r\n\r\n### 先决条件\r\n\r\n- 虚幻引擎5.5+\r\n- Python 3.12+\r\n- MCP客户端（例如，克劳德桌面、光标、Windsurf）\r\n\r\n### 项目\r\n\r\n为了快速入门，请随时使用starter项目 `MCPGameProject`这是一个UE 5.5空白入门项目 `UnrealMCP.uplugin` 已配置。\r\n\r\n1. **准备项目**\r\n   - 右键单击您的.uproject文件\r\n   - 生成Visual Studio项目文件\r\n1. **构建项目（包括插件）**\r\n   - 开放式解决方案(`.sln`)\r\n   - 选择 `Development Editor` 作为你的目标。\r\n   - 构建\r\n\r\n### 插件\r\n\r\n否则，如果你想在现有项目中使用该插件：\r\n\r\n1. **将插件复制到您的项目中**\r\n\r\n   - 复制 `MCPGameProject/Plugins/UnrealMCP` 到项目的插件文件夹\r\n\r\n1. **启用插件**\r\n\r\n   - 编辑>插件\r\n   - 在编辑器类别中查找“UnrealMCP”\r\n   - 启用插件\r\n   - 出现提示时重新启动编辑器\r\n\r\n1. **构建插件**\r\n\r\n   - 右键单击您的.uproject文件\r\n   - 生成Visual Studio项目文件\r\n   - 开放式解决方案（\\`.sln）\r\n   - 使用您的目标平台和输出设置进行构建\r\n\r\n### Python服务器设置\r\n\r\n看 [Python/README.md](Python/README.md) 详细的Python设置说明，包括：\r\n\r\n- 设置Python环境\r\n- 运行MCP服务器\r\n- 使用直接或基于服务器的连接\r\n\r\n### 配置MCP客户端\r\n\r\n基于mcp客户端，使用以下JSON进行mcp配置。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"unrealMCP\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"<path/to/the/folder/PYTHON>\",\r\n        \"run\",\r\n        \"unreal_mcp_server.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n一个例子可以在 `mcp.json`\r\n\r\n### MCP配置位置\r\n\r\n根据您使用的MCP客户端，配置文件的位置会有所不同：\r\n\r\n|MCP客户端|配置文件位置|注释|\r\n|------------|------------------------------|-------|\r\n|克劳德桌面| `~/.config/claude-desktop/mcp.json` |在Windows上： `%USERPROFILE%\\.config\\claude-desktop\\mcp.json` |\r\n|光标| `.cursor/mcp.json` |位于项目根目录中|\r\n|风帆冲浪| `~/.config/windsurf/mcp.json` |在Windows上： `%USERPROFILE%\\.config\\windsurf\\mcp.json` |\r\n\r\n每个客户端都使用与上例所示相同的JSON格式。\r\n只需将配置放置在MCP客户端的适当位置即可。\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 问题\r\n\r\n如有疑问，您可以在X/Twitter上联系我： [@崇祯树](https://www.x.com/chongdashu)\r\n",
+ "config": {
+  "unrealmcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "<path/to/the/folder/PYTHON>",
+    "run",
+    "unreal_mcp_server.py"
+   ],
+   "env": {}
+  }
+ }
+}

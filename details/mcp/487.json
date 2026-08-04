@@ -1,0 +1,23 @@
+{
+ "id": "487",
+ "kind": "mcp",
+ "name": "tebex",
+ "fingerprint_md5": "35f6072fba67d84487bb6788761d7af7",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp服务器tebex\r\n\r\nMCP（模型上下文协议）服务器，用于管理您的 [特贝克斯](https://tebex.io) 游戏服务器通过克劳德等人工智能助手进行存储。\r\n\r\n通过提供20个工具，涵盖商店信息、付款、优惠券、销售、禁令、礼品卡、玩家和套餐 [Tebex插件API](https://docs.tebex.io/plugin/).\r\n\r\n## 设置\r\n\r\n### 1.获取您的Tebex密钥\r\n\r\n首选 [Tebex服务器设置](https://server.tebex.io/settings/servers) 并复制您的 **密钥**.\r\n\r\n### 2.配置克劳德桌面\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tebex\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-server-tebex\"],\r\n      \"env\": {\r\n        \"TEBEX_SECRET\": \"your-tebex-secret-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.配置克劳德代码\r\n\r\n```bash\r\nclaude mcp add tebex -- npx mcp-server-tebex\r\n```\r\n\r\n设置环境变量：\r\n\r\n```bash\r\nexport TEBEX_SECRET=\"your-tebex-secret-key\"\r\n```\r\n\r\n## 可用工具\r\n\r\n### 商店\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get-store-info` |获取店铺名称、域名、货币、游戏类型|\r\n\r\n### 支付\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list-payments` |列出最近的付款（可选限额）|\r\n| `get-payment` |按交易ID获取付款详细信息|\r\n| `create-manual-payment` |为用户创建手动付款|\r\n| `update-payment` |更新付款状态或用户名|\r\n| `add-payment-note` |在付款中添加备注|\r\n\r\n### 优惠券\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list-coupons` |列出所有优惠券|\r\n| `get-coupon` |通过ID获取优惠券详细信息|\r\n| `create-coupon` |使用折扣设置创建新优惠券|\r\n| `delete-coupon` |删除优惠券|\r\n\r\n### 销售\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list-sales` |列出当前销售/折扣|\r\n\r\n### 禁令\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list-bans` |列出所有被禁止的用户|\r\n| `create-ban` |禁止用户（可选择通过IP）|\r\n\r\n### 礼品卡\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list-gift-cards` |列出所有礼品卡|\r\n| `get-gift-card` |获取礼品卡详细信息|\r\n| `create-gift-card` |创建新礼品卡|\r\n| `topup-gift-card` |将余额添加到礼品卡|\r\n| `void-gift-card` |作废/取消礼品卡|\r\n\r\n### 玩家\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get-player-packages` |获取玩家的活动套餐|\r\n\r\n### 包裹\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list-packages` |列出所有商店套餐|\r\n\r\n## 示例用法\r\n\r\n连接后，您可以问Claude以下问题：\r\n\r\n- “显示我的店铺信息”\r\n- “列出最近10笔付款”\r\n- “为所有套餐创建20%折扣优惠码SUMMER20”\r\n- “禁止用户作弊123的原因：退款欺诈”\r\n- “创建一张2025年12月到期的50美元礼品卡”\r\n- “球员史蒂夫有什么包？”\r\n\r\n## API费率限制\r\n\r\nTebex插件API允许 **每5分钟500个请求**.\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/talhahasim/mcp-server-tebex.git\r\ncd mcp-server-tebex\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "tebex": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-server-tebex"
+   ],
+   "env": {
+    "TEBEX_SECRET": "your-tebex-secret-key"
+   }
+  }
+ }
+}

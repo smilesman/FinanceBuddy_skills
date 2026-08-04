@@ -1,0 +1,24 @@
+{
+ "id": "1931",
+ "kind": "mcp",
+ "name": "fortnox",
+ "fingerprint_md5": "5ba8c525ff678fd481e0a4bf5cf9e317",
+ "download_count": 0,
+ "category": "商业工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Fortnox MCP服务器\r\n\r\n将AI代理连接到 **Fortnox** --瑞典最大的云计算平台（612000+客户）。\r\n\r\n通过模型上下文协议管理发票、客户、供应商、会计条目、订单等。\r\n\r\n## 工具（20）\r\n\r\n|类别|工具|描述|\r\n|----------|-------|-------------|\r\n| **发票** | `list_invoices`, `get_invoice`, `create_invoice`, `send_invoice`, `get_invoice_payments` |创建、发送和跟踪发票|\r\n| **客户** | `list_customers`, `get_customer`, `create_customer` |管理您的客户数据库|\r\n| **供应商** | `list_supplier_invoices`, `get_supplier`, `create_supplier_invoice` |跟踪账单和费用|\r\n| **会计** | `list_vouchers`, `create_voucher`, `get_accounts`, `get_financial_year` |日记账分录和会计科目表|\r\n| **报告** | `get_company_info`, `list_projects`, `list_cost_centers` |公司信息和成本跟踪|\r\n| **订单** | `list_orders`, `create_offer` |销售订单和报价|\r\n\r\n## 快速开始\r\n\r\n### 1.获取Fortnox访问令牌\r\n\r\n注册成为开发人员 [developer.fortnox.se](https://www.fortnox.se/developer) 并创建一个集成来获取您的OAuth2凭据。\r\n\r\n### 2.在Claude Desktop中配置\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fortnox\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"fortnox-mcp-server\"],\r\n      \"env\": {\r\n        \"FORTNOX_ACCESS_TOKEN\": \"your-access-token-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.开始使用\r\n\r\n问克劳德这样的问题：\r\n\r\n- “列出所有未付发票”\r\n- “以1500瑞典克朗/小时的速度为客户1001开具发票，咨询时间为10小时”\r\n- “显示会计科目表”\r\n- “哪些供应商发票逾期了？”\r\n- “为Acme AB创建报价”\r\n\r\n## 从源代码安装\r\n\r\n```bash\r\ngit clone https://github.com/viggojohansson/fortnox-mcp-server.git\r\ncd fortnox-mcp-server\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n然后配置Claude Desktop以指向本地版本：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fortnox\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/fortnox-mcp-server/dist/index.js\"],\r\n      \"env\": {\r\n        \"FORTNOX_ACCESS_TOKEN\": \"your-access-token-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `FORTNOX_ACCESS_TOKEN` |是|Fortnox的OAuth2访问令牌|\r\n\r\n## API 参考\r\n\r\n此服务器包装 [Fortnox REST API v3](https://api.fortnox.se/apidocs).速率限制：每5秒25个请求。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "fortnox": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "fortnox-mcp-server"
+   ],
+   "env": {
+    "FORTNOX_ACCESS_TOKEN": "your-access-token-here"
+   }
+  }
+ }
+}

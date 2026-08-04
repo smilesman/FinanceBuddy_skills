@@ -1,0 +1,23 @@
+{
+ "id": "667",
+ "kind": "mcp",
+ "name": "gemini-imagen",
+ "fingerprint_md5": "84ff4357615563a3c0b936553e90ac75",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# 双子座图像服务器\r\n\r\n一个基于TypeScript的MCP服务器，使用Google的Gemini Imagen API提供图像生成功能。此服务器允许您通过模型上下文协议生成具有可自定义参数的高质量图像。\r\n\r\n## 特性\r\n\r\n### 工具\r\n\r\n- `generate_image` -使用Google Gemini Imagen生成图像\r\n  - **提示** （必填）：图像生成的文本描述\r\n  - **图片数量** （可选）：要生成的图像数量（1-4，默认值：1）\r\n  - **宽高比** （可选）：图像宽高比（默认值：“9:16”）\r\n  - **sampleImageSize** （可选）：图像分辨率（默认值：“2K”）\r\n  - **人员生成** （可选）：控制人员生成（默认值：“allow_maadult”）\r\n\r\n## 参数选项\r\n\r\n### 宽高比\r\n\r\n控制生成图像的纵横比：\r\n\r\n- `\"1:1\"` -方形格式\r\n- `\"3:4\"` -肖像格式\r\n- `\"4:3\"` -景观格式\r\n- `\"9:16\"` -垂直格式（默认）\r\n- `\"16:9\"` -水平格式\r\n\r\n### sampleImageSize\r\n\r\n控制生成图像的分辨率（仅限标准和Ultra型号）：\r\n\r\n- `\"1K\"` -分辨率较低\r\n- `\"2K\"` -更高的分辨率（默认）\r\n\r\n### 人员生成\r\n\r\n控制模型是否可以生成人物图像：\r\n\r\n- `\"dont_allow\"` -街区一代人\r\n- `\"allow_adult\"` -仅生成成年人（默认）\r\n- `\"allow_all\"` -培养成人和儿童\r\n\r\n## 使用示例\r\n\r\n### 基本用法（默认设置）\r\n\r\n```json\r\n{\r\n  \"prompt\": \"A beautiful sunset over mountains\"\r\n}\r\n```\r\n\r\n这将使用默认设置：\r\n\r\n- 纵横比：“9:16”\r\n- sampleImageSize:“2K”\r\n- personGeneration：“允许成人”\r\n\r\n### 自定义参数\r\n\r\n```json\r\n{\r\n  \"prompt\": \"A cute cat playing with a ball\",\r\n  \"aspectRatio\": \"1:1\",\r\n  \"sampleImageSize\": \"1K\",\r\n  \"personGeneration\": \"dont_allow\",\r\n  \"numberOfImages\": 2\r\n}\r\n```\r\n\r\n### 肖像摄影\r\n\r\n```json\r\n{\r\n  \"prompt\": \"Professional headshot of a business person\",\r\n  \"aspectRatio\": \"3:4\",\r\n  \"sampleImageSize\": \"2K\",\r\n  \"personGeneration\": \"allow_adult\"\r\n}\r\n```\r\n\r\n### 风光摄影\r\n\r\n```json\r\n{\r\n  \"prompt\": \"Panoramic view of a mountain range at dawn\",\r\n  \"aspectRatio\": \"16:9\",\r\n  \"sampleImageSize\": \"2K\"\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n对于自动重建的开发：\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n## 安装\r\n\r\n### 方法1：使用npx（推荐）\r\n\r\n将服务器配置添加到MCP客户端：\r\n\r\n在MacOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gemini-imagen\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"/path/to/gemini-imagen-server/build/index.js\"],\r\n      \"env\": {\r\n        \"GEMINI_API_KEY\": \"YOUR_GEMINI_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 方法2：直接使用节点\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gemini-imagen\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/gemini-imagen-server/build/index.js\"],\r\n      \"env\": {\r\n        \"GEMINI_API_KEY\": \"YOUR_GEMINI_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 配置\r\n\r\n### API密钥设置\r\n\r\n这 `GEMINI_API_KEY` 可以通过两种方式提供：\r\n\r\n1. **MCP配置中的环境变量** （推荐）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gemini-imagen\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"/path/to/gemini-imagen-server/build/index.js\"],\r\n      \"env\": {\r\n        \"GEMINI_API_KEY\": \"YOUR_GEMINI_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n2. **系统环境变量**:\r\n\r\n```bash\r\nexport GEMINI_API_KEY=\"YOUR_GEMINI_API_KEY\"\r\n```\r\n\r\n### 获取Gemini API密钥\r\n\r\n1. 首选 [谷歌AI工作室](https://aistudio.google.com/)\r\n1. 使用您的Google帐户登录\r\n1. 点击“获取API密钥”\r\n1. 创建新的API密钥\r\n1. 复制密钥并在配置中使用\r\n\r\n## 输出\r\n\r\n生成的图像保存到 `/tmp/` 带有时间戳的文件名：\r\n\r\n- 格式： `generated_image_[timestamp]_[index].png`\r\n- 例子： `generated_image_1758733788860_0.png`\r\n\r\n## 调试\r\n\r\n由于MCP服务器通过stdio进行通信，调试可能具有挑战性。我们建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector):\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n检查器将提供一个URL，用于访问浏览器中的调试工具。\r\n\r\n## 错误处理\r\n\r\n服务器包括全面的错误处理：\r\n\r\n- 无效参数将被验证并拒绝\r\n- 发现API错误并报告有用的消息\r\n- 检测到丢失的API密钥并清楚地报告\r\n- 网络问题得到妥善处理\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。\r\n",
+ "config": {
+  "gemini-imagen": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "/path/to/gemini-imagen-server/build/index.js"
+   ],
+   "env": {
+    "GEMINI_API_KEY": "YOUR_GEMINI_API_KEY"
+   }
+  }
+ }
+}

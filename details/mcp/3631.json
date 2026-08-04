@@ -1,0 +1,23 @@
+{
+ "id": "3631",
+ "kind": "mcp",
+ "name": "serper-2",
+ "fingerprint_md5": "8ff8848b0ffe7ed6d9ddabb609ef27a0",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Serper MCP服务器\r\n\r\n\r\n一个模型上下文协议服务器，提供 **通过Serper进行谷歌搜索**此服务器使LLM能够从Google获取搜索结果信息。\r\n\r\n## 可用工具\r\n\r\n- `google_search` -设置 [所有参数](src/serper_mcp_server/schemas.py#L15)\r\n- `google_search_images` -设置 [所有参数](src/serper_mcp_server/schemas.py#L15)\r\n- `google_search_videos` -设置 [所有参数](src/serper_mcp_server/schemas.py#L15)\r\n- `google_search_places` -设置 [所有参数](src/serper_mcp_server/schemas.py#L20)\r\n- `google_search_maps` -设置 [所有参数](src/serper_mcp_server/schemas.py#L24)\r\n- `google_search_reviews` -设置 [所有参数](src/serper_mcp_server/schemas.py#L34)\r\n- `google_search_news` -设置 [所有参数](src/serper_mcp_server/schemas.py#L15)\r\n- `google_search_shopping` -设置 [所有参数](src/serper_mcp_server/schemas.py#L45)\r\n- `google_search_lens` -设置 [所有参数](src/serper_mcp_server/schemas.py#L50)\r\n- `google_search_scholar` -设置 [所有参数](src/serper_mcp_server/schemas.py#L20)\r\n- `google_search_patents` -设置 [所有参数](src/serper_mcp_server/schemas.py#L56)\r\n- `google_search_autocomplete` -设置 [所有参数](src/serper_mcp_server/schemas.py#L20)\r\n- `webpage_scrape` -设置 [所有参数](src/serper_mcp_server/schemas.py#L62)\r\n\r\n## 用法\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面的Serper MCP服务器 [史密瑟里](https://smithery.ai/server/@garylab/serper-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @garylab/serper-mcp-server --client claude\r\n```\r\n\r\n### 使用 `uv` （推荐）\r\n\r\n1. 确保您已安装 [`uv`](https://docs.astral.sh/uv/) 在您的操作系统上。\r\n\r\n1. 在MCP客户端代码配置中或 **克劳德** 设置（文件 `claude_desktop_config.json`)添加 `serper` mcp服务器：\r\n\r\n   ```json\r\n   {\r\n       \"mcpServers\": {\r\n           \"serper\": {\r\n               \"command\": \"uvx\",\r\n               \"args\": [\"serper-mcp-server\"],\r\n               \"env\": {\r\n                   \"SERPER_API_KEY\": \"<Your Serper API key>\"\r\n               }\r\n           }\r\n       }\r\n   }\r\n   ```\r\n\r\n   `uv` 将使用自动下载mcp服务器 `uvx` 从 [pypi.org](https://pypi.org/project/serper-mcp-server/) 并向您的MCP客户申请。\r\n\r\n### 使用 `pip` 对于项目\r\n\r\n1. 添加 `serper-mcp-server` 到您的MCP客户端代码 `requirements.txt` 文件。\r\n\r\n   ```txt\r\n   serper-mcp-server\r\n   ```\r\n\r\n1. 安装依赖项。\r\n\r\n   ```shell\r\n   pip install -r requirements.txt\r\n   ```\r\n\r\n1. 为您的客户端添加配置：\r\n\r\n   ```json\r\n   {\r\n       \"mcpServers\": {\r\n           \"serper\": {\r\n               \"command\": \"python3\",\r\n               \"args\": [\"-m\", \"serper_mcp_server\"],\r\n               \"env\": {\r\n                   \"SERPER_API_KEY\": \"<Your Serper API key>\"\r\n               }\r\n           }\r\n       }\r\n   }\r\n   ```\r\n\r\n### 使用 `pip` 供全球使用\r\n\r\n1. 确保 `pip` 或 `pip3` 在你的操作系统中。\r\n\r\n   ```bash\r\n   pip install serper-mcp-server\r\n   # or\r\n   pip3 install serper-mcp-server\r\n   ```\r\n\r\n1. MCP客户端代码配置或 **克劳德** 设置，添加 `serper` mcp服务器：\r\n\r\n   ```json\r\n   {\r\n       \"mcpServers\": {\r\n           \"serper\": {\r\n               \"command\": \"python3\",\r\n               \"args\": [\"serper-mcp-server\"],\r\n               \"env\": {\r\n                   \"SERPER_API_KEY\": \"<Your Serper API key>\"\r\n               }\r\n           }\r\n       }\r\n   }\r\n   ```\r\n\r\n## 调试\r\n\r\n您可以使用MCP检查器调试服务器。对于 `uvx` 安装：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uvx serper-mcp-server\r\n```\r\n\r\n或者，如果您已将软件包安装在特定目录中或正在其上开发：\r\n\r\n```bash\r\ngit clone https://github.com/garylab/serper-mcp-server.git\r\ncd serper-mcp-server\r\nnpx @modelcontextprotocol/inspector uv run serper-mcp-server -e SERPER_API_KEY=<the key>\r\n```\r\n\r\n## 许可证\r\n\r\nserper-mcp服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "serper": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "serper-mcp-server"
+   ],
+   "env": {
+    "SERPER_API_KEY": "<Your Serper API key>"
+   }
+  }
+ }
+}

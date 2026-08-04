@@ -1,0 +1,21 @@
+{
+ "id": "1631",
+ "kind": "mcp",
+ "name": "modal-toolbox",
+ "fingerprint_md5": "7ebe6b59f7318867ff545135c4459a2b",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 模态MCP工具箱🛠️\r\n\r\n[](https://smithery.ai/server/@philipp-eisen/modal-mcp-toolbox)\r\n\r\n在Modal上运行的模型上下文协议（MCP）工具的集合。\r\n这使您可以在以下工具中扩展LLM的功能： [鹅](https://block.github.io/goose/) 或 [克劳德桌面应用程序](https://claude.ai/download).\r\n\r\n<a href=\"https://glama.ai/mcp/servers/ai78w0p5mc\"></a>\r\n\r\n## 工具\r\n\r\n- `run_python_code_in_sandbox`：让我们在沙盒环境中运行python代码。\r\n- `generate_flux_image`：使用FLUX模型生成图像。\r\n\r\n## 演示\r\n\r\n### 通量图像生成\r\n\r\n\r\n### Python代码执行\r\n\r\n\r\n## 先决条件\r\n\r\n- A. [模态账户](https://modal.com/signup) 以及配置的模态CLI。\r\n- [紫外线的](https://github.com/astral-sh/uv?tab=readme-ov-file#installation)\r\n- 支持MCP的客户端。例如 [克劳德桌面应用程序](https://claude.ai/download) 或 [鹅](https://block.github.io/goose/)\r\n\r\n这是针对您的模态帐户运行的，因此您需要拥有一个模态帐户并登录。\r\n\r\n## 安装\r\n\r\n安装取决于使用MCP的客户端。这是给克劳德和鹅的说明。\r\n\r\n### 克劳德\r\n\r\n开始 `Settings > Developer` 在克劳德桌面应用程序中。然后单击编辑配置。\r\n\r\n\r\n添加mcp服务器的配置。我的配置如下：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"modal-toolbox\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"modal-mcp-toolbox\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 鹅\r\n\r\n首选 `Settings` 然后单击添加。\r\n\r\n\r\n然后添加一个扩展，如下图所示。\r\n重要的是将命令设置为：\r\n\r\n```\r\nuvx modal-mcp-toolbox\r\n```\r\n\r\n其余的你可以随意填写。\r\n\r\n\r\n### 通过Smithery安装（目前不工作）\r\n\r\n通过以下方式自动安装Claude Desktop的Modal MCP工具箱 [史密瑟里](https://smithery.ai/server/@philipp-eisen/modal-mcp-toolbox):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @philipp-eisen/modal-mcp-toolbox --client claude\r\n```\r\n",
+ "config": {
+  "modal-toolbox": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "modal-mcp-toolbox"
+   ],
+   "env": {}
+  }
+ }
+}

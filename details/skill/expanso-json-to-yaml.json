@@ -1,0 +1,12 @@
+{
+ "id": "expanso-json-to-yaml",
+ "kind": "skill",
+ "name": "expanso-json-to-yaml",
+ "fingerprint_md5": "bf9b3b565368306b941ffaf57b166449",
+ "download_count": 0,
+ "category": "CD",
+ "tags": "",
+ "version": "",
+ "readme": "# json-to-yaml\r\n\r\n将 JSON 转换为 YAML 格式\r\n\r\n## 要求\r\n\r\n- 已安装 Expanso Edge（PATH 中有 `expanso-edge` binary）\r\n- 通过以下方式安装：`clawhub install expanso-edge`\r\n\r\n## 用法\r\n\r\n### CLI Pipeline\r\n```bash\r\n# 独立运行\r\necho '<input>' | expanso-edge run pipeline-cli.yaml\r\n```\r\n\r\n### MCP Pipeline\r\n```bash\r\n# 作为 MCP server 启动\r\nexpanso-edge run pipeline-mcp.yaml\r\n```\r\n\r\n### 部署到 Expanso Cloud\r\n```bash\r\nexpanso-cli job deploy https://skills.expanso.io/json-to-yaml/pipeline-cli.yaml\r\n```\r\n\r\n## 文件\r\n\r\n| File | Purpose |\r\n|------|---------|\r\n| `skill.yaml` | Skill metadata（inputs、outputs、credentials） |\r\n| `pipeline-cli.yaml` | 独立 CLI pipeline |\r\n| `pipeline-mcp.yaml` | MCP server pipeline |",
+ "config": {}
+}

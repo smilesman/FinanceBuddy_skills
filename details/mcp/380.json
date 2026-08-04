@@ -1,0 +1,23 @@
+{
+ "id": "380",
+ "kind": "mcp",
+ "name": "pokedex",
+ "fingerprint_md5": "214d4b3e49af452c15a14003d1ed3352",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 🔴 Pokédex MCP服务器+聊天机器人\r\n\r\n作为MCP服务器的实时Pokédex——查找Pokémon、注册训练师和管理收藏。配备多提供商AI聊天机器人前端。\r\n\r\n______________________________________________________________________\r\n\r\n## 里面有什么\r\n\r\n|文件|目的|\r\n|---|---|\r\n| `server.py` |MCP服务器（FastMCP，5个工具）|\r\n| `backend.py` |MCP客户端+LLM路由（OpenAI、Groq、Gemini、Anthropic）|\r\n| `app.py` |Streamlit聊天机器人前端|\r\n| `test_server.py` |服务器逻辑单元测试|\r\n| `test_stdio.py` |协议级MCP标准测试|\r\n| `usage_example.py` |端到端使用演示（无需LLM）|\r\n\r\n______________________________________________________________________\r\n\r\n## MCP工具\r\n\r\n|工具|它做什么|\r\n|---|---|\r\n| `lookup_pokemon` |查找任何口袋妖怪——类型、统计数据、描述（来自PokeAPI直播）|\r\n| `register_trainer` |按姓名注册新培训师|\r\n| `get_trainer` |查看教练的个人资料和口袋妖怪系列|\r\n| `add_pokemon` |将口袋妖怪添加到训练师收藏中|\r\n| `remove_pokemon` |从训练师收藏中删除口袋妖怪|\r\n\r\n______________________________________________________________________\r\n\r\n## 聊天机器人设置\r\n\r\n### 1.安装依赖项\r\n\r\n```bash\r\npip install streamlit fastmcp requests langchain langchain-core langgraph\r\n\r\n# Install the SDK for your chosen provider:\r\npip install langchain-openai          # OpenAI\r\npip install langchain-groq            # Groq\r\npip install langchain-anthropic       # Anthropic\r\npip install langchain-google-genai    # Google Gemini\r\n```\r\n\r\n### 2.运行聊天机器人\r\n\r\n```bash\r\ncd app\r\nstreamlit run frontend.py\r\n```\r\n\r\n### 3.在侧边栏中\r\n\r\n- 选择您的 **LLM提供者** （OpenAI/Groq/Google Gemini/Autopic）\r\n- 选择一个 **模型**\r\n- 输入你的 **API密钥** （仅用于会话，从不存储）\r\n- 点击 **启动MCP服务器**\r\n- 开始聊天！\r\n\r\n______________________________________________________________________\r\n\r\n## 为什么 `uvx` 对于MCP客户？\r\n\r\n`uvx` 是的一部分 [`uv`](https://github.com/astral-sh/uv) Python工具链。它允许MCP客户端（Claude Desktop、Cursor等）运行您的服务器 **直接从GitHub下载，无需任何手动安装步骤**:\r\n\r\n```\r\nuvx --from git+https://github.com/MeetRVyas/pokedex-mcp-server.git pokedex-mcp-server\r\n```\r\n\r\n这个：\r\n\r\n- 自动从GitHub中提取代码\r\n- 创建隔离的虚拟环境\r\n- 运行 `pokedex-mcp-server` 入口点定义于 `pyproject.toml`\r\n- 在任何机器上都可以相同地工作——不需要路径配置\r\n\r\n### 安装 `uv` 第一\r\n\r\n```bash\r\n# macOS / Linux\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n\r\n# Windows\r\npowershell -c \"irm https://astral.sh/uv/install.ps1 | iex\"\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## Claude桌面配置\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\\\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pokedex\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--from\",\r\n        \"git+https://github.com/MeetRVyas/pokedex-mcp-server.git\",\r\n        \"pokedex-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动Claude Desktop——工具将自动显示。\r\n\r\n______________________________________________________________________\r\n\r\n## 本地开发\r\n\r\n```bash\r\n# Run server directly\r\npython server.py\r\n\r\n# Run tests\r\npython test_server.py\r\npython test_stdio.py\r\n\r\n# Run usage demo (hits PokeAPI live)\r\npython usage_example.py\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 示例提示\r\n\r\n> “将我注册为名为Ash的教练”\\\r\n> “抬头看看Gengar”\\\r\n> “将皮卡丘添加到阿什的收藏中”\\\r\n> “给我看看Ash的Pokédex”\\\r\n> “从阿什的收藏中删除皮卡丘”\\\r\n> “Charizard的基本数据是什么？”\r\n",
+ "config": {
+  "pokedex": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/MeetRVyas/pokedex-mcp-server.git",
+    "pokedex-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

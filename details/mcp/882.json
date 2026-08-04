@@ -1,0 +1,21 @@
+{
+ "id": "882",
+ "kind": "mcp",
+ "name": "telegraph-py",
+ "fingerprint_md5": "e911a7335ee0ef1a7005b01d0a8c38a9",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 电报MCP服务器（Python）\r\n\r\n一种模型上下文协议（MCP）服务器，提供与电报API（Telegraph.ph）交互的工具。此Python实现允许Claude和其他LLM客户端创建、管理和导出Telegraph页面。\r\n\r\n## 特性\r\n\r\n- **账户管理**：创建帐户、更新信息、管理访问令牌\r\n- **页面操作**：创建、编辑、检索和列出页面\r\n- **模板系统**：使用预构建的模板创建页面\r\n- **导出和备份**：将页面导出到Markdown/HTML，备份整个帐户\r\n- **MCP资源**：访问电报页面作为MCP资源\r\n- **MCP提示**：常见任务的指导工作流程\r\n\r\n## 安装\r\n\r\n### 使用uvx（推荐）\r\n\r\n```bash\r\nuvx telegraph-mcp-py\r\n```\r\n\r\n### 使用pip\r\n\r\n```bash\r\npip install telegraph-mcp-py\r\n```\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone https://github.com/NehoraiHadad/telegraph-mcp\r\ncd telegraph-mcp/telegraph-mcp-py\r\npip install -e .\r\n```\r\n\r\n## 用法\r\n\r\n### 使用克劳德代码\r\n\r\n```bash\r\nclaude mcp add telegraph-py -- uvx telegraph-mcp-py\r\n```\r\n\r\n### 使用克劳德桌面\r\n\r\n添加到您的Claude Desktop配置(`~/.config/claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"telegraph-py\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"telegraph-mcp-py\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者，如果通过pip安装：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"telegraph-py\": {\r\n      \"command\": \"telegraph-mcp-py\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 账户管理\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `telegraph_create_account` |创建新的Telegraph帐户|\r\n| `telegraph_edit_account_info` |更新帐户信息|\r\n| `telegraph_get_account_info` |获取帐户详细信息|\r\n| `telegraph_revoke_access_token` |撤销并重新生成访问令牌|\r\n\r\n### 页面管理\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `telegraph_create_page` |新建页面（支持HTML/Markdown）|\r\n| `telegraph_edit_page` |编辑现有页面|\r\n| `telegraph_get_page` |按路径获取页面|\r\n| `telegraph_get_page_list` |列出帐户的所有页面|\r\n| `telegraph_get_views` |获取页面浏览统计信息|\r\n\r\n### 模板\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `telegraph_list_templates` |列出可用模板|\r\n| `telegraph_create_from_template` |从模板创建页面|\r\n\r\n### 导出和备份\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `telegraph_export_page` |将页面导出为Markdown或HTML格式|\r\n| `telegraph_backup_account` |备份所有帐户页面|\r\n\r\n## 资源\r\n\r\n直接作为MCP资源访问Telegraph页面：\r\n\r\n```\r\ntelegraph://page/{path}\r\n```\r\n\r\n例子： `telegraph://page/Sample-Page-12-15`\r\n\r\n## 提示\r\n\r\n指导工作流程的预定义提示：\r\n\r\n- `create_blog_post` -创建博客文章指南\r\n- `create_documentation` -文档创建指南\r\n- `summarize_page` -总结现有页面\r\n\r\n## 例子\r\n\r\n### 使用Markdown创建页面\r\n\r\n```python\r\n# Via MCP tool call\r\ntelegraph_create_page(\r\n    access_token=\"your-token\",\r\n    title=\"My First Post\",\r\n    content=\"# Hello World\\n\\nThis is my first Telegraph page!\",\r\n    format=\"markdown\"\r\n)\r\n```\r\n\r\n### 使用模板\r\n\r\n```python\r\ntelegraph_create_from_template(\r\n    access_token=\"your-token\",\r\n    template=\"blog_post\",\r\n    title=\"My Blog Post\",\r\n    data={\r\n        \"intro\": \"Welcome to my blog!\",\r\n        \"sections\": [\r\n            {\"heading\": \"Section 1\", \"content\": \"First section content\"},\r\n            {\"heading\": \"Section 2\", \"content\": \"Second section content\"}\r\n        ],\r\n        \"conclusion\": \"Thanks for reading!\"\r\n    }\r\n)\r\n```\r\n\r\n### 导出页面\r\n\r\n```python\r\ntelegraph_export_page(\r\n    path=\"Sample-Page-12-15\",\r\n    format=\"markdown\"\r\n)\r\n```\r\n\r\n## 发展\r\n\r\n### 设置\r\n\r\n```bash\r\ncd telegraph-mcp-py\r\npip install -e \".[dev]\"\r\n```\r\n\r\n### MCP检验员测试\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uvx telegraph-mcp-py\r\n```\r\n\r\n## 相关套餐\r\n\r\n- [电报mcp](https://www.npmjs.com/package/telegraph-mcp) -TypeScript MCP服务器\r\n- [电报api py](https://pypi.org/project/telegraph-api-py/) -Python电报客户端\r\n- [电报api客户端](https://www.npmjs.com/package/telegraph-api-client) -TypeScript电报客户端\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 了解详情。\r\n",
+ "config": {
+  "telegraph-py": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "telegraph-mcp-py"
+   ],
+   "env": {}
+  }
+ }
+}

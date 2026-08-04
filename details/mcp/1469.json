@@ -1,0 +1,21 @@
+{
+ "id": "1469",
+ "kind": "mcp",
+ "name": "gitingestmcp",
+ "fingerprint_md5": "8cf56ef030e6238121bd610ef1b98014",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Gitinth MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器实现，与 [吉廷斯特](https://github.com/cyclotruc/gitingest) 用于将任何Git存储库转换为其代码库的简单文本摘要。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@narumiruna/gitingest-mcp\">\r\n  \r\n</a>\r\n\r\n## 特性\r\n\r\n- 通过模型上下文协议轻松与AI助手集成\r\n- Git存储库分析和摄取功能\r\n- 支持按大小、模式和分支过滤文件\r\n- 返回全面的存储库信息，包括摘要、文件结构和内容\r\n\r\n## 用法\r\n\r\n### 配置选项\r\n\r\n将以下配置添加到AI助手的设置中，以启用gitingest mcp作为mcp服务器：\r\n\r\n#### PyPI安装\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gitingestmcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"gitingestmcp@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### GitHub安装\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gitingestmcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--from\",\r\n        \"git+https://github.com/narumiruna/gitingest-mcp\",\r\n        \"gitingestmcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 本地安装\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gitingestmcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--directory\",\r\n        \"/home/<user>/workspace/gitingest-mcp\",\r\n        \"gitingestmcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## API\r\n\r\n服务器提供以下工具：\r\n\r\n### `ingest_git`\r\n\r\n分析Git存储库并以结构化格式返回其内容。\r\n\r\n#### 参数：\r\n\r\n- `source`：Git存储库的URL或本地目录路径\r\n- `max_file_size` （可选）：允许的最大文件大小（以字节为单位）（默认值：10MB）\r\n- `include_patterns` （可选）：指定要包含的文件的模式或模式集（例如，“\\*.md，src/”）\r\n- `exclude_patterns` （可选）：指定要排除的文件的模式或模式集\r\n- `branch` （可选）：要克隆和分析的分支（默认：“main”）\r\n\r\n#### 退货：\r\n\r\n包含以下内容的字符串：\r\n\r\n1. 存储库摘要\r\n1. 文件的树状结构\r\n1. 存储库文件的内容\r\n\r\n## 资源\r\n\r\n- gitingest网站：https://gitingest.com/\r\n- gitingest存储库：https://github.com/cyclotruc/gitingest\r\n\r\n## 许可证\r\n\r\n请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "gitingestmcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "gitingestmcp@latest"
+   ],
+   "env": {}
+  }
+ }
+}

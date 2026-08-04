@@ -1,0 +1,26 @@
+{
+ "id": "2268",
+ "kind": "mcp",
+ "name": "nearby-search",
+ "fingerprint_md5": "165ae0a18e46714d781037287bb49038",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# NearbySearch MCP服务器\r\n\r\n一个用于附近地点搜索的MCP服务器，具有基于IP的位置检测功能。\r\n\r\n## 特性\r\n\r\n- **基于IP的位置检测**：使用ipapi.co确定您当前的位置\r\n- **Google Places集成**：根据关键字和可选类型过滤器搜索附近的地方\r\n- **简单接口**：具有可自定义半径的单个刀具端点\r\n\r\n## 需求\r\n\r\n- Python 3.10+\r\n- 启用地点API的Google云平台API密钥\r\n- Internet连接\r\n\r\n## 安装\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/kukapay/nearby-search-mcp.git\r\ncd nearby-search-mcp\r\n```\r\n\r\n2. 安装依赖项：\r\n\r\n```bash\r\n# Using uv (recommended)\r\nuv add \"mcp[cli]\" httpx python-dotenv\r\n\r\n# Or using pip\r\npip install mcp httpx python-dotenv\r\n```\r\n\r\n3. 客户端配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"nearby-search\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"path/to/nearby-search-mcp\", \"run\", \"main.py\"],\r\n      \"env\": {\r\n        \"GOOGLE_API_KEY\": \"your google api key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n### 运行服务器\r\n\r\n- **发展模式** （与MCP检查员一起）：\r\n\r\n```bash\r\nmcp dev main.py\r\n```\r\n\r\n- **在Claude桌面中安装**:\r\n\r\n```bash\r\nmcp install main.py --name \"NearbySearch\"\r\n```\r\n\r\n- **直接执行**:\r\n\r\n```bash\r\npython main.py\r\n```\r\n\r\n### 可用端点\r\n\r\n**工具： `search_nearby`**\r\n\r\n- 搜索您当前位置附近的地点\r\n- 参数：\r\n  - `keyword` （str）：搜索什么（例如，“咖啡店”）\r\n  - `radius` （int，可选）：搜索半径，单位为米（默认值：1500）\r\n  - `type` （str，可选）：地点类型（例如“餐厅”、“咖啡馆”）\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "nearby-search": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "path/to/nearby-search-mcp",
+    "run",
+    "main.py"
+   ],
+   "env": {
+    "GOOGLE_API_KEY": "your google api key"
+   }
+  }
+ }
+}

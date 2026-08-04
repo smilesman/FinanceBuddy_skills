@@ -1,0 +1,26 @@
+{
+ "id": "2505",
+ "kind": "mcp",
+ "name": "documentation-finder",
+ "fingerprint_md5": "8a06c71005a7377bca7cb96cf641df3c",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 文档查找器MCP\r\n\r\nMCP（模型上下文协议）服务器，使用SerpAPI在网络上搜索包文档，并以干净、可读的格式返回内容。\r\n\r\n## 特性\r\n\r\n- 🔍 **搜索文档**：搜索有关任何软件包或库的文档\r\n- 📄 **获取内容**：提取并清理文档页面内容\r\n- 🚀 **组合搜索和提取**：搜索和检索热门结果的一步式工具\r\n- 📝 **Markdown输出**：以干净的markdown格式返回内容\r\n- 🎯 **智能内容提取**：自动识别主要内容区域\r\n\r\n## 特性\r\n\r\n### 工具（可执行操作）\r\n\r\n工具是执行操作的功能——搜索网络和获取文档内容。\r\n\r\n### 提示（可重用模板）\r\n\r\n提示是预构建的模板，指导LLM如何有效地将文档查找器用于常见任务。这些为学习、故障排除和比较软件包提供了结构化的工作流程。\r\n\r\n## 可用工具\r\n\r\n### 1. `search_documentation`\r\n\r\n使用谷歌搜索搜索有关软件包的文档。\r\n\r\n**参数：**\r\n\r\n- `package_name` （必填）：包/库的名称\r\n- `search_query` （可选）：其他搜索词（例如“安装”、“API参考”）\r\n- `num_results` （可选）：要返回的结果数（默认值：5，最大值：10）\r\n\r\n**例子：**\r\n\r\n```python\r\nsearch_documentation(\"fastapi\", \"authentication tutorial\", 5)\r\n```\r\n\r\n### 2. `fetch_documentation_content`\r\n\r\n从特定文档URL获取和提取内容。\r\n\r\n**参数：**\r\n\r\n- `url` （必填）：文档页面的URL\r\n- `max_length` （可选）：以字符为单位的最大内容长度\r\n\r\n**例子：**\r\n\r\n```python\r\nfetch_documentation_content(\"https://fastapi.tiangolo.com/tutorial/\", 50000)\r\n```\r\n\r\n### 3. `search_and_fetch_documentation`\r\n\r\n搜索并自动获取顶部结果的便利工具。\r\n\r\n**参数：**\r\n\r\n- `package_name` （必填）：包/库的名称\r\n- `search_query` （可选）：其他搜索词\r\n- `max_content_length` （可选）：最大内容长度（默认值：50000）\r\n\r\n**例子：**\r\n\r\n```python\r\nsearch_and_fetch_documentation(\"react\", \"hooks tutorial\")\r\n```\r\n\r\n## 可用提示\r\n\r\n### `get_documentation`\r\n\r\n一个灵活的提示模板，用于获取任何包的文档。\r\n\r\n**参数：**\r\n\r\n- `package_name` （必填）：包/库的名称\r\n- `query` （可选）：关于包的特定主题、功能或问题\r\n\r\n**示例：**\r\n\r\n```python\r\n# General documentation\r\nget_documentation(\"fastapi\")\r\n\r\n# Specific topic\r\nget_documentation(\"fastapi\", \"authentication\")\r\n\r\n# Specific function\r\nget_documentation(\"pandas\", \"DataFrame.merge\")\r\n\r\n# Troubleshooting\r\nget_documentation(\"requests\", \"SSL certificate errors\")\r\n```\r\n\r\n## 设置\r\n\r\n### 1.安装依赖项\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n或者使用pip：\r\n\r\n```bash\r\npip install -e .\r\n```\r\n\r\n### 2.获取SerpAPI密钥\r\n\r\n1. 注册一个免费帐户 [https://serpapi.com/](https://serpapi.com/)\r\n1. 从仪表板获取API密钥\r\n1. 将其设置为环境变量：\r\n\r\n```bash\r\nexport SERPAPI_KEY=\"your_api_key_here\"\r\n```\r\n\r\n或者创建一个 `.env` 文件：\r\n\r\n```\r\nSERPAPI_KEY=your_api_key_here\r\n\r\n# Optional: Custom User-Agent\r\nUSER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36\r\n```\r\n\r\n### 3.运行服务器\r\n\r\n```bash\r\npython main.py\r\n```\r\n\r\n或者使用紫外线：\r\n\r\n```bash\r\nuv run main.py\r\n```\r\n\r\n## 使用MCP客户端\r\n\r\n服务器运行后，您可以将其与任何兼容MCP的客户端（如Claude Desktop）一起使用。\r\n\r\n### Claude桌面配置示例\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n**选项1：基于命令（自动启动服务器）**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"documentation-finder\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/Users/krypton/PycharmProjects/Documentation-Finder-MCP\",\r\n        \"run\",\r\n        \"main.py\"\r\n      ],\r\n      \"env\": {\r\n        \"SERPAPI_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**选项2：直接HTTP连接**\r\n\r\n首先，手动启动服务器：\r\n\r\n```bash\r\nuv run main.py\r\n```\r\n\r\n然后配置Claude Desktop以连接到正在运行的服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"documentation-finder\": {\r\n      \"url\": \"http://localhost:8000/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 示例用法\r\n\r\n连接到MCP客户端后，您可以：\r\n\r\n### 直接使用工具\r\n\r\n- “搜索React钩子文档”\r\n- “查找最新的FastAPI身份验证文档”\r\n- “从以下位置获取文档https://docs.python.org/3/library/asyncio.html\"\r\n\r\n### 使用提示\r\n\r\n- 使用 `get_documentation` 提示了解任何软件包\r\n- 添加特定查询以关注特定主题、功能或问题\r\n- 提示引导AI有效地使用文档工具\r\n\r\n## 运作原理\r\n\r\n1. **搜索**：使用SerpAPI（谷歌搜索）查找相关文档页面\r\n1. **获取**：从文档URL下载HTML内容\r\n1. **提取**：使用BeautifulSoup识别和提取主要内容区域\r\n1. **清洁**：删除导航、页脚和其他非内容元素\r\n1. **转换**：使用html2text转换HTML以清除标记\r\n1. **返回**：提供格式化、可读的文档内容\r\n\r\n## 备注\r\n\r\n- SerpAPI免费套餐包括每月100次搜索\r\n- 服务器智能地从文档页面中提取主要内容\r\n- 内容以markdown格式返回，以提高可读性\r\n- 自动超时处理（每个请求30秒）\r\n- 用户代理欺骗，以确保与大多数网站的兼容性\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "documentation-finder": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/Users/krypton/PycharmProjects/Documentation-Finder-MCP",
+    "run",
+    "main.py"
+   ],
+   "env": {
+    "SERPAPI_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

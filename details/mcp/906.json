@@ -1,0 +1,24 @@
+{
+ "id": "906",
+ "kind": "mcp",
+ "name": "unweb",
+ "fingerprint_md5": "f28ead00cebed059a4b2d5350a22f4db",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# UnWeb MCP服务器\r\n\r\n\r\nMCP服务器，用于将网页转换为markdown [克劳德代码](https://claude.ai/code), [光标](https://cursor.com)，以及 [帆板运动](https://windsurf.ai)内容质量评分。多页面抓取。LangChain+LlamaIdex出口。\r\n\r\n## 快速开始\r\n\r\n在获取免费API密钥 [附录unweb.info](https://app.unweb.info) （500学分/月，无信用卡）。\r\n\r\n### 克劳德代码\r\n\r\n添加 `~/.claude/settings.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"unweb\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@mbsoftsystems/unweb-mcp\"],\r\n      \"env\": { \"UNWEB_API_KEY\": \"unweb_your_key_here\" }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n添加 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"unweb\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@mbsoftsystems/unweb-mcp\"],\r\n      \"env\": { \"UNWEB_API_KEY\": \"unweb_your_key_here\" }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 帆板运动\r\n\r\nWindsurf MCP配置文件中的格式相同。\r\n\r\n## 工具\r\n\r\n|工具|描述|积分|\r\n|------|-------------|---------|\r\n| `convert_url` |将网页URL转换为具有质量分数|1的干净标记|\r\n| `convert_html` |将原始HTML字符串转换为markdown |1|\r\n| `crawl_start` |开始抓取文档网站（路径受限的BFS）|1/页|\r\n| `crawl_status` |检查爬网作业进度|0|\r\n| `crawl_download` |将所有已爬网页面下载为串联的markdown |0|\r\n\r\n### convert_url\r\n\r\n将任何网页转换为干净的CommonMark标记：\r\n\r\n> “转换https://docs.stripe.com/api/charges降价”\r\n\r\n返回降价内容加上 **质量分数（0-100）** 表明提取置信度。分数低于40表示页面可能需要JavaScript渲染。\r\n\r\n### convert_html\r\n\r\n转换您已经拥有的HTML-API响应、抓取的内容、生成的标记：\r\n\r\n> “将此HTML转换为markdown： `<h1>Title</h1><p>Content</p>`\"\r\n\r\n### crawl_start→ crawl_status→ crawl_download\r\n\r\n抓取整个文档网站：\r\n\r\n> “爬行https://docs.example.com从/guides/开始，并将所有页面标记为“\r\n\r\n爬虫运行一个路径受限的BFS，转换每个页面。使用 `crawl_status` 检查进度和 `crawl_download` 要使用分隔符连接所有页面，请执行以下操作：\r\n\r\n```\r\n--- Page: guides/getting-started.md ---\r\n# Getting Started\r\nContent here...\r\n\r\n--- Page: guides/authentication.md ---\r\n# Authentication\r\nContent here...\r\n```\r\n\r\n**导出格式：** `raw-md` （默认）， `langchain` （JSONL用于LangChain）， `llamaindex` （JSON表示LlamaIdex）。\r\n\r\n## 为什么选择UnWeb MCP？\r\n\r\n|功能| UnWeb | Firecrawl | Jina阅读器|\r\n|---------|-------|-----------|-------------|\r\n|内容质量评分|每次回答0-100分|否|否|\r\n|多页抓取|是|是|否|\r\n|LangChain/LlamaIdex导出|本地|否|否|\r\n|转换原始HTML |是|否（仅URL）|否（只URL）|\r\n|免费等级|500学分/月（经常性）|500学分（一次性）|费率有限|\r\n|最便宜的支付|每月12美元|每月16美元|基于代币|\r\n\r\n## 定价\r\n\r\n|计划|积分/月|价格|\r\n|------|--------------|-------|\r\n|免费|500 |0美元|\r\n|新手|2000 |12美元/月|\r\n|专业版| 15000 |每月39美元|\r\n|规模|60000 |99美元/月|\r\n\r\n## 链接\r\n\r\n- [UnWeb](https://unweb.info) --登录页面\r\n- [文档](https://docs.unweb.info) -API完整文档\r\n- [仪表板](https://app.unweb.info) -管理API密钥和使用\r\n- [开发包](https://pypi.org/project/unweb/) — `pip install unweb`\r\n- [Node.js SDK](https://www.npmjs.com/package/@mbsoftsystems/unweb) — `npm install @mbsoftsystems/unweb`\r\n- [GitHub](https://github.com/mbsoft-systems/unweb-community) --示例和社区\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "unweb": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@mbsoftsystems/unweb-mcp"
+   ],
+   "env": {
+    "UNWEB_API_KEY": "unweb_your_key_here"
+   }
+  }
+ }
+}

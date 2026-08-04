@@ -1,0 +1,12 @@
+{
+ "id": "unifuncs-deep-research",
+ "kind": "skill",
+ "name": "unifuncs-deep-research",
+ "fingerprint_md5": "93140f7c04a229dda1851520d83fa57f",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# UniFuncs 深度研究 Skill\r\n\r\n深度分析，产出万字报告，支持多种输出格式。\r\n\r\n## 首次使用配置\r\n\r\n1. 前往 https://unifuncs.com/account 获取 API Key\r\n2. 设置环境变量：`export UNIFUNCS_API_KEY=\"sk-your-api-key\"`\r\n\r\n## 使用方法\r\n\r\n执行深度研究：\r\n```bash\r\ncurl -X POST \"https://api.unifuncs.com/deepresearch/v1/chat/completions\" \\\r\n  -H \"Authorization: Bearer $UNIFUNCS_API_KEY\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\"model\": \"u2\", \"messages\": [{\"role\": \"user\", \"content\": \"$ARGUMENTS\"}]}'\r\n```\r\n\r\n## 参数说明\r\n\r\n| 参数 | 说明 | 默认值 |\r\n|------|------|--------|\r\n| messages | 研究主题 | 必填 |\r\n| model | `u2`/`u1`/`u1-pro` | u2 |\r\n| output_type | 输出格式 | report |\r\n\r\n## 输出格式\r\n\r\n- `report` - 万字报告\r\n- `summary` - 精炼摘要\r\n- `wechat-article` - 微信公众号\r\n- `xiaohongshu-article` - 小红书\r\n- `zhihu-article` - 知乎文章\r\n\r\n## 更多信息\r\n\r\n- 详细 API 文档见 [api.md](references/api.md)",
+ "config": {}
+}

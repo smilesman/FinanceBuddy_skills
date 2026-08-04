@@ -1,0 +1,24 @@
+{
+ "id": "600",
+ "kind": "mcp",
+ "name": "citesurf",
+ "fingerprint_md5": "e6f5f807a7bd4896dc43cc350f6e2404",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# @citesurf/mcp\r\n\r\nMCP服务器 [Citisurf](https://www.citesurf.com)AI可见性监控。\r\n\r\n检查ChatGPT、Claude、Perplexity和Gemini是否推荐任何品牌。从您的AI代理获取可见性得分、情绪、竞争对手数据和可操作的见解。\r\n\r\n## 安装\r\n\r\n```bash\r\nnpx -y @citesurf/mcp\r\n```\r\n\r\n## 需求\r\n\r\n- 拥有活跃Plus或Max订阅的Citesurf帐户\r\n- API键（在“仪表板”>“设置”中创建一个）\r\n- 扫描操作的预付信用额度\r\n\r\n## 设置\r\n\r\n添加到MCP客户端配置中：\r\n\r\n### 克劳德桌面版\r\n\r\n`~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"citesurf\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@citesurf/mcp\"],\r\n      \"env\": {\r\n        \"CITESURF_API_KEY\": \"cs_live_...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n`.cursor/mcp.json` 在项目或全局设置中\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"citesurf\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@citesurf/mcp\"],\r\n      \"env\": {\r\n        \"CITESURF_API_KEY\": \"cs_live_...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add citesurf -e CITESURF_API_KEY=cs_live_... -- npx -y @citesurf/mcp\r\n```\r\n\r\n### 环境变量\r\n\r\n|变量|必填|描述|\r\n| ------------------- | -------- | -------------------------------------------------- |\r\n| `CITESURF_API_KEY` |是|您的API键从仪表板>设置|\r\n| `CITESURF_BASE_URL` |没有| API基本URL（默认值： `https://www.citesurf.com`) |\r\n\r\n## 工具\r\n\r\n### 品牌\r\n\r\n|工具|描述|积分|\r\n| -------------- | ------------------------------------------------------ | ------- |\r\n| `list_brands` |列出所有受监控的品牌及其最新指标|0|\r\n| `get_brand` |获取详细的品牌信息：分数、平台、竞争对手|0|\r\n| `create_brand` |开始在所有4个AI平台上监控品牌|0|\r\n| `update_brand` |更新品牌类型、类别、描述或提示|0|\r\n| `delete_brand` |停止监视并存档品牌|0|\r\n\r\n### 数据\r\n\r\n|工具|描述|积分|\r\n| ---------------- | ---------------------------------------------- | ------- |\r\n| `list_scans` |品牌的分页扫描列表|0|\r\n| `get_scan` |包含探针和引用的完整扫描详细信息|0|\r\n| `get_trends` |历史扫描趋势（7、30或90天）|0|\r\n| `get_prompts` |按提示分组的AI平台探测结果|0|\r\n| `get_personas` |按角色分组的探测结果|0|\r\n| `get_insights` |AI生成的可见性建议|0|\r\n| `update_insight` |取消或完成洞察|0|\r\n| `get_site_audit` |技术审核（robots.txt、llms.txt、架构）|0|\r\n| `get_report` |一次通话中包含所有数据的综合报告|0|\r\n| `get_account` |计划、信用余额、品牌计数|0|\r\n\r\n### 扫描\r\n\r\n|工具|描述|积分|\r\n| -------------- | ----------------------------------- | ------- |\r\n| `trigger_scan` |触发对现有品牌|1的新扫描|\r\n\r\n每次扫描花费1个学分，并在所有4个平台（ChatGPT、Claude、Gemini、Perplexity）上运行。读取数据永远不会花费学分。购买信用包 [Citisurf仪表板](https://www.citesurf.com).\r\n\r\n## 示例用法\r\n\r\n```text\r\n> List my monitored brands\r\n> What are the top insights for brand xyz?\r\n> How has my visibility score changed over the last 30 days?\r\n> Show me the latest scan detail for my brand\r\n> What do different personas see when asking about my brand?\r\n> Run a comprehensive report on my brand\r\n> Update my brand's description and monitoring prompts\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "citesurf": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@citesurf/mcp"
+   ],
+   "env": {
+    "CITESURF_API_KEY": "cs_live_..."
+   }
+  }
+ }
+}

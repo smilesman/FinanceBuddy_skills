@@ -1,0 +1,12 @@
+{
+ "id": "tiangong-notebooklm-cli",
+ "kind": "skill",
+ "name": "tiangong-notebooklm-cli",
+ "fingerprint_md5": "ebe41d86033dbbd0b553f991a716c6c6",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# NotebookLM CLI Wrapper\r\n\r\n## Required 参数\r\n- __CODE_`notebooklm`klm`klm` available on PATH.\r\n- NotebookLM CLI authenticated (运行 `login` if needed).\r\n\r\n## 快速开始\r\n- Wrapper script: `scripts/notebooklm.mjs` (invokes `notebooklm` C`notebooklm``notebooklm`\r\n- 运行 from the skill directory or use an absolute `{baseDir}` path.\r\n\r\n```bash\r\nnode {baseDir}/scripts/notebooklm.mjs status\r\nnode {baseDir}/scripts/notebooklm.mjs login\r\nnode {baseDir}/scripts/notebooklm.mjs list\r\nnode {baseDir}/scripts/notebooklm.mjs use <notebook_id>\r\nnode {baseDir}/scripts/notebooklm.mjs ask \"Summarize the key takeaways\" --notebook <notebook_id>\r\n```\r\n\r\n## Request & 输出\r\n- 命令 form: `node {baseDir}/scripts/notebooklm.mjs <command> [args...]`.\r\n- Prefer `--json` for machine-readable 输出.\r\n- For long-running tasks, use `--exec-timeout <seconds>`; `--timeout` is r`--timeout` wait/`--timeout`\r\n\r\n## 参考\r\n- `references/cli-commands.md`\r\n\r\n## Assets\r\n- None.",
+ "config": {}
+}

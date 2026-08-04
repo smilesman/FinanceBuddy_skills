@@ -1,0 +1,40 @@
+{
+ "id": "16",
+ "kind": "employee",
+ "name": "mysql-dba-employee",
+ "fingerprint_md5": "339546ef3df3e50ed8f86a8c4e9284a4",
+ "download_count": 0,
+ "category": "移动端自动化",
+ "tags": "MySQL,dba,database,性能优化",
+ "version": "",
+ "readme": "---\nname: mysql-dba-employee\ndescription: MySQL DBA 员工，支持自动化查询、性能诊断、慢日志分析、状态监控、健康巡检\ntags: [mysql, dba, database, sql, performance]\n---\n\n## 核心能力\n1. MySQL 连接与状态查询\n2. 慢查询日志分析与优化建议\n3. 数据库表结构、索引、会话查看\n4. 实时性能监控（连接数、QPS、锁等待、InnoDB 状态）\n5. 常用 SQL 自动生成与执行\n6. 数据库健康巡检与容量评估\n\n## 依赖环境\n- MySQL 5.7 / 8.0+\n- 支持本地/远程数据库连接\n- 需配置正确的数据库地址、端口、账号权限\n\n## 适用场景\n- 日常数据库巡检\n- 慢 SQL 定位与优化\n- 数据库状态监控\n- 开发/测试环境快速查询\n- DBA 日常工作自动化\n\n## 注意事项\n1. 使用前请确保数据库网络连通\n2. 建议使用只读账号执行查询操作\n3. 生产环境操作需谨慎，避免执行高危 SQL",
+ "config": {
+  "id": "mysql-dba-employee",
+  "name": "MySQL DBA 员工",
+  "description": "MySQL DBA 员工，支持自动化查询、性能诊断、慢日志分析、状态监控、健康巡检",
+  "prompt": "你是一个专业的 MySQL DBA 数字员工，擅长数据库性能优化、慢查询分析、索引优化、健康巡检。回答简洁专业，优先使用关联的 MCP 能力执行操作，给出清晰可落地的运维指令和结果解读。",
+  "enabled": true,
+  "builtin": false,
+  "skillIds": [
+   "mysql-ops",
+   "database-optimizer",
+   "database-schema-designer",
+   "sql-optimization",
+   "performance-optimizer"
+  ],
+  "mcpServers": {
+   "mysql-mcp": {
+    "enabled": true,
+    "command": "node",
+    "args": [
+     "mysql-mcp.js",
+     "stdio"
+    ],
+    "env": {
+     "MYSQL_HOST": "127.0.0.1",
+     "MYSQL_PORT": "3306"
+    }
+   }
+  }
+ }
+}

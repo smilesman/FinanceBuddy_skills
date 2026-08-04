@@ -1,0 +1,25 @@
+{
+ "id": "2404",
+ "kind": "mcp",
+ "name": "ads-2",
+ "fingerprint_md5": "9927ebfe69077ed057fbe04628a637a8",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp服务器广告\r\n\r\n\r\n一个强大的 [主控程序](https://modelcontextprotocol.io/) 服务器 [美国国家航空航天局天体物理数据系统（ADS）](https://ui.adsabs.harvard.edu/) --天体物理学文献的主要数据库。通过自然语言搜索论文、前后遍历引文图、导出BibTeX、计算指标和管理阅读列表。适用于Claude Desktop/Code、Cursor、OpenAI Codex和任何兼容MCP的客户端。\r\n\r\n[demo_15fps_crf20.webm](https://github.com/user-attachments/assets/340b904b-521b-45ef-aa18-73d3c2ddb5d6)\r\n\r\n## 快速开始\r\n\r\n### 获取ADS API代币\r\n\r\n1. 在以下网址创建免费帐户 [美国国家航空航天局广告](https://ui.adsabs.harvard.edu/)\r\n1. 登录并转到 [设置>API令牌](https://ui.adsabs.harvard.edu/user/settings/token)\r\n1. 点击 **生成新密钥** 并复制令牌\r\n\r\n### 安装\r\n\r\n不需要单独的安装步骤——下面的客户端配置使用 `uvx` 自动获取并运行服务器。只需选择你的客户并离开。需要Python 3.11+和 [紫外线](https://docs.astral.sh/uv/getting-started/installation/).\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add --scope user mcp-server-ads -e ADS_API_TOKEN=your-api-token-here -- uvx --from git+https://github.com/cbyrohl/mcp-server-ads mcp-server-ads\r\n```\r\n\r\n使用 `--scope project` 而是通过以下方式共享配置 `.mcp.json` 在您的仓库中，或省略 `--scope` 适用于本地（仅限当前项目）。\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 [Claude桌面配置](https://modelcontextprotocol.io/quickstart/user):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ads\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--from\", \"git+https://github.com/cbyrohl/mcp-server-ads\", \"mcp-server-ads\"],\r\n      \"env\": {\r\n        \"ADS_API_TOKEN\": \"your-api-token-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Codex 命令行界面\r\n\r\n```bash\r\ncodex mcp add mcp-server-ads --env ADS_API_TOKEN=your-api-token-here -- uvx --from git+https://github.com/cbyrohl/mcp-server-ads mcp-server-ads\r\n```\r\n\r\n这将安装到 `~/.codex/config.toml` （用户级别，适用于所有项目）。对于项目范围的配置，将条目添加到 `.codex/config.toml` 在你的项目根目录中。\r\n\r\n### 独立/Python API\r\n\r\n如果你想直接安装这个包（例如作为Python库或手动运行服务器）：\r\n\r\n```bash\r\n# Install with uv\r\nuv tool install git+https://github.com/cbyrohl/mcp-server-ads\r\n\r\n# Or with pip\r\npip install git+https://github.com/cbyrohl/mcp-server-ads\r\n```\r\n\r\n### 从源头运行\r\n\r\n```bash\r\ngit clone https://github.com/cbyrohl/mcp-server-ads.git\r\ncd mcp-server-ads\r\nuv sync\r\n\r\n# Run the server\r\nADS_API_TOKEN=your-token uv run mcp-server-ads\r\n```\r\n\r\n## 配置\r\n\r\n|环境变量|必填|默认|描述|\r\n|---------------------|----------|---------|-------------|\r\n| `ADS_API_TOKEN` |是|-|ADS中的API令牌|\r\n| `ADS_API_URL` |没有| `https://api.adsabs.harvard.edu` |API基本URL（替代SciX）|\r\n\r\n## 工具（11）\r\n\r\n### 搜索\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `ads_search` |使用完整的查询语法搜索ADS数据库，包括 `citations()`, `references()`, `similar()`, `trending()`，以及 `reviews()` 操作员|\r\n| `ads_bigquery` |在一组特定的bibcode中搜索（最多2000个）|\r\n\r\n### 出口和指标\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `ads_export` |导出18+种格式的记录（BibTeX、AASTeX、RIS、CSL等）|\r\n| `ads_metrics` |计算引用指标（h指数、g指数、引用计数等）|\r\n\r\n### 图书馆\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `ads_library` |管理库：列出、获取、创建、编辑或删除已保存的论文集|\r\n| `ads_library_documents` |管理库中的文档和笔记：添加/删除纸张，设置操作（并集、交集、差分、复制、清空）和笔记CRUD|\r\n\r\n### 发现与解决\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `ads_resolve_links` |解析论文的可用链接（全文、数据等）|\r\n| `ads_object_search` |将天体名称转换为ADS查询（SIMBAD/NED）|\r\n| `ads_citation_helper` |建议应与给定论文集一起引用的论文|\r\n| `ads_resolve_reference` |将自由文本引用字符串解析为ADS bibcodes|\r\n\r\n### 网络可视化\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `ads_network` |从一组论文中生成作者协作或论文引用网络|\r\n\r\n## 资源\r\n\r\n|URI|描述|\r\n|-----|-------------|\r\n| `ads://fields` |可搜索和可返回ADS字段的完整参考|\r\n| `ads://syntax` |ADS查询语法快速参考示例|\r\n| `ads://rate-limits` |实时API费率限制状态|\r\n\r\n## 提示\r\n\r\n|提示|描述|\r\n|--------|-------------|\r\n| `literature_review` |研究主题的多步文献综述工作流程|\r\n| `citation_analysis` |一组论文的引文网络分析工作流程|\r\n| `generate_bibliography` |从搜索或bibcodes生成格式化的参考书目|\r\n\r\n## 类似项目\r\n\r\n- [prtc/nasa广告mcp](https://github.com/prtc/nasa-ads-mcp) --ADS搜索、指标和库管理\r\n- [thostetler/scix-mcp](https://github.com/thostetler/scix-mcp) -SciX/ADS API的MCP服务器\r\n- [blazickjp/arxiv mcp服务器](https://github.com/blazickjp/arxiv-mcp-server) --用于arXiv论文搜索和检索的MCP服务器\r\n\r\n该服务器专注于广泛的ADS API覆盖范围、令牌高效输出和集成测试的可靠性。与基于arXiv的工具相比，ADS支持前向/后向引用遍历（任何论文的引用和参考文献），尽管它侧重于天体物理学。\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dev dependencies\r\nuv sync\r\n\r\n# Run tests\r\nuv run pytest\r\n\r\n# Lint\r\nuv run ruff check src/ tests/\r\n\r\n# Run the server locally\r\nADS_API_TOKEN=your-token uv run mcp-server-ads\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "ads": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/cbyrohl/mcp-server-ads",
+    "mcp-server-ads"
+   ],
+   "env": {
+    "ADS_API_TOKEN": "your-api-token-here"
+   }
+  }
+ }
+}

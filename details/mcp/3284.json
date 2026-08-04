@@ -1,0 +1,24 @@
+{
+ "id": "3284",
+ "kind": "mcp",
+ "name": "weather-4",
+ "fingerprint_md5": "2fb37806f274cc517551626d71a7f367",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP气象服务器\r\n\r\n提供天气信息工具和资源的模型上下文协议（MCP）服务器。\r\n\r\n## 特性\r\n\r\n- **当前天气**：获取任何位置的实时天气状况\r\n- **天气预报**：5天天气预报及详细信息\r\n- **位置支持**：世界主要城市、坐标和邮政编码\r\n- **单位**：支持摄氏度和华氏度\r\n- **资源**：天气位置数据和API信息\r\n- **提示**：为活动规划生成天气摘要\r\n\r\n## 工具\r\n\r\n### `get_current_weather`\r\n\r\n获取某个位置的当前天气信息。\r\n\r\n**参数：**\r\n\r\n- `location` （必填）：城市名称、坐标或邮政编码\r\n- `units` （可选）：“摄氏度”或“华氏度”（默认值：摄氏度）\r\n\r\n### `get_weather_forecast`\r\n\r\n获取某个地点的多日天气预报。\r\n\r\n**参数：**\r\n\r\n- `location` （必填）：城市名称、坐标或邮政编码\r\n- `days` （可选）：天数（1-5，默认值：3）\r\n\r\n## 资源\r\n\r\n- `weather://locations`：支持的位置和格式列表\r\n- `weather://api-info`：天气API和数据源信息\r\n\r\n## 提示\r\n\r\n- `weather_summary`：为活动规划生成天气摘要\r\n\r\n## 用法\r\n\r\n### 使用克劳德桌面\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-sse\"],\r\n      \"env\": {\r\n        \"SSE_URL\": \"https://your-server.fly.dev/mcp\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 地方发展\r\n\r\n```bash\r\nnpm install\r\nnpm start\r\n```\r\n\r\n### Docker部署\r\n\r\n```bash\r\ndocker build -t mcp-weather-server .\r\ndocker run -p 8080:8080 mcp-weather-server\r\n```\r\n\r\n## 健康检查\r\n\r\n服务器包括一个健康检查端点，位于 `/health` 返回服务器状态和版本信息。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@modelcontextprotocol/server-sse"
+   ],
+   "env": {
+    "SSE_URL": "https://your-server.fly.dev/mcp"
+   }
+  }
+ }
+}

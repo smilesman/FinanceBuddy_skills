@@ -1,0 +1,22 @@
+{
+ "id": "2668",
+ "kind": "mcp",
+ "name": "pubmed",
+ "fingerprint_md5": "ebceb35fc1f670814287de36724d2fc9",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# 增强型PubMed MCP服务器\r\n\r\n🔬 **不需要Python** -PubMed搜索MCP服务器的纯Node.js实现\r\n\r\n## 快速开始\r\n\r\n```bash\r\n# Claude Desktop Configuration\r\n{\r\n  \"mcpServers\": {\r\n    \"pubmed\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"enhanced-pubmed-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 特性\r\n\r\n- ✅ **没有Python依赖关系** -纯Node.js实现\r\n- 🔬 **增强PubMed搜索** -完整的摘要、MeSH术语、关键字\r\n- 📖 **PMC全文搜索** -在开放获取文章中搜索\r\n- 💾 **搜索历史记录** -用于持久存储的SQLite数据库\r\n- 🔓 **开放存取检测** -识别免费提供的文章\r\n- 🌐 **交叉平台的** -适用于Windows、macOS和Linux\r\n\r\n## 用法\r\n\r\n### 命令行\r\n\r\n```bash\r\n# Direct execution (no installation needed)\r\nnpx enhanced-pubmed-mcp-server\r\n\r\n# Help and version info\r\nnpx enhanced-pubmed-mcp-server --help\r\nnpx enhanced-pubmed-mcp-server --version\r\n```\r\n\r\n### Claude桌面集成\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pubmed\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"enhanced-pubmed-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**配置文件位置：**\r\n\r\n- **窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- **macOS：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n## 可用工具\r\n\r\n- `search_pubmed(query, max_results)` -增强PubMed搜索\r\n- `get_full_abstract(pmid)` -完整的摘要检索\r\n- `search_pmc_fulltext(query, max_results)` -PMC全文搜索\r\n- `retrieve_pubmed_results(search_id, page)` -分页结果\r\n- `list_pubmed_searches()` -搜索历史记录\r\n\r\n## 搜索示例\r\n\r\n```javascript\r\n// Basic search\r\nsearch_pubmed(\"COVID-19 vaccine\", 10)\r\n\r\n// Field-specific search\r\nsearch_pubmed(\"CRISPR[Title]\", 5)\r\n\r\n// Date range search\r\nsearch_pubmed(\"cancer therapy AND 2023[Date - Publication]\", 15)\r\n\r\n// Full-text search in open access articles\r\nsearch_pmc_fulltext(\"machine learning medical imaging\", 20)\r\n\r\n// Get complete abstract\r\nget_full_abstract(\"35504917\")\r\n```\r\n\r\n## 需求\r\n\r\n- **Node.js** 14.0.0或更高\r\n- **Internet连接** 用于PubMed API访问\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 仓库\r\n\r\nhttps://github.com/yourusername/enhanced-pubmed-mcp-server\r\n",
+ "config": {
+  "pubmed": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "enhanced-pubmed-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

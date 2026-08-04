@@ -1,0 +1,18 @@
+{
+ "id": "3596",
+ "kind": "mcp",
+ "name": "rockauto",
+ "fingerprint_md5": "329f3be77b20b3821266fe25b2553e33",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# RockAuto MCP服务器\r\n\r\nMCP（模型上下文协议）服务器，允许AI助手搜索 [RockAuto](https://www.rockauto.com) 汽车零部件目录。浏览车辆，按类别查找零件，按零件号搜索，并通过自然对话获取定价和详细信息。\r\n\r\n## 快速开始\r\n\r\n托管实例可用，无需安装：\r\n\r\n```\r\nhttps://rockauto-mcp.b-a92.workers.dev/mcp\r\n```\r\n\r\n### ChatGPT\r\n\r\n1. 打开 [ChatGPT](https://chatgpt.com) 并前往 **设置** > **已连接的应用程序** ([文档](https://help.openai.com/en/articles/12584461-developer-mode-apps-and-full-mcp-connectors-in-chatgpt-beta))\r\n1. 点击 **添加连接** 并选择 **主控程序**\r\n1. 粘贴URL： `https://rockauto-mcp.b-a92.workers.dev/mcp`\r\n1. 保存\r\n\r\n### 克劳德代码\r\n\r\n在终端中运行以下命令：\r\n\r\n```bash\r\nclaude mcp add rockauto --transport sse https://rockauto-mcp.b-a92.workers.dev/mcp\r\n```\r\n\r\n请参阅 [克劳德代码MCP文档](https://code.claude.com/docs/en/mcp.md) 更多选择。\r\n\r\n### 克劳德桌面\r\n\r\n添加到您的 `claude_desktop_config.json` ([文档](https://modelcontextprotocol.io/quickstart/user)):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"rockauto\": {\r\n      \"url\": \"https://rockauto-mcp.b-a92.workers.dev/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 其他MCP客户端\r\n\r\n任何支持SSE传输的MCP客户端都可以连接到上面的URL。\r\n\r\n## 示例提示\r\n\r\n连接后，尝试询问您的AI助手：\r\n\r\n- “2020款本田思域有哪些刹车片？”\r\n- “搜索零件号15400-PLM-A02”\r\n- “给我看看2018款丰田凯美瑞2.5L的机油滤清器”\r\n- “比较2015款福特F-150交流发电机的价格”\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n| ---- | ----------- |\r\n| `list_makes` |列出所有车辆制造商|\r\n| `list_years` |列出某个品牌的可用年份|\r\n| `list_models` |列出制造年份的型号|\r\n| `list_engines` |列出车辆的发动机选项|\r\n| `list_categories` |列出车辆+发动机的零件类别|\r\n| `browse_category` |在目录URL浏览子类别或零件|\r\n| `get_parts` |获取目录页面上列出的零件|\r\n| `search_parts` |一步按车辆+零件类型搜索（例如“制动片”）|\r\n| `search_part_number` |按零件号搜索（支持 `*` 通配符）|\r\n| `get_part_details` |获取特定零件的详细规格|\r\n\r\n## 自我寄宿\r\n\r\n### 本地（stdio）\r\n\r\n```bash\r\ngit clone https://github.com/BrianLeishman/rockauto-mcp.git\r\ncd rockauto-mcp\r\nnpm install\r\nnpm run build\r\nnode build/index.js\r\n```\r\n\r\n对于克劳德代码（本地标准）：\r\n\r\n```bash\r\nclaude mcp add rockauto -- node /absolute/path/to/rockauto-mcp/build/index.js\r\n```\r\n\r\n### 部署到Cloudflare Workers\r\n\r\n```bash\r\nnpm run deploy\r\n```\r\n\r\n这为您提供了自己的端点 `https://rockauto-mcp.<your-subdomain>.workers.dev/mcp`.\r\n\r\n### 本地开发\r\n\r\n```bash\r\nnpm run start     # Run Cloudflare Worker locally with wrangler\r\nnpm run dev       # Watch mode for TypeScript compilation\r\n```\r\n\r\n## 运作原理\r\n\r\n服务器抓取RockAuto的公共目录页面，并解析HTML以提取车辆和零件数据。不需要API密钥。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "rockauto": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://rockauto-mcp.b-a92.workers.dev/mcp"
+  }
+ }
+}

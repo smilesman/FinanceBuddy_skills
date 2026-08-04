@@ -1,0 +1,21 @@
+{
+ "id": "42",
+ "kind": "mcp",
+ "name": "apple-notes",
+ "fingerprint_md5": "3f1ad33310f67cb27113e00dc8da34fe",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Apple Notes MCP服务器\r\n\r\n> 使用模型上下文协议（MCP）自动化Apple Notes的强大工具\r\n\r\n**mcp名称：io.github.henilcalagiya/mcp-apple-notes**\r\n\r\n[](https://pypi.org/project/mcp-apple-notes/)\r\n[](https://opensource.org/licenses/MIT)\r\n[](https://www.python.org/downloads/)\r\n\r\n## 概述\r\n\r\nApple Notes MCP服务器提供Apple Notes与任何MCP兼容客户端的无缝集成。它通过一个简单安全的AppleScript API层实现了完整的笔记自动化，包括创建、阅读、更新和删除笔记。\r\n\r\n## 特性\r\n\r\n- **完全CRUD支持** 适用于Apple Notes（创建、读取、更新、删除）\r\n- **与Continue.dev、Claude Desktop、Perplexity和其他MCP客户端配合使用**\r\n- **本地AppleScript集成** 实现可靠的macOS自动化\r\n- **综合工具** 用于Apple Notes自动化\r\n- **自动安装** 通过 `uvx` 或手动设置\r\n- **FastMCP实施** 使用基于现代装饰器的API\r\n\r\n## 需求\r\n\r\n- **macOS** -需要AppleScript支持\r\n- **Python 3.10+** -MCP SDK兼容性所需\r\n- **Apple Notes应用程序** -必须安装并可访问\r\n- **MCP兼容客户端** （例如，Continue.dev、Claude Desktop）\r\n\r\n## 快速开始\r\n\r\n### 步骤1：安装uv（如果尚未安装）\r\n\r\n**macOS/Linux：**\r\n\r\n```bash\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n**Windows（PowerShell）：**\r\n\r\n```powershell\r\npowershell -c \"irm https://astral.sh/uv/install.ps1 | iex\"\r\n```\r\n\r\n**备选方案（pip）：**\r\n\r\n```bash\r\npip install uv\r\n```\r\n\r\n### 步骤2：添加MCP配置\r\n\r\n将此配置添加到MCP客户端：\r\n\r\n**对于困惑、光标、Continue.dev、克劳德桌面：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"apple-notes\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-apple-notes@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**🎉 就是这样！** 您的MCP客户端将在需要时自动安装并运行该软件包。\r\n\r\n> **注：** 确保您的MCP客户端有权访问Apple Notes并在“系统首选项”中执行AppleScript命令→ 安全与隐私→ 隐私→ 无障碍。\r\n\r\n## 可用工具\r\n\r\n### **笔记管理（6个工具）**\r\n\r\n- `create_note` -使用HTML内容创建笔记\r\n- `read_note` -通过身份验证读取笔记\r\n- `update_note` -用HTML内容按ID更新笔记\r\n- `delete_note` -通过验证按ID删除笔记\r\n- `move_note` -在文件夹之间移动笔记\r\n- `list_all_notes` -列出所有文件夹中的所有笔记\r\n\r\n### **文件夹管理（5个工具）**\r\n\r\n- `create_folder` -创建具有路径支持的文件夹\r\n- `read_folder` -按ID读取文件夹详细信息\r\n- `rename_folder` -按ID重命名文件夹\r\n- `delete_folder` -按ID删除文件夹\r\n- `move_folder` -在不同位置之间移动文件夹\r\n\r\n### **搜索和结构（3个工具）**\r\n\r\n- `search_notes` -按关键字搜索笔记\r\n- `list_folder_with_structure` -显示文件夹层次结构\r\n- `list_notes_with_structure` -显示文件夹+笔记层次结构\r\n\r\n## 内容支持\r\n\r\n**HTML格式**: ``, ``, `\r\n`, ``, ``, ``\r\n\r\n**特别功能**:\r\n\r\n- 支持Unicode和表情符号(🚀, ✅, 📝)\r\n- 嵌套文件夹路径（最多5级）\r\n- 自动字符转义\r\n- 内容丰富，有标题、列表、表格\r\n\r\n## 建筑\r\n\r\n服务器遵循MCP协议规范，采用模块化架构构建：\r\n\r\n- **AppleScript层** -处理与Apple Notes的直接交互\r\n- **工具层** -包装MCP工具的AppleScript操作\r\n- **FastMCP服务器层** -使用装饰器实现MCP协议\r\n\r\n## 故障排除\r\n\r\n### 常见问题\r\n\r\n1. **“没有名为'mcp'的模块”错误**\r\n\r\n   - 使用 `uvx` 用于自动安装\r\n   - 确保 `uv` 已安装并位于PATH中\r\n\r\n1. **AppleScript权限被拒绝**\r\n\r\n   - 在“系统首选项”中为您的终端/MCP客户端授予权限→ 安全与隐私→ 隐私→ 无障碍\r\n\r\n1. **未找到笔记**\r\n\r\n   - 确保已安装并可访问Apple Notes应用程序\r\n   - 检查注释是否存在于默认位置\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 作者\r\n\r\n**Henil C Alagiya**\r\n\r\n- **GitHub**: [@亨利卡拉吉亚](https://github.com/henilcalagiya)\r\n- **领英**: [Henil C Alagiya](https://linkedin.com/in/henilcalagiya)\r\n\r\n**支持和贡献：**\r\n\r\n- 🐛 **报告问题**: [GitHub问题](https://github.com/henilcalagiya/mcp-apple-notes/issues)\r\n- 💬 **问题**：联系 [领英](https://linkedin.com/in/henilcalagiya)\r\n- 🤝 **贡献**：欢迎拉取请求！\r\n",
+ "config": {
+  "apple-notes": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-apple-notes@latest"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "1366",
+ "kind": "mcp",
+ "name": "chatgpt",
+ "fingerprint_md5": "321ecf9adb3e2ddb0e297d5dfee48f7c",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# ChatGPT MCP服务器\r\n\r\n一个模型上下文协议（MCP）服务器，使AI助手能够与macOS上的ChatGPT桌面应用程序进行交互。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@xncbf/chatgpt-mcp\">\r\n  \r\n</a>\r\n\r\nhttps://github.com/user-attachments/assets/a30c9b34-cdbe-4c0e-a0b0-33eb5054db5c\r\n\r\n## 语言支持\r\n\r\n**响应检测支持的系统语言：**\r\n\r\n- 韩语\r\n- 英语\r\n\r\n**如果您的macOS系统语言未在上面列出，请按照以下说明操作：**\r\n\r\n1. 确保ChatGPT桌面应用正在运行\r\n1. 跑 `show_all_button_names.applescript` 并复制输出以创建语言支持问题。\r\n\r\n## 特性\r\n\r\n- 从任何兼容MCP的AI助手向ChatGPT发送提示\r\n- 使用Python和FastMCP构建\r\n\r\n**注：** 此服务器仅支持英文文本输入。非英语字符可能无法正常工作。\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- macOS\r\n- ChatGPT桌面应用已安装并正在运行\r\n- Python 3.10+\r\n- uv包管理器\r\n\r\n## 适用于Claude Code用户\r\n\r\n只需运行：\r\n\r\n```bash\r\nclaude mcp add chatgpt-mcp uvx chatgpt-mcp\r\n```\r\n\r\n就是这样！您可以在Claude Code中开始使用ChatGPT命令。\r\n\r\n## 对于其他MCP客户端\r\n\r\n### 步骤1：安装MCP服务器\r\n\r\n#### 选项A：从PyPI安装（推荐）\r\n\r\n```bash\r\n# Install with uv\r\nuv add chatgpt-mcp\r\n```\r\n\r\n#### 选项B：手动安装\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/xncbf/chatgpt-mcp\r\ncd chatgpt-mcp\r\n\r\n# Install dependencies with uv\r\nuv sync\r\n```\r\n\r\n### 步骤2：配置MCP客户端\r\n\r\n如果从PyPI安装，请在MCP客户端配置中添加：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chatgpt\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"chatgpt-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果手动安装，请添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chatgpt\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"chatgpt-mcp\"],\r\n      \"cwd\": \"/path/to/chatgpt-mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n1. **打开ChatGPT桌面应用程序** 并确保它正在运行\r\n1. **打开您的MCP客户端** （克劳德密码等）\r\n1. **使用ChatGPT命令** 在您的AI助手中：\r\n   - “向ChatGPT发送消息”\r\n\r\nAI助手将自动使用适当的MCP工具与ChatGPT进行交互。\r\n\r\n## 可用工具\r\n\r\n### ask_chatgpt\r\n\r\n向ChatGPT发送提示并接收响应。\r\n\r\n```python\r\nask_chatgpt(prompt=\"Hello, ChatGPT!\")\r\n```\r\n\r\n### get_chatgpt_响应\r\n\r\n发送消息后从ChatGPT获取最新响应。\r\n\r\n```python\r\nget_chatgpt_response()\r\n```\r\n\r\n### new_chatgpt_chat\r\n\r\n在ChatGPT中启动新的聊天对话。\r\n\r\n```python\r\nnew_chatgpt_chat()\r\n```\r\n\r\n## 发展\r\n\r\n### 局部测试\r\n\r\n在开发过程中本地测试MCP服务器：\r\n\r\n1. **以可编辑模式安装**\r\n\r\n   ```bash\r\n   uv pip install -e .\r\n   ```\r\n\r\n1. **使用MCP检查员进行测试**\r\n\r\n   ```bash\r\n   npx @modelcontextprotocol/inspector chatgpt-mcp\r\n   ```\r\n\r\n可编辑的安装创建了一个 `chatgpt-mcp` 命令直接引用您的源代码，因此您所做的任何更改都会立即反映出来，而无需重新安装。\r\n\r\n### 无需安装即可运行\r\n\r\n您也可以直接运行服务器：\r\n\r\n```bash\r\nPYTHONPATH=. uv run python -m chatgpt_mcp.chatgpt_mcp\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "chatgpt": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "chatgpt-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

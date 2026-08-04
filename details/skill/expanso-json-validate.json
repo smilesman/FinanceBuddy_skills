@@ -1,0 +1,12 @@
+{
+ "id": "expanso-json-validate",
+ "kind": "skill",
+ "name": "expanso-json-validate",
+ "fingerprint_md5": "6e2292d966cfb7606499c0c94edc7c70",
+ "download_count": 0,
+ "category": "基础设施",
+ "tags": "",
+ "version": "",
+ "readme": "# json-validate\r\n\r\n\"验证 JSON 语法和结构\"\r\n\r\n## 要求\r\n\r\n- Expanso Edge 已安装 (`expanso-edge` 二进制文件在 PATH 中)\r\n- 通过以下方式安装: `clawhub install expanso-edge`\r\n\r\n## 用法\r\n\r\n### CLI 流水线\r\n```bash\r\n# 独立运行\r\necho '<input>' | expanso-edge run pipeline-cli.yaml\r\n```\r\n\r\n### MCP 流水线\r\n```bash\r\n# 作为 MCP 服务器启动\r\nexpanso-edge run pipeline-mcp.yaml\r\n```\r\n\r\n### 部署到 Expanso Cloud\r\n```bash\r\nexpanso-cli job deploy https://skills.expanso.io/json-validate/pipeline-cli.yaml\r\n```\r\n\r\n## 文件\r\n\r\n| 文件 | 用途 |\r\n|------|---------|\r\n| `skill.yaml` | 技能元数据 (输入, 输出, 凭证) |\r\n| `pipeline-cli.yaml` | 独立 CLI 流水线 |\r\n| `pipeline-mcp.yaml` | MCP 服务器流水线 |",
+ "config": {}
+}

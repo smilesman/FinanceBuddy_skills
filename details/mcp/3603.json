@@ -1,0 +1,22 @@
+{
+ "id": "3603",
+ "kind": "mcp",
+ "name": "search_atproto_docs",
+ "fingerprint_md5": "dcd56ad1ac021cd0b089c0846f9bb957",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# ATproto文档的远程MCP服务器\r\n\r\n[https://glama.ai/mcp/servers/@immber/mcp-atproto-docs](https://glama.ai/mcp/servers/@immber/mcp-atproto-docs)\r\n\r\n## 部署到Cloudflare\r\n\r\n此远程MCP服务器发布 `tool` 用于搜索和查询AT协议的文档。\r\n\r\n|工具|说明|\r\n|------------------------|-------------------------|\r\n| `search_documentation` |搜索atproto文档|\r\n\r\n用爱创造💙, 使基于该协议的开发人员的生活更轻松。\r\n\r\n此远程MCP服务器可在以下网址公开访问：\r\n\r\n```\r\nhttps://mcp-atproto-docs.immber.workers.dev/sse\r\n```\r\n\r\n## 取决于\r\n\r\n使用创建 [远程MCP无授权服务器模板](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) CloudFlare提供。\r\n\r\n此MCP服务器查询CloudFlare AutoRAG实例，该实例由CloudFlare工作人员提供ATprocol的公共文档。\r\n\r\n- cron工作者 `=>` R2储物桶 `=>` AutoRAG矢量化数据库\r\n\r\n这个项目最初的灵感来自 [Cloudflare的文档MCP服务器](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize).\r\n\r\n## 来源\r\n\r\n[atproto文档工作者](https://github.com/immber/atproto-docs-worker) 是一个cloudflare worker，它抓取文档并将其保存到R2 bucket中。它按照每周的计划运行。\r\n\r\n要查看或请求更改当前包含的资源列表，请访问该仓库。\r\n\r\n## 使用工具\r\n\r\n与任何兼容MCP的客户端连接。然后让你选择的AI代理使用 `search_documentation` 工具。\r\n\r\n### 连接到Cloudflare AI游乐场\r\n\r\n您可以从Cloudflare AI Playground（一个远程MCP客户端）连接到此MCP服务器：\r\n\r\n1. 首选https://playground.ai.cloudflare.com/\r\n1. 输入您部署的MCP服务器URL( `https://mcp-atproto-docs.immber.workers.dev/sse`)\r\n1. 现在，您可以直接在操场上使用此MCP工具！\r\n\r\n### 将Claude Desktop连接到您的MCP服务器\r\n\r\n要从Claude Desktop连接到此MCP服务器，请按照以下步骤操作 [Anthropic的快速入门](https://modelcontextprotocol.io/quickstart/user) 在Claude Desktop中，转到“设置”>“开发人员”>“编辑配置”。\r\n\r\n使用此配置进行更新：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"search_atproto_docs\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-remote\",\r\n        \"https://mcp-atproto-docs.immber.workers.dev/sse\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动Claude，您应该会看到工具可用。\r\n\r\n### 示例查询\r\n",
+ "config": {
+  "search_atproto_docs": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://mcp-atproto-docs.immber.workers.dev/sse"
+   ],
+   "env": {}
+  }
+ }
+}

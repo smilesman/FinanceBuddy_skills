@@ -1,0 +1,26 @@
+{
+ "id": "2318",
+ "kind": "mcp",
+ "name": "strava-4",
+ "fingerprint_md5": "5eff46df41873410a368a92a03ba6ffb",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# Strava MCP服务器\r\n\r\n一个MCP（模型上下文协议）服务器，将Claude连接到您的Strava数据。直接从Claude Desktop或任何兼容MCP的客户端查询您的活动、统计数据和运动员资料。\r\n\r\n## 特性\r\n\r\n- **OAuth身份验证**：通过自动令牌刷新进行安全身份验证\r\n- **活动数据**：获取最近的活动、详细的活动信息、统计数据和更新说明\r\n- **运动员简介**：访问您的Strava个人资料和统计数据\r\n- **路段和路线**：按位置探索跑步路段，查看路线详细信息\r\n- **俱乐部和社区**：浏览您的俱乐部、会员和俱乐部活动\r\n- **社交**：查看荣誉、评论、KOM和星级片段\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n1. **Python 3.10+** 安装\r\n1. **Strava API应用程序**：创建一个https://www.strava.com/settings/api\r\n   - 将“授权回调域”设置为 `127.0.0.1`\r\n\r\n### 从GitHub安装\r\n\r\n```bash\r\npip install git+https://github.com/bronteee/strava-mcp.git\r\n```\r\n\r\n或者使用紫外线：\r\n\r\n```bash\r\nuv pip install git+https://github.com/bronteee/strava-mcp.git\r\n```\r\n\r\n### 配置Claude桌面\r\n\r\n添加到您的Claude Desktop配置文件中：\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"strava\": {\r\n      \"command\": \"strava-mcp\",\r\n      \"env\": {\r\n        \"STRAVA_CLIENT_ID\": \"your_client_id\",\r\n        \"STRAVA_CLIENT_SECRET\": \"your_client_secret\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果安装了紫外线，请使用：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"strava\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--from\", \"git+https://github.com/bronteee/strava-mcp.git\", \"strava-mcp\"],\r\n      \"env\": {\r\n        \"STRAVA_CLIENT_ID\": \"your_client_id\",\r\n        \"STRAVA_CLIENT_SECRET\": \"your_client_secret\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n### 认证\r\n\r\n1. 问克劳德：“连接到我的Strava帐户”\r\n1. Claude将提供一个授权URL\r\n1. 在浏览器中打开URL并授权应用程序\r\n1. 您已连接到当前会话\r\n\r\n**备注**：令牌仅存储在内存中。每次Claude Desktop重新启动时，您都需要重新进行身份验证。\r\n\r\n### 可用工具\r\n\r\n#### 认证\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_auth_status` |检查您是否经过身份验证|\r\n| `get_auth_url` |获取Strava授权URL|\r\n| `authenticate` |令牌的交换身份验证码（通常是自动的）|\r\n| `logout` |删除存储的令牌|\r\n\r\n#### 活动与运动员\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_activities` |使用可选日期筛选器获取最近的活动|\r\n| `get_activity_details` |获取特定活动的详细信息|\r\n| `update_activity_notes` |更新活动的注释/描述|\r\n| `get_athlete` |获取您的运动员资料|\r\n| `get_athlete_stats` |获取您的跑步/骑自行车/游泳统计数据|\r\n\r\n#### 路段和路线\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `geocode_location` |将位置名称转换为坐标以进行分段搜索|\r\n| `explore_running_segments` |查找某个区域中的跑步路段|\r\n| `get_segment` |使用折线获取详细的线段信息|\r\n| `get_my_routes` |列出您创建的路线|\r\n| `get_route` |通过嵌入的路段获取详细的路线信息|\r\n\r\n#### 俱乐部和社区\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_my_clubs` |列出你所加入的俱乐部|\r\n| `get_club` |获取俱乐部详细信息|\r\n| `get_club_members` |列出俱乐部成员|\r\n| `get_club_activities` |获取俱乐部成员最近的活动|\r\n\r\n#### 社交与参与\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_activity_kudos` |看看谁对某项活动表示赞扬|\r\n| `get_activity_comments` |获取活动评论|\r\n| `get_my_koms` |获取您的KOMs（山之王/女王）|\r\n| `get_starred_segments` |获取您的星级片段|\r\n\r\n### 示例提示\r\n\r\n- “向我展示我最近的5个Strava活动”\r\n- “我今年的跑步数据是什么？”\r\n- “获取我最近骑行的详细信息”\r\n- “更新我上次活动的笔记，说‘早上跑得真棒！’”\r\n- “上个月我跑了多少英里？”\r\n- “查找中央公园附近的跑步路段”\r\n- “我加入了哪些俱乐部？”\r\n- “让我看看上次跑步时谁给了我荣誉”\r\n- “我的KOM是什么？”\r\n\r\n## 发展\r\n\r\n### 设置\r\n\r\n```bash\r\ngit clone https://github.com/bronteee/strava-mcp.git\r\ncd strava-mcp\r\nuv sync --dev\r\n```\r\n\r\n### 运行测试\r\n\r\n```bash\r\nuv run pytest\r\n```\r\n\r\n### 类型检查\r\n\r\n```bash\r\nuv run ty check src\r\n```\r\n\r\n### 手动运行服务器\r\n\r\n```bash\r\n# Set environment variables\r\nexport STRAVA_CLIENT_ID=your_client_id\r\nexport STRAVA_CLIENT_SECRET=your_client_secret\r\n\r\n# Run the server\r\nstrava-mcp\r\n```\r\n\r\n## 安全\r\n\r\n- 令牌仅存储在内存中，并在服务器停止时清除\r\n- 客户端凭据通过环境变量传递，从不存储在文件中\r\n- OAuth流使用localhost回调-不涉及外部服务器\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "strava": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/bronteee/strava-mcp.git",
+    "strava-mcp"
+   ],
+   "env": {
+    "STRAVA_CLIENT_ID": "your_client_id",
+    "STRAVA_CLIENT_SECRET": "your_client_secret"
+   }
+  }
+ }
+}

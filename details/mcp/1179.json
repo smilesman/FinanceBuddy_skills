@@ -1,0 +1,18 @@
+{
+ "id": "1179",
+ "kind": "mcp",
+ "name": "neo4j-remote-2",
+ "fingerprint_md5": "8e17aae49395d5036ed438868bac8dde",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp-neo4j-服务器-sse-java\r\n\r\nmcp-neo4j-servers-se-java是一个使用java实现的mcp服务器 `SSE` （服务器发送事件）服务器传输或 `STDIO` 传输作为传输协议。\r\n\r\n## 概述\r\n\r\n一种模型上下文协议（MCP）服务器实现，提供数据库交互，并允许通过Neo4j进行图形探索。此服务器支持执行Cypher图查询、分析复杂的域数据，并支持选择远程可访问的数据库。灵感来自 [neo4j控件/mcpneo4j](https://github.com/neo4j-contrib/mcp-neo4j/tree/main/servers/mcp-neo4j-cypher).\r\n\r\n该项目展示了：\r\n\r\n- 与集成 `spring-ai-mcp-server-webflux-spring-boot-starter`\r\n- 支持SSE（服务器发送事件）和STDIO传输\r\n- 使用Spring AI的自动工具注册 `@Tool` 注释\r\n\r\n### 提示\r\n\r\n服务器提供演示提示：\r\n\r\n- `mcp-demo`：交互式提示，引导用户完成数据库操作\r\n  - 生成适当的数据库模式和示例数据\r\n\r\n### 工具\r\n\r\n服务器提供六个核心工具：\r\n\r\n#### 查询工具\r\n\r\n- `read-neo4j-cypher`\r\n\r\n  - 执行Cypher读取查询以从数据库读取数据\r\n  - 输入：\r\n    - `query` （string）：要执行的Cypher查询\r\n  - 返回：查询结果为对象数组\r\n\r\n- `write-neo4j-cypher`\r\n\r\n  - 执行更新Cypher查询\r\n  - 输入：\r\n    - `query` （string）：Cypher更新查询\r\n  - 返回：一个结果摘要计数器 `{ nodes_updated: number, relationships_created: number, ... }`\r\n\r\n#### 架构工具\r\n\r\n- `get-neo4j-schema`\r\n  - 获取图形数据库中所有节点类型的列表，以及它们的名称、类型和与其他节点类型的关系\r\n  - 无需输入\r\n  - 返回：包含两个字典的节点标签列表，一个用于属性，另一个用于关系\r\n\r\n## 使用Cline客户端\r\n\r\n1.克隆存储库\r\n\r\n```cmd\r\ngit clone https://github.com/dsimile/mcp-neo4j-server-sse-java.git\r\n```\r\n\r\n2.建设项目\r\n\r\n- Java 17+\r\n\r\n```cmd\r\ncd mcp-neo4j-server-sse-java\r\n\r\nmvn clean install -DskipTests\r\n```\r\n\r\n3.运行服务器\r\n\r\n- WebFlux SSE模式（默认）\r\n  - spring.ai.mcp.server.stadio（默认）：false\r\n  - 服务器ip（默认）：0.0.0.0\r\n  - 服务器端口（默认）：8543\r\n  - Neo 4 J URI（默认）：Neo 4 J://localhost:7687\r\n  - Neo4j用户名（默认）：Neo4j\r\n  - Neo4j密码（默认）：Neo4j\r\n  - Neo4j数据库（默认）：Neo4j\r\n\r\n```cmd\r\njava -jar target/mcp-neo4j-server-sse-java-1.0-SNAPSHOT.jar\r\n```\r\n\r\n- STDIO模式\r\n\r\n要启用STDIO传输，请设置相应的属性：\r\n\r\n```\r\njava -Dspring.ai.mcp.server.stdio=true \\\r\n     -Dspring.main.web-application-type=none \\\r\n     -Dneo4j.uri=neo4j://localhost:7687 \\\r\n     -Dneo4j.username=neo4j \\\r\n     -Dneo4j.password=<your password> \\\r\n     -Dneo4j.database=<your database> \\\r\n     -Dlog.path=/absolute/path/to/ \\\r\n     -jar target/mcp-neo4j-server-sse-java-1.0-SNAPSHOT.jar\r\n```\r\n\r\n> 注意：请确保Neo4j正在运行并且可用于远程连接。\r\n\r\n### 已发布包\r\n\r\n将服务器添加到您的 `cline_mcp_settings.json`.\r\n\r\n- WebFlux SSE模式（默认）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"neo4j-remote\": {\r\n      \"url\": \"http://0.0.0.0:8543/sse\",\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n- STDIO模式\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"neo4j-local\": {\r\n      \"disabled\": false,\r\n      \"command\": \"java\",\r\n      \"args\": [\r\n        \"-Dspring.ai.mcp.server.stdio=true\",\r\n        \"-Dspring.main.web-application-type=none\",\r\n        \"-Dneo4j.uri=neo4j://localhost:7687\",\r\n        \"-Dneo4j.username=neo4j\",\r\n        \"-Dneo4j.password=<your password>\",\r\n        \"-Dneo4j.database=<your database>\",\r\n        \"-Dlog.path=/absolute/path/to/\",\r\n        \"-jar\",\r\n        \"/absolute/path/to/mcp-neo4j-server-sse-java-1.0-SNAPSHOT.jar\"\r\n      ],\r\n      \"transportType\": \"stdio\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/absolute/path/to/` 使用构建的jar文件或日志文件的实际路径。\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "neo4j-remote": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://0.0.0.0:8543/sse"
+  }
+ }
+}

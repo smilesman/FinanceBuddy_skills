@@ -1,0 +1,25 @@
+{
+ "id": "1405",
+ "kind": "mcp",
+ "name": "deepseek-thinker",
+ "fingerprint_md5": "59c205cbb68979787cbd044547661c86",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Deepseek Thinker MCP服务器\r\n\r\n[](https://smithery.ai/server/@ruixingshi/deepseek-thinker-mcp)\r\n\r\nMCP（模型上下文协议）为启用MCP的AI客户端（如Claude Desktop）提供Deepseek推理内容。支持从Deepsk API服务或本地Ollama服务器访问Deepsk的思维过程。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/d7spzsfuwz\"></a>\r\n\r\n## 核心功能\r\n\r\n- 🤖 **双模式支持**\r\n\r\n  - OpenAI API模式支持\r\n  - Ollama本地模式支持\r\n\r\n- 🎯 **专注推理**\r\n\r\n  - 捕捉Deepseek的思维过程\r\n  - 提供推理输出\r\n\r\n## 可用工具\r\n\r\n### 成为深度思考者\r\n\r\n- **描述**：使用Deepseek模型进行推理\r\n- **输入参数**:\r\n  - `originPrompt` （string）：用户的原始提示\r\n- **退货**：包含推理过程的结构化文本响应\r\n\r\n## 环境配置\r\n\r\n### OpenAI API模式\r\n\r\n设置以下环境变量：\r\n\r\n```bash\r\nAPI_KEY=<Your OpenAI API Key>\r\nBASE_URL=<API Base URL>\r\n```\r\n\r\n### Ollama模式\r\n\r\n设置以下环境变量：\r\n\r\n```bash\r\nUSE_OLLAMA=true\r\n```\r\n\r\n## 用法\r\n\r\n### 与AI客户端集成，如Claude Desktop\r\n\r\n将以下配置添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"deepseek-thinker\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"deepseek-thinker-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"API_KEY\": \"<Your API Key>\",\r\n        \"BASE_URL\": \"<Your Base URL>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用Ollama模式\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"deepseek-thinker\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"deepseek-thinker-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"USE_OLLAMA\": \"true\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 本地服务器配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"deepseek-thinker\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"/your-path/deepseek-thinker-mcp/build/index.js\"\r\n      ],\r\n      \"env\": {\r\n        \"API_KEY\": \"<Your API Key>\",\r\n        \"BASE_URL\": \"<Your Base URL>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 开发设置\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build project\r\nnpm run build\r\n\r\n# Run service\r\nnode build/index.js\r\n```\r\n\r\n## 常见问题解答\r\n\r\n### 响应如下：“MCP错误-32001:请求超时”\r\n\r\n当Deepsseek API响应太慢或推理内容输出太长，导致MCP服务器超时时，会发生此错误。\r\n\r\n## 技术栈\r\n\r\n- TypeScript\r\n- @模型上下文协议/sdk\r\n- OpenAI API\r\n- 没有\r\n- Zod（参数验证）\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。有关详细信息，请参阅LICENSE文件。\r\n",
+ "config": {
+  "deepseek-thinker": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "deepseek-thinker-mcp"
+   ],
+   "env": {
+    "API_KEY": "<Your API Key>",
+    "BASE_URL": "<Your Base URL>"
+   }
+  }
+ }
+}

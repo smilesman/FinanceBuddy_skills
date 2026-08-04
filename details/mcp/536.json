@@ -1,0 +1,33 @@
+{
+ "id": "536",
+ "kind": "mcp",
+ "name": "windows-driver-input",
+ "fingerprint_md5": "40cf1d3d8553ce73220b7cf6d3e9e1d5",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# Windows驱动程序输入MCP（独立）\r\n\r\n通过IbInputSimulator公开驱动程序级键盘/鼠标工具的独立MCP服务器。\r\n\r\n- 没有UIA树，没有视觉，没有外壳——只有输入\r\n- 后端：DLL优先(`ibsim-dll`，无需AHK）；可选AHK(`ibsim-ahk`，需要AutoHotkey v2 64位）\r\n- 支持Unicode文本、WASD、组合、保持和滚动\r\n\r\n存储库：https://github.com/win10ogod/windows-driver-input-mcp\r\n许可证：MIT\r\n\r\n## 跑\r\n\r\n- 标准 ： `uv run main.py --transport stdio`\r\n- 上海证券交易所 `uv run main.py --transport sse --host localhost --port 8001`\r\n\r\n通过env配置（显示默认值）：\r\n\r\n- `WINDOWS_MCP_INPUT_BACKEND=ibsim-dll` （或 `ibsim-ahk`)\r\n- `WINDOWS_MCP_INPUT_DRIVER=AnyDriver`\r\n- `WINDOWS_MCP_RATE_MOVE_HZ=120`, `WINDOWS_MCP_RATE_MAX_DELTA=60`, `WINDOWS_MCP_RATE_SMOOTH=0.0`\r\n- `WINDOWS_MCP_RATE_CPS=8.0`, `WINDOWS_MCP_RATE_KPS=12.0`\r\n- `WINDOWS_INPUT_LOG_LEVEL=INFO`\r\n- `IBSIM_DIR` 可选择指向 `IbInputSimulator` 目录（如果不是托管）\r\n\r\n## 工具\r\n\r\n- `Input-Info`\r\n- `Move-Tool`\r\n- `Click-Tool`\r\n- `Drag-Tool`\r\n- `Scroll-Tool`\r\n- `Type-Tool(text, method=unicode|clipboard|vk, press_enter=false)`\r\n- `Shortcut-Tool`\r\n- `Key-Tool(mode=tap|down|up|hold, key, times, interval_ms, hold_ms)`\r\n- `Combo-Tool(keys=[...], hold_ms=...)`\r\n- `Desktop-Info` （虚拟屏幕原点/大小、监视器计数）\r\n- `Window-Info` （活动窗口标题/类和矩形）\r\n- `Windows-List` （枚举窗口；通过parent_hownd枚举顶级窗口或子窗口；过滤器：查询、仅可见、包含最小化、包含隐藏、限制）\r\n- `Windows-Select` （按以下方式选择 `index` 或第一场比赛 `query`；支持parent_hownd和可见性标志；返回hwnd和详细信息）\r\n- `Windows-Activate` （放在前面；可选 `show=restore|minimize|maximize|show`, `topmost=true|false`)\r\n- `Windows-SetPos` （移动/调整大小； `loc=[x,y]`, `size=[w,h]`, `z=topmost|notopmost|top|bottom`)\r\n- `Windows-Close` （发送WM_CLOSE）\r\n- `Input-RateLimiter-Config`\r\n\r\n## IbInputSimulator\r\n\r\n地方 `IbInputSimulator/Binding.AHK2/IbInputSimulator.dll` 和 `IbInputSimulator.ahk` 或者：\r\n\r\n- 在此文件夹内(`input_driver_server/IbInputSimulator/Binding.AHK2/...`)，或\r\n- 集 `IBSIM_DIR` 到目录保存 `Binding.AHK2` （或其父母）。\r\n\r\n服务器会自动发现公共位置，并检查父仓库布局，但对于真正独立的软件包，则需要进行销售 `IbInputSimulator` 建议使用此文件夹。\r\n\r\n## 安装\r\n\r\n- 需求\r\n\r\n  - Windows 7–11\r\n  - Python 3.13+(`python --version`)\r\n  - UV包管理器： `pip install uv` （或参见https://github.com/astral-sh/uv)\r\n  - IbInputSimulator已在 `input_driver_server/IbInputSimulator`.\r\n  - 可选（仅在使用时 `ibsim-ahk`)：自动热键v2 64位\r\n\r\n- 安装程序（克隆一次）\r\n\r\n  - `git clone https://github.com/win10ogod/windows-driver-input-mcp.git`\r\n  - `cd windows-driver-input-mcp`\r\n  - （可选） `uv sync` 如果你更喜欢有固定存款的本地venv\r\n\r\n## 客户端配置代码段（JSON）\r\n\r\n在接受模型上下文协议服务器配置的客户端中使用这些JSON块。\r\n\r\n### 克劳德桌面（高级>添加本地MCP）\r\n\r\n将此JSON粘贴到“从JSON安装”对话框中：\r\n\r\n```json\r\n{\r\n  \"command\": \"uv\",\r\n  \"args\": [\r\n    \"--directory\",\r\n    \"<ABSOLUTE PATH TO>/windows-driver-input-mcp\",\r\n    \"run\",\r\n    \"main.py\"\r\n  ],\r\n  \"env\": {\r\n    \"WINDOWS_MCP_INPUT_BACKEND\": \"ibsim-dll\",\r\n    \"WINDOWS_MCP_INPUT_DRIVER\": \"AnyDriver\",\r\n    \"WINDOWS_MCP_RATE_MOVE_HZ\": \"120\",\r\n    \"WINDOWS_MCP_RATE_MAX_DELTA\": \"60\",\r\n    \"WINDOWS_MCP_RATE_SMOOTH\": \"0.0\",\r\n    \"WINDOWS_MCP_RATE_CPS\": \"8.0\",\r\n    \"WINDOWS_MCP_RATE_KPS\": \"12.0\",\r\n    \"WINDOWS_INPUT_LOG_LEVEL\": \"INFO\"\r\n  }\r\n}\r\n```\r\n\r\n或者作为扩展包安装：\r\n\r\n1. `cd windows-driver-input-mcp`\r\n\r\n1. `npx @anthropic-ai/mcpb pack`\r\n\r\n1. 在克劳德桌面：设置→ 扩展→ 高级设置→ 安装扩展→ 选择生成的 `.mcpb`.\r\n\r\n### 食品法典委员会CLI（TOML）\r\n\r\n编辑 `%USERPROFILE%/.codex/config.toml` 并添加：\r\n\r\n```toml\r\n[mcp_servers.windows-driver-input]\r\ncommand = \"uv\"\r\nargs = [\r\n  \"--directory\",\r\n  \"<ABSOLUTE PATH TO>/windows-driver-input-mcp\",\r\n  \"run\",\r\n  \"main.py\"\r\n]\r\nenv = {\r\n  WINDOWS_MCP_INPUT_BACKEND = \"ibsim-dll\",\r\n  WINDOWS_MCP_INPUT_DRIVER = \"AnyDriver\",\r\n  WINDOWS_MCP_RATE_MOVE_HZ = \"120\",\r\n  WINDOWS_MCP_RATE_MAX_DELTA = \"60\",\r\n  WINDOWS_MCP_RATE_SMOOTH = \"0.0\",\r\n  WINDOWS_MCP_RATE_CPS = \"8.0\",\r\n  WINDOWS_MCP_RATE_KPS = \"12.0\",\r\n  WINDOWS_INPUT_LOG_LEVEL = \"INFO\"\r\n}\r\n```\r\n\r\n保存并重新启动Codex CLI以加载新服务器。\r\n\r\n### Gemini CLI（JSON）\r\n\r\n编辑 `%USERPROFILE%/.gemini/settings.json` 并将以下内容合并到 `mcpServers`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"windows-driver-input\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"<ABSOLUTE PATH TO>/windows-driver-input-mcp\",\r\n        \"run\",\r\n        \"main.py\"\r\n      ],\r\n      \"env\": {\r\n        \"WINDOWS_MCP_INPUT_BACKEND\": \"ibsim-dll\",\r\n        \"WINDOWS_MCP_INPUT_DRIVER\": \"AnyDriver\",\r\n        \"WINDOWS_MCP_RATE_MOVE_HZ\": \"120\",\r\n        \"WINDOWS_MCP_RATE_MAX_DELTA\": \"60\",\r\n        \"WINDOWS_MCP_RATE_SMOOTH\": \"0.0\",\r\n        \"WINDOWS_MCP_RATE_CPS\": \"8.0\",\r\n        \"WINDOWS_MCP_RATE_KPS\": \"12.0\",\r\n        \"WINDOWS_INPUT_LOG_LEVEL\": \"INFO\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动Gemini CLI以应用配置。\r\n\r\n## 致谢\r\n\r\n- 部分功能改编自Windows MCP：\r\n  https://github.com/CursorTouch/Windows-MCP\r\n- 特别感谢IbInputSimulator提供驾驶员级输入：\r\n  https://github.com/Chaoses-Ib/IbInputSimulator\r\n",
+ "config": {
+  "windows-driver-input": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "<ABSOLUTE PATH TO>/windows-driver-input-mcp",
+    "run",
+    "main.py"
+   ],
+   "env": {
+    "WINDOWS_MCP_INPUT_BACKEND": "ibsim-dll",
+    "WINDOWS_MCP_INPUT_DRIVER": "AnyDriver",
+    "WINDOWS_MCP_RATE_MOVE_HZ": "120",
+    "WINDOWS_MCP_RATE_MAX_DELTA": "60",
+    "WINDOWS_MCP_RATE_SMOOTH": "0.0",
+    "WINDOWS_MCP_RATE_CPS": "8.0",
+    "WINDOWS_MCP_RATE_KPS": "12.0",
+    "WINDOWS_INPUT_LOG_LEVEL": "INFO"
+   }
+  }
+ }
+}

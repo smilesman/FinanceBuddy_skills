@@ -1,0 +1,24 @@
+{
+ "id": "636",
+ "kind": "mcp",
+ "name": "dynamic-mockups",
+ "fingerprint_md5": "d5384a0d6c4935be19b49fcbb65833f7",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 动态模型MCP服务器\r\n\r\n官方MCP服务器 [动态模型](https://dynamicmockups.com) -产品模型生成器API。直接从Claude、Cursor和Windsurf等人工智能助手创建专业模型。\r\n\r\n## 需求\r\n\r\n- Node.js 18或更高版本\r\n- 动态模型API键- [在这里买一个](https://app.dynamicmockups.com/dashboard-api)\r\n\r\n## 安装\r\n\r\n将以下内容添加到MCP客户端配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dynamic-mockups\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@dynamic-mockups/mcp\"],\r\n      \"env\": {\r\n        \"DYNAMIC_MOCKUPS_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 可爱的\r\n\r\n对于Lovable，只需输入：\r\n\r\n- **服务器URL**: `https://mcp.dynamicmockups.com`\r\n- **API密钥**：您的动态模型API密钥([在这里买一个](https://app.dynamicmockups.com/dashboard-api))\r\n\r\n### HTTP传输\r\n\r\n如果你想通过HTTP而不是NPX连接，请使用：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dynamic-mockups\": {\r\n      \"type\": \"http\",\r\n      \"url\": \"https://mcp.dynamicmockups.com\",\r\n      \"headers\": {\r\n        \"x-api-key\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 配置文件位置\r\n\r\n|客户端|配置文件路径|\r\n|--------|------------------|\r\n|克劳德桌面（macOS）| `~/Library/Application Support/Claude/claude_desktop_config.json` |\r\n|克劳德桌面（Windows）| `%APPDATA%\\Claude\\claude_desktop_config.json` |\r\n|克劳德代码（CLI）| `.mcp.json` 在项目根中|\r\n|光标| `.cursor/mcp.json` 在项目中|\r\n|风帆冲浪| `~/.codeium/windsurf/mcp_config.json` |\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_api_info` |获取API知识库（计费、费率限制、格式、最佳实践、支持）|\r\n| `embed_mockup_editor` |在您的应用程序中实现可嵌入的原型编辑器|\r\n| `get_catalogs` |检索所有可用目录|\r\n| `get_collections` |检索集合（可选按目录筛选）|\r\n| `create_collection` |创建新收藏|\r\n| `get_mockups` |获取带有可选过滤器的可用模型列表|\r\n| `get_mockup_by_uuid` |通过UUID检索特定模型|\r\n| `search_products` |搜索用于启动MockAnything AI代的POD产品目录|\r\n| `get_product_details` |获取产品的装饰区域（位置）、颜色和尺寸——使用位置将艺术品放置在特定位置|\r\n| `get_styles` |列出可用于MockAnything AI生成的视觉样式（可选按模型过滤）|\r\n| `create_mockup` |从提示或图像URL创建新的AI模型模板|\r\n| `get_mockup_creation_status` |轮询模型创建任务的状态|\r\n| `create_render` |使用设计资产创建单个模型渲染（1学分）|\r\n| `create_batch_render` |在一个请求中渲染多个模型（每张图像1学分）|\r\n| `export_print_files` |导出高分辨率打印文件用于生产|\r\n| `upload_psd` |上传PSD文件，并可选择创建模型模板|\r\n| `delete_psd` |删除PSD文件，并可选择删除相关模型|\r\n| `tool_create_embroidery_effect` |将任何图像转换为逼真的刺绣/缝合效果|\r\n\r\n## 使用示例\r\n\r\n问你的AI助手：\r\n\r\n|用例|示例提示|\r\n|--------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|\r\n|嵌入编辑器|“将完整的模型编辑器添加到我的web应用程序中”|\r\n|列出目录|“获取我的动态模型目录”|\r\n|浏览模型|“向我展示我T恤系列中的所有模型”|\r\n|单渲染|“使用url中的任何T恤模型和我的艺术品创建模型渲染：https://example.com/my-design.png\"                               |\r\n|批处理渲染|“从url渲染我的艺术作品：https://example.com/my-design.png冬季T恤系列中的所有模型”|\r\n|创建系列|“创建一个名为2025年夏季连帽衫的新系列”|\r\n|上传PSD |“从url上传我的PSD模型：https://example.com/my-mockup.psd并从中创建模板”|\r\n|API信息|“动态模型的速率限制和支持的文件格式是什么？”|\r\n|打印文件|“为我的海报模型导出300 DPI的打印就绪文件”|\r\n|刺绣效果|“将我的徽标从url转换为刺绣效果：https://example.com/my-logo.png\"                                                     |\r\n|从Prompt创建一个模型|“创建一个穿着Gildan 5000 t恤跑步的人的模型，然后从url渲染我的标志：https://example.com/my-logo.png关于它”|\r\n|装饰特定区域|“创建Gildan 5000 t恤模型，并将我的标志放在url中：https://example.com/my-logo.png左胸”|\r\n|从图片URL创建模型|“将此产品照片转换为模型：https://example.com/product.jpg，并在上面渲染我的艺术作品”|\r\n\r\n## 错误处理\r\n\r\n服务器返回常见问题的明确错误消息：\r\n\r\n- **未配置API密钥** -设置 `DYNAMIC_MOCKUPS_API_KEY` 在您的环境中\r\n- **UUID无效** -确保UUID格式正确\r\n- **API错误** -查看返回的消息以了解详细信息\r\n\r\n## 链接\r\n\r\n- [动态模型网站](https://dynamicmockups.com)\r\n- [API文档](https://docs.dynamicmockups.com)\r\n- [获取API密钥](https://app.dynamicmockups.com/dashboard-api)\r\n- [GitHub 仓库](https://github.com/dynamic-mockups/mcp)\r\n- [GitHub问题](https://github.com/dynamic-mockups/mcp/issues)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "dynamic-mockups": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@dynamic-mockups/mcp"
+   ],
+   "env": {
+    "DYNAMIC_MOCKUPS_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

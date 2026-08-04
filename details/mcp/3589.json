@@ -1,0 +1,23 @@
+{
+ "id": "3589",
+ "kind": "mcp",
+ "name": "reddit-insights",
+ "fingerprint_md5": "c0b90689d49ed6d891851be50d917a4b",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Reddit Insights MCP服务器\r\n\r\n\r\nA. [模型上下文协议（MCP）](https://modelcontextprotocol.io/) 提供人工智能驱动的Reddit搜索和发现功能的服务器。使用语义AI搜索数百万条Reddit帖子，探索子版块，发现热门话题。\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g reddit-insights-mcp\r\n```\r\n\r\n或者直接使用npx运行：\r\n\r\n```bash\r\nnpx reddit-insights-mcp\r\n```\r\n\r\n## 配置\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的Claude Desktop配置文件中：\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"reddit-insights\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"reddit-insights-mcp\"],\r\n      \"env\": {\r\n        \"REDDIT_INSIGHTS_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `REDDIT_INSIGHTS_API_KEY` |没有|用于高级功能的API密钥|\r\n\r\n获取API密钥： [reddit-insights.com](https://reddit-insights.com)\r\n\r\n## 可用工具\r\n\r\n### `reddit_search`\r\n\r\n使用语义AI搜索Reddit对话。\r\n\r\n**参数：**\r\n\r\n- `query` （字符串，必填）：自然语言搜索查询\r\n- `limit` （数字，可选）：最大结果（1-100，默认值：20）\r\n\r\n**例子：**\r\n\r\n```\r\nSearch for discussions about mechanical keyboards for programming\r\n```\r\n\r\n### `reddit_list_subreddits`\r\n\r\n获取可用子版块的分页列表。\r\n\r\n**参数：**\r\n\r\n- `page` （数字，可选）：页码（默认值：1）\r\n- `limit` （数字，可选）：每页结果（1-100，默认值：20）\r\n- `search` （字符串，可选）：按名称、标题或描述筛选\r\n\r\n### `reddit_get_subreddit`\r\n\r\n获取特定subreddit的详细信息。\r\n\r\n**参数：**\r\n\r\n- `subreddit` （字符串，必填）：不带r/前缀的子目录名称\r\n\r\n### `reddit_get_trends`\r\n\r\n获取Reddit趋势文章和见解。\r\n\r\n**参数：**\r\n\r\n- `page` （数字，可选）：页码（默认值：1）\r\n- `perPage` （数字，可选）：每页结果（默认值：12）\r\n- `filter` （字符串，可选）：时间段-“最近”、“今天”、“周”、“月”\r\n- `category` （字符串，可选）：按类别筛选\r\n\r\n## 用法示例\r\n\r\n**研究一个主题：**\r\n\r\n```\r\nYou: What are developers saying about React Server Components?\r\nClaude: [Uses reddit_search] Found 45 results...\r\n```\r\n\r\n**探索社区：**\r\n\r\n```\r\nYou: Tell me about r/typescript\r\nClaude: [Uses reddit_get_subreddit] r/typescript has 285,432 subscribers...\r\n```\r\n\r\n**发现趋势：**\r\n\r\n```\r\nYou: What's trending in tech this week?\r\nClaude: [Uses reddit_get_trends] Top trending topics...\r\n```\r\n\r\n## 链接\r\n\r\n- [网站](https://reddit-insights.com)\r\n- [GitHub](https://github.com/lignertys/reddit-insights-mcp)\r\n- [npm](https://www.npmjs.com/package/reddit-insights-mcp)\r\n- [MCP注册表](https://registry.modelcontextprotocol.io)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "reddit-insights": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "reddit-insights-mcp"
+   ],
+   "env": {
+    "REDDIT_INSIGHTS_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

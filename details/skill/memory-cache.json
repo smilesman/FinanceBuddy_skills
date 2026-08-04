@@ -1,0 +1,12 @@
+{
+ "id": "memory-cache",
+ "kind": "skill",
+ "name": "memory-cache",
+ "fingerprint_md5": "d17d79091d6e9e6669dc3bc18e01556d",
+ "download_count": 0,
+ "category": "缓存",
+ "tags": "",
+ "version": "",
+ "readme": "# 内存缓存\r\n\r\nOpenClaw 代理的标准化 Redis 支持缓存系统。\r\n\r\n## 先决条件\r\n- **二进制文件**: 主机上必须可用 `python3`。\r\n- **凭证**: `REDIS_URL` 环境变量（例如，`redis://localhost:6379/0`）。\r\n\r\n## 设置\r\n1. 将 `env.example.txt` 复制到 `.env`。\r\n2. 在 `.env` 中配置你的连接。\r\n3. 依赖项列在 `requirements.txt` 中。\r\n\r\n## 核心工作流\r\n\r\n### 1. 存储和检索\r\n- **存储**: `python3 $WORKSPACE/skills/memory-cache/scripts/cache_manager.py set mema:cache:<name> <value> [--ttl 3600]`\r\n- **获取**: `python3 $WORKSPACE/skills/memory-cache/scripts/cache_manager.py get mema:cache:<name>`\r\n\r\n### 2. 搜索和维护\r\n- **扫描**: `python3 $WORKSPACE/skills/memory-cache/scripts/cache_manager.py scan [pattern]`\r\n- **Ping**: `python3 $WORKSPACE/skills/memory-cache/scripts/cache_manager.py ping`\r\n\r\n## 键命名约定\r\n\r\n严格执行 `mema:` 前缀：\r\n- `mema:context:*` – 会话状态。\r\n- `mema:cache:*` – 易失性数据。\r\n- `mema:state:*` – 持久状态。",
+ "config": {}
+}

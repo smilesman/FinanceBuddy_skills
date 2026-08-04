@@ -1,0 +1,25 @@
+{
+ "id": "3032",
+ "kind": "mcp",
+ "name": "bach-weather_by_api_ninjas",
+ "fingerprint_md5": "7b2967ad780bc0741175ccde69fd97a0",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# Weather By Api Ninjas MCP Server\r\n\r\n[English](./README_EN.md) | 简体中文 | [繁體中文](./README_ZH-TW.md)\r\n\r\n用于访问 Weather By Api Ninjas API 的 MCP 服务器。\r\n\r\n## 🚀 使用 EMCP 平台快速体验\r\n\r\n**[EMCP](https://sit-emcp.kaleido.guru)** 是一个强大的 MCP 服务器管理平台，让您无需手动配置即可快速使用各种 MCP 服务器！\r\n\r\n### 快速开始：\r\n\r\n1. 🌐 访问 **[EMCP 平台](https://sit-emcp.kaleido.guru)**\r\n2. 📝 注册并登录账号\r\n3. 🎯 进入 **MCP 广场**，浏览所有可用的 MCP 服务器\r\n4. 🔍 搜索或找到本服务器（`bach-weather_by_api_ninjas`）\r\n5. 🎉 点击 **\"安装 MCP\"** 按钮\r\n6. ✅ 完成！即可在您的应用中使用\r\n\r\n### EMCP 平台优势：\r\n\r\n- ✨ **零配置**：无需手动编辑配置文件\r\n- 🎨 **可视化管理**：图形界面轻松管理所有 MCP 服务器\r\n- 🔐 **安全可靠**：统一管理 API 密钥和认证信息\r\n- 🚀 **一键安装**：MCP 广场提供丰富的服务器选择\r\n- 📊 **使用统计**：实时查看服务调用情况\r\n\r\n立即访问 **[EMCP 平台](https://sit-emcp.kaleido.guru)** 开始您的 MCP 之旅！\r\n\r\n---\r\n\r\n## 简介\r\n\r\n这是一个 MCP 服务器，用于访问 Weather By Api Ninjas API。\r\n\r\n- **PyPI 包名**: `bach-weather_by_api_ninjas`\r\n- **版本**: 1.0.0\r\n- **传输协议**: stdio\r\n\r\n## 安装\r\n\r\n### 从 PyPI 安装:\r\n\r\n```bash\r\npip install bach-weather_by_api_ninjas\r\n```\r\n\r\n### 从源码安装:\r\n\r\n```bash\r\npip install -e .\r\n```\r\n\r\n## 运行\r\n\r\n### 方式 1: 使用 uvx（推荐，无需安装）\r\n\r\n```bash\r\n# 运行（uvx 会自动安装并运行）\r\nuvx --from bach-weather_by_api_ninjas bach_weather_by_api_ninjas\r\n\r\n# 或指定版本\r\nuvx --from bach-weather_by_api_ninjas@latest bach_weather_by_api_ninjas\r\n```\r\n\r\n### 方式 2: 直接运行（开发模式）\r\n\r\n```bash\r\npython server.py\r\n```\r\n\r\n### 方式 3: 安装后作为命令运行\r\n\r\n```bash\r\n# 安装\r\npip install bach-weather_by_api_ninjas\r\n\r\n# 运行（命令名使用下划线）\r\nbach_weather_by_api_ninjas\r\n```\r\n\r\n## 配置\r\n\r\n### API 认证\r\n\r\n此 API 需要认证。请设置环境变量:\r\n\r\n```bash\r\nexport API_KEY=\"your_api_key_here\"\r\n```\r\n\r\n### 环境变量\r\n\r\n| 变量名 | 说明 | 必需 |\r\n|--------|------|------|\r\n| `API_KEY` | API 密钥 | 是 |\r\n| `PORT` | 不适用 | 否 |\r\n| `HOST` | 不适用 | 否 |\r\n\r\n### 在 Cursor 中使用\r\n\r\n编辑 Cursor MCP 配置文件 `~/.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bach-weather_by_api_ninjas\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--from\", \"bach-weather_by_api_ninjas\", \"bach_weather_by_api_ninjas\"],\r\n      \"env\": {\r\n        \"API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 在 Claude Desktop 中使用\r\n\r\n编辑 Claude Desktop 配置文件 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bach-weather_by_api_ninjas\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--from\", \"bach-weather_by_api_ninjas\", \"bach_weather_by_api_ninjas\"],\r\n      \"env\": {\r\n        \"API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n此服务器提供以下工具:\r\n\r\n### `v1weather`\r\n\r\nAPI Ninjas Weather API endpoint.\r\n\r\n**端点**: `GET /v1/weather`\r\n\r\n**参数**:\r\n\r\n- `lat` (number): Latitude of desired location. If used, lon parameter must also be supplied.\r\n\r\n- `lon` (string): Longitude of desired location. If used, lat parameter must also be supplied.\r\n\r\n- `zip` (number): 5-digit Zip code (United States only).\r\n\r\n- `city` (string): City name.\r\n\r\n- `state` (string): US state (United States only).\r\n\r\n- `country` (string): Country name.\r\n\r\n---\r\n\r\n## 技术栈\r\n\r\n- **传输协议**: stdio\r\n- **HTTP 客户端**: httpx\r\n\r\n## 许可证\r\n\r\nMIT License - 详见 [LICENSE](./LICENSE) 文件。\r\n\r\n## 开发\r\n\r\n此服务器由 [API-to-MCP](https://github.com/BACH-AI-Tools/api-to-mcp) 工具生成。\r\n\r\n版本: 1.0.0\r\n",
+ "config": {
+  "bach-weather_by_api_ninjas": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "bach-weather_by_api_ninjas",
+    "bach_weather_by_api_ninjas"
+   ],
+   "env": {
+    "API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

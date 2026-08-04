@@ -1,0 +1,23 @@
+{
+ "id": "2087",
+ "kind": "mcp",
+ "name": "yfinance",
+ "fingerprint_md5": "3d96fede8bbd1336fdf87c43f0018034",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 雅虎金融MCP服务器\r\n\r\n\r\n  [English](README.md) | [中文](README.zh.md)\r\n\r\n\r\n这是一个模型上下文协议（MCP）服务器，提供来自雅虎财经的全面财务数据。它允许您检索有关股票的详细信息，包括历史价格、公司信息、财务报表、期权数据和市场新闻。\r\n\r\n\r\n## 演示\r\n\r\n\r\n## MCP工具\r\n\r\n服务器通过模型上下文协议公开以下工具：\r\n\r\n### 股票信息\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_historical_stock_prices` |获取具有可定制周期和间隔的股票的历史OHLCV数据|\r\n| `get_stock_info` |获取全面的股票数据，包括价格、指标和公司详细信息|\r\n| `get_yahoo_finance_news` |获取股票的最新新闻文章|\r\n| `get_stock_actions` |获取股票股息和拆分历史记录|\r\n\r\n### 财务报表\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_financial_statement` |获取损益表、资产负债表或现金流量表（年度/季度）|\r\n| `get_holder_info` |获取主要持有人、机构持有人、共同基金或内幕交易|\r\n\r\n### 选项数据\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_option_expiration_dates` |获取可用选项的到期日期|\r\n| `get_option_chain` |获取特定到期日期和类型（看涨/看跌）的期权链|\r\n\r\n### 分析师信息\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_recommendations` |获取分析师建议或升级/降级历史记录|\r\n\r\n## 真实世界用例\r\n\r\n使用此MCP服务器，您可以使用Claude执行以下操作：\r\n\r\n### 股票分析\r\n\r\n- **价格分析**：“给我看看过去6个月AAPL的历史股价，每天都有。”\r\n- **财务健康状况**：“获取微软的季度资产负债表。”\r\n- **性能指标**：“从股票信息来看，特斯拉的关键财务指标是什么？”\r\n- **趋势分析**：“比较亚马逊和谷歌的季度损益表。”\r\n- **现金流量分析**：“给我看看NVIDIA的年度现金流量表。”\r\n\r\n### 市场调研\r\n\r\n- **新闻分析**：“获取有关元平台的最新新闻文章。”\r\n- **机构活动**：“给我看看苹果股票的机构持有者。”\r\n- **内幕交易**：“特斯拉最近的内幕交易是什么？”\r\n- **期权分析**：“获取到期日为2024-06-21的SPY期权链。”\r\n- **分析师覆盖范围**：“过去3个月，分析师对亚马逊有什么建议？”\r\n\r\n### 投资研究\r\n\r\n- “使用微软最新的季度财务报表，对微软的财务状况进行全面分析。”\r\n- “比较可口可乐和百事可乐的股息历史和股票分割。”\r\n- “分析特斯拉过去一年的机构所有权变化。”\r\n- “生成一份关于30天后到期的苹果股票期权市场活动的报告。”\r\n- “总结过去6个月科技行业分析师的最新升级和降级。”\r\n\r\n## 需求\r\n\r\n- Python 3.11或更高版本\r\n- 依赖关系如所列 `pyproject.toml`，包括：\r\n  - 主控程序\r\n  - y融资\r\n  - 熊猫\r\n  - 皮丹提克\r\n  - 以及用于数据处理的其他软件包\r\n\r\n## 设置\r\n\r\n### 推荐：跑步 `uvx`\r\n\r\n直接从存储库运行服务器，而无需创建本地虚拟环境：\r\n\r\n```bash\r\nuvx --from git+https://github.com/Alex2Yang97/yahoo-finance-mcp yahoo-finance-mcp\r\n```\r\n\r\n### 本地开发\r\n\r\n1. 克隆此存储库：\r\n\r\n   ```bash\r\n   git clone https://github.com/Alex2Yang97/yahoo-finance-mcp.git\r\n   cd yahoo-finance-mcp\r\n   ```\r\n\r\n1. 创建和激活虚拟环境并安装依赖项：\r\n\r\n   ```bash\r\n   uv venv\r\n   source .venv/bin/activate  # On Windows: .venv\\Scripts\\activate\r\n   uv pip install -e .\r\n   ```\r\n\r\n## 用法\r\n\r\n### 快速开始\r\n\r\n使用以下命令运行打包的入口点：\r\n\r\n```bash\r\nuvx --from git+https://github.com/Alex2Yang97/yahoo-finance-mcp yahoo-finance-mcp\r\n```\r\n\r\n对于此签出中的本地更改，请使用：\r\n\r\n```bash\r\nuvx --from . yahoo-finance-mcp\r\n```\r\n\r\n### 发展模式\r\n\r\n如果您在本地克隆中工作，并希望直接运行源代码树：\r\n\r\n```bash\r\nuv run server.py\r\n```\r\n\r\n### 与Claude for Desktop集成\r\n\r\n要将此服务器与Claude for Desktop集成，请执行以下操作：\r\n\r\n1. 将Claude for Desktop安装到本地计算机。\r\n\r\n1. 将VS Code安装到本地计算机。然后运行以下命令打开 `claude_desktop_config.json` 文件：\r\n\r\n   - MacOS： `code ~/Library/Application\\ Support/Claude/claude_desktop_config.json`\r\n   - 窗户： `code $env:AppData\\Claude\\claude_desktop_config.json`\r\n\r\n1. 编辑Claude for Desktop配置文件，位于：\r\n\r\n   - macOS：\r\n\r\n     ```json\r\n     {\r\n       \"mcpServers\": {\r\n         \"yfinance\": {\r\n           \"command\": \"uvx\",\r\n           \"args\": [\r\n             \"--from\",\r\n             \"git+https://github.com/Alex2Yang97/yahoo-finance-mcp\",\r\n             \"yahoo-finance-mcp\"\r\n           ]\r\n         }\r\n       }\r\n     }\r\n     ```\r\n\r\n   - 窗户：\r\n\r\n     ```json\r\n     {\r\n       \"mcpServers\": {\r\n         \"yfinance\": {\r\n           \"command\": \"uvx\",\r\n           \"args\": [\r\n             \"--from\",\r\n             \"git+https://github.com/Alex2Yang97/yahoo-finance-mcp\",\r\n             \"yahoo-finance-mcp\"\r\n           ]\r\n         }\r\n       }\r\n     }\r\n     ```\r\n\r\n   - **备注**：您可能需要在命令字段中输入uv可执行文件的完整路径。你可以通过跑步来获得这个 `which uv` 在MacOS/Linux或 `where uv` 在Windows上。\r\n\r\n1. 重新启动桌面版的Claude\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "yfinance": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/Alex2Yang97/yahoo-finance-mcp",
+    "yahoo-finance-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

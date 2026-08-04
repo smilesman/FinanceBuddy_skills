@@ -1,0 +1,21 @@
+{
+ "id": "1744",
+ "kind": "mcp",
+ "name": "stdio-mcp-server",
+ "fingerprint_md5": "1221f904aa51f4c81ccf5d7f49a74dd5",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# stdout mcp服务器\r\n\r\n一种模型上下文协议（MCP）服务器，通过命名管道系统捕获和管理stdout日志。此服务器特别适用于：\r\n\r\n- 从多个进程或应用程序中捕获日志，并使其可用于在Cursor IDE中进行调试。\r\n- 实时监控应用程序输出，并提供MCP接口以查询、过滤和分析日志\r\n\r\n## 运作原理\r\n\r\n1. 服务器在特定位置创建一个命名管道(`/tmp/stdout_pipe` 在Unix/MacOS或 `\\\\.\\pipe\\stdout_pipe` 在Windows上）\r\n\r\n1. 任何应用程序都可以使用标准输出重定向将日志写入此管道。例如：\r\n\r\n```bash\r\nyour_application | tee /tmp/stdout_pipe # or\r\nyour_application > /tmp/stdout_pipe\r\n```\r\n\r\n3. 服务器监控管道，捕获所有传入日志，并维护最近100个条目的历史记录\r\n\r\n1. 通过MCP工具，您可以查询、过滤和分析这些日志\r\n\r\n## 系统要求\r\n\r\n安装前，请确保您已：\r\n\r\n- Node.js v18或更新版本\r\n\r\n## 安装选项\r\n\r\n### 选项1：在游标中安装\r\n\r\n1. 打开光标并导航到 `Cursor > Settings > MCP Servers`\r\n1. 点击“添加新的MCP服务器”\r\n1. 使用以下配置更新MCP设置文件：\r\n\r\n```sh\r\nname: stdout-mcp-server\r\ntype: command\r\ncommand: npx stdout-mcp-server\r\n```\r\n\r\n### 选项2：在其他MCP客户端中安装\r\n\r\n## 在其他MCP客户端中安装\r\n\r\n对于macOS/Linux：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"stdio-mcp-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"stdio-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n对于Windows：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-installer\": {\r\n      \"command\": \"cmd.exe\",\r\n      \"args\": [\"/c\", \"npx\", \"stdio-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用示例\r\n\r\n### 重定向应用程序日志\r\n\r\n要将应用程序的输出发送到管道，请执行以下操作：\r\n\r\n```bash\r\n# Unix/MacOS\r\nyour_application > /tmp/stdout_pipe\r\n\r\n# Windows (PowerShell)\r\nyour_application > \\\\.\\pipe\\stdout_pipe\r\n```\r\n\r\n### 监控多个应用程序\r\n\r\n您可以重定向来自多个来源的日志：\r\n\r\n```bash\r\n# Application 1\r\napp1 > /tmp/stdout_pipe &\r\n\r\n# Application 2\r\napp2 > /tmp/stdout_pipe &\r\n```\r\n\r\n### 查询日志\r\n\r\n您的AI将使用 `get-logs` MCP客户端中用于检索和过滤日志的工具：\r\n\r\n```typescript\r\n// Get last 50 logs\r\nget-logs()\r\n\r\n// Get last 100 logs containing \"error\"\r\nget-logs({ lines: 100, filter: \"error\" })\r\n\r\n// Get logs since a specific timestamp\r\nget-logs({ since: 1648675200000 }) // Unix timestamp in milliseconds\r\n```\r\n\r\n## 特性\r\n\r\n- 命名管道创建和监控\r\n- 实时日志捕获和存储\r\n- 通过MCP工具进行日志过滤和检索\r\n- 可配置的日志历史记录（默认值：100条）\r\n- 跨平台支持（基于Windows和Unix的系统）\r\n\r\n## 命名管道位置\r\n\r\n- 窗户： `\\\\.\\pipe\\stdout_pipe`\r\n- Unix/MacOS： `/tmp/stdout_pipe`\r\n\r\n## 可用工具\r\n\r\n### 获取日志\r\n\r\n使用可选筛选从命名管道中检索日志：\r\n\r\n参数：\r\n\r\n- `lines` （可选，默认值：50）：要返回的日志行数\r\n- `filter` （可选）：按以下方式筛选日志的文本\r\n- `since` （可选）：获取日志的时间戳\r\n\r\n示例响应：\r\n\r\n```typescript\r\n// Response format\r\n{\r\n  content: [{\r\n    type: \"text\",\r\n    text: \"[2024-03-20T10:15:30.123Z] Application started\\n[2024-03-20T10:15:31.456Z] Connected to database\"\r\n  }]\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n",
+ "config": {
+  "stdio-mcp-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "stdio-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

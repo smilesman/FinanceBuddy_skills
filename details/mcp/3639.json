@@ -1,0 +1,18 @@
+{
+ "id": "3639",
+ "kind": "mcp",
+ "name": "siloah-travel",
+ "fingerprint_md5": "eaa5d65d1c0ffa74177d31473c20dedf",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Siloah旅行MCP服务器\r\n\r\n直接从您的人工智能助手搜索全球70000多次游轮航行、678艘船和62条游轮。\r\n\r\n内置于 [模型上下文协议（MCP）](https://modelcontextprotocol.io)，部署在Cloudflare Workers上。\r\n\r\n## 快速开始\r\n\r\n将此URL添加到您的MCP客户端（Claude Desktop、Cursor等）：\r\n\r\n```\r\nhttps://mcp.siloah.travel/mcp\r\n```\r\n\r\n不需要API密钥。无需安装。\r\n\r\n### 克劳德桌面\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"siloah-travel\": {\r\n      \"url\": \"https://mcp.siloah.travel/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后问克劳德这样的问题：\r\n\r\n- *“找到2027年7月价格低于3000美元的地中海游轮”*\r\n- *“银海号有什么船？”*\r\n- *“告诉我Silver Nova的餐饮选择”*\r\n- *“向我展示从东京出发的游轮”*\r\n\r\n## 工具\r\n\r\n### `searchVoyages`\r\n\r\n按目的地、日期、品牌、价格和港口搜索游轮航行。\r\n\r\n|参数|说明|示例|\r\n|-----------|-------------|---------|\r\n| `destination` |地区名称| `Mediterranean`, `Caribbean`, `Alaska` |\r\n| `departureCity` |出发港口城市| `Miami`, `Tokyo`, `Southampton` |\r\n| `arrivalCity` |到达港口城市| `Venice`, `Sydney` |\r\n| `viaCity` |停靠港| `Santorini`, `Bali` |\r\n| `departureCountryCode` |出发国ISO| `US`, `JP`, `TW` |\r\n| `arrivalCountryCode` |抵达国家ISO| `IT`, `AU` |\r\n| `viaCountryCode` |通过国家ISO| `GR`, `ID` |\r\n| `brandName` |游轮名称| `Silversea`, `MSC`, `Ponant` |\r\n| `monthFrom` |开始月份| `2027-07` |\r\n| `minNights` / `maxNights` |持续时间范围| `7` / `14` |\r\n| `maxPrice` |每人最高价格（美元）| `5000` |\r\n\r\n### `searchBrands`\r\n\r\n按名称或级别搜索游轮。\r\n\r\n|参数|说明|示例|\r\n|-----------|-------------|---------|\r\n| `name` |品牌名称| `Silversea`, `Viking` |\r\n| `tier` |品牌层次| `ultra_luxury`, `luxury`, `popular` |\r\n\r\n### `searchShips`\r\n\r\n按名称、品牌、类型或载客量搜索船舶。\r\n\r\n|参数|说明|示例|\r\n|-----------|-------------|---------|\r\n| `name` |船舶名称| `Silver Nova` |\r\n| `brandName` |游轮| `Silversea` |\r\n| `shipType` |船舶类型| `ocean`, `river`, `expedition` |\r\n| `minPassengers` / `maxPassengers` |容量范围| `100` / `500` |\r\n\r\n### `searchByContent`\r\n\r\nRAG支持跨船餐厅、设施、客舱类型、港口指南和品牌特征的搜索。\r\n\r\n|参数|说明|示例|\r\n|-----------|-------------|---------|\r\n| `query` |自然语言问题| `Silver Nova restaurants` |\r\n| `source` |按类别筛选| `ship_dining`, `ship_facilities`, `cabin_types`, `canonical_ports` |\r\n\r\n## REST API\r\n\r\n同样的数据可以通过REST端点获得，与ChatGPT操作兼容：\r\n\r\n```\r\nGET https://mcp.siloah.travel/api/voyages?destination=Mediterranean&maxPrice=3000\r\nGET https://mcp.siloah.travel/api/brands?tier=luxury\r\nGET https://mcp.siloah.travel/api/ships?brandName=Silversea\r\nGET https://mcp.siloah.travel/api/search?query=Silver+Nova+restaurants\r\n```\r\n\r\nOpenAPI规范： [`https://mcp.siloah.travel/openapi.json`](https://mcp.siloah.travel/openapi.json)\r\n\r\n## 数据覆盖\r\n\r\n|类别|计数|\r\n|----------|-------|\r\n|行程|70000+|\r\n|船只|678|\r\n|游轮|62（20活跃）|\r\n|端口|6700+|\r\n|客舱类型|11000+|\r\n|语言|30|\r\n\r\n数据来自多个提供商，并定期更新。\r\n\r\n## 技术栈\r\n\r\n- **运行时**: [Cloudflare员工](https://workers.cloudflare.com)\r\n- **协议**: [MCP-SDK](https://github.com/modelcontextprotocol/typescript-sdk) （流式HTTP传输）\r\n- **数据库**: [Supabase](https://supabase.com) （PostgreSQL）\r\n- **检索增强生成**：OpenAI嵌入+pgvector\r\n\r\n## 关于\r\n\r\n建造于 [西罗亚旅游](https://siloah.travel) --全球旅行社的白标邮轮预订平台。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "siloah-travel": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.siloah.travel/mcp"
+  }
+ }
+}

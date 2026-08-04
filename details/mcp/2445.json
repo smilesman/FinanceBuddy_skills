@@ -1,0 +1,22 @@
+{
+ "id": "2445",
+ "kind": "mcp",
+ "name": "berlin-services",
+ "fingerprint_md5": "bef093194814f16eb68a886b11bbb0ed",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 柏林服务MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，提供对柏林管理服务（Dienstleistungen）数据的访问。该服务器允许像克劳德这样的人工智能助手搜索和检索柏林当局提供的1000多项公共服务的信息。\r\n\r\n## 特性\r\n\r\n- **搜索服务**：按名称或描述搜索服务\r\n- **服务详情**：获取有关特定服务的全面信息，包括：\r\n  - 要求和先决条件\r\n  - 费用和处理时间\r\n  - 所需表格和文件\r\n  - 在线处理选项\r\n  - 预约预约链接\r\n  - 主管部门\r\n  - 法律参考\r\n- **列表服务**：浏览所有可用服务\r\n- **统计**：获取数据集信息和统计数据\r\n\r\n## 安装\r\n\r\n### 选项1：使用npx（推荐-无需安装！）\r\n\r\n无需安装！只需通过npx直接使用即可。\r\n\r\n### 选项2：克隆和构建（用于开发）\r\n\r\n```bash\r\n# 1. Clone the repository\r\ngit clone https://github.com/ingohinterding/berlin-services-mcp.git\r\ncd berlin-services-mcp\r\n\r\n# 2. Install dependencies\r\nnpm install\r\n\r\n# 3. Build the project\r\nnpm run build\r\n```\r\n\r\n## 用法\r\n\r\n### 使用克劳德桌面\r\n\r\n将此配置添加到您的Claude Desktop配置文件中：\r\n\r\n**MacOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**视窗**: `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n**选项1：使用npx（最简单）**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"berlin-services\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@ingohinterding/berlin-services-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**选项2：使用本地构建**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"berlin-services\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"/ABSOLUTE/PATH/TO/berlin-services-mcp/build/index.js\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n（替换 `/ABSOLUTE/PATH/TO/berlin-services-mcp` 与您的实际路径）\r\n\r\n添加此内容后，完全重新启动Claude Desktop（Mac上的Cmd+Q，然后重新打开）。\r\n\r\n### 与MCP检查员一起\r\n\r\n用于测试：\r\n\r\n**使用npx：**\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector npx -y @ingohinterding/berlin-services-mcp\r\n```\r\n\r\n**本地构建：**\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector node build/index.js\r\n```\r\n\r\n这将打开一个web界面，您可以在其中交互式地测试所有工具。\r\n\r\n## 可用工具\r\n\r\n### 1. `search_services`\r\n\r\n按名称或描述搜索服务。\r\n\r\n**参数：**\r\n\r\n- `query` （字符串，必填）：搜索查询\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"query\": \"Anmeldung\"\r\n}\r\n```\r\n\r\n### 2. `get_service_details`\r\n\r\n获取特定服务的详细信息。\r\n\r\n**参数：**\r\n\r\n- `service_id` （string，必填）：服务ID\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"service_id\": \"120335\"\r\n}\r\n```\r\n\r\n### 3. `list_services`\r\n\r\n列出所有可用的服务。\r\n\r\n**参数：**\r\n\r\n- `limit` （number，可选）：返回的最大服务数（默认值：50，最大值：200）\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"limit\": 100\r\n}\r\n```\r\n\r\n### 4. `get_services_stats`\r\n\r\n获取数据集的统计信息。\r\n\r\n**参数：** 无\r\n\r\n## Claude查询示例\r\n\r\n配置后，您可以向Claude提出以下问题：\r\n\r\n- “搜索与居住登记相关的服务”\r\n- “申请公寓的要求是什么？”\r\n- “显示与护照相关的所有服务”\r\n- “服务ID 120335需要哪些文件？”\r\n- “在柏林注册我的地址需要多少钱？”\r\n\r\n## 数据源\r\n\r\n该服务器从柏林官方服务API获取数据：\r\nhttps://service.berlin.de/export/dienstleistungen/json/\r\n\r\n数据包括：\r\n\r\n- 1000+行政服务\r\n- 德语信息\r\n- 实时预约可用性\r\n- 在线处理链接（如果可用）\r\n- 每项服务的责任机构\r\n\r\n## 发展\r\n\r\n### 建筑\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n### 发展模式\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n### 项目结构\r\n\r\n```\r\nberlin-services-mcp/\r\n├── src/\r\n│   └── index.ts          # Main MCP server implementation\r\n├── build/                # Compiled JavaScript (generated)\r\n├── package.json\r\n├── tsconfig.json\r\n├── README.md\r\n└── LICENSE\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 致谢\r\n\r\n- 灵感来自 [Garmin MCP](https://github.com/Taxuspt/garmin_mcp) 项目\r\n- 数据由 [柏林服务](https://service.berlin.de/)\r\n- 与 [模型上下文协议](https://modelcontextprotocol.io/)\r\n",
+ "config": {
+  "berlin-services": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@ingohinterding/berlin-services-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "id": "281",
+ "kind": "mcp",
+ "name": "mcp-chess-server",
+ "fingerprint_md5": "3e0c2e559b0fcc4ac7c02a12430d2af5",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "通过将以下JSON代码添加到JSON配置文件中来安装此MCP服务器\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-chess-server\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"from\",\r\n        \"git+https://github.com/gaurav743/mcp-chess-server.git\",\r\n        \"chess\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "mcp-chess-server": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "from",
+    "git+https://github.com/gaurav743/mcp-chess-server.git",
+    "chess"
+   ],
+   "env": {}
+  }
+ }
+}

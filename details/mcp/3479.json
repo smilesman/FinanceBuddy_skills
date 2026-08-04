@@ -1,0 +1,25 @@
+{
+ "id": "3479",
+ "kind": "mcp",
+ "name": "historic-price",
+ "fingerprint_md5": "0640e623ac6e986f862c94201c7a6aae",
+ "download_count": 0,
+ "category": "数据抓取",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP服务器历史价格\r\n\r\nMCP服务器使用Groq提供的URL建议和页面抓取来查找用户指定产品或类别的历史价格趋势，然后返回结构化的时间序列和简洁的趋势摘要。\r\n\r\n该项目遵循标准的MCP服务器结构。\r\n\r\n## 特性\r\n\r\n- 通过Groq聊天完成的URL发现（与OpenAI兼容的API）\r\n- 可选页面抓取以提取价格和日期提及\r\n- 从代码片段和HTML中启发式解析价格和日期\r\n- 聚合为重复数据消除的时间序列和趋势摘要\r\n\r\n## 工具\r\n\r\n- **价格_趋势_研究**\r\n\r\n  - 输入：\r\n    - `query` （string，必填）：产品/类别查询（例如“Shawn Mendes演唱会门票”）\r\n    - `maxResults` （数字，可选，默认值为20）：要检查的最大web结果（内部有上限）\r\n  - 输出：JSON `series` （日期/价格点）， `summary` （方向、变化、货币），以及 `sources`.\r\n\r\n- **scrape_price_from_url**\r\n\r\n  - 输入：\r\n    - `url` （字符串，必填）：用于抓取价格提及和日期的URL\r\n  - 输出：JSON，可提取任何内容 `series` 和 `meta`.\r\n\r\n## 配置\r\n\r\n### Groq API密钥\r\n\r\n1. 获取Groq API密钥并将其设置为 `GROQ_API_KEY` （参见env示例）。\r\n1. 可选：设置 `GROQ_MODEL` （默认值： `llama-3.1-8b-instant`，自动回退到 `openai/gpt-oss-20b`)以及 `USER_AGENT`.\r\n\r\n创建本地 `.env` （或导出环境变量）基于 `env.example`.\r\n\r\n### NPX（克劳德桌面/VS代码）\r\n\r\n将此添加到您的配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"historic-price\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-historic-price\"],\r\n      \"env\": {\r\n        \"GROQ_API_KEY\": \"YOUR_API_KEY_HERE\",\r\n        \"GROQ_MODEL\": \"llama-3.1-8b-instant\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 码头工人\r\n\r\n构建并运行：\r\n\r\n```bash\r\ndocker build -t mcp/historic-price:latest .\r\ndocker run -i --rm \\\r\n  -e GROQ_API_KEY=\"$GROQ_API_KEY\" \\\r\n  -e GROQ_MODEL=\"llama-3.1-8b-instant\" \\\r\n  mcp/historic-price:latest\r\n```\r\n\r\n配置您的客户端以运行如上所示的容器命令。\r\n\r\n## 发展\r\n\r\n```bash\r\npnpm i # or npm i / bun i\r\npnpm dev\r\npnpm build && pnpm start\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 参考\r\n\r\n此实现使用Groq辅助的URL发现和抓取来生成价格历史序列。\r\n",
+ "config": {
+  "historic-price": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@modelcontextprotocol/server-historic-price"
+   ],
+   "env": {
+    "GROQ_API_KEY": "YOUR_API_KEY_HERE",
+    "GROQ_MODEL": "llama-3.1-8b-instant"
+   }
+  }
+ }
+}

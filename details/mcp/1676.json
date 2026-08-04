@@ -1,0 +1,24 @@
+{
+ "id": "1676",
+ "kind": "mcp",
+ "name": "promptopia-mcp",
+ "fingerprint_md5": "27361cae9f87971c6b2baac14f35c4f3",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 近视MCP\r\n\r\n[](https://smithery.ai/server/@lumile/promptopia-mcp)\r\n\r\n一个强大的模型上下文协议（MCP）服务器，用于管理、组织和重用具有变量替换和多消息会话结构的提示模板。\r\n\r\n## 引言\r\n\r\nPromptopia MCP是一个全面的MCP服务器，使AI应用程序能够通过模型上下文协议有效地管理提示模板。该服务器为单内容提示和复杂的多消息对话模板提供持久存储，具有自动变量检测、替换功能，并与MCP兼容的AI客户端无缝集成。\r\n\r\nPromptopia MCP采用TypeScript构建，专为可扩展性而设计，通过提供一个集中式、可重用的提示管理系统，该系统通过标准化的MCP协议直接集成到您的AI工作流程中，从而改变了您使用AI提示的方式。\r\n\r\n## 为什么要使用此服务器？\r\n\r\n- **集中提示管理**：使用文件系统持久性将所有提示模板存储、组织和版本化在一个安全的位置，消除分散的提示文件，确保项目之间的一致性。\r\n\r\n- **高级多消息支持**：使用基于角色的消息结构（用户/助理）创建复杂的对话模板，支持文本和图像内容，实现复杂的人工智能交互模式。\r\n\r\n- **智能变量替换**：使用自动检测变量 `{{variable}}` 语法和在运行时应用动态值，使您的提示在不同的上下文和用例中灵活和可重用。\r\n\r\n- **无缝MCP集成**：原生MCP协议支持意味着您的提示将自动成为Claude Desktop、IDE和其他MCP兼容应用程序中的一流资源，而无需额外配置。\r\n\r\n- **面向未来的架构**：考虑到可扩展性，支持提示链、条件逻辑、版本控制和高级工作流模式，以满足不断变化的人工智能交互需求。\r\n\r\n## 特性\r\n\r\n### 核心提示管理\r\n\r\n- **创建和存储提示**：添加单内容和多消息提示，并自动检测变量\r\n- **检索和列表**：按ID访问单个提示或浏览所有具有元数据的可用模板\r\n- **更新和删除**：通过完整的CRUD操作修改现有提示或删除过时的模板\r\n- **变量应用**：将模板变量替换为实际值以供立即使用\r\n\r\n### 多消息会话支持\r\n\r\n- **基于角色的消息**：使用明确的用户和助理消息角色构建对话\r\n- **混合内容类型**：支持同一对话模板中的文本和图像内容\r\n- **跨消息变量**：在对话中的多条消息中提取和应用变量\r\n- **格式转换**：根据需要在单一内容和多消息格式之间无缝转换\r\n\r\n### MCP协议集成\r\n\r\n- **本地MCP提示**：将存储的提示显示为MCP提示，以便在兼容应用程序中直接使用\r\n- **基于工具的访问**：用于快速管理操作的全套MCP工具\r\n- **标准化沟通**：完全符合MCP协议规范，实现可靠集成\r\n- **实时可变分辨率**：通过MCP协议应用变量以实现动态提示执行\r\n\r\n### 高性能\r\n\r\n- **自动变量检测**：解析 `{{variable}}` 基于智能提取的提示内容模式\r\n- **向后兼容**：在添加新功能的同时，保持对现有单一内容提示的支持\r\n- **文件系统持久性**：可靠的基于JSON的存储，具有有序的目录结构\r\n- **错误处理**：全面的错误管理，提供信息丰富的符合MCP的错误响应\r\n- **类型安全**：完整的TypeScript实现，具有强大的类型定义和验证\r\n\r\n### 计划的功能\r\n\r\n- **条件逻辑**：在提示模板中添加分支和条件执行\r\n- **版本控制**：跟踪更改并使用回滚功能维护即时历史记录\r\n- **搜索和标记**：使用元数据和全文搜索功能组织提示\r\n- **导入/导出**：跨不同环境备份和共享提示集合\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Promptopia for Claude Desktop [史密瑟里](https://smithery.ai/server/@lumile/promptopia-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @lumile/promptopia-mcp --client claude\r\n```\r\n\r\n#### 选项1:NPX（推荐）\r\n\r\n将此配置添加到您的Claude Desktop配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"promptopia-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"promptopia-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"PROMPTS_DIR\": \"<YOUR_PROMPTS_DIR>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 选项2：本地安装\r\n\r\n1. 克隆存储库\r\n1. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n3. 构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n4. 将此配置添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"promptopia-mcp\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"/path/to/promptopia-mcp/build/index.js\"\r\n      ],\r\n      \"env\": {\r\n        \"PROMPTS_DIR\": \"<YOUR_PROMPTS_DIR>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 调试\r\n\r\n由于MCP服务器通过stdio进行通信，调试可能具有挑战性。我们建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector)，可作为包脚本使用：\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n检查器将提供一个URL，用于访问浏览器中的调试工具。\r\n\r\n## 贡献\r\n\r\n非常欢迎捐款！请使用新的MCP服务器或对代码库的任何其他改进打开PR。\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证.md](LICENSE.md) 文件以获取详细信息。\r\n\r\n______________________________________________________________________\r\n\r\n<p align=\"center\">\r\nMade with ❤️ by Lumile\r\n</p>\r\n\r\n<p align=\"center\">\r\n<a href=\"https://www.lumile.com.ar\">Contact us</a> for any questions or feedback.\r\n</p>\r\n",
+ "config": {
+  "promptopia-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "promptopia-mcp"
+   ],
+   "env": {
+    "PROMPTS_DIR": "<YOUR_PROMPTS_DIR>"
+   }
+  }
+ }
+}

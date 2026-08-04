@@ -1,0 +1,32 @@
+{
+ "id": "52",
+ "kind": "mcp",
+ "name": "arr-assistant",
+ "fingerprint_md5": "47722482d8531c31849099e8570cb32a",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# arr助理mcp\r\n\r\nMCP服务器，用于搜索电影和电视节目并将其添加到Radarr和Sonarr。\r\n\r\n## 设置\r\n\r\n需要Python 3.12+和 [紫外线](https://docs.astral.sh/uv/) 为了地方发展。\r\n\r\n```bash\r\ngit clone <repo>\r\ncd arr-assistant-mcp\r\nuv sync\r\n```\r\n\r\n## 从源运行\r\n\r\n将此添加到您的 `claude_desktop_config.json` 直接运行已签出的项目：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"arr-assistant\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--project\",\r\n        \"/path/to/arr-assistant-mcp\",\r\n        \"src/arr_assistant_mcp/main.py\"\r\n      ],\r\n      \"env\": {\r\n        \"RADARR_URL\": \"http://your-ip:7878\",\r\n        \"RADARR_API_KEY\": \"your-radarr-api-key\",\r\n        \"SONARR_URL\": \"http://your-ip:8989\",\r\n        \"SONARR_API_KEY\": \"your-sonarr-api-key\",\r\n        \"QUALITY_PROFILE_ID\": \"1\",\r\n        \"RADARR_ROOT_FOLDER\": \"/storage/movies\",\r\n        \"SONARR_ROOT_FOLDER\": \"/storage/shows\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n尾随斜线 `RADARR_URL` 和 `SONARR_URL` 自动标准化。\r\n\r\n## 构建MCP捆绑包\r\n\r\n打包的发布工件现在应该使用 `.mcpb` 扩展。\r\n\r\n```bash\r\nnpm install -g @anthropic-ai/mcpb\r\nmcpb validate .\r\nmcpb pack . arr-assistant-mcp.mcpb\r\n```\r\n\r\n打开结果 `.mcpb` Claude Desktop中的文件来安装它。\r\n\r\n## 配置说明\r\n\r\n- **Radarr/Sonarr API键**：设置->常规->API密钥\r\n- **质量概况**：使用Radarr或Sonarr实例中的数字配置文件ID\r\n- **根文件夹**：如果省略，服务器将自动检测每个服务中的第一个可用根文件夹\r\n- **TVDB API密钥**：当前实施不需要\r\n\r\n## 工具\r\n\r\n- `test_config()` -Radarr和Sonarr的测试配置和连接\r\n- `search_movies(title)` -按标题搜索电影\r\n- `add_movie_by_id(tmdb_id, root_folder=None)` -将电影添加到Radarr\r\n- `search_and_add_show(description, auto_add=False)` -搜索电视节目，并可选择自动将唯一匹配项添加到Sonarr\r\n- `add_show_by_tvdb_id(tvdb_id, title, root_folder=None)` -向Sonarr添加节目\r\n- `get_server_status()` -检查雷达和声纳状态\r\n\r\n## 用法\r\n\r\n```python\r\nsearch_movies(\"The Matrix\")\r\nadd_movie_by_id(603)\r\n\r\n# Specify a custom root folder\r\nadd_show_by_tvdb_id(123456, \"Attack on Titan\", \"/storage/anime\")\r\n```\r\n\r\n如果没有提供根文件夹，则会从Radarr和Sonarr配置中自动检测到根文件夹，但仍然可以根据请求进行覆盖。\r\n",
+ "config": {
+  "arr-assistant": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--project",
+    "/path/to/arr-assistant-mcp",
+    "src/arr_assistant_mcp/main.py"
+   ],
+   "env": {
+    "RADARR_URL": "http://your-ip:7878",
+    "RADARR_API_KEY": "your-radarr-api-key",
+    "SONARR_URL": "http://your-ip:8989",
+    "SONARR_API_KEY": "your-sonarr-api-key",
+    "QUALITY_PROFILE_ID": "1",
+    "RADARR_ROOT_FOLDER": "/storage/movies",
+    "SONARR_ROOT_FOLDER": "/storage/shows"
+   }
+  }
+ }
+}

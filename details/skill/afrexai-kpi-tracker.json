@@ -1,0 +1,12 @@
+{
+ "id": "afrexai-kpi-tracker",
+ "kind": "skill",
+ "name": "afrexai-kpi-tracker",
+ "fingerprint_md5": "60e4aa5e0a0af2feb133e6be2b31b4da",
+ "download_count": 0,
+ "category": "业务应用",
+ "tags": "",
+ "version": "",
+ "readme": "# KPI Tracker Skill\r\n\r\n跟踪、分析并报告任何业务的关键绩效指标（Key Performance Indicators）。\r\n\r\n## 它能做什么\r\n\r\n激活后，本技能帮助你：\r\n- 定义并分类 KPI（revenue、ops、marketing、customer success）\r\n- 设置目标和阈值（green/yellow/red）\r\n- 以 markdown 格式生成每周/每月 KPI 报告\r\n- 标记偏离轨道的 KPI，并附带根因提示\r\n- 将历史数据存储在简单的 JSON 文件中，用于趋势分析\r\n\r\n## 使用方法\r\n\r\n告诉你的 agent：\"Track these KPIs\" 或 \"Give me a KPI report\" 或 \"Which metrics are off track?\"\r\n\r\n### 设置\r\n\r\n在你的工作区创建 `kpi-config.json`：\r\n\r\n```json\r\n{\r\n  \"kpis\": [\r\n    {\r\n      \"name\": \"Monthly Recurring Revenue\",\r\n      \"category\": \"revenue\",\r\n      \"unit\": \"$\",\r\n      \"target\": 50000,\r\n      \"redBelow\": 35000,\r\n      \"yellowBelow\": 45000\r\n    },\r\n    {\r\n      \"name\": \"Customer Churn Rate\",\r\n      \"category\": \"customer\",\r\n      \"unit\": \"%\",\r\n      \"target\": 3,\r\n      \"redAbove\": 7,\r\n      \"yellowAbove\": 5\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n### 记录数据\r\n\r\n说：\"Record MRR at $42,000 for this week\"\r\n\r\nagent 将条目存储在 `kpi-data.json` 中：\r\n```json\r\n{\r\n  \"entries\": [\r\n    { \"kpi\": \"Monthly Recurring Revenue\", \"value\": 42000, \"date\": \"2026-02-13\", \"note\": \"Post-launch week\" }\r\n  ]\r\n}\r\n```\r\n\r\n### 报告\r\n\r\n说：\"KPI report\"，agent 生成格式化的状态看板：\r\n\r\n```\r\nKPI Report —— Week of Feb 10, 2026\r\n\r\nMonthly Recurring Revenue: $48,200 (target: $50,000) —— 96.4%\r\nCustomer Churn Rate: 8.1% (target: 3%) —— 需要关注\r\nLead Conversion Rate: 11% (target: 15%) —— 从 9% 上升\r\n\r\nAction needed on 1 red, 1 yellow KPI\r\n```\r\n\r\n### 趋势分析\r\n\r\n说：\"Show MRR trend\" —— agent 读取历史条目并总结方向、速度，以及按当前速度是否能达成目标。\r\n\r\n## Agent 应该如何表现\r\n\r\n1. 读取 `kpi-config.json` 获取 KPI 定义\r\n2. 读取/写入 `kpi-data.json` 存储历史值\r\n3. 当被要求生成报告时：计算每个 KPI 的状态，用颜色指示器格式化\r\n4. 当某个 KPI 为红色时：主动建议调查方向\r\n5. 当记录时：验证数值是否合理（例如，churn 不能为负数）\r\n\r\n## 文件位置\r\n\r\n- Config: `kpi-config.json`（workspace root 或自定义路径）\r\n- Data: `kpi-data.json`（与 config 同目录）\r\n- Reports: 按需生成，可选保存到 `reports/kpi-YYYY-MM-DD.md`\r\n\r\n## 专业提示\r\n\r\n搭配 cron job 自动生成每周 KPI 报告。如需更深入的商业智能和预置行业 KPI 模板，请查看 [AfrexAI Context Packs](https://afrexai-cto.github.io/context-packs/) —— 包含 10 多个行业的 KPI 框架的 drop-in 配置。",
+ "config": {}
+}

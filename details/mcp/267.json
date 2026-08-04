@@ -1,0 +1,18 @@
+{
+ "id": "267",
+ "kind": "mcp",
+ "name": "livescore",
+ "fingerprint_md5": "969dbfeb47628c75818ffbb1da178c83",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# LiveScore MCP\r\n\r\n自由 [模型上下文协议](https://modelcontextprotocol.io/) 服务器，用于实时足球比分、赛程、球队统计数据和来自全球1000多个联赛的球员数据。\r\n\r\n**[livescoremcp.com](https://livescoremcp.com)**\r\n\r\n## 快速开始\r\n\r\n将任何MCP客户端连接到SSE端点：\r\n\r\n```\r\nhttps://livescoremcp.com/sse\r\n```\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"livescore\": {\r\n      \"url\": \"https://livescoremcp.com/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add livescore https://livescoremcp.com/sse\r\n```\r\n\r\n适用于任何兼容MCP的客户端： **克劳德桌面版**, **克劳德代码**, **光标**, **帆板运动**, **克莱恩**以及更多。\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_live_scores` |当前实时比赛，实时比分和逐分钟更新|\r\n| `get_fixtures` |比赛项目（欧洲冠军联赛、欧洲联赛、世界杯等）|\r\n| `get_league_fixtures` |联赛特定赛程（如荷甲、英超）|\r\n| `get_day_fixtures` |特定日期的所有固定装置|\r\n| `get_match` |详细的比赛信息，包括赛事、阵容、统计数据和正面交锋数据|\r\n| `get_team` |球队详细信息，包括球队和统计数据|\r\n| `get_player` |球员档案和职业统计|\r\n| `get_team_image` |团队徽标URL|\r\n| `search` |按名称搜索球队、球员或比赛|\r\n| `health` |连接检查|\r\n\r\n## 查询示例\r\n\r\n连接后，只需询问您的AI助手：\r\n\r\n- “现在的实时比分是多少？”\r\n- “给我看看英超联赛的积分榜”\r\n- “巴塞罗那本周表现如何？”\r\n- “今晚谁在冠军联赛中进球了？”\r\n- “这个星期六有什么比赛？”\r\n- “说说阿贾克斯的球队吧”\r\n\r\n## 数据源\r\n\r\n所有足球数据均由 **[football-mania.com](https://football-mania.com)** -一个全面的足球数据平台，覆盖全球1000多个联赛和比赛，提供实时比分、赛程、球队统计数据、球员档案和比赛细节。\r\n\r\n足球狂热也可以作为移动应用程序使用：\r\n\r\n- [Google Play](https://play.google.com/store/apps/details?id=holoduke.soccer_gen)\r\n- [应用商店](https://apps.apple.com/us/app/football-mania-soccer-scores/id896357542)\r\n\r\n## 使用策略\r\n\r\nLiveScore MCP是 **个人和非商业用途免费**.\r\n\r\n- 执行速率限制（每个IP每分钟30个请求）\r\n- 不允许批量抓取和自动数据采集\r\n- 商业用途需要许可-打开一个问题进行讨论\r\n\r\n## 技术栈\r\n\r\n- **走** 和 [mcp走](https://github.com/mark3labs/mcp-go)\r\n- **SSE运输** 用于实时通信\r\n- 部署于 [酷化](https://coolify.io)\r\n\r\n## 自我寄宿\r\n\r\n```bash\r\ngit clone https://github.com/holoduke/livescore-mcp.git\r\ncd livescore-mcp\r\ngo build -o livescore-mcp .\r\nPORT=8080 ./livescore-mcp\r\n```\r\n\r\n或者使用Docker：\r\n\r\n```bash\r\ndocker build -t livescore-mcp .\r\ndocker run -p 8080:8080 livescore-mcp\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "livescore": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://livescoremcp.com/sse"
+  }
+ }
+}

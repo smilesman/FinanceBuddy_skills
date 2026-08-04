@@ -1,0 +1,23 @@
+{
+ "id": "1462",
+ "kind": "mcp",
+ "name": "git-mcp",
+ "fingerprint_md5": "a8769de52fa88b4c69bed772d1314f30",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Git MCP\r\n\r\n[](https://smithery.ai/server/@kjozsa/git-mcp)\r\nMCP服务器，用于管理本地存储库上的Git操作。\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Git MCP for Claude Desktop [史密瑟里](https://smithery.ai/server/@kjozsa/git-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @kjozsa/git-mcp --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\nuvx install git-mcp\r\n```\r\n\r\n## 配置\r\n\r\n使用以下JSON配置片段添加MCP服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"git-mcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"git-mcp\"],\r\n      \"env\": {\r\n        \"GIT_REPOS_PATH\": \"/path/to/your/git/repositories\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 特点及用途\r\n\r\n### 环境变量\r\n\r\n- `GIT_REPOS_PATH`：包含Git存储库的目录路径（必填）\r\n\r\n您可以在环境中设置或创建 `.env` 运行服务器的目录中的文件。\r\n\r\n### 可用方法\r\n\r\n#### list_repositories\r\n\r\n列出配置路径中的所有Git存储库。\r\n\r\n- 参数：无\r\n- 返回：存储库名称列表\r\n\r\n#### get_last_git_tag\r\n\r\n查找指定存储库中的最后一个Git标记。\r\n\r\n- 参数： `repo_name` （Git仓库的名称）\r\n- 返回：字典 `version` （标签名称）和 `date` （标签创建日期）\r\n\r\n#### list_commits_since_last_tag\r\n\r\n列出最后一个Git标签和HEAD之间的提交消息。\r\n\r\n- 参数：\r\n  - `repo_name`：Git存储库的名称\r\n  - `max_count` （可选）：要返回的最大提交数\r\n- 返回：包含以下内容的词典列表 `hash`, `author`, `date`，以及 `message`\r\n\r\n#### create_git_tag\r\n\r\n在指定的存储库中创建新的git标记。\r\n\r\n- 参数：\r\n  - `repo_name`：git存储库的名称\r\n  - `tag_name`：要创建的标记的名称\r\n  - `message` （可选）：带注释标签的消息（如果没有提供，则创建一个轻量级标签）\r\n- 返回：字典 `status`, `version` （标签名称）， `date` （标签创建日期），以及 `type` （带注释或轻量级）\r\n\r\n#### push_git_tag\r\n\r\n将现有的git标签推送到默认的远程存储库。\r\n\r\n- 参数：\r\n  - `repo_name`：git存储库的名称\r\n  - `tag_name`：要推送的标签的名称\r\n- 返回：字典 `status`, `remote` （遥控器的名称）， `tag` （标签名称），以及 `message` （成功消息）\r\n\r\n#### refresh_repository\r\n\r\n通过签出主分支（或主分支作为回退）并从所有远程拉取来刷新存储库。\r\n\r\n- 参数：\r\n  - `repo_name`：git存储库的名称\r\n- 返回：字典 `status`, `repository`, `branch`，以及 `pull_results` （每个遥控器的结果）\r\n\r\n### 故障排除\r\n\r\n- **未找到存储库**：确保 `GIT_REPOS_PATH` 设置正确且存储库存在\r\n- **未找到标签**：存储库还没有任何标签\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nuv pip install -r requirements.txt\r\n\r\n# Run in dev mode with Inspector\r\nmcp dev git_mcp/server.py\r\n```\r\n\r\n## 测试\r\n\r\n该项目包括两个测试脚本：\r\n\r\n1. `test_git_mcp.py` -直接测试底层Git命令功能，而不使用MCP服务器。\r\n1. `test_mcp_server.py` -通过启动服务器实例并对其进行调用来测试MCP服务器功能。\r\n\r\n要运行测试，请执行以下操作：\r\n\r\n```bash\r\n# Test the Git command functionality\r\npython test_git_mcp.py\r\n\r\n# Test the MCP server (requires the git-mcp package to be installed)\r\npython test_mcp_server.py\r\n```\r\n",
+ "config": {
+  "git-mcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "git-mcp"
+   ],
+   "env": {
+    "GIT_REPOS_PATH": "/path/to/your/git/repositories"
+   }
+  }
+ }
+}

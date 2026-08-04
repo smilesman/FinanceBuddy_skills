@@ -1,0 +1,21 @@
+{
+ "id": "1442",
+ "kind": "mcp",
+ "name": "file-reader",
+ "fingerprint_md5": "933cc0a3240976bdba7c8bf542edb54b",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP文件内容读取器\r\n\r\n用于读取和分析各种文件格式的模型上下文协议（MCP）服务器，包括 <b>PDF、Excel、Word和PowerPoint文档</b>.\r\n\r\n## 特性\r\n\r\n- **多格式支持**：阅读PDF、Excel（.xlsx、.xls）、Word（.docx、.doc）和PowerPoint（.pptx、.ppt）文件\r\n- **内容分析**：使用结构化信息提取提取和分析文件内容\r\n- **文档搜索**：在多个文档中搜索特定内容\r\n- **文件上传**：支持临时文件上传和处理\r\n- **MCP集成**：完全符合模型上下文协议\r\n\r\n## 安装\r\n\r\n### 使用uvx（推荐）\r\n\r\n```bash\r\nuvx mcp-file-contents-reader\r\n```\r\n\r\n### 使用pip\r\n\r\n```bash\r\npip install mcp-file-contents-reader\r\n```\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone https://github.com/yourusername/mcp-file-contents-reader.git\r\ncd mcp-file-contents-reader\r\npip install -e .\r\n```\r\n\r\n## 用法\r\n\r\n### MCP配置\r\n\r\n将以下内容添加到您的 `mcp.json` 配置文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"file-reader\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-file-contents-reader\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者，如果通过pip安装：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"file-reader\": {\r\n      \"command\": \"mcp-file-contents-reader\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 可用工具\r\n\r\n#### 1. `read_file`\r\n\r\n阅读Excel、PDF、PPT、Word文件，并以文本形式返回内容。\r\n\r\n**参数：**\r\n\r\n- `file_path` （必填）：要读取的文件的路径\r\n- `sheet_name` （可选）：Excel文件的工作表名称\r\n- `page_range` （可选）：PDF文件的页面范围（例如“1-5”或“1,3,5”）\r\n\r\n#### 2. `search_documents`\r\n\r\n在Documents目录中搜索特定内容并分析文件。\r\n\r\n**参数：**\r\n\r\n- `keywords` （必填）：要在文件内容中搜索的关键字\r\n- `search_path` （可选）：要搜索的目录路径（默认：~/Documents）\r\n- `file_types` （可选）：要搜索的文件类型（默认值：\\[“pdf”、“docx”、“xlsx”、”pptx“、”doc“、”xls“、”ppt“\\]）\r\n\r\n#### 3. `analyze_file_content`\r\n\r\n详细分析具体文件内容，提取结构化信息。\r\n\r\n**参数：**\r\n\r\n- `file_path` （必填）：要分析的文件的路径\r\n- `extract_patterns` （可选）：要提取的特定模式或信息类型\r\n\r\n#### 4. `upload_file`\r\n\r\n上传并临时存储Base64编码的文件数据。\r\n\r\n**参数：**\r\n\r\n- `file_data` （必需）：Base64编码文件数据\r\n- `filename` （必填）：带扩展名的文件名\r\n\r\n#### 5. `read_uploaded_file`\r\n\r\n读取上传的文件并返回内容。\r\n\r\n**参数：**\r\n\r\n- `file_id` （必填）：上传文件的ID\r\n\r\n#### 6. `list_uploaded_files`\r\n\r\n返回已上传文件的列表。\r\n\r\n#### 7. `delete_uploaded_file`\r\n\r\n删除上传的文件。\r\n\r\n**参数：**\r\n\r\n- `file_id` （必填）：要删除的文件的ID\r\n\r\n#### 8. `get_file_info`\r\n\r\n返回文件的基本信息。\r\n\r\n**参数：**\r\n\r\n- `file_path` （必填）：获取有关信息的文件路径\r\n\r\n#### 9. `list_supported_formats`\r\n\r\n返回支持的文件格式列表。\r\n\r\n## 支持的文件格式\r\n\r\n- **Excel**：.xlsx、.xls\r\n- **可移植文档格式**：.pdf\r\n- **幻灯片**.pptx、.ppt\r\n- **字**.docx，.doc\r\n\r\n## 示例用法\r\n\r\n### 搜索捐款收据\r\n\r\n```json\r\n{\r\n  \"tool\": \"search_documents\",\r\n  \"arguments\": {\r\n    \"keywords\": [\"donation\", \"receipt\", \"charity\", \"fund\"],\r\n    \"search_path\": \"/Users/username/Documents\",\r\n    \"file_types\": [\"pdf\", \"docx\", \"xlsx\"]\r\n  }\r\n}\r\n```\r\n\r\n### 分析特定文件\r\n\r\n```json\r\n{\r\n  \"tool\": \"analyze_file_content\",\r\n  \"arguments\": {\r\n    \"file_path\": \"/Users/username/Documents/receipt.pdf\",\r\n    \"extract_patterns\": [\"donor\", \"amount\", \"organization\", \"date\"]\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n### 设置开发环境\r\n\r\n```bash\r\ngit clone https://github.com/yourusername/mcp-file-contents-reader.git\r\ncd mcp-file-contents-reader\r\npip install -e \".[dev]\"\r\n```\r\n\r\n### 运行测试\r\n\r\n```bash\r\npytest\r\n```\r\n\r\n### 代码格式化\r\n\r\n```bash\r\nblack mcp_file_reader/\r\n```\r\n\r\n### 类型检查\r\n\r\n```bash\r\nmypy mcp_file_reader/\r\n```\r\n\r\n## 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建要素分支\r\n1. 进行更改\r\n1. 为您的更改添加测试\r\n1. 运行测试套件\r\n1. 提交拉取请求\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。\r\n\r\n## 更新日志\r\n\r\n### 1.0.0\r\n\r\n- 初始版本\r\n- 支持PDF、Excel、Word和PowerPoint文件\r\n- MCP服务器实现\r\n- 文档搜索和分析功能\r\n",
+ "config": {
+  "file-reader": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-file-contents-reader"
+   ],
+   "env": {}
+  }
+ }
+}

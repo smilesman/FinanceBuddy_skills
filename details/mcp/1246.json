@@ -1,0 +1,30 @@
+{
+ "id": "1246",
+ "kind": "mcp",
+ "name": "postgres-readonly",
+ "fingerprint_md5": "46b2edb63c6f2c85e2ae89e204605e69",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# PostgreSQL只读MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，提供对一个配置的PostgreSQL数据库的安全、只读访问。\r\n\r\n服务器公开模式检查、数据预览、自定义 `SELECT` 查询执行、关系发现、数据库统计、安全连接元数据和 `connection_info` 提示MCP客户端，如Claude Desktop。\r\n\r\n## 特性\r\n\r\n- 每个MCP服务器实例有一个数据库\r\n- 严格的PostgreSQL只读验证(`SELECT` 仅）\r\n- 具有可选功能的模式感知工具 `schema` 输入，默认为 `public`\r\n- 服务器端行限制和查询超时保护\r\n- 数据预览，可选列选择，基本 `where` 过滤和文本截断\r\n- 外键关系发现\r\n- 按行和大小显示最大表的数据库统计信息\r\n- 安全 `db_info` 从不暴露密码的输出\r\n- `connection_info` 带有连接上下文和使用指南的MCP提示\r\n\r\n## 安装\r\n\r\n直接使用 `npx` 在MCP客户端配置中：\r\n\r\n```bash\r\nnpx -y postgres-readonly-mcp\r\n```\r\n\r\n或全局安装：\r\n\r\n```bash\r\nnpm install -g postgres-readonly-mcp\r\npostgres-readonly-mcp\r\n```\r\n\r\n仅适用于本地开发：\r\n\r\n```bash\r\ngit clone https://github.com/beydemirfurkan/postgres-readonly-mcp.git\r\ncd postgres-readonly-mcp\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n## Claude桌面配置\r\n\r\n推荐 `npx` 设置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres-readonly\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"postgres-readonly-mcp\"],\r\n      \"env\": {\r\n        \"POSTGRES_HOST\": \"127.0.0.1\",\r\n        \"POSTGRES_PORT\": \"5432\",\r\n        \"POSTGRES_USER\": \"postgres\",\r\n        \"POSTGRES_PASSWORD\": \"your_password\",\r\n        \"POSTGRES_DATABASE\": \"your_database\",\r\n        \"POSTGRES_SSL\": \"true\",\r\n        \"POSTGRES_SSL_REJECT_UNAUTHORIZED\": \"true\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n连接字符串设置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres-readonly\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"postgres-readonly-mcp\"],\r\n      \"env\": {\r\n        \"DATABASE_URL\": \"postgresql://USER:PASSWORD@HOST:5432/DB_NAME\",\r\n        \"POSTGRES_SSL\": \"true\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n编辑配置后重新启动Claude Desktop。\r\n\r\n## 多个数据库\r\n\r\n一个服务器实例映射到一个PostgreSQL数据库。要公开多个数据库，请添加多个具有不同名称和环境变量的MCP服务器条目：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres-crm\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"postgres-readonly-mcp\"],\r\n      \"env\": {\r\n        \"DATABASE_URL\": \"postgresql://USER:PASSWORD@HOST:5432/crm\"\r\n      }\r\n    },\r\n    \"postgres-analytics\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"postgres-readonly-mcp\"],\r\n      \"env\": {\r\n        \"DATABASE_URL\": \"postgresql://USER:PASSWORD@HOST:5432/analytics\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 环境变量\r\n\r\n- `POSTGRES_HOST`：PostgreSQL主机，默认 `localhost`\r\n- `POSTGRES_PORT`：PostgreSQL端口，默认值 `5432`\r\n- `POSTGRES_USER`：PostgreSQL用户，默认值 `postgres`\r\n- `POSTGRES_PASSWORD`：PostgreSQL密码，默认为空\r\n- `POSTGRES_DATABASE`：PostgreSQL数据库名称，默认值 `postgres`\r\n- `POSTGRES_SSL`：启用TLS，默认 `true`\r\n- `POSTGRES_SSL_REJECT_UNAUTHORIZED`：默认情况下，拒绝未经授权的TLS证书 `true`\r\n- `POSTGRES_QUERY_TIMEOUT_MS`：查询超时（毫秒），最小值 `1000`，默认值 `30000`\r\n- `DATABASE_URL`：PostgreSQL连接URL回退\r\n- `POSTGRES_URL`：PostgreSQL连接URL别名\r\n\r\n明确的 `POSTGRES_*` 当两者都存在时，主机字段会覆盖URL值。\r\n\r\n如果您的密码包含特殊字符(`/`, `@`, `:`)，URL将其编码为连接字符串。\r\n\r\n## 工具\r\n\r\n### `db_info`\r\n\r\n返回已配置数据库的安全连接元数据。\r\n\r\n输入：\r\n\r\n```json\r\n{}\r\n```\r\n\r\n### `list_tables`\r\n\r\n列出架构中的表/视图。\r\n\r\n输入：\r\n\r\n```json\r\n{ \"schema\": \"public\" }\r\n```\r\n\r\n### `describe_table`\r\n\r\n描述列、主键、外键和索引。\r\n\r\n输入：\r\n\r\n```json\r\n{\r\n  \"schema\": \"public\",\r\n  \"table\": \"users\"\r\n}\r\n```\r\n\r\n### `preview_data`\r\n\r\n通过可选的列选择和基本筛选预览表中的行。\r\n\r\n输入：\r\n\r\n```json\r\n{\r\n  \"schema\": \"public\",\r\n  \"table\": \"users\",\r\n  \"columns\": [\"id\", \"email\", \"created_at\"],\r\n  \"where\": \"created_at >= '2026-01-01'\",\r\n  \"limit\": 10\r\n}\r\n```\r\n\r\n### `run_query`\r\n\r\n运行自定义只读SQL查询。\r\n\r\n输入：\r\n\r\n```json\r\n{\r\n  \"query\": \"SELECT id, email FROM \\\"public\\\".\\\"users\\\" ORDER BY id DESC\",\r\n  \"limit\": 100\r\n}\r\n```\r\n\r\n### `show_relations`\r\n\r\n显示表的外键关系。\r\n\r\n输入：\r\n\r\n```json\r\n{\r\n  \"schema\": \"public\",\r\n  \"table\": \"orders\"\r\n}\r\n```\r\n\r\n### `db_stats`\r\n\r\n返回数据库大小、表计数、行估计值， `largestByRows`，以及 `largestBySize`.\r\n\r\n输入：\r\n\r\n```json\r\n{}\r\n```\r\n\r\n## 提示\r\n\r\n### `connection_info`\r\n\r\n提供安全的PostgreSQL连接上下文和只读使用指南。密码从不包括在内。\r\n\r\n## 安全模型\r\n\r\n- 仅 `SELECT` 允许发表声明\r\n- 一个请求中的多个SQL语句被阻止\r\n- DML、DDL、授予/撤销、维护和管理关键字被阻止\r\n- PostgreSQL的风险函数，如 `pg_sleep`, `dblink`，并且文件读取助手被阻止\r\n- 即使查询请求更多行，服务器端的结果也会受到限制\r\n- 对连接/运行时错误进行清理，以避免凭据泄漏\r\n\r\n## 限制\r\n\r\n- `preview_data` 违约： `10`，最大值： `100`\r\n- `run_query` 违约： `1000`，最大值： `5000`\r\n- 查询超时： `30000ms` 默认情况下\r\n- 长文本截断： `200` 字符\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\nnpm run dev\r\nnpm test\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "postgres-readonly": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "postgres-readonly-mcp"
+   ],
+   "env": {
+    "POSTGRES_HOST": "127.0.0.1",
+    "POSTGRES_PORT": "5432",
+    "POSTGRES_USER": "postgres",
+    "POSTGRES_PASSWORD": "your_password",
+    "POSTGRES_DATABASE": "your_database",
+    "POSTGRES_SSL": "true",
+    "POSTGRES_SSL_REJECT_UNAUTHORIZED": "true"
+   }
+  }
+ }
+}

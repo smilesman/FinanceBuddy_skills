@@ -1,0 +1,21 @@
+{
+ "id": "1887",
+ "kind": "mcp",
+ "name": "conveyancing",
+ "fingerprint_md5": "6d81625d6ddff2457171093a83c206c3",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 转让mcp服务器\r\n\r\n\r\nMCP服务器为人工智能助理提供英国住宅产权转让工具。帮助首次购房者和房主了解印花税、产权登记、房产搜索、调查、租赁条款和交易进度。\r\n\r\n## 为什么\r\n\r\n在英国买房需要大约15周的不透明法律程序和大量行话文件。此服务器为Claude（或任何兼容MCP的助手）提供了域工具来提供实际帮助。\r\n\r\n## 工具\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `estimate_stamp_duty` |SDLT/LBTT/LTT计算器——英格兰、苏格兰、威尔士（2025年4月费率）|\r\n| `check_lease_terms` |租赁条款标志——地租、租赁期限、服务费|\r\n| `explain_search_result` |简明英语+地方当局、环境、排水系统搜查的严厉程度|\r\n| `explain_survey_issue` |用RICS条件评级、成本估算和行动翻译测量员术语|\r\n| `parse_title_register` |分析所有权登记条目或原始HMLR文本——收费、限制、地役权|\r\n| `track_transaction_status` |地图更新/发送电子邮件至产权转让阶段，包括下一步和时间表|\r\n| `estimate_total_costs` |逐项成本明细——印花税、律师费、搜查费、调查费、抵押费、土地注册费|\r\n| `analyse_lease_document` |使用MCP采样进行人工智能驱动的租赁分析——提取和检查关键条款|\r\n| `plan_my_purchase` |带有MCP启发的交互式采购计划——时间表、成本、清单|\r\n| `get_price_history` |HMLR价格支付数据-最近销售接近邮政编码（免费，无API密钥）|\r\n| `lookup_title` |HMLR业务网关标题查找（需要API密钥）|\r\n\r\n## 资源\r\n\r\n|URI |它提供了什么|\r\n|-----|-----------------|\r\n| `conveyancing://process-stages` |从指导到完成后的11个阶段|\r\n| `conveyancing://process-stages/{n}` |按编号列出的各个阶段的详细信息（1-11）|\r\n| `conveyancing://search-types` |标准搜索类型、成本、周转时间和覆盖范围|\r\n| `conveyancing://search-types/{type}` |个人搜索类型详细信息|\r\n| `conveyancing://sdlt-rates` |当前SDLT频段、FTB减免、附加费|\r\n| `conveyancing://sdlt-rates/{buyer_type}` |特定买方类型的SDLT费率|\r\n| `conveyancing://lbtt-rates` |苏格兰LBTT费率和区间|\r\n| `conveyancing://ltt-rates` |威尔士LTT费率和等级|\r\n| `conveyancing://tenure-types` |永久产权、租赁权与普通产权的比较|\r\n| `conveyancing://survey-defects` |常见缺陷类别，包括严重程度和成本范围|\r\n| `conveyancing://survey-defects/{category}` |单个缺陷类别详细信息|\r\n| `conveyancing://scotland/process-stages` |苏格兰产权转让阶段（基于信件）|\r\n| `conveyancing://scotland/search-types` |苏格兰房产搜索类型|\r\n| `conveyancing://wales/process-stages` |威尔士产权转让差异|\r\n\r\n## 提示\r\n\r\n|提示|它生成了什么|\r\n|--------|------------------|\r\n| `first_time_buyer_briefing` |完整简报：时间表、成本、里程碑、陷阱|\r\n| `pre_exchange_checklist` |在交换合同之前需要确认的一切|\r\n| `solicitor_instruction_letter` |指示律师购买的信件|\r\n\r\n## 快速开始\r\n\r\n```bash\r\n# Install from PyPI\r\npip install conveyancing-mcp-server\r\n\r\n# Or with uvx (no install needed)\r\nuvx conveyancing-mcp\r\n\r\n# Or install from source for development\r\npip install -e \".[dev]\"\r\n\r\n# Run tests\r\npytest\r\n\r\n# Run the server\r\nconveyancing-mcp\r\n# or: python -m conveyancing_mcp.server\r\n```\r\n\r\n## 示例\r\n\r\n一位首次购房者询问35万英镑购房的印花税：\r\n\r\n**输入：**\r\n\r\n```json\r\n{\r\n  \"tool\": \"estimate_stamp_duty\",\r\n  \"arguments\": {\r\n    \"purchase_price\": 350000,\r\n    \"first_time_buyer\": true\r\n  }\r\n}\r\n```\r\n\r\n**输出：**\r\n\r\n```json\r\n{\r\n  \"purchase_price\": 350000,\r\n  \"buyer_type\": \"first-time buyer\",\r\n  \"additional_property\": false,\r\n  \"base_tax\": 2500,\r\n  \"additional_property_surcharge\": 0,\r\n  \"total_stamp_duty\": 2500,\r\n  \"effective_rate_percent\": 0.71,\r\n  \"country\": \"England & Northern Ireland\",\r\n  \"note\": \"SDLT rates from 1 April 2025. Temporary higher nil-rate bands (Sep 2022–Mar 2025) have reverted.\"\r\n}\r\n```\r\n\r\n2500英镑来自：30万英镑，0%（FTB零利率区间）+5万英镑，5%=2500英镑。\r\n\r\n## Claude桌面配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"conveyancing\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"conveyancing-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者，如果通过pip安装：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"conveyancing\": {\r\n      \"command\": \"conveyancing-mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 状态\r\n\r\n支持英格兰和北爱尔兰（SDLT）、苏格兰（LBTT）和威尔士（LTT）。\r\n\r\n根据验证的SDLT费率 [GOV.UK](https://www.gov.uk/stamp-duty-land-tax/residential-property-rates) 截至2026年3月。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "conveyancing": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "conveyancing-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

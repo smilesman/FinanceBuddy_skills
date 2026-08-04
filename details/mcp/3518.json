@@ -1,0 +1,21 @@
+{
+ "id": "3518",
+ "kind": "mcp",
+ "name": "mcp-hn-2",
+ "fingerprint_md5": "9fcf5cafaacc160138871ebae4778f20",
+ "download_count": 0,
+ "category": "新闻资讯",
+ "tags": "",
+ "version": "",
+ "readme": "# 黑客新闻MCP服务器\r\n\r\n\r\n一种模型上下文协议（MCP）服务器，提供从黑客新闻中获取信息的工具。\r\n\r\n[https://glama.ai/mcp/servers/e0rco8dfgt](https://glama.ai/mcp/servers/e0rco8dfgt)\r\n\r\n## 工具\r\n\r\n- `get_stories` 获取（顶部、新、ask_hn、show_hn）故事\r\n- `get_story_info` 获取与故事相关的评论\r\n- `search_stories` 按查询搜索故事\r\n- `get_user_info` 正在获取用户信息\r\n\r\n## 示例用法\r\n\r\n使用以下提示：\r\n\r\n```\r\nUser: Get the top stories of today\r\n  Output: Uses `get_stories` tool and returns a story about AI\r\nUser: What does the details of the story today that talks about the future of AI\r\n  Output: Uses `get_story_info` tool based on the results of the previous tool\r\nUser: What has the user `pg` been up to?\r\n  Output: Uses `get_user_info` tool and returns a summary of the user's activity\r\nUser: What does hackernews say about careers in AI?\r\n  Output: Uses `search_stories` tool and returns a summary of the comments\r\n```\r\n\r\n一个更详细的木偶操纵器MCP服务器示例：\r\n\r\n```\r\nUser: What are the top stories of today?\r\n  Output: Uses `get_stories` tool and returns a story about AI\r\nUser: Can you use the puppeteer tool to read the article about <AI> and also use the hackernews tool to view the comments and give me a summary of what the main comments are about the article?\r\n  Output: Uses puppeteer tool to read the article about AI and then uses the `get_story_info` hn tool to get the comments and returns a summary of the comments\r\n```\r\n\r\n## 快速启动\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面版黑客新闻MCP服务器 [史密瑟里](https://smithery.ai/server/mcp-hn):\r\n\r\n```bash\r\nnpx -y @smithery/cli install mcp-hn --client claude\r\n```\r\n\r\n### 克劳德桌面：\r\n\r\n更新以下内容：\r\n\r\n在MacOS上： `~/Library/Application\\ Support/Claude/claude_desktop_config.json`\r\n\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n以下内容用于生产：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-hn\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-hn\"]\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "mcp-hn": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-hn"
+   ],
+   "env": {}
+  }
+ }
+}

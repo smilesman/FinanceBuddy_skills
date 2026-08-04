@@ -1,0 +1,12 @@
+{
+ "id": "gitbackup",
+ "kind": "skill",
+ "name": "gitbackup",
+ "fingerprint_md5": "320fdbbc919a5d10f8bbd5379614ff64",
+ "download_count": 0,
+ "category": "基础设施",
+ "tags": "",
+ "version": "",
+ "readme": "# Git 备份（本地 bundle）\r\n\r\n## 概述\r\n创建 workspace repo 的自包含 Git bundle 并将其存储在 `/root/.openclaw/backups` 中。\r\n\r\n## 快速开始\r\n运行打包脚本：\r\n```bash\r\nbash /root/.openclaw/workspace/skills/gitbackup/scripts/git-backup.sh\r\n```\r\n\r\n## 输出\r\n打印 bundle 路径和大小。bundle 文件名包含 UTC 时间戳。\r\n\r\n## 注意事项\r\n- 如果 workspace 不是 Git repo，以明确的错误退出。\r\n- 不要删除旧的 bundles。",
+ "config": {}
+}

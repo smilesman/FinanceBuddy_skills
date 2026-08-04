@@ -1,0 +1,22 @@
+{
+ "id": "1708",
+ "kind": "mcp",
+ "name": "sequential-thinking",
+ "fingerprint_md5": "4b9fd0f8e681e56c2600adf460da008c",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 顺序思维MCP服务器\r\n\r\nMCP服务器实现，通过结构化思维过程提供动态和反思性问题解决的工具。\r\n\r\n## 特性\r\n\r\n- 将复杂问题分解为可管理的步骤\r\n- 随着理解的加深，修改和完善想法\r\n- 分支到其他推理路径\r\n- 动态调整想法总数\r\n- 生成并验证解决方案假设\r\n\r\n## 工具\r\n\r\n### 顺序思考\r\n\r\n为解决问题和分析提供详细的、循序渐进的思维过程。\r\n\r\n**输入：**\r\n\r\n- `thought` （string）：当前思考步骤\r\n- `nextThoughtNeeded` （boolean）：是否需要另一个思考步骤\r\n- `thoughtNumber` （整数）：当前思想数\r\n- `totalThoughts` （整数）：估计所需的总想法\r\n- `isRevision` （boolean，可选）：这是否改变了之前的想法\r\n- `revisesThought` （整数，可选）：正在重新考虑哪个想法\r\n- `branchFromThought` （整数，可选）：分支点思想数\r\n- `branchId` （字符串，可选）：分支标识符\r\n- `needsMoreThoughts` （boolean，可选）：如果需要更多想法\r\n\r\n## 用法\r\n\r\n顺序思维工具旨在：\r\n\r\n- 将复杂问题分解为步骤\r\n- 规划和设计，有修改空间\r\n- 可能需要修正航向的分析\r\n- 最初可能不清楚全部范围的问题\r\n- 需要在多个步骤中保持上下文的任务\r\n- 需要过滤掉无关信息的情况\r\n\r\n## 配置\r\n\r\n### 使用Claude Desktop\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n#### npx\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sequential-thinking\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@modelcontextprotocol/server-sequential-thinking\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 码头工人\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sequentialthinking\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"mcp/sequentialthinking\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n要禁用思想信息集env-var的日志记录，请执行以下操作： `DISABLE_THOUGHT_LOGGING` 到 `true`.\r\n评论\r\n\r\n### 使用VS代码\r\n\r\n要快速安装，请单击下面的安装按钮之一。..\r\n\r\n[](https://insiders.vscode.dev/redirect/mcp/install?name=sequentialthinking&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40modelcontextprotocol%2Fserver-sequential-thinking%22%5D%7D) [](https://insiders.vscode.dev/redirect/mcp/install?name=sequentialthinking&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40modelcontextprotocol%2Fserver-sequential-thinking%22%5D%7D&quality=insiders)\r\n\r\n[](https://insiders.vscode.dev/redirect/mcp/install?name=sequentialthinking&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22--rm%22%2C%22-i%22%2C%22mcp%2Fsequentialthinking%22%5D%7D) [](https://insiders.vscode.dev/redirect/mcp/install?name=sequentialthinking&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22--rm%22%2C%22-i%22%2C%22mcp%2Fsequentialthinking%22%5D%7D&quality=insiders)\r\n\r\n对于手动安装，您可以使用以下方法之一配置MCP服务器：\r\n\r\n**方法1：用户配置（推荐）**\r\n将配置添加到用户级MCP配置文件中。打开命令选项板(`Ctrl + Shift + P`)然后跑 `MCP: Open User Configuration`。这将打开您的用户 `mcp.json` 您可以在其中添加服务器配置的文件。\r\n\r\n**方法2：工作空间配置**\r\n或者，您可以将配置添加到名为的文件中 `.vscode/mcp.json` 在您的工作空间中。这将允许您与他人共享配置。\r\n\r\n> 有关VS Code中MCP配置的更多详细信息，请参阅 [官方VS Code MCP文档](https://code.visualstudio.com/docs/copilot/mcp).\r\n\r\n对于NPX安装：\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"sequential-thinking\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@modelcontextprotocol/server-sequential-thinking\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n对于Docker安装：\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"sequential-thinking\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"mcp/sequentialthinking\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 建筑\r\n\r\nDocker：\r\n\r\n```bash\r\ndocker build -t mcp/sequentialthinking -f src/sequentialthinking/Dockerfile .\r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "sequential-thinking": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@modelcontextprotocol/server-sequential-thinking"
+   ],
+   "env": {}
+  }
+ }
+}

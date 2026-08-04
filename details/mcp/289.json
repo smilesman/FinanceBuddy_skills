@@ -1,0 +1,26 @@
+{
+ "id": "289",
+ "kind": "mcp",
+ "name": "mcp-sticky-2",
+ "fingerprint_md5": "b045d814984bf8732ca7eff6a3f3d1f3",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp迷因粘\r\n\r\n使用MCP Meme Sticky创建AI生成的表情包。可以将生成的表情包转换为Telegram或WhatsApp的贴纸（WA即将推出）。 ✨ 无需API✨.\r\n\r\n对于Telegram，MCP服务器生成一个链接，可以将图像作为贴纸生成。可以在这里查看： [MCP粘性电报机器人](https://github.com/nkapila6/mcp-sticky-tele).\r\n\r\n## 归因\r\n\r\nMCP服务器使用多种服务。感谢以下服务/图书馆。\r\n\r\n- [梅梅根](https://memegen.link/)：GOATED开源模因生成器！\r\n- [媒体管道](https://ai.google.dev/edge/mediapipe/solutions/text/text_embedder)：Mediapipe的文本嵌入器，允许我选择模因模板。\r\n- [PythonAnywhere](https://www.pythonanywhere.com/)：免费的Python云服务！它为 [电报机器人](https://github.com/nkapila6/mcp-sticky-tele).\r\n- [网络爬虫](https://github.com/hellock/icrawler)：我的图像爬虫深受他们图书馆的启发。\r\n- [FastMCP](https://gofastmcp.com/getting-started/welcome)：FastMCP使Python MCP服务器更容易制作！\r\n\r\n## 完工工程\r\n\r\n- Meme一代\r\n\r\n  - \\[x\\] 可以根据提示生成自定义表情包。\r\n  - \\[x\\] 可以将生成的表情包保存在桌面上。（仅在MacOS上测试，请在其他操作系统上使用您各自的主机进行测试，并通过问题给我反馈）\r\n\r\n- 贴纸生成\r\n\r\n  - \\[x\\] 可以使用自定义编码将表情包转换为Telegram贴纸（如果机器人在线） [MCP粘性电报机器人](https://github.com/nkapila6/mcp-sticky-tele).\r\n  - \\[x\\] 自动打开Telegram，而不是要求用户粘贴到浏览器上。（5月22日增补）\r\n  - \\[x\\] 自动打开图像链接。（5月22日增补）\r\n  - \\[x\\] 使用memegen预构建模板（简单）。（5月22日增补）\r\n\r\n- 待定工作\r\n\r\n  - \\[\\]WhatsApp贴纸转换。\r\n  - \\[\\]记录消息。\r\n\r\n## 安装说明\r\n\r\n使用uvx安装。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-sticky\":{\r\n      \"command\": \"uvx\",\r\n        \"args\": [\r\n          \"--python=3.10\",\r\n          \"--from\",\r\n          \"git+https://github.com/nkapila6/mcp-meme-sticky\",\r\n          \"mcp-sticky\"\r\n        ],\r\n        \"env\": {\r\n          \"MCP_STICKY_RETURN_IMAGE\": \"true\"\r\n        }\r\n      }\r\n  }\r\n}\r\n```\r\n\r\n## 安全审计\r\n\r\nMseeP对每个MCP服务器进行安全审计，您可以通过单击查看此MCP服务器的安全审计 [这里](https://mseep.ai/app/nkapila6-mcp-meme-sticky).\r\n\r\n[](https://mseep.ai/app/nkapila6-mcp-meme-sticky)\r\n\r\n## MCP主机\r\n\r\n应与任何支持工具调用的MCP客户端配合使用。\r\n已对以下内容进行了测试：\r\n\r\n- 克劳德桌面版\r\n- 光标\r\n- 鹅\r\n- 其他人？你试试！\r\n\r\n## 示例\r\n\r\n点击下图在Claude Desktop上观看MCP Meme Sticky的视频。\r\n\r\nhttps://github.com/user-attachments/assets/3ad45852-ff98-4a17-9ae2-6201e82704cc\r\n\r\n在Claude Desktop上使用MCP Meme Sticky的图像示例。\r\n\r\n\r\n使用Goose MCP Host生成带有MCP Meme Sticky的Meme的示例！\r\n\r\n\r\n## 给我买杯咖啡\r\n\r\n如果我开发的软件对你有帮助。请给我买杯咖啡，我真的很感激！ 😄\r\n\r\n[](https://ko-fi.com/X8X51MK4A1)\r\n\r\n# 关于人工智能生成内容的免责声明\r\n\r\n通过此MCP服务器生成的内容是MCP主机（或客户端）维护的自动化流程和系统的产物。（这些术语不可互换，但人们倾向于使用它们可互换，正确的术语是host。）\r\n\r\n作为请求此内容的用户，我对所生成的具体输出、图像、贴纸或其他材料不承担任何责任。通过本服务创建的任何内容、表情包、贴纸或其他材料不一定反映我的个人观点、意见或意图。\r\n\r\n此服务的功能、内容过滤和适当操作完全由MCP主机负责。\r\n\r\n我出于善意使用了这个工具，用于创造性和有趣的目的。如果任何内容显得不恰当、不准确或可能有害，请将所有疑虑、投诉或询问直接发送给MCP主机提供商。MCP主机对通过其平台生成的所有内容承担全部责任。\r\n",
+ "config": {
+  "mcp-sticky": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--python=3.10",
+    "--from",
+    "git+https://github.com/nkapila6/mcp-meme-sticky",
+    "mcp-sticky"
+   ],
+   "env": {
+    "MCP_STICKY_RETURN_IMAGE": "true"
+   }
+  }
+ }
+}

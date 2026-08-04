@@ -1,0 +1,25 @@
+{
+ "id": "1285",
+ "kind": "mcp",
+ "name": "sqlserver-2",
+ "fingerprint_md5": "8631ddd798bad877e47a4aa096b6097f",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP SQL Server\r\n\r\n\r\n用于SQL server与Claude Code集成的模型上下文协议（MCP）服务器。直接从Claude查询、监视和分析您的SQL Server数据库。\r\n\r\n## 特性\r\n\r\n- **查询执行** -使用参数化输入执行SELECT查询\r\n- **模式探索** -浏览表、列、过程和索引\r\n- **数据库监控** -跟踪活动查询、阻塞会话、等待统计数据和连接\r\n- **性能分析** -识别缺失的索引、未使用的索引和碎片\r\n- **写入操作** -启用时插入、更新、删除（只读=假）\r\n\r\n## 安装\r\n\r\n### 选项1：来自npm（推荐）\r\n\r\n```bash\r\nnpx @fabriciofs/mcp-sql-server\r\n```\r\n\r\n### 选项2：全局安装\r\n\r\n```bash\r\nnpm install -g @fabriciofs/mcp-sql-server\r\n```\r\n\r\n### 选项3：在本地克隆和构建\r\n\r\n```bash\r\ngit clone https://github.com/fabriciofs/mcp-sql-server.git\r\ncd mcp-sql-server\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n## 配置\r\n\r\n### Claude代码集成\r\n\r\n添加到您的Claude Code MCP设置中(`~/.claude/settings.json` 或项目 `.claude/settings.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sqlserver\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@fabriciofs/mcp-sql-server\"],\r\n      \"env\": {\r\n        \"SQL_CONNECTION_URL\": \"sqlserver://user:password@localhost:1433/database\",\r\n        \"READONLY\": \"true\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用单独的连接参数：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sqlserver\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@fabriciofs/mcp-sql-server\"],\r\n      \"env\": {\r\n        \"SQL_SERVER\": \"localhost\",\r\n        \"SQL_DATABASE\": \"mydb\",\r\n        \"SQL_USER\": \"sa\",\r\n        \"SQL_PASSWORD\": \"yourpassword\",\r\n        \"SQL_PORT\": \"1433\",\r\n        \"SQL_TRUST_CERT\": \"true\",\r\n        \"READONLY\": \"true\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 环境变量\r\n\r\n#### 连接（选择一种方法）\r\n\r\n**方法1：连接URL**\r\n\r\n```bash\r\nSQL_CONNECTION_URL=sqlserver://user:password@host:port/database?TrustServerCertificate=true\r\n```\r\n\r\n**方法2：单个参数**\r\n\r\n```bash\r\nSQL_SERVER=localhost\r\nSQL_DATABASE=mydb\r\nSQL_USER=sa\r\nSQL_PASSWORD=yourpassword\r\nSQL_PORT=1433              # Optional, default: 1433\r\nSQL_ENCRYPT=true           # Optional, default: true\r\nSQL_TRUST_CERT=false       # Optional, default: false\r\n```\r\n\r\n#### 必需设置\r\n\r\n|变量|描述|\r\n|----------|-------------|\r\n| `READONLY` | **必修的。** 吃起来 `true` 用于只读模式或 `false` 启用写入操作|\r\n\r\n#### 可选设置\r\n\r\n|变量|默认值|描述|\r\n|----------|---------|-------------|\r\n| `QUERY_TIMEOUT` | `30000` |查询超时（毫秒）（最大值：120000）|\r\n| `MAX_ROWS` | `1000` |要返回的最大行数（最大值：5000）|\r\n| `POOL_MIN` | `2` |最小连接池大小|\r\n| `POOL_MAX` | `10` |最大连接池大小|\r\n| `LOG_LEVEL` | `info` |日志级别：调试、信息、警告、错误|\r\n\r\n## 可用工具\r\n\r\n### 查询工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `sql_execute` |使用参数化输入执行SELECT查询|\r\n\r\n### 架构工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `schema_list_tables` |列出数据库中的所有表和视图|\r\n| `schema_describe_table` |获取详细的表信息（列、索引、外键）|\r\n| `schema_list_columns` |在所有表中搜索列|\r\n| `schema_list_procedures` |列出存储过程|\r\n| `schema_list_indexes` |列出具有使用统计信息的索引|\r\n\r\n### 监控工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `monitor_active_queries` |监视当前正在运行的查询|\r\n| `monitor_blocking` |监控阻塞会话和锁链|\r\n| `monitor_wait_stats` |监控性能瓶颈的等待统计数据|\r\n| `monitor_database_size` |监控数据库大小和文件使用情况|\r\n| `monitor_connections` |监控活动连接|\r\n| `monitor_performance_counters` |监视SQL Server性能计数器|\r\n\r\n### 分析工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `analyze_query` |分析查询执行计划和统计|\r\n| `analyze_suggest_indexes` |根据查询模式建议缺少的索引|\r\n| `analyze_unused_indexes` |查找未使用的索引|\r\n| `analyze_duplicate_indexes` |查找重复或重叠的索引|\r\n| `analyze_fragmentation` |分析索引碎片级别|\r\n| `analyze_statistics` |分析表统计信息以查找过时数据|\r\n\r\n### 写入工具（只读=仅为false）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `sql_insert` |在表格中插入一行|\r\n| `sql_update` |更新表中的行|\r\n| `sql_delete` |从表中删除行|\r\n\r\n## 用法示例\r\n\r\n配置后，您可以要求Claude与您的数据库进行交互：\r\n\r\n```\r\n\"List all tables in the database\"\r\n\"Describe the Users table\"\r\n\"Show me active queries running for more than 5 seconds\"\r\n\"Find unused indexes in the Orders table\"\r\n\"Analyze the fragmentation of all indexes\"\r\n\"What are the top wait statistics?\"\r\n```\r\n\r\n## 安全考虑\r\n\r\n- **在生产中始终使用READONLY=true** 除非明确要求写访问权限\r\n- 使用环境变量安全地存储凭据\r\n- 使用具有最低所需权限的SQL Server帐户\r\n- 考虑远程连接的网络安全（VPN、防火墙规则）\r\n\r\n## 需求\r\n\r\n- Node.js>=20.0.0\r\n- SQL Server 2016或更高版本\r\n- 您要执行的操作的适当SQL Server权限\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build\r\nnpm run build\r\n\r\n# Development mode (watch)\r\nnpm run dev\r\n\r\n# Type check\r\nnpm run typecheck\r\n\r\n# Run MCP Inspector\r\nnpm run inspector\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "sqlserver": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@fabriciofs/mcp-sql-server"
+   ],
+   "env": {
+    "SQL_CONNECTION_URL": "sqlserver://user:password@localhost:1433/database",
+    "READONLY": "true"
+   }
+  }
+ }
+}

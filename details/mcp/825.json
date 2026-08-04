@@ -1,0 +1,18 @@
+{
+ "id": "825",
+ "kind": "mcp",
+ "name": "quality-qr",
+ "fingerprint_md5": "dac5a5a0f50791b7d140d920aa2a16cf",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# 优质QR MCP服务器\r\n\r\n通过人工智能助手（如Claude、Cursor和任何兼容MCP的工具）创建和管理可跟踪的二维码。\r\n\r\n与通用二维码生成器不同，优质二维码 **已保存到您的帐户** 扫描跟踪、分析以及无需重新打印即可更新目的地的能力。\r\n\r\n**端点：** `https://quality-qr.app/api/mcp`\r\n\r\n## 设置\r\n\r\n### 1.获取API密钥\r\n\r\n注册地址： [质量-qr.app](https://quality-qr.app) 并在生成API密钥 **仪表板>设置>API键**.\r\n\r\n### 2.配置您的MCP客户端\r\n\r\n> **Smithery用户：** 如果您通过安装 [史密瑟里](https://smithery.ai)，系统将提示您输入 `apiKey` 直接由Smithery处理 `Authorization` 标题为你。以下配置用于手动设置。\r\n\r\n#### 克劳德桌面版\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在Mac上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"quality-qr\": {\r\n      \"url\": \"https://quality-qr.app/api/mcp\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer YOUR_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 光标\r\n\r\n添加到光标MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"quality-qr\": {\r\n      \"url\": \"https://quality-qr.app/api/mcp\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer YOUR_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add quality-qr --transport http https://quality-qr.app/api/mcp \\\r\n  --header \"Authorization: Bearer YOUR_API_KEY\"\r\n```\r\n\r\n### 3.开始使用它\r\n\r\n问你的AI助手：\r\n\r\n- “创建二维码https://example.com\"\r\n- “使用密码guest123为网络MyWiFi制作WiFi二维码”\r\n- “显示我的二维码分析”\r\n- “列出我的所有二维码”\r\n- “禁用二维码abc123”\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `quality_qr_create` |创建可追踪的二维码。12种类型：URL、PDF、菜单、应用商店、社交、WiFi、vCard、电子邮件、电话、短信、文本、事件。返回内联SVG。 |\r\n| `quality_qr_list` |列出您的二维码，可选类型过滤器和分页。 |\r\n| `quality_qr_get` |通过ID获取二维码的完整详细信息|\r\n| `quality_qr_update` |更新目标URL（动态类型）、重命名或启用/禁用。 |\r\n| `quality_qr_delete` |永久删除二维码。释放计划配额。 |\r\n| `quality_qr_analytics` |扫描分析：总计、每日趋势、设备细分、主要国家。 |\r\n\r\n## 二维码类型\r\n\r\n**动态（打印后可以更改URL）：** URL、PDF、菜单、应用商店、社交媒体\r\n\r\n**静态（数据直接编码）：** WiFi、vCard、电子邮件、电话、短信、文本、活动\r\n\r\n## 速率限制\r\n\r\nMCP工具调用计入您的API费率限制。协议消息(`initialize`, `tools/list`)是免费的。\r\n\r\n|计划|工具调用/月|分析历史|价格|\r\n|------|-------------------|-------------------|-------|\r\n|免费|100|7天|免费|\r\n|专业| 1000 | 30天| 10欧元/月|\r\n|商业| 10000 | 1年| 30欧元/月|\r\n\r\n### 速率限制响应标头\r\n\r\n每个响应都包含标题，以帮助您管理使用情况：\r\n\r\n|标题|描述|\r\n|--------|-------------|\r\n| `X-RateLimit-Limit` |您的计划每月允许的最大工具调用次数|\r\n| `X-RateLimit-Remaining` |当前计费期内剩余的工具调用|\r\n| `X-RateLimit-Reset` |限制重置时的UTC时间戳（ISO 8601）|\r\n| `Retry-After` |重试前等待的秒数（仅在 `429` 答复）|\r\n\r\n当你收到 `429 Too Many Requests` 响应，等待中指定的秒数 `Retry-After` 在重试之前。\r\n\r\n## 安全\r\n\r\n- 通过API密钥（承载令牌）验证的所有请求\r\n- 可以从仪表板立即撤销密钥\r\n- 二维码仅限于您的帐户（无跨用户访问权限）\r\n- 未暴露任何管理、计费或团队管理操作\r\n- 符合GDPR和CCPA标准，托管在Cloudflare的全球边缘网络上\r\n\r\n### API密钥管理\r\n\r\n您的API密钥可完全访问您的二维码和分析。把它当作密码。\r\n\r\n- **定期旋转。** 在中生成新密钥 **仪表板>设置>API键**，更新MCP客户端配置，然后撤销旧密钥。您可以使用多个活动键来实现零停机轮换。\r\n- **立即撤销泄露的密钥。** 撤销立即生效——任何使用旧密钥的飞行中请求都将失败。\r\n- **限制对配置文件的访问。** MCP客户端配置以明文形式存储您的密钥。在macOS/Linux上，确保只有您的用户可以读取它们（例如。， `chmod 600`).避免将带有真实密钥的配置文件提交到版本控制。\r\n\r\n## 链接\r\n\r\n- [质量二维码](https://quality-qr.app)\r\n- [代理入职培训（SKILL.md）](https://quality-qr.app/agent-onboarding/SKILL.md) --AI代理自主使用Quality QR的分步说明([来源](SKILL.md))\r\n- [MCP文件](https://quality-qr.app/docs/mcp)\r\n- [API 文档](https://quality-qr.app/docs/api)\r\n- [定价](https://quality-qr.app/pricing)\r\n\r\n## 协议\r\n\r\n这是一个使用流式HTTP传输（JSON-RPC 2.0 over HTTP POST）的远程MCP服务器。无需本地安装。与MCP协议版本兼容 `2025-03-26`.\r\n",
+ "config": {
+  "quality-qr": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://quality-qr.app/api/mcp"
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "2146",
+ "kind": "mcp",
+ "name": "cloudflare-dns",
+ "fingerprint_md5": "7d281fab593cdcb7a8b11809d46a6909",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# @kodim/mcp云耀斑dns\r\n\r\n用于管理和分析Cloudflare DNS（区域、记录、分析和DNSSEC）的MCP服务器。\r\n\r\n## 安装\r\n\r\n### 克劳德代码\r\n\r\n添加到您的Claude Code MCP设置中(`.claude/settings.local.json` 或全局设置）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cloudflare-dns\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@kodim/mcp-cloudflare-dns\"],\r\n      \"env\": {\r\n        \"CLOUDFLARE_API_TOKEN\": \"your-cloudflare-api-token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 游标/其他MCP客户端\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cloudflare-dns\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@kodim/mcp-cloudflare-dns\"],\r\n      \"env\": {\r\n        \"CLOUDFLARE_API_TOKEN\": \"your-cloudflare-api-token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## Cloudflare API代币\r\n\r\n在创建API令牌 [Cloudflare仪表板](https://dash.cloudflare.com/profile/api-tokens).\r\n\r\n**所需权限：**\r\n\r\n- **区域** --阅读\r\n- **域名系统** --编辑\r\n- **分析** --阅读（用于分析工具）\r\n\r\n您可以使用“编辑区域DNS”模板作为起点，并添加Analytics读取权限。\r\n\r\n## 工具\r\n\r\n### 区域\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_zones` |列出所有DNS区域。按名称、状态筛选。 |\r\n| `get_zone` |按ID获取区域的完整详细信息|\r\n\r\n### DNS记录\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_dns_records` |列出带有过滤器（类型、名称、内容、代理、搜索、标记）的记录。 |\r\n| `get_dns_record` |获取特定记录的详细信息。 |\r\n| `create_dns_record` |创建记录（a、AAAA、CNAME、MX、TXT、SRV等）。 |\r\n| `update_dns_record` |部分更新现有记录。 |\r\n| `delete_dns_record` |永久删除记录。 |\r\n\r\n### 批量操作\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `batch_dns_records` |在一次通话中创建、更新和删除多条记录。 |\r\n| `export_dns_records` |以BIND格式导出所有记录（用于备份）。 |\r\n| `import_dns_records` |从BIND格式内容导入记录。 |\r\n\r\n### 分析\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_dns_analytics` |摘要指标：查询计数、响应时间、缓存统计数据。 |\r\n| `get_dns_analytics_by_time` |具有可配置间隔的时间序列分析。 |\r\n\r\n### 域名系统安全扩展\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_dnssec_status` |获取DNSSEC状态和DS记录详细信息。 |\r\n| `update_dnssec_status` |启用或禁用DNSSEC。 |\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install --ignore-scripts\r\n\r\n# Build\r\nnpm run build\r\n\r\n# Watch mode\r\nnpm run watch\r\n\r\n# Test with MCP Inspector\r\nCLOUDFLARE_API_TOKEN=your-token npm run dev\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "cloudflare-dns": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@kodim/mcp-cloudflare-dns"
+   ],
+   "env": {
+    "CLOUDFLARE_API_TOKEN": "your-cloudflare-api-token"
+   }
+  }
+ }
+}

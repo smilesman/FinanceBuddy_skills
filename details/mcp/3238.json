@@ -1,0 +1,22 @@
+{
+ "id": "3238",
+ "kind": "mcp",
+ "name": "time-agent",
+ "fingerprint_md5": "09b9886873c9cdfa42158f9639daaf27",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 在Cloudflare上构建远程MCP服务器（无需身份验证）\r\n\r\n此示例允许您在Cloudflare Workers上部署一个远程MCP服务器，该服务器提供任何给定时区的当前时间，而不需要身份验证。\r\n\r\n## 开始：\r\n\r\n这将把您的MCP服务器部署到以下URL： `https://time.mcp.camel.dev/sse`\r\n\r\n或者，您可以使用下面的命令行在本地计算机上创建远程MCP服务器：\r\n\r\n```bash\r\nnpm create cloudflare@latest -- my-mcp-server --template=cloudflare/ai/demos/remote-mcp-authless\r\n```\r\n\r\n## MCP工具：按时区查询时间\r\n\r\n此MCP服务器提供了一个工具：\r\n\r\n### `getTime`\r\n\r\n- **说明：** 返回给定IANA时区字符串的当前时间（例如。， `Asia/Taipei`, `America/New_York`).\r\n- **参数：**\r\n  - `timezone` （string）：IANA时区标识符。\r\n- **答复：**\r\n  - `Current time in : `\r\n\r\n#### 示例用法\r\n\r\n```json\r\n{\r\n  \"tool\": \"getTime\",\r\n  \"input\": { \"timezone\": \"Asia/Taipei\" }\r\n}\r\n```\r\n\r\n**答复：**\r\n\r\n```\r\nCurrent time in Asia/Taipei: 2025/06/14, 21:30:12\r\n```\r\n\r\n## 连接到Cloudflare AI游乐场\r\n\r\n您可以从Cloudflare AI Playground连接到您的MCP服务器，这是一个远程MCP客户端：\r\n\r\n1. 首选https://playground.ai.cloudflare.com/\r\n1. 输入您部署的MCP服务器URL(`https://time.mcp.camel.dev/sse`)\r\n1. 现在，您可以直接在操场上使用MCP工具！\r\n\r\n## 将Claude Desktop连接到您的MCP服务器\r\n\r\n您还可以使用以下命令从本地MCP客户端连接到远程MCP服务器 [mcp远程代理](https://www.npmjs.com/package/mcp-remote).\r\n\r\n要从Claude Desktop连接到MCP服务器，请按照以下步骤操作 [Anthropic的快速入门](https://modelcontextprotocol.io/quickstart/user) 在Claude Desktop中，转到“设置”>“开发人员”>“编辑配置”。\r\n\r\n使用此配置进行更新：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"time-agent\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-remote\", \"https://time.mcp.camel.dev/sse\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动Claude，您应该会看到该工具可用。\r\n\r\n## VS代码MCP示例\r\n\r\nVS Code现在原生支持MCP服务器。要连接到您的时间MCP服务器，请将以下内容添加到您的VS代码中 `settings.json`:\r\n\r\n```jsonc\r\n\"mcp\": {\r\n  \"servers\": {\r\n    \"time-mcp-server\": {\r\n      \"url\": \"https://time.mcp.camel.dev/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n这将允许您使用 `getTime` 工具直接从VS代码中。\r\n",
+ "config": {
+  "time-agent": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://time.mcp.camel.dev/sse"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "2408",
+ "kind": "mcp",
+ "name": "ai-reg-mcp",
+ "fingerprint_md5": "54acd37812704fda72e37b2072f0b989",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 人工智能法规MCP\r\n\r\n通过模型上下文协议（MCP）提供结构化、可查询的美国人工智能和隐私法数据。\r\n\r\n## 这是什么？\r\n\r\n人工智能法规MCP(`ai-reg-mcp`)是一个MCP服务器，为Claude（和其他MCP客户端）提供对有关美国人工智能法规、隐私法和合规要求的结构化数据的即时访问。无需再搜索PDF或法律网站——通过自然语言查询获取精确的监管信息。\r\n\r\n## 特性\r\n\r\n- **15项精心策划的人工智能/隐私法** 包括科罗拉多州人工智能法案、欧盟人工智能法案，加利福尼亚州ADMT，纽约市LL-144等\r\n- **136项结构化合规义务** 用通俗易懂的语言解释\r\n- **66项监管变化** 带有日期和影响描述\r\n- **自然语言管辖权查询** （例如，“Colorado”或“CO”都适用）\r\n- **跨司法管辖区比较** 找出最严格的要求\r\n- **零本地依赖** --适用于所有平台\r\n\r\n## 快速开始\r\n\r\n### 1.获取免费的API密钥\r\n\r\n访问 **[ai-reg-api.vercel.app](https://ai-reg-api.vercel.app)** 并登录GitHub。您将立即获得API密钥。\r\n\r\n### 2.配置克劳德桌面\r\n\r\n添加到您的Claude桌面配置(`claude_desktop_config.json`):\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ai-reg-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"ai-reg-mcp-server\"],\r\n      \"env\": {\r\n        \"AI_REG_API_KEY\": \"aireg_live_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.重新启动克劳德桌面\r\n\r\n您应该看到MCP服务器已连接。现在问克劳德关于人工智能的规定。\r\n\r\n## 用法\r\n\r\n连接后，您可以向Claude提出以下问题：\r\n\r\n- “科罗拉多州人工智能法案中的透明度要求是什么？”\r\n- “比较科罗拉多州、加利福尼亚州和纽约市的披露要求”\r\n- “遵守欧盟人工智能法案的最后期限是什么？”\r\n- “向我展示自2025年以来人工智能法规的最新变化”\r\n- “加州的人工智能部署者有哪些义务？”\r\n\r\n## 可用工具\r\n\r\n### 1. `search_laws`\r\n\r\n按司法管辖区、关键字、状态或生效日期搜索法律。\r\n\r\n### 2. `get_obligations`\r\n\r\n从特定法律中获取详细的合规义务。\r\n\r\n### 3. `compare_jurisdictions`\r\n\r\n比较多个司法管辖区的要求。\r\n\r\n### 4. `get_changes`\r\n\r\n查看随时间推移的监管变化。\r\n\r\n## 支持的法律（v0.3.0）\r\n\r\n**一级法律**\r\n\r\n- **科罗拉多州人工智能法案（SB24-205）** --高风险人工智能系统，算法歧视\r\n- **加利福尼亚州ADMT法规（CCPA）** --自动化决策技术\r\n- **组织** --人工智能/ADS在就业决策中的应用\r\n- **纽约市地方法律144** --自动化就业决策工具\r\n- **伊利诺伊州AIVIRA** --AI视频访谈\r\n- **得克萨斯州特拉加** --负责任的人工智能治理\r\n- **犹他州SB226** --人工智能消费者保护\r\n- **欧盟人工智能法案** --高风险人工智能系统（欧盟）\r\n- **美国废除法案** --NCII移除要求\r\n\r\n**二级法律**\r\n\r\n- **科罗拉多州人工智能保险治理规则（3 CCR 702-10）** --人工智能在保险承保/索赔中的应用\r\n- **加州人工智能透明度法案（SB 942）** --人工智能生成的内容披露要求\r\n- **加州伴侣聊天机器人安全法（SB 243）** --AI配套应用的安全标准\r\n- **纽约人工智能合成表演者广告披露** --合成表演者同意/披露\r\n- **蒙大拿州宣传权和数字复制法（HB 513）** --数字副本保护\r\n- **内华达州综合媒体政治广告披露（AB 73）** --政治广告中的合成媒体\r\n\r\n## 配置\r\n\r\n|环境变量|必填|默认|描述|\r\n|---------------------|----------|---------|-------------|\r\n| `AI_REG_API_KEY` |是|-|您的API密钥来自 [ai-reg-api.vercel.app](https://ai-reg-api.vercel.app) |\r\n| `AI_REG_API_URL` |没有| `https://ai-reg-api.vercel.app` |API基本URL（用于自托管）|\r\n\r\n## 费率限制（免费等级）\r\n\r\n- 100个请求/小时\r\n- 1000个请求/天\r\n- 10000次请求/月\r\n\r\n## 数据质量\r\n\r\n所有数据为：\r\n\r\n- 由法律/合规专家精心策划\r\n- 根据官方来源进行验证\r\n- 结构化，可编程访问\r\n- 随监管变化而更新\r\n- 包括简单的语言解释\r\n\r\n## 建筑\r\n\r\nv0.2.0是一个 **瘦客户端** --包中没有捆绑任何数据。所有法律数据均由私人API提供，在保持MCP接口相同的同时保护知识产权。\r\n\r\n```\r\nClaude Desktop  →  MCP Server (this package)  →  AI-Reg API (private)  →  Turso DB\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/Fractionalytics/ai-reg-mcp.git\r\ncd ai-reg-mcp\r\nnpm install\r\nnpm test\r\nnpm run build\r\n```\r\n\r\n## 从v0.1.0升级\r\n\r\nv0.2.0需要一个API密钥。如果你使用的是v0.1.0：\r\n\r\n1. 在获取免费API密钥 [ai-reg-api.vercel.app](https://ai-reg-api.vercel.app)\r\n1. 添加 `env` 阻止您的Claude Desktop配置（请参阅上面的快速入门）\r\n1. 重新启动克劳德桌面\r\n\r\nMCP工具界面保持不变——您现有的所有提示都将正常工作。\r\n\r\n## 局限性\r\n\r\n- **不是法律建议**：这是参考数据，不是法律指导\r\n- **美国聚焦**：目前涵盖美国法律+欧盟人工智能法案\r\n- **第1+2级法律**：未来版本中还将有其他第3级法律\r\n- **需要API密钥**：免费注册，即时密钥\r\n\r\n## 许可证\r\n\r\nMIT许可证——见 [许可证](LICENSE) 详见\r\n\r\n## 支持与联系\r\n\r\n- **错误报告**: [GitHub问题](https://github.com/Fractionalytics/ai-reg-mcp/issues)\r\n- **电子邮件**: david@fractionalytics.io\r\n\r\n## 免责声明\r\n\r\n该软件提供有关人工智能法规的参考信息，不应被视为法律建议。如有合规问题，请咨询熟悉您具体情况和管辖权的合格律师。\r\n",
+ "config": {
+  "ai-reg-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "ai-reg-mcp-server"
+   ],
+   "env": {
+    "AI_REG_API_KEY": "aireg_live_your_key_here"
+   }
+  }
+ }
+}

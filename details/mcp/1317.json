@@ -1,0 +1,25 @@
+{
+ "id": "1317",
+ "kind": "mcp",
+ "name": "your_mcp",
+ "fingerprint_md5": "32cbf3b7c98a146d9571ba86834410ed",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# MySQL MCP服务器\r\n\r\n一种模型上下文协议服务器，提供对MySQL数据库的只读访问。\r\n\r\n## 特性\r\n\r\n### 工具\r\n\r\n- **怎么翻译** -执行只读SQL查询（SELECT、SHOW、DESCRIBE、EXPLAIN）\r\n  - 所有查询都在只读事务中运行\r\n\r\n### 资源\r\n\r\n- **表架构** -自动发现表和列及其类型、键和约束\r\n\r\n## 安装\r\n\r\n### 码头工人\r\n\r\n```bash\r\ndocker build -t mcp/mysql .\r\ndocker run -i --rm mcp/mysql mysql://user:password@host:3306/database\r\n```\r\n\r\n### NPM\r\n\r\n```bash\r\nnpm install -g @modelcontextprotocol/server-mysql\r\n```\r\n\r\n### NPX\r\n\r\n```bash\r\nnpx -y @modelcontextprotocol/server-mysql mysql://user:password@localhost:3306/database\r\n```\r\n\r\n## 用法\r\n\r\n添加到MCP的配置中：\r\n\r\n### 使用Docker镜像（推荐）\r\n\r\n```bash\r\ndocker pull guidomarinho/mcp-mysql\r\n```\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"your_mcp\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"guidomarinho/mcp-mysql:latest\",\r\n        \"mysql://root:password@host.docker.internal:3306/you_db\"\r\n      ],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用本地Docker\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mysql\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"mcp/mysql\",\r\n        \"mysql://root:password@host.docker.internal:3306/database\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mysql\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@modelcontextprotocol/server-mysql\",\r\n        \"mysql://user:password@localhost:3306/database\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**备注**：当使用Docker连接到主机上的MySQL服务器时，请使用 `host.docker.internal` 而不是 `localhost`.\r\n\r\n## 连接字符串格式\r\n\r\n```\r\nmysql://username:password@host:port/database\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\nnode dist/index.js mysql://user:password@localhost:3306/database\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "your_mcp": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "guidomarinho/mcp-mysql:latest",
+    "mysql://root:password@host.docker.internal:3306/you_db"
+   ],
+   "env": {}
+  }
+ }
+}

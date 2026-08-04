@@ -1,0 +1,28 @@
+{
+ "id": "3610",
+ "kind": "mcp",
+ "name": "searxng-3",
+ "fingerprint_md5": "29cfeb1a76dd5c0db69ef4d1542e993c",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# SearXNG MCP服务器\r\n\r\n一 [MCP服务器](https://modelcontextprotocol.io/introduction) 实现集成了SearxNG API，提供了web搜索功能。\r\n\r\n[https://glama.ai/mcp/servers/0j7jjyt7m9](https://glama.ai/mcp/servers/0j7jjyt7m9)\r\n\r\n\r\n## 特性\r\n\r\n- **网页搜索**：一般查询、新闻、文章，带页码。\r\n- **分页**：控制返回大小和结果计数选项。\r\n\r\n## 工具\r\n\r\n- **搜索引擎web_search**\r\n  - 使用分页执行网络搜索\r\n  - 输入：\r\n    - `query` （string）：搜索词\r\n    - `count` （数字，可选）：每页结果（默认值20）\r\n    - `offset` （数字，可选）：分页偏移量（默认值0）\r\n\r\n## 配置\r\n\r\n### 设置SEARXNG_URL\r\n\r\n1. 从中选择SearxNG实例 [公共实例列表](https://searx.space/) 或者使用您当地的环境。\r\n1. 设置 `SEARXNG_URL` 环境变量到实例URL。\r\n1. 默认值 `SEARXNG_URL` 值是 `http://localhost:8080`.\r\n\r\n### 使用Claude Desktop\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装适用于克劳德桌面的SearxNG服务器 [史密瑟里](https://smithery.ai/server/@ihor-sokoliuk/server-searxng):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @ihor-sokoliuk/server-searxng --client claude\r\n```\r\n\r\n### NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"searxng\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\"\r\n        \"<full path to mcp-searxng repo>/\"\r\n      ],\r\n      \"env\": {\r\n        \"SEARXNG_URL\": \"YOUR_SEARXNG_INSTANCE_URL\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 码头工人\r\n\r\n#### 构建\r\n\r\n```bash\r\ndocker build -t mcp-server-searxng:latest -f Dockerfile .\r\n```\r\n\r\n#### 使用\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"searxng\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-e\",\r\n        \"SEARXNG_URL\",\r\n        \"mcp-server-searxng:latest\"\r\n      ],\r\n      \"env\": {\r\n        \"SEARXNG_URL\": \"YOUR_SEARXNG_INSTANCE_URL\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "searxng": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "SEARXNG_URL",
+    "mcp-server-searxng:latest"
+   ],
+   "env": {
+    "SEARXNG_URL": "YOUR_SEARXNG_INSTANCE_URL"
+   }
+  }
+ }
+}

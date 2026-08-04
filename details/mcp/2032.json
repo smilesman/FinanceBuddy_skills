@@ -1,0 +1,22 @@
+{
+ "id": "2032",
+ "kind": "mcp",
+ "name": "qrcode",
+ "fingerprint_md5": "c456ce806c8aed3139a33fcc8d39b200",
+ "download_count": 0,
+ "category": "商业工具",
+ "tags": "",
+ "version": "",
+ "readme": "# CrowdStrike AIDR MCP代理\r\n\r\n保护客户端和任何MCP服务器之间的通信。现在减少了99%\r\n立即注射！CrowdStrike AIDR MCP代理允许任何MCP客户端保护\r\n它使用CrowdStrike向MCP服务器发送和从MCP服务器接收的消息\r\nAIDR服务，用于保护工具的输入和输出。\r\n\r\n它的作用：通过运行所有MCP I/O来保护用户免受常见威胁\r\n通过CrowdStrike AIDR，它可以阻止：\r\n\r\n- 及时注射（是的，即使是那些被包裹在谜语中的注射）\r\n- 恶意链接、IP、域\r\n- 50种机密信息和个人身份信息\r\n- 10个内容过滤器，包括毒性、自残、暴力和按主题过滤\r\n- 支持104种口语\r\n\r\n## 先决条件\r\n\r\n- Node.js v22.15.0或更高版本。\r\n- CrowdStrike AIDR API代币。\r\n\r\n## 用法\r\n\r\n在现有的基于stdio的MCP服务器配置中，如下所示：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"qrcode\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@jwalsh/mcp-server-qrcode\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n用以下命令包裹原始命令 `npx -y @crowdstrike/aidr-mcp-proxy` 并添加\r\n环境变量：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"qrcode\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@crowdstrike/aidr-mcp-proxy\",\r\n        \"--\",\r\n        \"npx\",\r\n        \"-y\",\r\n        \"@jwalsh/mcp-server-qrcode\"\r\n      ],\r\n      \"env\": {\r\n        \"CS_AIDR_TOKEN\": \"cs_00000000000000000000000000000000\",\r\n        \"CS_AIDR_BASE_URL_TEMPLATE\": \"https://api.crowdstrike.com/aidr/{SERVICE_NAME}\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n1. 更新 `CS_AIDR_TOKEN` CrowdStrike AIDR API代币的值。\r\n1. 更新 `CS_AIDR_BASE_URL_TEMPLATE` CrowdStrike AIDR基本URL的值\r\n   模板。\r\n\r\n对于使用HTTP或SSE的远程服务器，请使用 [mcp遥控器](https://github.com/geelen/mcp-remote) 把它们变成stdio\r\n服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"proxied\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@crowdstrike/aidr-mcp-proxy\",\r\n        \"--\",\r\n        \"npx\",\r\n        \"-y\",\r\n        \"mcp-remote\",\r\n        \"https://remote.mcp.server/sse\"\r\n      ],\r\n      \"env\": {\r\n        \"CS_AIDR_TOKEN\": \"cs_00000000000000000000000000000000\",\r\n        \"CS_AIDR_BASE_URL_TEMPLATE\": \"https://api.crowdstrike.com/aidr/{SERVICE_NAME}\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 应用程序ID\r\n\r\n要在CrowdStrike AIDR中通过ID识别呼叫应用程序，请设置 `APP_ID`\r\n环境变量。\r\n\r\n### 应用名称\r\n\r\n要在CrowdStrike AIDR中按名称识别呼叫应用程序，请设置 `APP_NAME`\r\n环境变量。\r\n\r\n### 用户ID\r\n\r\n要在CrowdStrike AIDR中通过ID识别主叫用户，请设置\r\n`CS_AIDR_USER_ID` 环境变量。\r\n\r\n### 用户名\r\n\r\n要在CrowdStrike AIDR中按名称识别主叫用户，请设置\r\n`CS_AIDR_USER_NAME` 环境变量。\r\n\r\n### 代理\r\n\r\n请参阅 [AIDR文件](https://aidr-docs.crowdstrike.com/docs/aidr#cloud-origins)\r\n以满足连接要求。\r\n\r\nAIDR MCP代理自动从环境中读取代理配置\r\n变量 `http_proxy`, `https_proxy`，以及 `no_proxy`.上层存储环境\r\n还支持变量： `HTTP_PROXY`, `HTTPS_PROXY`，以及 `NO_PROXY`.如果\r\n设置了小写和大写的环境变量，大写\r\n环境变量将被忽略。\r\n",
+ "config": {
+  "qrcode": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@jwalsh/mcp-server-qrcode"
+   ],
+   "env": {}
+  }
+ }
+}

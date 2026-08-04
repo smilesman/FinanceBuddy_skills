@@ -1,0 +1,12 @@
+{
+ "id": "rook-ceph",
+ "kind": "skill",
+ "name": "rook-ceph",
+ "fingerprint_md5": "c98bc799bf3d068d438552284f0f3b6f",
+ "download_count": 0,
+ "category": "Kubernetes",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\n通过 Rook 在 Kubernetes 集群中编排 Ceph 存储，管理 StorageClass、Pool、RBD/CephFS 卷。",
+ "config": {}
+}

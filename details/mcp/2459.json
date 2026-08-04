@@ -1,0 +1,28 @@
+{
+ "id": "2459",
+ "kind": "mcp",
+ "name": "brave-search-3",
+ "fingerprint_md5": "1aa46f7d984ffdd33c7c299434835d82",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Brave Search MCP服务器\r\n\r\nMCP服务器实现集成了Brave Search API，提供了web和本地搜索功能。\r\n\r\n## 特性\r\n\r\n- **网页搜索**：一般查询、新闻、文章，带分页和新鲜度控制\r\n- **本地搜索**：查找具有详细信息的企业、餐馆和服务\r\n- **灵活过滤**：控制结果类型、安全级别和内容新鲜度\r\n- **智能回退**：当找不到结果时，本地搜索会自动回退到网络\r\n\r\n## 工具\r\n\r\n- **勇敢的网络搜索**\r\n\r\n  - 使用分页和过滤执行网络搜索\r\n  - 输入：\r\n    - `query` （string）：搜索词\r\n    - `count` （数字，可选）：每页结果（最多20个）\r\n    - `offset` （数字，可选）：分页偏移量（最大9）\r\n\r\n- **勇敢的探索**\r\n\r\n  - 搜索当地企业和服务\r\n  - 输入：\r\n    - `query` （string）：本地搜索词\r\n    - `count` （数字，可选）：结果数量（最多20个）\r\n  - 如果未找到本地结果，则自动回退到网络搜索\r\n\r\n## 配置\r\n\r\n### 获取API密钥\r\n\r\n1. 注册一个 [勇敢搜索API帐户](https://brave.com/search/api/)\r\n1. 选择一个计划（免费套餐每月可查询2000次）\r\n1. 生成API密钥 [从开发人员仪表板](https://api.search.brave.com/app/keys)\r\n\r\n### 使用Claude Desktop\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n### 码头工人\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"brave-search\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-e\",\r\n        \"BRAVE_API_KEY\",\r\n        \"mcp/brave-search\"\r\n      ],\r\n      \"env\": {\r\n        \"BRAVE_API_KEY\": \"YOUR_API_KEY_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"brave-search\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@modelcontextprotocol/server-brave-search\"\r\n      ],\r\n      \"env\": {\r\n        \"BRAVE_API_KEY\": \"YOUR_API_KEY_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 构建\r\n\r\nDocker构建：\r\n\r\n```bash\r\ndocker build -t mcp/brave-search:latest -f src/brave-search/Dockerfile .\r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "brave-search": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "BRAVE_API_KEY",
+    "mcp/brave-search"
+   ],
+   "env": {
+    "BRAVE_API_KEY": "YOUR_API_KEY_HERE"
+   }
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "id": "2056",
+ "kind": "mcp",
+ "name": "streamable",
+ "fingerprint_md5": "7a2a94133593b0a03fcf61a407c34609",
+ "download_count": 0,
+ "category": "商业工具",
+ "tags": "",
+ "version": "",
+ "readme": "**基本能力**\r\n## 产品定位\r\n名录集-企业信息查询MCP Server，提供名录集收录的企业基本信息调用服务，适用于需要获取特定企业基本信息的场景，如了解企业基本情况（企业名称、地址、注册日期、法人、注册资金、经营范围、公司类型、省份、城市、区县、乡镇、邮政编码）。\r\n\r\n### 核心功能\r\n1. 通过“企业统一社会信用代码/企业税号”查询企业基本信息（企业名称、地址、注册日期、法人、注册资金、经营范围、公司类型、所属省份、城市、区县、乡镇、邮政编码）。\r\n2. 通过“公司名称”查询企业基本信息（企业名称、地址、注册日期、法人、注册资金、经营范围、公司类型、经济行业名称、省份、城市、区县、乡镇、邮政编码）。\r\n\r\n### 适用场景\r\n- 求职应聘\r\n- 消费维权\r\n- 商业合作\r\n- 投资决策\r\n- 社交与人脉拓展\r\n- 客户关系管理\r\n- 供应链管理\r\n- 市场研究与分析\r\n\r\n### 工具列表\r\n1.query_by_credit_code：根据自然语言问题回答与企业主体code号相关的信息\r\n2.query_by_company_name:根据自然语言问题回答与企业主体名称相关的结果\r\n\r\n### 安装教程\r\n\r\n可流式传输的HTTP(streamableHttp) 部署\r\n以Cheery Studio为例\r\n1.右上角设置按钮 > MCP\r\n2.点击添加 “从JSON导入”\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"3eoVt5nRdffwBwiBIyI96\": {\r\n      \"name\": \"您的MCP服务名称\",\r\n      \"type\": \"streamableHttp\",\r\n      \"description\": \"您的描述\",\r\n      \"isActive\": true,\r\n      \"timeout\": \"100\",\r\n      \"longRunning\": true,\r\n      \"tags\": [],\r\n      \"baseUrl\": \"https://so.mingluji.com/mcp_enterprise\",\r\n      \"headers\": {\r\n        \"lang\": \"eee\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n其它平台如文心快码，通义灵码，cline等插件在建立连接后，在mcp.json中加入\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"streamable\": {\r\n            \"transportType\": \"streamableHttp\",\r\n            \"url\": \"https://so.mingluji.com/mcp_enterprise\",\r\n            \"disabled\": false\r\n        }\r\n    }\r\n}\r\n```\r\n",
+ "config": {
+  "streamable": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://so.mingluji.com/mcp_enterprise"
+  }
+ }
+}

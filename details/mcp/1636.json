@@ -1,0 +1,24 @@
+{
+ "id": "1636",
+ "kind": "mcp",
+ "name": "my-server",
+ "fingerprint_md5": "8ffc044b154487aea0665095bc108aa6",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 🐳 MCP服务器模板\r\n\r\n[](https://github.com/your-username/mcp-server-template/actions)\r\n\r\n具有Docker、双传输支持和自动化CI/CD的生产就绪MCP服务器模板。\r\n\r\n## ✨ 特性\r\n\r\n- **符合MCP 2025-06-18标准** -最新协议规范\r\n- **双重运输** -stdio和流式HTTP\r\n- **Docker就绪** -具有安全最佳实践的多拱集装箱\r\n- **CI/CD管道** -自动测试并发布到GitHub容器注册表\r\n- **模板就绪** -点击“使用此模板”开始\r\n\r\n## 🚀 快速开始\r\n\r\n### Docker（推荐）\r\n\r\n```bash\r\n# Pull from GitHub Container Registry\r\ndocker pull ghcr.io/your-username/mcp-server-template:latest\r\n\r\n# Or build locally\r\ndocker build -t mcp-server .\r\n\r\n# Run stdio mode (for MCP clients)\r\ndocker run -i --rm mcp-server\r\n\r\n# Run HTTP mode (for web integration)\r\ndocker run -p 8000:8000 -e MODE=http mcp-server\r\n```\r\n\r\n### 直接Python\r\n\r\n```bash\r\n# stdio mode\r\npython3 server.py\r\n\r\n# HTTP mode\r\npython3 server.py --http --port 8000\r\n```\r\n\r\n## 🔧 MCP客户端集成\r\n\r\n### 亚马逊Q/Claude桌面\r\n\r\n添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"my-server\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"ghcr.io/your-username/mcp-server-template:latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### HTTP客户端\r\n\r\n```bash\r\ncurl http://localhost:8000/mcp \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -H \"MCP-Protocol-Version: 2025-06-18\" \\\r\n  -H \"Accept: application/json, text/event-stream\" \\\r\n  -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\",\"params\":{}}'\r\n```\r\n\r\n## 🛠️ 发展\r\n\r\n### 项目结构\r\n\r\n```\r\n├── src/                   # Source code\r\n│   ├── server.py         # MCP server implementation\r\n│   └── entrypoint.sh     # Transport mode switching\r\n├── scripts/              # Development scripts\r\n│   └── setup-hooks.sh    # Git hooks setup\r\n├── examples/             # Usage examples\r\n│   └── client-config.json # Amazon Q configuration\r\n├── docs/                 # Documentation\r\n│   └── SETUP.md         # Setup guide\r\n├── .github/workflows/    # CI/CD automation\r\n├── Dockerfile           # Production container\r\n├── Makefile            # Development commands\r\n└── README.md          # This file\r\n```\r\n\r\n### 可用命令\r\n\r\n```bash\r\nmake build      # Build Docker image\r\nmake test       # Run all tests\r\nmake test-stdio # Test stdio transport\r\nmake test-http  # Test HTTP transport\r\nmake clean      # Clean up containers\r\n```\r\n\r\n### 添加工具\r\n\r\n编辑 `src/server.py` 并将您的工具添加到 `handle_request` 功能：\r\n\r\n```python\r\nelif method == 'tools/list':\r\n    return {\r\n        \"jsonrpc\": \"2.0\",\r\n        \"id\": request.get('id'),\r\n        \"result\": {\r\n            \"tools\": [\r\n                {\"name\": \"your_tool\", \"description\": \"Your tool description\", \r\n                 \"inputSchema\": {\"type\": \"object\", \"properties\": {...}}}\r\n            ]\r\n        }\r\n    }\r\n```\r\n\r\n## 📋 内置工具\r\n\r\n- **回声** -回显消息\r\n- **get_env** -获取环境变量\r\n\r\n## 🧪 测试\r\n\r\nCI管道自动测试：\r\n\r\n- ✅ MCP协议合规性（2024-11-05和2025-06-18）\r\n- ✅ stdio传输功能\r\n- ✅ 带有正确标头的HTTP传输\r\n- ✅ 工具执行和响应\r\n- ✅ Docker容器安全\r\n\r\n## 🚢 部署\r\n\r\n### GitHub容器注册表（自动）\r\n\r\n推到 `main` 分支或创建标签以自动构建和发布：\r\n\r\n```bash\r\ngit tag v1.0.0\r\ngit push origin v1.0.0\r\n```\r\n\r\n### 手动部署\r\n\r\n```bash\r\n# Build multi-arch image\r\ndocker buildx build --platform linux/amd64,linux/arm64 -t your-registry/mcp-server .\r\n\r\n# Push to registry\r\ndocker push your-registry/mcp-server\r\n```\r\n\r\n## 🔒 安全\r\n\r\n- 以非root用户身份运行\r\n- 默认情况下，HTTP服务器绑定到localhost\r\n- 协议版本验证\r\n- 输入净化\r\n\r\n## 📄 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件。\r\n\r\n______________________________________________________________________\r\n\r\n**🎯 准备好构建MCP服务器了吗？** 点击“使用此模板”开始！\r\n",
+ "config": {
+  "my-server": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "ghcr.io/your-username/mcp-server-template:latest"
+   ],
+   "env": {}
+  }
+ }
+}

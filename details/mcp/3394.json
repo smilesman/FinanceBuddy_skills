@@ -1,0 +1,27 @@
+{
+ "id": "3394",
+ "kind": "mcp",
+ "name": "cve-lookup",
+ "fingerprint_md5": "56f5146a7c6fae81bc150ef2fd5d8031",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# CVE MCP 服务器\r\n\r\n一个模型上下文协议（MCP）服务器，利用国家漏洞数据库（NVD）提供CVE漏洞查询和搜索功能。\r\n\r\n## 特点\r\n\r\n- **CVE查询**通过CVE ID获取特定CVE的详细信息\r\n- **CVE 搜索**通过描述中的关键词搜索CVE（通用漏洞和披露）\r\n- **NVD 集成**使用官方NVD API获取最新的漏洞数据\r\n- **CVSS评分**提供CVSS v2和v3评分及严重性等级\r\n\r\n## 先决条件\r\n\r\n- Python 3.13+（或 Python 3.13及以上版本）\r\n- [紫外线](https://docs.astral.sh/uv/) 包管理器\r\n- NVD API密钥（可选，但建议使用以提高速率限制）\r\n\r\n## 安装\r\n\r\n### 本地安装\r\n\r\n1. **克隆项目或导航至项目目录：**\r\n\r\n   ```bash\r\n   cd /path/to/cve-mcp-server\r\n   ```\r\n\r\n1. **安装依赖项：**\r\n\r\n   ```bash\r\n   uv sync\r\n   ```\r\n\r\n1. **设置NVD API密钥（可选）：**\r\n\r\n   ```bash\r\n   export NVD_API_KEY=\"your_nvd_api_key_here\"\r\n   ```\r\n\r\n## 运行服务器\r\n\r\n### 本地安装\r\n\r\n```bash\r\n# Direct execution\r\nuv run python server.py\r\n```\r\n\r\n## MCP客户端配置\r\n\r\n### 对于Claude Desktop\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cve-lookup\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/cve-mcp-server\", \"python\", \"server.py\"],\r\n      \"env\": {\r\n        \"NVD_API_KEY\": \"your_nvd_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 获取CVE信息（cve_id: 字符串）\r\n\r\n检索特定CVE的详细信息。\r\n\r\n**参数：**\r\n\r\n- `cve_id`CVE标识符（例如，“CVE-2021-44228”）\r\n\r\n**返回值：**\r\n\r\n- CVE ID（通用漏洞和暴露标识符）、描述、发布日期、CVSS评分、严重程度、CWE（常见弱点枚举）以及参考文献\r\n\r\n### 搜索CVE（Common Vulnerability and Exposure，通用漏洞和披露）信息，参数为关键字（keyword: str，字符串类型）和限制数量（limit: int，默认为10）\r\n\r\n根据描述中的关键词搜索CVE。\r\n\r\n**参数：**\r\n\r\n- `keyword`在CVE描述中搜索的术语\r\n- `limit`最大结果数量（默认10，最大50）\r\n\r\n**返回值：**\r\n\r\n- 包含ID、描述、严重程度、评分和发布日期的匹配CVE列表\r\n\r\n## 使用示例\r\n\r\n一旦MCP服务器运行并连接到您的客户端：\r\n\r\n- “查看 CVE-2021-44228”（Log4Shell 漏洞）\r\n- “搜索与Apache Log4j相关的CVE（通用漏洞和披露）”\r\n- “在WordPress中查找漏洞”\r\n- “获取CVE-2023-1234的详细信息”\r\n\r\n## 故障排除\r\n\r\n### 服务器未启动（红点）\r\n\r\n1. **检查依赖项：**\r\n\r\n   ```bash\r\n   uv sync\r\n   ```\r\n\r\n1. **手动测试服务器：**\r\n\r\n   ```bash\r\n   uv run python server.py\r\n   ```\r\n\r\n1. **验证Python路径：**\r\n\r\n   ```bash\r\n   which python3\r\n   ```\r\n\r\n1. **检查MCP配置语法** 在你的配置文件中\r\n\r\n### 常见问题\r\n\r\n- **ModuleNotFoundError（模块未找到错误）**跑 `uv sync` 安装依赖项\r\n- **权限被拒绝**检查文件权限和Python路径\r\n- **连接失败**重启您的MCP客户端（Claude桌面版）\r\n- **API速率限制**设置NVD API密钥以提高限制\r\n\r\n### 配置提示\r\n\r\n- 在MCP配置中使用绝对路径\r\n- 确保工作目录正确\r\n- 正确设置环境变量\r\n- 配置更改后重启MCP客户端\r\n\r\n## 依赖项\r\n\r\n- `mcp[cli]>=1.16.0` - 模型上下文协议框架\r\n- `nvdlib>=0.8.3` NVD API 客户端库\r\n- `requests>=2.32.5` - HTTP请求库\r\n\r\n## API密钥设置\r\n\r\n1. **获取NVD API密钥：**\r\n\r\n   - 访问：https://nvd.nist.gov/developers/request-an-api-key\r\n   - 注册一个免费的API密钥\r\n\r\n1. **设置环境变量：**\r\n\r\n   ```bash\r\n   export NVD_API_KEY=\"your_api_key_here\"\r\n   ```\r\n\r\n1. **更新MCP配置：**\r\n   将API密钥添加到您的MCP服务器环境变量中\r\n\r\n### 测试\r\n\r\n### 本地测试\r\n\r\n```bash\r\n# Test server imports\r\nuv run python -c \"import server; print('Server imports successfully')\"\r\n\r\n# Test server execution\r\nuv run python server.py\r\n```\r\n\r\n## 许可证\r\n\r\n这个项目是开源的。请参阅项目文件以获取具体的许可信息。\r\n",
+ "config": {
+  "cve-lookup": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "/path/to/cve-mcp-server",
+    "python",
+    "server.py"
+   ],
+   "env": {
+    "NVD_API_KEY": "your_nvd_api_key_here"
+   }
+  }
+ }
+}

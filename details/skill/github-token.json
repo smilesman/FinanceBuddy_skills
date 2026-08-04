@@ -1,0 +1,12 @@
+{
+ "id": "github-token",
+ "kind": "skill",
+ "name": "github-token",
+ "fingerprint_md5": "4df38e2d426ecff37df7bc5c1288ac5c",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "# GitHub PAT\r\n\r\nInteract with GitHub using Personal Access Tokens. User controls access via PAT scopes.\r\n\r\n## 设置\r\n\r\nUser provides their PAT:\r\n```\r\n1. Create PAT at github.com/settings/tokens\r\n2. Select scopes (repo for full, public_repo for public only)\r\n3. Provide token to agent\r\n```\r\n\r\nStore in TOOLS.md or pass via `--token`.\r\n\r\n## 命令\r\n\r\n```bash\r\n# List repos you have access to\r\npython3 scripts/gh.py repos [--token TOKEN]\r\n\r\n# Clone a repo\r\npython3 scripts/gh.py clone owner/repo [--token TOKEN]\r\n\r\n# Create branch\r\npython3 scripts/gh.py branch <branch-name> [--repo owner/repo]\r\n\r\n# Commit and push\r\npython3 scripts/gh.py push \"<message>\" [--branch branch] [--repo owner/repo]\r\n\r\n# Open a pull request\r\npython3 scripts/gh.py pr \"<title>\" [--body \"description\"] [--base main] [--head branch]\r\n\r\n# Create an issue\r\npython3 scripts/gh.py issue \"<title>\" [--body \"description\"] [--repo owner/repo]\r\n\r\n# View repo info\r\npython3 scripts/gh.py info owner/repo\r\n```\r\n\r\n## Security 模型\r\n\r\n- **User controls access** via PAT scopes\r\n- **No OAuth** - no \"allow full access\" prompts\r\n- **Least privilege** - user creates PAT with minimal needed scopes\r\n- **Fine-grained PATs** supported for specific repo access\r\n\r\n## 代币 存储\r\n\r\nAgent stores 代币 in TOOLS.md under `### GitHub` 截面. Never expose in logs or messages.",
+ "config": {}
+}

@@ -1,0 +1,12 @@
+{
+ "id": "alexa-cli",
+ "kind": "skill",
+ "name": "alexa-cli",
+ "fingerprint_md5": "4682670d04ff76880132c618a369d570",
+ "download_count": 0,
+ "category": "效率工具",
+ "tags": "",
+ "version": "",
+ "readme": "",
+ "config": {}
+}

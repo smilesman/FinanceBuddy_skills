@@ -1,0 +1,18 @@
+{
+ "id": "3350",
+ "kind": "mcp",
+ "name": "baidu_ai_search",
+ "fingerprint_md5": "1c3052777ba23414a4511bb997092988",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 百度AI搜索\r\n\r\n百度AI搜索组件将百度的搜索功能与大型语言模型技术相结合，提供智能响应和实时网络信息参考，支持各种行业应用场景。它提供了丰富的标准化功能，例如：\r\n\r\n- 自定义角色设置\r\n- 模型选择\r\n- 查询重写（包括时间敏感和多轮方法来增强搜索结果）\r\n- 搜索范围配置（模式、站点范围和发布日期的选择）\r\n- 可定制的参考链接数量\r\n\r\n## 快速开始\r\n\r\n1. 从控制台获取AppBuilder API密钥\r\n1. 将您的授权令牌格式化为： `Bearer+<AppBuilder API Key>` （保持“+”在中间）\r\n1. 配置为\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"baidu_ai_search\": {\r\n      \"url\": \"http://appbuilder.baidu.com/v2/ai_search/mcp/sse?api_key=Bearer+bce-v3/ALTAK...\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n有关更多详细信息，请参阅 [百度AI搜索](https://cloud.baidu.com/doc/AppBuilder/s/zm8pn5cju)\r\n",
+ "config": {
+  "baidu_ai_search": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://appbuilder.baidu.com/v2/ai_search/mcp/sse?api_key=Bearer+bce-v3/ALTAK..."
+  }
+ }
+}

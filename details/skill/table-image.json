@@ -1,0 +1,12 @@
+{
+ "id": "table-image",
+ "kind": "skill",
+ "name": "table-image",
+ "fingerprint_md5": "0070d40162572ecb541903780e6c91f1",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# Table Image Skill\r\n\r\n将 markdown 表格渲染为 PNG 图片，用于不支持 markdown 表格的消息平台。\r\n\r\n## 前置条件\r\n\r\n安装 tablesnap：\r\n\r\n```bash\r\ngo install github.com/joargp/tablesnap/cmd/tablesnap@latest\r\n```\r\n\r\n或从源码构建：\r\n```bash\r\ngit clone https://github.com/joargp/tablesnap.git\r\ncd tablesnap\r\ngo build -o tablesnap ./cmd/tablesnap\r\n```\r\n\r\n## 用法\r\n\r\n```bash\r\necho \"| Header 1 | Header 2 |\r\n|----------|----------|\r\n| Data 1   | Data 2   |\" | tablesnap -o /tmp/table.png\r\n```\r\n\r\n然后使用 `MEDIA:/tmp/table.png` 发送\r\n\r\n## 选项\r\n\r\n| 标志 | 默认值 | 描述 |\r\n|------|---------|-------------|\r\n| `-i` | stdin | 输入文件 |\r\n| `-o` | stdout | 输出文件 |\r\n| `--theme` | dark | 主题：`dark` 或 `light` |\r\n| `--font-size` | 14 | 字体大小（像素） |\r\n| `--padding` | 10 | 单元格内边距（像素） |\r\n\r\n## Emoji 支持\r\n\r\n**内置**（开箱即用）：✅ ❌ 🔴 🟢 🟡 ⭕ ⚠️\r\n\r\n**完整 emoji**（一次性下载）：\r\n```bash\r\ntablesnap emojis install\r\n```\r\n\r\n不支持的 emoji 在完整集安装前会渲染为 □。\r\n\r\n## 示例工作流\r\n\r\n```bash\r\n# 创建表格图片\r\necho \"| Task | Status |\r\n|------|--------|\r\n| Build | ✅ |\r\n| Deploy | 🚀 |\" | tablesnap -o /tmp/table.png\r\n\r\n# 在回复中发送\r\nMEDIA:/tmp/table.png\r\n```\r\n\r\n## 注意\r\n\r\n- 默认暗色主题（适配 Telegram/Discord 暗色模式）\r\n- 自动调整大小以适应内容\r\n- 输出约 10-20KB（适合消息发送）\r\n- 跨平台（内置 Inter 字体）\r\n\r\n## 链接\r\n\r\n- [tablesnap 仓库](https://github.com/joargp/tablesnap)",
+ "config": {}
+}

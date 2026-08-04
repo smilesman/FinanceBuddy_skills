@@ -1,0 +1,22 @@
+{
+ "id": "2867",
+ "kind": "mcp",
+ "name": "investor-agent",
+ "fingerprint_md5": "3c07266372d400423d8ec05628f8beae",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 投资者代理人\r\n\r\n面向长期投资者的金融研究MCP服务器。\r\n\r\n## 设置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"investor-agent\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"investor-agent\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_stock_info` |股票基本面——价格、财务状况、收益、所有权、分析师评级、个人资料|\r\n| `historical_prices` |OHLCV价格历史记录（默认值：每周1年，限制100）|\r\n| `get_options` |按未平仓合约排序的期权合约（默认值：每种类型前25名）|\r\n| `market_movers` |涨幅最大、跌幅最大或最活跃的股票|\r\n| `earnings_calendar` |纳斯达克即将发布的收益报告|\r\n| `fear_greed_index` |CNN股市或加密货币恐惧与贪婪指数|\r\n| `technical_indicator` |SMA、EMA、RSI、MACD或布林带|\r\n\r\n## 发展\r\n\r\n```bash\r\npnpm install\r\npnpm run test\r\npnpm run typecheck\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "investor-agent": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "investor-agent"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "2774",
+ "kind": "mcp",
+ "name": "web-search-6",
+ "fingerprint_md5": "1a3caaa8bbe1ca686a32769a5db14556",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Cấu hình MCP Server Web Search (Brave)\r\n\r\nRepository này chứa cấu hình MCP Server Web Search sử dụng Brave Search API để sử dụng trên nhiều máy tính.\r\n\r\n## Cấu hình\r\n\r\nFile `mcp.json` chứa cấu hình để thêm vào `.cursor/mcp.json` hoặc `~/.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"web-search\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@modelcontextprotocol/server-brave-search\"\r\n      ],\r\n      \"env\": {\r\n        \"BRAVE_API_KEY\": \"your-brave-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## Lưu ý quan trọng\r\n\r\n⚠️ **Cần Brave API Key**: Bạn cần lấy Brave API Key từ https://brave.com/search/api/ và thay thế `\"invalid-placeholder\"` trong file cấu hình.\r\n\r\n## Lấy Brave API Key\r\n\r\n1. Truy cập: https://brave.com/search/api/\r\n2. Đăng ký tài khoản (nếu chưa có)\r\n3. Tạo API key mới\r\n4. Copy API key và thay thế trong file `mcp.json`\r\n\r\n## Sử dụng\r\n\r\n1. Clone repository này:\r\n   ```bash\r\n   git clone https://github.com/NgoSon3868-Quas/WebSearch-MCP.git\r\n   cd WebSearch-MCP\r\n   ```\r\n\r\n2. Chỉnh sửa file `mcp.json` và thay thế `\"invalid-placeholder\"` bằng Brave API Key của bạn\r\n\r\n3. Copy nội dung từ `mcp.json` vào file cấu hình MCP của bạn:\r\n   - Windows: `C:\\Users\\<username>\\.cursor\\mcp.json`\r\n   - Mac/Linux: `~/.cursor/mcp.json`\r\n\r\n   Hoặc merge vào file `mcpServers` hiện có của bạn.\r\n\r\n4. Khởi động lại Cursor IDE\r\n\r\n## Yêu cầu\r\n\r\n- Node.js và npm đã được cài đặt\r\n- Package `@modelcontextprotocol/server-brave-search` sẽ được tự động tải khi sử dụng\r\n- Brave API Key hợp lệ\r\n\r\n## Tính năng\r\n\r\nMCP Server Web Search cung cấp các công cụ để:\r\n- Tìm kiếm trên web\r\n- Tìm kiếm địa phương (local search)\r\n- Lấy kết quả tìm kiếm từ Brave Search\r\n\r\n## Kiểm tra cấu hình\r\n\r\nSau khi thêm cấu hình và khởi động lại Cursor:\r\n1. Vào Settings > Tools & MCP\r\n2. Kiểm tra trong danh sách \"Installed MCP Servers\" có `web-search` với trạng thái \"Ready\"\r\n\r\n## Bảo mật\r\n\r\n⚠️ Không commit API key vào public repository. Luôn sử dụng placeholder và cập nhật trên máy local.\r\n",
+ "config": {
+  "web-search": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@modelcontextprotocol/server-brave-search"
+   ],
+   "env": {
+    "BRAVE_API_KEY": "your-brave-api-key-here"
+   }
+  }
+ }
+}

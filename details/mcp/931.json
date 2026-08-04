@@ -1,0 +1,22 @@
+{
+ "id": "931",
+ "kind": "mcp",
+ "name": "workshop_chess",
+ "fingerprint_md5": "54499aa57d20a01b8b0658a1e5122a0c",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Cloudflare Workshop MCP服务器\r\n\r\nCloudflare Workers的模型上下文协议（MCP）服务器实现，使用chess.com API提供与象棋相关的工具和功能。\r\n\r\n⚠️ AI生成的README\r\n\r\n## 上下文\r\n\r\n此MCP服务器是为Cloudflare研讨会“构建和部署远程MCP服务器\r\nCloudflare 的 [🔗 工作坊链接](https://cloudflare.ondemand.goldcast.io/on-demand/e274bc65-8118-43e3-8e57-bdff56f5b4fd)\r\n\r\n## 特性\r\n\r\n- 从chess.com获取每日国际象棋谜题\r\n- 查看当前实时国际象棋直播\r\n- 检索详细的玩家信息和统计数据\r\n- 按类别列出标题玩家（GM、IM等）\r\n- 实现AI辅助集成的模型上下文协议\r\n\r\n## Claude桌面设置\r\n\r\n要将此MCP服务器与Claude桌面应用程序一起使用：\r\n\r\n1. 打开Claude桌面设置\r\n1. 导航到配置文件位置\r\n1. 添加以下配置以启用国际象棋工具：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"workshop_chess\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-remote\",\r\n        \"https://cloudflare-workshop-mcp-server.donovan-5a5.workers.dev/sse\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 先决条件\r\n\r\n- [Node.js](https://nodejs.org/) （建议使用v18或更高版本）\r\n- [npm](https://www.npmjs.com/) （包含在Node.js中）\r\n- [Cloudflare帐户](https://dash.cloudflare.com/sign-up) （用于部署）\r\n\r\n### 设置\r\n\r\n1. 克隆存储库：\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   npm install\r\n   ```\r\n\r\n1. 设置环境变量：\r\n   创建一个 `.dev.vars` 用于本地开发的项目根目录中的文件，其中包含任何必需的API键或配置值。\r\n\r\n## 地方发展\r\n\r\n要在本地运行服务器，请执行以下操作：\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n这将使用Cloudflare的Workers命令行工具Wrangler启动开发服务器。服务器将在以下时间可用 `http://localhost:8787` 默认情况下。\r\n\r\n### 可用脚本\r\n\r\n- `npm run dev` 或 `npm start`：启动开发服务器\r\n- `npm run deploy`：部署到Cloudflare Workers\r\n- `npm run format`：使用Biome格式化代码\r\n- `npm run lint:fix`：查找并修复代码问题\r\n- `npm run type-check`：检查TypeScript类型\r\n\r\n## 部署\r\n\r\n要将MCP服务器部署到Cloudflare Workers，请执行以下操作：\r\n\r\n1. 请确保您已登录Cloudflare：\r\n\r\n   ```bash\r\n   npx wrangler login\r\n   ```\r\n\r\n1. 将环境变量推送到Cloudflare：\r\n\r\n   ```bash\r\n   npx wrangler secret bulk .dev.vars\r\n   ```\r\n\r\n1. 部署worker：\r\n\r\n   ```bash\r\n   npm run deploy\r\n   ```\r\n\r\n1. 部署后，您的MCP服务器将在部署输出中提供的URL上可用。\r\n\r\n## 使用示例\r\n\r\nMCP服务器提供了几个与国际象棋相关的工具，可供AI助手或实现模型上下文协议的其他客户端使用。\r\n\r\n### 示例提示\r\n\r\n以下是一些可以与可以访问此MCP服务器的AI助手一起使用的示例提示：\r\n\r\n#### 获取今天的国际象棋谜题\r\n\r\n```\r\nCan you show me today's chess puzzle from Chess.com?\r\n```\r\n\r\n#### 查找实时国际象棋直播\r\n\r\n```\r\nWho is currently streaming chess live?\r\n```\r\n\r\n#### 获取玩家信息\r\n\r\n```\r\nTell me about the chess player MagnusCarlsen.\r\n```\r\n\r\n#### 获取玩家统计信息\r\n\r\n```\r\nWhat are the chess ratings and statistics for Hikaru?\r\n```\r\n\r\n#### 列出标题玩家\r\n\r\n```\r\nCan you give me some GrandMasters FIDE ranking ?\r\n```\r\n",
+ "config": {
+  "workshop_chess": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://cloudflare-workshop-mcp-server.donovan-5a5.workers.dev/sse"
+   ],
+   "env": {}
+  }
+ }
+}

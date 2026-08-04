@@ -1,0 +1,21 @@
+{
+ "id": "241",
+ "kind": "mcp",
+ "name": "http-rquest",
+ "fingerprint_md5": "115dd5e16fbb02e6f0675420d7743d2f",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp任务\r\n\r\n[](https://pypi.org/project/mcp-rquest/) [](https://pypi.org/project/mcp-rquest/) [](https://github.com/xxxbrian/mcp-rquest) [](https://github.com/xxxbrian/mcp-rquest)\r\n\r\n一种模型上下文协议（MCP）服务器，为Claude和其他LLM提供高级HTTP请求功能。建立在 [请求](https://github.com/0x676e67/rquest)，该服务器通过精确的TLS/JA3/JA4指纹实现了逼真的浏览器模拟，使模型能够更自然地与网站交互，并绕过常见的反机器人措施。它还支持将PDF和HTML文档转换为Markdown，以便LLM更容易处理。\r\n\r\n## 特性\r\n\r\n- **完整的HTTP方法**：支持GET、POST、PUT、DELETE、PATCH、HEAD、OPTIONS和TRACE\r\n- **浏览器指纹**：准确的TLS、JA3/JA4和HTTP/2浏览器指纹\r\n- **内容处理**:\r\n  - 通过令牌计数自动处理大型响应\r\n  - HTML到Markdown的转换，以更好地处理LLM\r\n  - 使用Marker库将PDF转换为Markdown\r\n  - 在系统临时目录中安全存储响应\r\n- **身份验证支持**：基本、承载和自定义身份验证方法\r\n- **请求定制**:\r\n  - 标头、Cookie、重定向\r\n  - 表单数据、JSON有效载荷、多部分/表单数据\r\n  - 查询参数\r\n- **SSL安全**：使用BoringSSL进行具有真实浏览器指纹的安全连接\r\n\r\n## 可用工具\r\n\r\n- **HTTP请求工具**:\r\n\r\n  - `http_get` -使用可选参数执行GET请求\r\n  - `http_post` -通过POST请求提交数据\r\n  - `http_put` -使用PUT请求更新资源\r\n  - `http_delete` -使用DELETE请求删除资源\r\n  - `http_patch` -部分更新资源\r\n  - `http_head` -仅从资源中检索标头\r\n  - `http_options` -检索资源的选项\r\n  - `http_trace` -诊断请求跟踪\r\n\r\n- **响应处理工具**:\r\n\r\n  - `get_stored_response` -检索存储的大响应，可选按行范围检索\r\n  - `get_stored_response_with_markdown` -将HTML或PDF响应转换为Markdown格式，以更好地处理LLM\r\n  - `get_model_state` -获取PDF模型加载过程的当前状态\r\n  - `restart_model_loading` -如果加载PDF模型失败或卡住，请重新启动加载过程\r\n\r\n## PDF支持\r\n\r\nmcp-rquest现在支持PDF到Markdown的转换，允许您下载PDF文件并将其转换为易于LLM处理的Markdown格式：\r\n\r\n1. **自动PDF检测**：根据内容类型自动检测PDF文件\r\n1. **无缝转换**：相同 `get_stored_response_with_markdown` 该工具适用于HTML和PDF文件\r\n1. **高质量转换**：使用 [标记](https://github.com/VikParuchuri/marker) 用于精确PDF到Markdown转换的库\r\n1. **优化性能**：模型在包安装过程中预先下载，以避免请求处理过程中的延迟\r\n\r\n## 安装\r\n\r\n### 使用紫外线（推荐）\r\n\r\n使用时 [`uv`](https://docs.astral.sh/uv/) 不需要特定的安装。我们将\r\n使用 [`uvx`](https://docs.astral.sh/uv/guides/tools/) 直接运行 _mcp任务_.\r\n\r\n### 使用pip\r\n\r\n或者，您可以安装 `mcp-rquest` 通过pip：\r\n\r\n```bash\r\npip install mcp-rquest\r\n```\r\n\r\n安装后，您可以使用以下命令将其作为脚本运行：\r\n\r\n```bash\r\npython -m mcp_rquest\r\n```\r\n\r\n## 配置\r\n\r\n### 为Claude.app进行配置\r\n\r\n添加到您的Claude设置中：\r\n\r\n使用 `uvx`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"http-rquest\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-rquest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n使用 `pip`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"http-rquest\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"-m\", \"mcp_rquest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n使用 `pipx`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"http-rquest\": {\r\n      \"command\": \"pipx\",\r\n      \"args\": [\"run\", \"mcp-rquest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\n## 浏览器模拟\r\n\r\nmcp-rquest利用rquest强大的浏览器模拟功能提供逼真的浏览器指纹，这有助于绕过机器人检测，并访问通常仅适用于标准浏览器的内容。支持的浏览器指纹包括：\r\n\r\n- Chrome（多个版本）\r\n- 火狐\r\n- Safari浏览器（包括iOS和iPad版本）\r\n- 边缘\r\n- OkHttp\r\n\r\n这确保了通过mcp-rquest发送的请求显示为合法的浏览器流量，而不是机器人请求。\r\n\r\n## 发展\r\n\r\n### 建立开发环境\r\n\r\n1. 克隆存储库\r\n1. 使用uv创建虚拟环境：\r\n   ```bash\r\n   uv venv\r\n   ```\r\n1. 激活虚拟环境：\r\n   ```bash\r\n   # Unix/macOS\r\n   source .venv/bin/activate\r\n   # Windows\r\n   .venv\\Scripts\\activate\r\n   ```\r\n1. 安装开发依赖项：\r\n   ```bash\r\n   uv pip install -e \".[dev]\"\r\n   ```\r\n\r\n## 致谢\r\n\r\n- 该项目建立在 [请求](https://github.com/0x676e67/rquest)，它为高级HTTP客户端提供了浏览器指纹识别功能。\r\n- rquest基于 [reqwest](https://github.com/seanmonstar/reqwest).\r\n",
+ "config": {
+  "http-rquest": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-rquest"
+   ],
+   "env": {}
+  }
+ }
+}

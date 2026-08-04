@@ -1,0 +1,23 @@
+{
+ "id": "2569",
+ "kind": "mcp",
+ "name": "hirebase",
+ "fingerprint_md5": "e9df0388d33ceb2d9f7e801dd51f4a5a",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# HireBase MCP服务器\r\n\r\n模型上下文协议（MCP）服务器，提供与HireBase Job API交互的工具。\r\n\r\n\r\n## 可用的MCP交互\r\n\r\n此服务器公开以下MCP交互：\r\n\r\n### 工具\r\n\r\n- `search_jobs`：使用HireBase API根据各种条件（关键字、职称、地点、工资等）搜索工作。\r\n  - *参数*: `query`, `and_keywords`, `or_keywords`, `not_keywords`, `title`, `category`, `country`, `city`, `location_type`, `company`, `salary_from`, `salary_to`, `salary_currency`, `years_from`, `years_to`, `visa`, `limit`.\r\n- `get_job`：使用HireBase ID检索特定作业的详细信息。\r\n  - *参数*: `job_id`.\r\n\r\n### 鼓励\r\n\r\n- `create_candidate_profile`：根据候选人详细信息（姓名、领英、网站、简历文本）生成结构化提示，以帮助指导求职。\r\n  - *参数*: `name`, `linkedin_url`, `personal_website`, `resume_text`.\r\n\r\n## 客户端设置（示例：Claude桌面、光标）\r\n\r\n要将此服务器与Claude Desktop或Cursor等MCP客户端一起使用，您需要配置客户端以运行服务器进程，并可选择提供HireBase API密钥。\r\n\r\n1. **确保 `uv` 已安装：** `curl -LsSf https://astral.sh/uv/install.sh | sh`\r\n\r\n1. **获取HireBase API密钥（可选）：** 向请求密钥 [HireBase](https://hirebase.org/) 您可以将其设置为环境变量(`HIREBASE_API_KEY`)或者干脆把它留空。\r\n\r\n1. **配置您的客户端：**\r\n\r\n   - **使用 `uvx`:**\r\n\r\n     - **克劳德桌面：** 编辑您的 `claude_desktop_config.json`:\r\n       ```json\r\n       {\r\n         \"mcpServers\": {\r\n           \"hirebase\": {\r\n             \"command\": \"uvx\",\r\n             \"args\": [\r\n               \"hirebase-mcp\"\r\n             ],\r\n             \"env\": {\r\n               \"HIREBASE_API_KEY\": \"\"\r\n             }\r\n           }\r\n         }\r\n       }\r\n       ```\r\n     - **光标：** 前往“设置”>“MCP”>“添加服务器”：\r\n       - **Mac/Linux命令：** `uvx hirebase-mcp` （必要时调整包名）\r\n       - **Windows命令：** `cmd`\r\n       - **Windows参数：** `/c`, `uvx`, `hirebase-mcp` （必要时调整包名）\r\n       - 设置 `HIREBASE_API_KEY` 环境变量在相应的部分。\r\n\r\n   - **通过Python从源代码运行（替代）：**\r\n\r\n     1. 克隆仓库并记下克隆到的位置\r\n     1. **克劳德桌面：** 编辑您的 `claude_desktop_config.json`:\r\n\r\n     ```\r\n     {\r\n         \"mcpServers\": {\r\n             \"hirebase\": {\r\n                 \"command\": \"uv\",\r\n                 \"args\": [\r\n                     \"run\",\r\n                     \"--with\",\r\n                     \"mcp[cli]\",\r\n                     \"--with\",\r\n                     \"requests\",\r\n                     \"mcp\",\r\n                     \"run\",\r\n                     \"PATH_TO_REPO/src/hirebase_mcp/server.py\"\r\n                 ]\r\n             }\r\n         }\r\n     }\r\n     ```\r\n\r\n## 发展\r\n\r\n本项目使用：\r\n\r\n- `uv` 用于依赖关系管理和虚拟环境\r\n- `ruff` 用于裁剪和格式化\r\n- `hatch` 作为构建后端\r\n\r\n### 常见任务\r\n\r\n```bash\r\n# Setup virtual env\r\nuv venv\r\n\r\n# Install dependencies\r\nuv pip install -e .\r\n\r\n# install cli tools\r\nuv tool install ruff\r\n\r\n# Run linting\r\nruff check .\r\n\r\n# Format code\r\nruff format .\r\n```\r\n\r\n## 环境变量\r\n\r\n- `HIREBASE_API_KEY` (**必需的**)：用于访问HireBase API的API密钥。服务器需要它来对作业数据进行身份验证请求。\r\n\r\n## 测试\r\n\r\n此项目使用 `pytest` 用于测试核心工具逻辑。使用测试模拟外部API调用 `unittest.mock`.\r\n\r\n1. 安装测试依赖项：\r\n\r\n```bash\r\n# Ensure you are in your activated virtual environment (.venv)\r\nuv pip install -e '.[test]'\r\n```\r\n\r\n2. 运行测试：\r\n\r\n```bash\r\n# Example command\r\npytest\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎捐款。\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "hirebase": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "hirebase-mcp"
+   ],
+   "env": {
+    "HIREBASE_API_KEY": ""
+   }
+  }
+ }
+}

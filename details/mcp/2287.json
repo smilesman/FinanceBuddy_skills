@@ -1,0 +1,25 @@
+{
+ "id": "2287",
+ "kind": "mcp",
+ "name": "porkbun",
+ "fingerprint_md5": "b0c51955ef671c35a070946982243f4b",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# porkbun mcp\r\n\r\nMCP服务器 [波克本](https://porkbun.com/) DNS API。\r\n\r\n通过模型上下文协议管理DNS记录、域、DNSSEC、SSL证书等。\r\n\r\n## 配置\r\n\r\n将您的Porkbun API凭据设置为环境变量：\r\n\r\n```bash\r\nexport PORKBUN_API_KEY=\"pk1_...\"\r\nexport PORKBUN_SECRET_KEY=\"sk1_...\"\r\n```\r\n\r\n从获取API密钥 [Porkbon API访问页面](https://porkbun.com/account/api).\r\n\r\n## 只读模式（默认）\r\n\r\n默认情况下，porkbun mcp运行 **只读模式** 为了安全。写入操作\r\n（创建、编辑、删除）将返回错误，直到明确启用。\r\n\r\n### 启用写入操作\r\n\r\n让猪变得泥泞并做出改变：\r\n\r\n**环境变量：**\r\n\r\n```bash\r\nexport PORKBUN_GET_MUDDY=true\r\n```\r\n\r\n**CLI标志：**\r\n\r\n```bash\r\nuvx porkbun-mcp --get-muddy\r\n```\r\n\r\n## 用法\r\n\r\n直接与 [uvx](https://docs.astral.sh/uv/) （无需安装）：\r\n\r\n```bash\r\nuvx porkbun-mcp\r\n```\r\n\r\n### SSE运输\r\n\r\n```bash\r\nuvx porkbun-mcp --transport sse\r\n```\r\n\r\n## MCP客户端配置\r\n\r\n### 克劳德桌面\r\n\r\n添加到 `~/.config/claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"porkbun\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"porkbun-mcp\", \"--get-muddy\"],\r\n      \"env\": {\r\n        \"PORKBUN_API_KEY\": \"pk1_...\",\r\n        \"PORKBUN_SECRET_KEY\": \"sk1_...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **注：** 移除 `--get-muddy` 对于只读模式，建议使用args（出于安全考虑）。\r\n\r\n### 克劳德法典\r\n\r\n添加到 `~/.claude/settings.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"porkbun\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"porkbun-mcp\", \"--get-muddy\"],\r\n      \"env\": {\r\n        \"PORKBUN_API_KEY\": \"pk1_...\",\r\n        \"PORKBUN_SECRET_KEY\": \"sk1_...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### VS Code\r\n\r\n添加到 `.vscode/mcp.json` 在您的工作空间中（或使用 `MCP: Add Server` 命令）：\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"porkbun\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"porkbun-mcp\", \"--get-muddy\"],\r\n      \"env\": {\r\n        \"PORKBUN_API_KEY\": \"pk1_...\",\r\n        \"PORKBUN_SECRET_KEY\": \"sk1_...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### OpenCode\r\n\r\n添加到您的 `opencode.json` 配置：\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"porkbun\": {\r\n      \"type\": \"local\",\r\n      \"command\": [\"uvx\", \"porkbun-mcp\", \"--get-muddy\"],\r\n      \"environment\": {\r\n        \"PORKBUN_API_KEY\": \"pk1_...\",\r\n        \"PORKBUN_SECRET_KEY\": \"sk1_...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 域名系统\r\n\r\n- `dns_list` -列出域的所有DNS记录\r\n- `dns_get` -按ID获取特定DNS记录\r\n- `dns_get_by_name_type` -按子域和类型获取DNS记录\r\n- `dns_create` -创建新的DNS记录\r\n- `dns_edit` -按ID编辑DNS记录\r\n- `dns_edit_by_name_type` -按子域和类型编辑DNS记录\r\n- `dns_delete` -按ID删除DNS记录\r\n- `dns_delete_by_name_type` -按子域和类型删除DNS记录\r\n\r\n### 领域\r\n\r\n- `domains_list` -列出您帐户中的所有域\r\n- `domains_get_nameservers` -获取域的名称服务器\r\n- `domains_update_nameservers` -更新域的名称服务器\r\n- `domains_get_url_forwards` -获取URL转发规则\r\n- `domains_add_url_forward` -添加URL转发规则\r\n- `domains_delete_url_forward` -删除URL转发规则\r\n- `domains_check_availability` -检查域名可用性和定价\r\n- `domains_get_glue_records` -获取域的粘合记录\r\n\r\n### 域名系统安全扩展\r\n\r\n- `dnssec_list` -列出域的DNSSEC记录\r\n- `dnssec_create` -创建DNSSEC记录\r\n- `dnssec_delete` -删除DNSSEC记录\r\n\r\n### 安全套接层\r\n\r\n- `ssl_retrieve` -检索域的SSL证书包\r\n\r\n### 定价\r\n\r\n- `pricing_get` -获取所有可用TLD的定价\r\n\r\n### 效用\r\n\r\n- `ping` -测试API连接并获取您的公共IP\r\n\r\n## 提示\r\n\r\n指导常见DNS操作的预定义工作流：\r\n\r\n- `dns_setup` -为新服务器设置基本DNS（根a+www记录）\r\n- `dns_audit` -审核DNS配置是否存在问题（重复、缺少电子邮件记录、TTL低）\r\n- `email_dns_setup` -配置电子邮件DNS（MX、SPF、DKIM、DMARC）\r\n- `update_server_ip` -迁移到新服务器IP时更新DNS记录\r\n- `subdomain_setup` -为新子域创建A/CNAME记录\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nuv sync --dev\r\n\r\n# Run all checks\r\nmake check\r\n\r\n# Individual commands\r\nmake lint       # ruff check\r\nmake format     # ruff format\r\nmake typecheck  # ty check\r\nmake test       # pytest with coverage\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "porkbun": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "porkbun-mcp",
+    "--get-muddy"
+   ],
+   "env": {
+    "PORKBUN_API_KEY": "pk1_...",
+    "PORKBUN_SECRET_KEY": "sk1_..."
+   }
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "aliyun-mail",
+ "kind": "skill",
+ "name": "aliyun-mail",
+ "fingerprint_md5": "3e94573512f4959e7511c770138890ee",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 阿里云邮件技能\r\n\r\n此技能支持通过阿里云企业邮箱服务发送邮件，高级功能包括 Markdown 转换、HTML 样式、文件附件以及代码块的语法高亮。\r\n\r\n## 功能\r\n- **阿里云企业邮箱支持**：针对阿里云的 SMTP 服务 (smtp.mxhichina.com) 优化\r\n- **多种内容类型**：发送纯文本、Markdown 或 HTML 邮件\r\n- **带语法高亮的 Markdown**：Markdown 中代码块自动语法高亮\r\n- **文件附件**：包含一个或多个文件作为附件\r\n- **基于配置**：使用安全的配置文件存储 SMTP 凭据\r\n- **错误处理**：包含重试逻辑和详细的错误报告\r\n\r\n## 前提条件\r\n- **SMTP 配置文件**：在 OpenClaw 配置目录 (`/root/.openclaw/`) 中创建 `aliyun-mail-config.json`\r\n\r\n示例配置文件：\r\n```json\r\n{\r\n  \"server\": \"smtp.mxhichina.com\",\r\n  \"port\": 465,\r\n  \"username\": \"your-email@yourdomain.com\",\r\n  \"password\": \"your-app-password\",\r\n  \"emailFrom\": \"your-email@yourdomain.com\",\r\n  \"useTLS\": true\r\n}\r\n```\r\n\r\n确保配置文件具有安全的权限：\r\n```bash\r\nchmod 600 /root/.openclaw/aliyun-mail-config.json\r\n```\r\n\r\n## 使用方法\r\n\r\n### 基本文本邮件\r\n```bash\r\naliyun-mail send --to \"recipient@example.com\" --subject \"Hello\" --body \"This is a plain text email\"\r\n```\r\n\r\n### 带语法高亮的 Markdown 邮件\r\n```bash\r\naliyun-mail send \\\r\n  --to \"recipient@example.com\" \\\r\n  --subject \"Code Report\" \\\r\n  --body \"**Check out this Python code:**\\n\\n```python\\nprint('Hello World')\\n```\" \\\r\n  --markdown\r\n```\r\n\r\n### 带附件的 HTML 邮件\r\n```bash\r\naliyun-mail send \\\r\n  --to \"recipient@example.com\" \\\r\n  --subject \"Weekly Report\" \\\r\n  --body \"<h1>Weekly Report</h1><p>See attached file.</p>\" \\\r\n  --html \\\r\n  --attachments \"/path/to/report.pdf\"\r\n```\r\n\r\n### 从文件使用正文\r\n```bash\r\naliyun-mail send \\\r\n  --to \"recipient@example.com\" \\\r\n  --subject \"Report from File\" \\\r\n  --body-file \"/path/to/report.md\" \\\r\n  --markdown \\\r\n  --attachments \"/path/to/data.csv\"\r\n```\r\n\r\n## 命令行选项\r\n- `--to`: 收件人邮箱地址 (必需)\r\n- `--subject`: 邮件主题 (必需)\r\n- `--body`: 邮件正文内容 (如果未提供 --body-file 则必需)\r\n- `--body-file`: 包含邮件正文的文件路径\r\n- `--html`: 作为 HTML 邮件发送 (默认: 纯文本)\r\n- `--markdown`: 作为带语法高亮的 Markdown 邮件发送\r\n- `--attachments`: 要附加的文件路径列表，以空格分隔\r\n\r\n## 错误处理\r\n该工具包含健壮的错误处理，失败时最多进行 3 次重试。网络问题、认证错误和无效邮箱地址都会报告详细的错误信息。\r\n\r\n## 安全注意事项\r\n- 始终使用应用专用密码而不是你的主邮箱密码\r\n- 使用适当的文件权限保持配置文件安全\r\n- 切勿将配置文件提交到版本控制\r\n\r\n## 未来增强\r\n- 支持 CC/BCC 收件人\r\n- 邮件模板系统\r\n- 定时邮件发送\r\n- 富文本编辑器集成",
+ "config": {}
+}

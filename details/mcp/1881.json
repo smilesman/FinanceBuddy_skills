@@ -1,0 +1,23 @@
+{
+ "id": "1881",
+ "kind": "mcp",
+ "name": "cmc",
+ "fingerprint_md5": "8e6879e3ca03fde737a68f0bf459f8e5",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 加密货币MCP\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io/introduction) （MCP）服务器，为Claude AI提供对CoinMarketCap API加密货币数据的实时访问。\r\n\r\n## 特性\r\n\r\n此服务器为Claude提供以下工具：\r\n\r\n- **获取加密货币列表**：获取最新的加密货币市场数据\r\n- **获取加密货币报价**：检索特定加密货币的报价\r\n- **获取加密货币地图**：获取加密货币到CoinMarketCap ID的映射\r\n- **获取加密货币信息**：获取特定加密货币的详细元数据\r\n- **获取全局指标**：访问全球加密货币市场指标\r\n- **获取交易所列表**：获取有关加密货币交易所的信息\r\n\r\n## 先决条件\r\n\r\n- CoinMarketCap API密钥（在 [pro.coinmarketcap.com](https://pro.coinmarketcap.com))\r\n\r\n## 与Claude Desktop集成\r\n\r\n要将此MCP服务器与Claude Desktop集成，请执行以下操作：\r\n\r\n1. 找到Claude Desktop配置文件：\r\n\r\n   - 在 macOS 上： `~/Library/Application\\ Support/Claude/claude_desktop_config.json`\r\n\r\n1. 将以下配置添加到文件中：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"cmc\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\"crypto-mcp\"],\r\n            \"env\": {\r\n                \"COINMARKET_API_KEY\": \"your-api-key-here\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 手动安装\r\n\r\n1. 克隆此存储库\r\n1. 安装依赖项：\r\n\r\n```bash\r\n# Using npm\r\nnpm install\r\n\r\n# Using bun\r\nbun install\r\n```\r\n\r\n3. 构建TypeScript代码：\r\n\r\n```bash\r\n# Using npm\r\nnpm run build\r\n\r\n# Using bun\r\nbun run build\r\n```\r\n\r\n## Claude中的用法\r\n\r\n配置后，您可以要求Claude执行各种与加密货币相关的任务：\r\n\r\n- “按市值显示前10种加密货币”\r\n- “比特币和以太坊的当前价格是多少？”\r\n- “当今全球加密货币市场的指标是什么？”\r\n- “告诉我关于币安交易所的事”\r\n\r\n## 截图\r\n\r\n### 顶级加密货币\r\n\r\n\r\n### 加密货币元数据\r\n\r\n\r\n### 市场指标\r\n\r\n\r\n## 发展\r\n\r\n该项目使用TypeScript和模型上下文协议SDK来构建一个与Claude AI通信的服务器。\r\n\r\n要修改可用工具或添加新端点，请编辑 `src/index.ts` 归档并重建项目。\r\n",
+ "config": {
+  "cmc": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "crypto-mcp"
+   ],
+   "env": {
+    "COINMARKET_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

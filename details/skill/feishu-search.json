@@ -1,0 +1,12 @@
+{
+ "id": "feishu-search",
+ "kind": "skill",
+ "name": "feishu-search",
+ "fingerprint_md5": "22ba8b946b048eb8d2608dc6effe015f",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# Feishu Search Skill\r\n\r\n飞书（Lark）资源的统一搜索接口。\r\n\r\n## 先决条件\r\n\r\n- 先安装 `feishu-common`。\r\n- 此 skill 依赖 `../feishu-common/index.js` 获取令牌和 API 认证。\r\n\r\n## 功能\r\n\r\n- **搜索消息**：在私聊和群聊中查找聊天记录。\r\n- **搜索文档**：定位文档、表格和 bitable。\r\n- **搜索日历**：（计划中）查找事件。\r\n\r\n## 用法\r\n\r\n```bash\r\n# 搜索消息\r\nnode skills/feishu-search/index.js search_messages --query \"bug report\" --limit 10\r\n\r\n# 搜索文档\r\nnode skills/feishu-search/index.js search_docs --query \"Q3 Roadmap\"\r\n```\r\n\r\n## 配置\r\n\r\n需要标准飞书环境变量（`FEISHU_APP_ID`、`FEISHU_APP_SECRET`）或有效的 `FEISHU_TOKEN`。\r\n此 skill 使用来自 `../feishu-common/index.js` 的共享认证。",
+ "config": {}
+}

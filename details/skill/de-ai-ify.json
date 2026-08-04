@@ -1,0 +1,12 @@
+{
+ "id": "de-ai-ify",
+ "kind": "skill",
+ "name": "de-ai-ify",
+ "fingerprint_md5": "4a56d17d64271d1c2a9f38fd98d42aae",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# De-AI-ify 文本\r\n\r\n移除 AI 生成的模式，恢复自然的人类声音到你的写作中。\r\n\r\n## 用法\r\n\r\n```\r\n/de-ai-ify <file_path>\r\n```\r\n\r\n## 移除的内容\r\n\r\n### 1. 过度使用的过渡词\r\n\r\n- \"Moreover,\" \"Furthermore,\" \"Additionally,\" \"Nevertheless\"\r\n- 过多的 \"However\" 使用\r\n- \"While X, Y\" 开头\r\n\r\n### 2. AI 陈词滥调\r\n\r\n- \"In today's fast-paced world\"\r\n- \"Let's dive deep\"\r\n- \"Unlock your potential\"\r\n- \"Harness the power of\"\r\n\r\n### 3. 模糊限定语\r\n\r\n- \"It's important to note\"\r\n- \"It's worth mentioning\"\r\n- 模糊量词：\"various,\" \"numerous,\" \"myriad\"\r\n\r\n### 4. 企业流行语\r\n\r\n- \"utilize\" → \"use\"\r\n- \"facilitate\" → \"help\"\r\n- \"optimize\" → \"improve\"\r\n- \"leverage\" → \"use\"\r\n\r\n### 5. 机械式模式\r\n\r\n- 修辞问题后紧跟立即回答\r\n- 强迫的平行结构\r\n- 总是使用恰好三个例子\r\n- 强调声明\r\n\r\n## 添加的内容\r\n\r\n### 自然声音\r\n\r\n- 变化的句子长度\r\n- 对话式语调\r\n- 直接陈述\r\n- 具体例子\r\n\r\n### 人类节奏\r\n\r\n- 自然的过渡\r\n- 自信的断言\r\n- 个人视角\r\n- 真实的措辞\r\n\r\n## 流程\r\n\r\n1. **读取原始文件**\r\n2. **创建带 \"-HUMAN\" 后缀的副本**\r\n3. **应用 de-AI-ification**\r\n4. **提供变更日志**\r\n\r\n## 输出\r\n\r\n你将得到：\r\n\r\n- 一个带有自然人类声音的新文件\r\n- 显示修复内容的变更日志\r\n- 需要具体例子的位置列表\r\n\r\n## 示例转换\r\n\r\n**之前 (AI):** \"In today's rapidly evolving digital landscape, it's crucial to\r\nunderstand that leveraging AI effectively isn't just about utilizing\r\ncutting-edge technology—it's about harnessing its transformative potential to\r\nunlock unprecedented opportunities.\"\r\n\r\n**之后 (Human):** \"AI works best when you use it for specific tasks. Focus on\r\nwhat it does well: writing code, analyzing data, and answering questions.\"",
+ "config": {}
+}

@@ -1,0 +1,22 @@
+{
+ "id": "2496",
+ "kind": "mcp",
+ "name": "deepcrawl-mcp",
+ "fingerprint_md5": "db8facebb37862ea62eb754237530287",
+ "download_count": 0,
+ "category": "数据抓取",
+ "tags": "",
+ "version": "",
+ "readme": "______________________________________________________________________\r\n\r\n**克隆、抓取和抓取任何网站。** 免费Firecrawl替代品。没有API密钥，没有速率限制，没有订阅。\r\n\r\n## 快速开始\r\n\r\n**光标（单击一次）：** 单击上面的“在光标中安装”按钮。\r\n\r\n**手动MCP配置：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"deepcrawl-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"deepcrawl-mcp@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**CLI：**\r\n\r\n```bash\r\nnpx deepcrawl-mcp@latest\r\n```\r\n\r\n## 工具\r\n\r\n### `deepcrawl_scrape`\r\n\r\n删除一页并返回干净的标记。提取标题、描述、链接、图像和元数据。剥离导航、页脚、广告和跟踪。\r\n\r\n```\r\n\"Scrape https://example.com and give me the main content\"\r\n```\r\n\r\n|参数|默认值|说明|\r\n|-----------|---------|-------------|\r\n| `url` |必需|要抓取的页面URL|\r\n| `mainContentOnly` | `true` |仅提取主要内容（跳过导航/页脚）|\r\n| `includeLinks` | `true` |包含已发现的链接|\r\n| `includeImages` | `true` |包含图像URL|\r\n\r\n### `deepcrawl_clone`\r\n\r\n克隆一个包含所有资源的完整页面：HTML、CSS、JS、图像、字体、favicons。将所有内容下载到本地文件夹中，将URL重写为相对路径。打开 `index.html` 在浏览器中，它可以正常工作。\r\n\r\n```\r\n\"Clone https://competitor.com into a local folder\"\r\n```\r\n\r\n|参数|默认值|说明|\r\n|-----------|---------|-------------|\r\n| `url` |必需|要克隆的页面URL|\r\n| `outputDir` | `~/deepcrawl-clones/<domain>` |输出文件夹|\r\n| `depth` | `0` |链接深度：0=单页，1+=关注链接|\r\n\r\n### `deepcrawl_crawl`\r\n\r\n通过内部链接抓取整个网站。以干净的markdown返回每一页。非常适合内容分析、SEO审计或为RAG管道提供数据。\r\n\r\n```\r\n\"Crawl https://docs.example.com and return all pages as markdown\"\r\n```\r\n\r\n|参数|默认值|说明|\r\n|-----------|---------|-------------|\r\n| `url` |必需|起始URL|\r\n| `maxPages` | `20` |要抓取的最大页面数（最大：100）|\r\n| `includeImages` | `false` |每页包含图像URL|\r\n\r\n### `deepcrawl_map`\r\n\r\n通过sitemap.xml解析和主页链接爬行发现网站中的所有URL。在爬网之前运行此命令以查看网站的范围。\r\n\r\n```\r\n\"Map all pages on https://example.com\"\r\n```\r\n\r\n|参数|默认值|说明|\r\n|-----------|---------|-------------|\r\n| `url` |必填|网站URL|\r\n| `maxUrls` | `200` |要发现的最大URL数|\r\n\r\n## vs Firecrawl\r\n\r\n||deepcrawl|Firecrawl|\r\n|---|---|---|\r\n|价格|免费|每月19美元以上|\r\n|API密钥|无|必需|\r\n|费率限制|无|是|\r\n|报废降价|是|是|\r\n|完整网站抓取|是|是|\r\n|网站地图|是|是|\r\n|使用资产进行克隆| **是** |没有|\r\n|JS渲染| **是** （通过剧作家）|是|\r\n|反机器人旁路|部分（UA轮换、标头、延迟）|是|\r\n\r\ndeepcrawl可以开箱即用地处理静态站点。对于JS密集的SPA（React、Next.JS、SvelteKit），安装Playwright进行完整渲染：\r\n\r\n```bash\r\nnpm install -g playwright\r\nnpx playwright install chromium\r\n```\r\n\r\n安装后，deepcrawl会自动检测Playwright并启用JS渲染。使用 `jsRender: true` 所有工具还包括UA旋转、逼真的浏览器头和随机延迟，以避免基本的机器人检测。\r\n\r\n## 也是Soflution\r\n\r\n- **[brandcheck](https://github.com/Soflution1/BrandCheck)** -检查27个平台上的品牌可用性\r\n- **[副声纳](https://github.com/Soflution1/depsonar)** -依赖性审计、安全扫描、许可证检查\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "deepcrawl-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "deepcrawl-mcp@latest"
+   ],
+   "env": {}
+  }
+ }
+}

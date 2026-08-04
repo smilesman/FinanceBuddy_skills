@@ -1,0 +1,26 @@
+{
+ "id": "197",
+ "kind": "mcp",
+ "name": "dynamic-reincarnation-story",
+ "fingerprint_md5": "7c08f9303c29a65600bd53802be8df69",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 转世故事\r\n\r\n\r\n  \r\n\r\n\r\n互动式转世故事，让你在死后选择自己的道路。\r\n成为复仇之魂，像比尔博·巴金斯，或是《海贼王》中的路飞。\r\n采用FastMCP构建，实现动态叙事生成和沉浸式故事讲述。\r\n\r\n## 如何开始\r\n\r\n在Claude中，只需说 **“开始故事”** 开始你的转世之旅。\r\n\r\n## 故事路径\r\n\r\n1. **《复仇之路》** - 回到你的原世界，带着新力量去报复那些背叛你的人\r\n1. **去而复返** - 化身比尔博·巴金斯，体验他在中土世界的旅程\r\n1. **海盗之王** - 重生为Monkey D. Luffy，在《海贼王》的世界中扬帆起航\r\n\r\n## 特点/特性\r\n\r\n- 基于您选择的动态叙事生成\r\n- 由三个发人深省的问题引导的个性化故事路径\r\n- 沉浸式角色驱动叙事\r\n- 多个故事分支和结局\r\n- 交互式决策系统\r\n\r\n## 技术细节\r\n\r\n采用FastMCP（模型上下文协议）构建，可与Claude及其他AI助手实现无缝集成。\r\n\r\n## 入门指南\r\n\r\n1. 克隆此存储库\r\n1. 安装依赖项： `pip install fastmcp`\r\n1. 启动服务器： `python main.py`\r\n1. 连接到Claude并说“开始故事”\r\n\r\n## MCP配置\r\n\r\n要在Claude Desktop中使用此项目，请添加以下配置到您的 `claude_desktop_config.json`：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Dynamic Reincarnation Story\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--with\",\r\n        \"fastmcp\",\r\n        \"fastmcp\",\r\n        \"run\",\r\n        \"C:\\\\path\\\\to\\\\your\\\\reincarnate\\\\main.py\"\r\n      ],\r\n      \"env\": {},\r\n      \"transport\": \"stdio\",\r\n      \"type\": null,\r\n      \"cwd\": null,\r\n      \"timeout\": null,\r\n      \"description\": null,\r\n      \"icon\": null,\r\n      \"authentication\": null\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**注：** 更新路径中的（内容） `args` 将数组指向你的本地（文件/位置） `main.py` 文件位置。\r\n\r\n______________________________________________________________________\r\n\r\n*你的重生之旅正等待着你。。。*\r\n",
+ "config": {
+  "dynamic-reincarnation-story": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--with",
+    "fastmcp",
+    "fastmcp",
+    "run",
+    "C:\\path\\to\\your\\reincarnate\\main.py"
+   ],
+   "env": {}
+  }
+ }
+}

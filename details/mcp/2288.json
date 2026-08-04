@@ -1,0 +1,24 @@
+{
+ "id": "2288",
+ "kind": "mcp",
+ "name": "precipitation",
+ "fingerprint_md5": "5cb10f3d120de61d0976714ea974eddb",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# Buienradar MCP服务器\r\n\r\n## 概述\r\n\r\n这是一个MCP服务器，使用Buienradar获取给定纬度和经度的降水数据。它暴露了一个MCP工具， `get_precipitation_for`，提供未来两小时的降水预报。\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面版Buienradar MCP服务器 [史密瑟里](https://smithery.ai/server/@wpnbos/buienradar-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @wpnbos/buienradar-mcp-server --client claude\r\n```\r\n\r\n## 配置\r\n\r\n首先，确保你有 `uv` （以及Python）已安装。\r\n\r\n将此服务器与 `Claude for Desktop`，在以下位置更新配置文件：\r\n\r\nMacOS/Linux\r\n\r\n```\r\n~/Library/Application Support/Claude/claude_desktop_config.json\r\n```\r\n\r\n视窗\r\n\r\n```\r\ncode $env:AppData\\Claude\\claude_desktop_config.json\r\n```\r\n\r\n配置示例：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"precipitation\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"/ABSOLUTE/PATH/TO/PARENT/FOLDER/buienradar-mcp-server\",\r\n                \"run\",\r\n                \"server.py\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n替换 `/ABSOLUTE/PATH/TO/PARENT/FOLDER/buienradar-mcp-server` 使用服务器所在的实际路径。\r\n\r\n重新启动Claude for Desktop，使该工具可用。\r\n\r\n您可能需要提供以下内容的完整路径 `uv` 而不是仅仅 `uv`.\r\n找到适合您的完整路径 `uv` 可执行，在MacOS/Linux上执行 `which uv`.\r\n\r\n## 用法\r\n\r\n如果一切顺利，你应该可以向克劳德询问任何即将到来的降水。\r\n\r\n```\r\n> Will there be any rain soon in Amsterdam?\r\n\r\n> No rain predicted in Amsterdam for the next 2 hours.\r\n```\r\n",
+ "config": {
+  "precipitation": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/ABSOLUTE/PATH/TO/PARENT/FOLDER/buienradar-mcp-server",
+    "run",
+    "server.py"
+   ],
+   "env": {}
+  }
+ }
+}

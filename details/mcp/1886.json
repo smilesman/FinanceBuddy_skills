@@ -1,0 +1,18 @@
+{
+ "id": "1886",
+ "kind": "mcp",
+ "name": "compliance-intelligence",
+ "fingerprint_md5": "a22d4b5077c1ed70f3a8afafb8e766a7",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# ArtOfService合规智能MCP服务器\r\n\r\n远程MCP（模型上下文协议）服务器，为AI代理提供对包含以下内容的全面合规知识图的访问 **692+个合规框架**, **13700+个控件**，以及 **280000+跨框架映射**.\r\n\r\n## 快速开始\r\n\r\n### 通过SSE连接（服务器发送事件）\r\n\r\n```\r\nURL: https://api.theartofservice.com/mcp\r\nTransport: SSE\r\nAuthentication: Bearer token (API key)\r\n```\r\n\r\n### Claude桌面配置\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"compliance-intelligence\": {\r\n      \"url\": \"https://api.theartofservice.com/mcp\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer tas_YOUR_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标配置\r\n\r\n添加到MCP设置中：\r\n\r\n```json\r\n{\r\n  \"compliance-intelligence\": {\r\n    \"url\": \"https://api.theartofservice.com/mcp\",\r\n    \"headers\": {\r\n      \"Authorization\": \"Bearer tas_YOUR_API_KEY\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 获取API密钥\r\n\r\n1. 在以下网址创建免费帐户 [合规性.theartofservice.com](https://compliance.theartofservice.com/register)\r\n1. 导航到“设置”→ API密钥\r\n1. 生成API密钥（从 `tas_`)\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `agent_search_frameworks` |按名称、关键字或管辖区搜索和列出合规框架|\r\n| `agent_get_framework` |获取有关特定合规框架的详细信息|\r\n| `agent_get_framework_controls` |获取合规框架的所有控件，可选择按域进行筛选|\r\n| `agent_get_control` |通过代码获取特定控件的详细信息|\r\n| `agent_get_control_cross_references` |获取控件的跨框架映射（其他框架中的等效控件）|\r\n| `agent_cross_framework_map` |在两个合规框架之间映射控制|\r\n| `agent_coverage_report` |获取框架的跨框架覆盖率分析|\r\n| `agent_search` |跨控件和框架的全文搜索|\r\n| `agent_platform_stats` |获取平台统计数据（框架、控制、映射计数）|\r\n| `agent_pricing_info` |获取API定价层和当前使用信息|\r\n\r\n## 框架覆盖范围\r\n\r\n692+个框架的访问控制和交叉映射，包括：\r\n\r\n- **国际标准**：ISO 27001:2022、ISO 27701、ISO 22301、ISO 9001、ISO 14001\r\n- **美国框架**：NIST CSF 2.0、NIST SP 800-53第5版、NIST SP 800-171、CMMC 2.0、FedRAMP\r\n- **隐私法规**：GDPR、CCPA/CPRA、HIPAA、PIPEDA、LGPD、POPIA\r\n- **行业标准**：PCI DSS 4.0、SOC 2、HITRUST-CSF、SWIFT CSCF\r\n- **网络安全**：CIS Controls v8、OWASP Top 10、MITRE ATT&CK、Essential Eight\r\n- **澳大利亚框架**：ISM、PSPF、APRA CPS 234、《社会保险法》、《1988年隐私法》\r\n- **欧盟法规**：欧盟人工智能法案、DORA、NIS2指令、欧盟网络弹性法案\r\n- **治理与ESG**：COSO ERM、COBIT 2019、TCFD、GRI标准、联合国可持续发展目标\r\n\r\n## 发现\r\n\r\n- MCP发现： `https://api.theartofservice.com/.well-known/mcp.json`\r\n- OpenAI插件： `https://api.theartofservice.com/.well-known/ai-plugin.json`\r\n- OpenAPI规范： `https://api.theartofservice.com/openapi.json`\r\n\r\n## 示例用法\r\n\r\n连接后，您可以询问您的AI代理：\r\n\r\n- “ISO 27001:2022对访问管理有哪些控制？”\r\n- “绘制NIST CSF 2.0和ISO 27001:2022之间的控制图”\r\n- “查找涵盖数据加密要求的所有框架”\r\n- “SOC 2和HIPAA之间的覆盖重叠是什么？”\r\n- “搜索与事件响应相关的控制措施”\r\n\r\n## 定价\r\n\r\n|计划|通话/月|价格|\r\n|------|-------------|-------|\r\n|免费|100|0美元|\r\n|专业| 10000 | 49美元/月|\r\n|企业|10000|定制|\r\n\r\n## REST API\r\n\r\n除了MCP之外，还提供了REST API `https://api.theartofservice.com/api/agent/`。请参阅 [OpenAPI规范](https://api.theartofservice.com/openapi.json) 获取完整文档。\r\n\r\n## 支持\r\n\r\n- 网站： [合规性.theartofservice.com](https://compliance.theartofservice.com)\r\n- 电子邮件：support@theartofservice.com\r\n\r\n## 许可证\r\n\r\n这是一个托管服务。MCP服务器端点由TheArtOfService私人有限公司提供。\r\n",
+ "config": {
+  "compliance-intelligence": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://api.theartofservice.com/mcp"
+  }
+ }
+}

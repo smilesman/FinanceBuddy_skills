@@ -1,0 +1,22 @@
+{
+ "id": "2541",
+ "kind": "mcp",
+ "name": "g-search",
+ "fingerprint_md5": "5c9a8808e54c2e1eab3a3c795b29a8e1",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# G-搜索MCP\r\n\r\n一个功能强大的MCP服务器，用于谷歌搜索，可以同时使用多个关键字进行并行搜索。\r\n\r\n> 此项目修改自 [谷歌搜索](https://github.com/web-agent-master/google-search).\r\n\r\n> 🌟 **推荐**: [奥拉曼](https://ollaman.com/) -强大的Olama AI模型管理器。\r\n\r\n## 优势\r\n\r\n- **并行搜索**：支持在谷歌上同时使用多个关键字进行搜索，提高搜索效率\r\n- **浏览器优化**：在单个浏览器实例中打开多个选项卡，以实现高效的并行搜索\r\n- **自动验证处理**：智能检测验证码，并在需要时启用可见浏览器模式进行用户验证\r\n- **用户行为模拟**：模拟真实的用户浏览模式，以降低被搜索引擎检测到的可能性\r\n- **结构化数据**：以JSON格式返回结构化搜索结果，便于处理和分析\r\n- **可配置参数**：支持各种参数配置，如搜索结果限制、超时设置、区域设置等。\r\n\r\n## 快速开始\r\n\r\n直接使用npx运行：\r\n\r\n```bash\r\nnpx -y g-search-mcp\r\n```\r\n\r\n首次设置-在终端中运行以下命令安装所需的浏览器：\r\n\r\n```bash\r\nnpx playwright install chromium\r\n```\r\n\r\n### 调试模式\r\n\r\n使用 `--debug` 在调试模式下运行的选项（显示浏览器窗口）：\r\n\r\n```bash\r\nnpx -y g-search-mcp --debug\r\n```\r\n\r\n## 配置MCP\r\n\r\n在Claude Desktop中配置此MCP服务器：\r\n\r\nMacOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n窗户： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"g-search\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"g-search-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 特性\r\n\r\n- `search` -使用多个关键字执行谷歌搜索并返回结果\r\n  - 使用Playwright浏览器执行搜索\r\n  - 支持以下参数：\r\n    - `queries`：要执行的搜索查询数组（必需参数）\r\n    - `limit`：每个查询返回的最大结果数，默认值为10\r\n    - `timeout`：页面加载超时（毫秒），默认值为60000（60秒）\r\n    - `noSaveState`：是否避免保存浏览器状态，默认为false\r\n    - `locale`：搜索结果的区域设置，默认为en-US\r\n    - `debug`：是否启用调试模式（显示浏览器窗口），覆盖命令行中的--debug标志\r\n\r\n**示例用法**:\r\n\r\n```\r\nUse the search tool to search for \"machine learning\" and \"artificial intelligence\" on Google\r\n```\r\n\r\n**示例响应**:\r\n\r\n```json\r\n{\r\n  \"searches\": [\r\n    {\r\n      \"query\": \"machine learning\",\r\n      \"results\": [\r\n        {\r\n          \"title\": \"What is Machine Learning? | IBM\",\r\n          \"link\": \"https://www.ibm.com/topics/machine-learning\",\r\n          \"snippet\": \"Machine learning is a branch of artificial intelligence (AI) and computer science which focuses on the use of data and algorithms to imitate the way that humans learn, gradually improving its accuracy.\"\r\n        },\r\n        ...\r\n      ]\r\n    },\r\n    {\r\n      \"query\": \"artificial intelligence\",\r\n      \"results\": [\r\n        {\r\n          \"title\": \"What is Artificial Intelligence (AI)? | IBM\",\r\n          \"link\": \"https://www.ibm.com/topics/artificial-intelligence\",\r\n          \"snippet\": \"Artificial intelligence leverages computers and machines to mimic the problem-solving and decision-making capabilities of the human mind.\"\r\n        },\r\n        ...\r\n      ]\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n## 使用技巧\r\n\r\n### 处理特殊网站场景\r\n\r\n#### 调整搜索参数\r\n\r\n- **搜索结果数量**：有关更多搜索结果：\r\n\r\n  ```\r\n  Please return the top 20 search results for each keyword\r\n  ```\r\n\r\n  这将设置 `limit: 20` 参数。\r\n\r\n- **增加超时时间**：对于慢速加载情况：\r\n\r\n  ```\r\n  Please set the page loading timeout to 120 seconds\r\n  ```\r\n\r\n  这将调整 `timeout` 参数设置为120000毫秒。\r\n\r\n#### 区域设置调整\r\n\r\n- **更改搜索区域**：指定其他区域设置：\r\n  ```\r\n  Please use Chinese locale (zh-CN) for searching\r\n  ```\r\n  这将设置 `locale: \"zh-CN\"` 参数。\r\n\r\n### 调试和故障排除\r\n\r\n#### 启用调试模式\r\n\r\n- **动态调试激活**：要在特定搜索操作期间显示浏览器窗口，请执行以下操作：\r\n  ```\r\n  Please enable debug mode for this search operation\r\n  ```\r\n  这套 `debug: true` 即使服务器启动时没有 `--debug` 旗帜。\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Node.js 18或更高版本\r\n- NPM或纱线\r\n\r\n### 从源代码安装\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/jae-jae/g-search-mcp.git\r\ncd g-search-mcp\r\n```\r\n\r\n2. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n3. 安装Playwright浏览器：\r\n\r\n```bash\r\nnpm run install-browser\r\n```\r\n\r\n4. 构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n## 发展\r\n\r\n### 自动重建（开发模式）\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n### 使用MCP检查器进行调试\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n## 相关项目\r\n\r\n- [菲彻mcp](https://github.com/jae-jae/fetcher-mcp)：一个强大的MCP服务器，用于使用Playwright无头浏览器获取网页内容。具有智能内容提取、并行处理、资源优化等功能，使其成为网络内容抓取的理想工具。\r\n\r\n## 许可证\r\n\r\n根据 [MIT许可证](https://choosealicense.com/licenses/mit/)\r\n",
+ "config": {
+  "g-search": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "g-search-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

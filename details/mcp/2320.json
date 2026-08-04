@@ -1,0 +1,25 @@
+{
+ "id": "2320",
+ "kind": "mcp",
+ "name": "strava-6",
+ "fingerprint_md5": "1b37a171ce906de0afa2d34b65c6e44e",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# Strava MCP服务器\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io/introduction) （MCP）服务器，其提供对Strava API的访问。它允许语言模型从Strava API查询运动员活动数据。\r\n\r\n## 可用工具\r\n\r\n服务器公开了以下工具：\r\n\r\n### 活动查询\r\n\r\n- `get_activities(limit: int = 10)`：获取经过认证的运动员最近的活动\r\n- `get_activities_by_date_range(start_date: str, end_date: str, limit: int = 30)`：获取特定日期范围内的活动\r\n- `get_activity_by_id(activity_id: int)`：获取特定活动的详细信息\r\n- `get_recent_activities(days: int = 7, limit: int = 10)`：获取过去X天的活动\r\n\r\n日期应以ISO格式提供(`YYYY-MM-DD`).\r\n\r\n## 活动数据格式\r\n\r\n服务器返回具有一致字段名称和单位的活动数据：\r\n\r\n|字段|描述|单位|\r\n|-------|-------------|------|\r\n| `name` |活动名称|-|\r\n| `sport_type` |运动类型|-|\r\n| `start_date` |开始日期和时间|ISO 8601|\r\n| `distance_metres` |距离|米|\r\n| `elapsed_time_seconds` |总运行时间|秒|\r\n| `moving_time_seconds` |移动时间|秒|\r\n| `average_speed_mps` |平均速度|米每秒|\r\n| `max_speed_mps` |最大速度|米每秒|\r\n| `total_elevation_gain_metres` |总高程增益|米|\r\n| `elev_high_metres` |最高海拔|米|\r\n| `elev_low_metres` |最低海拔|米|\r\n| `calories` |燃烧的卡路里|kcal|\r\n| `start_latlng` |起始坐标|\\[lat，lng\\]|\r\n| `end_latlng` |终点坐标|\\[lat，lng\\]|\r\n\r\n## 认证\r\n\r\n要使用此服务器，您需要使用Strava API进行身份验证。请按照以下步骤操作：\r\n\r\n1. 创建Strava API应用程序：\r\n\r\n   - 首选 [Strava API设置](https://www.strava.com/settings/api)\r\n   - 创建一个应用程序以获取您的客户端ID和客户端密码\r\n   - 将授权回调域设置为 `localhost`\r\n\r\n1. 获取您的刷新令牌：\r\n\r\n   - 使用随附的 `get_strava_token.py` 脚本：\r\n\r\n   ```bash\r\n   python get_strava_token.py\r\n   ```\r\n\r\n   - 按照提示授权您的应用程序\r\n   - 该脚本将把您的令牌保存到 `.env` 文件\r\n\r\n1. 设置环境变量：\r\n   服务器需要以下环境变量：\r\n\r\n   - `STRAVA_CLIENT_ID`：您的Strava API客户ID\r\n   - `STRAVA_CLIENT_SECRET`：您的Strava API客户秘密\r\n   - `STRAVA_REFRESH_TOKEN`：您的Strava API刷新令牌\r\n\r\n## 用法\r\n\r\n### Claude桌面版\r\n\r\n更新您的 `claude_desktop_config.json` （位于 `~/Library/Application\\ Support/Claude/claude_desktop_config.json` 在macOS和 `%APPDATA%/Claude/claude_desktop_config.json` 在Windows上）包括以下内容：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"strava\": {\r\n            \"command\": \"uvx\",\r\n            \"args\": [\r\n                \"strava-mcp-server\"\r\n            ],\r\n            \"env\": {\r\n                \"STRAVA_CLIENT_ID\": \"YOUR_CLIENT_ID\",\r\n                \"STRAVA_CLIENT_SECRET\": \"YOUR_CLIENT_SECRET\",\r\n                \"STRAVA_REFRESH_TOKEN\": \"YOUR_REFRESH_TOKEN\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n### 克劳德·韦伯\r\n\r\n对于Claude Web，您可以在本地运行服务器，并使用MCP扩展进行连接。\r\n\r\n## 查询示例\r\n\r\n连接后，您可以向Claude提出以下问题：\r\n\r\n- “我最近的活动是什么？”\r\n- “显示我上周的活动”\r\n- “在过去的一个月里，我跑得最长的是什么？”\r\n- “获取我最新自行车活动的详细信息”\r\n\r\n## 错误处理\r\n\r\n服务器为常见问题提供人类可读的错误消息：\r\n\r\n- 日期格式无效\r\n- API身份验证错误\r\n- 网络连接问题\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。\r\n",
+ "config": {
+  "strava": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "strava-mcp-server"
+   ],
+   "env": {
+    "STRAVA_CLIENT_ID": "YOUR_CLIENT_ID",
+    "STRAVA_CLIENT_SECRET": "YOUR_CLIENT_SECRET",
+    "STRAVA_REFRESH_TOKEN": "YOUR_REFRESH_TOKEN"
+   }
+  }
+ }
+}

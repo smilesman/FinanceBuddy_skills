@@ -1,0 +1,24 @@
+{
+ "id": "2244",
+ "kind": "mcp",
+ "name": "maps-routes",
+ "fingerprint_md5": "27f9a14004cc33faef7f5b3037666cf8",
+ "download_count": 0,
+ "category": "地图服务",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP服务器：谷歌地图+健身路线\r\n\r\n## 目的\r\n\r\n此MCP服务器将路线查找和健身活动的查询转换为实时谷歌地图调用，并为人工智能助手返回结构化上下文。它可以：\r\n\r\n- 将查询“燃烧X卡路里”转换为可遵循的路线\r\n- 从谷歌地图获取步行路线\r\n- 可选择查找附近的地点作为航点\r\n\r\n目标是让人工智能的答案具有位置感知和目标感知（卡路里→ 距离→ 真实路线）。\r\n\r\n## 数据源/API\r\n\r\n- 谷歌地图地理编码API\r\n- 谷歌地图方向API\r\n- 谷歌地图地点API\r\n\r\n这些用于将文本位置解析为坐标，获取真实的路线距离/持续时间，并可选择查找附近的位置。\r\n\r\n## 需求\r\n\r\n- Python 3.10+\r\n- 启用了上述API的Google地图平台API密钥\r\n- 包裹来自 `requirements.txt`\r\n\r\n## 环境变量\r\n\r\n创建一个 `.env` 项目根目录中的文件（此文件可以通过复制.env.example粘贴）：\r\n\r\n```text\r\nGOOGLE_MAPS_API_KEY=YOUR_KEY_HERE\r\nDEFAULT_ORIGIN=Memorial Student Center, College Station, TX\r\nDEFAULT_DESTINATION=Century Tree, College Station, TX\r\n```\r\n\r\n笔记：\r\n\r\n- 替换 `YOUR_KEY_HERE` 在谷歌云平台中使用来自谷歌地图的实际API密钥。\r\n- `DEFAULT_ORIGIN` 当查询未指定开始时使用。\r\n- 您可以将这些更改为与您相关的位置。\r\n\r\n## 服务器条目/如何查询\r\n\r\n此MCP服务器旨在由发送自然语言查询的具有MCP功能的客户端（例如Claude Desktop）调用。服务器接收查询，检测意图（健身路线、方向、附近地点），从谷歌地图获取外部数据，并返回一个结构化的上下文对象，人工智能可以用它来回答用户。\r\n\r\n## 与Claude Desktop一起使用\r\n\r\n如果您希望Claude Desktop调用此MCP服务器，请添加一个名为的新文件（或更新） `claude_desktop_config.json` 如果不存在注册服务器，例如：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"maps-routes\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"C:\\\\path\\\\to\\\\fitness-routes\",\r\n        \"run\",\r\n        \"main.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n笔记：\r\n\r\n- 改变 `\"C:\\\\path\\\\to\\\\fitness-routes\"` 到此文件夹的实际路由\r\n\r\n## 安装和运行\r\n\r\n```bash\r\npython -m venv .venv\r\n.\\.venv\\Scripts\\activate  # For Windows\r\n# source .venv/bin/activate  # For Linux/MacOS\r\npip install -r requirements.txt\r\npython main.py\r\n```\r\n\r\n这将启动MCP服务器。 **当你进入Claude时，点击“搜索和工具”，确保标题为“地图路线”的MCP服务器已完全启用。**\r\n\r\n## 运作原理\r\n\r\n1. 服务器接收查询/工具调用。\r\n1. 它检测意图，例如：健身路线请求。\r\n1. 它转换卡路里→ 近似距离（记录的假设）。\r\n1. 它调用谷歌地图（地理编码、方向、地点）来构建一条真实的路线。\r\n1. 它返回一个AI可以直接使用的上下文包。\r\n\r\n## 示例提示\r\n\r\n- **燃烧300卡路里的路线。**\r\n- **给我一条从纪念学生中心出发的步行路线，可以燃烧400卡路里。**\r\n- **在纪念学生中心附近规划一个步行环路，这样我就可以在起点处结束。**\r\n- **从Texas a&M，College Station找到附近的健身房。**\r\n- **我现在有30分钟的步行时间，从纪念学生中心开始。**\r\n\r\n## 更多提示\r\n\r\n- **从得克萨斯A&M大学站燃烧500卡路里的路线。**\r\n- **我需要从纪念学生中心附近步行4公里。**\r\n- **从纪念学生中心到世纪树，选择骑自行车而不是步行。**\r\n- **请告诉我从纪念学生中心到世纪树的步行路线。**\r\n- **在大学站找一个我可以步行去的附近公园。**\r\n- **给我一条我可以在一个小时内完成的路线，从纪念学生中心开始。**\r\n- **给我一条从得克萨斯a&M大学站到最近的咖啡店的路线。**\r\n- **从得克萨斯州农工大学大学站到校园地标的最佳步行路线是什么。**\r\n\r\n## 假设\r\n\r\n- 卡路里燃烧在代码中用固定值近似（例如步行50千卡/公里）。这是为了保持MCP逻辑的简单性和可预测性。\r\n- 当用户未提供来源/目的地时，服务器将从以下位置恢复到默认值 `.env`.\r\n- 谷歌地图API必须在谷歌云项目中启用才能成功调用。\r\n\r\n## 故障排除\r\n\r\n- 如果响应包含 `\"error\": \"REQUEST_DENIED\"` 或类似，请检查：\r\n\r\n  - 存在API密钥\r\n  - 已启用计费\r\n  - 方向/地理编码/地点已启用\r\n\r\n- 如果响应为空，请确保 `.env` 已加载，服务器已在同一环境中启动。\r\n",
+ "config": {
+  "maps-routes": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "C:\\path\\to\\fitness-routes",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "2274",
+ "kind": "mcp",
+ "name": "nslookup-2",
+ "fingerprint_md5": "a4f885bd08383387b735a9d637c181ce",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# NS查找MCP服务器\r\n\r\n一个简单的MCP（模型上下文协议）服务器，它公开了nslookup命令功能。此服务提供了一个REST API接口来执行DNS查找，从而可以轻松地将DNS解析功能集成到应用程序中。\r\n\r\n## 特性\r\n\r\n- 通过REST API公开nslookup命令功能\r\n- 简单而专注的微服务\r\n- 使用uv和pyproject.toml的现代Python工具\r\n- 支持正向和反向DNS查找\r\n- 可配置的DNS服务器选择\r\n- 简洁明了的输出格式\r\n\r\n## 需求\r\n\r\n- Python 3.9或更高版本\r\n- uv（Python包管理器）\r\n\r\n## 安装\r\n\r\n1. 克隆存储库\r\n1. 使用uv安装依赖项：\r\n\r\n```bash\r\nuv pip install -e .\r\n```\r\n\r\n## 用法\r\n\r\n启动服务器：\r\n\r\n```bash\r\nuv run ns-lookup-mcp\r\n```\r\n\r\n调试模式：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv run ns-lookup-mcp\r\n```\r\n\r\n### MCP接口\r\n\r\n#### 工具\r\n\r\n服务器公开了以下工具：\r\n\r\n```json\r\n{\r\n  \"name\": \"nslookup\",\r\n  \"description\": \"Performs DNS lookups using the nslookup command. Supports both forward and reverse DNS lookups.\",\r\n  \"inputSchema\": {\r\n    \"type\": \"object\",\r\n    \"properties\": {\r\n      \"hostname\": {\r\n        \"type\": \"string\",\r\n        \"description\": \"Domain name or IP address to look up\"\r\n      },\r\n      \"server\": {\r\n        \"type\": \"string\",\r\n        \"description\": \"Optional DNS server to use for the lookup\"\r\n      }\r\n    },\r\n    \"required\": [\"hostname\"]\r\n  }\r\n}\r\n```\r\n\r\n#### 鼓励\r\n\r\n服务器提供以下提示：\r\n\r\n```json\r\n{\r\n  \"name\": \"nslookup\",\r\n  \"description\": \"Perform a DNS lookup using nslookup\",\r\n  \"arguments\": [\r\n    {\r\n      \"name\": \"hostname\",\r\n      \"description\": \"Domain name or IP address to look up\",\r\n      \"required\": true\r\n    },\r\n    {\r\n      \"name\": \"server\",\r\n      \"description\": \"Optional DNS server to use\",\r\n      \"required\": false\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n### MCP客户端配置\r\n\r\n要将此服务器与MCP客户端一起使用，请将以下配置添加到客户端的设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"nslookup\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--directory\",\r\n        \"[workspace]/ns-lookup-mcp\",\r\n        \"ns-lookup-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `[workspace]` 使用工作区目录的实际路径。\r\n\r\n### 输出示例\r\n\r\n服务器以简洁明了的格式返回DNS查找结果：\r\n\r\n```\r\nDNS:    192.168.1.1\r\nName:   example.com\r\nAddress: 93.184.216.34\r\n```\r\n\r\n### 常见DNS服务器\r\n\r\n- 谷歌DNS： `8.8.8.8`\r\n- Cloudflare DNS： `1.1.1.1`\r\n- OpenDNS： `208.67.222.222`\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "nslookup": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "[workspace]/ns-lookup-mcp",
+    "ns-lookup-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

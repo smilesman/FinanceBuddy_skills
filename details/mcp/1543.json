@@ -1,0 +1,21 @@
+{
+ "id": "1543",
+ "kind": "mcp",
+ "name": "macos-notification-mcp",
+ "fingerprint_md5": "69a887f149ebba1d285a0f0bb82c75c5",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 🔔 macOS通知MCP\r\n\r\n一个模型上下文协议（MCP）服务器，使AI助手能够触发macOS通知、声音和文本到语音。\r\n\r\n## ✨ 特性\r\n\r\n- 🔊 **声音通知**：播放系统听起来像潜水艇、Ping或叮当声\r\n- 💬 **横幅通知**：显示具有可自定义标题、消息和字幕的视觉通知\r\n- 🗣️ **语音通知**：将文本转换为语音，语音、速率和音量可调\r\n- 🎙️ **语音管理**：列出可用系统语音并从中选择\r\n- 🧪 **测试工具**：用于验证所有通知方法的诊断实用程序\r\n\r\n## 🚀 uvx快速入门（推荐）\r\n\r\n使用此工具的最快方法是 `uvx`，它运行无需永久安装的包：\r\n\r\n```bash\r\n# Install uv if you don't have it\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n\r\n# Run the MCP server directly (no installation needed)\r\nuvx macos-notification-mcp\r\n```\r\n\r\n## ⚙️ 配置Claude桌面\r\n\r\n将此添加到您的Claude Desktop配置中(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"macos-notification-mcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"macos-notification-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后重新启动Claude Desktop。\r\n\r\n## 📦 替代安装方法\r\n\r\n标准安装：\r\n\r\n```bash\r\npip install macos-notification-mcp\r\n```\r\n\r\n从源代码安装：\r\n\r\n```bash\r\ngit clone https://github.com/devizor/macos-notification-mcp\r\ncd macos-notification-mcp\r\npip install .\r\n```\r\n\r\n## 🛠️ 可用的通知工具\r\n\r\n### 🔊 声音通知\r\n\r\n```python\r\nsound_notification(sound_name=\"Submarine\")\r\n```\r\n\r\n可用声音：Basso、Blow、Bottle、Frog、Funk、Glass、Hero、Morse、Ping、Pop、Purr、Sosumi、Submarine、Tink\r\n\r\n### 💬 横幅通知\r\n\r\n```python\r\nbanner_notification(\r\n    title=\"Task Complete\",\r\n    message=\"Your analysis is ready\",\r\n    subtitle=None,  # Optional\r\n    sound=False,    # Optional: Play sound with notification\r\n    sound_name=None # Optional: Specify system sound\r\n)\r\n```\r\n\r\n### 🗣️ 语音通知\r\n\r\n```python\r\nspeak_notification(\r\n    text=\"The process has completed\",\r\n    voice=None,     # Optional: System voice to use\r\n    rate=150,       # Optional: Words per minute (default: 150)\r\n    volume=1.0      # Optional: Volume level 0.0-1.0\r\n)\r\n```\r\n\r\n### 🎙️ 语音管理\r\n\r\n```python\r\nlist_available_voices()  # Lists all available text-to-speech voices\r\n```\r\n\r\n### 🧪 测试\r\n\r\n```python\r\ntest_notification_system()  # Tests all notification methods\r\n```\r\n\r\n## 🔒 实现细节\r\n\r\n- ⏱️ **速率限制**：通知一次处理一个，最小间隔为0.5秒\r\n- 🔄 **排队**：按顺序处理多个通知请求\r\n- 🪟 **OS集成**：使用本机macOS命令(`afplay`, `osascript`, `say`)\r\n- 🔌 **FastMCP**：基于FastMCP框架构建，用于人工智能通信\r\n\r\n## ⚠️ 故障排除\r\n\r\n- 🔐 **权限**：确保在系统设置中允许通知→ 通知\r\n- ⏳ **时机**：一次只处理一个通知\r\n- 🌐 **环境**：如果直接使用命令（不是uvx），可能需要使用完整路径\r\n\r\n## 📄 许可证\r\n\r\nMIT许可证\r\n",
+ "config": {
+  "macos-notification-mcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "macos-notification-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "1103",
+ "kind": "mcp",
+ "name": "mcp-server-med",
+ "fingerprint_md5": "0932ee7c3db2357debebe3d8c17d50c5",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 医疗MCP服务器\r\n\r\n一个提供全面模型上下文协议（MCP）服务的服务器，用于提供药品信息和药物发现工具。\r\n\r\n## 概述\r\n\r\n这台MCP服务器提供了访问一个经过精心整理的药品信息数据库的权限，其中包括药物机制、适应症、剂量、副作用和禁忌症等信息。它旨在为医疗专业人士、研究人员以及处理医疗数据的开发人员提供辅助。\r\n\r\n## 特点/功能\r\n\r\n### 可用工具\r\n\r\n1. **药物发现数据（药物名称: 字符串）**\r\n\r\n   - 获取特定药物的全面信息\r\n   - 返回：名称、通用名、作用机制、适应症、剂量、副作用、禁忌症、药物类别\r\n\r\n1. **按药物类别搜索药物(drug_class: str)**\r\n\r\n   - 按治疗类别搜索药物（例如，“非甾体抗炎药（NSAID）”、“他汀类药物”、“血管紧张素转换酶抑制剂（ACE Inhibitor）”）\r\n   - 返回：与该类别匹配的药物列表及基本信息\r\n\r\n1. **检查药物相互作用(drug1: 字符串, drug2: 字符串)**\r\n\r\n   - 检查两种药物之间可能的相互作用\r\n   - 返回：严重程度级别、描述和建议\r\n\r\n1. **获取可用药物()**\r\n\r\n   - 获取数据库中所有可用药物的完整列表\r\n   - 返回：药物名称列表\r\n\r\n### 可用资源\r\n\r\n- **file://药物发现数据库**结构化的完整药物数据库\r\n\r\n### 可用提示\r\n\r\n- **药品信息**查询药品信息的模板\r\n\r\n## 当前药物数据库\r\n\r\n服务器目前包含以下信息：\r\n\r\n- **阿司匹林** （非甾体抗炎药，NSAID）- 止痛、抗炎、抗血小板治疗\r\n- **二甲双胍** （双胍类）- 2型糖尿病治疗药物\r\n- **赖诺普利** (血管紧张素转换酶抑制剂) - 高血压和心力衰竭\r\n- **阿托伐他汀** (他汀类药物) - 胆固醇管理\r\n- **阿莫西林** （青霉素类抗生素）- 细菌感染\r\n\r\n## 安装\r\n\r\n1. 确保已安装 Python 3.11 或更高版本\r\n1. 安装依赖项：\r\n   ```bash\r\n   pip install mcp[cli] fastmcp\r\n   ```\r\n\r\n## 使用方法\r\n\r\n### 运行服务器\r\n\r\n```bash\r\npython main.py\r\n```\r\n\r\n### 与MCP客户端一起使用\r\n\r\n该服务器可以与任何兼容MCP的客户端集成。请在您的MCP客户端设置中添加以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-server-med\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"mcp\",\r\n        \"dev\",\r\n        \"main.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n这种配置在……中也是可用的 `mcp-config.json` 文件便于复制。\r\n\r\n### 示例工具使用\r\n\r\n```python\r\n# Get information about aspirin\r\nresult = drug_discovery_data(\"aspirin\")\r\n\r\n# Search for all NSAID drugs\r\nnsaids = search_drugs_by_class(\"NSAID\")\r\n\r\n# Check interaction between aspirin and lisinopril\r\ninteraction = check_drug_interactions(\"aspirin\", \"lisinopril\")\r\n\r\n# Get all available drugs\r\nall_drugs = get_available_drugs()\r\n```\r\n\r\n## 数据结构\r\n\r\n每条药品记录包含：\r\n\r\n- `name`品牌/通用名称\r\n- `generic_name`通用药品名称\r\n- `mechanism`这种药物的作用机制\r\n- `indication`它治疗哪些病症\r\n- `dosage`典型的给药信息\r\n- `side_effects`常见的不良反应\r\n- `contraindications`何时不应使用该药物\r\n- `drug_class`治疗分类\r\n\r\n## 重要免责声明\r\n\r\n⚠️ **医疗免责声明**此工具仅供信息参考之用，不应作为专业医疗建议、诊断或治疗的替代。在做医疗决策时，请务必咨询合格的医疗专业人士。\r\n\r\n⚠️（表示警告或注意的符号） **数据限制**当前数据库仅包含一套用于演示的有限药物集合。在生产环境中，应将其连接到全面的药品数据库。\r\n\r\n⚠️（表示警告或注意的符号） **药物相互作用**药物相互作用的检查较为简化，并非全面。在临床决策时，请务必使用专业的药物相互作用数据库。\r\n\r\n## 发展\r\n\r\n### 添加新药\r\n\r\n要将新药物添加到数据库中，请扩展 `drug_db` 字典中的 `main.py` 带有必填字段。\r\n\r\n### 扩展功能\r\n\r\n服务器可以通过添加以下工具进行扩展：\r\n\r\n- 剂量计算器\r\n- 过敏检查\r\n- 药品管制信息\r\n- 临床试验数据\r\n- 药代动力学信息\r\n\r\n## 许可证\r\n\r\n此项目仅供教育和开发目的使用，按现状提供。\r\n\r\n## 做出贡献\r\n\r\n欢迎投稿！请确保所添加的任何医疗信息均来自可靠、经过同行评审的来源。\r\n",
+ "config": {
+  "mcp-server-med": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "mcp",
+    "dev",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

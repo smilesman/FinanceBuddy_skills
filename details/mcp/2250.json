@@ -1,0 +1,23 @@
+{
+ "id": "2250",
+ "kind": "mcp",
+ "name": "mcp-market",
+ "fingerprint_md5": "de622ffa2d79dd0b83469e7e78137fac",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 俄罗斯MCP市场🏗️\r\n\r\n**俄罗斯建筑市场首个商用MCP服务器目录。**\r\n\r\n俄罗斯AI代理建筑公司和房屋项目目录。3400多家公司遍布20个城市。\r\n\r\n## 🔗 快速连接\r\n\r\n### 克劳德桌面版\r\n\r\n添加 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-market\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-remote\", \"https://mcp-market.ru/mcp/\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 直接端点\r\n\r\n```\r\nhttps://mcp-market.ru/mcp/\r\n```\r\n\r\n## 🛠️ 工具（9）\r\n\r\n### 搜索与发现\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_companies` |按类别、地区、预算搜索建筑公司。返回名称、评级、价格、网站、电话。 |\r\n| `search_projects` |按面积、楼层、材料、价格搜索房屋项目。返回项目详细信息+公司联系人。 |\r\n| `compare_companies` |并排比较2-3家公司——价格、评级、项目、专业化。 |\r\n\r\n### 详情\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_company` |完整的公司简介：联系方式、价格、评级、项目列表。 |\r\n| `get_project` |详细的项目信息：规格、价格、功能、公司联系方式。 |\r\n\r\n### 参考\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_categories` |列出所有有计数的公司类别。 |\r\n| `get_regions` |列出所有有公司数量的地区。 |\r\n| `get_stats` |目录统计：公司、项目、地区、查询、潜在客户。 |\r\n\r\n### 行动\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `request_quote` |向公司发送报价请求。返回确认+公司联系人。 |\r\n\r\n## 📊 数据\r\n\r\n- **3400多家公司** 俄罗斯20个城市\r\n- **实房项目** 有规格、价格和直接链接\r\n- 来源：2GIS，公司网站\r\n- 定期更新\r\n\r\n### 类别\r\n\r\n`строительство` · `недвижимость` · `каркасные_дома` · `дома_из_бруса` · `газобетон` · `кирпич` · `модульные_дома` · `СИП`\r\n\r\n### 区域\r\n\r\n莫斯科、圣彼得堡、新西伯利亚、叶卡捷琳堡、喀山、克拉斯诺达尔、秋明等13个城市。\r\n\r\n## 💡 示例提示\r\n\r\n```\r\n\"Find frame house builders in Moscow region under 5 million rubles\"\r\n\"Compare these two companies: [id1] and [id2]\"\r\n\"Show house projects 100-150 m², 2 floors, frame construction\"\r\n\"Send a quote request to company [id] for project [id]\"\r\n```\r\n\r\n## 🏢 关于\r\n\r\n建造于 [斯堪地Ecodom](https://scandiecodom.ru) --使人工智能代理能够访问建筑市场数据。\r\n\r\n- 网站： [mcp-market.ru](https://mcp-market.ru)\r\n- 史密斯利： [smithery.ai/servers/devids77/mcp-market-russia](https://smithery.ai/servers/devids77/mcp-market-russia)\r\n- 联系人：scandiecodom@gmail.com\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "mcp-market": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-remote",
+    "https://mcp-market.ru/mcp/"
+   ],
+   "env": {}
+  }
+ }
+}

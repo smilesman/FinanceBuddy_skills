@@ -1,0 +1,12 @@
+{
+ "id": "k8s-operator-change",
+ "kind": "skill",
+ "name": "k8s-operator-change",
+ "fingerprint_md5": "815efcd50b4a891e806fd6490307cb53",
+ "download_count": 0,
+ "category": "Kubernetes",
+ "tags": "",
+ "version": "",
+ "readme": "# Kubernetes Operator 变更\r\n\r\n## 触发器\r\n\r\n- 更改 operator APIs、CRDs 或面向控制器的配置转换\r\n- 更改 semantic-router 的 Kubernetes Deployment control-plane behavior\r\n\r\n## 工作流\r\n\r\n1. 读取变更表面、功能完整检查清单和模块边界以获取 operator 上下文\r\n2. 修改 operator APIs、CRDs 或面向控制器的配置转换\r\n3. 运行 `make agent-report ENV=cpu CHANGED_FILES=\"...\"` 以识别受影响的表面\r\n4. 运行 `make agent-ci-gate CHANGED_FILES=\"...\"` 以验证所有约束\r\n5. 验证 operator APIs、CRDs 和面向路由器的转换保持一致\r\n\r\n## 陷阱\r\n\r\n- CRD schema 变更、转换更新和 reconciliation logic 通常需要一起落地以避免 split-brain 行为。\r\n- 当 leaving the router-side config contract ambiguous 时不要修复 Kubernetes 表示。\r\n\r\n## 必读\r\n\r\n- [docs/agent/change-surfaces.md](../../../../docs/agent/change-surfaces.md)\r\n- [docs/agent/feature-complete-checklist.md](../../../../docs/agent/feature-complete-checklist.md)\r\n- [docs/agent/module-boundaries.md](../../../../docs/agent/module-boundaries.md)\r\n\r\n## 标准命令\r\n\r\n- `make agent-report ENV=cpu CHANGED_FILES=\"...\"`\r\n- `make agent-ci-gate CHANGED_FILES=\"...\"`\r\n\r\n## 验收\r\n\r\n- Operator APIs、CRDs 和面向路由器的转换保持一致\r\n- 当 behavior changes 时更新相关的面向 Kubernetes 的验证",
+ "config": {}
+}

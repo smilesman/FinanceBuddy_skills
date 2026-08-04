@@ -1,0 +1,22 @@
+{
+ "id": "1044",
+ "kind": "mcp",
+ "name": "erc-8004-agents",
+ "fingerprint_md5": "3339b060808e8b128a3e4506f8a3c58c",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# ERC-8004 MCP服务器\r\n\r\n用于查询ERC-8004 AI代理身份的MCP（模型上下文协议）服务器。它查询The Graph子图以获取链上数据，并获取IPFS元数据以获取完整的链下详细信息。\r\n\r\n## 特性\r\n\r\n- **搜索代理** 按名称与可选协议过滤（MCP/A2A）\r\n- **列出代理** 具有分页、排序和协议过滤功能\r\n- **获取完整的代理详细信息** 包括合同状态、服务、身份和统计信息\r\n- **获取反馈/评论** 带有分数、标签、复习文本和MCP/A2A上下文\r\n- **获取参与度统计数据** 标签分析和分数分布\r\n- **获取完整元数据** 包括链下IPFS属性（认证、型号信息、社交链接、定价等）\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_agents` |使用可选协议筛选器按名称搜索代理|\r\n| `list_agents` |通过分页和排序浏览代理|\r\n| `get_agent` |按ID获取代理的完整详细信息|\r\n| `get_agent_feedback` |获取代理的所有反馈/评论|\r\n| `get_agent_stats` |获取参与度指标和得分明细|\r\n| `get_agent_metadata` |获取完整的链上+链下元数据（IPFS）|\r\n\r\n## 设置\r\n\r\n```bash\r\nyarn install\r\n```\r\n\r\n## 用法\r\n\r\n### stdio模式（克劳德桌面、光标等）\r\n\r\n```bash\r\nyarn dev\r\n```\r\n\r\n### HTTP模式（流式HTTP）\r\n\r\n```bash\r\nyarn dev:http\r\n```\r\n\r\n服务器启动于 `http://localhost:3100/mcp` 默认情况下。设置 `PORT` 环境变量来改变它。\r\n\r\n### 生产\r\n\r\n```bash\r\nyarn build\r\nyarn start          # stdio\r\nyarn start:http     # HTTP\r\n```\r\n\r\n## 使用Claude Desktop进行配置\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"erc-8004-agents\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"/path/to/erc-8004-mcp-server/src/index.ts\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用编译版本：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"erc-8004-agents\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/erc-8004-mcp-server/dist/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用光标进行配置\r\n\r\n添加到光标MCP设置(`.cursor/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"erc-8004-agents\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"/path/to/erc-8004-mcp-server/src/index.ts\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者对于HTTP传输：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"erc-8004-agents\": {\r\n      \"url\": \"http://localhost:3100/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 查询示例\r\n\r\n连接后，您可以询问您的AI助手：\r\n\r\n- “在ERC-8004上搜索健身器材”\r\n- “列出最近创建的具有MCP支持的代理”\r\n- “获取代理11155111:1213的详细信息”\r\n- “给我看龙虾拉里的所有反馈”\r\n- “代理11155111:1213的完整元数据属性是什么？”\r\n- “给我看看这位经纪人的统计数据和得分明细”\r\n\r\n## 数据源\r\n\r\n- **链上数据**: [ERC-8004子图](https://thegraph.com/hosted-service/) 在Sepolia测试网上\r\n- **链下元数据**：通过公共网关实现IPFS（IPFS.io、cloudflare-IPFS.com、dweb.link）\r\n",
+ "config": {
+  "erc-8004-agents": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "tsx",
+    "/path/to/erc-8004-mcp-server/src/index.ts"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "id": "2249",
+ "kind": "mcp",
+ "name": "mcp-ip-geo",
+ "fingerprint_md5": "c9d7c2f33831a9cbfb78e9ce5b38426c",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 📝 mcp-ip-geo\r\n\r\n  English | [简体中文](./README-zh_CN.md)\r\n\r\n______________________________________________________________________\r\n\r\n`mcp-ip-geo` 是一个 `MCP` (`Model Context Protocol`)使用IP-api.com服务提供IP地理定位查找服务（国家、地区、城市等）的服务器。\r\n\r\n# 🔌 MCP集成\r\n\r\n您可以整合 `mcp-ip-geo` 服务方式有两种：\r\n\r\n## 方法1：使用go run命令（Stdio）\r\n\r\n将以下内容添加到您的 `MCP` 配置以直接从GitHub运行最新版本：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-ip-geo\": {\r\n      \"command\": \"go\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"github.com/chenmingyong0423/mcp-ip-geo/cmd/mcp-ip-geo@latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 方法2：使用Docker（流式HTTP）\r\n\r\n### 🐳 Docker部署\r\n\r\n#### 步骤1：克隆存储库\r\n\r\n```bash\r\ngit clone https://github.com/chenmingyong0423/mcp-ip-geo.git\r\ncd mcp-ip-geo\r\n```\r\n\r\n#### 第二步：构建Docker镜像\r\n\r\n```bash\r\ndocker build -t mcp-ip-geo-server .\r\n```\r\n\r\n#### 步骤3：运行容器\r\n\r\n```bash\r\ndocker run -d --name mcp-ip-geo-server -p 8000:8000 mcp-ip-geo-server\r\n```\r\n\r\n一旦成功运行，服务将继续监听 `0.0.0.0:8000` 在容器内（监听所有网络接口），可以通过以下方式访问 `http://:8000/mcp`，在哪里 `` 可以是：\r\n\r\n- 当地开发环境：使用 `localhost` 或 `127.0.0.1`\r\n- LAN环境：使用服务器的内部IP地址（例如。， `192.168.x.x`)\r\n- 公共网络环境：使用服务器的公共IP地址或域名\r\n\r\n> 注意：该服务被配置为监听 `0.0.0.0` 容器内的地址，这是容器化应用程序的标准做法，确保可以从容器外部访问服务。\r\n\r\n#### 步骤4：配置MCP\r\n\r\n将以下内容添加到您的 `MCP` 配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-ip-geo\": {\r\n      \"url\": \"http://:8000/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `` 使用部署环境的实际服务器IP地址或域名。\r\n\r\n# ⚠️ 许可证通知\r\n\r\n> 注意：本项目使用ip-api.com的免费版本 **仅供非商业用途**。如果您打算将此项目用于商业目的，请遵守其服务条款或购买付费版本：https://ip-api.com/\r\n",
+ "config": {
+  "mcp-ip-geo": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://<server-address>:8000/mcp"
+  }
+ }
+}

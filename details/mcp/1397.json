@@ -1,0 +1,22 @@
+{
+ "id": "1397",
+ "kind": "mcp",
+ "name": "context101",
+ "fingerprint_md5": "5680ba33049e21b7ab801d67d2547a1c",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "<h1 align=\"center\">Context101 MCP : Learn to code AI-native</h1>\r\n<p align=\"center\">\r\n  <a href=\"https://cursor.com/en-US/install-mcp?name=context101&config=eyJjb21tYW5kIjoibnB4IC15IEBjb250ZXh0MTAxL21jcCJ9\"></a> <a href=\"https://cursor.com/en-US/install-mcp?name=context101&config=eyJjb21tYW5kIjoibnB4IC15IEBjb250ZXh0MTAxL21jcCJ9\"></a>\r\n</p>\r\n\r\n> Context101是一个在AI代码编辑器内工作的MCP服务器。\r\n\r\n💬 **编辑器中的AI原生课程** ：通过使用人工智能进行构建来学习。无论您是使用Cursor还是其他人工智能代码编辑器，Context101都会指导您完成实际项目（如构建网站），同时教授如何在人工智能时代学习和使用人工智能。\r\n\r\n🤖 **结构化学习，由MCP提供支持** Context101作为MCP提供结构化课程，使人工智能学习更加有效。Context101将对话组织成清晰、循序渐进的学习流程，而不是非结构化的人工智能聊天。\r\n\r\n🧠 **个性化学习路线图** Context101记住你的问题、挣扎和进步。通过在学习过程中提出正确的后续问题，它不断完善专门为您量身定制的路线图。\r\n\r\n传统课程（如Udemy、Coursera）需要100多个小时。Context101让你在大约一个小时内构建一个网站。用Context101学习愉快！\r\n\r\n## 快速开始\r\n\r\n#### 方法1:CLI安装（推荐）\r\n\r\n为IDE安装和配置MCP的一个命令：\r\n\r\n```bash\r\nnpx @context101/mcp\r\n```\r\n\r\n支持的客户端：游标、风帆、cline、claude\r\n\r\n#### 方法2：手动配置\r\n\r\n如果您更喜欢手动设置，请将此添加到IDE的MCP配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"context101\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@context101/mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> 配置文件位置：\r\n\r\n- 游标：~/.Cursor/mcp.json\r\n- 风帆：~/.codium/wundurf/mcp_gonfig.json\r\n- Cline:~/.Cline/mcp_gonfig.json\r\n- 克劳德：~/.Claude/mcp.config.json\r\n\r\n安装后，只需像往常一样与编辑器交谈：\r\n\r\n```txt\r\nTeach me React step-by-step by building a small project.\r\n```\r\n\r\n就是这样！现在，你的AI代码编辑器就像一个导师，有结构化的课程。\r\n\r\n## 亮点\r\n\r\n### 开始：以自然的对话开始课程\r\n\r\n\r\n### 测验：使用Context101提供的个性化测验进行学习\r\n\r\n\r\n### 构建：直接在代码编辑器中编写代码，Context101将帮助您完成\r\n\r\n\r\n## 课程\r\n\r\n- 即将到来\r\n",
+ "config": {
+  "context101": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@context101/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

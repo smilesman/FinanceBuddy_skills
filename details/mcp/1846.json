@@ -1,0 +1,18 @@
+{
+ "id": "1846",
+ "kind": "mcp",
+ "name": "bankstatemently",
+ "fingerprint_md5": "b4d5207b4728a28e8962db364ae96881",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 银行对账单MCP服务器\r\n\r\n**将银行对账单PDF解析为结构化财务数据——直接来自人工智能代理和编码助手。**\r\n\r\n→ **完整文档：** [bankstatemently.com/developers/mcp](https://bankstatemently.com/developers/mcp)\r\n→ **API参考：** [bankstatemently.com/developers/api](https://bankstatemently.com/developers/api)\r\n→ **获取API密钥：** [bankstatemently.com/developers](https://bankstatemently.com/developers)\r\n\r\n______________________________________________________________________\r\n\r\n## 概述\r\n\r\nBankstatemently MCP服务器实现 [模型上下文协议](https://modelcontextprotocol.io) 通过无状态HTTP。它允许人工智能代理（Claude、Cursor、Copilot等）解析银行对账单PDF，并在不离开代理会话的情况下处理由此产生的交易数据。\r\n\r\n**服务器URL:** `https://api.bankstatemently.com/mcp`\r\n\r\n**身份验证：** API密钥通过 `Authorization: Bearer <key>` 或 `X-API-Key` 头球\r\n\r\n适用于 **全球任何一家银行** --上传一条语句，服务器会自动处理检测。越来越多的银行通过公布的基准结果独立验证了准确性。\r\n\r\n______________________________________________________________________\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `parse_statement` |上传PDF（base64或URL）并将其解析为结构化交易、余额和账户元数据|\r\n| `get_statement` |检索以前上传的文档的解析数据|\r\n| `list_statements` |浏览以前解析的语句|\r\n| `get_credits` |检查您的剩余信用余额|\r\n| `evaluate_benchmark` |对分析的交易进行评分 [BSPB](https://github.com/bankstatemently/bspb) 基准地面真相。免费，不消耗任何积分。 |\r\n\r\n## 资源\r\n\r\n|资源|描述|\r\n|----------|-------------|\r\n| `benchmark://catalog` |浏览所有15个基准报表，包括难度、国家、货币和挑战|\r\n| `benchmark://statements/{id}` |特定语句的元数据（例如。 `benchmark://statements/bsb-001`) |\r\n\r\n______________________________________________________________________\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面(`claude_desktop_config.json`)\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bankstatemently\": {\r\n      \"type\": \"http\",\r\n      \"url\": \"https://api.bankstatemently.com/mcp\",\r\n      \"headers\": {\r\n        \"X-API-Key\": \"your_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标(`.cursor/mcp.json`)\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bankstatemently\": {\r\n      \"type\": \"http\",\r\n      \"url\": \"https://api.bankstatemently.com/mcp\",\r\n      \"headers\": {\r\n        \"X-API-Key\": \"your_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 示例用法\r\n\r\n连接后，您可以询问您的AI代理：\r\n\r\n> *“解析这份银行对账单PDF，并给我一份超过500美元的所有交易摘要。”*\r\n\r\n> *“将所附的Chase对账单转换为CSV，并对每笔交易进行分类。”*\r\n\r\n> *“上个月我在订阅上花了多少钱？这是我的银行对账单。”*\r\n\r\n### 基准\r\n\r\n> *“阅读基准目录，告诉我有哪些语句可用。”*\r\n\r\n> *“根据bsb-001评估我的解析交易。”*\r\n\r\n> *“我分析了新加坡基准报表中的12笔交易。给我的结果打分，告诉我哪里错了。”*\r\n\r\n______________________________________________________________________\r\n\r\n## 定价\r\n\r\n1学分=1个PDF页面。积分可作为一次性套餐或每月订阅。基准评估是免费的。\r\n\r\n→ [查看定价](https://bankstatemently.com/pricing)\r\n\r\n______________________________________________________________________\r\n\r\n## 链接\r\n\r\n- 网站： [bankstatemently.com](https://bankstatemently.com)\r\n- MCP文件： [bankstatemently.com/developers/mcp](https://bankstatemently.com/developers/mcp)\r\n- API文件： [bankstatemently.com/developers/api](https://bankstatemently.com/developers/api)\r\n- 基准数据集： [github/银行声明/bspb](https://github.com/bankstatemently/bspb)\r\n- REST API规范： [github/银行对账单](https://github.com/Bankstatemently/api)\r\n- 技术支持： [help@bankstatemently.com](mailto:help@bankstatemently.com)\r\n",
+ "config": {
+  "bankstatemently": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://api.bankstatemently.com/mcp"
+  }
+ }
+}

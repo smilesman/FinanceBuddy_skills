@@ -1,0 +1,12 @@
+{
+ "id": "wechat-mp-publisher",
+ "kind": "skill",
+ "name": "wechat-mp-publisher",
+ "fingerprint_md5": "5577c9d509d0daebbac2857fc3c7f24f",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "# 微信公众号远程发布 (Remote Publisher - Compliance Optimized)\r\n\r\n**核心痛点解决**：家用宽带 IP 频繁变动，无法固定添加到公众号白名单？\r\n本技能通过远程 `wenyan-mcp` 服务中转，让你的本地 OpenClaw 也能稳定发布文章，无需本地 IP 权限！\r\n\r\n## 🌟 架构优势\r\n\r\n- **IP 漫游无忧**：仅需将远程 MCP 服务器 IP 加入白名单，无论你在家里、咖啡厅还是 4G 热点，都能随时发布。\r\n- **合规隔离**：凭证与系统配置分离，避免污染全局 `TOOLS.md`。\r\n- **依赖自检**：脚本运行时自动检查 `jq`、`mcporter` 和 `wenyan-cli`。\r\n- **灵活配置**：支持自定义 MCP 配置文件路径。\r\n\r\n## ⚙️ 快速配置\r\n\r\n### 1. 准备凭证 (wechat.env)\r\n\r\n在技能根目录下复制 `wechat.env.example` 为 `wechat.env` 并填入公众号凭证：\r\n\r\n```bash\r\ncp wechat.env.example wechat.env\r\nnano wechat.env\r\n```\r\n\r\n内容示例：\r\n```bash\r\nexport WECHAT_APP_ID=\"wx...\"\r\nexport WECHAT_APP_SECRET=\"cx...\"\r\n# Optional: 指定 MCP 配置文件 (默认 $HOME/.openclaw/mcp.json)\r\n# export MCP_CONFIG_FILE=\"/path/to/your/mcp.json\"\r\n```\r\n\r\n### 2. 连接远程服务 (mcp.json)\r\n\r\n确保你的 `mcp.json` 指向远程 MCP 实例：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"wenyan-mcp\": {\r\n      \"name\": \"公众号远程助手\",\r\n      \"transport\": \"sse\",\r\n      \"url\": \"http://<your-remote-server-ip>:3000/sse\",\r\n      \"headers\": {\r\n        \"X-API-Key\": \"<optional-api-key>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🚀 使用指南\r\n\r\n### 方式 A: 智能助手 (推荐)\r\n\r\n直接对我说：\r\n> \"帮我把 `path/to/article.md` 发布到公众号，使用默认主题。\"\r\n\r\n我会自动：\r\n1. 读取 `wechat.env` 获取凭证\r\n2. 检查本地环境 (`mcporter`, `jq`)\r\n3. 调用远程 MCP 完成发布\r\n\r\n### 方式 B: 命令行脚本 (高级)\r\n\r\n我们提供了封装好的脚本 `scripts/publish-remote.sh`，体验与本地 CLI 一致：\r\n\r\n```bash\r\n# 赋予执行权限\r\nchmod +x scripts/publish-remote.sh\r\n\r\n# 发布文章 (自动加载 wechat.env)\r\n./scripts/publish-remote.sh ./my-post.md\r\n\r\n# 指定主题 (lapis)\r\n./scripts/publish-remote.sh ./my-post.md lapis\r\n```\r\n\r\n## 📝 Markdown 规范\r\n\r\n与标准 wenyan-cli 一致，头部必须包含元数据：\r\n\r\n```markdown\r\n---\r\ntitle: 我的精彩文章\r\ncover: https://example.com/cover.jpg\r\n---\r\n\r\n# 正文开始\r\n...\r\n```\r\n\r\n*提示：`cover` 推荐使用图床链接，以确保远程服务器能正确下载封面。*\r\n\r\n## 🛠️ 故障排查\r\n\r\n| 现象 | 原因 | 解决方案 |\r\n| :--- | :--- | :--- |\r\n| **Dependencies Missing** | 缺少 `jq` 或 `mcporter` | 请确保系统已安装这些工具 |\r\n| **Config Not Found** | 未找到 `wechat.env` | 请按照步骤 1 创建并配置 |\r\n| **IP not in whitelist** | 远程服务器 IP 未加白 | 登录公众号后台 -> 基本配置 -> IP 白名单，添加 **MCP 服务器的公网 IP** |",
+ "config": {}
+}

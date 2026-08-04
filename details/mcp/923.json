@@ -1,0 +1,23 @@
+{
+ "id": "923",
+ "kind": "mcp",
+ "name": "weibo",
+ "fingerprint_md5": "9f3a63e117dd19cc094e5c40831ea5dd",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 微博MCP服务器（TypeScript版本)\r\n\r\n## 安装\r\n\r\n从源码安装：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"weibo\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\r\n                \"--from\",\r\n                \"git+https://github.com/Selenium39/mcp-server-weibo.git\",\r\n                \"mcp-server-weibo\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n从包管理器安装：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"weibo\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\"mcp-server-weibo\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n- `search_users(keyword, limit)`：根据关键词搜索微博用户\r\n- `get_profile(uid)`：获取用户详细资料信息\r\n- `get_feeds(uid, limit)`：获取用户微博动态\r\n- `get_hot_search(limit)`：获取微博热搜榜\r\n- `search_content(keyword, limit, page?)`：根据关键词搜索微博内容\r\n\r\n### 资源\r\n\r\n无\r\n\r\n### 鼓励\r\n\r\n无\r\n\r\n## 系统要求\r\n\r\n- Node.js>=18.0.0\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n\r\n## 免责声明\r\n\r\n本项目与微博无关，仅用于学习和研究目的。\r\n\r\n## MCP服务器推荐\r\n\r\n[mcp服务器临时邮件](https://chat-tempmail.com/zh/mcp-server)\r\n",
+ "config": {
+  "weibo": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "--from",
+    "git+https://github.com/Selenium39/mcp-server-weibo.git",
+    "mcp-server-weibo"
+   ],
+   "env": {}
+  }
+ }
+}

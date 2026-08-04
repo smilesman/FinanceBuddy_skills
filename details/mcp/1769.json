@@ -1,0 +1,22 @@
+{
+ "id": "1769",
+ "kind": "mcp",
+ "name": "texteditor",
+ "fingerprint_md5": "e1324f0e157055192ff043df5bdb0bfb",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "# Claude文本编辑器MCP服务器\r\n\r\n[](https://www.npmjs.com/package/mcp-server-text-editor)\r\n[](https://github.com/bhouston/mcp-server-text-editor/actions/workflows/tests.yml)\r\n[](https://github.com/bhouston/mcp-server-text-editor)\r\n\r\n<p align=\"center\">\r\n  \r\n</p>\r\n\r\nClaude内置文本编辑器工具的开源实现 [模型上下文协议](https://www.anthropic.com/news/model-context-protocol) （MCP）服务器。此软件包提供的功能与 [Claude的内置文本编辑器工具](https://docs.anthropic.com/en/docs/build-with-claude/tool-use/text-editor-tool)，允许您通过标准化的API查看、编辑和创建文本文件。\r\n\r\n## 特性\r\n\r\n- **与Claude的文本编辑器相同的API**：实现与Claude的内置文本编辑器工具完全相同的接口\r\n- **MCP服务器实现**：遵循AI工具集成的模型上下文协议标准\r\n- **文件操作**:\r\n  - 查看具有可选行范围规范的文件内容\r\n  - 创建新文件\r\n  - 替换现有文件中的文本\r\n  - 在特定行号处插入文本\r\n  - 撤消以前的编辑\r\n\r\n## 支持的Claude文本编辑器版本\r\n\r\n此包实现了一个等效的工具 [内置的Claude文本编辑器工具](https://docs.anthropic.com/en/docs/build-with-claude/tool-use/text-editor-tool) 版本：\r\n\r\n- `text_editor_20241022` （克劳德3.5十四行诗）\r\n- `text_editor_20250124` （克劳德3.7十四行诗）\r\n\r\n但是使用工具名“text_editor”来避免与内置的Claude工具发生名称冲突。\r\n\r\n## 安装\r\n\r\n```bash\r\n# Install from npm\r\nnpm install mcp-server-text-editor\r\n\r\n# Or with pnpm\r\npnpm add mcp-server-text-editor\r\n```\r\n\r\n## 用法\r\n\r\n### 启动服务器\r\n\r\n```bash\r\n# Using npx\r\nnpx -y mcp-server-text-editor\r\n\r\n# Or if installed globally\r\nmcp-server-text-editor\r\n```\r\n\r\n### 在Claude Desktop中配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"textEditor\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-server-text-editor\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 工具命令\r\n\r\n#### 视图\r\n\r\n查看文件或目录的内容。\r\n\r\n```json\r\n{\r\n  \"command\": \"view\",\r\n  \"path\": \"/path/to/file.js\",\r\n  \"view_range\": [1, 10] // Optional: Show lines 1-10 only\r\n}\r\n```\r\n\r\n#### 创建\r\n\r\n使用指定内容创建新文件。\r\n\r\n```json\r\n{\r\n  \"command\": \"create\",\r\n  \"path\": \"/path/to/file.js\",\r\n  \"file_text\": \"console.log('Hello, world!');\"\r\n}\r\n```\r\n\r\n#### 字符串替换\r\n\r\n替换文件中的文本。\r\n\r\n```json\r\n{\r\n  \"command\": \"str_replace\",\r\n  \"path\": \"/path/to/file.js\",\r\n  \"old_str\": \"console.log('Hello, world!');\",\r\n  \"new_str\": \"console.log('Hello, Claude!');\"\r\n}\r\n```\r\n\r\n#### 插入\r\n\r\n在特定行插入文本。\r\n\r\n```json\r\n{\r\n  \"command\": \"insert\",\r\n  \"path\": \"/path/to/file.js\",\r\n  \"insert_line\": 5,\r\n  \"new_str\": \"// This line was inserted by Claude\"\r\n}\r\n```\r\n\r\n#### 撤消编辑\r\n\r\n还原上次对文件所做的编辑。\r\n\r\n```json\r\n{\r\n  \"command\": \"undo_edit\",\r\n  \"path\": \"/path/to/file.js\"\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n### 先决条件\r\n\r\n- Node.js 18+\r\n- pnpm\r\n\r\n### 设置\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/bhouston/mcp-server-text-editor.git\r\ncd mcp-server-text-editor\r\n\r\n# Install dependencies\r\npnpm install\r\n\r\n# Build the project\r\npnpm build\r\n```\r\n\r\n### 脚本\r\n\r\n- `pnpm build`：构建TypeScript项目\r\n- `pnpm lint`：运行ESLint并自动修复\r\n- `pnpm format`：使用Prettier格式化代码\r\n- `pnpm clean`：删除构建工件\r\n- `pnpm clean:all`：删除构建工件和node_modules\r\n- `pnpm test`：运行测试\r\n- `pnpm test:coverage`：使用覆盖率报告运行测试\r\n\r\n### 测试\r\n\r\n该项目使用Vitest进行测试。\r\n\r\n要运行测试，请执行以下操作：\r\n\r\n```bash\r\n# Run all tests\r\npnpm test\r\n\r\n# Run tests with coverage report\r\npnpm test:coverage\r\n```\r\n\r\n测试覆盖率报告将在 `coverage` 目录。\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n1. 分叉存储库\r\n1. 创建功能分支(`git checkout -b feature/amazing-feature`)\r\n1. 提交您的更改(`git commit -m 'Add some amazing feature'`)\r\n1. 推到分支(`git push origin feature/amazing-feature`)\r\n1. 打开拉取请求\r\n",
+ "config": {
+  "texteditor": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-server-text-editor"
+   ],
+   "env": {}
+  }
+ }
+}

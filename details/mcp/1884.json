@@ -1,0 +1,25 @@
+{
+ "id": "1884",
+ "kind": "mcp",
+ "name": "coingecko_mcp_local",
+ "fingerprint_md5": "ffe7d775f0e350e5a8cb4d15de88cac7",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# 🚀 Tu Primer Servidor MCP con Gemini CLI: Domina la Terminal con IA 💻\r\n\r\n¡Bienvenido a tu aventura para conectar Gemini CLI con un servidor MCP (Model Context Protocol)! 🎉\r\nEste proyecto te permite interactuar con la API de CoinGecko usando Gemini CLI, desbloqueando un arsenal de herramientas para obtener datos de criptomonedas: precios, tendencias, NFTs y mucho más. Aprende a configurarlo local o remotamente con esta guía paso a paso. 🌐\r\n\r\n---\r\n\r\n## 🎥 Tutorial en Video\r\nAprende en vivo cómo conectar tu primer servidor MCP, explora sus herramientas y automatiza tus proyectos como un experto en IA terminal.\r\n🔗 [Ver video en YouTube]([https://youtu.be/xxxx](https://www.youtube.com/watch?v=VnJpMbtYxS4)\r\n\r\n\r\n---\r\n\r\n## 🌍 Únete a la Comunidad\r\nComparte, aprende y crece con iacomunia.com – tu espacio para innovar con inteligencia artificial y automatización.\r\n\r\n---\r\n\r\n## 🛠 ¿Qué es este proyecto?\r\nUn servidor MCP para conectar Gemini CLI con la API de CoinGecko.\r\n⚡ Al arrancar obtendrás acceso a 46 herramientas para consultas cripto avanzadas, con comandos simples y mucha potencia.\r\n\r\n---\r\n\r\n## 📋 Requisitos\r\n- Node.js 20.18.1+ (`node --version`)\r\n- Yarn (`yarn --version`)\r\n- Gemini CLI instalado y configurado\r\n\r\n---\r\n\r\n## ⚙️ Instalación rápida\r\n\r\n`\r\ngit clone https://github.com/IAcomunIA/MCP_firts.git\r\ncd MCP_firts\r\nyarn install\r\n\r\n`\r\n---\r\n\r\n## 🔧 Configuración\r\n\r\n1. Crea archivo `.env` con tu API key (opcional para demo):\r\n\r\n`\r\n\r\nCOINGECKO_DEMO_API_KEY=tu-api-key\r\n\r\n`\r\n2. Modifica la configuración de Gemini CLI en `~/.gemini/settings.json`\r\n👉 **Opción Local:**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"coingecko_mcp_local\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@coingecko/coingecko-mcp\"],\r\n      \"cwd\": \"/ruta/a/MCP_firts/\",\r\n      \"env\": {\r\n        \"COINGECKO_DEMO_API_KEY\": \"YOUR_DEMO_API_KEY\",\r\n        \"COINGECKO_ENVIRONMENT\": \"demo\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n👉 **Opción Remota:**\r\n```json\r\n{\r\n\"mcpServers\": {\r\n\"coingecko_mcp\": {\r\n\"command\": \"npx\",\r\n\"args\": [\r\n\"mcp-remote\",\r\n\"https://mcp.api.coingecko.com/sse\"\r\n]\r\n}\r\n}\r\n}\r\n```\r\n---\r\n\r\n## 🚦 Cómo usar\r\n\r\nArranca el servidor local:\r\n```json\r\nyarn start\r\n```\r\nInteractúa con Gemini CLI usando comandos como:\r\n```json\r\ngemini get_simple_price\r\ngemini get_coins_markets\r\n```\r\n¡Explora todas las herramientas y automatiza consultas cripto directas!\r\n\r\n---\r\n\r\n## 🐛 Solución de problemas comunes\r\n\r\n- **No encuentra MCP:** Revisa que la ruta `cwd` en settings.json sea correcta.\r\n- **API Key inválida:** Usa modo demo o verifica tu `.env`.\r\n- **Problemas con Yarn:** Instala o actualiza `yarn` y ejecuta `yarn install` otra vez.\r\n\r\n---\r\n\r\n## 🌟 Recursos útiles\r\n\r\n- [Awesome MCP Servers – 1000+ MCP open source](https://github.com/wong2/awesome-mcp-servers)\r\n- [Documentación oficial CoinGecko API](https://www.coingecko.com/en/api)\r\n- [Comunidad iacomunia.com](https://iacomunia.com)\r\n\r\n---\r\n\r\n## 🤝 ¿Quieres contribuir?\r\n¿Tienes mejoras o ideas? ¡Abre un issue o pull request!\r\nSé parte activa y crece junto a la comunidad MCP.\r\n\r\n---\r\n\r\n*¡A programar y automatizar con inteligencia artificial en tu terminal!* 🚀\r\n*❤️ Hecho con pasión por la comunidad iAcomunIA*\r\n",
+ "config": {
+  "coingecko_mcp_local": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@coingecko/coingecko-mcp"
+   ],
+   "env": {
+    "COINGECKO_DEMO_API_KEY": "YOUR_DEMO_API_KEY",
+    "COINGECKO_ENVIRONMENT": "demo"
+   }
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "near-best-practices",
+ "kind": "skill",
+ "name": "near-best-practices",
+ "fingerprint_md5": "c3c8fe359af9408026a3af00c42f5818",
+ "download_count": 0,
+ "category": "区块链",
+ "tags": "",
+ "version": "",
+ "readme": "# NEAR Best Practices Guide Skill\r\n\r\nComprehensive best practices for NEAR wallet, contracts, and DeFi.\r\n\r\n## 描述\r\n\r\nThis skill provides best practices guidance for NEAR development, covering wallet security, contract patterns, DeFi safety, and more. Includes 100+ terms and explanations accessible via CLI 命令.\r\n\r\n## 功能特性\r\n\r\n- Browse best practices by category\r\n- 搜索 specific terms\r\n- 获取 detailed explanations\r\n- Quick 参考 guides\r\n- Security guidelines\r\n\r\n## 命令\r\n\r\n### `near-best browse [category]`\r\nBrowse best practices by category.\r\n\r\n**Categories:**\r\n- wallet - Wallet security and management\r\n- contracts - Smart contract best practices\r\n- defi - DeFi safety guidelines\r\n- keys - Private key management\r\n- gas - Gas optimization\r\n- testing - Testing and deployment\r\n\r\n### `near-best search <term>`\r\n搜索 a specific term or keyword.\r\n\r\n### `near-best get <term>`\r\n获取 detailed explanation for a specific term.\r\n\r\n### `near-best list`\r\n列表 all available terms.\r\n\r\n### `near-best random`\r\n获取 a random best practice 提示.\r\n\r\n## Categories\r\n\r\n### Wallet\r\n- Account recovery\r\n- Seed phrase storage\r\n- Multi-sig wallets\r\n- Hardware wallet integration\r\n\r\n### Contracts\r\n- NEP standards\r\n- Access 控制 patterns\r\n- 升级 strategies\r\n- Testing methodologies\r\n\r\n### DeFi\r\n- Risk assessment\r\n- Slippage protection\r\n- Liquidity provision\r\n- Yield farming safety\r\n\r\n### Keys\r\n- Key rotation\r\n- Access keys\r\n- Full access keys\r\n- Function call keys\r\n\r\n## 参考\r\n\r\n- NEAR Documentation: https://docs.near.org/\r\n- NEAR Standards (NEPs): https://github.com/near/NEPs\r\n- NEAR Security: https://docs.near.org/develop/contracts/security",
+ "config": {}
+}

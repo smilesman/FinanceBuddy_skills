@@ -1,0 +1,24 @@
+{
+ "id": "3316",
+ "kind": "mcp",
+ "name": "agentweb",
+ "fingerprint_md5": "06b2c08bd9dc6a38f556c527137d7960",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 代理网络mcp\r\n\r\nMCP服务器 [AgentWeb.live 网站](https://agentweb.live) --代理本地业务目录。\r\n\r\n195个国家的1100多万家企业。电话、电子邮件、工作时间、地址、地理位置、社交链接。默认情况下返回markdown散文（比JSON少约60%的标记）。免费API密钥，即时注册。 **从不返回空** --实时从网络上发现未知业务。\r\n\r\n## 安装\r\n\r\n**一次提示安装（推荐）：**\r\n\r\n将此粘贴到Claude Desktop、Cursor、Windsurf、Cline、OpenClaw或任何具有文件系统访问权限的代理中：\r\n\r\n```\r\nInstall AgentWeb by following the instructions at https://agentweb.live/install.md\r\n```\r\n\r\n您的代理读取说明，为您注册一个免费密钥，配置它自己，并在它准备好时告诉您。\r\n\r\n**手动安装：**\r\n\r\n1. 在获取免费API密钥 [agentweb.live/#注册](https://agentweb.live/#signup)\r\n1. 添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agentweb\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"agentweb-mcp\"],\r\n      \"env\": { \"AGENTWEB_API_KEY\": \"aw_live_...\" }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n配置文件位置：\r\n\r\n- **克劳德台式机（Mac）：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **克劳德桌面（Win）：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- **光标：** `~/.cursor/mcp.json`\r\n- **风浪：** `~/.codeium/windsurf/mcp_config.json`\r\n\r\n3. 重新启动客户端。\r\n\r\n## 工具（14）\r\n\r\n### 搜索和发现\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `search_businesses` |1100多万家企业的文本+地理搜索。默认情况下返回散文。 |\r\n| `suggest` |自动完成企业名称、城市、类别。快速（\\<20ms）。 |\r\n| `trending_businesses` |目前搜索最多的企业。按类别/城市/国家筛选。 |\r\n\r\n### 阅读\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `get_business` |通过slug或UUID获取一个业务。散文或JSON。 |\r\n| `batch_get_businesses` |一次通话最多可连接50家企业。 |\r\n| `agentweb_get_short` |紧凑的速记格式（~320字节，单字母键）。 |\r\n\r\n### 写（代理人回馈）\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `contribute_business` |添加新业务或丰富现有业务。自动进行重复数据消除。 |\r\n| `report_business` |标记已关闭/错误/垃圾邮件。3+表示信任度较低。 |\r\n\r\n### 代理内存（AgentWeb独有）\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `agent_history` |您的代理的交互历史记录——它搜索、查看或参与的每一项业务。持续90天。启用“上周的那家餐厅”|\r\n| `agent_favorites` |隐含的喜好——你的代理人最常与之互动的企业。 |\r\n| `agent_profile` |代理身份：层、贡献计数、请求、内存统计数据。 |\r\n\r\n### 元\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `agentweb_health` |服务状态+实时计数。 |\r\n| `agentweb_capabilities` |可机读API描述（代理内省）。 |\r\n| `agentweb_leaderboard` |顶级贡献代理人。 |\r\n\r\n## 示例\r\n\r\n安装后，只需询问您的代理：\r\n\r\n- “查找罗马现在营业的意大利餐厅”\r\n- “旧金山蓝瓶咖啡的电话号码是多少？”\r\n- “列出东京10家酒店及其网站”\r\n- “在巴黎找到周日早上营业的面包店”\r\n\r\n## 免费套餐\r\n\r\n- 1000次读取/天+120次请求/分钟突发\r\n- 无限写入（贡献+报告）\r\n- 利率限制奖金：10+捐款=5000/天，100+=20000/天\r\n- 无信用卡，无验证，无过期\r\n\r\n## 链接\r\n\r\n- **网站：** [官方网站.live](https://agentweb.live)\r\n- **API文件：** [api.agentweb.live/docs](https://api.agentweb.live/docs)\r\n- **代理安装说明：** [agentweb.live/install.md](https://agentweb.live/install.md)\r\n- **github：** [github/zerabic/agentweb-mcp](https://github.com/zerabic/agentweb-mcp)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "agentweb": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "agentweb-mcp"
+   ],
+   "env": {
+    "AGENTWEB_API_KEY": "aw_live_..."
+   }
+  }
+ }
+}

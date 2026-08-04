@@ -1,0 +1,27 @@
+{
+ "id": "490",
+ "kind": "mcp",
+ "name": "tft-mcp",
+ "fingerprint_md5": "73cf500a8f6ac05ca106edfc4133055b",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# TFT MCP服务器\r\n\r\n这是一个用于团队战斗战术（TFT）的模型上下文协议（MCP）服务器，通过各种工具提供对TFT游戏数据的访问。\r\n\r\n## 特性\r\n\r\n- 获取召唤者的比赛历史记录\r\n- 获取特定TFT匹配的详细信息\r\n\r\n## 先决条件\r\n\r\n- Node.js（v14或更高版本）\r\n- npm或纱线\r\n- Riot Games API密钥（用于访问TFT数据）-从获取 [Riot Games开发者门户](https://developer.riotgames.com/)\r\n  - 注意：对于开发，您可以使用24小时后到期的临时API密钥\r\n  - 对于生产使用，您需要在申请永久个人API密钥 [Riot的应用门户](https://developer.riotgames.com/app-type)\r\n- 您的游戏名称，可从Riot游戏机访问\r\n- 您的名字标语，可从Riot游戏机访问，通常紧随/显示在您的游戏名称之后。例如： `NA1`\r\n\r\n## 用法\r\n\r\n1. 在Claude Desktop配置文件中配置MCP服务器：\r\n\r\n### MacOS\r\n\r\n地点： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n### 视窗\r\n\r\n地点： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n添加以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tft-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-server-tft\",\r\n        \"--apiKey\",\r\n        \"<YOUR_RIOT_API_KEY>\",\r\n        \"--gameName\",\r\n        \"<YOUR_GAME_NAME>\",\r\n        \"--tagLine\",\r\n        \"<YOUR_TAG_LINE>\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n2. 服务器将在stdio上运行，并提供以下工具：\r\n\r\n### tft_match_历史\r\n\r\n获取当前玩家的TFT比赛历史记录。\r\n\r\n参数：\r\n\r\n- `count` （可选）：要检索的匹配数。默认值为20\r\n- `start` （可选）：开始分页索引。默认值为0\r\n\r\n### tft_match_details\r\n\r\n获取特定TFT匹配的详细信息。\r\n\r\n参数：\r\n\r\n- `matchId` （必填）：用于获取详细信息的比赛ID\r\n\r\n## 发展\r\n\r\n该项目使用TypeScript编写，并使用模型上下文协议SDK。要修改代码，请执行以下操作：\r\n\r\n1. 在 `src` 目录\r\n1. 跑 `npm run build` 编写\r\n1. 跑 `npm start` 具有测试更改所需的参数\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "tft-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-server-tft",
+    "--apiKey",
+    "<YOUR_RIOT_API_KEY>",
+    "--gameName",
+    "<YOUR_GAME_NAME>",
+    "--tagLine",
+    "<YOUR_TAG_LINE>"
+   ],
+   "env": {}
+  }
+ }
+}

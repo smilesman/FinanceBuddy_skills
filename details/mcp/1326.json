@@ -1,0 +1,27 @@
+{
+ "id": "1326",
+ "kind": "mcp",
+ "name": "agent-rules",
+ "fingerprint_md5": "200a30cffe076a988a3bae48b1451cbb",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://mseep.ai/app/4regab-agent-rules-mcp)\r\n\r\n# 代理规则MCP服务器\r\n\r\n[](https://modelcontextprotocol.io/)\r\n[](https://www.npmjs.com/package/agent-rules-mcp)\r\n[](https://opensource.org/licenses/MIT)\r\n\r\n此MCP服务器消除了对工作区中本地规则文件的需要。现在，您无需将编码标准复制到每个项目中，而是可以 **提示AI代理获取特定的编码规则** 或者从公共存储库或您自己的任何规则文件夹中删除所有规则。\r\n\r\n## 特性\r\n\r\n- **GitHub集成**：从任何GitHub存储库获取规则\r\n- **简单设置**：配置环境变量，不需要本地文件\r\n- **可配置的**：支持自定义存储库、分支和路径\r\n- **社区规则**：与现有收藏一起使用，如 [awesome-游标](https://github.com/PatrickJS/awesome-cursorrules) 和 [很棒的副驾驶](https://github.com/github/awesome-copilot)等等。\r\n- **复合扩展**：支持.chatmode.md、.prompt.md、.instructions.md文件\r\n- **灵活的格式**：支持任何有或没有元数据的markdown文件（.md/.mdc）\r\n\r\n## MCP客户端配置（默认）\r\n\r\n将此配置添加到您的MCP客户端（VS Code、Kiro、Cursor、Windsurf等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agent-rules\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\",\"agent-rules-mcp@latest\"],\r\n      \"env\": {\r\n        \"GITHUB_OWNER\": \"4regab\",\r\n        \"GITHUB_REPO\": \"agent-rules-mcp\",\r\n        \"GITHUB_PATH\": \"rules\",\r\n        \"GITHUB_BRANCH\": \"master\"\r\n      },\r\n      \"disabled\": false\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## **社区规则集合的示例使用**\r\n\r\n### GitHub精彩副驾驶合集\r\n\r\n立即访问社区维护的编码规则：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agent-rules\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\",\"agent-rules-mcp@latest\"],\r\n      \"env\": {\r\n        \"GITHUB_OWNER\": \"github\",\r\n        \"GITHUB_REPO\": \"awesome-copilot\",         \r\n        \"GITHUB_PATH\": \"instructions\",\r\n        \"GITHUB_BRANCH\": \"main\"\r\n      },\r\n      \"disabled\": false\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 真棒光标规则集合\r\n\r\n游标特定规则的替代集合：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agent-rules\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\",\"agent-rules-mcp@latest\"],\r\n      \"env\": {\r\n         \"GITHUB_OWNER\": \"PatrickJS\",\r\n         \"GITHUB_REPO\": \"awesome-cursorrules\",\r\n         \"GITHUB_PATH\": \"rules-new\",\r\n         \"GITHUB_BRANCH\": \"main\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n```\r\n\r\n## 可用工具\r\n\r\n- `get_rules`：从GitHub存储库规则文件夹中检索一个或多个域的规则内容。\r\n- `list_rules`：列出所有可用的规则域及其说明。\r\n\r\n### 使用自己的规则文件夹存储库（推荐）\r\n\r\n要使用自己的GitHub存储库而不是默认存储库，请执行以下操作：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agentrules\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\",\"agent-rules-mcp@latest\"],\r\n      \"env\": {\r\n        \"GITHUB_OWNER\": \"your-username\",\r\n        \"GITHUB_REPO\": \"your-rules-repo\",\r\n        \"GITHUB_PATH\": \"your-rules-folder\",\r\n        \"GITHUB_BRANCH\": \"main\"\r\n      },\r\n      \"disabled\": false\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**示例存储库结构：**\r\n\r\n```\r\nmy-coding-rules/\r\n├── rules/                       # Traditional single directory\r\n│   ├── python-style.md          # Standard markdown with metadata\r\n│   ├── react-patterns.mdc       # MDC format supported\r\n│   └── security-checklist.md    # With YAML frontmatter\r\n├── README.md\r\n└── .gitignore\r\n```\r\n\r\n## 这有什么帮助\r\n\r\n### 人工智能代理的按需规则访问\r\n\r\n**之前（传统方法）：**\r\n\r\n```\r\nmy-project/\r\n├──rules                  ← Local rule files needed\r\n│   ├── react-rules.md\r\n│   ├── security-rules.md\r\n│   └── typescript-rules.md\r\n├── src/\r\n└── package.json\r\n```\r\n\r\n**之后（代理规则MCP方法）：**\r\n\r\n```\r\nmy-project/\r\n├── src/\r\n└── package.json          ← Clean workspace, no local rules needed\r\n\r\n# In Coding Agent:\r\n\"Apply React best practices to this component\"\r\n→ Agent automatically fetches React rules from your rules folder\r\n```\r\n\r\n### **灵活的支持和文件格式兼容性**\r\n\r\n服务器使用各种文件格式和命名约定：\r\n\r\n**支持的扩展：**\r\n\r\n- `.md` -标准标记文件\r\n- `.mdc` -MDC（Markdown组件）文件\r\n- `.chatmode.md` -AI助手模式定义\r\n- `.prompt.md` -提示模板\r\n- `.instructions.md` -编码指令文件\r\n\r\n**自动元数据提取：**\r\n如果没有提供明确的元数据，服务器将：\r\n\r\n- 提取第一个标题作为标题\r\n- 使用第一段作为描述\r\n- 根据文件名生成回退描述\r\n- 解析YAML frontmatter（如果可用）\r\n\r\n**域名处理：**\r\n\r\n- `accessibility.chatmode.md` → 域名： `accessibility`\r\n- `react-best-practices.instructions.md` → 域名： `react-best-practices`\r\n- `4.1-Beast.chatmode.md` → 域名： `4.1-Beast` （支持点和特殊字符）\r\n\r\n这意味着您可以使用任何现有的markdown文档作为规则，而无需进行修改。\r\n\r\n## 贡献\r\n\r\n我们欢迎对默认规则库的贡献！\r\n\r\n- **清除域名**：使用描述性的烤肉串大小写文件名\r\n- **完整元数据**：包括描述和上次更新日期\r\n- **质量内容**：提供可操作、组织良好的规则和示例\r\n- **本地测试**：验证您的规则是否适用于MCP服务器\r\n- **遵循格式**：使用标准标记结构\r\n\r\n**推荐结构（用于最佳元数据提取）：**\r\n\r\n```markdown\r\n# Title of the coding rules\r\n\r\n- Last Updated: YYYY-MM-DD\r\n- Description: Brief description of the rules (used in list_rules() responses)\r\n- Version: X.X (optional, for tracking major changes)\r\n\r\n## Content \r\n```\r\n\r\n由以下材料制成 [基洛](https://kiro.devpost.com/) 为了 [与kiro黑客马拉松的代码](https://kiro.devpost.com/).\r\n\r\n## 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件。\r\n\r\n## 支持\r\n\r\n- **问题**：在GitHub Issues上报告错误和功能请求\r\n- **文档**：查看此README和内联代码文档\r\n",
+ "config": {
+  "agent-rules": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "agent-rules-mcp@latest"
+   ],
+   "env": {
+    "GITHUB_OWNER": "4regab",
+    "GITHUB_REPO": "agent-rules-mcp",
+    "GITHUB_PATH": "rules",
+    "GITHUB_BRANCH": "master"
+   }
+  }
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "id": "1276",
+ "kind": "mcp",
+ "name": "sql-analyzer",
+ "fingerprint_md5": "f9063a79da23f77a7460271f639868bb",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp服务器sql分析器\r\n\r\n一种模型上下文协议（MCP）服务器，使用以下命令提供SQL分析、linting和方言转换功能 [SQLGlot](https://sqlglot.com/sqlglot.html).\r\n\r\n## 概述\r\n\r\nSQL Analyzer MCP服务器提供用于分析和处理SQL查询的工具。它有助于：\r\n\r\n- SQL语法验证和linting\r\n- 在不同SQL方言之间转换查询（例如MySQL到PostgreSQL）\r\n- 提取和分析表引用和依赖关系\r\n- 确定列的使用和关系\r\n- 发现支持的SQL方言\r\n\r\n### Claude如何使用此服务器\r\n\r\n作为一名人工智能助手，这台服务器通过以下方式增强了我帮助用户高效使用SQL的能力：\r\n\r\n1. **查询验证**：在向用户建议之前，我可以立即验证SQL语法，确保我提供正确和方言适当的查询。\r\n\r\n1. **方言转换**：当用户需要在不同的数据库系统之间迁移查询时，我可以准确地转换语法，同时保留查询的逻辑。\r\n\r\n1. **代码分析**：表和列引用分析有助于我理解复杂的查询，从而更容易解释查询结构并提出优化建议。\r\n\r\n1. **兼容性检查**：通过了解支持的方言及其特定功能，我可以引导用户采用特定于数据库的最佳实践。\r\n\r\n这个工具集使我能够提供更准确和有用的SQL相关帮助，同时降低语法错误或方言特定问题的风险。\r\n\r\n### 提示\r\n\r\n在Claude Desktop设置中更新您的个人首选项，以请求首先使用验证生成的SQL `lint_sql` 工具。\r\n\r\n## 工具\r\n\r\n1. lint_sql\r\n\r\n   - 验证SQL查询语法并返回任何错误\r\n   - 输入：\r\n     - sql（string）：要分析的sql查询\r\n     - 方言（字符串，可选）：SQL方言（例如“mysql”、“postgres”）\r\n   - 返回：ParseResult包含：\r\n     - is_valid（布尔值）：SQL是否有效\r\n     - message（字符串）：错误消息或“无语法错误”\r\n     - position（object，可选）：错误的行和列（如果存在）\r\n\r\n1. transpile_sql\r\n\r\n   - 在不同方言之间转换SQL\r\n   - 输入：\r\n     - sql（string）：要转换的sql语句\r\n     - read_dialect（字符串）：源SQL方言\r\n     - write_dialect（字符串）：目标SQL方言\r\n   - 返回：TranspileResult包含：\r\n     - is_valid（boolean）：转译是否成功\r\n     - message（string）：错误消息或成功确认\r\n     - sql（string）：如果成功，则转换sql\r\n\r\n1. get_all_table_references\r\n\r\n   - 从SQL中提取表和CTE引用\r\n   - 输入：\r\n     - sql（string）：要分析的sql语句\r\n     - 方言（字符串，可选）：SQL方言\r\n   - 返回：TableReferences结果包含：\r\n     - is_valid（boolean）：分析是否成功\r\n     - message（字符串）：状态消息\r\n     - 表（数组）：包含类型、目录、数据库、表名、别名和完全限定名的表引用列表\r\n\r\n1. 获取所有列引用\r\n\r\n   - 使用表上下文提取列引用\r\n   - 输入：\r\n     - sql（string）：要分析的sql语句\r\n     - 方言（字符串，可选）：SQL方言\r\n   - 返回：ColumnReferences结果包含：\r\n     - is_valid（boolean）：分析是否成功\r\n     - message（字符串）：状态消息\r\n     - columns（数组）：包含列名、表名和完全限定名的列引用列表\r\n\r\n## 资源\r\n\r\n### SQL方言发现\r\n\r\n```\r\ndialects://all\r\n```\r\n\r\n返回所有支持的SQL方言列表，供所有工具使用。\r\n\r\n## 配置\r\n\r\n### 使用uvx（推荐）\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n      \"sql-analyzer\": {\r\n          \"command\": \"uvx\",\r\n          \"args\": [\r\n              \"--from\",\r\n              \"git+https://github.com/j4c0bs/mcp-server-sql-analyzer.git\",\r\n              \"mcp-server-sql-analyzer\"\r\n          ]\r\n      }\r\n  }\r\n}\r\n```\r\n\r\n### 使用紫外线\r\n\r\n克隆此仓库后，将其添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n      \"sql-analyzer\": {\r\n          \"command\": \"uv\",\r\n          \"args\": [\r\n              \"--directory\",\r\n              \"/path/to/mcp-server-sql-analyzer\",\r\n              \"run\",\r\n              \"mcp-server-sql-analyzer\"\r\n          ]\r\n      }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n要在开发模式下运行服务器，请执行以下操作：\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone git@github.com:j4c0bs/mcp-server-sql-analyzer.git\r\n\r\n# Run the server\r\nnpx @modelcontextprotocol/inspector uv --directory /path/to/mcp-server-sql-analyzer run mcp-server-sql-analyzer\r\n```\r\n\r\n要运行单元测试，请执行以下操作：\r\n\r\n```bash\r\nuv run pytest .\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "sql-analyzer": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/j4c0bs/mcp-server-sql-analyzer.git",
+    "mcp-server-sql-analyzer"
+   ],
+   "env": {}
+  }
+ }
+}

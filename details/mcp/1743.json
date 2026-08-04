@@ -1,0 +1,22 @@
+{
+ "id": "1743",
+ "kind": "mcp",
+ "name": "stackzero-labs-mcp",
+ "fingerprint_md5": "648d53f840e76e6f623603a7894ac0ec",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "<br />\r\n<div align=\"center\">\r\n  <a href=\"https://github.com/stackzero-labs/ui\">\r\n    \r\n  </a>\r\n\r\n<h3 align=\"center\">@stackzero-labs/mcp</h3>\r\n\r\n<p align=\"center\">\r\n    Official MCP (Model Context Protocol) server for stackzero-labs/ui.\r\n    <br />\r\n    <a href=\"https://ui.stackzero.co\"><strong>Official Docs »</strong></a>\r\n    <br />\r\n    <br />\r\n    <a href=\"https://ui.stackzero.co/get-started\">Get started</a>\r\n    &middot;\r\n    <a href=\"https://github.com/stackzero-labs/mcp/issues/new?labels=bug&template=bug-report---.md\">Report Bug</a>\r\n    &middot;\r\n    <a href=\"https://github.com/stackzero-labs/mcp/issues/new?labels=enhancement&template=feature-request---.md\">Request Feature</a>\r\n  </p>\r\n</div>\r\n\r\n## 概述\r\n\r\n此包允许您为stackzero labs/ui组件运行模型上下文服务器，使您能够将MCP协议用于您的应用程序。\r\n\r\n## 在Cursor中单击一次安装\r\n\r\n[](https://cursor.com/install-mcp?name=%40stackzero-labs%2Fmcp&config=eyJjb21tYW5kIjoibnB4IC15IEBzdGFja3plcm8tbGFicy9tY3BAbGF0ZXN0In0%3D)\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install @stackzero-labs/mcp\r\n```\r\n\r\n## 用法\r\n\r\n### 作为独立服务器\r\n\r\n```bash\r\nnpx @stackzero-labs/mcp\r\n```\r\n\r\n### 在克劳德桌面\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"@stackzero-labs/mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@stackzero-labs/mcp@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 在光标中（手动设置）\r\n\r\n转到光标设置，选择 `MCP`。添加到游标配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"@stackzero-labs/mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@stackzero-labs/mcp@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 发展\r\n\r\n```bash\r\n# Install dependencies\r\npnpm install\r\n\r\n# Build the project\r\npnpm build\r\n\r\n# Run in development mode\r\npnpm dev\r\n\r\n# Inspect the MCP server\r\npnpm inspect\r\n```\r\n\r\n## 许可证\r\n\r\n看 [许可证](LICENSE) 了解详情。\r\n",
+ "config": {
+  "stackzero-labs-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@stackzero-labs/mcp@latest"
+   ],
+   "env": {}
+  }
+ }
+}

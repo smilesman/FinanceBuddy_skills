@@ -1,0 +1,23 @@
+{
+ "id": "3399",
+ "kind": "mcp",
+ "name": "dataeyes",
+ "fingerprint_md5": "236b9565f9c3b3a91e8a49374158180e",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# DataEyes MCP服务器\r\n\r\n\r\n[中文版说明](README_zh.md)\r\n\r\n一个MCP服务器，通过 [DataEyes](https://dataeyes.ai) API\r\n\r\n## 工具\r\n\r\n- **搜索** --搜索网络并获得结构化结果。\r\n- **读** --获取一个网页并提取其内容。\r\n\r\n## 获取API密钥\r\n\r\n注册地址： [shuyanai.com](https://shuyanai.com) (中国站) or [数据眼.ai](https://dataeyes.ai) （全球）获取您的API密钥。\r\n\r\n## 用法\r\n\r\n### 标准\r\n\r\n对于本地MCP客户端（Cursor、Claude Desktop等），使用 [uvx](https://docs.astral.sh/uv/guides/tools/):\r\n\r\n#### 全球\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dataeyes\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"dataeyes-mcp-server\"],\r\n      \"env\": {\r\n        \"DATAEYES_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 中国站\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dataeyes\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"dataeyes-mcp-server\"],\r\n      \"env\": {\r\n        \"DATAEYES_API_KEY\": \"your-api-key\",\r\n        \"DATAEYES_API_BASE_URL\": \"https://api.shuyanai.com\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n|环境变量|默认值|描述|\r\n|---------------------|---------|-------------|\r\n| `DATAEYES_API_KEY` |-| API密钥（必需）|\r\n| `DATAEYES_API_BASE_URL` | `https://api.dataeyes.ai` |API基本URL|\r\n\r\n### 可流式传输的HTTP\r\n\r\n无需安装。直接连接到托管的MCP端点：\r\n\r\n#### 全球\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dataeyes\": {\r\n      \"url\": \"https://mcp.dataeyes.ai/mcp\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 中国站\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dataeyes\": {\r\n      \"url\": \"https://mcp.shuyanai.com/mcp\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\n该项目根据 [MIT许可证](LICENSE).\r\n",
+ "config": {
+  "dataeyes": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "dataeyes-mcp-server"
+   ],
+   "env": {
+    "DATAEYES_API_KEY": "your-api-key"
+   }
+  }
+ }
+}

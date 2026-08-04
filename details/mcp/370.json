@@ -1,0 +1,21 @@
+{
+ "id": "370",
+ "kind": "mcp",
+ "name": "playwright-8",
+ "fingerprint_md5": "c57865ef55da6ed273d296ec1c1b54c6",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 浏览器mcp\r\n\r\n浏览器扩展和MCP服务器，允许您与正在使用的浏览器进行交互。\r\n\r\n\r\n## 用法\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"playwright\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"@djyde/mcp-browser@latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n所有可用工具都列在 `server/src/tools.ts`.\r\n\r\n### `get_current_page_markdown`\r\n\r\n从当前浏览器浏览页面获取标记。\r\n\r\n例子：\r\n\r\n```\r\nSummarize the current page.\r\n```\r\n\r\n### `append_style`\r\n\r\n将css样式附加到当前浏览器浏览页面。\r\n\r\n例子：\r\n\r\n```\r\nChange the current page to dark mode.\r\n```\r\n\r\n### `history_search`\r\n\r\n搜索浏览器历史记录。\r\n\r\n例子：\r\n\r\n```\r\nSearch the browser history for \"github\".\r\n```\r\n\r\n## 路线图\r\n\r\n- \\[\\]将扩展发布到扩展存储。\r\n- \\[\\]编写文档。\r\n- \\[\\]添加更多工具。\r\n\r\n## 构建\r\n\r\n```bash\r\npnpm i\r\n```\r\n\r\n### 扩展\r\n\r\n```bash\r\ncd extension\r\n\r\n# chrome\r\nnpm run build\r\n\r\n# edge\r\nnpm run build:edge\r\n\r\n# firefox\r\nnpm run build:firefox\r\n```\r\n\r\n建成后，扩建部分将位于 `extension/.output` 目录。\r\n\r\n## 服务器\r\n\r\n```bash\r\ncd server\r\n\r\n# dev\r\nnpm run dev\r\n\r\n# build\r\nnpm run build\r\n```\r\n\r\n`server/dist/cli.js` 是MCP服务器条目。\r\n\r\n## 贡献\r\n\r\n### 添加新工具\r\n\r\n1. 将工具架构添加到 `tools` 数组in `server/src/tools.ts`.\r\n1. 在中添加扩展可调用处理程序 `extension/calls.ts`.\r\n1. 在中添加工具处理程序 `server/src/tools.ts`.使用 `call` 函数调用扩展处理程序。\r\n\r\n## 许可证\r\n\r\nAGPL-3.0或更高版本\r\n",
+ "config": {
+  "playwright": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@djyde/mcp-browser@latest"
+   ],
+   "env": {}
+  }
+ }
+}

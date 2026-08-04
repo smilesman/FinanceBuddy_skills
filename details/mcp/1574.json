@@ -1,0 +1,21 @@
+{
+ "id": "1574",
+ "kind": "mcp",
+ "name": "mcp-installer-2",
+ "fingerprint_md5": "c493d96640fe5cdb30135efcace28012",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp服务器重新启动\r\n\r\n用于重启Mac版Claude Desktop的模型上下文协议（MCP）服务器\r\n\r\n## 描述\r\n\r\n使用模型上下文协议（MCP）安装Claude Desktop工具有点麻烦。mcp安装程序通过使用mcp使事情变得更容易，允许您要求Claude安装mcp工具。\r\n\r\n安装后，您仍然需要重新启动Claude Desktop才能使更改生效。..这就是mcp服务器重启的地方！\r\n\r\n这 `mcp-server-restart` 该软件包提供了一个MCP服务器，用于重启Mac版的Claude Desktop。\r\n\r\n## 用法\r\n\r\n询问Claude Desktop“重新启动Claude”，它将重新启动应用程序。\r\n\r\n## 特性\r\n\r\n### 资源\r\n\r\n服务器提供状态资源：\r\n\r\n- `claude://status` -返回Claude Desktop的当前状态\r\n  - 返回带有运行状态、PID和时间戳的JSON\r\n  - MIME类型：application/json\r\n\r\n### 工具\r\n\r\n服务器实现了一个工具：\r\n\r\n- `restart_claude` -重新启动Claude Desktop应用程序\r\n  - 如果正在运行，则安全终止现有进程\r\n  - 启动新实例\r\n  - 在重新启动期间提供进度通知\r\n\r\n## Claude Desktop的安装\r\n\r\n安装需要在MacOS上编辑Claude Desktop配置文件： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n选项1：安装两个 [mcp安装程序](https://github.com/anaisbetts/mcp-installer) 和那个 [mcp服务器重新启动](https://github.com/non-dirty/mcp-server-restart) 包装：\r\n\r\n将以下内容添加到您的Claude Desktop配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-installer\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"@anaisbetts/mcp-installer\"\r\n      ]\r\n    },\r\n    \"mcp-server-restart\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"mcp-server-restart\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n选项1：仅安装 [mcp服务器重新启动](https://github.com/non-dirty/mcp-server-restart) 包裹：\r\n\r\n将以下内容添加到您的Claude Desktop配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-server-restart\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"mcp-server-restart\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 示例提示\r\n\r\n> 嘿，克劳德，安装名为MCP-server fetch的MCP服务器，然后重新启动克劳德\r\n\r\n> 请重新启动Claude\r\n\r\n### 测试\r\n\r\n运行测试套件：\r\n\r\n```bash\r\npytest\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件\r\n",
+ "config": {
+  "mcp-installer": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@anaisbetts/mcp-installer"
+   ],
+   "env": {}
+  }
+ }
+}

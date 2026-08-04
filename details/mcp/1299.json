@@ -1,0 +1,25 @@
+{
+ "id": "1299",
+ "kind": "mcp",
+ "name": "turso",
+ "fingerprint_md5": "048c561aec93ac818313952b2d6864ad",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# 电子邮件@prama13/turso-mcp\r\n\r\n用于对Turso/libSQL数据库进行只读查询的模型上下文协议（MCP）服务器。该服务器使Claude、Roo和Cline等人工智能助手能够安全地查询您的Turso数据库，而不会有任何数据修改的风险。\r\n\r\n## 特性\r\n\r\n- 🔒 **只读操作** -只允许SELECT查询\r\n- 📊 **表格浏览** -列出所有表并查看其模式\r\n- 🚫 **注重安全** -阻止所有写入操作（INSERT、UPDATE、DELETE、DROP、CREATE、ALTER等）\r\n- 🔌 **MCP协议** -与任何MCP客户端兼容\r\n- 📦 **易于设置** -与合作 `npx` -无需安装\r\n\r\n## 安装\r\n\r\n无需安装！直接使用 `npx`:\r\n\r\n```bash\r\nnpx @prama13/turso-mcp\r\n```\r\n\r\n## 配置\r\n\r\n### 对于Roo/Cline\r\n\r\n添加到MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"turso\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@prama13/turso-mcp\"],\r\n      \"env\": {\r\n        \"TURSO_DATABASE_URL\": \"libsql://your-database.turso.io\",\r\n        \"TURSO_AUTH_TOKEN\": \"your-auth-token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 适用于克劳德桌面\r\n\r\n增添 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"turso\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@prama13/turso-mcp\"],\r\n      \"env\": {\r\n        \"TURSO_DATABASE_URL\": \"libsql://your-database.turso.io\",\r\n        \"TURSO_AUTH_TOKEN\": \"your-auth-token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 获取您的Turso证书\r\n\r\n1. 安装Turso CLI：\r\n\r\n```bash\r\ncurl -sSfL https://get.tur.so/install.sh | bash\r\n```\r\n\r\n2. 注册/登录：\r\n\r\n```bash\r\nturso auth signup\r\n# or\r\nturso auth login\r\n```\r\n\r\n3. 创建数据库：\r\n\r\n```bash\r\nturso db create my-database\r\n```\r\n\r\n4. 获取您的数据库URL:\r\n\r\n```bash\r\nturso db show my-database --url\r\n```\r\n\r\n5. 创建身份验证令牌：\r\n\r\n```bash\r\nturso db tokens create my-database\r\n```\r\n\r\n## 可用工具\r\n\r\n### 怎么翻译\r\n\r\n对Turso数据库运行只读SQL查询。\r\n\r\n**参数：**\r\n\r\n- `sql` （字符串，必填）-要执行的SQL查询（仅限SELECT）\r\n\r\n**例子：**\r\n\r\n```sql\r\nSELECT * FROM users WHERE id = 1;\r\n```\r\n\r\n## 可用资源\r\n\r\n服务器将所有数据库表作为资源公开：\r\n\r\n- **列出表格** -自动发现数据库中的所有表\r\n- **表架构** -查看每个表的列定义\r\n\r\n## 安全\r\n\r\n此服务器实现了多层安全性以确保只读访问：\r\n\r\n1. **关键字过滤** -阻止包含write关键字的SQL语句：\r\n\r\n   - 插入、更新、删除、删除、创建、更改\r\n   - 替换、截断、连接、分离\r\n   - PRAGMA、重新索引、真空、分析\r\n\r\n1. **基于环境的凭据** -数据库凭据通过环境变量传递，从不在代码中传递\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/PramaAditya/turso-mcp.git\r\ncd turso-mcp\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build\r\nnpm run build\r\n\r\n# Test locally\r\nTURSO_DATABASE_URL=\"libsql://...\" TURSO_AUTH_TOKEN=\"...\" node dist/index.js\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 作者\r\n\r\nprama13\r\n\r\n## 相关\r\n\r\n- [图尔索](https://turso.tech) -Edge SQLite数据库\r\n- [模型上下文协议](https://modelcontextprotocol.io) -AI应用集成的开放协议\r\n- [libSQL](https://github.com/tursodatabase/libsql) -SQLite的开源分支\r\n",
+ "config": {
+  "turso": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@prama13/turso-mcp"
+   ],
+   "env": {
+    "TURSO_DATABASE_URL": "libsql://your-database.turso.io",
+    "TURSO_AUTH_TOKEN": "your-auth-token"
+   }
+  }
+ }
+}

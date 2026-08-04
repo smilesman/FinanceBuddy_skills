@@ -1,0 +1,12 @@
+{
+ "id": "google-weather",
+ "kind": "skill",
+ "name": "google-weather",
+ "fingerprint_md5": "af56dcbf41adf323b15801b79c5b360d",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Google Weather - 实时天气数据\r\n\r\n使用 Google 的 Weather API 获取准确的天气状况。需要启用 Weather API 的 Google Cloud API key。\r\n\r\n## 快速用法\r\n\r\n```bash\r\n# 当前天气（格式化输出）\r\npython3 skills/google-weather/lib/weather_helper.py current \"New York\"\r\npython3 skills/google-weather/lib/weather_helper.py current \"London\"\r\npython3 skills/google-weather/lib/weather_helper.py current \"Sydney\"\r\n\r\n# 24 小时预报\r\npython3 skills/google-weather/lib/weather_helper.py forecast \"Tel Aviv\"\r\n\r\n# 原始 JSON 数据\r\npython3 skills/google-weather/lib/weather_helper.py json \"Paris\"\r\n```\r\n\r\n## 示例输出\r\n\r\n```\r\n*New York*\r\nPartly Cloudy ⛅\r\n🌡️ 12°C (feels like 10°C)\r\n💨 Wind: 18 km/h NORTHWEST\r\n💧 Humidity: 55%\r\n```\r\n\r\n```\r\n*24h Forecast for Tel Aviv*\r\n18:00: 17.8°C, ☀️ 5 km/h NORTH\r\n22:00: 14.3°C, ☀️ 6 km/h EAST_NORTHEAST\r\n02:00: 12.8°C, ⛅ 8 km/h NORTHEAST\r\n06:00: 10.8°C, ☀️ 6 km/h EAST_NORTHEAST\r\n10:00: 16.1°C, ☀️ 5 km/h SOUTH\r\n14:00: 20.4°C, 🌤️ 8 km/h WEST_NORTHWEST\r\n```\r\n\r\n## 支持的位置\r\n\r\n全球任何位置 - 只需输入城市名称：\r\n- `New York`、`London`、`Paris`、`Berlin`、`Sydney`\r\n- `San Francisco`、`Berlin`、`Singapore`、`Dubai`\r\n- 或任何地址、地标或坐标\r\n\r\n本技能使用 Google Maps API 自动进行地理编码。\r\n\r\n## 可用数据\r\n\r\n- **Temperature**：当前 + 体感温度\r\n- **Conditions**：Clear、cloudy、rain、snow 等，带 emoji 图标\r\n- **Forecast**：温度、风和状况的每小时数据\r\n- **Humidity**：百分比\r\n- **Wind**：Speed、direction、gusts\r\n- **UV Index**：Sun exposure level\r\n- **Precipitation**：Probability 和 type\r\n- **Cloud Cover**：百分比\r\n- **Visibility**：Distance\r\n\r\n## 设置\r\n\r\n1. 在 [Google Cloud Console](https://console.cloud.google.com/) 中创建项目\r\n2. 启用 [Weather API](https://console.cloud.google.com/apis/library/weather.googleapis.com)\r\n3. 启用 [Geocoding API](https://console.cloud.google.com/apis/library/geocoding-backend.googleapis.com)（用于位置名称查找）\r\n4. 创建 API key 并将其设置为 `GOOGLE_API_KEY` 环境变量\r\n\r\n> 如果你已经配置了一个，也支持 `GOOGLE_WEATHER_API_KEY` 或 `GOOGLE_MAPS_API_KEY`。\r\n\r\n## 多语言支持\r\n\r\n输出根据位置自适应 - 基于 `language` 参数支持 English、Hebrew 和其他语言。\r\n\r\n```bash\r\n# Hebrew 输出\r\npython3 skills/google-weather/lib/weather_helper.py current \"Tel Aviv\"\r\n# Output: בהיר ☀️ 19°C...\r\n```",
+ "config": {}
+}

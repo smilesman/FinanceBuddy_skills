@@ -1,0 +1,28 @@
+{
+ "id": "1197",
+ "kind": "mcp",
+ "name": "oracledb_mcp_server",
+ "fingerprint_md5": "be543e9a44ee7a9b51ddda07881ccbc6",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# OracleDB MCP服务器\r\n\r\n \r\n\r\n## 概述\r\n\r\n- 此项目将安装 `MCP - Model Context Protocol Server`，它提供配置的Oracle数据库表/列作为LLM的上下文。\r\n- 使用此功能，我们可以使LLM与Oracle数据库交互，生成SQL语句，并使用LLM提示返回结果。\r\n\r\n## 安装\r\n\r\n- 安装软件包\r\n  ```bash\r\n  pip install oracledb_mcp_server\r\n  ```\r\n- 在最小值为的文件夹中创建.env `Oracle DB Connection String`.示例文件可用 [这里](https://raw.githubusercontent.com/rahgadda/oracledb_mcp_server/refs/heads/main/.env)\r\n- 测试 `oracledb_mcp_server` 服务器使用 `uv run oracledb_mcp_server` 从上面的文件夹。\r\n\r\n## Claud桌面\r\n\r\n- Claud Desktop的配置详细信息\r\n  ```json\r\n  {\r\n    \"mcpServers\": {\r\n      \"oracledb_mcp_server\":{\r\n        \"command\": \"uv\",\r\n        \"args\": [\"run\",\"oracledb_mcp_server\"],\r\n        \"env\": {\r\n            \"DEBUG\":\"True\",\r\n            \"COMMENT_DB_CONNECTION_STRING\":\"oracle+oracledb://USERNAME:PASSWORD@IP:PORT/?service_name=SERVICENAME\",\r\n            \"DB_CONNECTION_STRING\":\"oracle+oracledb://USERNAME:PASSWORD@IP:PORT/?service_name=SERVICENAME\",\r\n            \"TABLE_WHITE_LIST\":\"ACCOUNTS,CUS_ACC_RELATIONS,CUSTOMERS\",\r\n            \"COLUMN_WHITE_LIST\":\"ACCOUNTS.ACC_AAD_ID,CUS_ACC_RELATIONS.CAR_CUS_ID,CUS_ACC_RELATIONS.CAR_AAD_ID,CUSTOMERS.CUS_ID\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n  ```\r\n\r\n### 配置\r\n\r\n- 可用环境变量列表\r\n  - `DEBUG`：启用调试日志记录（可选默认值为False）\r\n  - `COMMENT_DB_CONNECTION_STRING`：用于注释的Oracle DB连接字符串。（必填）\r\n  - `DB_CONNECTION_STRING`：用于执行查询的Oracle DB连接字符串。（必填）\r\n  - `TABLE_WHITE_LIST`：列表格式的白名单表名称\\[“表1”、“表2”\\]（必填）\r\n  - `COLUMN_WHITE_LIST`：列表格式的白名单表列名\\[“table.column1”、“table.co柱2”\\]（必填）\r\n  - `QUERY_LIMIT_SIZE`：如果未提供，默认值为10条记录（可选默认值为0）\r\n\r\n## 拦截器\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv --directory \"D:\\\\MyDev\\\\mcp\\\\oracledb_mcp_server\" run -m oracledb_mcp_server\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎捐款。\\\r\n请随时提交拉取请求。\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证条款获得许可。\r\n\r\n## 演示\r\n\r\n\r\n## Github之星\r\n",
+ "config": {
+  "oracledb_mcp_server": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "oracledb_mcp_server"
+   ],
+   "env": {
+    "DEBUG": "True",
+    "COMMENT_DB_CONNECTION_STRING": "oracle+oracledb://USERNAME:PASSWORD@IP:PORT/?service_name=SERVICENAME",
+    "DB_CONNECTION_STRING": "oracle+oracledb://USERNAME:PASSWORD@IP:PORT/?service_name=SERVICENAME",
+    "TABLE_WHITE_LIST": "ACCOUNTS,CUS_ACC_RELATIONS,CUSTOMERS",
+    "COLUMN_WHITE_LIST": "ACCOUNTS.ACC_AAD_ID,CUS_ACC_RELATIONS.CAR_CUS_ID,CUS_ACC_RELATIONS.CAR_AAD_ID,CUSTOMERS.CUS_ID"
+   }
+  }
+ }
+}

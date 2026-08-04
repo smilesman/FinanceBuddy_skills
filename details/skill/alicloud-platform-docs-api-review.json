@@ -1,0 +1,12 @@
+{
+ "id": "alicloud-platform-docs-api-review",
+ "kind": "skill",
+ "name": "alicloud-platform-docs-api-review",
+ "fingerprint_md5": "b3f9f45bddc06e2972bd31ac4e991027",
+ "download_count": 0,
+ "category": "基础设施",
+ "tags": "",
+ "version": "",
+ "readme": "# 阿里云产品文档 + API 文档审查器\r\n\r\n当用户提供一个产品名称并要求进行端到端的文档/API 质量审查时使用此技能。\r\n\r\n## 此技能的作用\r\n\r\n1) 从最新的 OpenAPI 元数据中解析产品。\r\n2) 获取默认版本的最新 API 文档。\r\n3) 从官方产品页面发现产品/帮助文档链接。\r\n4) 生成一份结构化审查报告，包含：\r\n- 评分\r\n- 证据\r\n- 优先化建议 (P0/P1/P2)\r\n\r\n## 工作流程\r\n\r\n运行捆绑脚本：\r\n\r\n```bash\r\npython skills/platform/docs/alicloud-platform-docs-api-review/scripts/review_product_docs_and_api.py --product \"<产品名或产品代码>\"\r\n```\r\n\r\n示例：\r\n\r\n```bash\r\npython skills/platform/docs/alicloud-platform-docs-api-review/scripts/review_product_docs_and_api.py --product \"ECS\"\r\n```\r\n\r\n## 输出策略\r\n\r\n所有生成的产物必须写入：\r\n\r\n`output/alicloud-platform-docs-api-review/`\r\n\r\n每次运行，脚本会创建：\r\n\r\n- `review_evidence.json`\r\n- `review_report.md`\r\n\r\n## 报告指导\r\n\r\n当回答用户时：\r\n\r\n1) 首先说明解析出的产品 + 版本。\r\n2) 总结评分和前 3 个问题。\r\n3) 列出 P0/P1/P2 建议及具体行动。\r\n4) 提供报告中使用的来源链接。\r\n\r\n## 参考资料\r\n\r\n- 审查标准：`references/review-rubric.md`",
+ "config": {}
+}

@@ -1,0 +1,23 @@
+{
+ "id": "845",
+ "kind": "mcp",
+ "name": "scenext",
+ "fingerprint_md5": "9a17cb900d7c59b2ba8595a4d313ae5f",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Scenext MCP服务器\r\n\r\n[英语](README.en.md) | [中文](README.zh.md)\r\n\r\n______________________________________________________________________\r\n\r\n集成了以下功能的MCP服务器 [场景xt](https://scenext.cn) AI视频生成平台，根据主题创建教育解说视频。\r\n\r\n一个集成 [场景xt](https://scenext.cn) AI 视频生成平台的 MCP 服务器，可以根据题目生成教学讲解视频。\r\n\r\n## Quick Start / 快速开始\r\n\r\n本地接入（uvx模式）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"scenext\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"scenext-mcp\"],\r\n      \"env\": {\r\n        \"SCENEXT_API_KEY\": \"your_actual_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n远程接入（streamable-http）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"scenext\": {\r\n      \"type\": \"streamable-http\",\r\n      \"url\": \"https://mcp.scenext.cn/mcp/\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer your_actual_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n某些客户端不支持headers字段。您可以手动配置和添加请求标头“Authorization=Bearer your_actual_api_key_here”。\r\n\r\n详细文档：\r\n\r\n- [英文文档](README.en.md)\r\n- [中文文档](README.zh.md)\r\n\r\n## License / 许可证\r\n\r\nMIT许可证\r\n",
+ "config": {
+  "scenext": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "scenext-mcp"
+   ],
+   "env": {
+    "SCENEXT_API_KEY": "your_actual_api_key_here"
+   }
+  }
+ }
+}

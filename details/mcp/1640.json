@@ -1,0 +1,22 @@
+{
+ "id": "1640",
+ "kind": "mcp",
+ "name": "netlify",
+ "fingerprint_md5": "449d22e93bfb453ce44516a6e5468fc0",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Netlify MCP服务器\r\n\r\n[Netlify MCP服务器](https://docs.netlify.com/welcome/build-with-ai/netlify-mcp-server/) 遵循 [模型上下文协议（MCP）](https://modelcontextprotocol.org) 为了使代码代理能够使用Netlify API和CLI，他们可以使用自然语言提示创建新项目、构建、部署和管理Netlify资源。\r\n\r\n______________________________________________________________________\r\n\r\n## 概述\r\n\r\n模型上下文协议是一种新兴的标准协议，用于将代码代理与MCP服务器连接起来，允许它们使用自然语言管理资源和执行任务。Netlify MCP服务器充当一个桥梁，为您的代理提供API访问、CLI工具、提示等。\r\n\r\n您可以使用各种MCP客户端连接到Netlify MCP服务器，包括：\r\n\r\n- 帆板运动\r\n- 光标\r\n- 克劳德\r\n- 副驾驶（VSCode）\r\n- 克莱恩\r\n- 曲速\r\n- LM工作室\r\n- [查看完整列表](https://modelcontextprotocol.org/clients)\r\n\r\n______________________________________________________________________\r\n\r\n## 用例\r\n\r\n使用Netlify MCP Server，您的AI代理可以：\r\n\r\n- 创建、管理和部署Netlify项目\r\n- 修改访问控制以增强项目安全性\r\n- 安装或卸载Netlify扩展\r\n- 获取用户和团队信息\r\n- 启用和管理表单提交\r\n- 创建和管理环境变量和机密\r\n- 以及更多。..\r\n\r\n______________________________________________________________________\r\n\r\n## 先决条件\r\n\r\n- **Node.js 22或更高版本**\r\n  与核对 `node --version`\r\n- **Netlify帐户**\r\n- **MCP客户端** （例如，Windsurf、Cursor、Claude、Copilot）\r\n\r\n> **提示：** 全局安装Netlify CLI以获得最佳体验：\r\n> `npm install -g netlify-cli`\r\n\r\n______________________________________________________________________\r\n\r\n## MCP配置\r\n\r\n对于生产MCP服务器，使用以下配置：\r\n\r\n一键安装编辑器：\r\n\r\n[](https://cursor.com/install-mcp?name=netlify&config=eyJjb21tYW5kIjoibnB4IC15IEBuZXRsaWZ5L21jcCJ9)\r\n\r\n[](https://lmstudio.ai/install-mcp?name=netlify&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBuZXRsaWZ5L21jcCJdfQ%3D%3D)\r\n\r\n[](https://insiders.vscode.dev/redirect/mcp/install?name=netlify&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40netlify%2Fmcp%22%5D%7D)\r\n\r\n[](https://insiders.vscode.dev/redirect/mcp/install?name=netlify&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40netlify%2Fmcp%22%5D%7D&quality=insiders)\r\n\r\n[](goose://extension?cmd=npx&arg=-y&arg=%40netlify%2Fmcp&id=netlify&name=Netlify&description=Build%2C%20deploy%2C%20and%20manage%20sites%20with%20Netlify's%20official%20MCP%20server.)\r\n\r\n- 如果链接无法呈现或打开，请在浏览器中使用以下链接： `goose://extension?cmd=npx&arg=-y&arg=%40netlify%2Fmcp&id=netlify&name=Netlify&description=Build%2C%20deploy%2C%20and%20manage%20sites%20with%20Netlify's%20official%20MCP%20server.`\r\n\r\nMCP配置文件的配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"netlify\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@netlify/mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n有关本地发展，请参阅 [设置本地MCP配置](CONTRIBUTING.md).\r\n\r\n______________________________________________________________________\r\n\r\n## 故障排除\r\n\r\n### 节点版本\r\n\r\n- 使用Node.js 22或更高版本可获得最佳效果。\r\n\r\n- 如果你使用 `nvm`，运行：\r\n\r\n  ```bash\r\n  nvm install 22\r\n  nvm use 22\r\n  ```\r\n\r\n### Netlify身份验证故障排除\r\n\r\n- 如果遇到身份验证问题，可以临时添加 [Netlify个人访问令牌（PAT）](https://app.netlify.com/user/applications#personal-access-tokens) 到您的MCP配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"netlify-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@netlify/mcp\"],\r\n      \"env\": {\r\n        \"NETLIFY_PERSONAL_ACCESS_TOKEN\": \"YOUR-PAT-VALUE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**不要将PAT提交到存储库！**\r\n解决后，从配置中删除PAT。\r\n\r\n______________________________________________________________________\r\n\r\n## 生成新的个人访问令牌（PAT）\r\n\r\n1. 在Netlify仪表板中，选择您的用户图标。\r\n1. 首选 **用户设置** > **OAuth** > **新访问令牌**.\r\n1. 复制您的令牌并将其（临时）添加到您的MCP配置中，如上所述。\r\n1. 重新启动或刷新MCP客户端。\r\n\r\n______________________________________________________________________\r\n\r\n## 资源\r\n\r\n- [模型上下文协议文档](https://modelcontextprotocol.org/docs)\r\n- [MCP客户官方名单](https://modelcontextprotocol.org/clients)\r\n- [Netlify命令行界面](https://docs.netlify.com/cli/get-started/)\r\n",
+ "config": {
+  "netlify": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@netlify/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

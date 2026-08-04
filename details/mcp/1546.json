@@ -1,0 +1,22 @@
+{
+ "id": "1546",
+ "kind": "mcp",
+ "name": "magicuidesign-mcp",
+ "fingerprint_md5": "3db98c4d127d556b96d2252fef035f3f",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "# @魔术设计/mcp\r\n\r\n[](https://www.npmjs.com/package/@magicuidesign/mcp)\r\n\r\n官方模型上下文协议（MCP）服务器 [魔术UI](https://magicui.design/).\r\n\r\n<div align=\"center\">\r\n  \r\n</div>\r\n\r\n## 安装MCP配置\r\n\r\n```bash\r\nnpx @magicuidesign/cli@latest install <client>\r\n```\r\n\r\n### 支持的客户\r\n\r\n- \\[x\\] 游标\r\n- \\[x\\] 风帆冲浪\r\n- \\[x\\] 克劳德\r\n- \\[x\\] 克莱恩\r\n- \\[x\\] 鲁克林\r\n\r\n## 手动安装\r\n\r\n添加到IDE的MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"magicuidesign-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@magicuidesign/mcp@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 示例用法\r\n\r\n配置后，您可以提出以下问题：\r\n\r\n> “制作一个标志框”\r\n\r\n> “添加模糊淡入淡出文本动画”\r\n\r\n> “添加网格背景”\r\n\r\n## 可用工具\r\n\r\n服务器提供以下可通过MCP调用的工具：\r\n\r\n|工具名称|描述|\r\n|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\r\n| `listRegistryItems` |列出带有可选过滤器的Magic UI注册表项，如 `kind`, `query`, `limit`，以及 `offset`。建议用于注册表浏览。 |\r\n| `searchRegistryItems` |通过关键字在名称、标题、描述和注册表类型之间搜索Magic UI注册表项，并支持分页。 |\r\n| `getRegistryItem` |返回单个注册表项的详细信息，包括安装说明和可选源、相关项和示例。 |\r\n\r\n## MCP限制\r\n\r\n有些客户有 [限制](https://docs.cursor.com/context/model-context-protocol#limitations) 他们可以调用的工具数量。服务器保留了一个小型通用工具界面，并直接从实时Magic UI注册表读取，而不是依赖于硬编码的类别桶。广泛的语义发现概念，如 `widgets`, `media`，或 `devices` 目前尚未在MCP API中将其建模为一级类别。\r\n\r\n## 积分\r\n\r\n非常感谢 [@博柏](https://github.com/beaubhp) 用于创建MCP服务器🙏\r\n\r\n[MIT](https://github.com/magicuidesign/mcp/blob/main/LICENSE.md)\r\n",
+ "config": {
+  "magicuidesign-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@magicuidesign/mcp@latest"
+   ],
+   "env": {}
+  }
+ }
+}

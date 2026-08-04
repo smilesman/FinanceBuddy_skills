@@ -1,0 +1,24 @@
+{
+ "id": "3069",
+ "kind": "mcp",
+ "name": "drop-beacon",
+ "fingerprint_md5": "da5e10b9ed489f2655798d758803191f",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 丢弃信标MCP服务器\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io) 服务器，使人工智能助手能够访问实时EDC（日常携带）产品数据 [下降信标](https://edc4me.com) --1000多个品牌的100000多种产品。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_products` |按关键字、类别、品牌或材料搜索EDC产品|\r\n| `get_latest_drops` |获取过去7天的新产品滴剂|\r\n| `get_brand_info` |品牌统计数据、价格范围、类别和顶级产品|\r\n| `get_price_comparison` |比较零售商之间相同产品的价格|\r\n| `get_market_trends` |通过速度、领先者和价格分布进行销售|\r\n| `check_availability` |所有零售商的实时库存检查|\r\n\r\n## 快速开始\r\n\r\n```bash\r\nnpx drop-beacon-mcp\r\n```\r\n\r\n需要a `DATABASE_URL` 指向Drop Beacon数据库的环境变量。\r\n\r\n## Claude桌面配置\r\n\r\n添加 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"drop-beacon\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"drop-beacon-mcp\"],\r\n      \"env\": {\r\n        \"DATABASE_URL\": \"your-neon-connection-string\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 分类\r\n\r\n产品涵盖以下EDC类别：\r\n\r\n- 刀\r\n- 小提琴和触觉\r\n- 手电筒\r\n- 钢笔与书写\r\n- 钱包和组织\r\n- 多工具和撬棍\r\n- 手表\r\n- 箱包\r\n\r\n## 认证\r\n\r\n设置 `API_KEY` 环境变量，要求所有请求都有一个API密钥。如果未设置，服务器将在没有身份验证的情况下运行。\r\n\r\n## 速率限制\r\n\r\n每个进程每分钟60个请求（在内存中，重新启动时重置）。\r\n\r\n## 例子\r\n\r\n**“本周钛合金坐立不安的情况如何？”**\r\n用途 `get_latest_drops` 使用类别过滤器。\r\n\r\n**“比较Spyderco第3段的价格”**\r\n用途 `get_price_comparison` 显示零售商的价格。\r\n\r\n**“Grimsmo Norseman有现货吗？”**\r\n用途 `check_availability` 检查所有零售商。\r\n\r\n**“目前最热门的EDC品牌是什么？”**\r\n用途 `get_market_trends` 通过速度显示卖出。\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 链接\r\n\r\n- [下降信标](https://edc4me.com)\r\n- [npm](https://www.npmjs.com/package/drop-beacon-mcp)\r\n",
+ "config": {
+  "drop-beacon": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "drop-beacon-mcp"
+   ],
+   "env": {
+    "DATABASE_URL": "your-neon-connection-string"
+   }
+  }
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "id": "3107",
+ "kind": "mcp",
+ "name": "garth---garmin-connect",
+ "fingerprint_md5": "fa922933f361f1d486db487d809ba992",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# garth-mcp服务器\r\n\r\nGarmin Connect MCP服务器基于 [加思](https://github.com/matin/garth).\r\n\r\n## 用法\r\n\r\n## 安装\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Garth - Garmin Connect\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"garth-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"GARTH_TOKEN\": \"\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n确保路径 `uvx` 命令的作用域与MCP不同\r\n使用与shell相同的PATH。在macOS上，它通常\r\n`/Users/{user}/.local/bin/uvx`.\r\n\r\n## 工具筛选\r\n\r\n默认情况下，所有30个工具都是公开的。为了减小LLM使用的上下文大小，\r\n您可以使用环境变量过滤工具。\r\n\r\n### 仅启用特定工具（白名单）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Garth - Garmin Connect\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"garth-mcp-server\"],\r\n      \"env\": {\r\n        \"GARTH_TOKEN\": \"\",\r\n        \"GARTH_ENABLED_TOOLS\": \"get_activities,get_activity_details,daily_steps,nightly_sleep\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 禁用特定工具（黑名单）\r\n\r\n```json\r\n\"env\": {\r\n  \"GARTH_TOKEN\": \"\",\r\n  \"GARTH_DISABLED_TOOLS\": \"get_gear,get_gear_stats,get_device_settings,get_connectapi_endpoint\"\r\n}\r\n```\r\n\r\n工具名称不区分大小写，逗号分隔。如果 `GARTH_ENABLED_TOOLS`\r\n设置， `GARTH_DISABLED_TOOLS` 被忽略。\r\n\r\n## 工具\r\n\r\n### 健康与保健（使用Garth数据类）\r\n\r\n- `user_profile` -获取用户配置文件信息\r\n- `user_settings` -获取用户设置和首选项\r\n- `nightly_sleep` -通过可选的运动数据获取详细的睡眠数据\r\n- `daily_sleep` -获取每日睡眠摘要数据\r\n- `daily_stress` / `weekly_stress` -获取压力数据\r\n- `daily_intensity_minutes` / `weekly_intensity_minutes` -获取强度分钟数\r\n- `daily_body_battery` -获取车身电池数据\r\n- `daily_hydration` -获取水分数据\r\n- `daily_steps` / `weekly_steps` -获取步骤数据\r\n- `daily_hrv` / `hrv_data` -获取心率变异性数据\r\n\r\n### 活动（使用Garmin Connect API）\r\n\r\n- `get_activities` -使用可选筛选器获取活动列表\r\n- `get_activities_by_date` -获取特定日期的活动\r\n- `get_activity_details` -获取详细的活动信息\r\n- `get_activity_splits` -获取活动圈数/分割数据\r\n- `get_activity_weather` -获取活动的天气数据\r\n\r\n### 其他健康数据（使用Garmin Connect API）\r\n\r\n- `get_body_composition` -获取身体成分数据\r\n- `get_respiration_data` -获取呼吸数据\r\n- `get_spo2_data` -获取SpO2（血氧）数据\r\n- `get_blood_pressure` -获取血压读数\r\n\r\n### 设备和齿轮（使用Garmin Connect API）\r\n\r\n- `get_devices` -获取已连接的设备\r\n- `get_device_settings` -获取设备设置\r\n- `get_gear` -获取装备信息\r\n- `get_gear_stats` -获取装备使用统计数据\r\n\r\n### 实用工具\r\n\r\n- `monthly_activity_summary` -获取月度活动概览\r\n- `snapshot` -获取日期范围的快照数据\r\n- `get_connectapi_endpoint` -直接访问任何Garmin Connect API端点\r\n",
+ "config": {
+  "garth---garmin-connect": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "garth-mcp-server"
+   ],
+   "env": {
+    "GARTH_TOKEN": "<output of `uvx garth login`>"
+   }
+  }
+ }
+}

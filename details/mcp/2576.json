@@ -1,0 +1,26 @@
+{
+ "id": "2576",
+ "kind": "mcp",
+ "name": "internetsearch-mcp-server",
+ "fingerprint_md5": "dad89a8afc4bd6bf50f328560946bd45",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Internetsearch-mcp-server\r\n\r\n- [English README](README.en.md)\r\n\r\n一个用于联网搜索的MCP服务器\r\n基于博查搜索API的MCP服务器\r\n需要使用博查AI的搜索服务密钥，具体文档请查阅[博查开发文档](https://bocha-ai.feishu.cn/wiki/HmtOw1z6vik14Fkdu5uc9VaInBb).\r\n\r\n**如何使用**\r\n1、将仓库git clone\r\n```bash\r\ngit clone https://github.com/mingdedi/Internetsearch-mcp-server.git\r\n```\r\n2、使用uv重建环境\r\n```bash\r\ncd Internetsearch-mcp-server\r\npip install uv\r\nuv venv\r\n./.venv/Scripts/activate.bat\r\nuv sync\r\n```\r\n3、在配置文件中添加，类似格式如下\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Internetsearch-mcp-server\": {\r\n      \"description\": \"Internetsearch-mcp-server\",\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/Internetsearch-mcp-server\",\r\n        \"run\",\r\n        \"Internet_search.py\"\r\n      ],\r\n      \"env\": {\r\n        \"BOCHAAI_API_KEY\": \"sk-123456789412345678312323456789e\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**注意**\r\n这里的BOCHAAI_API_KEY中的密钥仅仅是一个示例。\r\n如果想要获取一个实际可用的密钥请访问[博查AI](https://bochaai.com/)\r\n",
+ "config": {
+  "internetsearch-mcp-server": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/Internetsearch-mcp-server",
+    "run",
+    "Internet_search.py"
+   ],
+   "env": {
+    "BOCHAAI_API_KEY": "sk-123456789412345678312323456789e"
+   }
+  }
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "id": "558",
+ "kind": "mcp",
+ "name": "a1d",
+ "fingerprint_md5": "1e9b116a3bb1686cbe2200e241f4e755",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# A1D MCP服务器-通用人工智能工具\r\n\r\n一个强大的MCP（模型上下文协议）服务器，为任何兼容MCP的客户端提供AI图像和视频处理工具。无需设置即可使用。\r\n\r\n## 🤖 可用的AI工具\r\n\r\n|工具|描述|用例|\r\n|------|-------------|-----------|\r\n| **remove_bg** |AI背景移除|从照片、产品图片中移除背景|\r\n| **image_upscaler** |AI图像增强|高分辨率图像2x、4x、8x、16x|\r\n| **video_upscaler** |AI视频增强|提高视频质量和分辨率|\r\n| **图像矢量化** |转换为矢量|将图像转换为可缩放的SVG图形|\r\n| **图像扩展名** |智能图像扩展|智能扩展图像边界|\r\n| **图像生成器** |文本到图像AI |根据文本描述生成图像|\r\n\r\n## 🚀 快速设置（2分钟）\r\n\r\n### 1.获取API密钥\r\n\r\n- 访问 [A1D.ai](https://a1d.ai/home/api) 获取您的免费API密钥\r\n- 可选： [购买信用](https://a1d.ai/pricing) 用于延长使用时间\r\n\r\n### 2.连接您的MCP客户端\r\n\r\n**对于Claude Desktop：**\r\n将此添加到您的Claude Desktop配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"a1d\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-remote@latest\",\r\n        \"https://mcp.a1d.ai/sse\",\r\n        \"--header\",\r\n        \"api_key:${MCP_API_KEY}\"\r\n      ],\r\n      \"env\": {\r\n        \"MCP_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**对于MCP检查员：**\r\n\r\n- 开始： `npx @modelcontextprotocol/inspector`\r\n- 运输类型： `SSE`\r\n- 网址： `https://mcp.a1d.ai/sse`\r\n- 添加标题： `api_key: your_api_key_here`\r\n\r\n**对于其他MCP客户端：**\r\n\r\n- 服务器URL: `https://mcp.a1d.ai/sse`\r\n- 身份验证：标头 `api_key: your_api_key_here`\r\n\r\n### 3.重新启动客户端\r\n\r\n就是这样！您将在MCP客户端中看到可用的AI工具。\r\n\r\n## 💡 如何使用\r\n\r\n配置后，只需让您的AI助手帮助处理图像或视频任务：\r\n\r\n- *“删除此图像的背景”*\r\n- *“将此图像放大到4倍分辨率”*\r\n- *“将此照片转换为矢量图形”*\r\n- *“生成山上日落的图像”*\r\n\r\n## 🔧 配置帮助\r\n\r\n### Claude桌面配置文件位置\r\n\r\n**窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n**macOS：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**Linux：** `~/.config/Claude/claude_desktop_config.json`\r\n\r\n### 故障排除\r\n\r\n**工具未显示？**\r\n\r\n- 添加配置后重新启动MCP客户端\r\n- 验证您的API密钥是否正确\r\n- 检查配置文件语法\r\n\r\n**连接问题？**\r\n\r\n```bash\r\n# Test the connection directly\r\nnpx mcp-remote https://mcp.a1d.ai/sse --header \"api_key:your_api_key\"\r\n```\r\n\r\n**如果需要，清除缓存：**\r\n\r\n```bash\r\nrm -rf ~/.mcp-auth\r\n```\r\n\r\n## 📚 资源\r\n\r\n- **[API文档](https://a1d.ai/api/quick-start)** -API详细参考\r\n- **[获取API密钥](https://a1d.ai/home/api)** -免费注册\r\n- **[定价](https://a1d.ai/pricing)** -信贷方案\r\n\r\n## 🛠️ 对于开发者\r\n\r\n想要添加更多工具或自定义服务器吗？此存储库包含具有配置驱动架构的完整源代码。\r\n\r\n### 地方发展\r\n\r\n```bash\r\ngit clone https://github.com/AIGC-Hackers/a1d-mcp-server.git\r\ncd a1d-mcp-server\r\nnpm install\r\nnpm run start\r\n```\r\n\r\n本地服务器将于启动 `http://localhost:8787`。您可以通过添加 `api_key` 请求的头部。\r\n\r\n### 添加新工具\r\n\r\n只需编辑 `src/config/tools.json` 无需编写代码即可添加新的AI工具：\r\n\r\n```json\r\n{\r\n  \"name\": \"new_tool\",\r\n  \"description\": \"Tool description\",\r\n  \"apiEndpoint\": \"/api/endpoint\",\r\n  \"inputSchema\": { /* ... */ },\r\n  \"zodValidation\": { /* ... */ }\r\n}\r\n```\r\n\r\n看 [docs/ADD_NEW_TOOL.md](docs/ADD_NEW_TOOL.md) 详细说明。\r\n\r\n## 🔐 安全\r\n\r\n- **用户提供的凭据**：此服务器希望用户通过标头提供自己的A1D API密钥\r\n- **没有存储的秘密**：所有API键都通过请求头传递，服务器端不存储任何内容\r\n- **报告漏洞**：参见 [安全.md](SECURITY.md) 负责披露\r\n\r\n## 🤝 贡献\r\n\r\n我们欢迎捐款！拜托：\r\n\r\n1. 分叉存储库\r\n1. 创建要素分支\r\n1. 遵循现有代码样式\r\n1. 为新功能添加测试\r\n1. 提交拉取请求\r\n\r\n## 📄 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n______________________________________________________________________\r\n\r\n<div align=\"center\">\r\n  <strong>Built with ❤️ by the A1D Team</strong><br>\r\n  <a href=\"https://a1d.ai\">A1D.ai</a> •\r\n  <a href=\"https://github.com/AIGC-Hackers/a1d-mcp-server\">GitHub</a> •\r\n  <a href=\"https://a1d.ai/api/quick-start\">API Docs</a>\r\n</div>\r\n",
+ "config": {
+  "a1d": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote@latest",
+    "https://mcp.a1d.ai/sse",
+    "--header",
+    "api_key:${MCP_API_KEY}"
+   ],
+   "env": {
+    "MCP_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

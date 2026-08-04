@@ -1,0 +1,23 @@
+{
+ "id": "2251",
+ "kind": "mcp",
+ "name": "mcp-server",
+ "fingerprint_md5": "8dca46be8fa684964b3ac58326250381",
+ "download_count": 0,
+ "category": "路线规划",
+ "tags": "",
+ "version": "",
+ "readme": "他死了 [Next.js](https://nextjs.org) 该项目与 [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) 已启动。\r\n\r\n## 设施说明\r\n\r\n1. 创建一个帐户 [OpenRouteService](https://openrouteservice.org/).\r\n\r\n1. 进入 [https://account.heigit.org/manage/key](https://account.heigit.org/manage/key) 找到你的API密钥。\r\n\r\n1. 在项目的主目录中创建一个 `.env`文件并添加您的 API_KEY 如下：\r\n\r\n   ```env\r\n   NEXT_PUBLIC_ORS_API_KEY=\"dein_api_key\"\r\n   ```\r\n\r\n1. 安装依赖关系\r\n\r\n   ```bash\r\n   npm install\r\n   ```\r\n\r\n1. 启动服务器 ：\r\n\r\n   ```bash\r\n   npm run dev\r\n   ```\r\n\r\n1. 如果您还没有 Claude Desktop，请加载 [昨天](https://claude.ai/download) 下来\r\n\r\n1. 使用下面的文档 [模型上下文协议快速入门](https://modelcontextprotocol.io/quickstart/user)访问 Claude 配置文件。\r\n\r\n1. 将此配置插入您的 Claude 配置文件：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"mcp-server\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\"-y\", \"mcp-remote\", \"http://localhost:3000/mcp\"]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. 在 Claude Desktop 中尝试以下提示：\r\n\r\n   ```text\r\n   Hallo, ich moechte eine Klassenfahrt fuer Jugendliche in Deutschland organisieren: 20 Jugendliche aus Berlin, maximal 4 Stunden Fahrtzeit, Budget 100 € pro Person, Reisedatum ist der 20.08.2025. Bitte gib mir außerdem die aktuelle Temperatur in den passenden Staedten.\r\n   ```\r\n",
+ "config": {
+  "mcp-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-remote",
+    "http://localhost:3000/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

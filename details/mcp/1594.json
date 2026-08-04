@@ -1,0 +1,22 @@
+{
+ "id": "1594",
+ "kind": "mcp",
+ "name": "mcp-svelte-docs",
+ "fingerprint_md5": "7eb0823db2e6a1311919c7c5f54d69fc",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp瘦文档\r\n\r\n提供权威Svelte 5的模型上下文协议（MCP）服务器\r\n以及直接从TypeScript中提取的SvelteKit定义\r\n声明。获取所有内容的精确语法、参数和示例\r\n通过一个统一的界面提供5个概念。\r\n\r\n## 建筑\r\n\r\n**定义优先法**：与其使用多种专用工具，\r\n该服务器提供了一个强大的 `svelte_definition` 工具\r\n访问28个以上的综合定义，包括：\r\n\r\n- **所有 Svelte 5 runes** （$状态、$派生、$道具、$效果变体）\r\n- **现代特征** （代码片段、等待表达式、远程函数）\r\n- **事件处理** （DOM事件、自定义事件、组件\r\n  通信）\r\n- **迁移指导** （提供4到5种模式和最佳实践）\r\n- **TypeScript接口** （片段、快照类型）\r\n- **高级图案** （全局状态、常见错误、生命周期\r\n  等效物）\r\n\r\n## 可用工具\r\n\r\n### `svelte_definition`\r\n\r\n**单一、强大的工具** 对于所有Svelte 5和SvelteKit概念：\r\n\r\n```typescript\r\nsvelte_definition(identifier: string, format?: \"syntax\"|\"quick\"|\"full\")\r\n```\r\n\r\n**示例：**\r\n\r\n- `svelte_definition(\"$state\")` -完成$state文档\r\n- `svelte_definition(\"snippets\", \"quick\")` -片段概述\r\n  例子\r\n- `svelte_definition(\"onclick\", \"syntax\")` -只有TypeScript\r\n  签名\r\n- `svelte_definition(\"migration-patterns\")` -Svelte 4→ 5 迁移\r\n  指南\r\n\r\n**响应格式：**\r\n\r\n- `\"syntax\"` -仅支持TypeScript签名（约50个单词）\r\n- `\"quick\"` -定义+最小示例（约200字）\r\n- `\"full\"` -完整的文档和示例（~500-1000字，\r\n  默认）\r\n\r\n### 可用标识符（28+）\r\n\r\n**核心符文：** `$state`, `$state.raw`, `$state.snapshot`, `$derived`,\r\n`$derived.by`, `$props`, `$bindable`, `$effect`, `$effect.pre`,\r\n`$effect.root`, `$effect.pending`, `$effect.tracking`\r\n\r\n**开发工具：** `$inspect`, `$host`\r\n\r\n**特征和图案：** `snippets`, `onclick`, `component-events`,\r\n`migration-patterns`, `await-expressions`, `remote-functions`,\r\n`global-state`, `common-mistakes`, `lifecycle-equivalents`\r\n\r\n**事件处理：** `custom-events`, `event-delegation`,\r\n`event-modifiers`\r\n\r\n**TypeScript接口：** `snippet`, `snapshot`\r\n\r\n## 主要特点\r\n\r\n### 🎯 **权威和TypeScript优先**\r\n\r\n- **直接来源**：定义摘自Svelte 5官方\r\n  TypeScript声明\r\n- **始终为最新**：反映了实际的API，而不是过时的教程\r\n- **类型安全**：包括精确的参数类型、返回值和\r\n  约束\r\n\r\n### ⚡ **单一界面，全面覆盖**\r\n\r\n- **一个工具**: `svelte_definition` 替换16+专用工具\r\n- **28+定义**：每个Svelte 5符文、特征和图案\r\n  覆盖的\r\n- **一致的响应**：无论您是否需要，界面都是一样的 `$state`\r\n  或 `remote-functions`\r\n\r\n### 🚀 **现代Svelte 5和SvelteKit支持**\r\n\r\n- **等待表达**：直接在模板中异步操作\r\n  (`await-expressions`)\r\n- **远程功能**：类型安全的客户端-服务器通信\r\n  (`remote-functions`)\r\n- **所有符文**：完成 `$effect` 家庭， `$state` 变体，\r\n  `$derived.by`, `$bindable`\r\n- **高级模式**：事件处理、全局状态、组件\r\n  沟通\r\n\r\n### 📚 **智能错误恢复**\r\n\r\n- **模糊匹配**：建议拼写错误的正确标识符\r\n- **相关概念**：搜索时指向类似的定义\r\n  失败\r\n- **迁移帮助**将 Slilte 4 模式转换为 Slilte 5\r\n  等价物\r\n\r\n## 配置\r\n\r\n克劳德桌面（通过WSL）\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"mcp-svelte-docs\": {\r\n\t\t\t\"command\": \"wsl.exe\",\r\n\t\t\t\"args\": [\"bash\", \"-c\", \"npx -y mcp-svelte-docs\"]\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\n光标\r\n\r\n[](https://cursor.com/en/install-mcp?name=mcp-svelte-docs&config=eyJjb21tYW5kIjoibnB4IC15IG1jcC1zdmVsdGUtZG9jcyJ9)\r\n\r\n风帆冲浪（通过WSL）\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"mcp-svelte-docs\": {\r\n\t\t\t\"command\": \"wsl.exe\",\r\n\t\t\t\"args\": [\"bash\", \"-c\", \"npx -y mcp-svelte-docs\"]\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\nWindows（不带WSL）\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"mcp-svelte-docs\": {\r\n\t\t\t\"command\": \"npx\",\r\n\t\t\t\"args\": [\"-y\", \"mcp-svelte-docs\"]\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\nmacOS/Linux\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"mcp-svelte-docs\": {\r\n\t\t\t\"command\": \"npx\",\r\n\t\t\t\"args\": [\"-y\", \"mcp-svelte-docs\"]\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 致谢\r\n\r\n构建于：\r\n\r\n- [模型上下文协议](https://github.com/modelcontextprotocol)\r\n- [斯维尔特](https://svelte.dev)\r\n",
+ "config": {
+  "mcp-svelte-docs": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-svelte-docs"
+   ],
+   "env": {}
+  }
+ }
+}

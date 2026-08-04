@@ -1,0 +1,18 @@
+{
+ "id": "2698",
+ "kind": "mcp",
+ "name": "searchvideo",
+ "fingerprint_md5": "c9ab7c3b2642e054b5743961c2f1c083",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "## 工具说明\r\n\r\n### getSearchVideo\r\n\r\n#### 功能描述\r\n\r\n##### 产品定位\r\n\r\n**爱奇艺影视搜索** 是一个基于 MCP 协议的 **爱奇艺（IQIYI）视频搜索**服务器。\r\n\r\n##### 核心功能\r\n\r\n- 爱奇艺视频内容搜索，支持通过多种类型的搜索词获取IQIYI站内视频\r\n-\r\n- 使用案例\r\n    - 影视剧精准搜索，可输入：狂飙、书卷一梦\r\n    - 影视类型泛搜，可输入：电影、古装电视剧\r\n    - 系列作品数据搜索，可输入：奥特曼、漫威、速度与激情\r\n    - 明星作品获取，可输入：张译、李一桐\r\n    - ……\r\n    -\r\n- 可获得视频的封面图、标题、简介、标签、演员、播放链接等信息\r\n\r\n#### 适用场景\r\n\r\n需要集成 IQIYI视频搜索功能的项目\r\n需要获取 IQIYI视频信息的应用\r\n\r\n#### 请求参数\r\n\r\n| 参数名 | 类型 | 必填 | 描述 |\r\n|-------|------|-----|------|\r\n| keyword | string | 是 | 要搜索的影视剧名称 |\r\n\r\n#### 返回结果\r\n\r\n```json\r\n{\r\n  \"status\": 0,\r\n  \"rank_name\": \"为您找到以下内容\",\r\n  \"total_count\": 2,\r\n  \"items\": [\r\n    {\r\n      \"vertical_image\": \"https://gips1.baidu.com/it/u=364649524,2163821431&fm=3081&app=3081&f=JPEG?w=405&h=540\",\r\n      \"horizontal_image\": \"https://gips0.baidu.com/it/u=3572835585,1070701981&fm=3081&app=3081&f=JPEG?w=720&h=405\",\r\n      \"title\": \"流浪地球2\",\r\n      \"description\": \"【爱奇艺首播升级完...\",\r\n      \"tags\": \"科幻 灾难 冒险 世界末日 燃 烧脑 内地 普通话 院线\",\r\n      \"year\": \"2023\",\r\n      \"cast\": \"吴京,刘德华,李雪健,沙溢\",\r\n      \"score\": \"9.0\",\r\n      \"detail_url\": \"https://m.iqiyi.com/v_1yzsojq1cg8.html\"\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n#### 返回字段说明\r\n\r\n| 字段名 | 类型 | 描述 |\r\n|-------|------|------|\r\n| status | int | 状态码 |\r\n| rank_name | string | 结果标题 |\r\n| total_count | int | 结果总数 |\r\n| items[].vertical_image | string | 竖版封面图URL |\r\n| items[].horizontal_image | string | 横版封面图URL |\r\n| items[].title | string | 影视剧名称 |\r\n| items[].description | string | 剧情简介 |\r\n| items[].tags | string | 标签分类 |\r\n| items[].year | string | 上映年份 |\r\n| items[].cast | string | 主演列表(逗号分隔) |\r\n| items[].score | string | 评分 |\r\n| items[].detail_url | string | 详情页URL |\r\n\r\n## 接入方式\r\n\r\n### mcp配置\r\n\r\nsse方式配置如下url即可。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"searchvideo\": {\r\n      \"url\": \"http://mpaas.iqiyi.com/mcp/searchvideo/sse?token=${your_token}\",\r\n      \"disabled\": false\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### token申请\r\n\r\n按如下模板发送邮件到mcpservice@qiyi.com,审核通过后会邮件回复。\r\n主题：MCP权限申请-影视搜索\r\n内容：\r\n【申请主体】xxx有限公司\r\n【用途】\r\n【应用地址】\r\n【访问QPS预估】\r\n【联系人/电话】\r\n",
+ "config": {
+  "searchvideo": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://mpaas.iqiyi.com/mcp/searchvideo/sse?token=${your_token}"
+  }
+ }
+}

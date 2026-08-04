@@ -1,0 +1,24 @@
+{
+ "id": "3259",
+ "kind": "mcp",
+ "name": "weather-11",
+ "fingerprint_md5": "1008b44e2823e6931997af6f63d5767b",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 气象MCP服务器\r\n\r\n模型上下文协议（MCP）服务器，使用美国国家气象局API提供天气预报和警报。\r\n\r\n## 特性\r\n\r\n此MCP服务器公开了两个主要工具：\r\n\r\n- **获取警报**：获取美国任何州的活跃天气警报\r\n- **获取预测**：获取任何位置（纬度/经度）的详细天气预报\r\n\r\n## 先决条件\r\n\r\n- Python 3.10或更高版本\r\n- uv包管理器（推荐）或pip\r\n- MCP兼容客户端（例如，桌面版的Claude）\r\n\r\n## 安装\r\n\r\n### 1.安装uv（推荐）\r\n\r\n**Windows（PowerShell）：**\r\n\r\n```powershell\r\npowershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\r\n```\r\n\r\n**macOS/Linux：**\r\n\r\n```bash\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n### 2.建立项目\r\n\r\n导航到天气目录并安装依赖项：\r\n\r\n```powershell\r\ncd weather\r\nuv venv\r\n.venv\\Scripts\\Activate.ps1  # Windows\r\n# source .venv/bin/activate  # macOS/Linux\r\nuv sync\r\n```\r\n\r\n或者，使用pip：\r\n\r\n```powershell\r\ncd weather\r\npip install -r requirements.txt\r\n```\r\n\r\n## 运行服务器\r\n\r\n### 独立测试\r\n\r\n要直接测试服务器，请执行以下操作：\r\n\r\n```powershell\r\n# Using uv (recommended)\r\nuv run weather.py\r\n\r\n# Or using Python directly\r\npython weather.py\r\n```\r\n\r\n服务器将启动并通过STDIO监听MCP请求。\r\n\r\n### 与Claude for Desktop集成\r\n\r\n1. **安装桌面版Claude** 从 [claude.ai/下载](https://claude.ai/download)\r\n\r\n1. **为桌面配置Claude** 通过编辑配置文件：\r\n\r\n   **窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n   **macOS：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   **Linux：** `~/.config/Claude/claude_desktop_config.json`\r\n\r\n1. **添加天气服务器配置：**\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"weather\": {\r\n         \"command\": \"uv\",\r\n         \"args\": [\r\n           \"--directory\",\r\n           \"C:\\\\ABSOLUTE\\\\PATH\\\\TO\\\\YOUR\\\\weather\",\r\n           \"run\",\r\n           \"weather.py\"\r\n         ]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n   **重要提示：** 替换 `C:\\\\ABSOLUTE\\\\PATH\\\\TO\\\\YOUR\\\\weather` 带有天气目录的实际绝对路径。\r\n\r\n   如果你没有uv，你可以直接使用Python：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"weather\": {\r\n         \"command\": \"python\",\r\n         \"args\": [\r\n           \"C:\\\\ABSOLUTE\\\\PATH\\\\TO\\\\YOUR\\\\weather\\\\weather.py\"\r\n         ]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. **重新启动桌面版的Claude**\r\n\r\n1. **测试集成** 通过向克劳德提出以下问题：\r\n\r\n   - “萨克拉门托的天气预报是什么？”（需要纬度/经度）\r\n   - “德克萨斯州的活跃天气警报是什么？”\r\n   - “获取加利福尼亚州的天气警报”\r\n\r\n## 使用示例\r\n\r\n一旦配置了Claude for Desktop，您就可以使用自然语言与天气工具进行交互：\r\n\r\n### 天气警报\r\n\r\n- “佛罗里达州有天气警报吗？”\r\n- “显示德克萨斯州的活动天气警报”\r\n- “加利福尼亚州有哪些天气预警？”\r\n\r\n### 天气预报\r\n\r\n- “纬度38.7749，经度-122.4194的预报是什么？”（旧金山）\r\n- “获取坐标40.7128，-74.0060的天气预报”（纽约）\r\n\r\n## api参考\r\n\r\n### get_alerts（状态：str）\r\n\r\n获取美国某个州的活跃天气警报。\r\n\r\n**参数：**\r\n\r\n- `state`：两个字母的美国州代码（例如，“CA”、“NY”、“TX”）\r\n\r\n**退货：** 带有警报详细信息的格式化字符串，包括事件类型、区域、严重性、描述和说明。\r\n\r\n### get_forecast（纬度：float，经度：float）\r\n\r\n获取特定位置的天气预报。\r\n\r\n**参数：**\r\n\r\n- `latitude`：纬度坐标（浮动）\r\n- `longitude`：经度坐标（浮动）\r\n\r\n**退货：** 带有预测期的格式化字符串，包括温度、风和详细的预测信息。\r\n\r\n## 故障排除\r\n\r\n### 常见问题\r\n\r\n1. **服务器未在Claude for Desktop中显示：**\r\n\r\n   - 验证配置文件中的绝对路径\r\n   - 确保uv在您的PATH中或使用uv.exe的完整路径\r\n   - 配置更改后重新启动Claude for Desktop\r\n   - 检查配置JSON是否有效\r\n\r\n1. **“无法获取”错误：**\r\n\r\n   - 确保您有互联网连接\r\n   - 美国国家气象局API仅适用于美国地区\r\n   - 检查坐标是否有效（纬度：-90到90，经度：-180到180）\r\n\r\n1. **导入错误：**\r\n\r\n   - 验证是否安装了所有依赖项： `uv sync` 或 `pip install httpx mcp[cli]`\r\n   - 确保你使用的是Python 3.10或更高版本\r\n\r\n### 日志记录\r\n\r\n服务器使用stderr进行日志记录，以避免干扰MCP协议。如果需要调试：\r\n\r\n1. 添加写入stderr或文件的日志语句\r\n1. 从不使用 `print()` 主服务器代码中的语句，因为它们会破坏STDIO传输\r\n\r\n## 发展\r\n\r\n服务器是使用以下方式构建的：\r\n\r\n- **FastMCP**：简化的MCP服务器框架\r\n- **httpx**：API请求的异步HTTP客户端\r\n- **美国国家气象局API**：免费天气数据源\r\n\r\n要修改或扩展服务器，请执行以下操作：\r\n\r\n1. 编辑 `weather.py`\r\n1. 使用添加新工具 `@mcp.tool()` 装饰器\r\n1. 遵循MCP错误处理和响应格式的最佳实践\r\n\r\n## 许可证\r\n\r\n这个项目是开源的，可以在MIT许可证下使用。\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "C:\\ABSOLUTE\\PATH\\TO\\YOUR\\weather",
+    "run",
+    "weather.py"
+   ],
+   "env": {}
+  }
+ }
+}

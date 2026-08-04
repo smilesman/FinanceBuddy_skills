@@ -1,0 +1,12 @@
+{
+ "id": "sqlite-expert",
+ "kind": "skill",
+ "name": "sqlite-expert",
+ "fingerprint_md5": "492ea3a208c6eded10908605a8227f88",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# SQLite 专家\r\n\r\n一位对 SQLite 内部结构、性能调优和嵌入式数据库模式有深入了解的数据库专家。此技能为从移动应用和物联网设备到服务器端缓存层和分析工作负载的应用程序中有效使用 SQLite 提供指导，利用其超越简单键值存储的高级功能。\r\n\r\n## 关键原则\r\n\r\n- 启用 WAL 模式（PRAGMA journal_mode=WAL）以进行并发读/写访问；它允许读取者在不阻塞写入者的情况下继续，反之亦然\r\n- 使用 PRAGMA busy_timeout 设置合理的等待时间（例如 5000ms），而不是在争用时立即收到 SQLITE_BUSY 错误\r\n- 从一开始就使用适当的索引设计模式；SQLite 的查询规划器严重依赖索引可用性来制定高效的执行计划\r\n- 保持事务简短且明确；将相关写入包装在 BEGIN/COMMIT 中以确保原子性并减少 fsync 开销\r\n- 了解 SQLite 是无服务器和单文件的；它的优势在于简单性和可靠性，而不是高并发多写入者工作负载\r\n\r\n## 技术\r\n\r\n- 在连接打开时设置性能 PRAGMA：journal_mode=WAL、synchronous=NORMAL、cache_size=-64000（64MB）、mmap_size=268435456、temp_store=MEMORY\r\n- 使用 FTS5 进行全文搜索：使用 MATCH 查询和 bm25() 排名的 CREATE VIRTUAL TABLE docs USING fts5(title, body)\r\n- 使用 JSON1 扩展查询 JSON 数据：json_extract()、json_each()、json_group_array() 用于存储在 TEXT 列中的文档样式数据\r\n- 编写递归 CTE（WITH RECURSIVE）用于树遍历、图遍历和生成值序列\r\n- 使用窗口函数（ROW_NUMBER、LAG、LEAD、SUM OVER）进行运行总计、排名和时间序列分析，无需自连接\r\n- 创建包含查询所需所有列的覆盖索引，以启用仅索引扫描（使用 EXPLAIN QUERY PLAN 验证显示 COVERING INDEX）\r\n- 使用 INSERT ... ON CONFLICT (column) DO UPDATE SET 实现 UPSERT 进行原子插入或更新操作\r\n\r\n## 常见模式\r\n\r\n- **多数据库访问**：使用 ATTACH DATABASE 在单个连接中跨多个 SQLite 文件进行查询，连接来自不同数据库的表\r\n- **应用程序定义的函数**：在您的主机语言中注册自定义标量或聚合函数，用于 SQL 查询内部的域特定计算\r\n- **增量 Vacuum**：使用 PRAGMA auto_vacuum=INCREMENTAL 并定期执行 PRAGMA incremental_vacuum 以回收空间，而无需完整的 VACUUM 锁定\r\n- **模式迁移**：使用 PRAGMA user_version 跟踪模式版本并在应用程序启动时顺序应用迁移脚本\r\n\r\n## 需要避免的陷阱\r\n\r\n- 不要使用具有不同 PRAGMA 设置的多个连接；应在每个连接上一致设置 WAL 模式和其他 PRAGMA\r\n- 不要将 SQLite 用于具有数十个同时写入者的高并发写入工作负载；考虑使用 PostgreSQL 或其他客户端-服务器数据库\r\n- 不要内联存储大 BLOB（超过 1MB）；当大对象作为外部文件存储且路径在数据库中引用时，SQLite 性能更好\r\n- 不要在开发期间跳过 EXPLAIN QUERY PLAN；没有它，慢速全表扫描会被忽视，直到生产负载揭示它们",
+ "config": {}
+}

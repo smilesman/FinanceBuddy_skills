@@ -1,0 +1,26 @@
+{
+ "id": "1742",
+ "kind": "mcp",
+ "name": "ssh",
+ "fingerprint_md5": "8ba8f0ea6eeee81eab503ba73454b3e5",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# SSH-MCP服务器\r\n\r\n\r\nSSH客户端服务器的Rust实现，集成了模型上下文协议（MCP），允许大型语言模型（LLM）连接到SSH服务器并利用SSH功能。\r\n\r\n**轻便高效：**\r\n\r\n- 🚀 `ssh-mcp`：仅4.3MB二进制大小，1.8MB内存占用\r\n- 🔄 `ssh-mcp-stdio`：二进制文件大小仅为1.5MB，内存使用量为2.3MB\r\n- 🐳 `docker`：最终图像大小仅为27.5MB\r\n\r\n## 特性\r\n\r\n- **SSH客户端集成**：通过MCP命令连接到SSH服务器\r\n- **SSH命令执行**：在远程SSH服务器上运行命令\r\n- **端口转发**：设置SSH隧道和端口转发（默认情况下通过 `port_forward` 特征）\r\n- **会话管理**：跟踪和管理多个SSH会话\r\n- **MCP协议支持**：内置诗意mcpserver，实现AI/LLM兼容性\r\n- **有状态的连接**：跨多个命令维护SSH会话\r\n\r\n## 安装和集成\r\n\r\n您有两个安装选项：\r\n\r\n### 选项1：使用Docker（推荐）\r\n\r\n不需要Rust工具链，只需要Docker！\r\n\r\n```bash\r\n# Pull the pre-built image from Docker Hub\r\ndocker pull mingyang91/ssh-mcp\r\n\r\n# Run the server\r\ndocker run -p 8000:8000 mingyang91/ssh-mcp\r\n```\r\n\r\n或者自己塑造形象：\r\n\r\n```bash\r\n# Build the Docker image\r\ndocker build -t ssh-mcp .\r\n\r\n# Run the server\r\ndocker run -p 8000:8000 ssh-mcp\r\n```\r\n\r\n### 选项2：通过Cargo安装\r\n\r\n先决条件：\r\n\r\n- Rust 1.70.0或更高版本\r\n- 货物包装经理\r\n\r\n```bash\r\ncargo install ssh-mcp\r\n```\r\n\r\n## 与mcpServers集成\r\n\r\n要将SSH-MCP与mcpServers一起使用，请将以下配置添加到mcpServers-JSON配置中：\r\n\r\n### 如果通过Cargo安装：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ssh\": {\r\n      \"command\": \"ssh-mcp-stdio\", \r\n      \"args\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 如果使用Docker：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ssh\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"--entrypoint\", \"ssh-mcp-stdio\", \"-i\", \"--rm\", \"ssh-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n这将注册SSH处理程序，允许LLM通过MCP服务器管理SSH连接。\r\n\r\n## 用法\r\n\r\n### 连接到SSH服务器\r\n\r\n#### 使用密码身份验证\r\n\r\n```json\r\n{\r\n  \"command\": \"ssh_connect\",\r\n  \"params\": {\r\n    \"address\": \"example.com:22\",\r\n    \"username\": \"user\",\r\n    \"password\": \"password\"\r\n  }\r\n}\r\n```\r\n\r\n#### 使用密钥身份验证\r\n\r\n```json\r\n{\r\n  \"command\": \"ssh_connect\",\r\n  \"params\": {\r\n    \"address\": \"example.com:22\",\r\n    \"username\": \"user\",\r\n    \"key_path\": \"/path/to/private_key\"\r\n  }\r\n}\r\n```\r\n\r\n#### 使用SSH代理身份验证\r\n\r\n```json\r\n{\r\n  \"command\": \"ssh_connect\",\r\n  \"params\": {\r\n    \"address\": \"example.com:22\",\r\n    \"username\": \"user\"\r\n  }\r\n}\r\n```\r\n\r\n答复：\r\n\r\n```json\r\n{\r\n  \"session_id\": \"c8a3b2e1-4f5d-6e7c-8a9b-0c1d2e3f4a5b\",\r\n  \"message\": \"Successfully connected to user@example.com:22\",\r\n  \"authenticated\": true\r\n}\r\n```\r\n\r\n如果连接失败：\r\n\r\n```json\r\n{\r\n  \"error\": \"Failed to connect: Connection refused\"\r\n}\r\n```\r\n\r\n### 执行命令\r\n\r\n```json\r\n{\r\n  \"command\": \"ssh_execute\",\r\n  \"params\": {\r\n    \"session_id\": \"c8a3b2e1-4f5d-6e7c-8a9b-0c1d2e3f4a5b\",\r\n    \"command\": \"ls -la\"\r\n  }\r\n}\r\n```\r\n\r\n答复：\r\n\r\n```json\r\n{\r\n  \"stdout\": \"total 32\\ndrwxr-xr-x  5 user group 4096 Jan 1 12:00 .\\ndrwxr-xr-x 25 user group 4096 Jan 1 12:00 ..\\n-rw-r--r--  1 user group  142 Jan 1 12:00 file.txt\\n\",\r\n  \"stderr\": \"\",\r\n  \"exit_code\": 0\r\n}\r\n```\r\n\r\n### 设置端口转发\r\n\r\n注意：默认情况下，端口转发通过 `port_forward` 特征标志。\r\n\r\n```json\r\n{\r\n  \"command\": \"ssh_forward\",\r\n  \"params\": {\r\n    \"session_id\": \"c8a3b2e1-4f5d-6e7c-8a9b-0c1d2e3f4a5b\",\r\n    \"local_port\": 8080,\r\n    \"remote_address\": \"internal-server\",\r\n    \"remote_port\": 80\r\n  }\r\n}\r\n```\r\n\r\n答复：\r\n\r\n```json\r\n{\r\n  \"local_address\": \"127.0.0.1:8080\",\r\n  \"remote_address\": \"internal-server:80\",\r\n  \"active\": true\r\n}\r\n```\r\n\r\n### 断开会话连接\r\n\r\n```json\r\n{\r\n  \"command\": \"ssh_disconnect\",\r\n  \"params\": {\r\n    \"session_id\": \"c8a3b2e1-4f5d-6e7c-8a9b-0c1d2e3f4a5b\"\r\n  }\r\n}\r\n```\r\n\r\n答复：\r\n\r\n```json\r\n\"Session c8a3b2e1-4f5d-6e7c-8a9b-0c1d2e3f4a5b disconnected successfully\"\r\n```\r\n\r\n### 列出所有活动会话\r\n\r\n```json\r\n{\r\n  \"command\": \"ssh_list_sessions\"\r\n}\r\n```\r\n\r\n答复：\r\n\r\n```json\r\n[\r\n  \"c8a3b2e1-4f5d-6e7c-8a9b-0c1d2e3f4a5b\",\r\n  \"d9b4c3a2-5e6f-7g8h-9i0j-1k2l3m4n5o6p\"\r\n]\r\n```\r\n\r\n## 配置\r\n\r\n可以通过以下环境变量配置服务器：\r\n\r\n|变量|描述|默认值|\r\n| -------- | ----------------------- | ------- |\r\n|MCP_PORT|MCP服务器的端口|8000|\r\n|RUST_LOG |日志记录级别|信息|\r\n\r\n## 功能配置\r\n\r\n该项目使用Cargo功能启用/禁用某些功能：\r\n\r\n|功能|描述|默认值|\r\n| ------------ | ----------------------------------- | ------- |\r\n|port_forward |启用SSH端口转发支持|已启用|\r\n\r\n要构建而不进行端口转发，请执行以下操作：\r\n\r\n```\r\ncargo build --release --no-default-features\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n### CI/CD管道\r\n\r\n本项目使用GitHub Actions进行持续集成和部署：\r\n\r\n- 所有PR和对main的提交都会自动测试\r\n- 标记的版本（以“v”开头）会自动发布到crates.io\r\n- Docker镜像会自动构建并推送到Docker Hub\r\n  - 主分支的最新标签\r\n  - 语义版本发布（v1.0.0、v1.0等）的版本标签\r\n- 要创建新版本，请确保Cargo.toml中的版本与标签匹配（例如v0.1.0）\r\n- 您需要设置 `CARGO_REGISTRY_TOKEN`, `DOCKERHUB_USERNAME`，以及 `DOCKERHUB_TOKEN` GitHub存储库设置中的秘密\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。\r\n",
+ "config": {
+  "ssh": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--entrypoint",
+    "ssh-mcp-stdio",
+    "-i",
+    "--rm",
+    "ssh-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "823",
+ "kind": "mcp",
+ "name": "pymupdf4llm-mcp",
+ "fingerprint_md5": "fa338341caf229f77c92fbe3fe595be3",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# 此包已合并到官方回购中，请改用官方回购。\r\n\r\nhttps://github.com/pymupdf/pymupdf4llm-mcp\r\n\r\n# pymupdf4llm-mcp\r\n\r\n\r\n适用于pymupdf4llm的MCP服务器，最适合将PDF导出到LLM的markdown。\r\n\r\n- **Github仓库**: <https://github.com/ai-zerolab/pymupdf4llm-mcp/>\r\n- **文档** <https://ai-zerolab.github.io/pymupdf4llm-mcp/>\r\n\r\n## 快速开始\r\n\r\n运行以下命令以运行MCP服务器：\r\n\r\n```bash\r\nuvx pymupdf4llm-mcp@latest stdio # stdio mode\r\n# or\r\nuvx pymupdf4llm-mcp@latest sse # sse mode\r\n```\r\n\r\n配置您的光标/风帆/。..和其他MCP客户端连接到此服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pymupdf4llm-mcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"pymupdf4llm-mcp@latest\",\r\n        \"stdio\"\r\n      ],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "pymupdf4llm-mcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "pymupdf4llm-mcp@latest",
+    "stdio"
+   ],
+   "env": {}
+  }
+ }
+}

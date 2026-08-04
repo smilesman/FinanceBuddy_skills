@@ -1,0 +1,23 @@
+{
+ "id": "1050",
+ "kind": "mcp",
+ "name": "fhir-2",
+ "fingerprint_md5": "7b6ca2789aca70488cc192cba49e6d96",
+ "download_count": 0,
+ "category": "数据迁移",
+ "tags": "",
+ "version": "",
+ "readme": "# 医疗保健模型上下文协议（MCP）服务器\r\n\r\n## 概述\r\n\r\n此服务器允许您在指定的Contoso服务器上搜索Contoso（快速医疗保健互操作性资源）资源。它是用Python构建的，支持命令行、Docker和VS Code集成。\r\n\r\n## 先决条件\r\n\r\n- Python 3.8+\r\n- [紫外线](https://github.com/astral-sh/uv) （用于依赖关系管理）\r\n- 可访问的➤服务器（默认为公共HAPI Contoso测试服务器）\r\n\r\n## 设置\r\n\r\n1. **克隆存储库：**\r\n   ```bash\r\n   git clone <repository_url>\r\n   cd <repository_directory>\r\n   ```\r\n1. **创建虚拟环境并安装依赖项：**\r\n   ```bash\r\n   uv venv\r\n   source .venv/bin/activate\r\n   uv pip sync requirements.txt\r\n   ```\r\n   或者使用pip：\r\n   ```bash\r\n   python -m venv .venv\r\n   source .venv/bin/activate\r\n   pip install -r requirements.txt\r\n   ```\r\n1. **配置环境变量：**\r\n   复制示例文件并根据需要进行自定义：\r\n   ```bash\r\n   cp .env.example .env\r\n   ```\r\n\r\n## 用法\r\n\r\n运行服务器：\r\n\r\n```bash\r\nuv run server.py\r\n```\r\n\r\n## VS代码集成\r\n\r\n将以下JSON块添加到VS Code中的用户设置（JSON）文件中。您可以通过按Ctrl+Shift+P并键入首选项：打开用户设置（JSON）来完成此操作。\r\n\r\n\r\nStreamable HTTPstdio\r\n\r\n\r\n```json\r\n\"mcp\": {\r\n    \"servers\": {\r\n        \"fhir\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\r\n                \"-y\",\r\n                \"mcp-remote\",\r\n                \"http://localhost:8000/mcp\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n\r\n```json\r\n\"mcp\": {\r\n    \"servers\": {\r\n        \"fhir\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"/path/to/fhir-mcp-server\",\r\n                \"run\",\r\n                \"fhir-mcp-server\",\r\n                \"--transport\",\r\n                \"stdio\"\r\n            ],\r\n            \"env\": {\r\n                \"HEALTHCARE_MCP_FHIR__ACCESS_TOKEN\": \"Your FHIR Access Token\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n\r\n## Claude桌面集成\r\n\r\n将以下JSON块添加到您的Claude Desktop设置中，以连接到本地MCP服务器。\r\n\r\n- 启动Claude Desktop应用程序，单击顶部栏中的Claude菜单，然后选择“设置…”。\r\n- 在“设置”窗格中，单击左侧边栏中的“开发人员”。然后单击“编辑配置”。这将在您的文件系统中打开您的配置文件。如果它还不存在，Claude将在以下位置自动创建一个：\r\n  - macOS：~/库/应用程序支持/Claude/Claude_desktop_config json\r\n  - Windows：%APPDATA%\\\\Claude\\\\Claude_desktop_config.json\r\n- 在任何文本编辑器中打开claude_desktop_config.json文件。用以下JSON块替换其内容以注册MCP服务器：\r\n\r\n\r\nStreamable HTTPstdio\r\n\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"fhir\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\r\n                \"-y\",\r\n                \"mcp-remote\",\r\n                \"http://localhost:8000/mcp\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"fhir\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"/path/to/fhir-mcp-server\",\r\n                \"run\",\r\n                \"fhir-mcp-server\",\r\n                \"--transport\",\r\n                \"stdio\"\r\n            ],\r\n            \"env\": {\r\n                \"HEALTHCARE_MCP_FHIR__ACCESS_TOKEN\": \"Your FHIR Access Token\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n\r\n## MCP检查器集成\r\n\r\n按照以下步骤启动并运行MCP检查器：\r\n\r\n- 打开终端并运行以下命令：\r\n\r\n  `npx -y @modelcontextprotocol/inspector`\r\n\r\n- 在MCP检查器界面中：\r\n\r\n\r\nStreamable HTTPstdio\r\n\r\n\r\n- 运输类型： `Streamable HTTP`\r\n- 网址： `http://localhost:8000/mcp`\r\n\r\n\r\n- 运输类型： `STDIO`\r\n- 命令： `uv`\r\n- 论据： `--directory /path/to/fhir-mcp-server run fhir-mcp-server --transport stdio`\r\n\r\n\r\n确保您的MCP服务器已在上述端点上运行并侦听。\r\n\r\n一旦连接，MCP Inspector将允许您可视化工具调用，检查请求/响应有效负载，并轻松调试您的工具实现。\r\n\r\n## 示例提示\r\n\r\n- 获取患者53373的过敏史\r\n- 获取患者ID 53373的免疫记录\r\n- 列出患者22的所有主动护理计划\r\n- 为53373号患者提供一份综合报告，包括其完整的过敏史以及所有可用的免疫记录，按日期组织，并突出显示任何关键警报\r\n- 检索患者ID 22的所有活动护理计划，并将其显示在标记表中，显示每个计划的ID、标题、状态、意图和开始日期\r\n",
+ "config": {
+  "fhir": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-remote",
+    "http://localhost:8000/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

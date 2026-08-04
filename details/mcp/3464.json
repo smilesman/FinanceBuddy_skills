@@ -1,0 +1,18 @@
+{
+ "id": "3464",
+ "kind": "mcp",
+ "name": "google_search",
+ "fingerprint_md5": "6cbab87ea399361600ad1e5ed5aee539",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP服务器搜索\r\n\r\n一个MCP（模型上下文协议）服务器，为AI模型提供谷歌搜索功能。此服务器允许模型从网络上搜索最新信息。\r\n\r\n## 特性\r\n\r\n- 谷歌搜索与缓存集成\r\n- 可配置的请求延迟和重试，以避免速率限制\r\n- 支持简单和高级搜索（带描述）\r\n- 节流和随机化，做一个好的网络公民\r\n\r\n## 安装\r\n\r\n### 使用Docker（推荐）\r\n\r\n1. 构建Docker镜像：\r\n\r\n   ```\r\n   docker build -t mcp-server-search .\r\n   ```\r\n\r\n1. 创建持久性所需的目录：\r\n\r\n   ```\r\n   mkdir -p ./logs ./cache\r\n   ```\r\n\r\n1. 运行容器（启用SSE）：\r\n\r\n   ```\r\n   docker run --rm -p 8000:8000 \\\r\n     -v \"$(pwd)/logs:/app/logs\" \\\r\n     -v \"$(pwd)/cache:/app/cache\" \\\r\n     mcp-server-search\r\n   ```\r\n\r\n这将启动启用了SSE的服务器，并使其可在以下位置访问http://localhost:8000/sse.\r\n\r\n这些卷确保：\r\n\r\n- 日志被持久化到 `./logs` 目录\r\n- 搜索缓存将持久化到 `./cache` 目录\r\n- 如果这两个目录不存在，Docker会自动创建它们\r\n\r\n注： `-i` MCP协议通信需要标志，以及 `--rm` 容器退出时自动移除。\r\n\r\n### 临床整合\r\n\r\n要将此MCP服务器与Cline一起使用，请将以下配置添加到Cline MCP设置文件（位于 `~/.config/Code/User/globalStorage/rooveterinaryinc.roo-cline/settings/cline_mcp_settings.json` 对于VS代码）：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"google_search\": {\r\n            \"url\": \"http://localhost:8000/sse\"\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n此配置：\r\n\r\n- 通过HTTP SSE在端口8000上连接到搜索MCP服务器 `/sse` 端点\r\n- 不再使用Docker stdio传输；Cline直接连接到HTTP端点\r\n\r\n## 配置\r\n\r\n服务器接受以下命令行参数：\r\n\r\n- `--log-level`：设置日志记录级别（调试、信息、警告、错误、严重）。默认值：信息\r\n- `--log-file`：日志文件的路径（默认：stdout）\r\n- `--cache-path`：搜索缓存文件的路径（默认：cache/google_cache.db）\r\n- `--request-delay`：搜索请求之间的延迟（秒）（默认值：5）\r\n- `--max-retries`：失败搜索的最大重试次数（默认值：3）\r\n\r\n## 用法\r\n\r\n服务器公开以下MCP端点：\r\n\r\n### 工具\r\n\r\n- `google_search`：搜索谷歌并返回结果。结果以格式化的Markdown结构呈现，其中包含标题、URL和描述（启用时）。\r\n\r\n  参数：\r\n\r\n  - `query` （string，必填）：要执行的搜索查询\r\n  - `num_results` （整数，可选）：要返回的结果数（最小值：1，最大值：20，默认值：5）\r\n  - `use_cache` （boolean，可选）：是否使用缓存结果（默认值：true）\r\n  - `include_descriptions` （布尔值，可选）：是否在结果中包含描述（默认值：true）\r\n\r\n  特征：\r\n\r\n  - 自动请求限制和重试机制\r\n  - 随机用户代理轮换，以更好地分配请求\r\n  - 基于文件的缓存，具有线程安全访问功能\r\n  - 速率限制的指数回退（HTTP 429）\r\n\r\n### 提示\r\n\r\n- `google_search`：使用给定的查询搜索谷歌。以对话格式返回结果。\r\n\r\n  参数：\r\n\r\n  - `query` （string，必填）：要执行的搜索查询\r\n  - `num_results` （整数，可选）：要返回的结果数（1-20，默认值：5）\r\n\r\n## 关于MCP\r\n\r\n模型上下文协议（MCP）是一种用于将大型语言模型（LLM）与工具和数据源连接起来的协议。了解更多信息，请访问 [github/modelcontextprotocol](https://github.com/modelcontextprotocol).\r\n",
+ "config": {
+  "google_search": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:8000/sse"
+  }
+ }
+}

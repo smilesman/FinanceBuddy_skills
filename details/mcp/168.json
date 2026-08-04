@@ -1,0 +1,22 @@
+{
+ "id": "168",
+ "kind": "mcp",
+ "name": "cs-crawler",
+ "fingerprint_md5": "7b615171d16be5bd3af5d7aa7ec16e7f",
+ "download_count": 0,
+ "category": "网页抓取",
+ "tags": "",
+ "version": "",
+ "readme": "# CS爬行器MCP\r\n\r\n一种模型上下文协议（MCP）服务器，通过crawl4ai库提供网络爬行功能。\r\n\r\n## 特性\r\n\r\n- 具有多种输出格式的Web爬行\r\n- 元数据抽取\r\n- MCP集成\r\n- 轻松部署\r\n\r\n## 快速开始\r\n\r\n1. 克隆存储库\r\n1. 安装依赖项： `pip install -r requirements.txt`\r\n1. 安装剧作家： `python -m playwright install chromium`\r\n1. 配置您的MCP客户端\r\n\r\n## 安装\r\n\r\n```bash\r\ngit clone https://github.com/CoachSteff/cs-crawler-mcp.git\r\ncd cs-crawler-mcp\r\npip install -r requirements.txt\r\npython -m playwright install chromium\r\n```\r\n\r\n### 本地配置\r\n\r\n此项目使用本地 `config.json` （被git忽略）并发送a `config.json.template`.\r\n\r\n```bash\r\ncp config.json.template config.json\r\n# Edit python_path and server_path to your environment\r\n```\r\n\r\nCI/测试将回落到 `config.json.template` 用于在以下情况下进行架构检查 `config.json` 缺席。\r\n\r\n## 用法\r\n\r\n添加到您的MCP客户端配置（Claude Desktop、Cursor等）。两种选择：\r\n\r\n- NPX（没有Python预安装，在第一次运行时自动引导本地venv）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cs-crawler\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"github:CoachSteff/cs-crawler-mcp@main\"],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n- 直接Python入口点（之后 `pip install -r requirements.txt`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cs-crawler\": {\r\n      \"command\": \"python3\",\r\n      \"args\": [\"/absolute/path/to/cs-crawler-mcp/server.py\"],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n- `crawl_url` -抓取单个URL\r\n- `get_metadata` -提取页面元数据\r\n\r\n## 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件。\r\n",
+ "config": {
+  "cs-crawler": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "github:CoachSteff/cs-crawler-mcp@main"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "1672",
+ "kind": "mcp",
+ "name": "postmancer",
+ "fingerprint_md5": "74919f6acc1c5f33c6308e858207cdf7",
+ "download_count": 0,
+ "category": "API 调试",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://mseep.ai/app/hijaz-postmancer)\r\n\r\n# 邮递员\r\n\r\n[](https://archestra.ai/mcp-catalog/hijaz__postmancer)\r\n\r\n\r\n用于API测试和管理的独立MCP服务器，允许AI助手通过自然语言与RESTful API交互。\r\n\r\n## 概述\r\n\r\nPostmancer是一个MCP（模型上下文协议）服务器，它使Claude等人工智能助手能够进行HTTP请求、管理API端点的集合以及测试API响应。它提供了与Postman或Insomnia等工具类似的功能，但专门为AI助手设计。\r\n\r\n## 特性\r\n\r\n- 向任何REST API发出HTTP请求\r\n- 在集合中保存和组织请求\r\n- 设置和使用具有变量替换的环境变量\r\n- 多种身份验证方法（基本、承载、API密钥、OAuth2）\r\n- 请求/响应历史和测试\r\n\r\n## 快速开始\r\n\r\n### 安装\r\n\r\n```bash\r\n# Install globally\r\nnpm install -g postmancer\r\n\r\n# Or run directly with npx\r\nnpx postmancer\r\n```\r\n\r\n### 与Claude Desktop一起使用\r\n\r\n将此添加到您的Claude Desktop配置文件中：\r\n\r\n- 窗户： `%USERPROFILE%\\.claude\\claude_desktop_config.json`\r\n- macOS/Linux： `~/.claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postmancer\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"postmancer\"],\r\n      \"env\": {\r\n        \"LOG_LEVEL\": \"info\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用Docker\r\n\r\n```bash\r\ndocker run -i --rm \\\r\n  --mount type=bind,src=/path/to/collections,dst=/data/collections \\\r\n  postmancer\r\n```\r\n\r\n## 可用工具\r\n\r\nPostmanager为AI助手提供以下工具：\r\n\r\n1. **http_request** -向任何URL发送HTTP请求\r\n1. **list_collections** -查看您保存的所有API集合\r\n1. **list_requests** -查看集合中的所有请求\r\n1. **保存请求** -将请求保存到集合\r\n1. **request_from_collection** -执行已保存的请求\r\n1. **set_environment_variable** -为请求模板设置变量\r\n1. **get_environment_variables** -查看所有环境变量\r\n\r\n## 配置\r\n\r\n使用以下环境变量配置Postmanager：\r\n\r\n- `COLLECTIONS_PATH`：存储集合的路径（默认：~/.postancer）\r\n- `LOG_LEVEL`：日志记录级别（调试、信息、警告、错误）（默认值：信息）\r\n- `POSTMANCER_ENCRYPTION_KEY`：用于加密凭证和令牌的密钥（如果未提供，则生成随机密钥）\r\n- `ENCRYPTION_KEY`：用于加密标记为机密的环境变量的密钥（如果未提供，则使用默认密钥）\r\n\r\n为了生产环境中的安全，强烈建议设置这些加密密钥，而不是使用默认值。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "postmancer": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "postmancer"
+   ],
+   "env": {
+    "LOG_LEVEL": "info"
+   }
+  }
+ }
+}

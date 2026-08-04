@@ -1,0 +1,18 @@
+{
+ "id": "588",
+ "kind": "mcp",
+ "name": "bizintel",
+ "fingerprint_md5": "568c0df6924af7da81ee457ece152028",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# BizIntel MCP服务器\r\n\r\n\r\n通过AI驱动的商业智能工具 [模型上下文协议（MCP）](https://modelcontextprotocol.io).让你的人工智能助手能够实时研究竞争对手、给网站评分、分析评论和进行市场研究。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `analyze_competitors` |竞争格局分析，包括市场定位、SWOT分析和战略建议|\r\n| `score_web_presence` |搜索引擎优化、性能、内容、社交媒体和信任信号的网站存在评分（0-100）|\r\n| `analyze_reviews` |通过情感分析、主题提取和声誉洞察进行在线评论聚合|\r\n| `market_research` |行业研究，包括市场规模、趋势、机会和客户细分分析|\r\n\r\n## 快速入门（托管）\r\n\r\n**无需安装。** 使用托管版本：\r\n\r\n1. 在获取免费API密钥 [mcp.ezbizservices.com/signup](https://mcp.ezbizservices.com/signup)\r\n1. 添加到您的MCP客户端配置（Claude Desktop、Cursor等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bizintel\": {\r\n      \"url\": \"https://mcp.ezbizservices.com/mcp\",\r\n      \"headers\": {\r\n        \"x-api-key\": \"YOUR_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. 让你的人工智能助手分析任何业务！\r\n\r\n### 示例提示\r\n\r\n- “分析德克萨斯州奥斯汀咖啡店的竞争格局”\r\n- “对example.com的网络存在度进行评分”\r\n- “客户在评论中对\\[企业名称\\]有何评价？”\r\n- “研究人工智能咨询服务的市场机会”\r\n\r\n## 自我寄宿\r\n\r\n```bash\r\ngit clone https://github.com/ezbiz-services/mcp-business-intelligence.git\r\ncd mcp-business-intelligence\r\nbun install\r\n\r\ncp .env.example .env\r\n# Edit .env with your OpenAI API key and admin secret\r\n\r\nbun run server.ts\r\n```\r\n\r\n### 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `OPENAI_API_KEY` |是|用于AI驱动分析的OpenAI API密钥|\r\n| `ADMIN_SECRET` |是|管理员API端点的机密|\r\n| `MCP_PORT` |无|服务器端口（默认值：4200）|\r\n\r\n## 定价\r\n\r\n|级别|价格|请求/月|\r\n|------|-------|----------------|\r\n| **自由** | $0 | 10 |\r\n|起步价|19美元/月|200|\r\n|专业| 49美元/月|1000|\r\n|商务| 99美元/月|5000|\r\n\r\n免费开始 [mcp.ezbizservices.com](https://mcp.ezbizservices.com)\r\n\r\n## 建筑\r\n\r\n- **运行时间：** [包子](https://bun.sh)\r\n- **协议：** [MCP-SDK](https://www.npmjs.com/package/@modelcontextprotocol/sdk) （流式HTTP传输）\r\n- **人工智能：** OpenAI GPT-4o用于分析\r\n- **报废：** Cheerio用于网络数据提取\r\n- **认证：** 基于API密钥的分层速率限制\r\n\r\n## 链接\r\n\r\n- **主页：** [mcp.ezbizservices.com](https://mcp.ezbizservices.com)\r\n- **API文件：** [mcp.ezbizservices.com/docs](https://mcp.ezbizservices.com/docs)\r\n- **注册：** [mcp.ezbizservices.com/signup](https://mcp.ezbizservices.com/signup)\r\n- **服务器卡：** [mcp.ezbizservices.com/众所周知/mcp/server-card.json](https://mcp.ezbizservices.com/.well-known/mcp/server-card.json)\r\n\r\n## 许可证\r\n\r\nMIT——见 [许可证](LICENSE)\r\n",
+ "config": {
+  "bizintel": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.ezbizservices.com/mcp"
+  }
+ }
+}

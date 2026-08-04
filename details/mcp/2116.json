@@ -1,0 +1,22 @@
+{
+ "id": "2116",
+ "kind": "mcp",
+ "name": "astro-server",
+ "fingerprint_md5": "37ca653b545ff25de32c2f6e25dd2712",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# AstroMCP\r\n\r\n模型上下文协议（MCP）服务器，为人工智能助手提供占星术图表功能。\r\n\r\n## 🚀 快速开始\r\n\r\n1. 克隆存储库\r\n1. 安装依赖项：\r\n   ```bash\r\n   bun install\r\n   ```\r\n1. 启动服务器：\r\n   ```bash\r\n   bun run start\r\n   ```\r\n\r\n## ✨ 主要特点\r\n\r\n- 根据日期、时间和位置生成详细的占星术图表\r\n- 通过模型上下文协议与AI助手无缝集成\r\n- 由...驱动 [图表2txt](https://github.com/simpolism/chart2txt) 用于自然语言图表解释\r\n- 使用光子地理编码API进行位置查找\r\n- 输出行星位置、房屋位置和主要方面\r\n\r\n## 📂 项目结构\r\n\r\n```\r\nAstroMCP/\r\n├── src/\r\n│   ├── tools/\r\n│   │   ├── getChart/        # Astrological chart functionality\r\n│   │   └── ...              # Other tools\r\n│   ├── utils/               # Shared utilities\r\n│   ├── main.ts              # Server entry point\r\n│   └── types.ts             # Shared type definitions\r\n├── tests/                   # Test files\r\n├── biome.json               # Linting configuration\r\n├── tsconfig.json            # TypeScript configuration\r\n└── package.json             # Project dependencies\r\n```\r\n\r\n## 🔮 使用占星术工具\r\n\r\n这 `get_chart` 工具接受三个参数：\r\n\r\n- `date`：YYYY-MM-DD格式的日期\r\n- `time`：24小时制时间（HH:MM:SS）\r\n- `location`：“城市、国家”格式的位置\r\n\r\n示例响应：\r\n\r\n```\r\nAstrology Chart (location: New York, USA, at: 1/1/2001, 1:01:00 AM):\r\n\r\nAscendant is at 21° Libra. Sun is at 10° Capricorn. Moon is at 21° Pisces. Mercury is at 14° Capricorn. Venus is at 27° Aquarius. Mars is at 5° Scorpio. Jupiter is at 2° Gemini. Saturn is at 24° Taurus. Uranus is at 18° Aquarius. Neptune is at 5° Aquarius. Pluto is at 13° Sagittarius.\r\n\r\nSun is in house 4. Moon is in house 6. Mercury is in house 4. Venus is in house 5. Mars is in house 2. Jupiter is in house 9. Saturn is in house 8. Uranus is in house 5. Neptune is in house 5. Pluto is in house 3.\r\n\r\nSun is in conjunction with Mercury (orb: 3.8°). Moon is in sextile with Saturn (orb: 2.8°). Venus is in square with Jupiter (orb: 4.9°). Venus is in square with Saturn (orb: 2.7°). Mars is in square with Neptune (orb: 0.3°). Jupiter is in trine with Neptune (orb: 3.2°).\r\n```\r\n\r\n## ⚙️ 配置\r\n\r\n### API终点\r\n\r\n服务器使用以下API终结点：\r\n\r\n- 用于地理编码位置的Photon API（Photon.komout.io）\r\n- [简单Astro API](https://github.com/simpolism/simple-astro-api) 用于行星计算（目前使用托管版本）\r\n\r\n### 创建新工具\r\n\r\n该项目包括一个脚本，用于帮助创建新的MCP工具：\r\n\r\n```bash\r\nbun run scripts/create-tool.ts\r\n```\r\n\r\n## 🛠️ 发展\r\n\r\n- **运行测试**: `bun test`\r\n- **格式代码**: `bun run format`\r\n- **Lint代码**: `bun run lint`\r\n- **生成项目**: `bun run build`\r\n\r\n要将AstroMCP服务器添加到Claude Desktop，请执行以下操作：\r\n\r\n1. 构建项目：\r\n   ```bash\r\n   bun run build\r\n   ```\r\n1. 添加到您的Claude Desktop配置中：\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"astrology-mcp-server\": {\r\n         \"command\": \"/path/to/node\",\r\n         \"args\": [\"/path/to/AstroMCP/dist/main.js\"]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n## 📦 发布到npm\r\n\r\n1. 请确保您已登录到npm：\r\n   ```bash\r\n   npm login\r\n   ```\r\n1. 构建项目：\r\n   ```bash\r\n   bun run build\r\n   ```\r\n1. 发布包：\r\n   ```bash\r\n   npm publish\r\n   ```\r\n\r\n## 从npm安装（发布后）\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"astro-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"astrology-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "astro-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "astrology-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "id": "508",
+ "kind": "mcp",
+ "name": "uiautomation",
+ "fingerprint_md5": "70e18250bff4ddc9dd01c13c10e58263",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# UIAutomation MCP Server\r\n\r\n[](https://www.python.org/downloads/)\r\n[](https://opensource.org/licenses/Apache-2.0)\r\n[](https://modelcontextprotocol.io/)\r\n\r\n> 基于 [Python-UIAutomation-for-Windows](https://github.com/yinkaisheng/Python-UIAutomation-for-Windows) 的 MCP (Model Context Protocol) 服务器\r\n\r\n**特别感谢** [yinkaisheng](https://github.com/yinkaisheng) 开发的优秀 UI 自动化库，本项目是其 MCP 封装实现。\r\n\r\n---\r\n\r\n## 简介\r\n\r\nUIAutomation MCP Server 让 AI 助手（如 Claude、ChatGPT）能够通过 MCP 协议直接操作 Windows UI 控件，实现：\r\n\r\n- 自动化桌面应用程序操作\r\n- 控件信息查询与截图\r\n- 键盘鼠标模拟\r\n- 窗口管理\r\n\r\n支持的应用类型：Win32、MFC、WPF、Windows Forms、Modern UI (UWP)、Qt、Firefox、Chrome、Electron 等。\r\n\r\n## 安装\r\n\r\n### 方式 1: uv 安装 (推荐)\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n\r\n## 配置\r\n\r\n在 Claude Desktop 或其他 MCP 客户端的配置文件中添加：\r\n\r\n\r\n### 方式 : uv 开发模式\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"uiautomation\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"D:\\\\path\\\\to\\\\Python-UIAutomation-for-Windows\",\r\n        \"run\",\r\n        \"--no-project\",\r\n        \"main.py\"\r\n      ],\r\n      \"type\": \"stdio\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\n## 可用工具\r\n\r\n### 控件查找 (6)\r\n\r\n| 工具 | 描述 |\r\n|------|------|\r\n| `ui_find_window` | 查找顶层窗口 |\r\n| `ui_find_control` | 查找子控件 |\r\n| `ui_get_children` | 获取子控件列表 |\r\n| `ui_get_focused` | 获取当前焦点控件 |\r\n| `ui_get_foreground` | 获取前台窗口 |\r\n| `ui_control_from_point` | 获取屏幕坐标处的控件 |\r\n\r\n### 交互操作 (5)\r\n\r\n| 工具 | 描述 |\r\n|------|------|\r\n| `ui_click` | 点击控件 (支持左键/右键/双击) |\r\n| `ui_send_keys` | 发送键盘输入 |\r\n| `ui_set_value` | 设置文本值 |\r\n| `ui_close_window` | 关闭窗口 (需确认) |\r\n| `ui_move_window` | 移动/调整窗口 |\r\n\r\n### 信息查询 (6)\r\n\r\n| 工具 | 描述 |\r\n|------|------|\r\n| `ui_get_properties` | 获取控件属性 |\r\n| `ui_get_text` | 获取文本内容 |\r\n| `ui_get_rect` | 获取边界矩形 |\r\n| `ui_screenshot` | 控件/窗口截图 |\r\n| `ui_exists` | 检查控件是否存在 |\r\n| `ui_wait_for` | 等待条件满足 |\r\n\r\n### Pattern 操作 (6)\r\n\r\n| 工具 | 描述 |\r\n|------|------|\r\n| `ui_invoke` | 调用按钮 (InvokePattern) |\r\n| `ui_toggle` | 切换状态 (TogglePattern) |\r\n| `ui_expand_collapse` | 展开/折叠 (ExpandCollapsePattern) |\r\n| `ui_select_item` | 选择项 (SelectionItemPattern) |\r\n| `ui_scroll` | 滚动控件 (ScrollPattern) |\r\n| `ui_terminate_process` | 终止进程 (需确认) |\r\n\r\n### 辅助工具 (5)\r\n\r\n| 工具 | 描述 |\r\n|------|------|\r\n| `ui_clipboard_get` | 获取剪贴板内容 |\r\n| `ui_clipboard_set` | 设置剪贴板内容 |\r\n| `ui_list_processes` | 列出运行中的进程 |\r\n| `ui_show_desktop` | 显示/最小化所有窗口 |\r\n| `ui_get_screen_size` | 获取屏幕尺寸 |\r\n\r\n## 环境变量\r\n\r\n| 变量 | 默认值 | 描述 |\r\n|------|--------|------|\r\n| `UIAUTOMATION_LOG_LEVEL` | `INFO` | 日志级别 (DEBUG/INFO/WARNING/ERROR) |\r\n| `UIAUTOMATION_TIMEOUT` | `10` | 默认操作超时秒数 |\r\n| `UIAUTOMATION_ADMIN_CHECK` | `true` | 是否检查管理员权限 |\r\n| `UIAUTOMATION_CONFIRMATION_ENABLED` | `true` | 危险操作确认机制 |\r\n\r\n## 安全机制\r\n\r\n以下操作需要用户确认才会执行：\r\n\r\n- `ui_close_window` - 关闭窗口\r\n- `ui_terminate_process` - 终止进程\r\n\r\n可通过设置 `UIAUTOMATION_CONFIRMATION_ENABLED=false` 禁用确认机制（不推荐）。\r\n\r\n## 使用示例\r\n\r\n配置完成后，你可以对 AI 助手说：\r\n\r\n```\r\n请帮我打开记事本，输入 \"Hello World\"，然后保存到桌面\r\n```\r\n\r\n```\r\n截图当前活动窗口并保存\r\n```\r\n\r\n```\r\n列出所有打开的 Chrome 标签页\r\n```\r\n\r\n## 系统要求\r\n\r\n- **操作系统**: Windows 7 SP1 或更高版本\r\n- **Python**: 3.10 或更高版本\r\n- **权限**: 建议以管理员权限运行以获得最佳兼容性\r\n\r\n## 注意事项\r\n\r\n1. **管理员权限**: 要自动化以管理员权限运行的应用，MCP 服务器也需要管理员权限\r\n2. **Chrome/Electron**: 需要添加 `--force-renderer-accessibility` 启动参数\r\n3. **UWP 应用**: 部分现代应用可能有访问限制\r\n\r\n## 致谢\r\n\r\n- [yinkaisheng/Python-UIAutomation-for-Windows](https://github.com/yinkaisheng/Python-UIAutomation-for-Windows) - 核心库\r\n- [Model Context Protocol](https://modelcontextprotocol.io/) - 协议规范\r\n\r\n## License\r\n\r\nApache License 2.0\r\n",
+ "config": {
+  "uiautomation": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "D:\\path\\to\\Python-UIAutomation-for-Windows",
+    "run",
+    "--no-project",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

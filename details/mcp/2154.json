@@ -1,0 +1,21 @@
+{
+ "id": "2154",
+ "kind": "mcp",
+ "name": "dda",
+ "fingerprint_md5": "b35659039d687e4752a024dc48018408",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# DDA MCP服务器\r\n\r\n用于控制天文设备的MCP（模型上下文协议）服务器。支持黑龙天文设备和任何ASCOM羊驼兼容设备。\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g @darkdragonsastro/dda-mcp-server\r\n```\r\n\r\n或者直接使用npx运行：\r\n\r\n```bash\r\nnpx @darkdragonsastro/dda-mcp-server\r\n```\r\n\r\n## 配置\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的Claude Desktop配置文件中：\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dda\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@darkdragonsastro/dda-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add dda -- npx @darkdragonsastro/dda-mcp-server\r\n```\r\n\r\n## 工具\r\n\r\n### 设备发现\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `discover_devices` |通过UDP广播在本地网络上发现暗龙天文设备|\r\n| `discover_alpaca_devices` |在本地网络上发现ASCOM Alpaca设备|\r\n\r\n### 黑龙天文设备\r\n\r\n#### DragonLAIR（滚落式车顶控制器）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_device_status` |获取设备的当前状态|\r\n| `get_device_settings` |获取设备设置，包括安全配置、位置和电机设置|\r\n| `open_roof` |打开天文台屋顶|\r\n| `close_roof` |关闭天文台屋顶|\r\n| `abort_roof` |中止当前的屋顶操作|\r\n| `get_mount_sensors` |获取连接到DragonLAIR的安装传感器的状态|\r\n| `locate_device` |使设备发出蜂鸣声/闪烁，以帮助在物理上定位它|\r\n\r\n#### 安装传感器\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_mount_sensor_status` |获取独立安装传感器的状态（俯仰、横滚、安全位置）|\r\n\r\n#### DragonLIGHT（平板控制器）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_flat_panel_status` |获取平板状态（开/关、亮度）|\r\n| `turn_on_flat_panel` |打开平板灯|\r\n| `turn_off_flat_panel` |关闭平板灯|\r\n| `set_flat_panel_brightness` |设置亮度级别（0-255）|\r\n\r\n### ASCOM羊驼设备\r\n\r\n所有羊驼设备必须首先使用以下方式连接 `alpaca_device_connect`.\r\n\r\n#### 连接管理\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `alpaca_device_connect` |连接或断开任何羊驼装置|\r\n\r\n#### 望远镜\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `alpaca_telescope_status` |获取望远镜位置、跟踪状态和回转状态|\r\n| `alpaca_telescope_slew` |切换到坐标（RA/Dec或Alt/Az）|\r\n| `alpaca_telescope_park` |停放或拆下望远镜|\r\n| `alpaca_telescope_tracking` |启用或禁用跟踪|\r\n| `alpaca_telescope_abort` |中止任何正在进行的杀戮|\r\n\r\n#### 相机\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `alpaca_camera_status` |获取相机温度、冷却状态和曝光状态|\r\n| `alpaca_camera_cooler` |控制冷却器的开启/关闭并设定目标温度|\r\n| `alpaca_camera_expose` |开始浅色或深色曝光|\r\n| `alpaca_camera_abort` |中止当前暴露|\r\n\r\n#### 调焦机构\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `alpaca_focuser_status` |获取调焦器位置、温度和移动状态|\r\n| `alpaca_focuser_move` |将调焦器移动到特定位置|\r\n| `alpaca_focuser_halt` |停止调焦器移动|\r\n\r\n#### 滤光轮\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `alpaca_filterwheel_status` |获取当前过滤器位置和可用过滤器|\r\n| `alpaca_filterwheel_set` |更改到特定的过滤器位置|\r\n\r\n#### 穹顶\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `alpaca_dome_status` |获取圆顶闸门状态、位置和回转状态|\r\n| `alpaca_dome_shutter` |打开或关闭圆顶百叶窗|\r\n| `alpaca_dome_slew` |将圆顶旋转到特定方位|\r\n\r\n#### 旋转器\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `alpaca_rotator_status` |获取转子位置和运动状态|\r\n| `alpaca_rotator_move` |将旋转器移动到绝对或相对位置|\r\n| `alpaca_rotator_halt` |停止旋转器运动|\r\n\r\n#### 开关\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `alpaca_switch_status` |获取设备上所有开关的状态|\r\n| `alpaca_switch_set` |打开或关闭开关|\r\n| `alpaca_switch_set_value` |将开关设置为特定值|\r\n\r\n#### 盖子校准器\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `alpaca_covercalibrator_status` |获取盖子和校准器状态|\r\n| `alpaca_covercalibrator_cover` |打开、关闭或停止盖子|\r\n| `alpaca_covercalibrator_calibrator` |打开（带亮度）或关闭校准器|\r\n\r\n#### 安全监视器\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `alpaca_safetymonitor_status` |获取安全监视器状态（安全/不安全）|\r\n\r\n#### 观测条件（天气）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `alpaca_observingconditions_status` |获取天气数据（温度、湿度、风、云量等）|\r\n\r\n## 支持设备\r\n\r\n### 暗龙天文学\r\n\r\n- **龙莱** -带安装传感器集成的滚落式车顶控制器\r\n- **龙灯** -校准框架的平板控制器\r\n- **安装传感器** -检测望远镜位置，确保车顶安全操作\r\n\r\n### ASCOM羊驼兼容\r\n\r\n任何实施ASCOM Alpaca API的设备：\r\n\r\n- 望远镜/支架\r\n- 照相机（CCD/CMOS）\r\n- 焦点\r\n- 滤片轮\r\n- 穹顶\r\n- 旋转器\r\n- 开关/电源控制器\r\n- 盖板校准器/平板\r\n- 安全监视器\r\n- 气象站\r\n\r\n## 许可证\r\n\r\nISC\r\n",
+ "config": {
+  "dda": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@darkdragonsastro/dda-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

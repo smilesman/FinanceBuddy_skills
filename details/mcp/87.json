@@ -1,0 +1,24 @@
+{
+ "id": "87",
+ "kind": "mcp",
+ "name": "browserai",
+ "fingerprint_md5": "b363ede4ccff9e8a64208ba4ff149876",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# Browserai MCP\r\n\r\n\r\n### Empower AI Agents with Real-Time Web Data\r\n\r\n\r\n## 🌟 概述\r\n\r\n欢迎使用Browserai模型上下文协议（MCP）服务器，该服务器旨在使LLM、AI代理和应用程序能够实时访问、发现和提取web数据。该服务器使MCP客户端（如Claude Desktop、VS Code、Cursor和WindSurf）能够无缝搜索网络、导航网站、执行操作和高效检索数据，甚至可以从具有防抓取措施的网站检索数据。\r\n\r\n\r\n## ⚙️ 原理\r\n\r\nBrowserai MCP服务器充当您的AI代理（MCP客户端）和互联网之间的中介：\r\n\r\n1. 您的AI代理（例如，Claude Desktop，VSCode扩展）通过模型上下文协议向Browserai MCP服务器发送请求。\r\n1. MCP服务器利用您的Browserai API令牌和项目配置，执行请求的web操作（例如，搜索、导航、提取数据）。\r\n1. 它利用Browserai强大的基础设施来管理复杂性，例如绕过地理限制和机器人检测机制。\r\n1. 然后，服务器将结构化数据或操作结果传递回您的AI代理。\r\n\r\n这种架构允许您的代理访问实时web信息和功能，而无需直接管理浏览器实例或防阻塞技术。\r\n\r\n## ✨ 特性\r\n\r\n- **实时Web访问**：直接从网上检索最新信息。\r\n- **绕过地理限制**：访问内容不受地域限制。\r\n- **Web解锁器**：浏览受机器人检测系统保护的网站。\r\n- **浏览器控件**：利用可选的远程浏览器自动化功能。\r\n- **无缝集成**：与所有符合MCP标准的AI助手兼容。\r\n\r\n## 🔧 帐户设置\r\n\r\n要开始使用Browserai MCP服务器，需要Browserai帐户和API密钥。\r\n\r\n1. 确保您在上有一个帐户 [浏览器.ai](https://browser.ai)。新用户可获得免费测试积分，并可选择按需付费。\r\n1. 从获取API密钥 [用户仪表板](https://browser.ai/dashboard/page/projects).\r\n1. 在您的 [仪表盘](https://browser.ai/dashboard/page/overview).\r\n   - 可以使用以下命令在MCP服务器配置中覆盖此项目名称 `PROJECT_NAME` 环境变量。\r\n\r\n## 🚀 快速启动\r\n\r\n本指南有助于使用常见的AI客户端设置Browserai MCP服务器。\r\n\r\n1. **安装Node.js**:\r\n   这 `npx` 命令是必需的。如果尚未安装Node.js，请从 [node.js网站](https://nodejs.org/en/download). `npx` 是一个Node.js包运行器，简化了CLI工具的执行，如 `@brightdata/browserai-mcp`.\r\n\r\n### 克劳德桌面\r\n\r\n1. 导航到Claude>设置>开发人员>编辑配置> `claude_desktop_config.json` 并添加以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Browserai\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@brightdata/browserai-mcp\"],\r\n      \"env\": {\r\n        \"API_TOKEN\": \"<your-browserai-api-token>\",\r\n        \"PROJECT_NAME\": \"<your-browserai-project-name (optional)>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### VSCode代理\r\n\r\n1. 配置您的VSCode代理。这通常涉及修改设置文件。例如，创建一个 `.vscode/mcp.json` 在项目中包含以下内容的文件：\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"browserai-mcp\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@brightdata/browserai-mcp\"],\r\n      \"env\": {\r\n        \"API_TOKEN\": \"<your-browserai-api-token>\",\r\n        \"PROJECT_NAME\": \"<your-browserai-project-name (optional)>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**VSCode代理注意事项：** MCP服务器配置的具体路径和结构（例如，文件名 `.vscode/mcp.json` 或者JSON键，如 `\"servers\"`)可能因使用中的VSCode代理扩展而异。请参阅VSCode Agent的文档以获取准确的说明。\r\n\r\n## 🔌 其他MCP客户端\r\n\r\n要将此MCP服务器与支持模型上下文协议的其他AI代理或应用程序集成：\r\n\r\n1. **命令**：使用以下命令启动服务器 `npx @brightdata/browserai-mcp`.\r\n1. **环境变量**:\r\n   - `API_TOKEN`：您的Browserai API令牌（必需）。\r\n   - `PROJECT_NAME`：Browserai项目的名称（可选；如果省略，则默认为预配置的项目）。\r\n     确保在执行命令的环境中可以访问这些变量。有关配置外部MCP服务器和设置环境变量的指导，请参阅客户的文档。\r\n\r\n## ⚠️ 安全最佳实践\r\n\r\n**重要提示：** 将所有抓取的网络内容视为潜在的不可信数据。为了降低快速注射的风险，避免在LLM提示中直接使用原始刮取的内容。\r\n相反，采用以下做法：\r\n\r\n- 在处理之前过滤和验证所有网络数据。\r\n- 更喜欢结构化数据提取（使用 `web_data` 工具）覆盖原始文本。\r\n\r\n## ⚠️ 故障排除\r\n\r\n### 某些工具的超时\r\n\r\n一些工具需要大量时间来读取web数据，因为页面加载时间可能会有很大差异。\r\n\r\n为确保您的代理能够成功使用数据，请在代理的设置中配置足够高的超时时间。A值 `180s` （3分钟）通常足以满足大多数请求，但会根据目标站点的性能进行调整。\r\n\r\n### `spawn npx ENOENT` 错误\r\n\r\n此错误表示 `npx` 您的系统找不到命令。要解决此问题，请执行以下操作：\r\n\r\n#### 定位你的Node.js/npm路径\r\n\r\n**macOS：**\r\n执行 `which node` 在你的终端。输出将类似 `/usr/local/bin/node`.\r\n\r\n**窗户：**\r\n执行 `where node` 在您的命令提示符中。输出将类似于 `C:\\Program Files\\nodejs\\node.exe`.\r\n\r\n#### 更新MCP配置\r\n\r\n在客户端的MCP服务器配置中，替换 `\"npx\"` 带有Node.js可执行文件的完整路径。例如，在macOS上，它可能看起来像这样：\r\n\r\n```json\r\n\"command\": \"/usr/local/bin/node\"\r\n```\r\n\r\n（确保 `args` 仍然包括 `[\"@brightdata/browserai-mcp\"]` 或通往 `npx` 脚本（如果使用） `node` 直接与 `npx`的基础脚本。)\r\n\r\n## 📞 支持\r\n\r\n如果您遇到任何问题或有疑问，请联系Browserai支持团队或在此存储库中提交问题。\r\n",
+ "config": {
+  "browserai": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@brightdata/browserai-mcp"
+   ],
+   "env": {
+    "API_TOKEN": "<your-browserai-api-token>",
+    "PROJECT_NAME": "<your-browserai-project-name (optional)>"
+   }
+  }
+ }
+}

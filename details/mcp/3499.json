@@ -1,0 +1,26 @@
+{
+ "id": "3499",
+ "kind": "mcp",
+ "name": "komga-ebook-search",
+ "fingerprint_md5": "11f0513f2bd72a1d9972ff179a334bb1",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Komga电子书图书馆\r\n\r\n**使用模型上下文协议通过人工智能搜索和阅读您的Komga电子书集**\r\n\r\n\r\n连接您的 [群组](https://komga.org/) 数字图书馆到克劳德等人工智能助手，实现智能图书发现、内容阅读和电子书收藏的全文搜索。\r\n\r\n## 🎯 目的\r\n\r\nBridge AI助手与数字图书馆基础设施相结合，为研究、事实核查和学术引文提供权威的来源访问。 **核心理念：Komga寻找书籍，我们搜索IN书籍。**\r\n\r\n## ✨ 主要特点\r\n\r\n- **智能格式检测**：自动EPUB与PDF处理\r\n- **全文检索**：FlexSearch集成，实现即时内容发现\r\n- **克劳德视觉OCR**：非文本内容的智能PDF处理\r\n- **会话缓存**：优化了重复访问的性能\r\n- **保守派的倒退**：优雅的降级可防止用户体验不佳\r\n\r\n## 📚 格式支持矩阵\r\n\r\n|格式|内容提取|搜索能力|性能|\r\n|--------|-------------------|-------------------|-------------|\r\n| **电子版** |XHTML文本提取|FlexSearch全文搜索|\\<索引后1秒|\r\n| **PDF（文本）** |pdf解析提取| FlexSearch全文搜索|初始2-5s，缓存\\<1s|\r\n| **PDF（图片）** |清晰压缩+克劳德视觉|特定页面指导|实时|\r\n\r\n## 🚀 快速开始\r\n\r\n### 安装\r\n\r\n```bash\r\n# Via NPM (recommended)\r\nnpx @sylweriusz/komga-book-search\r\n\r\n# Via Smithery (for Claude Desktop)\r\nnpx @smithery/cli install @sylweriusz/komga-book-search --client claude\r\n```\r\n\r\n### 配置\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"komga-ebook-search\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@sylweriusz/komga-book-search\"],\r\n      \"env\": {\r\n        \"KOMGA_URL\": \"http://your-komga-server:25600\",\r\n        \"KOMGA_USERNAME\": \"your-username\",\r\n        \"KOMGA_PASSWORD\": \"your-password\",\r\n        \"KOMGA_LIBRARY\": \"your-library-filter\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🛠️ MCP工具\r\n\r\n### `search_library_books(query, library_filter?)`\r\n\r\n通过格式检测发现图书馆馆藏中的书籍。\r\n\r\n```typescript\r\n// Find academic books on specific topics\r\n{\r\n  \"query\": \"artificial intelligence\",\r\n  \"library_filter\": \"academic\"  // optional\r\n}\r\n```\r\n\r\n### `get_book_overview(book_id)`\r\n\r\n检索完整的图书元数据，包括页数和格式信息。\r\n\r\n```typescript\r\n{\r\n  \"book_id\": \"0K79C4PQAEH7J\"\r\n}\r\n```\r\n\r\n### `read_book_pages(book_id, start_page, end_page)`\r\n\r\n通过智能格式路由访问书籍内容（最多15页）。\r\n\r\n- **EPUB**：返回带有章节分隔符的纯文本\r\n- **PDF文件**：返回针对Claude Vision OCR优化的压缩图像\r\n\r\n### `search_within_book(book_id, search_term)`\r\n\r\n在个人书籍中进行全文搜索。\r\n\r\n- **EPUB和文本PDF**：带上下文和亮点的FlexSearch\r\n- **图像PDF**：使用指南 `read_book_pages` Claude Vision\r\n\r\n## 💡 用例\r\n\r\n- **学术研究**：在学术书籍中搜索引文和参考文献\r\n- **事实核查**：对权威来源的交叉引用索赔\r\n- **语言学习**：在上下文中查找对话示例和词汇\r\n- **技术文档**：高效地浏览复杂的技术手册\r\n\r\n## 🏗️ 建筑\r\n\r\n内置于 **精益架构方法论（LAM）**:\r\n\r\n- **垂直特征切片**：每个MCP工具都是独立的功能\r\n- **依赖注入**：以建筑商为基础，无单体\r\n- **严格的类型安全**：零 `any` 类型，全面的TypeScript\r\n- **单一责任**：一个文件，一个目的\r\n- **无循环依赖关系**：明确依赖方向\r\n\r\n## 📋 需求\r\n\r\n- **Node.js**：18.0.0或更高\r\n- **Komga服务器**：正在运行具有API访问权限的实例\r\n- **TypeScript**：包含在依赖项中\r\n\r\n## 🔧 发展\r\n\r\n```bash\r\n# Clone and setup\r\ngit clone https://github.com/sylweriusz/komga-ebook-search.git\r\ncd komga-ebook-search\r\nnpm install\r\n\r\n# Build and run\r\nnpm run build\r\nnpm start\r\n\r\n# Development mode\r\nnpm run dev\r\n```\r\n\r\n## 📝 配置变量\r\n\r\n|变量|描述|必填|示例|\r\n|----------|-------------|----------|---------|\r\n| `KOMGA_URL` |Komga服务器URL |✅ | `http://localhost:25600` |\r\n| `KOMGA_USERNAME` |身份验证用户名|✅ | `admin@example.com` |\r\n| `KOMGA_PASSWORD` |身份验证密码|✅ | `your-password` |\r\n| `KOMGA_LIBRARY` |库筛选器（部分匹配）|✅ | `academic` |\r\n\r\n## 🐛 故障排除\r\n\r\n### 连接问题\r\n\r\n- 验证Komga服务器是否可访问\r\n- 检查身份验证凭据\r\n- 确保用户具有PAGE_STREAMING角色\r\n\r\n### 搜索问题\r\n\r\n- 确认 `KOMGA_LIBRARY` 筛选器与现有库匹配\r\n- 检查书籍格式支持（文本搜索首选EPUB）\r\n\r\n### 性能问题\r\n\r\n- 首次访问时的EPUB索引（2-4秒）\r\n- 后续搜索使用缓存索引（\\<1秒）\r\n- 大型PDF可能需要耐心进行初始处理\r\n\r\n## 📄 许可证\r\n\r\nMIT© [西尔维尔](https://github.com/sylweriusz)\r\n\r\n## 🤝 贡献\r\n\r\n欢迎投稿！请阅读我们的 [贡献指南](CONTRIBUTING.md) 并遵循LAM架构原则。\r\n\r\n## 🔗 相关项目\r\n\r\n- [群组](https://komga.org/) -漫画/电子书服务器和网络阅读器\r\n- [模型上下文协议](https://modelcontextprotocol.io/) -AI工具集成的开放标准\r\n- [史密瑟里](https://smithery.ai/) -MCP服务器注册和市场\r\n\r\n______________________________________________________________________\r\n\r\n**专为需要人工智能访问其藏书的研究人员、学者和数字图书馆爱好者而设计。**\r\n",
+ "config": {
+  "komga-ebook-search": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@sylweriusz/komga-book-search"
+   ],
+   "env": {
+    "KOMGA_URL": "http://your-komga-server:25600",
+    "KOMGA_USERNAME": "your-username",
+    "KOMGA_PASSWORD": "your-password",
+    "KOMGA_LIBRARY": "your-library-filter"
+   }
+  }
+ }
+}

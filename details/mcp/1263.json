@@ -1,0 +1,24 @@
+{
+ "id": "1263",
+ "kind": "mcp",
+ "name": "routemesh",
+ "fingerprint_md5": "805bea85e546827bd0ead787aa2bcc1d",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# RouteMesh MCP服务器\r\n\r\n`@routemesh/mcp` 是一个本地stdio MCP服务器，用于通过RouteMesh查询区块链数据。\r\n\r\n## 概览\r\n\r\n- 从一个MCP服务器查询多个EVM链。\r\n- 快速提取有用的链上数据（区块、交易、日志、余额、费用）。\r\n- 当您需要内置工具之外的方法时，请使用通用JSON-RPC。\r\n- 通过RouteMesh路由+故障转移减少RPC端点管理开销。\r\n- 将Cursor作为按需命令插入，而不是后台守护进程。\r\n\r\n## 提示示例\r\n\r\n- “列出匹配的链 `base` 给我看看他们的链ID。\"\r\n- “获取BSC上的最新块，并汇总时间戳+tx计数。”\r\n- “获取tx收据 `0x...` 在以太坊上，告诉我它是否成功。\"\r\n- “获取区块X和Y之间Arbitrum上此合约的日志。”\r\n- “使用这些参数估计在Base上调用此方法的气体。”\r\n- “跑 `eth_getCode` 地址在链8453上 `0x...`.\"\r\n\r\n## 工具\r\n\r\n- `rpc_list_chains` -发现并过滤支持的链\r\n- `rpc_call` -通用JSON-RPC逃逸口\r\n- `rpc_get_block` -按数字/标签/哈希提取\r\n- `rpc_get_transaction` -按哈希值获取交易\r\n- `rpc_get_transaction_receipt` -通过哈希获取收据\r\n- `rpc_get_logs` -使用块/主题过滤器查询日志\r\n- `rpc_get_balance` -地址的本机令牌余额\r\n- `rpc_call_contract` -只读 `eth_call`\r\n- `rpc_estimate_gas` -天然气估算\r\n- `rpc_get_fee_data` -天然气价格+EIP-1559提示\r\n- `rpc_trace_transaction` -尽最大努力跟踪/调试事务\r\n\r\n## 先决条件\r\n\r\n- Node.js 20+\r\n- RouteMesh API密钥([注册](https://routeme.sh/auth/signup))\r\n\r\n## 快速开始\r\n\r\n安装和构建：\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n为本地开发设置API密钥：\r\n\r\n```bash\r\ncp .env.example .env\r\n```\r\n\r\n运行本地构建：\r\n\r\n```bash\r\nROUTEMESH_API_KEY=your_key_here node dist/index.js\r\n```\r\n\r\n在开发模式下运行：\r\n\r\n```bash\r\nROUTEMESH_API_KEY=your_key_here npm run dev\r\n```\r\n\r\n运行已发布的包：\r\n\r\n```bash\r\nROUTEMESH_API_KEY=your_key_here npx -y @routemesh/mcp\r\n```\r\n\r\n## 光标MCP配置\r\n\r\n将其中一个添加到 `~/.cursor/mcp.json`.\r\n\r\n本地构建：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"routemesh\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/ABSOLUTE/PATH/TO/PROJECT/dist/index.js\"],\r\n      \"env\": {\r\n        \"ROUTEMESH_API_KEY\": \"replace-with-your-routemesh-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n已发布的包通过 `npx`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"routemesh\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@routemesh/mcp\"],\r\n      \"env\": {\r\n        \"ROUTEMESH_API_KEY\": \"replace-with-your-routemesh-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 开发命令\r\n\r\n- `npm run typecheck` -静态类型检查\r\n- `npm run test` -运行一次测试\r\n- `npm run test:watch` -监视模式\r\n- `npm run build` -编译到 `dist/`\r\n\r\n## 发布\r\n\r\n```bash\r\nnpm run test\r\nnpm run build\r\nnpm version patch\r\nnpm publish --access public\r\n```\r\n\r\n## 备注\r\n\r\n- 服务器是只读的。\r\n- 请求使用 `ROUTEMESH_BASE_URL` 首先，然后 `ROUTEMESH_BACKUP_BASE_URL` 关于可重试的失败。\r\n- `rpc_list_chains` 解析来自的链数据 `https://routeme.sh/llms.txt`.\r\n\r\n## 参考文献\r\n\r\n- RouteMesh链列表： [https://routeme.sh/llms.txt](https://routeme.sh/llms.txt)\r\n- RouteMesh文档： [https://routeme.sh/docs](https://routeme.sh/docs)\r\n",
+ "config": {
+  "routemesh": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@routemesh/mcp"
+   ],
+   "env": {
+    "ROUTEMESH_API_KEY": "replace-with-your-routemesh-key"
+   }
+  }
+ }
+}

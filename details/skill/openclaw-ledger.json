@@ -1,0 +1,12 @@
+{
+ "id": "openclaw-ledger",
+ "kind": "skill",
+ "name": "openclaw-ledger",
+ "fingerprint_md5": "7ac74b4fe8daebee9d1db1cd69c824cb",
+ "download_count": 0,
+ "category": "DevOps",
+ "tags": "",
+ "version": "",
+ "readme": "# OpenClaw Ledger\r\n\r\n面向 agent workspaces 的防篡改审计追踪。每个工作区变更都记录在 hash-chained log 中 —— 如果有人篡改条目，链条就会断裂，你就会知道。\r\n\r\n## 问题\r\n\r\nAgents 修改文件、执行命令、安装技能 —— 并且没有留下可验证的记录。如果出了问题，你无法追踪发生了什么。如果日志存在，没有任何证据表明它们在事后没有被篡改。\r\n\r\n\r\n## 命令\r\n\r\n### 初始化\r\n\r\n创建 ledger 并对当前工作区状态进行快照。\r\n\r\n```bash\r\npython3 {baseDir}/scripts/ledger.py init --workspace /path/to/workspace\r\n```\r\n\r\n### 记录变更\r\n\r\n对当前状态进行快照并记录自上次记录以来的所有变更。\r\n\r\n```bash\r\npython3 {baseDir}/scripts/ledger.py record --workspace /path/to/workspace\r\npython3 {baseDir}/scripts/ledger.py record -m \"Installed new skill\" --workspace /path/to/workspace\r\n```\r\n\r\n### 验证链条\r\n\r\n验证 hash chain 是否完整 —— 没有条目被篡改。\r\n\r\n```bash\r\npython3 {baseDir}/scripts/ledger.py verify --workspace /path/to/workspace\r\n```\r\n\r\n### 查看日志\r\n\r\n显示最近的 ledger 条目。\r\n\r\n```bash\r\npython3 {baseDir}/scripts/ledger.py log --workspace /path/to/workspace\r\npython3 {baseDir}/scripts/ledger.py log -n 20 --workspace /path/to/workspace\r\n```\r\n\r\n### 快速状态\r\n\r\n```bash\r\npython3 {baseDir}/scripts/ledger.py status --workspace /path/to/workspace\r\n```\r\n\r\n## 工作原理\r\n\r\n每个条目包含：\r\n- Timestamp\r\n- 前一个条目的 SHA-256 hash\r\n- Event type 和 data（file changes、snapshots）\r\n\r\n如果任何条目被修改、插入或删除，hash chain 就会断裂，`verify` 会检测到它。\r\n\r\n## 退出代码\r\n\r\n- `0` —— Clean / chain intact\r\n- `1` —— 无 ledger 或轻微问题\r\n- `2` —— Chain tampered / corrupt entries\r\n\r\n## 无外部依赖\r\n\r\n仅 Python 标准库。无需 pip install。无网络调用。所有内容都在本地运行。\r\n\r\n## 跨平台\r\n\r\n适用于 OpenClaw、Claude Code、Cursor 和任何使用 Agent Skills specification 的工具。",
+ "config": {}
+}

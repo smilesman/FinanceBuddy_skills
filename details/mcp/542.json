@@ -1,0 +1,24 @@
+{
+ "id": "542",
+ "kind": "mcp",
+ "name": "wow-armory",
+ "fingerprint_md5": "73596f0d1f5349b396af72be016bd725",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# WoW军械库MCP服务器\r\n\r\n一个模型上下文协议（MCP）服务器，提供对魔兽世界军械库数据和功能的访问。\r\n\r\n## 概述\r\n\r\n此MCP服务器使AI助手能够通过暴雪的Armory网站与魔兽世界角色信息进行交互，提供角色查找和声誉跟踪工具。\r\n\r\n## 先决条件\r\n\r\n- Python 3.8或更高版本\r\n- [紫外线](https://docs.astral.sh/uv/) 包管理器\r\n- Git\r\n\r\n## 安装\r\n\r\n1. **克隆存储库：**\r\n\r\n   ```bash\r\n   git clone <repository-url>\r\n   cd wow-armory-mcp\r\n   ```\r\n\r\n1. **设置虚拟环境：**\r\n\r\n   ```bash\r\n   uv venv\r\n   ```\r\n\r\n1. **安装依赖项：**\r\n\r\n   ```bash\r\n   uv pip install -r pyproject.toml\r\n   ```\r\n\r\n> **注：** 该命令从以下位置安装依赖项 `pyproject.toml` 而不是传统 `requirements.txt` 文件。\r\n\r\n## 配置\r\n\r\n### Claude桌面集成\r\n\r\n要将此MCP服务器与Claude Desktop一起使用，请将以下配置添加到您的Claude Desktop设置中：\r\n\r\n**配置文件的位置：**\r\n\r\n- **macOS：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n**配置：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"wow-armory\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/your/wow-armory-mcp\",\r\n        \"run\",\r\n        \"server.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **重要提示：** 替换 `/path/to/your/wow-armory-mcp` 使用克隆存储库的实际绝对路径。\r\n\r\n### 环境变量\r\n\r\n如果您的服务器需要API凭据或配置，请创建 `.env` 项目根目录中的文件：\r\n\r\n```bash\r\n# Add any required environment variables here\r\n# Example:\r\n# WOW_API_KEY=your_api_key_here\r\n```\r\n\r\n## 用法\r\n\r\n配置后，重新启动Claude Desktop。当克劳德需要访问魔兽世界相关信息时，魔兽世界军械库服务器将自动启动。\r\n\r\n### 可用工具\r\n\r\n服务器提供与魔兽世界军械库数据交互的工具：\r\n\r\n- **字符信息** -获取详细的角色信息，包括级别、职业、种族和装备\r\n- **角色声誉** -检索不同派系的角色声誉排名\r\n\r\n## 发展\r\n\r\n### 手动运行服务器\r\n\r\n对于开发和测试：\r\n\r\n```bash\r\n# Activate the virtual environment\r\nsource .venv/bin/activate  # On Windows: .venv\\Scripts\\activate\r\n\r\n# Run the server\r\npython server.py\r\n```\r\n\r\n### 项目结构\r\n\r\n```\r\nwow-armory-mcp/\r\n├── server.py          # Main MCP server implementation\r\n├── pyproject.toml      # Project dependencies and metadata\r\n├── .env               # Environment variables (create this)\r\n├── README.md          # This file\r\n└── src/               # Source code directory\r\n    ├── __init__.py\r\n    ├── armory/        # Armory API client\r\n    ├── tools/         # MCP tool implementations\r\n    └── utils/         # Utility functions\r\n```\r\n\r\n## 故障排除\r\n\r\n### 常见问题\r\n\r\n1. **“找不到命令：uv”**\r\n\r\n   - 按照以下步骤安装uv [官方文件](https://docs.astral.sh/uv/)\r\n\r\n1. **“权限被拒绝”错误**\r\n\r\n   - 确保Claude Desktop配置中的路径使用正斜杠，即使在Windows上也是如此\r\n   - 验证绝对路径是否正确\r\n\r\n1. **API身份验证失败**\r\n\r\n   - 验证是否正确配置了任何必需的API凭据\r\n   - 检查你的 `.env` 文件（如果需要身份验证）\r\n\r\n1. **服务器无法启动**\r\n\r\n   - 验证是否安装了所有依赖项： `uv pip list`\r\n   - 检查服务器日志中的特定错误消息\r\n\r\n### 调试\r\n\r\n通过设置环境变量启用调试日志记录：\r\n\r\n```bash\r\nexport MCP_LOG_LEVEL=debug\r\n```\r\n\r\n## 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建要素分支： `git checkout -b feature-name`\r\n1. 进行更改并添加测试\r\n1. 提交您的更改： `git commit -am 'Add some feature'`\r\n1. 推到分支： `git push origin feature-name`\r\n1. 提交拉取请求\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n\r\n版权所有（c）2025丹尼尔·富兰克林\r\n\r\n特此免费向任何获得副本的人授予许可\r\n本软件和相关文档文件（“软件”），以处理\r\n在软件中不受限制，包括但不限于权利\r\n使用、复制、修改、合并、发布、分发、再许可和/或销售\r\n软件的副本，并允许软件的接收者\r\n根据以下条件提供：\r\n\r\n上述版权声明和本许可声明应包含在所有\r\n软件的副本或实质性部分。\r\n\r\n软件按“原样”提供，不提供任何形式的明示或明示担保\r\n隐含的，包括但不限于适销性保证，\r\n适用于特定目的且不造成伤害。在任何情况下\r\n作者或版权持有人对任何索赔、损害赔偿或其他\r\n因以下原因产生的责任，无论是在合同、侵权或其他诉讼中，\r\n出于或与软件、使用或其他交易有关\r\n软件。\r\n\r\n## 支持\r\n\r\n对于问题和疑问：\r\n\r\n- 在GitHub上打开一个问题\r\n- 检查 [MCP文件](https://spec.modelcontextprotocol.io/)\r\n- 查看暴雪军械库网站文档\r\n\r\n## 更新日志\r\n\r\n### \\[1.0.0-beta\\]-2025年8月27日\r\n\r\n- 初始版本\r\n- 基本角色和公会查找功能\r\n- 与Claude Desktop集成\r\n",
+ "config": {
+  "wow-armory": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/your/wow-armory-mcp",
+    "run",
+    "server.py"
+   ],
+   "env": {}
+  }
+ }
+}

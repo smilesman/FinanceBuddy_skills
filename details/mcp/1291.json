@@ -1,0 +1,24 @@
+{
+ "id": "1291",
+ "kind": "mcp",
+ "name": "talon",
+ "fingerprint_md5": "129d6020ac389a01245aa303ba6a3fd4",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Talon MCP服务器\r\n\r\n\r\n英语| [中文](README_zh.md)\r\n\r\nMCP（模型上下文协议）服务器 **塔隆** 多模型数据引擎。使Cursor、Claude Desktop、Windsurf和其他MCP兼容客户端中的AI代理能够直接查询和操作所有9个Talon引擎。\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g talon-mcp-server\r\n```\r\n\r\n或直接通过 `npx` --无需安装：\r\n\r\n```bash\r\nnpx talon-mcp-server\r\n```\r\n\r\n## 快速开始\r\n\r\n### 1.启动Talon服务器\r\n\r\n```bash\r\n./talon-server --http-port 8080 --data ./data\r\n```\r\n\r\n### 2.在游标中配置\r\n\r\n添加到您的项目 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"talon\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"talon-mcp-server\"],\r\n      \"env\": {\r\n        \"TALON_URL\": \"http://localhost:8080\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.在Claude Desktop中配置\r\n\r\n添加 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"talon\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"talon-mcp-server\"],\r\n      \"env\": {\r\n        \"TALON_URL\": \"http://localhost:8080\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 4.在Windsurf中配置\r\n\r\n添加 `~/.codeium/windsurf/mcp_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"talon\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"talon-mcp-server\"],\r\n      \"env\": {\r\n        \"TALON_URL\": \"http://localhost:8080\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 支持的引擎和工具\r\n\r\n|引擎|工具|说明|\r\n|--------|-------|-------------|\r\n| **结构化查询语言** | `talon_sql_query`, `talon_sql_execute` |带有向量/地理函数的完整SQL|\r\n| **键值** | `talon_kv_get/set/delete/scan/mget/incr` |Redis兼容键值存储|\r\n| **矢量** | `talon_vector_search/insert/create_index` |HNSW相似性搜索|\r\n| **时间序列** | `talon_ts_query/write/create` |具有聚合功能的时间序列数据|\r\n| **消息队列** | `talon_mq_publish/poll/ack/create_topic/list_topics` |消费者群体、DLQ、优先级|\r\n| **全文搜索** | `talon_fts_search/index_doc/hybrid_search/create_index` |BM25+混合动力车（BM25+矢量RRF）|\r\n| **地理空间** | `talon_geo_search/add/create` |地理空间半径/框搜索|\r\n| **图** | `talon_graph_query/shortest_path/add_vertex/add_edge/create` |带BFS的属性图，最短路径|\r\n| **人工智能** | `talon_ai_session`, `talon_ai_memory` |会话/上下文/内存管理|\r\n| **管理员** | `talon_list_tables/describe_table/server_info/persist/raw_execute` |架构检查、服务器状态、原始命令|\r\n\r\n**38工具** 涵盖Talon的所有功能。\r\n\r\n## 环境变量\r\n\r\n|变量|默认值|描述|\r\n|----------|---------|-------------|\r\n| `TALON_URL` | `http://localhost:8080` |Talon服务器HTTP端点|\r\n| `TALON_TIMEOUT` | `30000` |请求超时（毫秒）|\r\n\r\n## 例子\r\n\r\n配置后，AI代理可以直接与Talon交互：\r\n\r\n```\r\n\"Show me all tables in the database\"\r\n→ talon_list_tables\r\n\r\n\"Create a users table with id, name, and a 384-dim embedding column\"\r\n→ talon_sql_execute: CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT, emb VECTOR(384))\r\n\r\n\"Search for vectors similar to [0.1, 0.2, ...] in the embeddings index\"\r\n→ talon_vector_search\r\n\r\n\"Set cache key session:abc to token123 with 1 hour TTL\"\r\n→ talon_kv_set(key=\"session:abc\", value=\"token123\", ttl=3600)\r\n\r\n\"Find articles about 'machine learning' using hybrid search\"\r\n→ talon_fts_hybrid_search: BM25 + vector similarity with RRF fusion\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/darkmice/talon-mcp.git\r\ncd talon-mcp\r\nnpm install\r\nnpm run build\r\n\r\nnpm run dev    # Watch mode with tsx\r\nnpm start      # Run built server\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "talon": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "talon-mcp-server"
+   ],
+   "env": {
+    "TALON_URL": "http://localhost:8080"
+   }
+  }
+ }
+}

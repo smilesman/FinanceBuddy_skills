@@ -1,0 +1,32 @@
+{
+ "id": "1328",
+ "kind": "mcp",
+ "name": "aider-mcp-server",
+ "fingerprint_md5": "53b42f1311a4f7a93a41e2e70f4eb2dc",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP服务器助手\r\n\r\n> 使用Aider提供AI编码功能的机器认知协议（MCP）服务器。\r\n\r\n<p align=\"center\">\r\n  \r\n  \r\n</p>\r\n\r\n## 目录\r\n\r\n- [概述](#overview)\r\n- [特性](#features)\r\n- [先决条件](#prerequisites)\r\n- [安装](#installation)\r\n- [配置](#configuration)\r\n- [运行服务器](#running-the-server)\r\n- [MCP工具](#mcp-tools)\r\n- [与MCP客户端集成](#integration-with-mcp-clients)\r\n- [故障排除](#troubleshooting)\r\n- [许可证](#license)\r\n\r\n## 概述\r\n\r\n该MCP服务器利用Aider，一个强大的人工智能编码助手，通过标准化的API提供编码功能。通过将工作分散地卸载给Aider，我们可以降低成本，同时使用特定于模型的功能通过多个专注的LLM调用创建更可靠的代码。\r\n\r\n## 特性\r\n\r\n- **AI代码生成**：使用Aider运行一次性编码任务以添加、修复或增强代码\r\n- **模型选择**：查询可用模型，为您的任务选择最合适的模型\r\n- **灵活的配置**：使用可自定义的设置配置Aider会话\r\n- **多运输支持**：通过服务器发送事件（SSE）或stdio运行，以实现灵活集成\r\n- **一般问题解答**：使用简单的提示提出法学硕士问题\r\n\r\n## 先决条件\r\n\r\n- **python**：3.10或更高\r\n- **程序包管理器**：uv（推荐）或pip\r\n- **API密钥**：根据您要使用的模型，您需要API密钥用于：\r\n  - OpenAI（适用于GPT模型）\r\n  - 拟人化（适用于克劳德模特）\r\n  - 谷歌（适用于双子座车型）\r\n\r\n## 安装\r\n\r\n1. 克隆存储库：\r\n\r\n   ```bash\r\n   git clone https://github.com/your-username/aider-mcp.git\r\n   cd aider-mcp\r\n   ```\r\n\r\n1. 安装软件包：\r\n\r\n   ```bash\r\n   uv sync\r\n   uv venv\r\n   uv pip install -e .\r\n   ```\r\n\r\n1. 运行测试以确保一切正常：\r\n\r\n   ```bash\r\n   uv run pytest\r\n   ```\r\n\r\n## 配置\r\n\r\n使用环境变量配置服务器行为 `.env` 文件：\r\n\r\n```bash\r\n# Create environment file from example\r\ncp .env.example .env\r\n```\r\n\r\n编辑 `.env` 文件以配置传输、主机、端口和API密钥。\r\n\r\n|变量|描述|默认值|必填|\r\n| ------------------- | ------------------------------------------ | ------------ | -------- |\r\n| `TRANSPORT` |传输协议（sse或stdio）| `sse` |没有|\r\n| `HOST` |使用SSE传输时要绑定的主机| `0.0.0.0` |没有|\r\n| `PORT` |使用SSE传输时要监听的端口| `8050` |没有|\r\n| `OPENAI_API_KEY` |用于OpenAI模型的API密钥||\\*|\r\n| `ANTHROPIC_API_KEY` |人类模型的API密钥||\\*|\r\n| `GEMINI_API_KEY` |适用于Google Gemini模型的API密钥||\\*|\r\n\r\n\\*仅当使用该提供商的型号时才需要\r\n\r\n### 命令行选项\r\n\r\n- `--editor-model`：用于编辑的模型（默认值：gemini/jemini-2.5-pro-exp-03-25）\r\n- `--architect-model`：用于架构规划的模型（可选）\r\n- `--cwd`：当前工作目录（默认：当前目录）\r\n\r\n## 运行服务器\r\n\r\n### 启动服务器（SSE模式）\r\n\r\n```bash\r\n# Using the module directly\r\nuv run python -m aider_mcp_server\r\n```\r\n\r\n或者使用自定义设置：\r\n\r\n```bash\r\nuv run python -m aider_mcp_server --editor-model \"gemini/gemini-2.5-pro-exp-03-25\" --cwd \"/path/to/project\"\r\n```\r\n\r\n您应该看到类似于以下内容的输出：\r\n\r\n```\r\nStarting server with transport: sse\r\nUsing SSE transport on 0.0.0.0:8050\r\n```\r\n\r\n### 使用stdio模式\r\n\r\n使用stdio模式时，您不需要单独启动服务器——正确配置后，MCP客户端将自动启动它（请参阅 [与MCP客户端集成](#integration-with-mcp-clients)).\r\n\r\n## MCP工具\r\n\r\nAider MCP服务器提供以下工具：\r\n\r\n### ai_code\r\n\r\n运行Aider执行编码任务。\r\n\r\n参数：\r\n\r\n- `ai_coding_prompt`：AI编码任务的提示\r\n- `relative_editable_files`：可编辑的文件列表\r\n- `relative_readonly_files`：（可选）应为只读的文件列表\r\n- `settings`：（可选）助手会话的设置\r\n\r\n例子：\r\n\r\n```json\r\n{\r\n  \"ai_coding_prompt\": \"Add a function that calculates the factorial of a number\",\r\n  \"relative_editable_files\": [\"math.py\"],\r\n  \"settings\": {\r\n    \"auto_commits\": false,\r\n    \"use_git\": false\r\n  }\r\n}\r\n```\r\n\r\n### get_models\r\n\r\n列出按子字符串筛选的可用Aider模型。\r\n\r\n参数：\r\n\r\n- `substring`：通过以下方式过滤模型\r\n\r\n例子：\r\n\r\n```json\r\n{\r\n  \"substring\": \"openai\"\r\n}\r\n```\r\n\r\n### ask_问题\r\n\r\n向LLM发送提示并返回响应。\r\n\r\n参数：\r\n\r\n- `prompt`：要发送的问题或声明\r\n- `model`：（可选）要使用的LLM模型\r\n\r\n例子：\r\n\r\n```json\r\n{\r\n  \"prompt\": \"What is the capital of France?\",\r\n  \"model\": \"gpt-4o\"\r\n}\r\n```\r\n\r\n## 与MCP客户端集成\r\n\r\n配置您的MCP客户端以连接到SSE端点：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"aider-mcp-server\": {\r\n      \"transport\": \"sse\",\r\n      \"serverUrl\": \"http://localhost:8050/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 标准集成\r\n\r\n配置您的MCP客户端以通过stdio运行服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"aider-mcp-server\": {\r\n      \"transport\": \"stdio\",\r\n      \"command\": \"python\",\r\n      \"args\": [\"-m\", \"aider_mcp_server\"],\r\n      \"env\": {\r\n        \"TRANSPORT\": \"stdio\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 与MCP客户端集成\r\n\r\n#### 使用Docker\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n      \"aider-mcp-server\": {\r\n        \"command\": \"docker\",\r\n        \"args\": [ \"run\", \"-i\", \"--rm\",\r\n          \"--mount\", \"type=bind,source=<YOUR_FULL_PATH>\",\r\n          \"-e\", \"TRANSPORT=stdio\",\r\n          \"-e\", \"EDITOR_MODEL=gemini/gemini-2.5-pro-preview-03-25\",\r\n          \"-e\", \"GEMINI_API_KEY=<YOUR_API_KEY>\",\r\n          \"danielscholl/aider-mcp-server\"\r\n        ]\r\n      }\r\n    }\r\n  }\r\n```\r\n",
+ "config": {
+  "aider-mcp-server": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "--mount",
+    "type=bind,source=<YOUR_FULL_PATH>",
+    "-e",
+    "TRANSPORT=stdio",
+    "-e",
+    "EDITOR_MODEL=gemini/gemini-2.5-pro-preview-03-25",
+    "-e",
+    "GEMINI_API_KEY=<YOUR_API_KEY>",
+    "danielscholl/aider-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

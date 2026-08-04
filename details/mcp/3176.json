@@ -1,0 +1,23 @@
+{
+ "id": "3176",
+ "kind": "mcp",
+ "name": "ncei-ads",
+ "fingerprint_md5": "5f62261225a05c503f435b45dc573601",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# NCEI ADS MCP服务器\r\n\r\nNOAA NCEI访问数据服务API的模型上下文协议（MCP）服务器-通过Claude Desktop访问天气和气候数据。\r\n\r\n## 特性\r\n\r\n- 🌦️ **API全面覆盖：** 支持所有官方NCEI ADS参数\r\n- 🔍 **车站查找器：** 按地址、邮政编码或坐标查找最近的气象站\r\n- 📊 **多种格式：** JSON、CSV、SSV\r\n- 🗓️ **灵活日期：** 支持时区的ISO 8601日期和时间戳\r\n- 🗺️ **地理过滤：** 边界框查询\r\n- 📏 **单位转换：** 标准或公制单位\r\n- ⚡ **生产就绪：** 全面的错误处理和测试\r\n- 🏗️ **模块化架构：** 可维护性关注点的清晰分离\r\n\r\n## 快速开始\r\n\r\n### 1.安装uv\r\n\r\n```bash\r\n# macOS/Linux\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n\r\n# Windows\r\npowershell -c \"irm https://astral.sh/uv/install.ps1 | iex\"\r\n```\r\n\r\n### 2.配置克劳德桌面\r\n\r\n添加到您的配置文件中：\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ncei-ads\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--from\",\r\n        \"git+https://github.com/Shubham-Saboo/NCICS-MCP.git\",\r\n        \"ncei-ads-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.重新启动克劳德桌面\r\n\r\n就是这样！服务器将自动下载、设置和运行。\r\n\r\n## 可用工具\r\n\r\n### 1.查找最近的车站\r\n\r\n按地址、邮政编码或坐标查找车站ID。返回最近的气象站及其ID。\r\n\r\n**示例提示：**\r\n\r\n- “查找距离纽约最近的每日摘要站”\r\n- “离邮政编码02101最近的气象站是哪里？”\r\n- 查找纬度42.3601、经度-71.0589附近的全球小时站\r\n\r\n**参数：**\r\n\r\n- `dataset` -数据集名称（例如，“每日摘要”、“全球每小时”）\r\n- `location` -地址或邮政编码（例如“马萨诸塞州波士顿”或“02101”）\r\n- 或 `latitude` + `longitude` -十进制坐标\r\n- `radius_km` -搜索半径（默认值：50km，建议最大值：200km）\r\n\r\n**退货：**\r\n\r\n- 站ID（与fetch_data工具一起使用）\r\n- 车站名称和坐标\r\n- 与您所在位置的距离\r\n- 即用型示例\r\n\r\n### 2.获取天气数据\r\n\r\n从NCEI检索历史天气和气候数据。\r\n\r\n**示例提示：**\r\n\r\n- “获取2024年1月1日至3日USW00094728站的温度数据”\r\n- “获取2016年1月北大西洋的海风数据”\r\n\r\n**每日温度数据：**\r\n\r\n```\r\ndataset: daily-summaries\r\nstartDate: 2024-01-01\r\nendDate: 2024-01-03\r\nstations: USW00094728\r\ndataTypes: TMAX,TMIN,PRCP\r\nunits: metric\r\nformat: json\r\n```\r\n\r\n**带边界框的海洋数据：**\r\n\r\n```\r\ndataset: global-marine\r\nstartDate: 2016-01-01\r\nendDate: 2016-01-02\r\nboundingBox: 90,-180,-90,180\r\ndataTypes: WIND_DIR,WIND_SPEED\r\nformat: csv\r\n```\r\n\r\n看 [测试_会话.md](TEST_CASES.md) 用于14+个综合测试用例。\r\n\r\n## 支持的参数\r\n\r\n**必修的：**\r\n\r\n- `dataset` -数据集标识符（例如，“每日摘要”、“全球海洋”）\r\n- `startDate` -ISO 8601日期（YYYY-MM-DD或YYYY-MM-MM-DTHH:MM:ssZ）\r\n- `endDate` -ISO 8601日期\r\n\r\n**可选：**\r\n\r\n- `stations` -逗号分隔的站ID\r\n- `dataTypes` -逗号分隔的数据类型代码\r\n- `boundingBox` -地理过滤器为“N、W、S、E”\r\n- `units` -“标准”或“公制”\r\n- `format` -“json”（默认）、“csv”或“ssv”\r\n- `includeAttributes`, `includeStationName`, `includeStationLocation` -布尔标志\r\n- `options` -高级选项字符串\r\n\r\n**文档：** https://www.ncei.noaa.gov/support/access-data-service-api-user-documentation\r\n\r\n## 发展\r\n\r\n### 本地设置\r\n\r\n```bash\r\ngit clone https://github.com/Shubham-Saboo/NCICS-MCP.git\r\ncd NCICS-MCP\r\nuv pip install -e \".[dev]\"\r\n```\r\n\r\n### 运行测试\r\n\r\n```bash\r\nuv run pytest tests/ -v\r\n```\r\n\r\n所有测试均通过，包括：\r\n\r\n- 数据提取（所有格式：JSON、CSV、SSV）\r\n- HTTP错误处理（400500）\r\n- 超时和连接错误\r\n- 参数验证\r\n- 模块化架构（API客户端、实用程序、工具）\r\n\r\n### 项目结构\r\n\r\n```\r\nsrc/ncei_ads_mcp/\r\n├── server.py              # Main MCP server with tool registration\r\n├── api/\r\n│   ├── client.py          # HTTP client for NCEI API\r\n│   └── endpoints.py       # API URLs\r\n├── tools/\r\n│   ├── fetch_data.py      # Data fetching tool\r\n│   └── find_station.py    # Station finder tool\r\n└── utils/\r\n    ├── distance.py        # Haversine distance calculations\r\n    ├── geocoding.py       # Address to coordinates conversion\r\n    └── error_handlers.py  # HTTP error handling\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！拜托：\r\n\r\n1. 分叉存储库\r\n1. 创建要素分支\r\n1. 运行测试\r\n1. 提交拉取请求\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证.md](LICENSE.md)\r\n\r\n## 致谢\r\n\r\n- 内置于 [模型上下文协议](https://modelcontextprotocol.io)\r\n- 数据来自 [诺亚·恩西](https://www.ncei.noaa.gov/)\r\n",
+ "config": {
+  "ncei-ads": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/Shubham-Saboo/NCICS-MCP.git",
+    "ncei-ads-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "id": "2200",
+ "kind": "mcp",
+ "name": "gdal-mcp",
+ "fingerprint_md5": "d6ec8b4ce8280817b41bef750a3935a6",
+ "download_count": 0,
+ "category": "路线规划",
+ "tags": "",
+ "version": "",
+ "readme": "# GDAL MCP\r\n\r\n**具有认知推理的地理空间人工智能**\r\n\r\nGDAL MCP是一种模型上下文协议（MCP）服务器，为AI代理提供地理空间分析功能，同时要求它们 **证明他们的方法选择** 通过反射中间件系统。\r\n\r\n**v1.1.3发布（2026-02-25）**\r\n\r\n- 增加了次区域空间查询功能。\r\n- 添加了环境变量配置选项。\r\n\r\n______________________________________________________________________\r\n\r\n## 文档\r\n\r\n1. **[安装、设置和MCP配置](QUICKSTART.md)**\r\n1. **[完整的工具文档和示例](TOOLS.md)**\r\n1. **[运行时配置和刀具表面控制](docs/ENVIRONMENT_VARIABLES.md)**\r\n1. **[长期路线图和理念](docs/VISION.md)**\r\n1. **[发布历史和更新](CHANGELOG.md)**\r\n\r\n______________________________________________________________________\r\n\r\n## 快速开始\r\n\r\n### 通过uvx安装（推荐）\r\n\r\n```bash\r\n# Run directly from PyPI\r\nuvx --from gdal-mcp gdal --transport stdio\r\n```\r\n\r\n### MCP配置（克劳德桌面）\r\n\r\n添加 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gdal-mcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--from\", \"gdal-mcp\", \"gdal\", \"--transport\", \"stdio\"],\r\n      \"env\": {\r\n        \"GDAL_MCP_WORKSPACES\": \"/path/to/your/geospatial/data\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**看 [QUICKSTART.md](QUICKSTART.md) 用于：**\r\n\r\n- 替代安装方法（Docker、本地开发）\r\n- 详细的MCP客户端配置\r\n- 工作区安全设置\r\n- 故障排除指南\r\n\r\n______________________________________________________________________\r\n\r\n## 主要特点\r\n\r\n### 反射中间件\r\n\r\n- CRS选择的预执行推理、重采样方法。\r\n- 结构化理由：意图、替代方案、选择、权衡、信心。\r\n- 在多操作工作流中，持久缓存的命中率为75%。\r\n- 跨域缓存共享。对齐跨越光栅和矢量操作。\r\n\r\n### 综合工具集\r\n\r\n- **光栅工具：** 信息、转换、重新投影、统计、查询\r\n- **矢量工具：** 信息、重新投影、转换、剪辑、缓冲、简化、查询\r\n\r\n> 看 **[工具参考](TOOLS.md)** 获取完整的文档\r\n\r\n______________________________________________________________________\r\n\r\n## 反射系统\r\n\r\n### 是什么让GDAL MCP与众不同？\r\n\r\n大多数AI工具系统在收到请求时会立即执行操作。GDAL MCP要求AI **证明方法论决策的合理性** 在执行之前，创建一个关于“为什么”的对话，而不仅仅是执行“什么”\r\n\r\n**传统人工智能工具方法：**\r\n\r\n```text\r\nUser: \"Reproject this DEM to Web Mercator\"\r\nAI: *silently executes operation*\r\nResult: DEM reprojected (but with what resampling? why that CRS? what tradeoffs?)\r\n```\r\n\r\n**GDAL MCP：**\r\n\r\n```text\r\n---\r\nUser:\r\n  > Reproject this DEM to Web Mercator for my web map\r\n---\r\nAI:\r\n  [[reflection middleware intercepts]]\r\n---\r\nAI:\r\n  \"\"\"\r\n  Before reprojecting to EPSG:3857, let me justify this CRS choice:\r\n\r\n  Intent:\r\n    Web Mercator preserves angles (conformal projection), essential for web tile rendering and navigation\r\n\r\n  Alternatives considered:\r\n  - EPSG:4326 (WGS84) → rejected:\r\n    - not conformal, distorts shapes\r\n  - Local UTM → rejected:\r\n    - limited extent, not web-standard\r\n\r\n  Tradeoffs:\r\n    Area distortion increases at high latitudes (acceptable for web visualization)\r\n\r\n  Confidence:\r\n    High; This is the standard for web mapping.\r\n\r\n  [[justification stored, operation proceeds]]\r\n  \"\"\"\r\n---\r\nResult:\r\n  DEM reprojected with documented methodology\r\n```\r\n\r\n### 为什么这很重要\r\n\r\n**1.利用MCP协议的全部功能**\r\n\r\n模型上下文协议不仅仅是关于工具暴露。MCP公开了其他用于代理推理和交互的原语。\r\n\r\n反射系统利用MCP的设计实现：\r\n\r\n- 执行前提示（工具依赖性）\r\n- 结构化推理（模式验证的理由）\r\n- 有状态的工作流（理由缓存）\r\n- 人机交互（咨询提示）\r\n\r\n**2.防止无声故障**\r\n\r\n地理空间操作可以成功执行，但会产生方法论上不正确的结果：\r\n\r\n- 对连续高程数据进行最近邻重采样会产生伪影\r\n- 用于面积计算的Web Mercator会产生高达40%以上的失真\r\n- 对分类数据进行双线性插值会产生无效的类值\r\n\r\n反射系统会显示这些选项以进行验证。\r\n\r\n**3.教育性，非限制性**\r\n\r\nAI模型不会被阻止执行操作。需要证明理解：\r\n\r\n- 第一用途：解释推理，教授方法论\r\n- 缓存：即时执行（知识持久）\r\n- 结果：75%以上的缓存命中率，摩擦最小\r\n\r\n**4.创建审计跟踪**\r\n\r\n每一个方法决策都记录了：\r\n\r\n- 意图：必须保护哪些财产？\r\n- 替代方案：还考虑了什么？\r\n- 理由：为什么选择这个？\r\n- 权衡：有什么局限性？\r\n- 信心：高/中/低\r\n\r\n这使得 **可再生地理空间科学**.\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 了解详情。\r\n\r\n______________________________________________________________________\r\n\r\n## 致谢\r\n\r\n- 内置于 [快速多通道处理](https://github.com/jlowin/fastmcp)\r\n- 由...驱动 [拉斯特里奥](https://github.com/rasterio/rasterio) 和 [GDAL](https://gdal.org)\r\n- 灵感来自 [模型上下文协议](https://modelcontextprotocol.io)\r\n\r\n______________________________________________________________________\r\n\r\n**内置于❤️ 面向地理空间人工智能社区**\r\n\r\n*地理空间操作是思考，而不仅仅是执行。*\r\n",
+ "config": {
+  "gdal-mcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "gdal-mcp",
+    "gdal",
+    "--transport",
+    "stdio"
+   ],
+   "env": {
+    "GDAL_MCP_WORKSPACES": "/path/to/your/geospatial/data"
+   }
+  }
+ }
+}

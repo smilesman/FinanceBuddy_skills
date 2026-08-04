@@ -1,0 +1,25 @@
+{
+ "id": "1069",
+ "kind": "mcp",
+ "name": "influxdb",
+ "fingerprint_md5": "f658f94ad6e60c5f4316c671d01549a6",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# InfluxDB v2 MCP服务器\r\n\r\n\r\n模型上下文协议（MCP）服务器，使用InfluxDB OSS API v2公开对InfluxDBv2实例的访问。主要使用Claude Code构建。\r\n\r\n## 特性\r\n\r\n此MCP服务器提供：\r\n\r\n- **资源**：访问组织、存储桶和测量数据\r\n- **工具**：写入数据、执行查询和管理数据库对象\r\n- **提示**：常见Flux查询和Line Protocol格式的模板\r\n\r\n## 资源\r\n\r\n服务器公开以下资源：\r\n\r\n1. **组织列表**: `influxdb://orgs`\r\n\r\n   - 显示InfluxDB实例中的所有组织\r\n\r\n1. **Buckets列表**: `influxdb://buckets`\r\n\r\n   - 显示所有存储桶及其元数据\r\n\r\n1. **铲斗测量**: `influxdb://bucket/{bucketName}/measurements`\r\n\r\n   - 列出指定桶内的所有测量值\r\n\r\n1. **查询数据**: `influxdb://query/{orgName}/{fluxQuery}`\r\n\r\n   - 执行Flux查询并将结果作为资源返回\r\n\r\n## 工具\r\n\r\n服务器提供以下工具：\r\n\r\n1. `write-data`：以线路协议格式写入时间序列数据\r\n\r\n   - 参数：组织、桶、数据、精度（可选）\r\n\r\n1. `query-data`：执行Flux查询\r\n\r\n   - 参数：组织、查询\r\n\r\n1. `create-bucket`：创建新bucket\r\n\r\n   - 参数：名称、组织ID、保留周期秒（可选）\r\n\r\n1. `create-org`：创建新组织\r\n\r\n   - 参数：名称、描述（可选）\r\n\r\n## 提示\r\n\r\n服务器提供以下提示模板：\r\n\r\n1. `flux-query-examples`：常见Flux查询示例\r\n1. `line-protocol-guide`：InfluxDB线路协议格式指南\r\n\r\n## 配置\r\n\r\n服务器需要以下环境变量：\r\n\r\n- `INFLUXDB_TOKEN` （必需）：InfluxDB API的身份验证令牌\r\n- `INFLUXDB_URL` （可选）：InfluxDB实例的URL（默认为 `http://localhost:8086`)\r\n- `INFLUXDB_ORG` （可选）：某些操作的默认组织名称\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面版InfluxDB MCP服务器 [史密瑟里](https://smithery.ai/server/@idoru/influxdb-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @idoru/influxdb-mcp-server --client claude\r\n```\r\n\r\n### 选项1：使用npx运行（推荐）\r\n\r\n```bash\r\n# Run directly with npx\r\nINFLUXDB_TOKEN=your_token npx influxdb-mcp-server\r\n```\r\n\r\n### 选项2：全局安装\r\n\r\n```bash\r\n# Install globally\r\nnpm install -g influxdb-mcp-server\r\n\r\n# Run the server\r\nINFLUXDB_TOKEN=your_token influxdb-mcp-server\r\n```\r\n\r\n### 选项3：来源\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/idoru/influxdb-mcp-server.git\r\ncd influxdb-mcp-server\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Run the server\r\nINFLUXDB_TOKEN=your_token npm start\r\n```\r\n\r\n`influxdb-mcp-server` 默认情况下使用stdio传输。您可以通过以下方式明确请求 `--stdio`，或通过提供流式HTTP传输来启动服务器 `--http` 带有可选端口号的选项（默认为3000）。此模式使用内部Express.js服务器：\r\n\r\n```bash\r\n# Start with Streamable HTTP transport on default port 3000\r\nINFLUXDB_TOKEN=your_token npm start -- --http\r\n\r\n# Start with Streamable HTTP transport on a specific port\r\nINFLUXDB_TOKEN=your_token npm start -- --http 8080\r\n```\r\n\r\n如果您全局安装或使用npx，则可以运行：\r\n\r\n```bash\r\nINFLUXDB_TOKEN=your_token influxdb-mcp-server --http\r\n# or explicitly force stdio\r\nINFLUXDB_TOKEN=your_token influxdb-mcp-server --stdio\r\n# or\r\nINFLUXDB_TOKEN=your_token influxdb-mcp-server --http 8080\r\n```\r\n\r\n## 与Claude for Desktop集成\r\n\r\n将服务器添加到您的 `claude_desktop_config.json`:\r\n\r\n### 使用npx（推荐）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"influxdb\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"influxdb-mcp-server\"],\r\n      \"env\": {\r\n        \"INFLUXDB_TOKEN\": \"your_token\",\r\n        \"INFLUXDB_URL\": \"http://localhost:8086\",\r\n        \"INFLUXDB_ORG\": \"your_org\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 如果本地安装\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"influxdb\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/influxdb-mcp-server/src/index.js\"],\r\n      \"env\": {\r\n        \"INFLUXDB_TOKEN\": \"your_token\",\r\n        \"INFLUXDB_URL\": \"http://localhost:8086\",\r\n        \"INFLUXDB_ORG\": \"your_org\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 代码结构\r\n\r\n服务器代码被组织成模块化结构：\r\n\r\n- `src/`\r\n  - `index.js` -主服务器入口点\r\n  - `config/` -配置相关文件\r\n    - `env.js` -环境变量处理\r\n  - `utils/` -实用功能\r\n    - `influxClient.js` -InfluxDB API客户端\r\n    - `loggerConfig.js` -控制台记录器配置\r\n  - `handlers/` -资源和工具处理程序\r\n    - `organizationsHandler.js` -组织列表\r\n    - `bucketsHandler.js` -Buckets列表\r\n    - `measurementsHandler.js` -测量列表\r\n    - `queryHandler.js` -查询执行\r\n    - `writeDataTool.js` -数据写入工具\r\n    - `queryDataTool.js` -查询工具\r\n    - `createBucketTool.js` -Bucket创建工具\r\n    - `createOrgTool.js` -组织创建工具\r\n  - `prompts/` -提示模板\r\n    - `fluxQueryExamplesPrompt.js` -通量查询示例\r\n    - `lineProtocolGuidePrompt.js` -线路协议指南\r\n\r\n这种结构允许更好的可维护性、更容易的测试和更清晰的关注点分离。\r\n\r\n## 测试\r\n\r\n该存储库包括全面的集成测试，这些测试：\r\n\r\n- 使用InfluxDB启动Docker容器\r\n- 用示例数据填充它\r\n- 测试所有MCP服务器功能\r\n\r\n要运行测试，请执行以下操作：\r\n\r\n```bash\r\nnpm test\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "influxdb": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "influxdb-mcp-server"
+   ],
+   "env": {
+    "INFLUXDB_TOKEN": "your_token",
+    "INFLUXDB_URL": "http://localhost:8086",
+    "INFLUXDB_ORG": "your_org"
+   }
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "load-testing",
+ "kind": "skill",
+ "name": "load-testing",
+ "fingerprint_md5": "4915d2209f0bb55ef464eff227835fee",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\n设计并执行负载测试方案，评估系统在不同负载下的性能表现，识别性能瓶颈和容量上限。",
+ "config": {}
+}

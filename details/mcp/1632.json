@@ -1,0 +1,22 @@
+{
+ "id": "1632",
+ "kind": "mcp",
+ "name": "multicluster-mcp-server",
+ "fingerprint_md5": "c5b18c82564acdfbcb34ada33024735a",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 打开集群管理MCP服务器\r\n\r\n这 **OCM MCP服务器** 为生成AI（GenAI）系统提供了一个强大的网关，通过模型上下文协议（MCP）与多个Kubernetes集群进行交互。它促进了对Kubernetes资源的全面操作，简化了多集群管理，并提供了交互式集群可观测性。\r\n\r\n## **🚀 特性**\r\n\r\n### 🛠️ MCP工具-Kubernetes集群感知\r\n\r\n- ✅ 从检索资源 **中枢集群** （当前背景）\r\n\r\n- ✅ 从检索资源 **托管集群**\r\n\r\n- ✅ 连接到a **管理集群** 使用指定 `ClusterRole`\r\n\r\n- ✅ 跨多个Kubernetes集群访问资源（通过开放集群管理）\r\n\r\n- 🔄 检索和分析 **指标、日志和警报** 来自集成集群\r\n\r\n- ❌ 与多集群API交互，包括托管集群、策略、附加组件等\r\n\r\n  \r\n\r\n  <details>\r\n  <summary>Mutiple Kubernetes Clusters Operations</summary>\r\n\r\n  [](https://asciinema.org/a/706281)\r\n\r\n  </details>\r\n\r\n### 📦 开放式集群管理提示模板 *（规划）*\r\n\r\n- 提供为OCM任务量身定制的可重用提示模板，简化代理交互和自动化\r\n\r\n### 📚 开放集群管理的MCP资源 *（规划）*\r\n\r\n- 参考官方OCM文档和相关资源，以支持开发和集成\r\n\r\n### **📌 如何使用**\r\n\r\n使用以下代码段配置服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"multicluster-mcp-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"multicluster-mcp-server@latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**注：** 确保 `kubectl` 已安装。默认情况下，该工具使用 **`KUBECONFIG`** 访问集群的环境变量。在多集群设置中，它将配置的集群视为 **中枢集群**，通过它访问他人。\r\n\r\n## 许可证\r\n\r\n该项目根据 [MIT许可证](LICENSE).\r\n",
+ "config": {
+  "multicluster-mcp-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "multicluster-mcp-server@latest"
+   ],
+   "env": {}
+  }
+ }
+}

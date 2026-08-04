@@ -1,0 +1,23 @@
+{
+ "id": "3290",
+ "kind": "mcp",
+ "name": "weather-mcp-server",
+ "fingerprint_md5": "805d02696e403d2bcf43fd9fe75e5ace",
+ "download_count": 0,
+ "category": "地图服务",
+ "tags": "",
+ "version": "",
+ "readme": "# 天气 MCP 服务器\r\n\r\n这是一个基于 FastMCP 构建的天气查询服务器，提供城市天气信息查询服务。\r\n\r\n## 功能特点\r\n\r\n- 支持全球城市天气查询\r\n- 提供温度、湿度和天气描述信息\r\n- 支持摄氏度和华氏度温度单位切换\r\n- 基于 Model Context Protocol (MCP) 实现\r\n- 完整的日志记录\r\n\r\n## 安装要求\r\n\r\n- Python 3.8+\r\n- OpenWeatherMap API 密钥\r\n- uv (Python 包管理工具)\r\n\r\n## 快速开始\r\n\r\n1. 克隆仓库：\r\n```bash\r\ngit clone\r\ncd weather-mcp-server\r\n```\r\n\r\n2. 安装依赖：\r\n```bash\r\nmake install\r\n```\r\n\r\n3. 设置环境变量：\r\n创建 `.env` 文件并添加以下内容：\r\n```\r\nOPENWEATHER_API_KEY=你的OpenWeatherMap_API密钥\r\n```\r\n\r\n4. 运行服务器：\r\n```bash\r\nmake run\r\n```\r\n\r\n## 安装和使用\r\n\r\n### 选项 1：使用 uvx（推荐）\r\n\r\n使用 `uvx` 将自动从 PyPI 安装包，无需克隆仓库。将以下配置添加到 Claude Desktop 的配置文件 `claude_desktop_config.json` 中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather-mcp-server\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"weather-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"OPENWEATHER_API_KEY\": \"你的OpenWeatherMap_API密钥\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 选项 2：本地开发模式\r\n\r\n1. 克隆仓库并安装依赖：\r\n```bash\r\ngit clone\r\ncd weather-mcp-server\r\nmake install\r\n```\r\n\r\n2. 设置环境变量：\r\n创建 `.env` 文件并添加以下内容：\r\n```\r\nOPENWEATHER_API_KEY=你的OpenWeatherMap_API密钥\r\n```\r\n\r\n3. 在 Claude Desktop 配置文件中添加：\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"path/to/src/weather_mcp_server\",\r\n        \"run\",\r\n        \"weather-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"OPENWEATHER_API_KEY\": \"你的OpenWeatherMap_API密钥\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n配置文件位置：\r\n- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- Windows: `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n重启 Claude Desktop 以加载新的 MCP 服务器。\r\n\r\n## 开发\r\n\r\n本项目使用 Makefile 来简化常用命令。\r\n\r\n### 可用命令\r\n\r\n```bash\r\nmake install  # 安装依赖\r\nmake format   # 格式化代码\r\nmake lint     # 运行代码检查\r\nmake clean    # 清理临时文件\r\nmake run      # 运行服务器\r\n```\r\n\r\n### 发布新版本\r\n\r\n```bash\r\nmake release version=v0.1.0\r\n```\r\n\r\n## MCP 工具\r\n\r\n服务器提供以下 MCP 工具：\r\n\r\n### get_weather\r\n\r\n获取指定城市的天气信息。\r\n\r\n参数：\r\n- `city`: 城市名称（必填）\r\n- `units`: 温度单位（可选，默认为 \"metric\"）\r\n  - \"metric\": 摄氏度\r\n  - \"imperial\": 华氏度\r\n\r\n示例请求：\r\n```json\r\n{\r\n    \"name\": \"get_weather\",\r\n    \"kwargs\": {\r\n        \"city\": \"Beijing\",\r\n        \"units\": \"metric\"\r\n    }\r\n}\r\n```\r\n\r\n示例响应：\r\n```json\r\n{\r\n    \"temperature\": 20.5,\r\n    \"humidity\": 65,\r\n    \"description\": \"晴\",\r\n    \"city\": \"Beijing\"\r\n}\r\n```\r\n\r\n现在您可以通过 Claude 使用自然语言命令与天气服务进行交互，例如：\r\n- \"查看北京的天气\"\r\n- \"东京现在的温度是多少\"\r\n- \"伦敦的天气情况如何\"\r\n",
+ "config": {
+  "weather-mcp-server": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "weather-mcp-server"
+   ],
+   "env": {
+    "OPENWEATHER_API_KEY": "你的OpenWeatherMap_API密钥"
+   }
+  }
+ }
+}

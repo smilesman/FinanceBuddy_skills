@@ -1,0 +1,22 @@
+{
+ "id": "965",
+ "kind": "mcp",
+ "name": "agr-genomics",
+ "fingerprint_md5": "2fcd9d31e32e97b187da324a6fd53926",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# AGR MCP服务器\r\n\r\nMCP查询服务器 [基因组资源联盟](https://www.alliancegenome.org) -模型生物的基因组学数据。\r\n\r\n## 安装\r\n\r\n### 选项1:npx（推荐）\r\n\r\n无需安装。添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agr-genomics\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"agr-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 选项2：全局安装\r\n\r\n```bash\r\nnpm install -g agr-mcp-server\r\n```\r\n\r\n然后在你的配置中使用：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agr-genomics\": {\r\n      \"command\": \"agr-mcp-server\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 配置文件位置\r\n\r\n|客户端|配置路径|\r\n|--------|-------------|\r\n|克劳德桌面（macOS）| `~/Library/Application Support/Claude/claude_desktop_config.json` |\r\n|克劳德桌面（Windows）| `%APPDATA%\\Claude\\claude_desktop_config.json` |\r\n|克劳德代码| `~/.claude/settings.json` |\r\n|光标|设置>MCP服务器|\r\n|风帆冲浪| `~/.codeium/windsurf/mcp_config.json` |\r\n\r\n## 用法\r\n\r\n自然地提问：\r\n\r\n- “在人类中寻找BRCA1基因”\r\n- “哪些基因参与DNA修复？”\r\n- “获取有关HGNC:1100的信息”\r\n- “寻找胰岛素基因的直系同源物”\r\n- “TP53与哪些疾病有关？”\r\n- “显示蠕虫中daf-2的表达式数据”\r\n- “查找所有具有激酶活性的人类基因”\r\n- “查询AllianceMine 11号染色体上的小鼠基因”\r\n\r\n### 支持的物种\r\n\r\n人、小鼠、大鼠、斑马鱼、苍蝇、蠕虫、酵母、爪蟾\r\n\r\n## 工具\r\n\r\n### AGR API工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_genes` |使用可选物种过滤器搜索基因|\r\n| `get_gene_info` |详细的基因信息（符号、位置、同义词）|\r\n| `get_gene_diseases` |基因的疾病关联|\r\n| `search_diseases` |按名称搜索疾病|\r\n| `get_gene_expression` |跨组织/阶段的表达数据|\r\n| `find_orthologs` |跨物种同源物|\r\n| `get_gene_phenotypes` |表型注释|\r\n| `get_gene_interactions` |分子和遗传相互作用|\r\n| `get_gene_alleles` |基因的等位基因/变体|\r\n| `search_alleles` |按名称搜索等位基因|\r\n| `get_species_list` |列出支持的模式生物|\r\n\r\n### Alliance矿山工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `mine_search` |在AllianceMine中搜索基因、蛋白质、疾病|\r\n| `mine_query` |运行原始PathQuery XML查询|\r\n| `mine_query_builder` |使用JSON DSL构建查询|\r\n| `mine_natural_query` |自然语言查询（返回LLM的模式）|\r\n| `mine_list_templates` |列出可用的查询模板|\r\n| `mine_run_template` |运行预构建的查询模板|\r\n| `mine_get_lists` |获取可用的基因/蛋白质列表|\r\n| `mine_get_list` |获取特定列表的内容|\r\n| `mine_create_list` |创建新列表（需要身份验证）|\r\n| `mine_add_to_list` |将项目添加到列表中（需要身份验证）|\r\n| `mine_delete_list` |删除列表（需要身份验证）|\r\n\r\n### AllianceMine查询示例\r\n\r\n**使用查询生成器：**\r\n\r\n```\r\nFind human genes with BRCA in symbol:\r\n- from: Gene\r\n- select: primaryIdentifier, symbol, name\r\n- where: organism.shortName = \"H. sapiens\", symbol CONTAINS \"BRCA\"\r\n```\r\n\r\n**使用模板：**\r\n\r\n```\r\nGene_Alleles - Find alleles for a gene\r\nGene_DOTerm - Disease annotations for a gene\r\nGene_GOTerms - GO annotations for a gene\r\nGOTerm_Genes - Find genes by GO term\r\n```\r\n\r\n### 认证\r\n\r\n列表管理操作(`mine_create_list`, `mine_add_to_list`, `mine_delete_list`)需要AllianceMine API令牌：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agr-genomics\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"agr-mcp-server\"],\r\n      \"env\": {\r\n        \"ALLIANCEMINE_TOKEN\": \"your-token-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 基因ID格式\r\n\r\n|物种|格式|示例|\r\n|---------|--------|---------|\r\n|人类| `HGNC:*` | `HGNC:1100` |\r\n老鼠 `MGI:*` | `MGI:95892` |\r\n|老鼠| `RGD:*` | `RGD:3889` |\r\n|斑马鱼| `ZFIN:ZDB-GENE-*` | `ZFIN:ZDB-GENE-990415-72` |\r\n|飞吧| `FB:FBgn*` | `FB:FBgn0000017` |\r\n|蠕虫| `WB:WBGene*` | `WB:WBGene00000898` |\r\n|酵母| `SGD:S*` | `SGD:S000002536` |\r\n|爪蟾| `Xenbase:XB-GENE-*` | `Xenbase:XB-GENE-485905` |\r\n\r\n## 数据源\r\n\r\n- [基因组资源联盟API](https://www.alliancegenome.org/api)\r\n- [联盟矿山](https://alliancemine.alliancegenome.org/alliancemine)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "agr-genomics": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "agr-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

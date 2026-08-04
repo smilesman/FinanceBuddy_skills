@@ -1,0 +1,26 @@
+{
+ "id": "2789",
+ "kind": "mcp",
+ "name": "xhs-mcp-2",
+ "fingerprint_md5": "bad47cf1aaff8a79ec0000df41b0d9b3",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 小红书MCP服务\r\n\r\n## 特点\r\n- [x] 采用js逆向出x-s,x-t,直接请求http接口,无须笨重的playwright\r\n- [x] 搜索笔记\r\n- [x] 获取笔记内容\r\n- [x] 获取笔记的评论\r\n- [x] 发表评论\r\n\r\n\r\n## 快速开始\r\n\r\n### 1. 环境\r\n * node\r\n * python 3.12\r\n * uv (pip install uv)\r\n\r\n### 2. 安装依赖\r\n```sh\r\n\r\ngit clone git@github.com:jobsonlook/xhs-mcp.git\r\n\r\ncd xhs-mcp\r\nuv sync\r\n\r\n```\r\n\r\n### 3. 获取小红书的cookie\r\n[打开web小红书](https://www.xiaohongshu.com/explore)\r\n登录后，获取cookie，将cookie配置到第4步的 XHS_COOKIE 环境变量中\r\n\r\n\r\n### 4. 配置mcp server\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"xhs-mcp\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"/Users/xxx/xhs-mcp\",\r\n                \"run\",\r\n                \"main.py\"\r\n            ],\r\n            \"env\": {\r\n                \"XHS_COOKIE\": \"xxxx\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 免责声明\r\n本项目仅用于学习交流，禁止用于其他用途，任何涉及商业盈利目的均不得使用，否则风险自负。\r\n",
+ "config": {
+  "xhs-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/Users/xxx/xhs-mcp",
+    "run",
+    "main.py"
+   ],
+   "env": {
+    "XHS_COOKIE": "xxxx"
+   }
+  }
+ }
+}

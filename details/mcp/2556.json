@@ -1,0 +1,27 @@
+{
+ "id": "2556",
+ "kind": "mcp",
+ "name": "gopher-twitter",
+ "fingerprint_md5": "3bfb0e933c97ce42e44ecb821608261e",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Gopher MCP 服务器\r\n\r\n一个模型上下文协议（MCP）服务器，提供对Gopher AI API的访问。该服务器允许MCP客户端通过Gopher AI平台搜索数据。\r\n\r\n## 特点/功能\r\n\r\n- **Twitter搜索**使用自然语言查询搜索Twitter帖子\r\n- **MCP集成**与模型上下文协议客户端完全兼容\r\n- **可配置的结果**可调整的最大搜索结果数量\r\n- **错误处理**全面的错误处理和报告\r\n- **异步处理**处理异步API响应，采用轮询方式\r\n\r\n## 先决条件\r\n\r\n- Go 1.24.7 或更高版本\r\n- Gopher AI API密钥\r\n- 与MCP兼容的客户端（例如，Claude Desktop、Cline等）\r\n\r\n## 安装\r\n\r\n### 来自源（或“来源”）\r\n\r\n1. 克隆仓库：\r\n\r\n```bash\r\ngit clone https://github.com/gopher-lab/gopher-mcp-server.git\r\ncd gopher-mcp-server\r\n```\r\n\r\n2. 构建服务器：\r\n\r\n```bash\r\ngo build -o gopher-mcp-server ./data\r\n```\r\n\r\n### 使用 Docker\r\n\r\n```bash\r\ndocker build -t gopher-mcp-server .\r\n```\r\n\r\n## 配置\r\n\r\n### 环境变量\r\n\r\n- `GOPHER_API`： **必需的** - 您的Gopher AI API密钥\r\n- `MAX_RESULTS`： **可选** - 返回的最大搜索结果数量（默认：15）\r\n\r\n### 示例配置\r\n\r\n```bash\r\nexport GOPHER_API=\"your-gopher-api-key-here\"\r\nexport MAX_RESULTS=\"20\"\r\n```\r\n\r\n## 用法\r\n\r\n### 运行服务器\r\n\r\n```bash\r\n# Using the binary\r\n./gopher-mcp-server\r\n\r\n# Using Docker\r\ndocker run -e GOPHER_API=\"your-api-key\" gopher-mcp-server\r\n```\r\n\r\n### MCP 客户端配置\r\n\r\n将此服务器添加到您的MCP客户端配置中：\r\n\r\n#### Claude 桌面版（claude_desktop_config.json）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gopher-twitter\": {\r\n      \"command\": \"./gopher-mcp-server\",\r\n      \"env\": {\r\n        \"GOPHER_API\": \"your-gopher-api-key-here\",\r\n        \"MAX_RESULTS\": \"15\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### Cline 配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gopher-twitter\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"--rm\", \"-e\", \"GOPHER_API=your-api-key\", \"gopher-mcp-server\"],\r\n      \"env\": {\r\n        \"GOPHER_API\": \"your-gopher-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 搜索推特\r\n\r\n使用Gopher AI API搜索Twitter帖子。\r\n\r\n**参数：**\r\n\r\n- `query` (字符串)：要执行的搜索查询\r\n\r\n**返回值：**\r\n\r\n- `tweets` （数组）：与搜索查询匹配的推特帖子数组\r\n- `error` (字符串，可选)：如果搜索失败，显示错误信息\r\n\r\n**示例用法：**\r\n\r\n```json\r\n{\r\n  \"name\": \"search_twitter\",\r\n  \"arguments\": {\r\n    \"query\": \"artificial intelligence trends 2024\"\r\n  }\r\n}\r\n```\r\n\r\n**响应示例：**\r\n\r\n```json\r\n{\r\n  \"tweets\": [\r\n    {\r\n      \"ID\": \"tweet_123\",\r\n      \"Content\": \"Exciting developments in AI this year...\",\r\n      \"Metadata\": {...},\r\n      \"Score\": 0.95\r\n    }\r\n  ],\r\n  \"error\": null\r\n}\r\n```\r\n\r\n## API详情\r\n\r\n### Twitter帖子结构\r\n\r\n响应中的每条Twitter帖子都包含：\r\n\r\n- `ID`帖子的唯一标识符\r\n- `Content`这条推文的文本内容\r\n- `Metadata`关于帖子的额外元数据\r\n- `Score`搜索查询的相关性得分\r\n\r\n### 错误处理\r\n\r\n服务器处理各种错误场景：\r\n\r\n- **API 错误**无效的API密钥，速率限制，服务不可用\r\n- **网络错误**连接超时，网络故障\r\n- **处理错误**搜索超时，响应无效\r\n\r\n错误信息会返回在 `error` 响应字段。\r\n\r\n## 发展\r\n\r\n### 建筑\r\n\r\n```bash\r\n# Build the server\r\nmake build\r\n\r\n# Run tests\r\nmake test\r\n\r\n# Build Docker image\r\nmake docker-build\r\n```\r\n\r\n### 依赖项\r\n\r\n- `github.com/modelcontextprotocol/go-sdk`Go语言的MCP SDK\r\n- `github.com/tmc/langchaingo`语言链实用工具\r\n\r\n## 故障排除\r\n\r\n### 常见问题\r\n\r\n1. **API密钥未设置**\r\n\r\n   - 确保 `GOPHER_API` 环境变量已设置\r\n   - 验证API密钥是否有效且具有适当的权限\r\n\r\n1. **搜索超时**\r\n\r\n   - 服务器最多轮询30次以获取结果（总计60秒）\r\n   - 检查Gopher AI服务是否出现延迟\r\n\r\n1. **未返回结果**\r\n\r\n   - 验证搜索查询是否有效\r\n   - 检查是否有符合您标准的帖子\r\n   - 确保API密钥有权访问Twitter数据\r\n\r\n1. **MCP客户端连接问题**\r\n\r\n   - 验证服务器二进制文件是否可执行\r\n   - 检查MCP客户端配置是否正确\r\n   - 确保服务器正在运行且可访问\r\n\r\n### 调试\r\n\r\n通过设置日志级别来启用详细日志记录：\r\n\r\n```bash\r\nexport LOG_LEVEL=debug\r\n./gopher-mcp-server\r\n```\r\n\r\n## 做出贡献\r\n\r\n1. 为仓库创建分支（或：克隆仓库）\r\n1. 创建一个特性分支\r\n1. 做出你的更改\r\n1. 如适用，请添加测试\r\n1. 提交拉取请求\r\n\r\n## 许可证\r\n\r\n此项目遵循Apache License 2.0协议授权。详情请参见LICENSE文件。\r\n\r\n## 支持\r\n\r\n对于问题和疑问：\r\n\r\n- 在GitHub上创建一个问题\r\n- 请查阅Gopher AI的文档以获取有关API的问题解答\r\n- 审查MCP文档中的协议相关问题\r\n",
+ "config": {
+  "gopher-twitter": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-e",
+    "GOPHER_API=your-api-key",
+    "gopher-mcp-server"
+   ],
+   "env": {
+    "GOPHER_API": "your-gopher-api-key-here"
+   }
+  }
+ }
+}

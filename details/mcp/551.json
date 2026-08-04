@@ -1,0 +1,27 @@
+{
+ "id": "551",
+ "kind": "mcp",
+ "name": "youtube-mcp",
+ "fingerprint_md5": "56bc72faab37dfb461e37fcb2c55cd65",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# YouTube MCP服务器\r\n\r\n用于YouTube API集成的模型上下文协议（MCP）服务器。搜索视频、管理播放列表，并直接通过Claude Desktop或其他MCP客户端与YouTube互动。\r\n\r\n## 特性\r\n\r\n- 🔍 搜索YouTube视频\r\n- 📋 创建和管理播放列表\r\n- ➕ 将视频添加到播放列表\r\n- 📝 列出用户播放列表\r\n- 🗑️ 删除播放列表\r\n\r\n## 先决条件\r\n\r\n- Node.js 18或更高版本\r\n- YouTube数据API v3访问\r\n- 谷歌云控制台帐户\r\n\r\n## 安装\r\n\r\n### 选项1：从npm安装（推荐）\r\n\r\n```bash\r\nnpm install -g @a.ardeshir/youtube-mcp\r\n```\r\n\r\n### 选项2：从GitHub安装\r\n\r\n```bash\r\ngit clone https://github.com/aardeshir/youtube-mcp.git\r\ncd youtube-mcp\r\nnpm install\r\n```\r\n\r\n## 设置\r\n\r\n### 1.设置YouTube API\r\n\r\n#### 第一步：创建谷歌云项目\r\n\r\n1. 首选 [谷歌云控制台](https://console.cloud.google.com/)\r\n1. 创建新项目或选择现有项目\r\n1. 记下您的项目ID\r\n\r\n#### 步骤2：启用YouTube数据API v3\r\n\r\n1. 在谷歌云控制台中，转到“API和服务”>“库”\r\n1. 搜索“YouTube数据API v3”\r\n1. 点击它并按“启用”\r\n\r\n**常见问题**：如果您看到“YouTube Data API v3以前未在项目中使用或已禁用”，请在启用后等待2-3分钟，以便进行传播。\r\n\r\n#### 步骤3：创建OAuth 2.0凭据\r\n\r\n1. 转到“API和服务”>“凭据”\r\n1. 点击“+创建证书”>“OAuth客户端ID”\r\n1. 如果出现提示，请配置OAuth同意屏幕：\r\n   - 选择“外部”（或“内部”作为工作区）\r\n   - 填写必填字段（应用程序名称、支持电子邮件）\r\n   - 将您的电子邮件添加为测试用户\r\n   - 对于范围，添加： `https://www.googleapis.com/auth/youtube`\r\n1. 对于应用程序类型，选择“Web应用程序”\r\n1. 添加授权重定向URI： `http://localhost:8080/callback`\r\n1. 保存并记录您的客户端ID和客户端密码\r\n\r\n#### 步骤4：获取API密钥（可选-用于只读访问）\r\n\r\n1. 转到“API和服务”>“凭据”\r\n1. 单击“+创建CREDENTIALS”>“API键”\r\n1. 将密钥限制为YouTube数据API v3\r\n\r\n### 2.身份验证\r\n\r\n运行OAuth安装向导：\r\n\r\n**如果通过npm安装：**\r\n\r\n```bash\r\nyoutube-mcp-setup\r\n```\r\n\r\n**如果从GitHub安装：**\r\n\r\n```bash\r\nnpm run auth-setup\r\n```\r\n\r\n这将：\r\n\r\n1. 提示输入您的客户端ID和客户端密码\r\n1. 打开浏览器进行谷歌授权\r\n1. 自动生成刷新令牌\r\n1. 创建 `.env` 将您的凭据归档\r\n\r\n### 3.配置克劳德桌面\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在Mac上）：\r\n\r\n**如果通过npm安装：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@a.ardeshir/youtube-mcp\"],\r\n      \"env\": {\r\n        \"YOUTUBE_API_KEY\": \"your-api-key\",\r\n        \"YOUTUBE_CLIENT_ID\": \"your-client-id\",\r\n        \"YOUTUBE_CLIENT_SECRET\": \"your-client-secret\",\r\n        \"YOUTUBE_REFRESH_TOKEN\": \"your-refresh-token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**如果从GitHub安装：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube-mcp\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/youtube-mcp/index.js\"],\r\n      \"env\": {\r\n        \"YOUTUBE_API_KEY\": \"your-api-key\",\r\n        \"YOUTUBE_CLIENT_ID\": \"your-client-id\",\r\n        \"YOUTUBE_CLIENT_SECRET\": \"your-client-secret\",\r\n        \"YOUTUBE_REFRESH_TOKEN\": \"your-refresh-token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用示例\r\n\r\n### 搜索视频\r\n\r\n```\r\nSearch YouTube for \"piano tutorials\"\r\n```\r\n\r\n### 创建播放列表\r\n\r\n```\r\nCreate a YouTube playlist called \"My Favorites\" \r\n```\r\n\r\n### 列表播放列表\r\n\r\n```\r\nShow my YouTube playlists\r\n```\r\n\r\n## 故障排除\r\n\r\n### “YouTube Data API v3以前从未在项目中使用过”\r\n\r\n- 确保在Google云控制台中启用API\r\n- 等待2-3分钟以传播更改\r\n- 检查您使用的项目是否正确\r\n\r\n### “无效凭据”错误\r\n\r\n- 验证是否配置了OAuth同意屏幕\r\n- 确保添加了测试用户电子邮件\r\n- 检查重定向URI是否完全匹配： `http://localhost:8080/callback`\r\n\r\n### MCP未在Claude Desktop中连接\r\n\r\n- 检查所有环境变量是否已设置\r\n- 配置更改后重新启动Claude Desktop\r\n- 验证Node.js路径是否正确\r\n\r\n### “超出配额”错误\r\n\r\n- YouTube API有每日配额\r\n- 检查 [谷歌云控制台](https://console.cloud.google.com/) 供使用\r\n- 考虑请求增加配额\r\n\r\n## 安全说明\r\n\r\n- 永不承诺 `.env` 文件到版本控制\r\n- 确保您的刷新令牌安全\r\n- 生产使用OAuth，API密钥仅用于测试\r\n- 定期轮换凭证\r\n\r\n## 贡献\r\n\r\n欢迎投稿！拜托：\r\n\r\n1. 分叉存储库\r\n1. 创建特征分支\r\n1. 提交拉取请求\r\n\r\n## 许可证\r\n\r\nMIT-见许可证文件\r\n\r\n## 支持\r\n\r\n对于问题和疑问：\r\n\r\n- [GitHub问题](https://github.com/aardeshir/youtube-mcp/issues)\r\n- [MCP文件](https://modelcontextprotocol.io)\r\n\r\n## 致谢\r\n\r\n内置：\r\n\r\n- [模型上下文协议SDK](https://github.com/anthropics/mcp)\r\n- [谷歌API Node.js客户端](https://github.com/googleapis/google-api-nodejs-client)\r\n",
+ "config": {
+  "youtube-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@a.ardeshir/youtube-mcp"
+   ],
+   "env": {
+    "YOUTUBE_API_KEY": "your-api-key",
+    "YOUTUBE_CLIENT_ID": "your-client-id",
+    "YOUTUBE_CLIENT_SECRET": "your-client-secret",
+    "YOUTUBE_REFRESH_TOKEN": "your-refresh-token"
+   }
+  }
+ }
+}

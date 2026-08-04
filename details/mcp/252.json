@@ -1,0 +1,25 @@
+{
+ "id": "252",
+ "kind": "mcp",
+ "name": "jellyfin",
+ "fingerprint_md5": "26cae4d7acc6c8a92a9fa8cb847de75f",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Jellyfin MCP服务器\r\n\r\n一 [主控程序](https://modelcontextprotocol.io/) 让AI助手管理 [水母](https://jellyfin.org/) 媒体服务器。建于 [FastMCP](https://github.com/jlowin/fastmcp) 设计用于 [克劳德代码](https://docs.anthropic.com/en/docs/claude-code)，但与任何MCP客户端兼容。\r\n\r\n## 能力\r\n\r\n### 图书馆管理\r\n\r\n- **列出库** --枚举所有已配置的库（电影、音乐、节目、书籍等）\r\n- **扫描库** --触发完全重新扫描或重新扫描特定库\r\n\r\n### 搜索和浏览\r\n\r\n- **搜索媒体** --按关键字查找项目，可选类型过滤（音频、音乐专辑、音乐艺术家、电影、系列、剧集、书籍）\r\n- **浏览库** --分页浏览，可配置排序（按名称、添加日期、评级、年份等）\r\n- **获取商品详细信息** --任何项目的完整元数据，包括流派、标签、人物、文件路径、比特率和提供商ID\r\n- **获取最近的项目** --最近添加的内容，按最新内容排序\r\n- **查找类似项目** --基于给定项目发现相关内容\r\n\r\n### 播放列表管理\r\n\r\n- **列出、创建和删除播放列表**\r\n- **修改播放列表** --在单个操作中添加和删除项目\r\n- **检查播放列表内容** --包括删除所需的播放列表项目ID\r\n\r\n### 计划任务\r\n\r\n- **列出计划任务** --查看所有任务的当前状态和进度百分比\r\n- **按需运行任务** --立即触发任何预定任务（库扫描、歌词下载等）\r\n\r\n### 服务器监控\r\n\r\n- **服务器状态** --版本信息、活动会话（正在播放）、计划任务状态和最近的活动日志——所有这些都在一个可配置的调用中\r\n\r\n## 需求\r\n\r\n- Python 3.10+\r\n- [紫外线](https://docs.astral.sh/uv/) （推荐）或pip\r\n- 带有API密钥的Jellyfin服务器\r\n\r\n## 安装\r\n\r\n```bash\r\ngit clone https://github.com/AlphaGit/jellyfin-mcp-server.git\r\ncd jellyfin-mcp-server\r\nuv sync\r\n```\r\n\r\n## 配置\r\n\r\n1. 在下的Jellyfin仪表板中生成一个API键 **管理>高级>API密钥**\r\n\r\n1. 复制示例env文件并填写您的值：\r\n\r\n```bash\r\ncp .env.example .env\r\n```\r\n\r\n```env\r\nJELLYFIN_URL=https://your-jellyfin-server.com\r\nJELLYFIN_API_KEY=your-api-key-here\r\nJELLYFIN_USERNAME=your-username-here\r\n```\r\n\r\n用户名在启动时解析为用户ID。这对于用户范围的API调用（播放列表、项目详细信息等）是必需的，因为API密钥验证不支持 `/Users/Me` 终点。\r\n\r\n## 使用Claude代码\r\n\r\n存储库包括 `.mcp.json` 自动注册服务器。只需在项目目录中打开Claude Code并重新启动——工具将立即可用。\r\n\r\n若要从其他项目使用此服务器，请将其添加到该项目的 `.mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"jellyfin\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--project\", \"/path/to/jellyfin-mcp-server\", \"python\", \"jellyfin_mcp.py\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 与其他MCP客户端一起使用\r\n\r\n直接运行服务器：\r\n\r\n```bash\r\nuv run python jellyfin_mcp.py\r\n```\r\n\r\n服务器使用MCP协议通过stdio进行通信。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "jellyfin": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--project",
+    "/path/to/jellyfin-mcp-server",
+    "python",
+    "jellyfin_mcp.py"
+   ],
+   "env": {}
+  }
+ }
+}

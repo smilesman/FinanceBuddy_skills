@@ -1,0 +1,18 @@
+{
+ "id": "452",
+ "kind": "mcp",
+ "name": "spotify-10",
+ "fingerprint_md5": "541d0c199b3de2f36b6ed346024dfd70",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Spotify云MCP\r\n\r\nCloudflare Worker为Spotify提供MCP（模型上下文协议）集成，使AI助手能够控制播放、搜索音乐和管理队列。\r\n\r\n## 特性\r\n\r\n- 控制播放（播放、暂停、跳过、上一页）\r\n- 搜索曲目、专辑、艺术家和播放列表\r\n- 管理播放队列\r\n- 控制音量、随机播放和重复模式\r\n- 查看和在设备之间传输\r\n- 访问用户播放列表\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `spotify_now_playing` |获取当前播放的曲目|\r\n| `spotify_play` |开始或恢复播放|\r\n| `spotify_pause` |暂停播放|\r\n| `spotify_next` |跳到下一首曲目|\r\n| `spotify_previous` |转到上一曲目|\r\n| `spotify_search` |搜索曲目、专辑、艺术家或播放列表|\r\n| `spotify_queue` |将曲目添加到队列|\r\n| `spotify_get_queue` |获取当前播放队列|\r\n| `spotify_volume` |设置播放音量（0-100）|\r\n| `spotify_shuffle` |切换洗牌模式|\r\n| `spotify_repeat` |设置重复模式（跟踪、上下文、关闭）|\r\n| `spotify_devices` |获取可用的播放设备|\r\n| `spotify_transfer` |将播放转移到其他设备|\r\n| `spotify_playlists` |获取用户播放列表|\r\n\r\n## 设置\r\n\r\n### 1.创建Spotify应用程序\r\n\r\n1. 首选 [Spotify开发者仪表板](https://developer.spotify.com/dashboard)\r\n1. 创建新应用程序\r\n1. 添加您的回调URL： `https://your-worker.workers.dev/callback`\r\n1. 保存您的客户端ID和客户端密码\r\n\r\n### 2.创建KV命名空间\r\n\r\n```bash\r\nwrangler kv:namespace create \"KV\"\r\n```\r\n\r\n将KV绑定添加到您的 `wrangler.toml`:\r\n\r\n```toml\r\n[[kv_namespaces]]\r\nbinding = \"KV\"\r\nid = \"your-kv-namespace-id\"\r\n```\r\n\r\n### 3.配置环境变量\r\n\r\n创建 `.dev.vars` 本地开发文件：\r\n\r\n```\r\nSPOTIFY_CLIENT_ID=your_client_id_here\r\nSPOTIFY_CLIENT_SECRET=your_client_secret_here\r\n```\r\n\r\n对于生产，在Cloudflare中将这些设置为机密：\r\n\r\n```bash\r\nwrangler secret put SPOTIFY_CLIENT_ID\r\nwrangler secret put SPOTIFY_CLIENT_SECRET\r\n```\r\n\r\n### 4.部署\r\n\r\n```bash\r\nnpm install\r\nnpm run deploy\r\n```\r\n\r\n### 5.身份验证\r\n\r\n1. 访问 `https://your-worker.workers.dev/auth`\r\n1. 使用您的Spotify帐户登录\r\n1. 授权应用程序\r\n1. 成功后，您将看到“Spotify已连接！”\r\n\r\n## 端点\r\n\r\n|端点|方法|描述|\r\n|----------|--------|-------------|\r\n| `/` |GET |服务信息|\r\n| `/health` |GET |健康检查和身份验证状态|\r\n| `/auth` |GET |启动OAuth流|\r\n| `/callback` |GET|OAuth回调|\r\n| `/mcp` |POST | MCP JSON-RPC端点|\r\n| `/sse` |GET|MCP SSE端点用于客户端发现|\r\n\r\n## MCP客户端配置\r\n\r\n添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"spotify\": {\r\n      \"url\": \"https://your-worker.workers.dev/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证管理\r\n\r\n访问令牌过期时会自动刷新。令牌使用以下密钥存储在Cloudflare KV中：\r\n\r\n- `spotify_access_token` -当前访问令牌\r\n- `spotify_refresh_token` -刷新令牌以获取新的访问令牌\r\n- `spotify_token_expires` -到期时间戳\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n______________________________________________________________________\r\n\r\n## 支持\r\n\r\n如果这对你有帮助，考虑支持我的工作☕\r\n\r\n[](https://ko-fi.com/maii983083)\r\n\r\n______________________________________________________________________\r\n\r\n*由三合会（Mai、Kai Stryder和Lucian Vale）为社区建造。*\r\n",
+ "config": {
+  "spotify": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://your-worker.workers.dev/sse"
+  }
+ }
+}

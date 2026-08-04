@@ -1,0 +1,26 @@
+{
+ "id": "513",
+ "kind": "mcp",
+ "name": "valorant",
+ "fingerprint_md5": "c0364a8ea29c4bfb97d31c4ecd266d70",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Valorant MCP服务器\r\n\r\n模型上下文协议（MCP）服务器，通过与Henrik API集成，提供全面的Valorant球员统计数据和比赛数据。该服务器允许Claude Desktop获取球员信息、比赛历史、排名数据，并对Valorant球员进行性能分析。\r\n\r\n## 特性\r\n\r\n- **玩家帐户信息**：获取玩家详细信息，包括PUUID、显示名称、标签和帐户级别\r\n- **排名和MMR数据**：获取当前竞争排名和峰值排名信息\r\n- **比赛历史**：使用详细统计信息检索最近的比赛数据\r\n- **性能分析**：使用胜率、K/D比率和平均值分析多场比赛中的球员表现\r\n- **灵活过滤**：按游戏模式筛选比赛（竞技、无等级、死亡竞赛、扣球）\r\n\r\n## 先决条件\r\n\r\n- Python 3.8或更高版本\r\n- Henrik API密钥（从 [Henrik Dev API](https://docs.henrikdev.xyz/valorant.html))\r\n- Claude桌面应用程序\r\n\r\n## 安装\r\n\r\n### 1.克隆或下载服务器\r\n\r\n保存 `valorant.py` 文件到您想要的位置。\r\n\r\n### 2.安装依赖项\r\n\r\n```bash\r\npip install aiohttp pydantic mcp\r\n```\r\n\r\n或者使用虚拟环境：\r\n\r\n```bash\r\npython -m venv valorant_env\r\nsource valorant_env/bin/activate  # On Windows: valorant_env\\Scripts\\activate\r\npip install aiohttp pydantic mcp\r\n```\r\n\r\n### 3.获取Henrik API密钥\r\n\r\n1. 访问 [Henrik Dev API文档](https://docs.henrikdev.xyz/valorant.html)\r\n1. 按照他们的说明获取API密钥\r\n1. 请确保此密钥的安全——您需要它进行配置\r\n\r\n## 配置\r\n\r\n### Claude桌面设置\r\n\r\n将以下内容添加到您的 `claude_desktop_config.json` 文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"valorant\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"/absolute/path/to/valorant.py\"],\r\n      \"env\": {\r\n        \"VAL_API_KEY\": \"your_henrik_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 配置选项\r\n\r\n**使用完整的Python路径** （推荐）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"valorant\": {\r\n      \"command\": \"/full/path/to/python\",\r\n      \"args\": [\"/absolute/path/to/valorant.py\"],\r\n      \"env\": {\r\n        \"VAL_API_KEY\": \"your_henrik_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**使用紫外线**:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"valorant\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"/absolute/path/to/valorant.py\", \"run\", \"valorant.py\"],\r\n      \"env\": {\r\n        \"VAL_API_KEY\": \"HDEV-a65abbc4-eac1-4bce-9206-98ef16e2d535\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 环境变量\r\n\r\n|变量|描述|必填|\r\n|----------|-------------|----------|\r\n| `VAL_API_KEY` |您的Henrik API密钥|是|\r\n\r\n## 可用工具\r\n\r\n### `get_player_account`\r\n\r\n获取Valorant玩家的基本帐户信息。\r\n\r\n**参数：**\r\n\r\n- `name` （string）：玩家的显示名称\r\n- `tag` （string）：玩家的标签行\r\n\r\n**例子：** 获取玩家“TenZ#NA1”的帐户信息\r\n\r\n### `get_player_rank`\r\n\r\n获取当前竞争排名和峰值排名信息。\r\n\r\n**参数：**\r\n\r\n- `name` （string）：玩家的显示名称\r\n- `tag` （string）：玩家的标签行\r\n\r\n**退货：** 当前层、峰值层和PUUID\r\n\r\n### `get_match_history`\r\n\r\n使用详细统计信息检索最近的比赛历史记录。\r\n\r\n**参数：**\r\n\r\n- `name` （string）：玩家的显示名称\r\n- `tag` （string）：玩家的标签行\r\n- `match_count` （int，可选）：要检索的匹配数（最大20，默认5）\r\n- `mode` （字符串，可选）：按游戏模式筛选（竞技、无等级、死亡竞赛、扣球）\r\n\r\n**退货：** 最近与K/D/A、地图、模式和匹配结果的匹配列表\r\n\r\n### `analyze_player_performance`\r\n\r\n分析球员在最近多场比赛中的表现。\r\n\r\n**参数：**\r\n\r\n- `name` （string）：玩家的显示名称\r\n- `tag` （string）：玩家的标签行\r\n- `matches_to_analyze` （int，可选）：要分析的最近匹配数（默认值5）\r\n\r\n**退货：** 综合性能分析包括：\r\n\r\n- 胜率百分比\r\n- 平均杀人、死亡、助攻\r\n- K/D比率\r\n- 统计总数\r\n\r\n## 可用资源\r\n\r\n### 玩家简介\r\n\r\n`valorant://player/{name}/{tag}/profile`\r\n\r\n获取完整的玩家资料，包括帐户信息和排名数据。\r\n\r\n### 比赛历史\r\n\r\n`valorant://player/{name}/{tag}/matches/{count}`\r\n\r\n获取格式化的比赛历史记录，便于阅读。\r\n\r\n## 使用示例\r\n\r\n### 基本玩家查找\r\n\r\n```\r\nGet account information for player \"Shroud#NA1\"\r\n```\r\n\r\n### 性能分析\r\n\r\n```\r\nAnalyze the recent performance of player \"TenZ#TSM\" over the last 10 matches\r\n```\r\n\r\n### 将历史记录与筛选相匹配\r\n\r\n```\r\nGet the last 15 competitive matches for player \"Ninja#USA\"\r\n```\r\n\r\n### 比较分析\r\n\r\n```\r\nCompare the performance of \"Player1#TAG1\" and \"Player2#TAG2\"\r\n```\r\n",
+ "config": {
+  "valorant": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/absolute/path/to/valorant.py",
+    "run",
+    "valorant.py"
+   ],
+   "env": {
+    "VAL_API_KEY": "HDEV-a65abbc4-eac1-4bce-9206-98ef16e2d535"
+   }
+  }
+ }
+}

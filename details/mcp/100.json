@@ -1,0 +1,23 @@
+{
+ "id": "100",
+ "kind": "mcp",
+ "name": "chess-7",
+ "fingerprint_md5": "08172f60c9c8e6c0a606bf92f26d0f81",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP构建象棋服务器\r\n\r\n通过将以下JSON代码添加到配置文件中来安装此MCP服务器\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"chess\": {\r\n\t\t\t\"command\": \"uvx\",\r\n\t\t\t\"args\": [\r\n        \"--from\",\r\n        \"git+https://github.com/JairAviles/mcp-build-chess-server.git\",\r\n        \"chess\"\r\n      ]\r\n\t\t}\r\n\t}\r\n}\r\n\r\n```\r\n",
+ "config": {
+  "chess": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/JairAviles/mcp-build-chess-server.git",
+    "chess"
+   ],
+   "env": {}
+  }
+ }
+}

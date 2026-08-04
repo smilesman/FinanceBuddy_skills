@@ -1,0 +1,22 @@
+{
+ "id": "425",
+ "kind": "mcp",
+ "name": "screen-capture-mcp",
+ "fingerprint_md5": "ecfe62c46b3d788303ab9ced0734becf",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# 屏幕截图mcp\r\n\r\n[](https://www.npmjs.com/package/screen-capture-mcp)\r\n[](https://opensource.org/licenses/MIT)\r\n\r\n一个快速简单的MCP服务器，使Claude Code（或任何MCP客户端）能够在任何指定的时间间隔内对您的屏幕或特定程序进行截图（例如“在下一分钟每5秒对虚幻引擎进行一次截图”）。在处理游戏、GUI或Claude需要看到的任何可视化内容时非常有用。\r\n\r\n**仅限Windows** --使用PowerShell和。NET用于屏幕截图。\r\n\r\n## 为什么？\r\n\r\n当你用Claude Code做一些可视化的东西时——游戏、UI、3D编辑器——Claude是盲人。它可以读取你的代码，但不知道结果实际上是什么样子的。你最终会手动进行屏幕截图，将图像拖动到聊天中，并解释你正在看什么。\r\n\r\n此MCP服务器修复了此问题。安装后，Claude可以在需要查看屏幕上发生的事情时自行截图。\r\n\r\n## 特性\r\n\r\n- **全屏截图** --捕获您的主显示器\r\n- **窗口捕获** --按标题捕获特定窗口（部分匹配）\r\n- **自动调整大小** --图像大小调整为1280px宽以节省标记\r\n- **零本地依赖** --使用PowerShell/。NET内置于Windows中，无需本机编译\r\n\r\n## 安装\r\n\r\n### 通过npm（推荐）\r\n\r\n```bash\r\nnpm install -g screen-capture-mcp\r\n```\r\n\r\n然后用Claude Code注册：\r\n\r\n```bash\r\nclaude mcp add -s user -t stdio screen-capture-mcp -- screen-capture-mcp\r\n```\r\n\r\n或者手动将其添加到您的 `~/.claude.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"screen-capture-mcp\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"screen-capture-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone https://github.com/kmoulder/screen-capture-mcp.git\r\ncd screen-capture-mcp\r\nnpm install\r\nnpm run build\r\nclaude mcp add -s user -t stdio screen-capture-mcp -- node /path/to/screen-capture-mcp/dist/index.js\r\n```\r\n\r\n注册后重新启动Claude Code。\r\n\r\n## 用法\r\n\r\n注册后，Claude Code可以调用 `take_screenshot` 工具。你可以自然地要求截图：\r\n\r\n```\r\n\"Take a screenshot\"\r\n\"Take a screenshot of the Godot window\"\r\n\"Show me what the game looks like right now\"\r\n```\r\n\r\n### 随时间监控\r\n\r\n因为Claude可以反复调用该工具，所以你可以让它随着时间的推移观察你的屏幕：\r\n\r\n```\r\n\"Take a screenshot every 5 seconds for the next minute and describe what changes\"\r\n\"Wait 30 seconds then take a screenshot\"\r\n\"Watch the Unity window and let me know when the build finishes\"\r\n\"Capture the game window every 10 seconds while I playtest — give me feedback on the UI\"\r\n```\r\n\r\n这对于以下情况特别有用：\r\n\r\n- **游戏测试反馈** --运行您的游戏，并在玩游戏时从克劳德那里获得实时观察结果\r\n- **构建监控** --让Claude观看长时间运行的构建或部署，并在完成时通知您\r\n- **UI迭代** --在编辑器中进行更改，并让Claude比较屏幕截图以跟踪进度\r\n- **虫子繁殖** --让Claude在重现错误时截取屏幕截图，然后分析序列\r\n\r\n### 将视觉上下文引入编码任务\r\n\r\n您还可以将截图混合到正常的开发工作中：\r\n\r\n```\r\n\"Look at the game window and then fix the player sprite so it faces the right direction\"\r\n\"Take a screenshot of the editor, then update the CSS to match the mockup I have open\"\r\n\"Check what the app looks like in the browser and fix any layout issues you see\"\r\n```\r\n\r\n这关闭了编写代码和查看结果之间的循环——Claude可以进行更改、截图结果并迭代。\r\n\r\n### 工具模式\r\n\r\n```\r\ntake_screenshot(window_title?: string)\r\n```\r\n\r\n|参数|类型|说明|\r\n|-----------|------|-------------|\r\n| `window_title` | `string` （可选）|要捕获的窗口标题（部分匹配）。省略全屏显示。 |\r\n\r\n返回base64编码的PNG图像。\r\n\r\n## 隐私\r\n\r\n屏幕截图完全在您的本地计算机上捕获和处理。此工具不会上传、保存到磁盘或发送到任何外部服务。\r\n\r\n捕获的图像是：\r\n\r\n1. 通过PowerShell/在本地获取。网\r\n1. 使用在内存中调整大小 `sharp`\r\n1. 通过MCP协议作为base64直接传递给Claude Code\r\n\r\n屏幕截图不会写入您的文件系统——它们仅在MCP工具调用期间存在于内存中。作为对话的一部分，图像数据被发送到Claude API（就像你自己把截图拖到聊天中一样），但该服务器永远不会存储或记录它。\r\n\r\n如果你想验证这一点，整个服务器都是一个文件-- [src/index.ts](src/index.ts).\r\n\r\n## 运作原理\r\n\r\n- 使用PowerShell `System.Drawing` 和 `System.Windows.Forms` 捕捉屏幕\r\n- 对于特定于窗口的捕获，使用 `user32.dll GetWindowRect` 通过P/Invoke查找并捕获目标窗口\r\n- 使用以下命令将图像大小调整为1280px宽 `sharp` 在返回之前，保持代币使用合理\r\n- 没有临时文件或磁盘写入——一切都发生在内存中\r\n\r\n## 需求\r\n\r\n- Windows 10/11\r\n- Node.js 18+\r\n- PowerShell（包含在Windows中）\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "screen-capture-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "screen-capture-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

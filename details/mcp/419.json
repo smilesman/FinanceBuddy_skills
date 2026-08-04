@@ -1,0 +1,22 @@
+{
+ "id": "419",
+ "kind": "mcp",
+ "name": "rundida",
+ "fingerprint_md5": "0af9de3c52c5e1372c7d0eb0e51c9de2",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# @rundida/mcp服务器\r\n\r\nMCP服务器 [**Rundida**](https://rundida.com) --世界上最全面的跑步工具平台。\r\n\r\n让你的AI助手访问92个跑步计算器、46个训练指南、44个以上的马拉松赛事、速度/时间/距离计算、比赛时间预测和心率训练区。\r\n\r\n[](https://rundida.com)\r\n[](https://www.npmjs.com/package/@rundida/mcp-server)\r\n[](LICENSE)\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"rundida\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@rundida/mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add rundida -- npx -y @rundida/mcp-server\r\n```\r\n\r\n### 光标/风帆\r\n\r\n添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"rundida\": {\r\n    \"command\": \"npx\",\r\n    \"args\": [\"-y\", \"@rundida/mcp-server\"]\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n|工具|类型|描述|\r\n|------|------|-------------|\r\n| `list_tools` |数据|浏览全部 [92个正在运行的计算器](https://rundida.com) 附描述|\r\n| `get_tool` |数据|获取特定工具的详细信息、常见问题解答和来源|\r\n| `list_guides` |数据|浏览全部 [46跑步指南](https://rundida.com/guide/) 附描述|\r\n| `get_guide` |数据|获取指南详细信息、常见问题解答和相关工具|\r\n| `list_marathons` |数据|列表 [44+场马拉松比赛](https://rundida.com/marathon/) 注明日期和地点|\r\n| `get_marathon` |数据|获取马拉松比赛的详细信息，包括天气和赛道概况|\r\n| `calculate_pace` |计算|计算速度、时间或距离（提供3个中的任意2个）|\r\n| `predict_race` |计算|使用Riegel公式+VO2max估计预测比赛时间|\r\n| `heart_rate_zones` |计算|计算5个HR训练区（Karvonen方法）|\r\n| `marathon_countdown` |计算|获取特定马拉松赛事的倒计时|\r\n\r\n**数据工具** 从 [API龙迪达](https://rundida.com/api/) 具有30分钟缓存。 **计算工具** 本地运行，无需任何API调用。\r\n\r\n## 示例用法\r\n\r\n问你的AI助手：\r\n\r\n- “如果我想在3:30内完成马拉松比赛，我的马拉松配速是多少？”\r\n- “根据我的10公里45分钟预测我的马拉松时间”\r\n- “我的心率区域是什么？我32岁，静息心率为52”\r\n- “距离东京马拉松还有多少天？”\r\n- “向我展示所有与营养相关的计算器”\r\n- “关于马拉松训练，你有什么跑步指南？”\r\n- “跟我说说沙发到5K的指南”\r\n\r\n## 关于RunDida\r\n\r\n[**Rundida**](https://rundida.com) (跑滴答) 是一个面向各级跑步者的免费跑步工具平台：\r\n\r\n- **[90+交互式计算器](https://rundida.com)** --速度、心率区、最大摄氧量、比赛预测、营养、装备尺寸、天气影响等\r\n- **[29马拉松倒计时](https://rundida.com/marathon/)** --实时计时器，提供比赛日天气预报、赛道概况和训练工具\r\n- **[免费JSON API](https://rundida.com/api/)** --无需身份验证，启用CORS， [OpenAPI 3.0已记录](https://rundida.com/api/openapi.json)\r\n- **多语言** — English, Chinese (中文)\r\n- **可嵌入小部件** --一行iframe嵌入任何计算器\r\n\r\n所有工具都是免费的，不需要帐户。试试看 [Rundida.com](https://rundida.com).\r\n\r\n## 运作原理\r\n\r\n计算工具使用既定的运行科学公式：\r\n\r\n|公式|用于|说明|\r\n|---------|---------|-------------|\r\n| **Riegel配方** | `predict_race` |跨距离比赛时间预测|\r\n| **杰克·丹尼尔斯方法** | `predict_race` |根据比赛表现估算VO2max|\r\n| **卡尔沃宁方法** | `heart_rate_zones` |从年龄到静息心率的心率训练区|\r\n\r\n## 需求\r\n\r\n- Node.js>=18\r\n- 互联网连接（数据工具从 [Rundida.com](https://rundida.com))\r\n\r\n## 链接\r\n\r\n|资源|URL|\r\n|----------|-----|\r\n| **RunDida网站** | [Rundida.com](https://rundida.com) |\r\n| **API 文档** | [Rundida.com/api](https://rundida.com/api/) |\r\n| **OpenAPI规范** | [Rundida.com/api/openapi.son](https://rundida.com/api/openapi.json) |\r\n| **NPM包** | [@rundida/mcp服务器](https://www.npmjs.com/package/@rundida/mcp-server) |\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "rundida": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@rundida/mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

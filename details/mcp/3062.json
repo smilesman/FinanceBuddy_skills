@@ -1,0 +1,18 @@
+{
+ "id": "3062",
+ "kind": "mcp",
+ "name": "dchub",
+ "fingerprint_md5": "1f78d198ad5f31ecc200ff70baaf575d",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# DC集线器MCP服务器\r\n\r\n**AI代理的实时数据中心智能。**\r\n\r\n唯一将设施数据、基础设施和实时网格智能组合到一个可查询界面中的MCP服务器。专为Claude、Cursor、Cline、Continue以及任何从事数据中心选址、能源分析或市场研究的人工智能助手而设计。\r\n\r\n______________________________________________________________________\r\n\r\n## 你能用它做什么\r\n\r\n```\r\n\"What's the current grid headroom in PJM?\"\r\n\"Show me AWS data center construction pipeline in Ohio\"\r\n\"Compare ERCOT vs PJM capacity prices over the last 30 days\"\r\n\"Find data centers within 50km of Northern Virginia substations >230kV\"\r\n\"What's the live demand and generation mix in CAISO right now?\"\r\n\"Get fiber routes between Ashburn and Atlanta\"\r\n```\r\n\r\n你的人工智能助手会得到实时、结构化的答案，而不是PDF的链接。\r\n\r\n## 里面是什么\r\n\r\n- **21000+数据中心设施** 覆盖170多个国家——运营商、容量、位置、光纤连接\r\n- **126427个变电站** 根据电压等级、可用容量估算\r\n- **实时电网遥测** --CAISO、MISO、SPP、NYISO的活荷载/净空高度（每5分钟刷新一次）；覆盖PJM、ERCOT、ISO-NE+魁北克水电公司、AESO、北池\r\n- **互连队列快照** 根据ISO建造/小心/避免判断（ERCOT 410 GW/87%DC，PJM 30 GW/73%DC等）\r\n- **2000多笔并购交易** +人工智能能力指数+超大规模10亿美元+交易跟踪器\r\n- **输电线路、天然气管道、光纤线路** --完整的基础设施堆栈\r\n- **NEPA文件** 即将到来的联邦能源+数据中心项目\r\n- **税收优惠** 按州列出资格详情\r\n- **市场情报** 为全球232个DC市场提供每日DCPI裁决\r\n\r\n**38个MCP工具** 涵盖设施搜索、市场情报、电网+互联、站点分析、交易和基础设施。 [完整工具列表→](https://dchub.cloud/integrations/mcp)\r\n\r\n**克劳德和Cursor积极使用** --看 [/引用自](https://dchub.cloud/cited-by).\r\n\r\n## 为什么DC Hub与其他目录相比\r\n\r\n|| DC Hub | datacenters.com | dcbyte | baxtel|\r\n|--------------------------|:------:|:---------------:|:------:|:------:|\r\n|实时网格数据|✅   |        ❌       |   ❌   |   ❌   |\r\n|MCP/AI集成|✅   |        ❌       |   ❌   |   ❌   |\r\n|设施+基础设施+电网|✅   |        ❌       |   ❌   |   ❌   |\r\n|实时API |✅   |        ❌       |   ❌   |   ❌   |\r\n|《国家环境政策法》文件✅   |        ❌       |   ❌   |   ❌   |\r\n|免费开发层|✅   |        ❌       |   ❌   |   ✅   |\r\n\r\n他们的优势：你可以浏览的设施目录。我们的优势：API您的人工智能助手可以在整个基础设施堆栈中实时查询。\r\n\r\n## 安装\r\n\r\n### 克劳德桌面/克劳德代码\r\n\r\n添加 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dchub\": {\r\n      \"url\": \"https://dchub.cloud/mcp\",\r\n      \"transport\": \"http\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n在中搜索“DC Hub” [光标MCP市场](https://cursor.directory/plugins/dc-hub) → 单击“安装”。\r\n\r\n### Cline/Continue.dev\r\n\r\n```json\r\n{\r\n  \"name\": \"dchub\",\r\n  \"url\": \"https://dchub.cloud/mcp\",\r\n  \"transport\": \"http\"\r\n}\r\n```\r\n\r\n### Smithery.ai\r\n\r\n列在 [smithery.ai/servers/azmartone67/dchub](https://smithery.ai/servers/azmartone67/dchub).通过Smithery CLI添加：\r\n\r\n```\r\nnpx -y @smithery/cli install @azmartone67/dchub --client claude\r\n```\r\n\r\n## 定价\r\n\r\n- **匿名：** 10次呼叫/天，不需要API密钥\r\n- **免费密钥（电子邮件注册，约60秒）：** [https://dchub.cloud/signup](https://dchub.cloud/signup) --50个电话/天\r\n- **新手（9美元/月）：** 200个电话/天→ [条纹](https://buy.stripe.com/8x2dRa5sS0x75uteGuaZi0g)\r\n- **开发者（49美元/月）：** 500次呼叫/天，全现场访问→ [条纹](https://buy.stripe.com/7sY5kE8F4fs13mI0PEaZi0c)\r\n- **专业版（199美元/月）：** 2000次通话/天+批量导出，历史数据\r\n- **企业（定制）：** 100000次呼叫/天，专用支持，自定义集成\r\n- **计量溢流：** 超出每日上限的每100个电话1美元（无超龄限制）\r\n\r\n## 数据源\r\n\r\nEIA小时RTO数据·HIFLD变电站数据库·OpenStreetMap·PeeringDB·DC Hub专有新闻+设施管道·法规.gov NEPA文件·USGS·EPA eGRID·FEMA NRI\r\n\r\n## 开源\r\n\r\n此MCP服务器的传输层是开源的。数据+业务逻辑存在于 [dchub.cloud](https://dchub.cloud).问题： [GitHub问题](https://github.com/azmartone67/dchub-mcp-server/issues).\r\n\r\n## 联系\r\n\r\nazmartone@gmail.com--Jonathan Martone--Martone顾问有限责任公司\r\n",
+ "config": {
+  "dchub": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://dchub.cloud/mcp"
+  }
+ }
+}

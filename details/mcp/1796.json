@@ -1,0 +1,22 @@
+{
+ "id": "1796",
+ "kind": "mcp",
+ "name": "wezterm-mcp",
+ "fingerprint_md5": "66f8857a181a94f09d18a97fc09e3d86",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# WezTerm MCP服务器\r\n\r\n## 概述\r\n\r\n这是WezTerm的MCP服务器。\r\n它允许您从Claude Desktop和其他MCP客户端控制WezTerm。\r\n\r\n## 安装\r\n\r\n要与Claude Desktop一起使用，请添加服务器配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"wezterm-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"wezterm-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n要通过Smithery自动安装WezTerm for Claude Desktop，请执行以下操作：\r\n\r\n```bash\r\nnpx -y @smithery/cli install @hiraishikentaro/wezterm-mcp --client claude\r\n```\r\n\r\n[](https://smithery.ai/server/@hiraishikentaro/wezterm-mcp)\r\n",
+ "config": {
+  "wezterm-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "wezterm-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

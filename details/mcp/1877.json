@@ -1,0 +1,24 @@
+{
+ "id": "1877",
+ "kind": "mcp",
+ "name": "chainlist-mcp",
+ "fingerprint_md5": "c183d648dc8e9083b46953fb828abd97",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# 链表MCP服务器\r\n\r\n一个MCP服务器，使AI代理能够快速访问经过验证的EVM链信息，包括RPC URL、链ID、探索者和本地令牌——来源于Chainlist.org。\r\n\r\n\r\n## 特性\r\n\r\n- **高效的数据获取**：缓存Chainlist API数据以最大限度地减少请求。\r\n- **灵活搜索**：使用正则表达式进行不区分大小写的关键字匹配 `getChainsByKeyword`.\r\n- **结构化输出**：带表格的Markdown响应 `rpc` 和 `explorers` 为了可读性。\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- **python**：版本3.10或更高版本。\r\n- **紫外线**：建议用于管理Python项目和依赖关系（通过安装 `pip install uv` 或跟随 [紫外线文件](https://docs.astral.sh/uv/)).\r\n\r\n### 步骤\r\n\r\n1. **克隆存储库**:\r\n\r\n   ```bash\r\n   git clone https://github.com/kukapay/chainlist-mcp.git\r\n   cd chainlist-mcp\r\n   ```\r\n\r\n1. **再进行**:\r\n\r\n   ```bash\r\n   uv sync\r\n   ```\r\n\r\n1. **安装到克劳德桌面**:\r\n\r\n   将服务器安装为Claude Desktop应用程序：\r\n\r\n   ```bash\r\n   uv run mcp install cli.py --name \"Chainlist MCP\"\r\n   ```\r\n\r\n   配置文件作为参考：\r\n\r\n   ```json\r\n   {\r\n      \"mcpServers\": {\r\n          \"Chainlist MCP\": {\r\n              \"command\": \"uv\",\r\n              \"args\": [ \"--directory\", \"/path/to/chainlist-mcp\", \"run\", \"main.py\" ]\r\n          }\r\n      }\r\n   }\r\n   ```\r\n\r\n   替换 `/path/to/chainlist-mcp` 使用您的实际安装路径。\r\n\r\n## 用法\r\n\r\n服务器通过MCP协议公开两个工具，可通过MCP兼容客户端或MCP检查器访问。\r\n\r\n### 工具\r\n\r\n#### `getChainById`\r\n\r\n- **描述**：通过链ID检索区块链的详细信息。\r\n- **参数**:\r\n  - `chain_id` （整数）：区块链的唯一标识符（例如，以太坊主网为1）。\r\n- **退货**：带有链详细信息或错误消息的Markdown字符串。\r\n\r\n**示例提示** （在MCP客户端中）：\r\n\r\n```\r\nGet the details for the blockchain with chain ID 1.\r\n```\r\n\r\n**示例响应**:\r\n\r\n```markdown\r\n**Chain Details**\r\n- **Name**: Ethereum Mainnet\r\n- **Chain ID**: 1\r\n- **Native Currency**: Ether (ETH, 18 decimals)\r\n- **TVL**: 134376951329.85631\r\n**RPC Endpoints**:\r\n| URL                                          | Tracking |\r\n|----------------------------------------------|----------|\r\n| https://eth.llamarpc.com                     | none     |\r\n| https://go.getblock.io/...                   | none     |\r\n...\r\n**Explorers**:\r\n| Name       | URL                        | Standard |\r\n|------------|----------------------------|----------|\r\n| etherscan  | https://etherscan.io       | EIP3091  |\r\n...\r\n```\r\n\r\n#### `getChainsByKeyword`\r\n\r\n- **描述**：按关键字搜索区块链（不区分大小写的部分匹配）。\r\n- **参数**:\r\n  - `keyword` （string）：要搜索的关键字或部分名称（例如“eth”）。\r\n  - `limit` （整数，可选）：最大结果数（默认值：5）。\r\n- **退货**：Markdown字符串列表最多为 `limit` 匹配链或错误消息。\r\n\r\n**示例提示** （在MCP客户端中）：\r\n\r\n```\r\nFind blockchains with 'eth' in their name, limit to 2 results.\r\n```\r\n\r\n**示例响应**:\r\n\r\n```markdown\r\n**Matching Chains**\r\n\r\n### Chain 1\r\n**Chain Details**\r\n- **Name**: Ethereum Mainnet\r\n- **Chain ID**: 1\r\n- **Native Currency**: Ether (ETH, 18 decimals)\r\n- **TVL**: 134376951329.85631\r\n**RPC Endpoints**:\r\n| URL                                          | Tracking |\r\n|----------------------------------------------|----------|\r\n| https://eth.llamarpc.com                     | none     |\r\n...\r\n**Explorers**:\r\n| Name       | URL                        | Standard |\r\n|------------|----------------------------|----------|\r\n| etherscan  | https://etherscan.io       | EIP3091  |\r\n...\r\n\r\n### Chain 2\r\n**Chain Details**\r\n- **Name**: Ethereum Goerli\r\n- **Chain ID**: 5\r\n- **Native Currency**: Ether (ETH, 18 decimals)\r\n- **TVL**: N/A\r\n**RPC Endpoints**:\r\n| URL                                          | Tracking |\r\n|----------------------------------------------|----------|\r\n| https://goerli.infura.io/...                 | yes      |\r\n...\r\n**Explorers**:\r\n| Name       | URL                        | Standard |\r\n|------------|----------------------------|----------|\r\n| etherscan  | https://goerli.etherscan.io | EIP3091  |\r\n...\r\n```\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "chainlist-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/chainlist-mcp",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

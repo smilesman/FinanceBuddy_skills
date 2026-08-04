@@ -1,0 +1,24 @@
+{
+ "id": "224",
+ "kind": "mcp",
+ "name": "github",
+ "fingerprint_md5": "b4afa5160e7c21ceb3e445d0ea9941e7",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP服务器\r\n\r\n此存储库包含模型上下文协议（MCP）服务器的配置和设置，包括GitHub和Puppeteer集成。\r\n\r\n## 概述\r\n\r\nMCP（模型上下文协议）服务器提供与不同服务交互的各种功能：\r\n\r\n- GitHub MCP服务器：用于GitHub API交互\r\n- Puppeteer MCP服务器：用于web浏览器自动化\r\n\r\n## 安装说明\r\n\r\n### 先决条件\r\n\r\n- 已安装Node.js和npm\r\n- GitHub个人访问令牌（适用于GitHub MCP服务器）\r\n\r\n### 安装\r\n\r\n1. 安装所需的MCP服务器：\r\n\r\n```bash\r\n# Install GitHub MCP Server\r\nnpx -y @modelcontextprotocol/server-github\r\n\r\n# Install Puppeteer MCP Server\r\nnpx -y @modelcontextprotocol/server-puppeteer\r\n```\r\n\r\n### 配置\r\n\r\nMCP服务器按以下结构配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"github\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@modelcontextprotocol/server-github\"\r\n      ],\r\n      \"env\": {\r\n        \"GITHUB_PERSONAL_ACCESS_TOKEN\": \"your-token-here\"\r\n      }\r\n    },\r\n    \"puppeteer\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@modelcontextprotocol/server-puppeteer\"\r\n      ],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 运行服务器\r\n\r\n要运行GitHub MCP服务器：\r\n\r\n```bash\r\nGITHUB_PERSONAL_ACCESS_TOKEN=\"your-token\" npx -y @modelcontextprotocol/server-github\r\n```\r\n\r\n要运行Puppeteer MCP服务器：\r\n\r\n```bash\r\nnpx -y @modelcontextprotocol/server-puppeteer\r\n```\r\n\r\n## 特性\r\n\r\n- GitHub集成\r\n\r\n  - 存储库管理\r\n  - 问题跟踪\r\n  - 拉取请求处理\r\n  - 代码搜索\r\n  - 还有更多。..\r\n\r\n- Puppeter集成\r\n\r\n  - Web自动化\r\n  - 屏幕截图\r\n  - 页面导航\r\n  - 表单交互\r\n  - 还有更多。..\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n",
+ "config": {
+  "github": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@modelcontextprotocol/server-github"
+   ],
+   "env": {
+    "GITHUB_PERSONAL_ACCESS_TOKEN": "your-token-here"
+   }
+  }
+ }
+}

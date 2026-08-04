@@ -1,0 +1,12 @@
+{
+ "id": "mdnew",
+ "kind": "skill",
+ "name": "mdnew",
+ "fingerprint_md5": "334615e10c0ad462a87d0ae332d6e4b3",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# mdnew\r\n\r\n使用 `markdown.new` 三级转换管道（Header Negotiation -> Workers AI -> Browser Rendering）从任何 URL 获取干净的 Markdown。\r\n\r\n## 用法\r\n\r\n使用目标 URL 运行脚本：\r\n\r\n```bash\r\npython3 scripts/mdnew.py <url>\r\n```\r\n\r\n## 为什么使用 mdnew?\r\n\r\n1. **令牌效率**: 与原始 HTML 相比，内容大小减少多达 80%。\r\n2. **干净数据**: 剥离样板、广告和导航菜单，仅保留核心内容。\r\n3. **JS 执行**: 通过 Cloudflare Browser Rendering 回退自动处理 JS 密集型页面。\r\n4. **代理优先**: 包含 `x-markdown-tokens` 跟踪以帮助管理上下文窗口。",
+ "config": {}
+}

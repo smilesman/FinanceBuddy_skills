@@ -1,0 +1,27 @@
+{
+ "id": "1149",
+ "kind": "mcp",
+ "name": "mysql-11",
+ "fingerprint_md5": "4743b1a7d5d5b4832675c94943721149",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# MySQL MCP 服务器\r\n\r\n此MCP服务器提供对MySQL数据库的只读访问。\r\n\r\n## 功能\r\n- 列出可用数据库\r\n- 列出数据库中的表\r\n- 描述表结构（包含字段备注）\r\n- 执行只读SQL查询\r\n\r\n## 安装\r\n\r\n### 1. 从NPM安装\r\n\r\n```bash\r\n# 全局安装\r\nnpm install -g @valuprosys/mysql-mcp-server\r\n\r\n# 或在项目中本地安装\r\nnpm install @valuprosys/mysql-mcp-server\r\n```\r\n\r\n### 2. 配置环境变量\r\n\r\n服务器需要以下环境变量：\r\n- `MYSQL_HOST`: 数据库服务器地址\r\n- `MYSQL_PORT`: 数据库端口 (默认: 3306)\r\n- `MYSQL_USER`: 数据库用户名\r\n- `MYSQL_PASSWORD`: 数据库密码\r\n- `MYSQL_DATABASE`: 默认数据库名 (可选)\r\n\r\n### 3. 添加到MCP配置\r\n\r\n在MCP配置文件中添加以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mysql\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@valuprosys/mysql-mcp-server\"],\r\n      \"env\": {\r\n        \"MYSQL_HOST\": \"your-mysql-host\",\r\n        \"MYSQL_PORT\": \"3306\",\r\n        \"MYSQL_USER\": \"your-mysql-user\",\r\n        \"MYSQL_PASSWORD\": \"your-mysql-password\",\r\n        \"MYSQL_DATABASE\": \"your-default-database\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": [\r\n        \"list_databases\",\r\n        \"list_tables\",\r\n        \"describe_table\",\r\n        \"execute_query\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n## 可用工具\r\n\r\n### list_databases\r\n\r\n列出MySQL服务器上所有可访问的数据库。\r\n\r\n**参数**: 无\r\n\r\n### list_tables\r\n\r\n列出指定数据库中的所有表。\r\n\r\n**参数**:\r\n- `database` (可选): 数据库名称 (未指定时使用默认数据库)\r\n\r\n### describe_table\r\n\r\n显示指定表的详细结构。\r\n\r\n**参数**:\r\n- `database` (可选): 数据库名称 (未指定时使用默认数据库)\r\n- `table` (必填): 表名称\r\n\r\n### execute_query\r\n\r\n执行只读SQL查询。\r\n\r\n**参数**:\r\n- `query` (必填): SQL查询语句 (仅允许SELECT、SHOW、DESCRIBE和EXPLAIN语句)\r\n- `database` (可选): 数据库名称 (未指定时使用默认数据库)\r\n",
+ "config": {
+  "mysql": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@valuprosys/mysql-mcp-server"
+   ],
+   "env": {
+    "MYSQL_HOST": "your-mysql-host",
+    "MYSQL_PORT": "3306",
+    "MYSQL_USER": "your-mysql-user",
+    "MYSQL_PASSWORD": "your-mysql-password",
+    "MYSQL_DATABASE": "your-default-database"
+   }
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "822",
+ "kind": "mcp",
+ "name": "puter",
+ "fingerprint_md5": "99adb0abe440d7fa69ea7b4d84341b89",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 计算机MCP⚠️ 已归档\r\n\r\n> **状态**：该项目不再积极维护。\r\n>\r\n> **理由**：Puter的API是为通过Puter.js基于浏览器的使用而设计的。服务器端直接API调用命中率限制，无法可靠使用。官方的Puter.js库需要Node.js 24+，但目前尚未广泛使用。\r\n\r\n______________________________________________________________________\r\n\r\n**历史的**：本地MCP服务器，将LLM环境与Puter的免费AI和云服务连接起来\r\n\r\nputerMCP是一个Types/Node.js [模型上下文协议（MCP）](https://modelcontextprotocol.io/) 通过在本地运行的服务器 `npx` 并充当任何兼容MCP的LLM环境（Claude Desktop、Kilo Code、Trae、Cursor、Windsurf等）之间的桥梁，以及 [计算机](https://puter.com)的免费、无限制的人工智能和云API。\r\n\r\n首批交付的功能是 **图像生成** 30多个模型（GPT Image、DALL-E、Gemini Nano Banana、Flux、Stable Diffusion等）-所有这些都没有API密钥或每个请求的成本。\r\n\r\n## 特性\r\n\r\n- **零摩擦**：安装并运行单个 `npx` 命令。\r\n- **免费图像生成**：通过Puter的免费层访问30多种型号，包括DALL-E 3、Flux.1和稳定扩散。\r\n- **安全认证**：使用本地安全存储的个人Puter帐户令牌。\r\n- **通用兼容性**：适用于Claude Desktop、Cursor、Trae和任何其他MCP客户端。\r\n- **内联图像生成**：图像直接返回聊天界面，可供预览和下载。\r\n- **智能回退**：如果高级型号（如DALL-E 3）因配额限制而失败，则自动尝试免费型号（如Flux）。\r\n\r\n## 先决条件\r\n\r\n- [Node.js](https://nodejs.org/) （v18或更高版本）\r\n- 免费帐户 [Puter.com](https://puter.com)\r\n\r\n## 安装和设置\r\n\r\n### 1.使用Puter进行身份验证\r\n\r\n您需要向MCP服务器提供Puter身份验证令牌。这是一次性设置。\r\n\r\n1. 登录到 [计算机网](https://puter.com).\r\n1. 打开浏览器开发者工具(**F12** 或 **Cmd+选项+I**) -> **控制台**.\r\n1. 类型 `puter.authToken` 然后按Enter键。\r\n1. 复制字符串（不带引号）。\r\n1. 在终端中运行以下命令：\r\n\r\n```bash\r\nnpx puter-mcp --token <your-token-here>\r\n```\r\n\r\n您的令牌将安全地存储在 `~/.puter-mcp/config.json`.\r\n\r\n### 2.配置您的MCP客户端\r\n\r\n#### 克劳德桌面版\r\n\r\n将以下内容添加到您的 `claude_desktop_config.json`:\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"puter\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"puter-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 托盘/光标/千克代码\r\n\r\n将配置添加到项目的MCP设置中（例如。， `.kilo/mcp.json` 或通过IDE设置UI）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"puter\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"puter-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n配置后，重新启动LLM环境。现在，您可以要求它生成图像：\r\n\r\n- “使用DALL-E 3在夜间创建赛博朋克城市”\r\n- “使用Flux.1 Schnell为咖啡店创建徽标”\r\n- “显示可用的型号”\r\n\r\n### 可用工具\r\n\r\n- **`generate_image`**：从文本提示生成图像。\r\n\r\n  - `prompt`：图像的描述。\r\n  - `model`：（可选）型号ID（默认值： `dall-e-3`).\r\n  - `quality`：（可选）质量设置（例如。， `hd`, `standard`).\r\n\r\n- **`list_models`**：列出所有可用的图像生成模型。\r\n\r\n  - `category`：（可选）按类别筛选(`all`, `openai`, `google`, `flux`, `stable-diffusion`, `other`).\r\n\r\n## 发展\r\n\r\n1. 克隆存储库：\r\n\r\n   ```bash\r\n   git clone https://github.com/yourusername/puter-mcp.git\r\n   cd puter-mcp\r\n   ```\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   npm install\r\n   ```\r\n\r\n1. 构建项目：\r\n\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n1. 在本地运行：\r\n\r\n   ```bash\r\n   node bin/puter-mcp.mjs\r\n   ```\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n______________________________________________________________________\r\n\r\n## 替代方案\r\n\r\n如果您需要在MCP/AI工作流程中免费生成图像，请考虑：\r\n\r\n1. **开放路由** -免费套餐提供多种图像型号\r\n1. **Together.ai** -Flux型号的免费套餐（10次/分钟）\r\n1. **直接API密钥** -使用OpenAI、Google或Anthropic API以及您自己的密钥\r\n\r\n对于基于浏览器的应用程序，官方 [Puter.js](https://developer.puter.com/) 该库运行良好，支持直接从前端代码生成图像。\r\n",
+ "config": {
+  "puter": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "puter-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

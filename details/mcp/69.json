@@ -1,0 +1,22 @@
+{
+ "id": "69",
+ "kind": "mcp",
+ "name": "bifrost",
+ "fingerprint_md5": "4c6b7bff1f84d1f94e17d2a2373ab529",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# @商业地图/双名册\r\n\r\n[](https://github.com/Business-Maps/bifrost/actions/workflows/ci.yml)\r\n[](https://www.npmjs.com/package/@businessmaps/bifrost)\r\n\r\nMCP服务器，允许AI工具调用浏览器中运行的函数。\r\n\r\n守护进程位于任何MCP客户端和浏览器选项卡之间。它一边通过stdio与JSON-RPC通信，另一边通过WebSocket通信。你的浏览器应用程序连接、注册工具，人工智能可以调用它们。\r\n\r\n## 快速开始\r\n\r\n### 1.添加到您的AI工具\r\n\r\n**克劳德代码：**\r\n\r\n```bash\r\nclaude mcp add --transport stdio bifrost -- npx @businessmaps/bifrost --no-auth\r\n```\r\n\r\n**克劳德桌面版** -添加到 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bifrost\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@businessmaps/bifrost\", \"--no-auth\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**光标** -添加到 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bifrost\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@businessmaps/bifrost\", \"--no-auth\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n无需安装。 `npx` 自动下载并运行该包。\r\n\r\n### 2.将客户端添加到浏览器应用程序\r\n\r\n```bash\r\nnpm i @businessmaps/bifrost-browser\r\n```\r\n\r\n或者通过CDN：\r\n\r\n```html\r\n<script src=\"https://unpkg.com/@businessmaps/bifrost-browser\"></script>\r\n```\r\n\r\n包含TypeScript类型。\r\n\r\n### 3.登记工具\r\n\r\n```js\r\nimport { BifrostBrowser } from \"@businessmaps/bifrost-browser\";\r\n\r\nconst bridge = new BifrostBrowser({ port: 3099 });\r\n\r\nbridge.registerTools([\r\n  {\r\n    name: \"get_page_title\",\r\n    description: \"Returns the page title\",\r\n    inputSchema: { type: \"object\", properties: {} },\r\n    handler: async () => document.title,\r\n  },\r\n  {\r\n    name: \"get_selection\",\r\n    description: \"Returns the user's current text selection\",\r\n    inputSchema: { type: \"object\", properties: {} },\r\n    handler: async () => window.getSelection().toString(),\r\n  },\r\n]);\r\n\r\nbridge.connect();\r\n```\r\n\r\n就是这样。人工智能现在可以呼叫 `get_page_title` 和 `get_selection` 在浏览器选项卡中。处理程序可以完全访问DOM、Canvas、IndexedDB、剪贴板， `fetch`等等。\r\n\r\n## 认证\r\n\r\n默认情况下，守护进程在启动时生成随机令牌。有两种方法可以获得它：\r\n\r\n- **终端模式** -守护进程启动时，令牌会打印到屏幕上\r\n- **MCP模式** -AI调用内置 `bifrost_connection_info` 工具获取令牌，然后告诉您要粘贴到应用程序中的内容\r\n\r\n将令牌传递给客户端：\r\n\r\n```js\r\nconst bridge = new BifrostBrowser({ port: 3099, token: \"TOKEN\" });\r\n```\r\n\r\n完全跳过身份验证 `--no-auth` 在地方发展过程中。\r\n\r\n## 多个标签页\r\n\r\n每个选项卡都注册了自己的工具。调用路由给拥有该工具的人。断开选项卡的连接会删除其工具。\r\n\r\n## 选项\r\n\r\n```\r\n--port <port>     WebSocket port        (default: 3099)\r\n--timeout <secs>  Tool call timeout     (default: 120)\r\n--no-auth         Disable token auth    (dev only)\r\n--help, -h        Show this message\r\n--version, -v     Show version\r\n```\r\n\r\n## 开发\r\n\r\n```bash\r\ngit clone https://github.com/Business-Maps/bifrost.git && cd bifrost\r\nnpm install\r\nnpm test\r\n```\r\n\r\n[建筑](docs/architecture.md) · [客户端API](docs/client-api.md) · [贡献](CONTRIBUTING.md)\r\n\r\n## 许可证\r\n\r\nApache 2.0\r\n",
+ "config": {
+  "bifrost": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@businessmaps/bifrost",
+    "--no-auth"
+   ],
+   "env": {}
+  }
+ }
+}

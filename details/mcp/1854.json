@@ -1,0 +1,22 @@
+{
+ "id": "1854",
+ "kind": "mcp",
+ "name": "binance",
+ "fingerprint_md5": "26ab39e111ad4014a1a143f2db396848",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 币安加密货币MCP\r\n\r\n\r\n[模型上下文协议](https://modelcontextprotocol.io) 用于访问币安加密货币市场数据的服务。\r\n\r\n## 概述\r\n\r\n该MCP服务允许人工智能代理（如Claude、Cursor、Windsurf等）执行Binance API调用，并从加密货币市场获取实时数据，包括价格、蜡烛图、订单簿等。\r\n\r\n**目的**\r\n您可以直接向AI询问最新的加密货币价格、交易量、价格趋势和其他信息，而无需查看币安网站或使用其他工具。\r\n\r\n**可用信息**\r\n\r\n通过此MCP服务，您可以获得以下信息：\r\n\r\n- 当前价格信息-获取指定加密货币的实时价格\r\n- 订单簿数据-查看买卖订单深度\r\n- 烛台图数据-获取不同时间段的烛台数据\r\n- 24小时价格变动-查看24小时内的价格变动\r\n- 交易历史-查看最近的交易记录\r\n- 价格统计-获取不同时间窗口的价格统计数据\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n| -------------------------- | ----------------------------------------------- |\r\n| `get_price` |获取指定加密货币的当前价格|\r\n| `get_order_book` |获取订单簿数据|\r\n| `get_recent_trades` |获取最近交易列表|\r\n| `get_historical_trades` |获取历史交易数据|\r\n| `get_aggregate_trades` |获取总交易列表|\r\n| `get_klines` |获取K线/烛台数据|\r\n| `get_ui_klines` |获取UI优化的K线数据|\r\n| `get_avg_price` |获取当前平均价格|\r\n| `get_24hr_ticker` |获取24小时价格变动统计|\r\n| `get_trading_day_ticker` |获取交易日市场信息|\r\n| `get_book_ticker` |获取订单簿股票代码|\r\n| `get_rolling_window_ticker` |获取滚动窗口价格变化统计数据|\r\n\r\n## 在游标中使用\r\n\r\n**全球安装**\r\n\r\n使用npx运行MCP服务：\r\n\r\n```bash\r\nnpx -y @snjyor/binance-mcp@latest\r\n```\r\n\r\n在游标IDE中：\r\n\r\n1. 首选 `Cursor Settings` > `MCP`\r\n1. 点击 `+ Add New MCP Service`\r\n1. 填写表格：\r\n   - 姓名： `binance`\r\n   - 类型： `command`\r\n   - 命令： `npx -y @snjyor/binance-mcp@latest`\r\n\r\n**工程安装**\r\n\r\n添加a `.cursor/mcp.json` 文件到您的项目：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"binance\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@snjyor/binance-mcp@latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**用法**\r\n\r\n配置后，币安市场数据工具将自动可供Cursor AI代理使用：\r\n\r\n1. 该工具将列在 `Available Tools` 在MCP设置中\r\n1. 代理将在相关时自动使用它\r\n1. 您可以明确地要求代理使用这些工具\r\n\r\n## 在其他MCP兼容环境中使用\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"binance\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@snjyor/binance-mcp@latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用示例\r\n\r\n以下是一些使用示例：\r\n\r\n**查询比特币价格**\r\n\r\n```\r\nPlease tell me the current price of Bitcoin\r\n```\r\n\r\n**查看以太坊24小时价格走势**\r\n\r\n```\r\nHow has Ethereum's price changed in the past 24 hours?\r\n```\r\n\r\n**获取BNB的K线数据**\r\n\r\n```\r\nShow me the daily K-line data for BNB over the last 5 days\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build\r\nnpm run build\r\n\r\n# Local testing\r\nnpm run start\r\n```\r\n\r\n## 调试服务器\r\n\r\n要调试服务器，您可以使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector).\r\n\r\n首先构建服务器\r\n\r\n```\r\nnpm run build\r\n```\r\n\r\n在终端中运行以下命令：\r\n\r\n```\r\n# Start MCP Inspector and server\r\nnpx @modelcontextprotocol/inspector node dist/index.js\r\n```\r\n\r\n## 许可证\r\n\r\n[Apache 2.0](LICENSE)\r\n",
+ "config": {
+  "binance": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@snjyor/binance-mcp@latest"
+   ],
+   "env": {}
+  }
+ }
+}

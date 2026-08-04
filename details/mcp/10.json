@@ -1,0 +1,21 @@
+{
+ "id": "10",
+ "kind": "mcp",
+ "name": "abletonmcp-2",
+ "fingerprint_md5": "3b36649cd1f24457790d152db61c6a00",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Virtual Sound Engineer\r\n\r\nMCP server wrapper for Ableton Live — controlla Ableton con AI (Claude) tramite linguaggio naturale.\r\n\r\n## Cosa fa\r\n\r\nPermette a Claude di controllare Ableton Live direttamente:\r\n- Creare tracce MIDI e audio\r\n- Scrivere clip MIDI con note e accordi\r\n- Caricare strumenti e plugin\r\n- Controllare il trasporto (play, stop, BPM)\r\n- Gestire il mixer (volume, pan, sends)\r\n- E molto altro via prompt in linguaggio naturale\r\n\r\n## Setup\r\n\r\n### 1. Remote Script Ableton\r\n\r\nCopiare `AbletonMCP_Remote_Script/__init__.py` nella cartella MIDI Remote Scripts di Ableton:\r\n\r\n```\r\n/Applications/Ableton Live 10 Suite.app/Contents/App-Resources/MIDI Remote Scripts/AbletonMCP/__init__.py\r\n```\r\n\r\nPoi in Ableton: **Preferences → Link/MIDI → Control Surface** → seleziona `AbletonMCP`\r\n\r\n### 2. Claude Desktop config\r\n\r\nAggiungere in `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"AbletonMCP\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"ableton-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3. Riavviare Claude Desktop\r\n\r\nIl server parte automaticamente quando Claude lo necessita. Ableton deve essere aperto e il Control Surface `AbletonMCP` attivo.\r\n\r\n## Dipendenze\r\n\r\n- Ableton Live 10+\r\n- Python 3.8+ con `uv` (`brew install uv`)\r\n- Pacchetto: [ableton-mcp](https://github.com/ahujasid/ableton-mcp) by Siddharth Ahuja\r\n\r\n## Utilizzo\r\n\r\nCon Claude Desktop aperto e Ableton attivo, basta chiedere in chat:\r\n- \"Crea una traccia MIDI con un synth pad e scrivi una progressione in Am\"\r\n- \"Aggiungi un drum rack alla traccia 2\"\r\n- \"Imposta il BPM a 128 e avvia la riproduzione\"\r\n\r\n## Struttura\r\n\r\n```\r\nvirtual-sound-engineer/\r\n├── AbletonMCP_Remote_Script/\r\n│   └── __init__.py       # Remote Script da installare in Ableton\r\n├── claude_desktop_config.json  # Esempio di config MCP\r\n└── README.md\r\n```\r\n",
+ "config": {
+  "abletonmcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "ableton-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

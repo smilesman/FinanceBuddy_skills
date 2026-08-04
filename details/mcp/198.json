@@ -1,0 +1,25 @@
+{
+ "id": "198",
+ "kind": "mcp",
+ "name": "edgefinder",
+ "fingerprint_md5": "d04fb3a797f19aaabab7083acf56b18f",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# @边缘查找器/cli\r\n\r\nCLI和MCP服务器 [边缘查找器](https://edgefinder.io) 体育分析。从您的终端或人工智能代理获取人工智能支持的NFL、NBA和MLB博彩建议、球员统计数据、赔率、赛程和Polymarket投资组合跟踪。\r\n\r\n## 需求\r\n\r\n- Node.js 18+\r\n- EdgeFinder订阅（入门版每月20美元，专业版每月50美元，或终极版每月150美元）\r\n\r\n## 入门指南\r\n\r\n```bash\r\n# Install\r\nnpm install -g @edgefinder/cli\r\n\r\n# Log in (opens magic link in your email)\r\nedgefinder login\r\n\r\n# Start asking questions\r\nedgefinder ask \"Who should I bet on tonight?\"\r\n```\r\n\r\n`edgefinder login` 将引导您完成所有操作——输入您的电子邮件，单击魔术链接，如果您还没有订阅，它将在您的浏览器中打开定价页面。一旦设置好，您的API密钥将自动保存。\r\n\r\n要注销：\r\n\r\n```bash\r\nedgefinder logout\r\n```\r\n\r\n### 手动配置\r\n\r\n您也可以直接设置您的API密钥，如果您已经从 [chat.edgefinder.io/settings/integrations](https://chat.edgefinder.io/settings/integrations):\r\n\r\n```bash\r\n# Environment variable\r\nexport EDGEFINDER_API_KEY=ef_live_...\r\n\r\n# Or save to config file (~/.edgefinder/config.json)\r\nedgefinder config set api-key ef_live_...\r\n```\r\n\r\n## CLI使用情况\r\n\r\n```bash\r\n# AI-powered analysis\r\nedgefinder ask \"Who should I bet on tonight?\"         # NFL (default)\r\nedgefinder ask --nba \"Lakers vs Celtics prediction\"   # NBA\r\nedgefinder ask --mlb \"Yankees vs Red Sox prediction\"  # MLB\r\n\r\n# Schedules and scores\r\nedgefinder schedule nfl\r\nedgefinder schedule nba --date 2026-02-20\r\n\r\n# Polymarket odds\r\nedgefinder odds nfl --week 12\r\nedgefinder odds nba\r\n\r\n# Standings\r\nedgefinder standings nba\r\n\r\n# Portfolio tracking (requires connected Polymarket wallet)\r\nedgefinder portfolio summary\r\nedgefinder portfolio positions\r\nedgefinder portfolio trades\r\n\r\n# Account status\r\nedgefinder status\r\n```\r\n\r\n所有命令支持 `--json` 用于机器可读输出。\r\n\r\n### 交互模式\r\n\r\n跑 `edgefinder` 没有启动交互式会话的子命令。使用 `/nfl`, `/nba`，或 `/mlb` 在提出后续问题之前，先切换活跃的联盟。\r\n\r\n## MCP服务器\r\n\r\n将EdgeFinder用作Claude Desktop、Openclaw或任何MCP兼容客户端等AI代理中的工具。\r\n\r\nEdgeFinder支持两种MCP连接模式：\r\n\r\n- **本地标准MCP**：通过此CLI包运行 `npx @edgefinder/cli mcp`。将其用于可以启动命令的桌面/本地代理客户端。\r\n- **远程HTTP MCP**：由EdgeFinder主办，网址为 `https://chat.edgefinder.io/api/mcp`。将其用于基于URL的连接器UI，如Grok或ChatGPT自定义应用程序/连接器。\r\n\r\n### 本地stdio设置\r\n\r\n添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"edgefinder\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@edgefinder/cli\", \"mcp\"],\r\n      \"env\": {\r\n        \"EDGEFINDER_API_KEY\": \"ef_live_...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n此模式从以下位置读取凭据 `EDGEFINDER_API_KEY`, `edgefinder login`，或 `edgefinder config set api-key`.\r\n\r\n### 远程HTTP设置\r\n\r\n对于要求提供MCP服务器URL的客户端，请使用：\r\n\r\n```text\r\nhttps://chat.edgefinder.io/api/mcp\r\n```\r\n\r\n工具调用需要EdgeFinder API密钥。更喜欢支持请求标头的客户端：\r\n\r\n```text\r\nAuthorization: Bearer YOUR_EDGEFINDER_API_KEY\r\n```\r\n\r\n如果连接器UI只接受URL，不提供设置标头的方法，请使用：\r\n\r\n```text\r\nhttps://chat.edgefinder.io/api/mcp?api_key=YOUR_EDGEFINDER_API_KEY\r\n```\r\n\r\nGrok和ChatGPT使用远程HTTP URL，因为它们的连接器流通过HTTPS连接到托管的MCP服务器。这 `@edgefinder/cli` 该包对本地MCP客户端仍然有用，但它本身并不承载公共URL。\r\n\r\n### 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `ask` |NFL、NBA或MLB的人工智能体育分析——投注选择、球员统计、比赛|\r\n| `get_schedule` |比赛日程和比分|\r\n| `get_standings` |联赛排名|\r\n| `get_odds` |多市场投注赔率|\r\n| `get_portfolio` |Polymarket投资组合数据（摘要、头寸、交易）|\r\n| `analyze_position` |分析投资组合头寸——按团队/头衔搜索，使用持有/退出建议、入场评估或输赢事后分析进行人工智能分析|\r\n| `get_status` |帐户和订阅状态|\r\n\r\n`analyze_position` 当前在本地stdio MCP服务器中可用。托管的远程MCP端点当前公开 `ask`, `get_schedule`, `get_standings`, `get_odds`, `get_portfolio`，以及 `get_status`.\r\n\r\n## Codex插件\r\n\r\n此回购也是 [食品法典市场](https://www.codex-marketplace.com) 插件。舱单住在 [`.codex-plugin/plugin.json`](./.codex-plugin/plugin.json) 并捆绑EdgeFinder MCP服务器(`.mcp.json`)加上 [`edgefinder` 技能](./skills/edgefinder/SKILL.md)插件读取凭据的方式与CLI相同-- `edgefinder login`, `edgefinder config set api-key`，或 `EDGEFINDER_API_KEY` 在插件环境中。\r\n\r\n## OpenClaw插件\r\n\r\n此仓库还包括一个本地可安装的OpenClaw插件包 [`openclaw-plugin/`](./openclaw-plugin).\r\n\r\n本地安装：\r\n\r\n```bash\r\nopenclaw plugins install /absolute/path/to/openclaw-plugin\r\n```\r\n\r\nOpenClaw还可以通过软件包名称安装它：\r\n\r\n```bash\r\nopenclaw plugins install @edgefinder/openclaw-plugin\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "edgefinder": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@edgefinder/cli",
+    "mcp"
+   ],
+   "env": {
+    "EDGEFINDER_API_KEY": "ef_live_..."
+   }
+  }
+ }
+}

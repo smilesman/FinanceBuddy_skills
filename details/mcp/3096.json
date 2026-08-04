@@ -1,0 +1,24 @@
+{
+ "id": "3096",
+ "kind": "mcp",
+ "name": "flighty",
+ "fingerprint_md5": "e1db787ccf4013943f7e5967fdd66972",
+ "download_count": 0,
+ "category": "出行交通",
+ "tags": "",
+ "version": "",
+ "readme": "# 飞行MCP\r\n\r\n本地MCP（模型上下文协议）服务器，允许AI助手访问您的 [轻浮的](https://www.flightyapp.com/) 飞行数据。直接从Flighty macOS应用程序的本地SQLite数据库读取。\r\n\r\n## 特性\r\n\r\n- **列出您的航班** -查看您自己的即将到来、过去或所有航班\r\n- **列出朋友的航班** -查看已连接好友的航班，可按姓名筛选\r\n- **获取航班详细信息** -按号码或ID查找任何航班\r\n- **搜索航班** -按航空公司、机场、日期范围筛选\r\n- **航班状态** -检查当前状态、延迟、登机口、天气\r\n- **延误预测** -历史准时绩效统计\r\n- **添加航班** -按航班代码和日期添加航班，并可选择自动查找机场\r\n- **机场搜索** -按IATA代码、城市或名称查找机场\r\n- **航空公司搜索** -按IATA代码、名称或联盟查找航空公司\r\n- **航班统计** -汇总统计数据（距离、顶级航线、航空公司）\r\n- **连接** -查看转机和转机时间\r\n\r\n## 先决条件\r\n\r\n- macOS与 [飞行应用程序](https://www.flightyapp.com/) 安装\r\n- Python 3.11+\r\n- [紫外线](https://docs.astral.sh/uv/) 包管理器\r\n- （可选）免费 [空气实验室](https://airlabs.co/) 添加航班时用于自动查找机场的API密钥\r\n\r\n## 设置\r\n\r\n### 克劳德桌面版\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"flighty\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/flighty-mcp\",\r\n        \"run\",\r\n        \"main.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n要在添加航班时启用机场自动查找，请添加AirLabs API密钥：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"flighty\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/flighty-mcp\",\r\n        \"run\",\r\n        \"main.py\"\r\n      ],\r\n      \"env\": {\r\n        \"AIRLABS_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您可以在获得免费的API密钥 [airlabs.co](https://airlabs.co/).\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add flighty -- uv --directory /path/to/flighty-mcp run main.py\r\n```\r\n\r\n使用AirLabs API密钥：\r\n\r\n```bash\r\nclaude mcp add flighty -e AIRLABS_API_KEY=your-api-key-here -- uv --directory /path/to/flighty-mcp run main.py\r\n```\r\n\r\n## 配置\r\n\r\n默认情况下，服务器从以下位置读取：\r\n\r\n```\r\n~/Library/Containers/com.flightyapp.flighty/Data/Documents/MainFlightyDatabase.db\r\n```\r\n\r\n用覆盖 `FLIGHTY_DB_PATH` 环境变量（如果需要）。\r\n\r\n### 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `FLIGHTY_DB_PATH` |否|覆盖默认的Flighty数据库路径|\r\n| `AIRLABS_API_KEY` |没有| [空气实验室](https://airlabs.co/) API键，用于在添加航班时自动查找机场。如果没有这个，您必须手动提供出发和到达机场。 |\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_flights` |使用过滤器列出您自己的航班（即将出发/过去/已存档）|\r\n| `list_friend_flights` |列出已连接好友的航班，可选择按姓名筛选|\r\n| `get_flight` |通过ID或航班号获取详细的航班信息|\r\n| `search_flights` |按航空公司、机场、日期范围搜索|\r\n| `get_flight_status` |当前状态、延迟、登机口、天气|\r\n| `get_delay_forecast` |历史延迟统计|\r\n| `add_flight` |按代码和日期添加航班（使用AirLabs API密钥自动解决机场问题）|\r\n| `search_airports` |按代码、城市或名称搜索机场|\r\n| `search_airlines` |按代码、名称或联盟搜索航空公司|\r\n| `get_flight_stats` |汇总统计数据（距离、顶级路线等）|\r\n| `get_connections` |航班转机和中转信息|\r\n\r\n## 查询示例\r\n\r\n- “我接下来的航班是什么？”\r\n- “费利克斯有什么航班要来？”\r\n- “UA194多久延迟一次？”\r\n- “添加2026年4月15日的LH400航班”\r\n- “显示我2025年的航班统计数据”\r\n- “我下一班飞机从哪个登机口起飞？”\r\n- “搜索东京机场”\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "flighty": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/flighty-mcp",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

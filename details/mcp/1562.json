@@ -1,0 +1,23 @@
+{
+ "id": "1562",
+ "kind": "mcp",
+ "name": "mcp-docs-provider",
+ "fingerprint_md5": "9d15577c47040c79c90029f8904d9dcc",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP文档提供者\r\n\r\n[](https://smithery.ai/server/@YassineTk/mcp-docs-provider)\r\n\r\n通过MCP为LLM提供文档上下文提供者。该服务器使AI模型能够无缝访问和查询您当地的降价技术文档。\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的mcp文档提供程序 [史密瑟里](https://smithery.ai/server/@YassineTk/mcp-docs-provider):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @YassineTk/mcp-docs-provider --client claude\r\n```\r\n\r\n## 使用光标进行配置\r\n\r\n将其添加到您的Cursor配置文件中(`mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-docs-provider\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"mcp-docs-provider\",\r\n        \"/path/to/your/documentation.md\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n- `/path/to/your/documentation.md` 带有markdown文档文件的路径\r\n\r\n### 更新Markdown文档后不需要重建。\r\n\r\n## MCP客户端规则配置\r\n\r\n将以下规范添加到您的MCP客户端规则中（例如Cursor）（这可确保自动使用文档上下文，而不会在查询中明确提及“使用我的MCP”。）：\r\n“如果用户向您询问ui模式，请遵循mcp文档提供商mcp服务器。”\r\n",
+ "config": {
+  "mcp-docs-provider": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-docs-provider",
+    "/path/to/your/documentation.md"
+   ],
+   "env": {}
+  }
+ }
+}

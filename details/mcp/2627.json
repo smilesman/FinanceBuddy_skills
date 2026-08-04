@@ -1,0 +1,26 @@
+{
+ "id": "2627",
+ "kind": "mcp",
+ "name": "nasa-ads",
+ "fingerprint_md5": "6d7f7e73e2f96891bb0c46b494ae564c",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 美国国家航空航天局ADS MCP服务器\r\n\r\n用于查询NASA ADS（天体物理数据系统）API的模型上下文协议（MCP）服务器。\r\n\r\n## 特性\r\n\r\n- **搜索**：使用完整的Solr语法查询论文。自动返回摘要、arXiv ID和DOI。\r\n- **元数据**：检索详细记录和BibTeX引用。\r\n- **引用与参考文献**：分析特定论文的引文网络。\r\n\r\n## 快速开始\r\n\r\n使用此服务器最简单的方法是使用Docker。\r\n\r\n### 1.先决条件\r\n\r\n- [码头工人](https://www.docker.com/) 安装并运行。\r\n- NASA ADS API代币（获取一个 [这里](https://ui.adsabs.harvard.edu/user/settings/token)).\r\n\r\n### 2.配置（光标/风帆）\r\n\r\n将以下内容添加到您的 `mcp_config.json`.\r\n\r\n**替换** `your-dockerhub-username` 使用图像维护者的用户名。\r\n**替换** `your-secret-token` 使用您的实际NASA ADS API代币。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"nasa-ads\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-e\",\r\n        \"NASA_ADS_TOKEN=your-secret-token\",\r\n        \"katkov/nasa-ads-mcp:latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search` |搜索论文。可选：设置 `include_abstract=True` 获取摘要。默认为 `output_format=\"toon\"`. |\r\n| `get_record` |通过bibcode获取特定论文的详细元数据。默认为 `output_format=\"toon\"`. |\r\n| `get_bibtex` |获取论文的BibTeX引用。 |\r\n| `get_citations` |查找引用特定论文的论文。默认为 `output_format=\"toon\"`. |\r\n| `get_references` |查找特定论文引用的论文。默认为 `output_format=\"toon\"`. |\r\n\r\n## 使用示例\r\n\r\n### 检查引文\r\n\r\n要了解谁引用了特定的论文：\r\n\r\n> “找到霍金（1974）的论文《黑洞爆炸》，告诉我是谁引用的。”\r\n\r\n代理人将使用 `search` 查找bibcode(`1974Natur.248...30H`)然后 `get_citations`.\r\n\r\n### 检查参考文献\r\n\r\n要查看论文的参考书目：\r\n\r\n> “获取1974Natur.248…30H论文的参考文献。”\r\n\r\n### 使用JSON格式\r\n\r\n要获取标准JSON输出：\r\n\r\n> “使用JSON格式搜索霍金的论文。”\r\n\r\n代理人将致电 `search` 随着 `output_format=\"json\"`.\r\n\r\n______________________________________________________________________\r\n\r\n## 从克隆的Repo（Docker）运行\r\n\r\n如果您已克隆此存储库并希望自己构建映像：\r\n\r\n1. **塑造形象**:\r\n   在存储库根目录下运行此命令：\r\n\r\n   ```bash\r\n   docker build -t nasa-ads-mcp .\r\n   ```\r\n\r\n1. **配置客户端**:\r\n   使用 `nasa-ads-mcp` （没有任何用户名前缀）。\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"nasa-ads\": {\r\n         \"command\": \"docker\",\r\n         \"args\": [\r\n           \"run\",\r\n           \"-i\",\r\n           \"--rm\",\r\n           \"-e\",\r\n           \"NASA_ADS_TOKEN=your-secret-token\",\r\n           \"nasa-ads-mcp\"\r\n         ]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n### 从源代码运行（Python）\r\n\r\n1. 安装依赖项： `pip install -r requirements.txt`\r\n1. 运行： `fastmcp run nasa_ads_mcp.py`\r\n\r\n## 运行测试\r\n\r\n要在Docker容器中运行测试：\r\n\r\n```bash\r\n# Build the image\r\ndocker build -t nasa-ads-mcp .\r\n\r\n# Run tests (replace with your actual token)\r\ndocker run --rm -e NASA_ADS_TOKEN=your-secret-token nasa-ads-mcp python /app/tests/test_mcp.py\r\ndocker run --rm -e NASA_ADS_TOKEN=your-secret-token nasa-ads-mcp python /app/tests/test_toon.py\r\n```\r\n",
+ "config": {
+  "nasa-ads": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "NASA_ADS_TOKEN=your-secret-token",
+    "katkov/nasa-ads-mcp:latest"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "id": "2339",
+ "kind": "mcp",
+ "name": "uber",
+ "fingerprint_md5": "b24ef20b62a263af0c0eda2c86501b0f",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP优步服务器\r\n\r\n一个MCP（模型上下文协议）服务器，用于通过人工智能助手预订优步乘车。\r\n\r\n## 特性\r\n\r\n- 使用Uber进行OAuth 2.0身份验证\r\n- 获取游乐设施的价格估算\r\n- 请求乘坐优步\r\n- 检查游乐设施状态\r\n- 取消游乐设施\r\n\r\n## 安装\r\n\r\n### 使用npm（全局安装）\r\n\r\n```bash\r\nnpm install -g mcp-uber\r\n```\r\n\r\n### 使用npx（无需安装）\r\n\r\n```bash\r\nnpx mcp-uber\r\n```\r\n\r\n## 设置\r\n\r\n### 步骤1：创建优步开发者帐户\r\n\r\n1. 首选 [优步开发者仪表板](https://developer.uber.com/)\r\n1. 点击“登录”，然后：\r\n   - 使用现有的优步乘客/司机帐户\r\n   - 创建一个专门用于开发的新帐户\r\n\r\n**💡 提示：** 对于组织，创建电子邮件别名（例如。，dev@yourcompany.com)而不是使用个人账户更容易转移所有权。\r\n\r\n### 第二步：创建新应用\r\n\r\n1. 在 [开发者面板](https://developer.uber.com/dashboard)，点击“创建应用程序”（右上角）\r\n1. 填写所需信息：\r\n   - **应用程序名称**：您的应用程序名称\r\n   - **描述**：简要说明你的应用程序的功能\r\n1. 点击“创建”\r\n\r\n### 步骤3：获取您的API凭据\r\n\r\n1. 在仪表板中导航到您的应用程序\r\n1. 转到 **认证** 标签\r\n1. 你会发现：\r\n   - **客户端ID**：应用程序的公共标识符\r\n   - **客户端密钥**：私钥（确保安全！）\r\n   - **服务器令牌**：用于服务器端请求\r\n\r\n### 步骤4：配置OAuth设置\r\n\r\n1. 在 **认证** 选项卡，添加您的重定向URI：\r\n   - 对于本地测试： `http://localhost:3000/callback`\r\n   - 用于生产：您的实际回调URL\r\n1. 选择所需范围：\r\n   - `profile` -用户基本资料信息\r\n   - `request` -代表用户请求乘车\r\n   - `ride_request` -查看和管理当前骑行请求\r\n\r\n**⚠️ 注：** 这 `request` 该范围享有特权，需要优步批准才能用于生产。在开发过程中，您的帐户可以在未经批准的情况下使用它。\r\n\r\n### 步骤5：设置环境变量\r\n\r\n使用您的凭据创建环境变量（请参阅下面的配置部分）\r\n\r\n## 使用Claude Desktop\r\n\r\n### 使用npm（全局安装）\r\n\r\n添加到您的Claude Desktop配置(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"uber\": {\r\n      \"command\": \"mcp-uber\",\r\n      \"env\": {\r\n        \"UBER_CLIENT_ID\": \"your_client_id\",\r\n        \"UBER_CLIENT_SECRET\": \"your_client_secret\",\r\n        \"UBER_REDIRECT_URI\": \"http://localhost:3000/callback\",\r\n        \"UBER_ENVIRONMENT\": \"sandbox\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用npx\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"uber\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-uber\"],\r\n      \"env\": {\r\n        \"UBER_CLIENT_ID\": \"your_client_id\",\r\n        \"UBER_CLIENT_SECRET\": \"your_client_secret\",\r\n        \"UBER_REDIRECT_URI\": \"http://localhost:3000/callback\",\r\n        \"UBER_ENVIRONMENT\": \"sandbox\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n1. **uber_get_auth_url** -获取OAuth授权URL\r\n1. **uber_set_access_token** -设置用户的访问令牌\r\n1. **uber_price_estimates** -获取乘车价格估算\r\n1. **uber_request_ride** -请求乘坐优步\r\n1. **uber_getride_status** -检查骑行请求状态\r\n1. **uber_cancel-ride** -取消乘车请求\r\n\r\n## OAuth流\r\n\r\n1. 使用 `uber_get_auth_url` 获取授权URL\r\n1. 用户访问URL并授权您的应用程序\r\n1. 回调后，将代码交换为访问令牌\r\n1. 使用 `uber_set_access_token` 存储令牌\r\n1. 现在您可以进行API调用\r\n\r\n## 配置\r\n\r\n### 环境变量\r\n\r\nMCP服务器需要以下环境变量：\r\n\r\n- `UBER_CLIENT_ID`：您的优步应用程序客户端ID\r\n- `UBER_CLIENT_SECRET`：您的优步应用程序客户端机密\r\n- `UBER_REDIRECT_URI`：OAuth回调URL（默认值： `http://localhost:3000/callback`)\r\n- `UBER_ENVIRONMENT`：要么 `sandbox` 或 `production` （默认值： `sandbox`)\r\n\r\n## 测试您的集成\r\n\r\n1. **使用沙盒模式** 用于测试：\r\n\r\n   - 集 `UBER_ENVIRONMENT=sandbox` 在您的环境中\r\n   - 沙盒模式在没有真实驾驶员的情况下模拟骑行请求\r\n   - 非常适合开发和测试\r\n\r\n1. **测试OAuth流**:\r\n\r\n   - 使用 `uber_get_auth_url` 获取授权URL的工具\r\n   - 访问URL并授权您的应用程序\r\n   - 授权后，优步将使用代码重定向到您的回叫URL\r\n   - 将代码交换为访问令牌（您需要设置自己的回调处理程序）\r\n   - 使用 `uber_set_access_token` 将令牌存储在MCP服务器中\r\n\r\n1. **设置回调处理程序**:\r\n\r\n   - 对于测试，您可以使用简单的Express服务器（请参阅 `examples/oauth-server.js` 在 [GitHub仓库](https://github.com/199-biotechnologies/mcp-uber))\r\n   - 对于生产环境，在应用程序中实现一个安全的回调处理程序\r\n   - 回调URL必须与您的优步应用程序中配置的URL完全匹配\r\n\r\n## 重要提示\r\n\r\n### 沙盒vs生产\r\n\r\n- **沙盒模式** （默认）：\r\n\r\n  - 模拟游乐设施和司机\r\n  - 无实际费用\r\n  - 非常适合测试\r\n  - 仅限于您的开发者帐户\r\n\r\n- **生产模式**:\r\n\r\n  - 实际乘车和收费\r\n  - 需要优步批准特权范围\r\n  - 必须通过优步的审查程序\r\n\r\n### 安全最佳实践\r\n\r\n1. **从不提交凭据**：确保您的客户机密安全\r\n1. **使用环境变量**：不要硬编码凭据\r\n1. **实施适当的令牌存储**：当前内存存储仅用于演示\r\n1. **验证重定向URI**：确保正确配置了回调URL\r\n\r\n### API限制\r\n\r\n- 适用费率限制（查看优步的文件）\r\n- 特权范围需要批准才能用于生产\r\n- 与生产相比，沙盒模式有一些局限性\r\n\r\n### 故障排除\r\n\r\n- **“无效范围”错误**：您的应用程序需要获得生产中特权作用域的批准\r\n- **“重定向URI无效”**：确保你的重定向URI与优步仪表板中配置的完全匹配\r\n- **“未经授权”的错误**：检查您的访问令牌是否有效且未过期\r\n\r\n## 资源\r\n\r\n- [优步API文档](https://developer.uber.com/docs)\r\n- [OAuth 2.0指南](https://developer.uber.com/docs/riders/ride-requests/tutorials/api/introduction-oauth)\r\n- [沙盒测试指南](https://developer.uber.com/docs/riders/ride-requests/tutorials/api/sandbox)\r\n- [API状态页](https://status.uber.com/)\r\n",
+ "config": {
+  "uber": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-uber"
+   ],
+   "env": {
+    "UBER_CLIENT_ID": "your_client_id",
+    "UBER_CLIENT_SECRET": "your_client_secret",
+    "UBER_REDIRECT_URI": "http://localhost:3000/callback",
+    "UBER_ENVIRONMENT": "sandbox"
+   }
+  }
+ }
+}

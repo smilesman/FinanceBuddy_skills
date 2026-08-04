@@ -1,0 +1,12 @@
+{
+ "id": "creator-alpha-feed",
+ "kind": "skill",
+ "name": "creator-alpha-feed",
+ "fingerprint_md5": "e0be8d802da853979e802763bb59c84f",
+ "download_count": 0,
+ "category": "效率工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Creator Alpha Feed\r\n\r\n1. 首先读取配置：\r\n   - `${OBSIDIAN_CONFIG_PATH:-<your_obsidian_vault>/OpenClaw/项目/AI内容日报/采集配置.md}`\r\n2. 按此顺序为 X 执行采集：\r\n   - 首页信息流 → 白名单账户 → 关键词\r\n3. 优先使用 API（如果可用）；不可用时回退到浏览器。\r\n4. 强制执行浏览器标签页上限：\r\n   - 最多 7 个并发标签页；先关闭已完成的标签页；最后保留 0 个标签页（在完成前关闭所有临时标签页）。\r\n5. 按配置的结构构建排名输出（默认）：\r\n   - KOL TOP3（最近 6 小时）\r\n   - 实用/教程/观点 TOP10\r\n   - 行业 TOP3（最近 6 小时）\r\n6. 将简洁结果推送到群组频道；将完整报告写入 Obsidian 路径。\r\n7. 报告文件名使用时间戳格式：`YYYY-MM-DD_HHMM.md`。\r\n8. 优先使用真实的 Obsidian Vault 路径（而非工作区镜像）（如果可用）。\r\n9. 使用结构化的 Obsidian 目录：\r\n   - `OpenClaw/项目/AI内容日报/01-日报/` 用于最终报告\r\n   - `OpenClaw/项目/AI内容日报/02-运行记录/` 用于验证/调试运行\r\n   - `OpenClaw/项目/AI内容日报/03-文档/` 用于安装/操作文档\r\n10. 如果某个来源需要登录，请暂停并通知用户登录；等待最多 3 分钟并定期检查，如果仍然不可用，则继续处理剩余来源。\r\n\r\n## 捆绑脚本\r\n\r\n在需要时使用 `scripts/collect-v4.sh` 和相关脚本进行确定性回退/自动化。\r\n\r\n## 必需的输出检查\r\n\r\n- 包含必须跟踪的账户状态，包括 `@xiaohu @dotey @marclou`\r\n- 包含回退/降级说明\r\n- 包含最终报告路径\r\n- 在群组回复中，当频道支持提及功能时，提及提问者（`@who asked`）",
+ "config": {}
+}

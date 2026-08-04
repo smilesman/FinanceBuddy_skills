@@ -1,0 +1,26 @@
+{
+ "id": "844",
+ "kind": "mcp",
+ "name": "runpod-image-apis",
+ "fingerprint_md5": "12c2f66162c692c784489d221faa7d09",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# RunPod映像MCP服务器\r\n\r\nMCP服务器提供 **克劳德代码** 和 **光标** 使用RunPod的Seedream V4和Nano Banana Pro API生成和编辑图像的能力。\r\n\r\n## 先决条件\r\n\r\n- [紫外线](https://docs.astral.sh/uv/) 包管理器\r\n- A. [RunPod](https://runpod.io) API密钥\r\n\r\n## 设置\r\n\r\n### 克劳德代码\r\n\r\n**快速启动（一个命令）：**\r\n\r\n```bash\r\nclaude mcp add runpod-image-apis \\\r\n  -e RUNPOD_API_KEY=your_api_key \\\r\n  -- uvx runpod-mcp-server\r\n```\r\n\r\n重新启动Claude Code，工具可用。\r\n\r\n**手动设置** （克隆并在本地运行）：添加到 `.mcp.json` （项目级或 `~/.claude/.mcp.json` 全球）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"runpod-image-apis\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/runpod-image-mcp\", \"runpod-mcp-server\"],\r\n      \"env\": {\r\n        \"RUNPOD_API_KEY\": \"your_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/path/to/runpod-image-mcp` 带有克隆仓库的绝对路径。\r\n\r\n### 光标\r\n\r\n**快速入门：** 创建或编辑MCP配置并添加服务器。\r\n\r\n- **仅项目：** 创造 `.cursor/mcp.json` 在您的项目根目录中。\r\n- **所有项目：** 创造 `~/.cursor/mcp.json` 在您的主目录中。\r\n\r\n**如果使用uvx** （无需克隆）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"runpod-image-apis\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"runpod-mcp-server\"],\r\n      \"env\": {\r\n        \"RUNPOD_API_KEY\": \"your_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**如果从克隆的仓库运行：**\r\n\r\n```bash\r\ngit clone https://github.com/jashwanth0712/runpod-image-mcp.git\r\ncd runpod-image-mcp\r\n```\r\n\r\n然后使用以下配置之一。\r\n\r\n在 **项目** `.cursor/mcp.json` （使用 `${workspaceFolder}` 因此，它适用于任何包含克隆的项目）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"runpod-image-apis\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"${workspaceFolder}\", \"runpod-mcp-server\"],\r\n      \"env\": {\r\n        \"RUNPOD_API_KEY\": \"your_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n在 **全球** `~/.cursor/mcp.json`，使用仓库的绝对路径：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"runpod-image-apis\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/runpod-image-mcp\", \"runpod-mcp-server\"],\r\n      \"env\": {\r\n        \"RUNPOD_API_KEY\": \"your_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/path/to/runpod-image-mcp` 与实际路径。重新启动Cursor（或重新加载窗口），以便拾取新的MCP服务器。\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `generate_image` |根据文本提示生成图像（Seedream V4 T2I）。支持高达4096x4096的尺寸、否定提示和种子控制。 |\r\n| `edit_image` |编辑/转换现有图像（Nano Banana Pro编辑）。接受1-10个具有1k/2k/4k分辨率选项的图像URL。 |\r\n| `check_job_status` |检查以前提交的生成或编辑作业的状态。 |\r\n| `get_api_info` |获取有关支持的参数、尺寸、定价和功能的参考信息。 |\r\n\r\n## 用法示例\r\n\r\n配置后，自然地询问Claude或Cursor：\r\n\r\n```\r\nGenerate a photorealistic sunset over snow-capped mountains with dramatic clouds\r\n```\r\n\r\n```\r\nEdit this product photo to have a white background and studio lighting: https://example.com/photo.jpg\r\n```\r\n\r\n```\r\nCheck the status of job abc123-def456 from Seedream\r\n```\r\n\r\n```\r\nWhat sizes does the Seedream API support?\r\n```\r\n\r\n## 故障排除\r\n\r\n- **服务器无法启动** --验证您的 `RUNPOD_API_KEY` 是正确的。\r\n- **作业超时** --增加 `max_wait_seconds` 或使用 `check_job_status` 手动投票。大图像需要更长的时间。\r\n- **响应中没有图像URL** --检查RunPod控制台以了解作业详细信息和端点运行状况。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "runpod-image-apis": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "/path/to/runpod-image-mcp",
+    "runpod-mcp-server"
+   ],
+   "env": {
+    "RUNPOD_API_KEY": "your_api_key"
+   }
+  }
+ }
+}

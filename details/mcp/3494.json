@@ -1,0 +1,23 @@
+{
+ "id": "3494",
+ "kind": "mcp",
+ "name": "kagi",
+ "fingerprint_md5": "b4682a5a0e060862951d030b86f85074",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Kagi MCP服务器\r\n\r\nMCP服务器由 [API公司](https://help.kagi.com/kagi/api/overview.html)。它将搜索和提取工具暴露给MCP兼容的客户端。\r\n\r\n## 工具\r\n\r\n- **`kagi_search_fetch`** -网络、新闻、视频、播客和图像搜索，可选择页面提取、过滤器和Kagi镜头。\r\n- **`kagi_extract`** -以markdown的形式获取页面的全部内容。\r\n\r\n> **注：** 以前的 `kagi_fastgpt` 和 `kagi_summarizer` 工具已被移除。两者都计划在未来的版本中回归。\r\n\r\n## 需求\r\n\r\n- 一个Kagi API密钥 `KAGI_API_KEY`.\r\n- [`uv`](https://docs.astral.sh/uv/) 对于推荐 `uvx` 安装路径。\r\n\r\n安装 `uv`:\r\n\r\n```bash\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n窗户：\r\n\r\n```powershell\r\npowershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\r\n```\r\n\r\n## 客户端设置\r\n\r\n### Codex 命令行界面\r\n\r\n```bash\r\ncodex mcp add kagi --env KAGI_API_KEY=<YOUR_API_KEY_HERE> -- uvx kagimcp\r\n```\r\n\r\nCodex将MCP配置写入 `~/.codex/config.toml`.\r\n\r\n### 克劳德桌面\r\n\r\n先安装uv。\r\n\r\nMacOS/Linux：\r\n\r\n```bash\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n窗户：\r\n\r\n```\r\npowershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\r\n```\r\n\r\n然后在Claude Desktop配置中（通过设置->开发人员->编辑配置找到）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kagi\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"kagimcp\"],\r\n      \"env\": {\r\n        \"KAGI_API_KEY\": \"YOUR_API_KEY_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add kagi -e KAGI_API_KEY=\"YOUR_API_KEY_HERE\" -- uvx kagimcp\r\n```\r\n\r\n### 铁匠铺\r\n\r\n```bash\r\nnpx -y @smithery/cli install kagimcp --client claude\r\n```\r\n\r\n### 基罗\r\n\r\n添加到Kiro MCP配置文件(`~/.kiro/settings/mcp.json` 全球，或 `.kiro/settings/mcp.json` 对于项目范围）使用相同的 `mcpServers` JSON格式 [克劳德桌面](#claude-desktop)。请参阅 [Kiro MCP文件](https://kiro.dev/docs/mcp/) 了解更多详情。\r\n\r\n### 开源代码\r\n\r\n在中编辑OpenCode配置文件 `~/.config/opencode/opencode.json` 并添加以下内容：\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"kagi\": {\r\n      \"type\": \"local\",\r\n      \"command\": [\"uvx\", \"kagimcp\"],\r\n      \"enabled\": true,\r\n      \"environment\": {\r\n        \"KAGI_API_KEY\": \"<YOUR_API_KEY_HERE>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用示例\r\n\r\n- 搜索： `Who was Time's 2024 person of the year?`\r\n- 提取物： `extract the full content of https://en.wikipedia.org/wiki/Model_Context_Protocol`\r\n\r\n## 配置\r\n\r\n环境变量|描述\r\n--- | ---\r\n`KAGI_API_KEY` |需要的Kagi API密钥。\r\n`FASTMCP_LOG_LEVEL` |例如，日志记录级别 `ERROR`.\r\n`KAGI_SEARCH_TIMEOUT` |搜索超时（秒）。默认为 `10`.\r\n`KAGI_EXTRACT_TIMEOUT` |提取超时时间（秒）。默认为 `30`.\r\n`KAGI_MAX_RETRIES` |第一个请求后的最大重试次数。默认为 `2`；set `0` 禁用重试。\r\n`KAGI_HIDDEN_PARAMS` |逗号分隔的搜索参数，用于在面向LLM的架构中隐藏。\r\n\r\n可隐藏的搜索参数：\r\n\r\n```text\r\nworkflow, extract_count, limit, include_domains, exclude_domains, time_relative, after, before, file_type, lens_id\r\n```\r\n\r\n例子：\r\n\r\n```bash\r\nKAGI_HIDDEN_PARAMS=\"extract_count,after,before,time_relative,include_domains,exclude_domains\"\r\n```\r\n\r\n## 本地开发\r\n\r\n```bash\r\ngit clone https://github.com/kagisearch/kagimcp.git\r\ncd kagimcp\r\nuv sync\r\n```\r\n\r\n通过stdio在本地运行：\r\n\r\n```bash\r\nKAGI_API_KEY=<YOUR_API_KEY_HERE> uv run kagimcp\r\n```\r\n\r\n使用流式HTTP传输运行：\r\n\r\n```bash\r\nKAGI_API_KEY=<YOUR_API_KEY_HERE> uv run kagimcp --http --host 0.0.0.0 --port 8000\r\n```\r\n\r\n## 自我寄宿\r\n\r\nHTTP模式是多对映体的：每个请求都通过\r\n`Authorization: Bearer <key>` header而不是服务器范围的envvar，所以一个\r\n实例可以为多个用户提供服务。该回购交易 `Dockerfile` 安装固定 `kagimcp` PyPI和\r\n在HTTP模式下运行它。集装箱尊重 `$PORT` 所以它适用于任何\r\n注入一个（Railway、Render、Cloud Run、Fly.io等）的平台。\r\n\r\n在本地构建和运行：\r\n\r\n```sh\r\ndocker build -t kagimcp-hosted .\r\ndocker run --rm -p 8000:8000 kagimcp-hosted\r\n```\r\n\r\n烟雾测试：\r\n\r\n```sh\r\ncurl -sL http://127.0.0.1:8000/mcp -X POST \\\r\n  -H \"authorization: Bearer $KAGI_API_KEY\" \\\r\n  -H \"content-type: application/json\" \\\r\n  -H \"accept: application/json, text/event-stream\" \\\r\n  -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}'\r\n```\r\n\r\n要在生产中升级版本，请在 `Dockerfile` 并重新部署。\r\n\r\n## 调试\r\n\r\n检查已发布的软件包：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uvx kagimcp\r\n```\r\n\r\n检查本地结账：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv --directory /ABSOLUTE/PATH/TO/kagimcp run kagimcp\r\n```\r\n\r\n检查员通常在 `http://localhost:5173`.\r\n\r\n## 预发布说明\r\n\r\n如果使用预发布版本，则适用相同的安装说明，但使用 `uvx --prerelease allow --from kagimcp==1.0.0rc2 kagimcp` 而不是 `uvx kagimcp` （替换 `1.0.0rc2` 无论您想安装哪个版本）。\r\n",
+ "config": {
+  "kagi": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "kagimcp"
+   ],
+   "env": {
+    "KAGI_API_KEY": "YOUR_API_KEY_HERE"
+   }
+  }
+ }
+}

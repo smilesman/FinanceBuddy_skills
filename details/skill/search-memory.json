@@ -1,0 +1,12 @@
+{
+ "id": "search-memory",
+ "kind": "skill",
+ "name": "search-memory",
+ "fingerprint_md5": "583459261396a411032efd11caf07a79",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# Search Memory\r\n\r\n## 概述\r\n\r\n索引本地记忆文件并运行带近期加权的快速关键词搜索。\r\n\r\n## 快速开始\r\n\r\n1) 构建/更新索引（增量缓存）：\r\n```bash\r\nscripts/index-memory.py\r\n```\r\n\r\n2) 搜索索引：\r\n```bash\r\nscripts/search-memory.py \"your query\" --top 5\r\n```\r\n\r\n## 说明\r\n\r\n- 索引包含 `MEMORY.md` 以及 `memory/**/*.md`。\r\n- 缓存存放于 `memory/cache/` 下。\r\n- 搜索使用关键词评分 + 近期加权（最近 30/90 天）。",
+ "config": {}
+}

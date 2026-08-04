@@ -1,0 +1,24 @@
+{
+ "id": "3175",
+ "kind": "mcp",
+ "name": "nationalparks",
+ "fingerprint_md5": "00fa4b826fa1ef5b6e2403e982115d59",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 国家公园MCP服务器\r\n\r\n美国国家公园管理局（NPS）API的MCP服务器，提供有关美国国家公园的实时信息，包括公园详细信息、警报和活动。\r\n\r\n## 工具\r\n\r\n1. `findParks`\r\n\r\n   - 根据各种标准搜索国家公园\r\n   - 输入：\r\n     - `stateCode` （可选字符串）：按州代码过滤公园（例如，加利福尼亚州为“CA”）。多个状态可以用逗号分隔（例如，“CA、OR、WA”）\r\n     - `q` （可选字符串）：按名称或描述过滤公园的搜索词\r\n     - `limit` （可选数量）：可返回的最大公园数量（默认值：10，最大值：50）\r\n     - `start` （可选数字）：结果的起始位置（可用于分页）\r\n     - `activities` （可选字符串）：按可用活动筛选（例如，“徒步旅行、露营”）\r\n   - 返回：将公园与详细信息进行匹配\r\n\r\n1. `getParkDetails`\r\n\r\n   - 获取特定国家公园的全面信息\r\n   - 输入：\r\n     - `parkCode` （string）：国家公园的公园代码（例如，“yose”代表优胜美地，“grca”代表大峡谷）\r\n   - 返回：详细的公园信息，包括描述、时间、费用、联系人和活动\r\n\r\n1. `getAlerts`\r\n\r\n   - 获取国家公园的最新警报，包括关闭、危险和重要信息\r\n   - 输入：\r\n     - `parkCode` （可选字符串）：按公园代码过滤警报（例如，Yosemite的“yose”）。多个公园可以用逗号分隔（例如，“yose，grca”）\r\n     - `limit` （可选数字）：要返回的最大警报数（默认值：10，最大值：50）\r\n     - `start` （可选数字）：结果的起始位置（可用于分页）\r\n     - `q` （可选字符串）：按标题或描述筛选警报的搜索词\r\n   - 返回：按公园组织的当前警报\r\n\r\n1. `getVisitorCenters`\r\n\r\n   - 获取游客中心及其营业时间的信息\r\n   - 输入：\r\n     - `parkCode` （可选字符串）：按公园代码过滤游客中心（例如，Yosemite的“yose”）。多个公园可以用逗号分隔（例如，“yose，grca”）\r\n     - `limit` （可选数量）：可返回的游客中心的最大数量（默认值：10，最大值：50）\r\n     - `start` （可选数字）：结果的起始位置（可用于分页）\r\n     - `q` （可选字符串）：按名称或描述过滤访客中心的搜索词\r\n   - 返回：游客中心信息，包括位置、时间和联系方式\r\n\r\n1. `getCampgrounds`\r\n\r\n   - 获取有关可用露营地及其设施的信息\r\n   - 输入：\r\n     - `parkCode` （可选字符串）：按公园代码过滤露营地（例如，Yosemite的“yose”）。多个公园可以用逗号分隔（例如，“yose，grca”）\r\n     - `limit` （可选数量）：可返回的最大露营地数量（默认值：10，最大值：50）\r\n     - `start` （可选数字）：结果的起始位置（可用于分页）\r\n     - `q` （可选字符串）：搜索词，按名称或描述过滤露营地\r\n   - 返回：营地信息，包括设施、费用和预订详情\r\n\r\n1. `getEvents`\r\n\r\n   - 查找公园即将举办的活动\r\n   - 输入：\r\n     - `parkCode` （可选字符串）：按公园代码过滤事件（例如，Yosemite的“yose”）。多个公园可以用逗号分隔（例如，“yose，grca”）\r\n     - `limit` （可选数字）：要返回的最大事件数（默认值：10，最大值：50）\r\n     - `start` （可选数字）：结果的起始位置（可用于分页）\r\n     - `dateStart` （可选字符串）：筛选事件的开始日期（格式：YYYY-MM-DD）\r\n     - `dateEnd` （可选字符串）：筛选事件的结束日期（格式：YYYY-MM-DD）\r\n     - `q` （可选字符串）：按标题或描述筛选事件的搜索词\r\n   - 返回：事件信息，包括日期、时间和描述\r\n\r\n## 设置\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动为Claude Desktop安装mcp服务器国家标记 [史密瑟里](https://smithery.ai/server/@KyrieTangSheng/mcp-server-nationalparks):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @KyrieTangSheng/mcp-server-nationalparks --client claude\r\n```\r\n\r\n### NPS API密钥\r\n\r\n1. 从获取免费的API密钥 [国家公园管理局开发者门户](https://www.nps.gov/subjects/developer/get-started.htm)\r\n1. 安全地存储此密钥，因为它将用于对请求进行身份验证\r\n\r\n### 使用Claude Desktop\r\n\r\n要将此服务器与Claude Desktop一起使用，请将以下内容添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"nationalparks\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-server-nationalparks\"],\r\n      \"env\": {\r\n        \"NPS_API_KEY\": \"YOUR_NPS_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 示例用法\r\n\r\n### 在州内寻找公园\r\n\r\n```\r\nTell me about national parks in Colorado.\r\n```\r\n\r\n### 获取特定公园的详细信息\r\n\r\n```\r\nWhat's the entrance fee for Yellowstone National Park?\r\n```\r\n\r\n### 检查警报或关闭\r\n\r\n```\r\nAre there any closures or alerts at Yosemite right now?\r\n```\r\n\r\n### 寻找游客中心\r\n\r\n```\r\nWhat visitor centers are available at Grand Canyon National Park?\r\n```\r\n\r\n### 寻找露营地\r\n\r\n```\r\nAre there any campgrounds with electrical hookups in Zion National Park?\r\n```\r\n\r\n### 查找即将发生的事件\r\n\r\n```\r\nWhat events are happening at Acadia National Park next weekend?\r\n```\r\n\r\n### 根据活动规划旅行\r\n\r\n```\r\nWhich national parks in Utah have good hiking trails?\r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。有关详细信息，请参阅LICENSE文件。\r\n\r\n## 附录：热门国家公园及其代码\r\n\r\n|公园名称|公园代码|\r\n|-----------|-----------|\r\n|约塞米蒂|\r\n|大峡谷| grca|\r\n|黄石公园|大喊|\r\n|锡安|\r\n|大雾山|\r\n|阿卡迪亚|阿卡德|\r\n|奥林匹克|\r\n|落基山|洛莫|\r\n|约书亚树|\r\n|红杉和国王峡谷|塞基|\r\n\r\n有关完整列表，请访问 [NPS网站](https://www.nps.gov/findapark/index.htm).\r\n",
+ "config": {
+  "nationalparks": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-server-nationalparks"
+   ],
+   "env": {
+    "NPS_API_KEY": "YOUR_NPS_API_KEY"
+   }
+  }
+ }
+}

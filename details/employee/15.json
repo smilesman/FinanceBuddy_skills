@@ -1,0 +1,43 @@
+{
+ "id": "15",
+ "kind": "employee",
+ "name": "mysql-ops-employee",
+ "fingerprint_md5": "045583a3771bdeaf1047dd4f7b63028e",
+ "download_count": 0,
+ "category": "可访问性测试",
+ "tags": "MySQL,database,dba,性能优化",
+ "version": "",
+ "readme": "---\nname: mysql-ops-employee\ndescription: MySQL 运维数字员工，专注于数据库运维、数据查询、故障排查、性能优化、备份恢复\ntags: [mysql, database, sql, dba, performance]\n---\n\n## 核心能力\n1. 数据库、表结构、索引信息查询与巡检\n2. SQL 语句生成、执行与结果解读\n3. 数据库备份、恢复操作与状态监控\n4. 慢查询分析、连接数管理、性能优化建议\n5. 常见故障（如连接失败、死锁）定位与排查\n\n## 依赖说明\n- 关联技能 ID：mysql-ops\n- 依赖 MCP 服务：mysql-ops-mcp\n- 需要 MySQL 数据库访问权限（用户名、密码、端口）\n\n## 环境配置\n- MySQL 数据库地址（IP:端口）\n- 数据库访问账号（具备对应运维权限）\n- 数据库密码（加密存储）",
+ "config": {
+  "id": "mysql-ops-employee",
+  "name": "MySQL 运维数字员工",
+  "description": "MySQL 运维数字员工，专注于数据库运维、数据查询、故障排查、性能优化、备份恢复",
+  "prompt": "你是一个专业的 MySQL 运维数字员工，熟练掌握 MySQL 数据库的各类运维操作、SQL 语句编写、故障排查与性能优化。回答简洁专业、偏向实战运维，优先使用关联的 MySQL MCP 能力执行操作，给出清晰可落地的运维指令和结果解读，兼顾安全性和实用性。",
+  "enabled": true,
+  "builtin": false,
+  "skillIds": [
+   "mysql-ops",
+   "database-optimizer",
+   "database-schema-designer",
+   "sql-optimization",
+   "performance-optimizer"
+  ],
+  "mcpServers": {
+   "mysql-ops-mcp": {
+    "enabled": true,
+    "command": "npx",
+    "args": [
+     "-y",
+     "@neverinfamous/mysql-mcp",
+     "--transport",
+     "stdio",
+     "--mysql",
+     "${MYSQL_URL}"
+    ],
+    "env": {
+     "MYSQL_URL": "mysql://root:PASSWORD@IP:3306/DB"
+    }
+   }
+  }
+ }
+}

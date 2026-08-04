@@ -1,0 +1,24 @@
+{
+ "id": "89",
+ "kind": "mcp",
+ "name": "browsercat",
+ "fingerprint_md5": "afd3721f25228bf4063201f73a52343a",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# BrowserCat MCP服务器\r\n\r\n一种模型上下文协议服务器，使用BrowseCat的云浏览器服务提供浏览器自动化功能。此服务器使LLM能够在真实的浏览器环境中与网页交互、截图和执行JavaScript，而无需在本地安装浏览器。\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n- **浏览器导航**\r\n  - 导航到浏览器中的任何URL\r\n  - 输入： `url` （字符串）\r\n- **浏览器_屏幕截图**\r\n  - 捕获整个页面或特定元素的屏幕截图\r\n  - 输入：\r\n    - `name` （string，必填）：屏幕截图的名称\r\n    - `selector` （string，可选）：用于截图元素的CSS选择器\r\n    - `width` （数字，可选，默认值：800）：截图宽度\r\n    - `height` （数字，可选，默认值：600）：截图高度\r\n- **浏览器图标**\r\n  - 点击页面上的元素\r\n  - 输入： `selector` （string）：用于单击元素的CSS选择器\r\n- **浏览器切换**\r\n  - 将元素悬停在页面上\r\n  - 输入： `selector` （string）：用于悬停元素的CSS选择器\r\n- **浏览器cat_fill**\r\n  - 填写输入字段\r\n  - 输入：\r\n    - `selector` （string）：输入字段的CSS选择器\r\n    - `value` （string）：要填充的值\r\n- **浏览器选择**\r\n  - 从下拉菜单中选择一个选项\r\n  - 输入：\r\n    - `selector` （string）：用于选择元素的CSS选择器\r\n    - `value` （string）：要选择的值\r\n- **浏览器_评估**\r\n  - 在浏览器控制台中执行JavaScript\r\n  - 输入： `script` （string）：要执行的JavaScript代码\r\n\r\n### 资源\r\n\r\n服务器提供对两种资源的访问：\r\n\r\n1. **控制台日志** (`console://logs`)\r\n   - 文本格式的浏览器控制台输出\r\n   - 包括来自浏览器的所有控制台消息\r\n1. **截图** (`screenshot://`)\r\n   - 捕获的屏幕截图的PNG图像\r\n   - 可通过捕获期间指定的屏幕截图名称访问\r\n\r\n## 主要特点\r\n\r\n- 基于云的浏览器自动化\r\n- 无需安装本地浏览器\r\n- 控制台日志监控\r\n- 屏幕截图功能\r\n- JavaScript执行\r\n- 基本的网络交互（导航、点击、表单填写）\r\n\r\n## 使用BrowserCat MCP服务器的配置\r\n\r\n### 环境变量\r\n\r\nBrowserCat MCP服务器需要以下环境变量：\r\n\r\n- `BROWSERCAT_API_KEY`：您的BrowserCat API密钥（必需）。你可以在以下网址免费获得一个https://browsercat.xyz/mcp.\r\n\r\n### NPX配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"browsercat\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@browsercatco/mcp-server\"],\r\n      \"env\": {\r\n        \"BROWSERCAT_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "browsercat": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@browsercatco/mcp-server"
+   ],
+   "env": {
+    "BROWSERCAT_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

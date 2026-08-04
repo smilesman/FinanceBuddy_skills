@@ -1,0 +1,12 @@
+{
+ "id": "jmeter-performance-testing",
+ "kind": "skill",
+ "name": "jmeter-performance-testing",
+ "fingerprint_md5": "2d09a2285038419863b4886ac077d40e",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\n使用 Apache JMeter 执行性能测试，包括分布式测试、指标采集（TPS、响应时间、错误率），生成测试报告。",
+ "config": {}
+}

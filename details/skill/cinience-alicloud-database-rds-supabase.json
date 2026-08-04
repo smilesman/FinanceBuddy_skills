@@ -1,0 +1,12 @@
+{
+ "id": "cinience-alicloud-database-rds-supabase",
+ "kind": "skill",
+ "name": "cinience-alicloud-database-rds-supabase",
+ "fingerprint_md5": "2b47ec400af8ed6ba024f587b52c8bd2",
+ "download_count": 0,
+ "category": "数据库",
+ "tags": "",
+ "version": "",
+ "readme": "Category: service\r\n\r\n# 阿里云 RDS Supabase（RDS AI 服务 2025-05-07）\r\n\r\n使用 RDS AI 服务 OpenAPI 管理 RDS Supabase 应用实例及相关配置，包括实例生命周期、认证、存储、RAG、白名单与 SSL。\r\n\r\n## 前置要求\r\n\r\n- 使用 RAM 用户/角色最小权限的 AccessKey，优先从环境变量读取 AK/SK。\r\n- OpenAPI 为 RPC 签名机制，优先使用官方 SDK 或 OpenAPI Explorer。\r\n\r\n## 工作流\r\n\r\n1) 明确资源类型：实例 / 认证 / 存储 / RAG / 安全配置。  \r\n2) 在 `references/api_overview.md` 中定位接口。  \r\n3) 选择调用方式（SDK / OpenAPI Explorer / 自签名）。  \r\n4) 变更后使用查询接口确认状态与配置。  \r\n\r\n## AccessKey 读取优先级（必须遵循）\r\n\r\n1) 环境变量（优先）：`ALICLOUD_ACCESS_KEY_ID` / `ALICLOUD_ACCESS_KEY_SECRET` / `ALICLOUD_REGION_ID`\r\nRegion 规则：`ALICLOUD_REGION_ID` 作为可选默认值；若未设置，执行时应选择最合理的 Region，无法判断则主动询问。  \r\n2) 标准配置文件：`~/.alibabacloud/credentials`\r\n\r\n## Region 默认策略\r\n\r\n- 如未指定 Region，优先选择最合理 Region；无法判断则询问用户。  \r\n- 仅在明确需要或用户同意时，才进行全地域查询（先调 `ListRegions`，再对每个 Region 调用查询接口）。  \r\n- 若用户提供 Region，则只查询指定 Region。  \r\n\r\n## 常见操作映射\r\n\r\n- 实例：`CreateAppInstance` / `DeleteAppInstance` / `StartInstance` / `StopInstance` / `RestartInstance`\r\n- 连接与认证：`DescribeInstanceEndpoints` / `DescribeInstanceAuthInfo` / `ModifyInstanceAuthConfig`\r\n- 存储：`DescribeInstanceStorageConfig` / `ModifyInstanceStorageConfig`\r\n- 安全：`ModifyInstanceIpWhitelist` / `DescribeInstanceIpWhitelist` / `ModifyInstanceSSL` / `DescribeInstanceSSL`\r\n- RAG：`ModifyInstanceRAGConfig` / `DescribeInstanceRAGConfig`\r\n\r\n## 选择问题（不确定时提问）\r\n\r\n1. 目标实例 ID 是什么？所在地域？\r\n2. 要做的是实例生命周期，还是配置变更（认证/存储/RAG/白名单/SSL）？\r\n3. 是否需要批量操作或先查询现有配置？\r\n\r\n## Output Policy\r\n\r\n若需保存结果或响应，写入：\r\n`output/database-rds-supabase/`\r\n\r\n## References\r\n\r\n- API 总览与接口分组：`references/api_overview.md`\r\n- 核心接口参数速查：`references/api_reference.md`\r\n- 全地域查询示例：`references/query-examples.md`\r\n- 官方文档来源清单：`references/sources.md`",
+ "config": {}
+}

@@ -1,0 +1,12 @@
+{
+ "id": "auto-skill-hunter",
+ "kind": "skill",
+ "name": "auto-skill-hunter",
+ "fingerprint_md5": "47d9d57439f4b911bba6362051bb2464",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Auto Skill Hunter\r\n\r\n只专注于 **Skill**（不处理 Gene），支持自动检索与自动安装。\r\n\r\n## 用法\r\n\r\n```bash\r\nnode skills/skill-hunter/src/hunt.js\r\n```\r\n\r\n### 常用参数\r\n\r\n```bash\r\n# 1) 全自动巡逻（默认）\r\nnode skills/skill-hunter/src/hunt.js --auto\r\n\r\n# 2) 指定一个“当前无法解决的问题”，触发定向找技能\r\nnode skills/skill-hunter/src/hunt.js --query \"无法稳定抓取网页并总结关键信息\"\r\n\r\n# 3) 只看候选，不真正安装（调试推荐）\r\nnode skills/skill-hunter/src/hunt.js --dry-run\r\n```\r\n\r\n## 功能\r\n\r\n1. 从近期聊天和任务记忆中抽取“待解决问题”与关键词。  \r\n2. 在 ClawHub 上做趋势 + 关键词搜索。  \r\n3. 用多维价值评分筛选候选 skill：  \r\n   - 问题匹配度（是否能解决近期问题）  \r\n   - 用户与 代理 画像匹配度（`USER.md` + personality）  \r\n   - 互补性（与现有技能重复度低）  \r\n   - 基础质量信号（stars/downloads 等）  \r\n4. 自动安装高分技能，并确保生成可运行入口（`index.js` 自检）。  \r\n5. 生成中文巡逻报告。  \r\n\r\n## 安装 政策\r\n\r\n- 默认每轮最多安装 2 个（可通过 `--max-install` 或环境变量覆盖）。  \r\n- 已存在同名 skill 会跳过。  \r\n- 若远程克隆失败，会回退到“可运行模板安装”，保证可执行。",
+ "config": {}
+}

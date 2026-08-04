@@ -1,0 +1,22 @@
+{
+ "id": "1688",
+ "kind": "mcp",
+ "name": "react-native-debugger-mcp",
+ "fingerprint_md5": "0290b9cff3b3d81ae561f35440139ed9",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# React原生调试器MCP\r\n\r\n连接到React Native应用程序调试器的MCP服务器。\r\n\r\n## ✨ 主要特点\r\n\r\n- 可以从Metro检索控制台日志\r\n\r\n## 🚀 快速开始\r\n\r\n将以下内容添加到您的Claude Desktop/Cursor MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"react-native-debugger-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@twodoorsdev/react-native-debugger-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "react-native-debugger-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@twodoorsdev/react-native-debugger-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "2",
+ "kind": "mcp",
+ "name": "302ai-browser-use-mcp",
+ "fingerprint_md5": "c24d17d78b6fed770c77eaf87a291aed",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# \r\n🤖 302AI浏览器使用MCP服务器🚀✨\r\n\r\n\r\nAn AI-powered browser automation server implementing Model Context Protocol (MCP) for natural language browser control and web research.\r\n\r\n\r\n[](https://glama.ai/mcp/servers/@302ai/302_browser_use_mcp)\r\n\r\n\r\n中文 | English | 日本語\r\n\r\n\r\n## 预览\r\n\r\n以下是一些使用示例\r\n\r\n\r\n以下是支持的工具列表\r\n\r\n\r\n## ✨ 特性✨\r\n\r\n- 🔧 动态加载-从远程服务器自动更新工具列表。\r\n- 🌐 支持多种模式，您可以使用 `stdin` 本地模式，或将其作为远程HTTP服务器托管\r\n\r\n## 🚀 刀具清单\r\n\r\n- [创建浏览器自动化任务](https://302ai-en.apifox.cn/api-282235063)\r\n- [查询浏览器任务状态](https://302ai-en.apifox.cn/api-282235713)\r\n\r\n## 发展\r\n\r\n安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n对于自动重建的开发：\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n## 安装\r\n\r\n要与Claude Desktop一起使用，请添加服务器配置：\r\n\r\n在MacOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\\\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"302ai-browser-use-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@302ai/browser-use-mcp\"],\r\n      \"env\": {\r\n        \"302AI_API_KEY\": \"YOUR_API_KEY_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n要与Cherry Studio一起使用，请添加服务器配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Li2ZXXJkvhAALyKOFeO4N\": {\r\n      \"name\": \"302ai-browser-use-mcp\",\r\n      \"description\": \"\",\r\n      \"isActive\": true,\r\n      \"registryUrl\": \"\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@302ai/browser-use-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"302AI_API_KEY\": \"YOUR_API_KEY_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n要与ChatWise一起使用，请将以下内容复制到剪贴板\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"302ai-sandbox-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@302ai/browser-use-mcp\"],\r\n      \"env\": {\r\n        \"302AI_API_KEY\": \"YOUR_API_KEY_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n转到设置->工具->添加按钮->选择从剪贴板导入\r\n\r\n\r\n### 查找您的302AI_API_KEY [这里](https://dash.302.ai/apis/list)\r\n\r\n[使用教程](https://help.302.ai/en/docs/API-guan-li)\r\n\r\n### 调试\r\n\r\n由于MCP服务器通过stdio进行通信，调试可能具有挑战性。我们建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector)，可作为包脚本使用：\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n检查器将提供一个URL，用于访问浏览器中的调试工具。\r\n\r\n## ✨ 约302.AI✨\r\n\r\n[302.AI](https://302.ai/en/) 是一个面向企业的人工智能应用平台，提供按需付费服务、即用型解决方案和开源生态系统。✨\r\n\r\n1. 🧠 集成了最新、最全面的人工智能功能和品牌，包括但不限于语言模型、图像模型、语音模型和视频模型。\r\n1. 🚀 基于基础模型开发深度应用程序-我们开发真正的人工智能产品，而不仅仅是简单的聊天机器人\r\n1. 💰 零月费，所有功能均按使用付费，完全开放，实现真正的低门槛和高潜力。\r\n1. 🛠 强大的团队和中小企业管理后端-一个人管理，很多人使用。\r\n1. 🔗 所有人工智能功能都提供API访问，所有工具都是开源和可定制的（正在进行中）。\r\n1. 💡 强大的开发团队，每周推出2-3个新应用程序，每天更新产品。有兴趣加入的开发者欢迎与我们联系。\r\n",
+ "config": {
+  "302ai-browser-use-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@302ai/browser-use-mcp"
+   ],
+   "env": {
+    "302AI_API_KEY": "YOUR_API_KEY_HERE"
+   }
+  }
+ }
+}

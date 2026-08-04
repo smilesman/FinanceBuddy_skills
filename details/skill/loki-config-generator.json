@@ -1,0 +1,12 @@
+{
+ "id": "loki-config-generator",
+ "kind": "skill",
+ "name": "loki-config-generator",
+ "fingerprint_md5": "f05a75b48f4f6e09bfc5901ea77ab641",
+ "download_count": 0,
+ "category": "日志分析",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\n根据部署规模和需求自动生成 Loki 配置文件，包括存储后端、索引模式、资源限制等参数优化。",
+ "config": {}
+}

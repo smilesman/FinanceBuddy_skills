@@ -1,0 +1,23 @@
+{
+ "id": "1048",
+ "kind": "mcp",
+ "name": "fastapi-mcp",
+ "fingerprint_md5": "990e5beecbd55ffad30e76401a559511",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# PostgreSQL MCP 服务器\r\n\r\n一个模型上下文协议（MCP）服务器，为像Claude Desktop这样的AI助手提供对PostgreSQL数据库的安全、只读访问。\r\n\r\n## 特点/功能\r\n\r\n- **数据库模式资源**访问表结构、关系和元数据\r\n- **只读SQL工具**利用内置的安全控制安全地执行SELECT查询\r\n- **数据分析提示**为常见数据库分析任务提供的预构建模板\r\n- **性能监控**内置查询用于数据库性能分析\r\n- **数据质量报告**全面的数据质量评估工具\r\n\r\n## 快速入门：使用UV（紫外线）\r\n\r\n### 1. 安装依赖项\r\n\r\n```bash\r\n# Install uv if you haven't already\r\npip install uv\r\n\r\n# Install project dependencies\r\nuv sync\r\n```\r\n\r\n### 2. 环境设置\r\n\r\n创建一个 `.env` 项目根目录下的文件：\r\n\r\n```env\r\nPOSTGRES_HOST=localhost\r\nPOSTGRES_PORT=5432\r\nPOSTGRES_DB=your_database_name\r\nPOSTGRES_USER=your_username\r\nPOSTGRES_PASSWORD=your_password\r\nPOSTGRES_SSL=prefer\r\n```\r\n\r\n### 3. 启动服务器\r\n\r\n```bash\r\n# Run as HTTP server\r\nuv run python -m fastmcp.server server:mcp --port 8000\r\n\r\n# Or with specific database parameters\r\nuv run python server.py --host localhost --port 5432 --database mydb --user postgres\r\n```\r\n\r\n## MCP客户端配置\r\n\r\n### Claude 桌面版\r\n\r\n将此配置添加到您的Claude桌面配置文件中：\r\n\r\n**位置**：\r\n\r\n- macOS（苹果电脑操作系统）： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- Windows： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fastapi-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-remote\",\r\n        \"http://127.0.0.1:8000/mcp\",\r\n        \"8080\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Cursor 集成开发环境（IDE）\r\n\r\n对于Cursor或其他MCP客户端：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgresql-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-remote\", \"http://127.0.0.1:8000/mcp\", \"8080\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 远程服务器配置\r\n\r\n对于使用HTTPS的远程服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgresql-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-remote\", \"https://your-server.com:8000/mcp\", \"8080\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用资源\r\n\r\n- `schema://tables` - 列出所有数据库表\r\n- `schema://table/{table_name}` - 详细的表结构\r\n- `schema://relationships` - 外键关系\r\n\r\n## 可用工具\r\n\r\n- `execute_read_query(sql, limit)` - 安全地执行SELECT查询\r\n- `describe_table(table_name)` - 获取表结构和示例数据\r\n- `get_table_stats(table_name)` - 表格数据的统计分析\r\n\r\n## 可用提示\r\n\r\n- `analyze_table_data(table_name)` - 综合表格分析模板\r\n- `performance_analysis()` - 数据库性能监控查询\r\n- `data_quality_report()` - 数据质量评估框架\r\n\r\n## 安全特性\r\n\r\n- **只读访问权限**仅允许使用SELECT语句\r\n- **查询验证**阻止危险的SQL关键字\r\n- **结果限制**可配置的行数限制（最多1000行）\r\n- **连接池**高效的数据库连接\r\n- **错误处理**优雅的错误响应\r\n\r\n## 故障排除\r\n\r\n### 连接问题\r\n\r\n1. 验证数据库凭据 `.env` 文件\r\n1. 检查 PostgreSQL 服务器是否正在运行\r\n1. 确保与数据库主机的网络连接\r\n1. 验证SSL设置与您的数据库配置相匹配\r\n\r\n### 权限问题\r\n\r\n确保您的数据库用户对您想要查询的表具有SELECT权限：\r\n\r\n```sql\r\nGRANT SELECT ON ALL TABLES IN SCHEMA public TO your_user;\r\n```\r\n\r\n### 紫外线问题\r\n\r\n```bash\r\n# Update uv\r\npip install --upgrade uv\r\n\r\n# Clear uv cache if needed\r\nuv cache clean\r\n\r\n# Reinstall dependencies\r\nrm -rf .venv\r\nuv sync\r\n```\r\n\r\n## 发展\r\n\r\n### 运行测试\r\n\r\n```bash\r\nuv run python test_client.py\r\n```\r\n\r\n### 添加新功能\r\n\r\n1. 添加新的工具/资源到 `server.py`\r\n1. 用新功能更新此README文件\r\n1. 使用您的MCP客户端进行测试\r\n\r\n## 要求\r\n\r\n- Python 3.13及以上版本\r\n- PostgreSQL 数据库\r\n- UV包管理器\r\n- 兼容MCP的客户端（如Claude Desktop、Cursor等）\r\n\r\n## 依赖项\r\n\r\n- `asyncpg` - PostgreSQL 异步驱动程序\r\n- `fastmcp` - MCP服务器框架\r\n- `mcp` - 模型上下文协议库\r\n- `python-dotenv` - 环境变量管理\r\n\r\n## 许可证\r\n\r\n这个项目是开源的。详情请参见许可证文件。\r\n",
+ "config": {
+  "fastapi-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "http://127.0.0.1:8000/mcp",
+    "8080"
+   ],
+   "env": {}
+  }
+ }
+}

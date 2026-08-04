@@ -1,0 +1,18 @@
+{
+ "id": "73",
+ "kind": "mcp",
+ "name": "bored",
+ "fingerprint_md5": "abeaa2d019b08e9c67fb8aeba5e6d98f",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp无聊\r\n\r\nBored MCP-包装Bored API（免费，无授权）\r\n\r\n部分 [Pipeworx](https://pipeworx.io) --MCP网关，将AI代理连接到250多个实时数据源。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `random_activity` |得到一个随机的活动建议来治疗无聊。返回活动名称、类型、参与者计数和价格范围。 |\r\n| `activity_by_type` |按类别查找随机活动（例如，“烹饪”、“运动”、“放松”）。返回活动名称、类型、所需参与者和价格范围。 |\r\n| `activity_by_participants` |为特定的小组规模找到一个随机活动（例如，1代表单人，4代表小组）。返回活动名称、类型和价格范围。 |\r\n\r\n## 快速开始\r\n\r\n添加到您的MCP客户端（Claude Desktop、Cursor、Windsurf等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bored\": {\r\n      \"url\": \"https://gateway.pipeworx.io/bored/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者连接到完整的Pipeworx网关，以访问所有250多个数据源：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pipeworx\": {\r\n      \"url\": \"https://gateway.pipeworx.io/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用ask_pipeworx\r\n\r\n您可以用简单的英语提问，而不是直接调用工具：\r\n\r\n```\r\nask_pipeworx({ question: \"your question about Bored data\" })\r\n```\r\n\r\n网关选择正确的工具并自动填充参数。\r\n\r\n## 更多\r\n\r\n- [所有工具和指南](https://github.com/pipeworx-io/examples)\r\n- [pipeworx.io](https://pipeworx.io)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "bored": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://gateway.pipeworx.io/bored/mcp"
+  }
+ }
+}

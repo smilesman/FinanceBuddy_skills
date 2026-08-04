@@ -1,0 +1,18 @@
+{
+ "id": "1394",
+ "kind": "mcp",
+ "name": "construction-cost",
+ "fingerprint_md5": "6bc2e3319ccaa846aa2cb15633897ea5",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 建设成本计算器MCP服务器\r\n\r\n一个无身份验证的MCP（模型上下文协议）服务器，使用来自公共谷歌表格的数据提供建筑成本估算工具。\r\n\r\n## 特性\r\n\r\n- **不要求进行验证**：从可公开访问的谷歌表格中读取\r\n- **5可用工具**:\r\n  - `list_all_items` -获取所有建筑项目\r\n  - `get_item` -按代码获取特定项目的详细信息\r\n  - `search_items` -按关键字搜索项目\r\n  - `get_items_by_category` -按类别筛选项目\r\n  - `calculate_cost` -用工程量计算项目总成本\r\n\r\n## 数据源\r\n\r\n服务器从谷歌表格中获取建筑成本数据：\r\n[工程造价数据库](https://docs.google.com/spreadsheets/d/1laH5l1FjwWC5HXLp8xkG1eolwScKHIlxB6PohBWQjh0/edit?gid=0#gid=0)\r\n\r\n数据包括：\r\n\r\n- 混凝土（板、基脚、墙、柱、楼梯）\r\n- 框架（墙、地板、屋顶、梁）\r\n- 饰面（干墙、油漆、地板、瓷砖）\r\n- 电气（接线、面板、插座、固定装置）\r\n- 管道（管道、固定装置、热水器）\r\n- 暖通空调（系统、管道系统）\r\n- 屋面（材料、安装）\r\n- 外部（墙板、窗户、门）\r\n\r\n## 本地开发\r\n\r\n### 先决条件\r\n\r\n- Python 3.11+\r\n- 点\r\n\r\n### 设置\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ncd construct_cost_calc\r\n```\r\n\r\n2. 创建虚拟环境：\r\n\r\n```bash\r\npython -m venv venv\r\nsource venv/bin/activate  # On Windows: venv\\Scripts\\activate\r\n```\r\n\r\n3. 安装依赖项：\r\n\r\n```bash\r\npip install -r requirements.txt\r\n```\r\n\r\n4. 运行服务器：\r\n\r\n```bash\r\npython server.py\r\n```\r\n\r\n服务器将于启动 `http://localhost:8000` SSE运输。\r\n\r\n### 环境变量\r\n\r\n|变量|默认值|描述|\r\n|----------|---------|-------------|\r\n| `GOOGLE_SHEET_ID` | `1laH5l1FjwWC5HXLp8xkG1eolwScKHIlxB6PohBWQjh0` |谷歌表格ID|\r\n| `SHEET_GID` | `0` |“图纸”选项卡GID|\r\n| `CACHE_TTL_SECONDS` | `300` |缓存持续时间（5分钟）|\r\n| `DEFAULT_LABOR_RATE` | `75.0` |默认美元/小时费率|\r\n\r\n## 部署到Render.com\r\n\r\n### 一键部署\r\n\r\n[](https://render.com/deploy)\r\n\r\n### 手动部署\r\n\r\n1. 将此存储库推送到GitHub\r\n1. 首选 [渲染仪表板](https://dashboard.render.com/)\r\n1. 点击 **新** → **蓝图**\r\n1. 连接您的存储库\r\n1. 渲染将使用 `render.yaml` 配置服务\r\n\r\n### 部署后\r\n\r\n您的MCP服务器将在以下网址提供：\r\n\r\n```\r\nhttps://your-service-name.onrender.com/sse\r\n```\r\n\r\n## 连接至Agenti AI平台\r\n\r\n将MCP服务器添加到Agenti AI配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"construction-cost\": {\r\n      \"url\": \"https://your-service-name.onrender.com/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具使用示例\r\n\r\n### 列出所有项目\r\n\r\n```\r\nTool: list_all_items\r\nParameters: none\r\n```\r\n\r\n### 获取特定项目\r\n\r\n```\r\nTool: get_item\r\nParameters: {\"item_code\": \"concrete_slab_4000psi\"}\r\n```\r\n\r\n### 搜索项\r\n\r\n```\r\nTool: search_items\r\nParameters: {\"query\": \"drywall\"}\r\n```\r\n\r\n### 按类别获取项目\r\n\r\n```\r\nTool: get_items_by_category\r\nParameters: {\"category\": \"concrete\"}\r\n```\r\n\r\n### 计算成本\r\n\r\n```\r\nTool: calculate_cost\r\nParameters: {\r\n  \"items\": [\r\n    {\"item_code\": \"concrete_slab_4000psi\", \"quantity\": 2000},\r\n    {\"item_code\": \"framing_wall_2x4\", \"quantity\": 500},\r\n    {\"item_code\": \"drywall_standard_12\", \"quantity\": 3000}\r\n  ],\r\n  \"labor_rate\": 80.0\r\n}\r\n```\r\n\r\n## 成本计算公式\r\n\r\n```\r\nItem Cost = (Material Cost × Quantity) + (Labor Hours × Quantity × Labor Rate)\r\nTotal Cost = Sum of all Item Costs\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "construction-cost": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://your-service-name.onrender.com/sse"
+  }
+ }
+}

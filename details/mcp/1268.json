@@ -1,0 +1,18 @@
+{
+ "id": "1268",
+ "kind": "mcp",
+ "name": "sap-hana",
+ "fingerprint_md5": "a767962c00827ec44285dccbdadf41d3",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# SAP HANA MCP服务器（Python）\r\n\r\nSAP HANA的模型上下文协议（MCP）服务器，使用 [FastMCP](https://github.com/prefecthq/fastmcp) 以及官方的SAP HANA Python驱动程序(`hdbcli`).\r\n\r\n此服务器将SAP HANA数据库功能（列出表、列、运行查询）作为人工智能助手可以使用的MCP工具公开。\r\n\r\n## 先决条件\r\n\r\n- Python 3.12+\r\n- 访问SAP HANA实例（内部部署或SAP HANA云）\r\n- SAP HANA客户端库（随 `hdbcli`)\r\n\r\n## 安装\r\n\r\n```bash\r\n# Clone and enter the directory\r\ncd sap-hana-mcp-server-python\r\n\r\n# Install dependencies\r\npip install -r requirements.txt\r\n```\r\n\r\n## 配置\r\n\r\n复制示例环境文件并填写SAP HANA连接详细信息：\r\n\r\n```bash\r\ncp .env.example .env\r\n```\r\n\r\n编辑 `.env` 使用您的服务器设置：\r\n\r\n|变量|描述|默认值|\r\n|---|---|---|\r\n| `HANA_HOST` |SAP HANA服务器主机名| *（必填）* |\r\n| `HANA_PORT` |SAP HANA服务器端口| `443` |\r\n| `HANA_SCHEMA` |筛选表的默认架构| *（可选）* |\r\n| `SERVER_PORT` |MCP服务器HTTP端口| `8000` |\r\n\r\n## 认证\r\n\r\nSAP HANA凭据由每个MCP客户端通过以下方式提供 **HTTP基本身份验证**。服务器不存储数据库凭据——每个请求都必须包含一个 `Authorization` 标题中包含用户的SAP HANA用户名和密码。\r\n\r\n```\r\nAuthorization: Basic <base64(username:password)>\r\n```\r\n\r\n如果标头丢失或无效，服务器将返回错误。这允许不同的用户连接到他们自己的SAP HANA帐户。\r\n\r\n## 运行服务器\r\n\r\n### 本地\r\n\r\n```bash\r\npython main.py\r\n```\r\n\r\n服务器启动于 `http://localhost:8000/sse` 使用SSE传输。\r\n\r\n### 使用Docker\r\n\r\n```bash\r\ndocker build -t sap-hana-mcp .\r\ndocker run -p 8000:8000 --env-file .env sap-hana-mcp\r\n```\r\n\r\n## MCP工具\r\n\r\n### `sap_hana_get_tables`\r\n\r\n列出SAP HANA实例中可用的表。返回包含列的CSV： `Schema`, `Table`, `Description`.\r\n\r\n|参数|类型|必填|说明|\r\n|---|---|---|---|\r\n| `catalog` |string |否|目录名称筛选器|\r\n| `schema` |string |否|架构名称筛选器（默认为 `HANA_SCHEMA`) |\r\n\r\n### `sap_hana_get_columns`\r\n\r\n列出特定表的列。返回包含列的CSV： `Schema`, `Table`, `Column`, `DataType`, `Remarks`.\r\n\r\n|参数|类型|必填|说明|\r\n|---|---|---|---|\r\n| `table` |string |是|表名|\r\n| `catalog` |string |否|目录名称筛选器|\r\n| `schema` |string |否|架构名称筛选器（默认为 `HANA_SCHEMA`) |\r\n\r\n### `sap_hana_run_query`\r\n\r\n执行SQL SELECT语句。以CSV格式返回结果。SQL方言基于SQL-92。标识符应使用双引号括起来。\r\n\r\n|参数|类型|必填|说明|\r\n|---|---|---|---|\r\n| `sql` |string | Yes |要执行的SELECT语句|\r\n\r\n### `sap_hana_lookup_table_info`\r\n\r\n从以下位置查找SAP表和字段描述 [leanx.eu](https://leanx.eu)。当SAP HANA系统目录中没有表和列的注释或描述时非常有用。不需要数据库身份验证。\r\n\r\n|参数|类型|必填|说明|\r\n|---|---|---|---|\r\n| `table` |string | Yes | SAP表名（例如ANLA、BKPF、MARA）|\r\n\r\n返回包含列的CSV： `Field`, `Description`, `DataElement`, `Datatype`, `Length`, `Decimals`.\r\n\r\n## MCP资源\r\n\r\n### `sap_hana://tables/{schema}/{table}`\r\n\r\n以CSV格式返回给定架构和表的列元数据。\r\n\r\n## 连接到AI客户端\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sap-hana\": {\r\n      \"url\": \"http://localhost:8000/sse\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Basic <base64(username:password)>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 游标/其他MCP客户端\r\n\r\n使用SSE端点 `http://localhost:8000/sse` 并配置 `Authorization: Basic` 带有SAP HANA凭据的标头。\r\n\r\n## 项目结构\r\n\r\n```\r\nsap-hana-mcp-server-python/\r\n  main.py            # MCP server with tools and resources\r\n  requirements.txt   # Python dependencies\r\n  .env.example       # Environment variable template\r\n  Dockerfile         # Docker container build\r\n  pyproject.toml     # Project metadata\r\n  README.md          # This file\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "sap-hana": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:8000/sse"
+  }
+ }
+}

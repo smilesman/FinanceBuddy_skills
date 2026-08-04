@@ -1,0 +1,26 @@
+{
+ "id": "2566",
+ "kind": "mcp",
+ "name": "hermes-search-mcp",
+ "fingerprint_md5": "2ad88e5e42c39b775328596014255ed8",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Hermes搜索MCP服务器🔍\r\n\r\n> 🔌 **兼容Cline、Cursor、Claude Desktop和任何其他MCP客户端！**\r\n\r\n模型上下文协议（MCP）是一个开放标准，使人工智能系统能够与各种数据源和工具无缝交互，促进安全的双向连接。\r\n\r\nHermes Search MCP服务器提供：\r\n\r\n- 结构化/非结构化数据的全文和语义搜索功能\r\n- Azure认知搜索中的文档索引和管理\r\n- 具有可定制参数的高效搜索操作\r\n- 使用TypeScript进行类型安全操作\r\n\r\n## 先决条件🔧\r\n\r\n在开始之前，请确保您已经：\r\n\r\n- Azure认知搜索服务和凭据\r\n- 克劳德桌面或光标\r\n- Node.js（v20或更高版本）\r\n- Git已安装（仅在使用Git安装方法时需要）\r\n\r\n## Hermes Search MCP服务器安装⚡\r\n\r\n### 使用NPX运行\r\n\r\n```bash\r\nnpx -y hermes-search-mcp@latest\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n要通过Smithery自动安装Hermes Search MCP Server for Claude Desktop，请执行以下操作：\r\n\r\n```bash\r\nnpx -y @smithery/cli install @hermes-search/mcp --client claude\r\n```\r\n\r\n## 配置MCP客户端⚙️\r\n\r\n### 配置Cline🤖\r\n\r\n在Cline中设置Hermes Search MCP服务器的最简单方法是单击一下市场：\r\n\r\n1. 在VS代码中打开Cline\r\n1. 点击侧边栏中的Cline图标\r\n1. 导航到“MCP服务器”选项卡（4个方块）\r\n1. 搜索“Hermes搜索”并点击“安装”\r\n1. 出现提示时，输入您的Azure认知搜索凭据\r\n\r\n或者，您可以在Cline中手动设置Hermes Search MCP服务器：\r\n\r\n1. 打开Cline MCP设置文件：\r\n\r\n```bash\r\n# For macOS:\r\ncode ~/Library/Application\\ Support/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json\r\n\r\n# For Windows:\r\ncode %APPDATA%\\Code\\User\\globalStorage\\saoudrizwan.claude-dev\\settings\\cline_mcp_settings.json\r\n```\r\n\r\n2. 将Hermes搜索服务器配置添加到文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"hermes-search-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"hermes-search-mcp@latest\"],\r\n      \"env\": {\r\n        \"AZURE_SEARCH_ENDPOINT\": \"your-search-endpoint\",\r\n        \"AZURE_SEARCH_API_KEY\": \"your-api-key\",\r\n        \"AZURE_SEARCH_INDEX_NAME\": \"your-index-name\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. 保存文件并重新启动Cline（如果它已经在运行）。\r\n\r\n### 配置光标🖥️\r\n\r\n> **备注**：需要Cursor 0.45.6或更高版本\r\n\r\n在Cursor中设置Hermes Search MCP服务器：\r\n\r\n1. 打开光标设置\r\n1. 导航到功能>MCP服务器\r\n1. 点击“+添加新MCP服务器”按钮\r\n1. 填写以下信息：\r\n   - **名字**：输入服务器的昵称（例如“hermes search mcp”）\r\n   - **类型**：选择“command”作为类型\r\n   - **命令**：输入运行服务器的命令：\r\n   ```bash\r\n   env AZURE_SEARCH_ENDPOINT=your-search-endpoint AZURE_SEARCH_API_KEY=your-api-key AZURE_SEARCH_INDEX_NAME=your-index-name npx -y hermes-search-mcp@latest\r\n   ```\r\n   > **重要**：用Azure认知搜索凭据替换环境变量\r\n\r\n### 配置Claude Desktop应用程序🖥️\r\n\r\n#### 对于macOS：\r\n\r\n```bash\r\n# Create the config file if it doesn't exist\r\ntouch \"$HOME/Library/Application Support/Claude/claude_desktop_config.json\"\r\n\r\n# Opens the config file in TextEdit\r\nopen -e \"$HOME/Library/Application Support/Claude/claude_desktop_config.json\"\r\n```\r\n\r\n#### 对于Windows：\r\n\r\n```bash\r\ncode %APPDATA%\\Claude\\claude_desktop_config.json\r\n```\r\n\r\n#### 添加Hermes搜索服务器配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"hermes-search-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"hermes-search-mcp@latest\"],\r\n      \"env\": {\r\n        \"AZURE_SEARCH_ENDPOINT\": \"your-search-endpoint\",\r\n        \"AZURE_SEARCH_API_KEY\": \"your-api-key\",\r\n        \"AZURE_SEARCH_INDEX_NAME\": \"your-index-name\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 在Claude桌面应用程序中的使用🎯\r\n\r\n一旦安装完成，并且配置了Claude桌面应用程序，您必须完全关闭并重新打开Claude桌面程序，才能看到hermes搜索mcp服务器。您应该在应用程序的左下角看到一个搜索图标，指示可用的MCP工具。\r\n\r\n### Hermes搜索示例\r\n\r\n1. **搜索文档**:\r\n\r\n```\r\nSearch for documents containing \"machine learning\" in the Azure Cognitive Search index, returning the top 10 results.\r\n```\r\n\r\n2. **索引内容**:\r\n\r\n```\r\nIndex the following documents into Azure Cognitive Search: [{\"id\": \"1\", \"title\": \"AI Overview\", \"content\": \"Artificial Intelligence is...\"}]\r\n```\r\n\r\n3. **删除索引**:\r\n\r\n```\r\nDelete the current Azure Cognitive Search index.\r\n```\r\n\r\n## 故障排除🛠️\r\n\r\n### 常见问题\r\n\r\n1. **找不到服务器**\r\n\r\n   - 通过运行验证npm安装 `npm --version`\r\n   - 检查Claude Desktop配置语法\r\n   - 通过运行以下命令确保Node.js已正确安装 `node --version`\r\n\r\n1. **Azure搜索凭据问题**\r\n\r\n   - 确认您的Azure认知搜索凭据有效\r\n   - 检查配置中是否正确设置了凭据\r\n   - 验证凭据周围没有空格或引号\r\n\r\n1. **索引访问问题**\r\n\r\n   - 验证索引是否存在于Azure认知搜索服务中\r\n   - 检查索引权限\r\n   - 确保API密钥具有适当的访问权限\r\n\r\n## 致谢✨\r\n\r\n- MCP规范的模型上下文协议\r\n- 克劳德桌面的拟人化\r\n- 微软Azure认知搜索\r\n",
+ "config": {
+  "hermes-search-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "hermes-search-mcp@latest"
+   ],
+   "env": {
+    "AZURE_SEARCH_ENDPOINT": "your-search-endpoint",
+    "AZURE_SEARCH_API_KEY": "your-api-key",
+    "AZURE_SEARCH_INDEX_NAME": "your-index-name"
+   }
+  }
+ }
+}

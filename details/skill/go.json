@@ -1,0 +1,12 @@
+{
+ "id": "go",
+ "kind": "skill",
+ "name": "go",
+ "fingerprint_md5": "60cab1cec71d18af83e6cfac70c8e4ab",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Go 编程语言\r\n\r\n有效使用 Go 项目的指南。\r\n\r\n## 读取依赖源文件\r\n\r\n要查看来自依赖的源文件，或回答有关依赖的问题：\r\n\r\n```bash\r\ngo mod download -json MODULE\r\n```\r\n\r\n使用返回的 Dir 路径读取源文件。\r\n\r\n## 读取文档\r\n\r\n使用 go doc 读取包、类型、函数等的文档：\r\n\r\n```bash\r\ngo doc foo.Bar       # 特定符号的文档\r\ngo doc -all foo      # 包的所有文档\r\n```\r\n\r\n## 运行程序\r\n\r\n使用 go run 而不是 go build 以避免留下构建产物：\r\n\r\n```bash\r\ngo run .             # 运行当前包\r\ngo run ./cmd/foo     # 运行特定命令\r\n```",
+ "config": {}
+}

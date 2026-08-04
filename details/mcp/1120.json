@@ -1,0 +1,46 @@
+{
+ "id": "1120",
+ "kind": "mcp",
+ "name": "minio-mcp",
+ "fingerprint_md5": "435035b49f18d8686054b37b2612bfaa",
+ "download_count": 0,
+ "category": "数据库与数据",
+ "tags": "",
+ "version": "",
+ "readme": "# MinIO MCP服务器\r\n\r\n用于与MinIO对象存储交互的模型上下文协议（MCP）服务器。此服务器在Docker中运行，并提供用于上传、下载和管理MinIO bucket中文件的工具。\r\n\r\n## 🚀 快速开始\r\n\r\n### 选项1：使用Docker Run（建议用于Cursor MCP）\r\n\r\n拉取Docker镜像：\r\n\r\n```bash\r\ndocker pull foxsnow/minio-mcp\r\n```\r\n\r\n### 选项2：使用Docker Compose\r\n\r\n#### 步骤1：创建.env文件\r\n\r\n创建一个 `.env` 文件在 `mcp/minioMcp` 目录：\r\n\r\n```bash\r\n# MinIO Server Configuration\r\nMINIO_ENDPOINT=your-minio-server.com\r\nMINIO_PORT=9000\r\nMINIO_USERNAME=your-access-key\r\nMINIO_PASSWORD=your-secret-key\r\nMINIO_USE_SSL=false\r\n\r\n# MCP Server Configuration\r\nMCP_PORT=5055\r\n\r\n# Permissions (true/false)\r\nMINIO_CAN_READ=true\r\nMINIO_CAN_EDIT=true\r\nMINIO_CAN_DELETE=true\r\nMINIO_CAN_CREATE=true\r\n```\r\n\r\n⚠️ **安全说明：** 这 `.env` 文件通过以下方式自动从git中排除 `.gitignore`。切勿将凭据提交到版本控制！\r\n\r\n#### 第二步：从Docker Compose开始\r\n\r\n```bash\r\ncd mcp/minioMcp\r\ndocker-compose up -d\r\n```\r\n\r\n#### 步骤3：停止服务\r\n\r\n```bash\r\ndocker-compose down\r\n```\r\n\r\n### 在游标中配置\r\n\r\n将此配置添加到您的 `~/.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"minio-mcp\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-v\",\r\n        \"/Users/your-username/path/to/downloads:/downloads\",\r\n        \"-e\",\r\n        \"MINIO_ENDPOINT=your-minio-server.com\",\r\n        \"-e\",\r\n        \"MINIO_PORT=443\",\r\n        \"-e\",\r\n        \"MINIO_USERNAME=your-username\",\r\n        \"-e\",\r\n        \"MINIO_PASSWORD=your-password\",\r\n        \"-e\",\r\n        \"MINIO_USE_SSL=true\",\r\n        \"-e\",\r\n        \"MINIO_CAN_READ=true\",\r\n        \"-e\",\r\n        \"MINIO_CAN_EDIT=true\",\r\n        \"-e\",\r\n        \"MINIO_CAN_DELETE=true\",\r\n        \"-e\",\r\n        \"MINIO_CAN_CREATE=true\",\r\n        \"-e\",\r\n        \"DOWNLOAD_PATH=/downloads\",\r\n        \"foxsnow/minio-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 📋 配置参数\r\n\r\n### Docker Args详解\r\n\r\n|参数|描述|\r\n| -------------------------- | -------------------------------------------------------------- |\r\n| `run -i --rm` |以交互方式运行容器，并在停止时将其删除|\r\n| `-v /host/path:/downloads` | **将本地文件夹装载到容器的 `/downloads` 文件夹** |\r\n| `-e MINIO_ENDPOINT` |MinIO服务器地址（不含http/https）|\r\n| `-e MINIO_PORT` |MinIO服务器端口（通常为9000或443）|\r\n| `-e MINIO_USERNAME` |MinIO访问密钥/用户名|\r\n| `-e MINIO_PASSWORD` |MinIO密钥/密码|\r\n| `-e MINIO_USE_SSL` |使用HTTPS连接(`true` 或 `false`)                       |\r\n| `-e MINIO_CAN_READ` |允许读取操作(`true` 或 `false`)                      |\r\n| `-e MINIO_CAN_EDIT` |允许编辑操作(`true` 或 `false`)                      |\r\n| `-e MINIO_CAN_DELETE` |允许删除操作(`true` 或 `false`)                    |\r\n| `-e MINIO_CAN_CREATE` |允许创建/上传操作(`true` 或 `false`)             |\r\n| `-e DOWNLOAD_PATH` |容器的下载目录（使用 `/downloads`)              |\r\n\r\n## 🔒 重要提示：Docker文件系统限制\r\n\r\n### ⚠️ 批判性理解\r\n\r\n**此MCP服务器在Docker内部运行，这意味着它具有有限的文件系统访问权限：**\r\n\r\n- ✅ **可以访问：** 仅装载的文件 `/downloads` 目录\r\n- ❌ **无法访问：** 主机系统上其他任何位置的文件\r\n- 📁 **卷装载：** 这 `-v` flag将您的主机目录映射到容器的 `/downloads`\r\n\r\n### 文件路径示例\r\n\r\n#### ✅ 正确的文件路径（容器内部）\r\n\r\n```\r\n/downloads/myfile.jpg\r\n/downloads/documents/report.pdf\r\n/downloads/subfolder/image.png\r\n```\r\n\r\n#### ❌ 文件路径不正确（将失败）\r\n\r\n```\r\n/Users/username/Documents/file.jpg    ❌ Host path - not accessible\r\nC:\\Users\\file.jpg                      ❌ Windows path - not accessible\r\n~/Downloads/file.jpg                   ❌ Home directory - not accessible\r\n```\r\n\r\n## 📤 如何上传文件\r\n\r\n### 步骤1：将文件复制到下载文件夹\r\n\r\n首先，将您的文件复制到您在Docker中挂载的文件夹中：\r\n\r\n```bash\r\n# Example: If you mounted /Users/username/minio-downloads:/downloads\r\ncp /path/to/your/file.jpg /Users/username/minio-downloads/\r\n```\r\n\r\n### 步骤2：使用MCP上传\r\n\r\n使用容器路径的MCP工具(`/downloads/filename`):\r\n\r\n```javascript\r\n// In Cursor AI Chat\r\nUpload /downloads/file.jpg to bucket \"my-bucket\"\r\n```\r\n\r\n**例子：**\r\n\r\n```\r\nFile location on host: /Users/john/minio-downloads/photo.jpg\r\nFile location in container: /downloads/photo.jpg\r\nUse in MCP: /downloads/photo.jpg ✅\r\n```\r\n\r\n## 📥 如何下载文件\r\n\r\n### 使用MCP从MinIO下载\r\n\r\n下载的文件会自动保存到 `/downloads` 容器内的目录，该目录映射到您的主机文件夹。\r\n\r\n**例子：**\r\n\r\n```\r\nDownload object \"report.pdf\" from bucket \"documents\"\r\n→ File saved to: /downloads/report.pdf\r\n→ Available on host at: /Users/username/minio-downloads/report.pdf\r\n```\r\n\r\n## 🛠️ 可用操作\r\n\r\n### 铲斗操作\r\n\r\n- `list_buckets` -列出所有桶\r\n- `make_bucket` -创建新bucket\r\n- `bucket_exists` -检查铲斗是否存在\r\n- `remove_bucket` -取出一个空桶\r\n- `list_objects` -列出bucket中的对象\r\n\r\n### 上传操作\r\n\r\n- `fput_object` -从以下位置上传文件 `/downloads` 目录\r\n- `put_object` -上传文本/字符串内容\r\n- `upload_folder` -从上传整个文件夹 `/downloads`\r\n\r\n### 下载操作\r\n\r\n- `get_object` -下载小文本文件\r\n- 文件保存到 `/downloads` 目录\r\n\r\n### 对象管理\r\n\r\n- `stat_object` -获取对象元数据\r\n- `copy_object` -在MinIO中复制对象\r\n- `remove_object` -删除对象\r\n- `remove_objects` -删除多个对象\r\n\r\n### 预先签名的URL\r\n\r\n- `presigned_get_object` -生成临时下载URL\r\n- `presigned_put_object` -生成临时上传URL\r\n\r\n## 💡 用法示例\r\n\r\n### 示例1：上传图像\r\n\r\n```bash\r\n# 1. Copy image to downloads folder\r\ncp ~/Pictures/photo.jpg /Users/username/minio-downloads/\r\n\r\n# 2. In Cursor AI, ask:\r\n\"Upload /downloads/photo.jpg to bucket 'photos' as 'vacation-2024.jpg'\"\r\n```\r\n\r\n### 示例2：上传多个文件\r\n\r\n```bash\r\n# 1. Copy files to a subfolder\r\nmkdir -p /Users/username/minio-downloads/documents\r\ncp ~/Documents/*.pdf /Users/username/minio-downloads/documents/\r\n\r\n# 2. In Cursor AI, ask:\r\n\"Upload all files from /downloads/documents to bucket 'my-docs'\"\r\n```\r\n\r\n### 示例3：下载文件\r\n\r\n```\r\n\"Download the file 'report.pdf' from bucket 'documents'\"\r\n```\r\n\r\n该文件将出现在您已挂载的下载文件夹中：\r\n`/Users/username/minio-downloads/report.pdf`\r\n\r\n## 🐛 故障排除\r\n\r\n### 错误：“文件不存在”\r\n\r\n**原因：** 文件不在已装载的 `/downloads` 目录。\r\n\r\n**解决方案：**\r\n\r\n1. 检查您的音量： `-v /host/path:/downloads`\r\n1. 将文件复制到已装载的主机目录\r\n1. 使用容器路径： `/downloads/filename`\r\n\r\n### 错误：“权限被拒绝”\r\n\r\n**原因：** Docker无权访问已挂载的文件夹。\r\n\r\n**解决方案：**\r\n\r\n```bash\r\n# Give Docker access to the folder\r\nchmod -R 755 /path/to/your/downloads\r\n```\r\n\r\n### 下载后文件未显示\r\n\r\n**检查：**\r\n\r\n1. 查看已装载的主机目录（不是 `/downloads`)\r\n1. 验证您的中的卷装载量 `mcp.json`\r\n1. 检查容器权限\r\n\r\n## 🔐 安全最佳实践\r\n\r\n1. **专用下载文件夹：** 为MinIO传输创建一个特定文件夹\r\n1. **权限控制：** 使用 `MINIO_CAN_*` 用于限制操作的标志\r\n1. **临时文件：** 定期清理下载文件夹\r\n1. **敏感数据：** 不要将凭据或敏感文件留在下载文件夹中\r\n\r\n## 📝 高级配置\r\n\r\n### 只读模式\r\n\r\n```json\r\n{\r\n  \"minio-mcp\": {\r\n    \"args\": [\r\n      // ... other args ...\r\n      \"-e\",\r\n      \"MINIO_CAN_READ=true\",\r\n      \"-e\",\r\n      \"MINIO_CAN_EDIT=false\",\r\n      \"-e\",\r\n      \"MINIO_CAN_DELETE=false\",\r\n      \"-e\",\r\n      \"MINIO_CAN_CREATE=false\"\r\n    ]\r\n  }\r\n}\r\n```\r\n\r\n### 多个MinIO服务器\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"minio-production\": {\r\n      // ... production config ...\r\n    },\r\n    \"minio-development\": {\r\n      // ... development config ...\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🔨 开发与建筑\r\n\r\n### 在本地构建Docker镜像\r\n\r\n```bash\r\ncd mcp/minioMcp\r\ndocker build -t minio-mcp .\r\n```\r\n\r\n### 运行本地构建的映像\r\n\r\n```bash\r\ndocker run -i --rm \\\r\n  -v $(pwd)/downloads:/downloads \\\r\n  -e MINIO_ENDPOINT=your-server.com \\\r\n  -e MINIO_PORT=443 \\\r\n  -e MINIO_USERNAME=your-username \\\r\n  -e MINIO_PASSWORD=your-password \\\r\n  -e MINIO_USE_SSL=true \\\r\n  -e MINIO_CAN_READ=true \\\r\n  -e MINIO_CAN_EDIT=true \\\r\n  -e MINIO_CAN_DELETE=true \\\r\n  -e MINIO_CAN_CREATE=true \\\r\n  minio-mcp\r\n```\r\n\r\n### 重建TypeScript\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n### 推送到Docker Hub（仅限维护人员）\r\n\r\n```bash\r\n# Build for multiple platforms\r\ndocker buildx build --platform linux/amd64,linux/arm64 \\\r\n  -t foxsnow/minio-mcp:latest \\\r\n  -t foxsnow/minio-mcp:v1.0.0 \\\r\n  --push .\r\n```\r\n\r\n## 📚 额外资源\r\n\r\n- [MinIO文件](https://min.io/docs/minio/linux/index.html)\r\n- [模型上下文协议](https://modelcontextprotocol.io/)\r\n- [Docker卷指南](https://docs.docker.com/storage/volumes/)\r\n\r\n## 🤝 贡献\r\n\r\nGitHub存储库欢迎问题和拉取请求。\r\n\r\n## 📄 许可证\r\n\r\n此项目根据Apache许可证2.0获得许可。\r\n",
+ "config": {
+  "minio-mcp": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-v",
+    "/Users/your-username/path/to/downloads:/downloads",
+    "-e",
+    "MINIO_ENDPOINT=your-minio-server.com",
+    "-e",
+    "MINIO_PORT=443",
+    "-e",
+    "MINIO_USERNAME=your-username",
+    "-e",
+    "MINIO_PASSWORD=your-password",
+    "-e",
+    "MINIO_USE_SSL=true",
+    "-e",
+    "MINIO_CAN_READ=true",
+    "-e",
+    "MINIO_CAN_EDIT=true",
+    "-e",
+    "MINIO_CAN_DELETE=true",
+    "-e",
+    "MINIO_CAN_CREATE=true",
+    "-e",
+    "DOWNLOAD_PATH=/downloads",
+    "foxsnow/minio-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

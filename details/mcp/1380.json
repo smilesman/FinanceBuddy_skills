@@ -1,0 +1,22 @@
+{
+ "id": "1380",
+ "kind": "mcp",
+ "name": "cloudflare-5",
+ "fingerprint_md5": "6682975e9cd76e004435c5edd1b42f19",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Cloudflare Logpush MCP 服务器 📜\r\n\r\n这是一个 [模型上下文协议（MCP）](https://modelcontextprotocol.io/introduction) 支持远程MCP的服务器\r\n内置Cloudflare OAuth，实现便捷连接。\r\n\r\n它集成了由……驱动的工具 [Cloudflare Logpush API](https://developers.cloudflare.com/logs/) 为Logpush作业提供深入见解。\r\n\r\n## 🔨 可用工具\r\n\r\n当前可用的工具：\r\n\r\n| **类别** | **工具** | **描述** |\r\n| --------------------------- | ---------------------------- | ----------------------------------------------------------------------- |\r\n| **按账户划分的日志推送作业** | `logpush_jobs_by_account_id` | 根据特定账户或用户下的所有账户获取Logpush作业 |\r\n\r\n这个MCP服务器仍在开发中，我们计划在未来添加更多工具。\r\n\r\n### 提示示例\r\n\r\n- `Which Logpush jobs failed recently?`\r\n- `Do any of my Logpush jobs in my <insert name> account have errors?`\r\n- `Can you list all the enabled job failures from today?`\r\n\r\n## 从任何MCP客户端访问远程MCP服务器\r\n\r\n如果你的MCP客户端对远程MCP服务器提供了全面支持，那么该客户端将提供一种方式来接受服务器URL（`https://logs.mcp.cloudflare.com`在其界面内直接（例如在 [Cloudflare AI 试验场](https://playground.ai.cloudflare.com/)）。\r\n\r\n如果您的客户端尚不支持远程MCP服务器，您将需要使用相应的配置文件来设置它 [mcp-remote（可译为“远程MCP”或根据具体上下文译为更贴切的名称，如“MCP远程控制”等）](https://www.npmjs.com/package/mcp-remote) 指定您的客户端可以访问哪些服务器。\r\n\r\n将内容替换为以下配置：\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"cloudflare\": {\r\n\t\t\t\"command\": \"npx\",\r\n\t\t\t\"args\": [\"mcp-remote\", \"https://logs.mcp.cloudflare.com/mcp\"]\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\n一旦您设置了配置文件，请重启MCP客户端，此时将打开一个浏览器窗口，显示您的OAuth登录页面。请按照认证流程进行操作，以授予客户端访问您的MCP服务器的权限。授权后，您即可使用这些工具。\r\n",
+ "config": {
+  "cloudflare": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://logs.mcp.cloudflare.com/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

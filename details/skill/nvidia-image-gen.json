@@ -1,0 +1,12 @@
+{
+ "id": "nvidia-image-gen",
+ "kind": "skill",
+ "name": "nvidia-image-gen",
+ "fingerprint_md5": "820889b59061a4a24a0ed0bb6900c165",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# NVIDIA 图像生成\r\n\r\n使用 NVIDIA 的 FLUX 模型生成和编辑图像。\r\n\r\n## 模型\r\n\r\n| 模型 | 用例 | 速度 | 质量 |\r\n|-------|----------|-------|---------|\r\n| `dev` | 高质量文本到图像 | 正常 | 最佳 |\r\n| `schnell` | 快速文本到图像 | 快速 | 良好 |\r\n| `kontext` | 图像编辑 | 正常 | 最佳 |\r\n\r\n## 快速开始\r\n\r\n```bash\r\n# 生成图像\r\npython scripts/generate.py \"A cute cat in space\"\r\n\r\n# 编辑现有图像\r\npython scripts/generate.py \"Add sunglasses\" -i photo.jpg -o edited.png\r\n```\r\n\r\n## 参数\r\n\r\n### 文本到图像 (dev/schnell)\r\n\r\n| 参数 | 短选项 | 默认值 | 描述 |\r\n|-----------|-------|---------|-------------|\r\n| `prompt` | | (必需) | 文本描述 |\r\n| `-o, --output` | | output.png | 输出文件路径 |\r\n| `--width` | | 1024 | 输出宽度（像素） |\r\n| `--height` | | 1024 | 输出高度（像素） |\r\n| `--aspect-ratio` | `-ar` | 1:1 | 宽高比预设 |\r\n| `--steps` | `-s` | 30 | 扩散步数 |\r\n| `--seed` | | 0 | 随机种子 (0=随机) |\r\n| `--model` | `-m` | auto | 模型选择 |\r\n\r\n### 图像编辑 (kontext)\r\n\r\n| 参数 | 短选项 | 默认值 | 描述 |\r\n|-----------|-------|---------|-------------|\r\n| `prompt` | | (必需) | 编辑指令 |\r\n| `-i, --input` | | (必需) | 输入图像路径 |\r\n| `-o, --output` | | output.png | 输出文件路径 |\r\n| `--steps` | `-s` | 30 | 扩散步数 |\r\n| `--cfg` | | 3.5 | 引导比例 |\r\n| `--seed` | | 0 | 随机种子 |\r\n\r\n## 支持的宽高比\r\n\r\n| 比例 | 分辨率 |\r\n|-------|------------|\r\n| 1:1 | 1024×1024 |\r\n| 16:9 | 1344×768 |\r\n| 9:16 | 768×1344 |\r\n| 4:3 | 1216×832 |\r\n| 3:4 | 832×1216 |\r\n\r\n## 示例\r\n\r\n### 基本生成\r\n```bash\r\npython scripts/generate.py \"A mountain landscape at sunset\"\r\n```\r\n\r\n### 宽屏格式 (16:9)\r\n```bash\r\npython scripts/generate.py \"A panoramic beach view\" -ar 16:9\r\n```\r\n\r\n### 竖屏模式 (9:16)\r\n```bash\r\npython scripts/generate.py \"A professional headshot\" -ar 9:16\r\n```\r\n\r\n### 自定义尺寸\r\n```bash\r\npython scripts/generate.py \"A banner image\" --width 1344 --height 768\r\n```\r\n\r\n### 快速生成\r\n```bash\r\npython scripts/generate.py \"Quick sketch of a robot\" -m schnell\r\n```\r\n\r\n### 编辑图像\r\n```bash\r\npython scripts/generate.py \"Make the background a sunset\" -i input.jpg -o output.png\r\n```\r\n\r\n### 可复现的结果\r\n```bash\r\npython scripts/generate.py \"A robot\" --seed 12345\r\n```\r\n\r\n## 输出\r\n\r\n脚本输出 `MEDIA:/path/to/image.png`，可以直接发送到聊天。\r\n\r\n## API 密钥\r\n\r\nAPI 密钥嵌入在脚本中。要使用不同的密钥，请设置 `NVIDIA_API_KEY` 环境变量。",
+ "config": {}
+}

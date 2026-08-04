@@ -1,0 +1,24 @@
+{
+ "id": "3570",
+ "kind": "mcp",
+ "name": "perplexity-4",
+ "fingerprint_md5": "5a35ac53436185114b95cc9cbcffcc4a",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# 困惑MCP服务器\r\n\r\n由Perplexity的专业人工智能模型驱动的智能研究助理。具有自动查询复杂性检测功能，可将请求路由到最合适的模型以获得最佳结果。与官方服务器不同，它具有对每项任务的搜索功能，本质上\r\n\r\n它还迫使使用MCP的代理具有特定性\r\n\r\n## 工具\r\n\r\n### 1.搜索（Sonar Pro）\r\n\r\n快速搜索简单查询和基本信息查找。最适合需要简洁、直接答案的直截了当的问题。\r\n\r\n```javascript\r\nconst result = await use_mcp_tool({\r\n  server_name: \"perplexity\",\r\n  tool_name: \"search\",\r\n  arguments: {\r\n    query: \"What is the capital of France?\",\r\n    force_model: false // Optional: force using this model even if query seems complex\r\n  }\r\n});\r\n```\r\n\r\n### 2.原因（Sonar Reasoning Pro）\r\n\r\n处理需要详细分析的复杂、多步骤任务。非常适合解释、比较和解决问题。\r\n\r\n```javascript\r\nconst result = await use_mcp_tool({\r\n  server_name: \"perplexity\",\r\n  tool_name: \"reason\",\r\n  arguments: {\r\n    query: \"Compare and contrast REST and GraphQL APIs, explaining their pros and cons\",\r\n    force_model: false // Optional: force using this model even if query seems simple\r\n  }\r\n});\r\n```\r\n\r\n### 3.深度研究（声纳深度研究）\r\n\r\n进行全面的研究并生成详细的报告。非常适合对复杂主题进行深入分析。\r\n\r\n```javascript\r\nconst result = await use_mcp_tool({\r\n  server_name: \"perplexity\",\r\n  tool_name: \"deep_research\",\r\n  arguments: {\r\n    query: \"The impact of quantum computing on cryptography\",\r\n    focus_areas: [\r\n      \"Post-quantum cryptographic algorithms\",\r\n      \"Timeline for quantum threats\",\r\n      \"Practical mitigation strategies\"\r\n    ],\r\n    force_model: false // Optional: force using this model even if query seems simple\r\n  }\r\n});\r\n```\r\n\r\n## 设置\r\n\r\n1. **先决条件**\r\n\r\n   - Node.js（来自 [nodejs.org](https://nodejs.org))\r\n   - 困惑API密钥（来自 [困惑.ai/settings/api](https://www.perplexity.ai/settings/api))\r\n   - 将repo克隆到某个地方\r\n\r\n1. **配置MCP设置**\r\n\r\n添加到MCP设置文件中（位置因平台而异）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"perplexity\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/perplexity-server/build/index.js\"],\r\n      \"env\": {\r\n        \"PERPLEXITY_API_KEY\": \"YOUR_API_KEY_HERE\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用NPX不必在本地安装（建议用于macos）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"perplexity\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"perplexity-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"PERPLEXITY_API_KEY\": \"your_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果MCP客户端无法从\r\n使用以下方法的环境 `\"${env:PERPLEXITY_API_KEY}\"` 现代常见\r\nAI编码代理（例如Kiro），有两种后备解决方案：\r\n\r\n**命令行参数**：直接将API键作为命令行参数传递，您甚至可以尝试查看“$｛env:PERPLEXITY_API_key｝”是否在其中工作。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"perplexity\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"/path/to/perplexity-server/build/index.js\",\r\n        \"--api-key\",\r\n        \"your_api_key_here\"\r\n      ],\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**阅读明确的 `.env` 文件**：指定项目的位置 `.env` 带有环境变量和当前项目的API键的文件 `--cwd` 命令行参数，MCP服务器将读取 `.env` 从目录中找到Perplexity API密钥。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"perplexity\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"/path/to/perplexity-server/build/index.js\",\r\n        \"--cwd\",\r\n        \"/path/to/your/project\"\r\n      ],\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**优先顺序**：命令行参数>环境变量>.env文件 `--cwd` （需要路径）\r\n\r\n## 明星历史\r\n",
+ "config": {
+  "perplexity": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "perplexity-mcp"
+   ],
+   "env": {
+    "PERPLEXITY_API_KEY": "your_api_key"
+   }
+  }
+ }
+}

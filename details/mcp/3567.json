@@ -1,0 +1,26 @@
+{
+ "id": "3567",
+ "kind": "mcp",
+ "name": "perplexity",
+ "fingerprint_md5": "40628b1dab6f60fab54fb162b64d1f2b",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# 困惑MCP服务器\r\n\r\nA. [FastMCP](https://github.com/jlowin/fastmcp) 与Perplexity的API集成的服务器，提供网络搜索和基于人工智能的答案。\r\n\r\n## 特性\r\n\r\n### 三层研究工作流程\r\n\r\n1. **`search`** -先脚踏实地\r\n\r\n   - 提问前先找到相关来源\r\n   - 返回URL、标题和代码段\r\n   - 当你不知道一个话题时，使用这个\r\n\r\n1. **`ask`** -获取AI答案（默认）\r\n\r\n   - 基于网络的人工智能合成答案\r\n   - 使用 `sonar` 模型（快速且经济高效）\r\n   - 包括引用和可选图像/相关问题\r\n\r\n1. **`ask_more`** -深入挖掘\r\n\r\n   - 对复杂问题进行更全面的分析\r\n   - 使用 `sonar-pro` 型号（功能更强，但价格更高）\r\n   - 使用时间 `ask` 没有提供足够的深度\r\n\r\n## 先决条件\r\n\r\n- Python 3.10或更高版本\r\n- A. [困惑API键](https://www.perplexity.ai/settings/api)\r\n- [紫外线](https://github.com/astral-sh/uv) （推荐）或pip\r\n\r\n## 本地设置\r\n\r\n### 1.安装依赖项\r\n\r\n使用紫外线（推荐）：\r\n\r\n```bash\r\nuv pip install -e .\r\n```\r\n\r\n或者使用pip：\r\n\r\n```bash\r\npip install -e .\r\n```\r\n\r\n### 2.配置API密钥\r\n\r\n复制示例环境文件：\r\n\r\n```bash\r\ncp .env.example .env\r\n```\r\n\r\n编辑 `.env` 并添加您的困惑API密钥：\r\n\r\n```\r\nPERPLEXITY_API_KEY=your_api_key_here\r\n```\r\n\r\n### 3.运行服务器\r\n\r\n在本地测试服务器：\r\n\r\n```bash\r\nuv run fastmcp run server.py\r\n```\r\n\r\n或者与 `fastmcp` CLI：\r\n\r\n```bash\r\nfastmcp run server.py\r\n```\r\n\r\n### 4.安装在克劳德桌面\r\n\r\n安装服务器以与Claude Desktop一起使用：\r\n\r\n```bash\r\nfastmcp install claude-code server.py\r\n```\r\n\r\n或者手动添加到您的Claude Desktop配置中(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"perplexity\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"fastmcp\", \"run\", \"/absolute/path/to/server.py\"],\r\n      \"env\": {\r\n        \"PERPLEXITY_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 云部署（FastMCP云）\r\n\r\n部署到 [fastmcp.cloud](https://fastmcp.cloud) 为了便于托管：\r\n\r\n### 1.推送到GitHub\r\n\r\n```bash\r\ngit init\r\ngit add .\r\ngit commit -m \"Initial commit\"\r\ngit remote add origin https://github.com/yourusername/perplexity-mcp.git\r\ngit push -u origin main\r\n```\r\n\r\n### 2.部署在FastMCP云上\r\n\r\n1. 访问 [fastmcp.cloud](https://fastmcp.cloud)\r\n1. 通过 GitHub 登录\r\n1. 创建一个新项目并连接您的仓库\r\n1. 配置：\r\n   - **入口点**: `server.py`\r\n   - **环境变量**：添加 `PERPLEXITY_API_KEY`\r\n1. 部署！\r\n\r\n您的服务器将在 `https://your-project-name.fastmcp.app/mcp`\r\n\r\nFastMCP云自动：\r\n\r\n- ✅ 检测来自的依赖关系 `pyproject.toml`\r\n- ✅ 每次推送时都会部署 `main`\r\n- ✅ 为PR创建预览部署\r\n- ✅ 处理HTTP传输和身份验证\r\n\r\n## 工具使用指南\r\n\r\n### 研究工作流程示例\r\n\r\n```\r\n1. Don't know about a topic? → Use search()\r\n   search(\"latest AI research papers on transformers\")\r\n\r\n2. Found sources? → Use ask() to understand\r\n   ask(\"What are the key innovations in transformer models?\")\r\n\r\n3. Need more depth? → Use ask_more()\r\n   ask_more(\"Explain the mathematical foundations of attention mechanisms in transformers\")\r\n```\r\n\r\n### 刀具参数\r\n\r\n#### `search(query, max_results=10, recency=None, domain_filter=None)`\r\n\r\n- `query`：搜索查询字符串\r\n- `max_results`：结果数（默认值：10）\r\n- `recency`：按时间筛选- `\"day\"`, `\"week\"`, `\"month\"`，或 `\"year\"`\r\n- `domain_filter`：包括/排除域\r\n  - 包括： `[\"wikipedia.org\", \"github.com\"]`\r\n  - 排除： `[\"-reddit.com\", \"-pinterest.com\"]`\r\n\r\n#### `ask(query, reasoning_effort=\"medium\", ...)`\r\n\r\n- `query`：要问的问题\r\n- `reasoning_effort`: `\"low\"`, `\"medium\"` （默认），或 `\"high\"`\r\n- `search_mode`: `\"web\"` （默认）， `\"academic\"`，或 `\"sec\"`\r\n- `recency`：时间过滤器\r\n- `domain_filter`：域筛选器\r\n- `return_images`：包含图像（默认值：False）\r\n- `return_related_questions`：包括后续问题（默认值：False）\r\n\r\n#### `ask_more(query, reasoning_effort=\"medium\", ...)`\r\n\r\n参数与 `ask()`，但使用更强大的 `sonar-pro` 模型。\r\n\r\n## 成本优化\r\n\r\n- **从开始 `search`**：寻找资源的免费/廉价方式\r\n- **默认为 `ask`**：用途 `sonar` （成本效益）\r\n- **升级到 `ask_more`**：仅在需要时（更昂贵）\r\n\r\n## 发展\r\n\r\n### 项目结构\r\n\r\n```\r\nperplexity-mcp/\r\n├── server.py           # Main FastMCP server\r\n├── pyproject.toml      # Dependencies\r\n├── .env.example        # Environment template\r\n└── README.md          # This file\r\n```\r\n\r\n### 检查服务器\r\n\r\n看看FastMCP Cloud会看到什么：\r\n\r\n```bash\r\nfastmcp inspect server.py\r\n```\r\n\r\n## api参考\r\n\r\n此服务器使用两个困惑API端点：\r\n\r\n- **搜索API** (`/search`)-返回排名的搜索结果\r\n- **聊天完成API** (`/chat/completions`)-返回AI生成的答案\r\n\r\n支持的型号：\r\n\r\n- `sonar` -快速、经济高效\r\n- `sonar-pro` -更全面\r\n\r\n## 故障排除\r\n\r\n### API关键问题\r\n\r\n如果您遇到身份验证错误：\r\n\r\n1. 在验证您的API密钥https://www.perplexity.ai/settings/api\r\n1. 检查一下 `PERPLEXITY_API_KEY` 设置正确\r\n1. 确保没有多余的空格或引号\r\n\r\n### 超时错误\r\n\r\n如果请求超时：\r\n\r\n- 默认超时为搜索30秒，聊天60秒\r\n- 复杂的问题可能需要更长的时间\r\n- 考虑使用 `reasoning_effort=\"low\"` 以获得更快的响应\r\n\r\n### 局部测试\r\n\r\n测试单个工具：\r\n\r\n```bash\r\nuv run fastmcp dev server.py\r\n```\r\n\r\n这将打开一个交互式开发界面。\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请打开问题或PR。\r\n\r\n## 链接\r\n\r\n- [困惑API文档](https://docs.perplexity.ai)\r\n- [FastMCP文档](https://gofastmcp.com)\r\n- [FastMCP云](https://fastmcp.cloud)\r\n",
+ "config": {
+  "perplexity": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "fastmcp",
+    "run",
+    "/absolute/path/to/server.py"
+   ],
+   "env": {
+    "PERPLEXITY_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

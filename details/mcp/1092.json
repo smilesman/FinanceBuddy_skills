@@ -1,0 +1,26 @@
+{
+ "id": "1092",
+ "kind": "mcp",
+ "name": "ldap",
+ "fingerprint_md5": "367ea0beeee0a2e2837189118a164953",
+ "download_count": 0,
+ "category": "数据迁移",
+ "tags": "",
+ "version": "",
+ "readme": "# ldap mcp\r\n\r\n\r\n用于只读LDAP目录操作的MCP服务器。\r\n\r\n## 安装\r\n\r\n```bash\r\nuv add ldap-mcp\r\n# or\r\npip install ldap-mcp\r\n```\r\n\r\n## 配置\r\n\r\n运行前设置环境变量：\r\n\r\n```bash\r\nexport LDAP_URI=\"ldaps://ldap.example.com:636\"\r\nexport LDAP_BASE_DN=\"dc=example,dc=com\"\r\nexport LDAP_BIND_DN=\"cn=readonly,dc=example,dc=com\"\r\nexport LDAP_BIND_PASSWORD=\"secret\"\r\n\r\n# Optional: only return employee accounts in all searches\r\nexport LDAP_DEFAULT_FILTER=\"(employeeType=employee)\"\r\n```\r\n\r\n### 所有环境变量\r\n\r\n|变量|必填|默认|描述|\r\n|----------|----------|---------|-------------|\r\n| `LDAP_URI` |是|-|服务器URI（ldap://或ldaps://）|\r\n| `LDAP_BASE_DN` |是|-|默认搜索库DN|\r\n| `LDAP_BIND_DN` |否|-|绑定DN（空=匿名）|\r\n| `LDAP_BIND_PASSWORD` |否|-|绑定密码|\r\n| `LDAP_DEFAULT_FILTER` |否|-|对所有搜索进行AND筛选|\r\n| `LDAP_AUTH_METHOD` |没有| `simple` | `simple` 或 `anonymous` |\r\n| `LDAP_USE_STARTTLS` |没有| `false` |升级到端口389上的TLS|\r\n| `LDAP_TLS_VERIFY` |没有| `true` |验证TLS证书|\r\n| `LDAP_CA_CERT` |否|-| CA证书路径|\r\n| `LDAP_TIMEOUT` |没有| `30` |连接超时（秒）|\r\n\r\n## 用法\r\n\r\n运行服务器：\r\n\r\n```bash\r\nuvx ldap-mcp                    # stdio transport (default)\r\nuvx ldap-mcp --transport sse    # SSE transport\r\n```\r\n\r\n或者，如果安装在项目中：\r\n\r\n```bash\r\nuv run ldap-mcp\r\n```\r\n\r\n\r\nClaude Desktop\r\n\r\n增添 `claude_desktop_config.json` （macOS： `~/Library/Application Support/Claude/`，Windows： `%APPDATA%\\Claude\\`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ldap\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"ldap-mcp\"],\r\n      \"env\": {\r\n        \"LDAP_URI\": \"ldaps://ldap.example.com:636\",\r\n        \"LDAP_BASE_DN\": \"dc=example,dc=com\",\r\n        \"LDAP_BIND_DN\": \"cn=readonly,dc=example,dc=com\",\r\n        \"LDAP_BIND_PASSWORD\": \"secret\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\nClaude Code\r\n\r\n通过CLI添加：\r\n\r\n```bash\r\nclaude mcp add --transport stdio \\\r\n  --env LDAP_URI=ldaps://ldap.example.com:636 \\\r\n  --env LDAP_BASE_DN=dc=example,dc=com \\\r\n  --env LDAP_BIND_DN=cn=readonly,dc=example,dc=com \\\r\n  --env LDAP_BIND_PASSWORD=secret \\\r\n  ldap -- uvx ldap-mcp\r\n```\r\n\r\n或添加到 `.mcp.json` 在项目根目录中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ldap\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"ldap-mcp\"],\r\n      \"env\": {\r\n        \"LDAP_URI\": \"ldaps://ldap.example.com:636\",\r\n        \"LDAP_BASE_DN\": \"dc=example,dc=com\",\r\n        \"LDAP_BIND_DN\": \"${LDAP_BIND_DN}\",\r\n        \"LDAP_BIND_PASSWORD\": \"${LDAP_BIND_PASSWORD}\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\nOpenCode\r\n\r\n增添 `~/.config/opencode/config.json` （或 `opencode.json` 在项目根目录中）：\r\n\r\n```json\r\n{\r\n  \"$schema\": \"https://opencode.ai/config.json\",\r\n  \"mcp\": {\r\n    \"ldap\": {\r\n      \"type\": \"local\",\r\n      \"command\": [\"uvx\", \"ldap-mcp\"],\r\n      \"environment\": {\r\n        \"LDAP_URI\": \"ldaps://ldap.example.com:636\",\r\n        \"LDAP_BASE_DN\": \"dc=example,dc=com\",\r\n        \"LDAP_BIND_DN\": \"{env:LDAP_BIND_DN}\",\r\n        \"LDAP_BIND_PASSWORD\": \"{env:LDAP_BIND_PASSWORD}\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\n## 工具\r\n\r\n### ldap_search\r\n\r\n使用筛选器搜索LDAP目录。\r\n\r\n```\r\nfilter: \"(objectClass=person)\"\r\nbase_dn: \"ou=users,dc=example,dc=com\"  # optional\r\nscope: \"subtree\"  # base, one, or subtree\r\nattributes: [\"cn\", \"mail\", \"uid\"]  # optional\r\nsize_limit: 100\r\n```\r\n\r\n### ldap_get_tentry\r\n\r\n按DN获取一个包含所有属性的条目。\r\n\r\n```\r\ndn: \"cn=jdoe,ou=users,dc=example,dc=com\"\r\nattributes: [\"*\"]  # optional, defaults to all\r\ninclude_operational: true  # include createTimestamp, etc.\r\n```\r\n\r\n### ldap_get_schema\r\n\r\n浏览LDAP架构定义。\r\n\r\n```\r\nschema_type: \"all\"  # object_classes, attribute_types, or all\r\nname_filter: \"person\"  # optional substring filter\r\n```\r\n\r\n### ldap_比较\r\n\r\n比较属性值而不检索条目。\r\n\r\n```\r\ndn: \"cn=jdoe,ou=users,dc=example,dc=com\"\r\nattribute: \"memberOf\"\r\nvalue: \"cn=admins,ou=groups,dc=example,dc=com\"\r\n```\r\n\r\n## 提示\r\n\r\n### user_lookup\r\n\r\n通过姓名、电子邮件或uid查找用户的指导性工作流程。\r\n\r\n### group_members\r\n\r\n使用可选的名称解析列出LDAP组的成员。\r\n\r\n### 团体会员资格\r\n\r\n查找用户所属的所有组。\r\n\r\n### 搜索指南\r\n\r\nLDAP过滤器语法参考示例。\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dev dependencies\r\nuv sync --group dev\r\n\r\n# Run checks\r\nmake check    # lint + format + typecheck + test\r\n\r\n# Run tests only\r\nmake test\r\n\r\n# Auto-fix issues\r\nmake fix\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "ldap": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "ldap-mcp"
+   ],
+   "env": {
+    "LDAP_URI": "ldaps://ldap.example.com:636",
+    "LDAP_BASE_DN": "dc=example,dc=com",
+    "LDAP_BIND_DN": "cn=readonly,dc=example,dc=com",
+    "LDAP_BIND_PASSWORD": "secret"
+   }
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "agentmail-cli",
+ "kind": "skill",
+ "name": "agentmail-cli",
+ "fingerprint_md5": "57ce10c59e03ba577c1808212dad8ed1",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "[AgentMail](https://agentmail.to) 的 CLI — 创建收件箱、发送消息和阅读电子邮件。\r\n\r\n## API 密钥设置\r\n\r\nAPI 密钥必须在任何命令工作之前配置。两种方法：\r\n\r\n1. **配置文件（对持久 agent 推荐）：**\r\n```\r\nagentmail config set-key YOUR_API_KEY\r\n```\r\n这将密钥存储在 `~/.agentmail/config.json` 中，并在 session 之间持久化。\r\n\r\n2. **环境变量：**\r\n```\r\nexport AGENTMAIL_API_KEY=YOUR_API_KEY\r\n```\r\n\r\n验证配置：\r\n```\r\nagentmail config show\r\n```\r\n\r\n如果命令因认证错误而失败，请重新运行 `agentmail config set-key` — 仅环境变量可能无法在 shell session 之间持久化。\r\n\r\n## 始终使用 --json\r\n\r\n始终向每个命令传递 `--json` 以获得机器可读的输出。需要时使用 `jq` 进行解析。\r\n\r\n## 收件箱命令\r\n\r\n创建收件箱：\r\n```\r\nagentmail inbox create --json\r\nagentmail inbox create --domain example.com --json\r\nagentmail inbox create --username support --domain example.com --display-name \"Support Team\" --json\r\n```\r\n\r\n列出收件箱：\r\n```\r\nagentmail inbox list --json\r\nagentmail inbox list --limit 10 --json\r\n```\r\n\r\n获取收件箱详情：\r\n```\r\nagentmail inbox get <inbox-id> --json\r\n```\r\n\r\n删除收件箱：\r\n```\r\nagentmail inbox delete <inbox-id>\r\n```\r\n\r\n## 消息命令\r\n\r\n发送消息：\r\n```\r\nagentmail message send --from <inbox-id> --to recipient@example.com --subject \"Subject\" --text \"Body text\" --json\r\n```\r\n\r\n发送 HTML：\r\n```\r\nagentmail message send --from <inbox-id> --to recipient@example.com --subject \"Subject\" --html \"<h1>Hello</h1>\" --json\r\n```\r\n\r\n多个收件人、抄送、密送：\r\n```\r\nagentmail message send --from <inbox-id> --to \"a@example.com,b@example.com\" --cc \"cc@example.com\" --bcc \"bcc@example.com\" --subject \"Subject\" --text \"Body\" --json\r\n```\r\n\r\n列出收件箱中的消息：\r\n```\r\nagentmail message list <inbox-id> --json\r\nagentmail message list <inbox-id> --limit 20 --json\r\n```\r\n\r\n获取特定消息：\r\n```\r\nagentmail message get <inbox-id> <message-id> --json\r\n```\r\n\r\n删除消息（删除整个线程）：\r\n```\r\nagentmail message delete <inbox-id> <message-id>\r\n```\r\n\r\n## 常见工作流程\r\n\r\n```bash\r\n# 1. 创建收件箱，捕获 ID\r\nINBOX_ID=$(agentmail inbox create --json | jq -r '.inboxId')\r\n\r\n# 2. 发送电子邮件\r\nagentmail message send --from \"$INBOX_ID\" --to user@example.com --subject \"Hello\" --text \"Message body\" --json\r\n\r\n# 3. 检查回复\r\nagentmail message list \"$INBOX_ID\" --json\r\n```\r\n\r\n## 注意\r\n\r\n- 在 https://agentmail.to 获取 API 密钥\r\n- 配置文件位置：`~/.agentmail/config.json`\r\n- 环境变量 `AGENTMAIL_API_KEY` 优先于配置文件\r\n- 删除消息会删除包含它的整个线程",
+ "config": {}
+}

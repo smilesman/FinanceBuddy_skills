@@ -1,0 +1,24 @@
+{
+ "id": "1797",
+ "kind": "mcp",
+ "name": "whoami",
+ "fingerprint_md5": "7a2d1adbb9314153a12f30dcf58a1b5f",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://mseep.ai/app/kukapay-whoami-mcp)\r\n\r\n# WhoAmI MCP服务器\r\n\r\n[](https://smithery.ai/server/@kukapay/whoami-mcp)\r\n一个轻量级的MCP服务器，告诉你到底是谁。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@kukapay/whoami-mcp\">\r\n  \r\n</a>\r\n\r\n\r\n## 特性\r\n\r\n- 返回系统用户名作为您的姓名和身份。\r\n- 快速同步执行，非常适合本地LLM集成。\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装WhoAmI for Claude Desktop [史密瑟里](https://smithery.ai/server/@kukapay/whoami-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @kukapay/whoami-mcp --client claude\r\n```\r\n\r\n1. **克隆存储库**\r\n\r\n   ```bash\r\n   git clone https://github.com/kukapay/whoami-mcp.git\r\n   ```\r\n\r\n1. **客户端配置**\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"whoami\": {\r\n         \"command\": \"uv\",\r\n         \"args\": [\"--directory\", \"path/to/whoami_mcp\", \"run\", \"main.py\"]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n## 用法\r\n\r\n### MCP工具\r\n\r\n- **名字**: `whoami`\r\n- **描述**：检索当前系统用户的用户名作为您的姓名。\r\n- **输出**：你的名字。\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "whoami": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "path/to/whoami_mcp",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

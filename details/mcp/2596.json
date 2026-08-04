@@ -1,0 +1,27 @@
+{
+ "id": "2596",
+ "kind": "mcp",
+ "name": "librarian",
+ "fingerprint_md5": "ffe48e87173eac6a3a73beb853638cc3",
+ "download_count": 0,
+ "category": "知识库检索",
+ "tags": "",
+ "version": "",
+ "readme": "# 图书管理员\r\n\r\nLibrarian是一个MCP（模型上下文协议）服务器，允许任何具有兼容MCP客户端的LLM查询维基百科的信息。它可以被配置为自动事实检查信息，而不需要明确的用户请求。\r\n\r\n**注：** 虽然本指南侧重于Claude Desktop设置，但Librarian还支持通过WebSocket/HTTP进行远程托管，以实现更广泛的可访问性。\r\n\r\n> *“你唯一必须知道的就是图书馆的位置。”*\r\n>\r\n> --阿尔伯特·爱因斯坦\r\n\r\n\r\n*Claude Desktop使用图书管理员MCP服务器对信息进行事实核查的示例*\r\n\r\n\r\n## 特性\r\n\r\n- **自动事实检查**：配置Claude Desktop以使用维基百科主动验证事实声明\r\n- **维基百科搜索**：搜索相关维基百科文章\r\n- **页面信息**：获取特定维基百科页面的详细信息\r\n- **页面摘要**：维基百科页面的快速摘要\r\n- **页面章节**：从维基百科页面获取特定部分\r\n- **多语言支持**：以不同语言查询维基百科\r\n\r\n## 安装\r\n\r\n### Claude桌面设置\r\n\r\n#### 1.先决条件\r\n\r\n- [克劳德桌面](https://claude.ai/download) 已安装在您的计算机上\r\n- [紫外线](https://docs.astral.sh/uv/) 已安装包管理器\r\n- Python 3.13或更高版本\r\n\r\n#### 2.克隆和设置项目\r\n\r\n```bash\r\ngit clone <your-repository-url>\r\ncd librarian\r\nuv sync\r\n```\r\n\r\n#### 3.配置克劳德桌面\r\n\r\n将此配置添加到您的Claude Desktop配置文件中：\r\n\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**Linux**: `~/.config/Claude/claude_desktop_config.json`\r\n\r\n**对于Windows：**\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"librarian\": {\r\n            \"command\": \"C:\\\\Users\\\\[USERNAME]\\\\.local\\\\bin\\\\uv.exe\",\r\n            \"args\": [\"--directory\", \"C:\\\\Users\\\\[USERNAME]\\\\path\\\\to\\\\librarian\", \"run\", \"python\", \"librarian_stdio.py\"],\r\n            \"env\": {\r\n                \"PYTHONPATH\": \"C:\\\\Users\\\\[USERNAME]\\\\path\\\\to\\\\librarian\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n**对于macOS/Linux：**\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"librarian\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\"--directory\", \"/path/to/your/librarian\", \"run\", \"python\", \"librarian_stdio.py\"],\r\n            \"env\": {\r\n                \"PYTHONPATH\": \"/path/to/your/librarian\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n**重要**:\r\n\r\n- 替换 `[USERNAME]` 和 `/path/to/your/librarian` 与你的实际路径\r\n- 这 `--directory` flag确保uv使用正确的项目环境\r\n- 使用完整路径 `uv.exe` Windows上的可靠性\r\n\r\n#### 4.重新启动克劳德桌面\r\n\r\n添加配置后，完全重新启动Claude Desktop以加载MCP服务器。\r\n\r\n#### 5.故障排除\r\n\r\n如果您遇到问题：\r\n\r\n1. **检查克劳德桌面日志**:\r\n\r\n   - **视窗**: `%AppData%\\Claude\\logs\\mcp-server-librarian.log`\r\n   - **macOS**: `~/Library/Logs/Claude/mcp-server-librarian.log`\r\n\r\n1. **常见问题**:\r\n\r\n   - `ModuleNotFoundError`：确保您正在使用 `--directory` 标记和正确的路径\r\n   - `File not found`：对两者都使用绝对路径 `command` 和in `args`\r\n   - `Virtual environment warnings`：这些是无害的，但可以通过适当的路径避免\r\n\r\n1. **手动测试**:\r\n\r\n   ```bash\r\n   cd /path/to/librarian\r\n   uv run python librarian_stdio.py\r\n   # Should start without errors\r\n   ```\r\n\r\n## 自动事实检查设置\r\n\r\n要使Claude Desktop自动使用维基百科进行事实核查，请通过以下方式开始对话：\r\n\r\n```\r\n\"Use your Wikipedia tools to automatically fact-check any factual claims in our conversation. Don't wait for me to ask - proactively verify information and provide corrections when needed.\"\r\n```\r\n\r\n或者通过引用使用内置的系统提示： `fact_checking_instructions`\r\n\r\n### 行为示例\r\n\r\n配置后，Claude Desktop将自动：\r\n\r\n- ✅ 验证历史日期和事件\r\n- ✅ 检查履历信息\r\n- ✅ 确认科学事实和发现\r\n- ✅ 验证地理信息\r\n- ✅ 纠正常见误解\r\n- ✅ 提供维基百科的来源归因\r\n\r\n## 可用工具\r\n\r\n1. **search_wikipedia_pages**：搜索任何主题的维基百科文章，并返回前5个包含选择信息的结果\r\n1. **get_wikipedia_page_info**：获取特定页面的全面信息，包括内容、摘要、超链接单词和类别\r\n1. **get_wikipedia_page_summary**：使用可定制的句子长度快速获取维基百科页面摘要\r\n1. **get_wikipedia_page_sections**：对于需要特定信息的大页面，获取维基百科页面上所有部分的列表\r\n1. **get_wikipedia_page_sections_info**：通过标题或索引获取维基百科页面特定部分的详细内容\r\n\r\n所有工具都通过指定语言参数（默认值：“en”）支持多语言维基百科查询。\r\n\r\n## 例子\r\n\r\n### Claude Desktop中的可用工具\r\n\r\n\r\n*显示正确配置MCP服务器时Claude Desktop中可用的维基百科工具的屏幕截图*\r\n\r\n### MCP服务器配置\r\n\r\n\r\n*Claude Desktop显示图书管理员MCP服务器已成功连接并可用*\r\n\r\n### VS代码集成示例\r\n\r\n\r\n*使用GitHub Copilot在VS Code中使用库管理员工具的示例*\r\n\r\n## 许可证\r\n\r\n这个项目是开源的。请检查许可证文件以了解详细信息。\r\n",
+ "config": {
+  "librarian": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/your/librarian",
+    "run",
+    "python",
+    "librarian_stdio.py"
+   ],
+   "env": {
+    "PYTHONPATH": "/path/to/your/librarian"
+   }
+  }
+ }
+}

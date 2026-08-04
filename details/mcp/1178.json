@@ -1,0 +1,18 @@
+{
+ "id": "1178",
+ "kind": "mcp",
+ "name": "neo4j-remote",
+ "fingerprint_md5": "ad6d4e712ca12b7128b46c346ba27081",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# neo4j服务器远程\r\n\r\nneo4j服务器远程是一个使用服务器发送事件（SSE）或STDIO作为传输协议的MCP服务器。\r\n\r\n## 概述\r\n\r\n一种模型上下文协议（MCP）服务器实现，提供数据库交互，并允许通过Neo4j进行图形探索。此服务器支持执行Cypher图查询、分析复杂的域数据，并支持选择远程可访问的数据库。灵感来自 [neo4j控件/mcpneo4j](https://github.com/neo4j-contrib/mcp-neo4j/tree/main/servers/mcp-neo4j-cypher).\r\n\r\n### 提示\r\n\r\n服务器提供演示提示：\r\n\r\n- `mcp-demo`：交互式提示，引导用户完成数据库操作\r\n  - 生成适当的数据库模式和示例数据\r\n\r\n### 工具\r\n\r\n服务器提供三个核心工具：\r\n\r\n#### 查询工具\r\n\r\n- `read-neo4j-cypher`\r\n\r\n  - 执行Cypher读取查询以从数据库读取数据\r\n  - 输入：\r\n    - `query` （string）：要执行的Cypher查询\r\n  - 返回：查询结果为对象数组\r\n\r\n- `write-neo4j-cypher`\r\n\r\n  - 执行更新Cypher查询\r\n  - 输入：\r\n    - `query` （string）：Cypher更新查询\r\n  - 返回：一个结果摘要计数器 `{ nodes_updated: number, relationships_created: number, ... }`\r\n\r\n#### 架构工具\r\n\r\n- `get-neo4j-schema`\r\n  - 获取图形数据库中所有节点类型的列表，以及它们的名称、类型和与其他节点类型的关系\r\n  - 无需输入\r\n  - 返回：包含两个字典的节点标签列表，一个用于属性，另一个用于关系\r\n\r\n## 使用Cline客户端\r\n\r\n1.克隆存储库\r\n\r\n```cmd\r\ngit clone https://github.com/dsimile/mcp-neo4j-server-sse.git\r\n```\r\n\r\n2.需要安装\r\n\r\n- Python 3.12+\r\n\r\n```cmd\r\ncd mcp-neo4j-server-sse\r\n\r\npip install -r requirements.txt\r\n```\r\n\r\n3.运行服务器\r\n\r\n- SSE模式（默认）\r\n\r\n使用UX命令运行MCP服务器，然后选择您选择的数据库。默认IP地址为0.0.0.0，默认端口为8543。\r\n\r\n```cmd\r\nuv run .\\src\\mcp-neo4j-cypher\\neo4j_server_remote.py --url bolt://localhost:7687 --username neo4j --password neo4j123 --database neo4j\r\n```\r\n\r\n- STDIO模式\r\n\r\n使用UX命令在本地运行MCP服务器，模式设置为STDIO，并使用相同的Neo4j连接信息。\r\n\r\n> 注意：请确保Neo4j正在运行并且可用于远程连接。\r\n\r\n### 已发布包\r\n\r\n将服务器配置添加到您的 `cline_mcp_settings.json`.\r\n\r\n- SSE模式（默认）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"neo4j-remote\": {\r\n      \"url\": \"http://0.0.0.0:8543/sse\",\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n- STDIO模式\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"neo4j-local\": {\r\n      \"disabled\": false,\r\n      \"timeout\": 60,\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"/absolute/path/to/neo4j_server_remote.py\",\r\n        \"--url\",\r\n        \"bolt://localhost:7687\",\r\n        \"--username\",\r\n        \"neo4j\",\r\n        \"--password\",\r\n        \"neo4j123\",\r\n        \"--database\",\r\n        \"neo4j\",\r\n        \"--mode\",\r\n        \"stdio\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "neo4j-remote": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://0.0.0.0:8543/sse"
+  }
+ }
+}

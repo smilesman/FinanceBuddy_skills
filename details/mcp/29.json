@@ -1,0 +1,23 @@
+{
+ "id": "29",
+ "kind": "mcp",
+ "name": "android-mcp",
+ "fingerprint_md5": "403a076df04e6ff91f4861822b0cf95c",
+ "download_count": 0,
+ "category": "移动端自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 安卓MCP🤖✨\r\n\r\n[](#) [](#-requirements) [](#-requirements) [](#-notes--limits)\r\n\r\n友好的MCP stdio服务器，通过ADB与Android设备聊天 `@devicefarmer/adbkit`，通过使用换行符分隔的JSON-RPC `@modelcontextprotocol/sdk` （没有 `Content-Length` 需要标题）。将其插入Cursor/Claude MCP并开始戳设备。\r\n\r\n## ✨ 这是什么？\r\n\r\n- MCP传输，转发方便的ADB操作（点击、文本、截图、UI转储等）。\r\n- 在stdin/stdout上使用换行符分隔的JSON；每行一请求，每行一响应。\r\n- 原型友好：如果你愿意，可以在以后将最小的JSON-RPC循环换成完整的MCP SDK。\r\n\r\n## 📦 需求\r\n\r\n- Node.js 18+和npm。\r\n- PATH上的ADB（例如，Android SDK平台工具）。保持 `adb start-server` 跑步。\r\n- 至少连接了一个设备或模拟器(`adb devices`).\r\n- 可选：仅当您计划构建演示应用程序时，才使用Android SDK/Gradle；MCP服务器本身不需要。\r\n\r\n## 🚀 设置（本地）\r\n\r\n```bash\r\ngit clone <repo-url> android-mcp\r\ncd android-mcp\r\nnpm ci           # or npm install\r\nnpm test         # stdio + tsconfig smoke tests\r\nnpm run dev      # start MCP server with tsx\r\n# or explicitly:\r\nnpx --yes tsx src/server.ts\r\n```\r\n\r\n要生成输出，请执行以下操作： `npm run build` （发射 `dist/`).保持 `adb devices` 在调用工具之前感到高兴。\r\n\r\n## 🧰 MCP配置（光标/克劳德）\r\n\r\n示例 `~/.cursor/mcp.json` 条目：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"android-mcp\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\"--yes\", \"tsx\", \"/home/ivan/code/android-mcp/src/server.ts\"],\r\n      \"cwd\": \"/home/ivan/code/android-mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🎮 暴露的工具\r\n\r\n- `selectDevice` `{ serial }` → 为后续通话设置默认设备。\r\n- `keyEvent` `{ keyCode, serial? }` → send `input keyevent`.\r\n- `tap` `{ x, y, serial? }`\r\n- `text` `{ text, serial? }` → uses `input text` （空格变成 `%s`).\r\n- `startActivity` `{ component, serial? }` → e.g. `\"org.example/.MainActivity\"`.\r\n- `screenshot` `{ serial? }` → `{ mimeType: \"image/png\", base64 }`.\r\n- `uiDump` `{ serial? }` → 已解析 `uiautomator dump` 树（文本、内容描述、资源ID、边界）。\r\n- `findAndTap` `{ text?, contentDesc?, serial? }` → 找到第一个匹配节点并点击其中心。\r\n- `listDevicesDetailed` → 列出带有型号/制造商/sdk信息的附加设备。\r\n\r\n## 📸 注释和限制\r\n\r\n- 屏幕截图和UI转储是周期性快照（尚未流式传输）。\r\n- UI转储取决于 `uiautomator` 存在于设备上。\r\n- 原型运输；您可以在不更改ADB帮助程序的情况下连接更丰富的MCP SDK。\r\n\r\n## 🧪 测试\r\n\r\n```bash\r\nnpm test\r\n```\r\n\r\n## 📱 可选：构建/安装演示应用程序\r\n\r\n只有当你想练习示例Android UI时才需要：\r\n\r\n```bash\r\n# from the parent monorepo that contains the Android app\r\n./gradlew assembleDebug\r\nadb install -r app/build/outputs/apk/debug/app-debug.apk\r\nadb shell am start -n org.dronix.android.kindlegratis/.MainActivity\r\n```\r\n\r\n## 🛠️ CI提示\r\n\r\n- 节点工作流：签出→ 设置节点18+→ `npm ci` → `npm test`.\r\n- 如果在CI中构建Android应用程序，请添加Java 17+Android SDK设置并运行 `./gradlew assembleDebug`.\r\n",
+ "config": {
+  "android-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "--yes",
+    "tsx",
+    "/home/ivan/code/android-mcp/src/server.ts"
+   ],
+   "env": {}
+  }
+ }
+}

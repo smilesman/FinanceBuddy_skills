@@ -1,0 +1,12 @@
+{
+ "id": "ceph-health-monitor",
+ "kind": "skill",
+ "name": "ceph-health-monitor",
+ "fingerprint_md5": "6db2df4184400c1e836dc1a0b0c92630",
+ "download_count": 0,
+ "category": "生活方式",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\n持续监控 Ceph 集群健康状态，包括 OSD 状态、PG 分布、存储容量，及时发现并告警异常。",
+ "config": {}
+}

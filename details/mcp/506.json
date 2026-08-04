@@ -1,0 +1,27 @@
+{
+ "id": "506",
+ "kind": "mcp",
+ "name": "twitter-automation",
+ "fingerprint_md5": "a5701deb11e74152b98bc14ec44ccfbb",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Twitter自动化MCP服务器\r\n\r\n一个模型上下文协议（MCP）服务器，使Claude能够通过AI生成的图像和线程支持自动发布推特。\r\n\r\n## 特性\r\n\r\n- 🎨 **AI图像生成** -使用Google AI Gemini 2.0 Flash生成图像\r\n- 🔗 **URL图像支持** -从URL添加图像\r\n- 🐦 **Twitter集成** -完全支持Twitter API v2，支持媒体上传\r\n- 🧵 **线程支持** -使用适当的回复链自动创建线程\r\n- 📏 **长度验证** -防止280多个字符的推文带有明确的错误消息\r\n- 🔄 **自动上传** -发布推文时自动上传图片\r\n\r\n## 快速开始\r\n\r\n### 1.安装软件包\r\n\r\n```bash\r\nnpm install -g twitter-automation-mcp\r\n```\r\n\r\n### 2.获取API密钥\r\n\r\n**Twitter API密钥**：按照本指南生成您的Twitter API密钥和令牌：\r\n👉 **[生成Twitter API密钥和令牌](https://www.ryancarmody.dev/blog/generate-twitter-api-keys-and-tokens)**\r\n\r\n**谷歌人工智能API密钥**：从以下位置获取钥匙 [谷歌人工智能工作室](https://aistudio.google.com/)\r\n\r\n### 3.配置克劳德桌面\r\n\r\n添加到您的Claude Desktop MCP配置中：\r\n\r\n**选项A：使用NPM包（推荐）**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"twitter-automation\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"twitter-automation-mcp\"],\r\n      \"env\": {\r\n        \"TWITTER_API_KEY\": \"your_api_key\",\r\n        \"TWITTER_API_SECRET\": \"your_api_secret\",\r\n        \"TWITTER_ACCESS_TOKEN\": \"your_access_token\",\r\n        \"TWITTER_ACCESS_TOKEN_SECRET\": \"your_access_token_secret\",\r\n        \"GOOGLE_AI_API_KEY\": \"your_google_ai_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**选项B：使用本地安装**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"twitter-automation\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"path/to/twitter-automation/dist/index.js\"],\r\n      \"env\": {\r\n        \"TWITTER_API_KEY\": \"your_api_key\",\r\n        \"TWITTER_API_SECRET\": \"your_api_secret\",\r\n        \"TWITTER_ACCESS_TOKEN\": \"your_access_token\",\r\n        \"TWITTER_ACCESS_TOKEN_SECRET\": \"your_access_token_secret\",\r\n        \"GOOGLE_AI_API_KEY\": \"your_google_ai_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 4.重新启动克劳德桌面\r\n\r\n重新启动Claude Desktop以加载MCP服务器。\r\n\r\n## 用法\r\n\r\n### 简单推特\r\n\r\n```\r\nPost this tweet: \"Hello world! 👋 #FirstTweet\"\r\n```\r\n\r\n### 使用人工智能生成的图像发布推文\r\n\r\n```\r\nGenerate an image of a robot coding, then post: \"AI is the future! 🤖💻\"\r\n```\r\n\r\n### 带有URL图像的推文\r\n\r\n```\r\nAdd this image https://example.com/image.jpg then post: \"Check this out!\"\r\n```\r\n\r\n### 推特帖子\r\n\r\n```\r\nPost this tweet: \"Here's what I learned about AI 🧵\" \r\nWith thread: [\"First insight about machine learning\", \"Second point about neural networks\"]\r\n```\r\n\r\n### 带图像的线程\r\n\r\n```\r\nGenerate an image \"AI brain\" for the main tweet\r\nAdd URL image https://example.com/chart.jpg for thread tweet 1  \r\nThen post the thread\r\n```\r\n\r\n## 可用工具\r\n\r\n- **`generateImages`** -为线程中的特定推文生成AI图像\r\n- **`addImageFromUrl`** -将URL中的现有图像添加到特定推文中\r\n- **`postTweet`** -发布带有自动图像上传和验证功能的推文\r\n\r\n## 错误处理\r\n\r\n服务器提供明确的错误消息：\r\n\r\n- **长度验证**：“主要推文内容为287个字符，超过了275个字符的限制”\r\n- **缺少凭据**：缺少哪些API密钥的明确指示\r\n- **Twitter API错误**：带有上下文的描述性错误消息\r\n\r\n## 需求\r\n\r\n- **Node.js** 18+\r\n- **Twitter开发者帐户** 具有读写权限\r\n- **谷歌人工智能工作室API** 访问\r\n\r\n## 故障排除\r\n\r\n**“403禁止”错误**：确保您的Twitter应用程序具有读写权限，并在更改权限后重新生成访问令牌。\r\n\r\n**“图像上传失败”**：检查您的图像是否为5MB以下的有效PNG/JPG文件。\r\n\r\n**“内容太长”**：每条推文必须少于275个字符。将长内容拆分为推文。\r\n\r\n## 部署\r\n\r\n要部署此MCP服务器或在容器中运行它吗？\r\n\r\n👉 **看 [部署.md](DEPLOYMENT.md)** 有关部署选项：\r\n\r\n- **NPM包** -发布并使用 `npx` （推荐）\r\n- **Docker容器** -在具有完整环境变量设置的隔离环境中运行\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "twitter-automation": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "twitter-automation-mcp"
+   ],
+   "env": {
+    "TWITTER_API_KEY": "your_api_key",
+    "TWITTER_API_SECRET": "your_api_secret",
+    "TWITTER_ACCESS_TOKEN": "your_access_token",
+    "TWITTER_ACCESS_TOKEN_SECRET": "your_access_token_secret",
+    "GOOGLE_AI_API_KEY": "your_google_ai_key"
+   }
+  }
+ }
+}

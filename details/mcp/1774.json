@@ -1,0 +1,22 @@
+{
+ "id": "1774",
+ "kind": "mcp",
+ "name": "think-tool-2",
+ "fingerprint_md5": "2b3273b1dd349ed900de6fe037fc1f56",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP思维工具服务器\r\n\r\n[](https://smithery.ai/server/@cgize/claude-mcp-think-tool)\r\n\r\n一种实现模型上下文协议（MCP）的服务器 [“思考”工具](https://www.anthropic.com/engineering/claude-think-tool) 以提高克劳德的复杂推理能力。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@cgize/claude-mcp-think-tool\">\r\n  \r\n</a>\r\n\r\n## 概述\r\n\r\n这个MCP服务器实现了Anthropic的“思考”工具，该工具为克劳德在复杂的问题解决任务中提供了一个专门的结构化思维空间。如所述 [Anthropic的博客文章](https://www.anthropic.com/engineering/claude-think-tool)，think工具已被证明可以显著提高需要在长链工具调用中遵守策略和推理的复杂任务的性能。\r\n\r\n## 客户指令\r\n\r\n将这些自定义指令添加到Claude中，以优化其对think工具的使用：\r\n\r\n```\r\nYou have access to a \"think\" tool that provides a dedicated space for structured reasoning. Using this tool significantly improves your performance on complex tasks. \r\n\r\n## When to use the think tool \r\nBefore taking any action or responding to the user after receiving tool results, use the think tool as a scratchpad to: \r\n- List the specific rules that apply to the current request \r\n- Check if all required information is collected \r\n- Verify that the planned action complies with all policies \r\n- Iterate over tool results for correctness \r\n- Analyze complex information from web searches or other tools \r\n- Plan multi-step approaches before executing them \r\n\r\n## How to use the think tool effectively \r\nWhen using the think tool: \r\n1. Break down complex problems into clearly defined steps \r\n2. Identify key facts, constraints, and requirements \r\n3. Check for gaps in information and plan how to fill them \r\n4. Evaluate multiple approaches before choosing one \r\n5. Verify your reasoning for logical errors or biases\r\n```\r\n\r\n## 关键用例\r\n\r\n- **复杂的工具链**：当Claude需要调用复杂的工具并仔细分析输出时\r\n- **政策遵守**：用于在具有详细指南的策略密集型环境中导航\r\n- **顺序决策**：当每一步都建立在以前的基础上，错误代价高昂时\r\n- **多步分析**：将复杂问题分解为可管理的步骤\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面版Think Tool Server [史密瑟里](https://smithery.ai/server/@cgize/claude-mcp-think-tool):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @cgize/claude-mcp-think-tool --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\nnpm install -g @cgize/mcp-think-tool\r\n```\r\n\r\n## 配置\r\n\r\n将此配置添加到MCP配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"think-tool\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@cgize/mcp-think-tool\"\r\n      ],\r\n      \"type\": \"stdio\",\r\n      \"pollingInterval\": 30000,\r\n      \"startupTimeout\": 30000,\r\n      \"restartOnFailure\": true\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n配置文件位置：\r\n\r\n- `C:\\Users\\[username]\\AppData\\Roaming\\Claude\\claude_desktop_config.json`\r\n\r\n如果全局安装，您还可以使用：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"think-tool\": {\r\n      \"command\": \"claude-mcp-think-tool\",\r\n      \"args\": [],\r\n      \"type\": \"stdio\",\r\n      \"pollingInterval\": 30000,\r\n      \"startupTimeout\": 30000,\r\n      \"restartOnFailure\": true\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n- **思考**：记录解决问题过程中的结构化推理\r\n- **获取想法**：检索所有记录的想法\r\n- **清晰的想法**：重置思维过程\r\n- **get_thought_stats**：分析思维模式\r\n\r\n## 示例提示\r\n\r\n```\r\nUsing the think tool, solve this multi-step problem:\r\n\r\nA train travels at a constant speed of 60 km/h. It departs from station A at 9:00 AM and arrives at station B at 11:30 AM. What is the distance between stations A and B?\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "think-tool": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@cgize/mcp-think-tool"
+   ],
+   "env": {}
+  }
+ }
+}

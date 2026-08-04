@@ -1,0 +1,23 @@
+{
+ "id": "2478",
+ "kind": "mcp",
+ "name": "congressmcp",
+ "fingerprint_md5": "92340531e7e987cc45d9e7c7c703b6fc",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 国会MCP\r\n\r\n**91多种国会数据工具，适用于Claude、Cursor、VS Code和任何MCP客户端。**\r\n\r\n通过自然语言访问美国国会的实时数据，包括法案、投票、议员、委员会、听证会等 [模型上下文协议](https://modelcontextprotocol.io/).\r\n\r\n## 快速开始\r\n\r\n### 1.获得免费的Congress.gov API密钥\r\n\r\n注册地址： **[api.congress.gov/注册](https://api.congress.gov/sign-up/)** （需要30秒，完全免费）。\r\n\r\n### 2.配置您的MCP客户端\r\n\r\n**克劳德桌面版** --添加到 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"congressmcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"congressmcp\"],\r\n      \"env\": {\r\n        \"CONGRESS_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**VS Code** --添加到 `.vscode/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"congressmcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"congressmcp\"],\r\n      \"env\": {\r\n        \"CONGRESS_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**光标** --添加到 `~/.cursor/mcp.json` 使用与VS Code相同的格式。\r\n\r\n### 3.开始提问\r\n\r\n> “查找第119届国会最近的气候变化法案”\r\n> “加利福尼亚州的参议员是如何对最新的国防法案进行投票的？”\r\n> “参议院司法委员会的成员是谁？”\r\n> “H.R.1234的最新行动是什么？”\r\n\r\n## 工具\r\n\r\n**6套工具，91+次操作** 涵盖所有Congress.gov API终点：\r\n\r\n|工具集|操作|它的作用|\r\n|---------|-----------|--------------|\r\n| **账单** |16|搜索、详细信息、文本、操作、修改、共同赞助者、主题|\r\n| **修正案** |7|搜索、详细信息、操作、赞助商、文本|\r\n| **条约和摘要** |5 |条约检索、行动、委员会、文本；账单摘要|\r\n| **成员和委员会** |13 |按姓名/州/地区、赞助立法、委员会法案/报告搜索成员|\r\n| **投票和提名** |13 |众议院/参议院投票、提名、唱名|\r\n| **记录和听证会** |10+|国会记录、听证会、CRS报告、委员会印刷品|\r\n\r\n## 从源代码运行\r\n\r\n```bash\r\ngit clone https://github.com/amurshak/congressMCP\r\ncd congressMCP\r\npip install -e .\r\n\r\n# stdio (default — for MCP clients)\r\nCONGRESS_API_KEY=your-key congressmcp\r\n\r\n# HTTP (for self-hosting / remote access)\r\ncongressmcp --transport streamable-http --port 8000\r\n```\r\n\r\n## 配置\r\n\r\n|变量|必填|默认|描述|\r\n|----------|----------|---------|-------------|\r\n| `CONGRESS_API_KEY` |是|-|您的免费Congress.gov API密钥|\r\n| `MCP_TRANSPORT` |没有| `stdio` |运输方式(`stdio` 或 `streamable-http`) |\r\n| `ENABLE_CACHING` |没有| `false` |在内存中缓存API响应|\r\n| `CACHE_TIMEOUT` |没有| `300` |缓存TTL（秒）|\r\n\r\n## 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建要素分支\r\n1. 提交拉取请求\r\n\r\n## 许可证\r\n\r\n可持续使用许可证\r\n\r\n______________________________________________________________________\r\n\r\n**为政府透明度和可访问的公民数据而构建。**\r\n",
+ "config": {
+  "congressmcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "congressmcp"
+   ],
+   "env": {
+    "CONGRESS_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

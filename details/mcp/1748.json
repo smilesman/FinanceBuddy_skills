@@ -1,0 +1,22 @@
+{
+ "id": "1748",
+ "kind": "mcp",
+ "name": "storybook",
+ "fingerprint_md5": "bfd34373f6b2f8817a88d8b5ef7fe976",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 故事书MCP服务器\r\n\r\n用于与故事书交互的模型上下文协议服务器。\r\n\r\n## 用法\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"storybook\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-storybook@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### 获取故事\r\n\r\n从故事书配置中检索故事列表。\r\n\r\n**参数：**\r\n\r\n- `configDir` （string）：包含.storybook配置文件夹的目录的绝对路径\r\n\r\n**退货：**\r\n\r\n- 故事ID列表\r\n\r\n## 技术细节\r\n\r\n- 使用 `@modelcontextprotocol/sdk`\r\n- 使用stdio传输进行通信\r\n- 在中缓存数据 `./cache` 相对于脚本位置\r\n\r\n不幸的是，我们需要安装此包中可能遇到的任何框架，这样索引构建就不会失败。\r\n",
+ "config": {
+  "storybook": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-storybook@latest"
+   ],
+   "env": {}
+  }
+ }
+}

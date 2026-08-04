@@ -1,0 +1,22 @@
+{
+ "id": "3553",
+ "kind": "mcp",
+ "name": "openclaw-docs",
+ "fingerprint_md5": "021c28ba87d479bcaf2b85782436ac5b",
+ "download_count": 0,
+ "category": "知识库检索",
+ "tags": "",
+ "version": "",
+ "readme": "# openclaw文档mcp\r\n\r\n\r\n用于从中搜索和检索文档的模型上下文协议（MCP）服务器 [开爪](https://docs.openclaw.ai/).\r\n\r\n## 特性\r\n\r\n- 🔍 **搜索文档** -在所有OpenClaw文档中进行全文搜索\r\n- 📄 **检索页面** -获取任何文档页面的完整内容\r\n- 📋 **列出所有页面** -浏览完整的文档结构\r\n- ⚡ **快速缓存** -内置缓存以提高性能\r\n\r\n## 安装\r\n\r\n### 来自GitHub\r\n\r\n```bash\r\nnpm install -g github:XXXiby/openclaw-docs-mcp\r\n```\r\n\r\n### 本地安装\r\n\r\n```bash\r\ngit clone https://github.com/XXXiby/openclaw-docs-mcp.git\r\ncd openclaw-docs-mcp\r\nnpm install\r\n```\r\n\r\n## 用法\r\n\r\n### 作为MCP服务器\r\n\r\n直接运行：\r\n\r\n```bash\r\nopenclaw-docs-mcp\r\n```\r\n\r\n或者使用npx：\r\n\r\n```bash\r\nnpx github:XXXiby/openclaw-docs-mcp\r\n```\r\n\r\n### VS代码配置\r\n\r\n添加到您的VS代码 `mcp.json` (`~/.config/Code/User/mcp.json` 或 `%APPDATA%\\Code\\User\\mcp.json`):\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"openclaw-docs\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"github:XXXiby/openclaw-docs-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n对于Windows上的WSL用户：\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"openclaw-docs\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"wsl\",\r\n      \"args\": [\"-e\", \"npx\", \"-y\", \"github:XXXiby/openclaw-docs-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Claude桌面配置\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"openclaw-docs\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"github:XXXiby/openclaw-docs-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### search_openclaw_docs\r\n\r\n在OpenClaw文档中搜索有关主题的信息。\r\n\r\n**参数：**\r\n\r\n- `query` （字符串，必填）：搜索查询（例如“网关配置”、“电报通道”）\r\n- `maxResults` （数字，可选）：返回的最大结果数（默认值：5，最大值：20）\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"name\": \"search_openclaw_docs\",\r\n  \"arguments\": {\r\n    \"query\": \"telegram channel setup\",\r\n    \"maxResults\": 5\r\n  }\r\n}\r\n```\r\n\r\n### get_openclaw_doc_page\r\n\r\n获取特定文档页面的完整内容。\r\n\r\n**参数：**\r\n\r\n- `path` （字符串，必填）：页面路径（例如，“/网关/配置”、“/通道/电报”）\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"name\": \"get_openclaw_doc_page\",\r\n  \"arguments\": {\r\n    \"path\": \"/gateway/configuration\"\r\n  }\r\n}\r\n```\r\n\r\n### list_openclaw_doc_pages\r\n\r\n列出站点地图中所有可用的文档页面。\r\n\r\n**参数：** 无\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"name\": \"list_openclaw_doc_pages\",\r\n  \"arguments\": {}\r\n}\r\n```\r\n\r\n## 运作原理\r\n\r\n1. 从以下位置获取站点地图 `https://docs.openclaw.ai/sitemap.xml`\r\n1. 使用Cheerio解析HTML内容以提取文本\r\n1. 对搜索结果执行基于关键字的相关性评分\r\n1. 缓存结果5分钟以提高性能\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/XXXiby/openclaw-docs-mcp.git\r\ncd openclaw-docs-mcp\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Run locally\r\nnode index.js\r\n\r\n# Test tools/list\r\necho '{\"jsonrpc\": \"2.0\", \"method\": \"tools/list\", \"id\": 1}' | node index.js\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 了解详情。\r\n\r\n## 相关\r\n\r\n- [OpenClaw文档](https://docs.openclaw.ai/)\r\n- [OpenClaw GitHub](https://github.com/openclaw/openclaw)\r\n- [模型上下文协议](https://modelcontextprotocol.io/)\r\n",
+ "config": {
+  "openclaw-docs": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "github:XXXiby/openclaw-docs-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

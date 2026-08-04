@@ -1,0 +1,18 @@
+{
+ "id": "3427",
+ "kind": "mcp",
+ "name": "eurostat",
+ "fingerprint_md5": "8da52b95dcd83faa1f4885b60831ec6f",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 欧洲统计局mcp\r\n\r\n一 [主控程序](https://modelcontextprotocol.io) 暴露的服务器 [欧盟统计局统计API](https://ec.europa.eu/eurostat/web/main/data/web-services) 以便法学硕士助理能够发现、探索和检索欧盟官方统计数据。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `search_datasets` |按关键字搜索欧盟统计局目录|\r\n| `get_dataset_dimensions` |检查数据集的维度结构和有效筛选代码|\r\n| `get_dataset_data` |使用可选过滤器（地理、时间、单位等）检索数据|\r\n\r\n### 典型工作流程\r\n\r\n```\r\n1. search_datasets(\"GDP\")                          # find dataset codes\r\n2. get_dataset_dimensions(\"nama_10_gdp\")           # discover dimensions & valid codes\r\n3. get_dataset_data(\"nama_10_gdp\",                 # pull the numbers\r\n       geo=[\"FR\",\"DE\",\"ES\"],\r\n       last_time_period=5,\r\n       filters={\"unit\": [\"CLV10_MEUR\"], \"na_item\": [\"B1GQ\"]})\r\n```\r\n\r\n## 资源\r\n\r\n|URI|描述|\r\n|---|---|\r\n| `eurostat://datasets/{query}` |浏览与关键字匹配的数据集|\r\n| `eurostat://dataset/{code}/dimensions` |特定数据集的维度结构|\r\n\r\n## 提示\r\n\r\n|提示|描述|\r\n|---|---|\r\n| `explore_topic` |逐步计划查找某一主题的欧盟统计数据|\r\n| `compare_countries` |检索并比较欧盟国家的指标|\r\n\r\n______________________________________________________________________\r\n\r\n## 入门\r\n\r\n### 先决条件\r\n\r\n- Python 3.11+\r\n- [紫外线](https://docs.astral.sh/uv/) （推荐）或pip\r\n\r\n### 本地安装\r\n\r\n```bash\r\ngit clone https://github.com/dcerecedo/eurostat-mcp.git\r\ncd eurostat-mcp\r\n\r\n# with uv\r\nuv pip install -e .\r\n\r\n# or with pip\r\npip install -e .\r\n```\r\n\r\n### 运行（stdio——用于克劳德桌面/Claude代码）\r\n\r\n```bash\r\neurostat-mcp\r\n# or\r\neurostat-mcp --transport stdio\r\n```\r\n\r\n### 运行（SSE--用于网络客户端）\r\n\r\n```bash\r\neurostat-mcp --transport sse\r\n# listens on http://0.0.0.0:8000/sse by default\r\n```\r\n\r\n要覆盖默认值的环境变量：\r\n\r\n|变量|默认值|描述|\r\n|---|---|---|\r\n| `MCP_TRANSPORT` | `stdio` |运输： `stdio`, `sse`，或 `streamable-http` |\r\n| `MCP_HOST` | `0.0.0.0` |绑定主机（仅限SSE/HTTP）|\r\n| `MCP_PORT` | `8000` |绑定端口（仅限SSE/HTTP）|\r\n\r\n______________________________________________________________________\r\n\r\n## 码头工人\r\n\r\n使用Docker Compose构建并运行（暴露端口8001）：\r\n\r\n```bash\r\ndocker compose up --build\r\n```\r\n\r\n服务器将在以下时间可用 `http://localhost:8001/sse`.\r\n\r\n要直接运行映像，请执行以下操作：\r\n\r\n```bash\r\ndocker build -t eurostat-mcp .\r\ndocker run -p 8001:8001 eurostat-mcp\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 连接到克劳德\r\n\r\n### 克劳德桌面版\r\n\r\n将以下内容添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"eurostat\": {\r\n      \"command\": \"eurostat-mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码（stdio）\r\n\r\n```bash\r\nclaude mcp add eurostat -- eurostat-mcp\r\n```\r\n\r\n### Claude Code（SSE——通过Docker或SSE服务器运行时）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"eurostat\": {\r\n      \"type\": \"sse\",\r\n      \"url\": \"http://localhost:8001/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n即用型 `.mcp.json` 带有SSE配置的文件包含在此存储库中。\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "eurostat": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:8001/sse"
+  }
+ }
+}

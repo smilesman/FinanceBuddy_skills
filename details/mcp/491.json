@@ -1,0 +1,26 @@
+{
+ "id": "491",
+ "kind": "mcp",
+ "name": "thegamecrafter",
+ "fingerprint_md5": "fc8c0780ef072b2428be856c073c3996",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 游戏制作MCP服务器\r\n\r\n[](https://www.npmjs.com/package/@alex-gon/tgc-mcp-server)\r\n[](https://registry.modelcontextprotocol.io/v0.1/servers/io.github.alex-gon/thegamecrafter)\r\n[](LICENSE)\r\n[](https://github.com/alex-gon/thegamecrafter-mcp-server/actions)\r\n[](https://glama.ai/mcp/servers/alex-gon/thegamecrafter-mcp-server)\r\n\r\n将AI助手连接到的MCP服务器 [游戏制作者](https://www.thegamecrafter.com/) API，让您通过自然对话设计、管理和定价桌面游戏。\r\n\r\n浏览组件目录，创建游戏项目，添加纸牌和棋盘，上传艺术品，并通过您的AI助手获得即时定价估算。\r\n\r\n[](https://glama.ai/mcp/servers/alex-gon/thegamecrafter-mcp-server)\r\n\r\n## 给谁的\r\n\r\n独立棋盘游戏设计师、桌面创作者和TGC用户，他们希望通过人工智能助手管理他们的项目，而不是手动导航TGC web界面。\r\n\r\n## 先决条件\r\n\r\n- **Node.js** 18岁或以后\r\n- A. **TGC账户** — [在这里注册](https://www.thegamecrafter.com/)\r\n- A. **TGC API密钥** — [在此处生成一个](https://www.thegamecrafter.com/account/apikeys)\r\n\r\n## 安装\r\n\r\n### 选项1:远程（托管在Apify上）--无需安装\r\n\r\n连接到托管服务器：\r\n\r\n```\r\nhttps://chillbot3000--tgc-mcp-server.apify.actor/mcp\r\n```\r\n\r\n不需要本地设置。致电时提供您的TGC凭据 `authenticate` 工具。使用量通过Apify的按事件付费模式按每次操作计费（每个典型会话约0.09美元）。\r\n\r\n也可在 [Glama连接器](https://glama.ai/mcp/connectors).\r\n\r\n### 选项2：本地（通过npx）\r\n\r\n将服务器添加到Claude Desktop配置中(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"thegamecrafter\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@alex-gon/tgc-mcp-server\"],\r\n      \"env\": {\r\n        \"TGC_API_KEY_ID\": \"your-api-key-id\",\r\n        \"TGC_USERNAME\": \"your-tgc-username\",\r\n        \"TGC_PASSWORD\": \"your-tgc-password\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动克劳德桌面。服务器将自动下载并显示在您的MCP连接中。\r\n\r\n\r\nAlternative: install from source\r\n\r\n```bash\r\ngit clone https://github.com/alex-gon/thegamecrafter-mcp-server.git\r\ncd thegamecrafter-mcp-server\r\nnpm install && npm run build\r\n```\r\n\r\n然后使用 `\"command\": \"node\"` 和 `\"args\": [\"/absolute/path/to/dist/index.js\"]` 在上面的配置中。\r\n\r\n\r\n## 配置\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `TGC_API_KEY_ID` |是|您的TGC API密钥ID|\r\n| `TGC_USERNAME` |是|您的TGC帐户用户名|\r\n| `TGC_PASSWORD` |是|您的TGC帐户密码|\r\n| `TGC_API_BASE` |没有| API基本URL（默认为 `https://www.thegamecrafter.com/api`) |\r\n| `TGC_UPLOAD_BASE_DIR` |否|限制文件上传到此目录（默认为工作目录）|\r\n\r\n看 `.env.example` 对于模板。\r\n\r\n## 可用工具\r\n\r\n### 工具\r\n\r\n|工具|描述|身份验证|\r\n|------|-------------|------|\r\n| `authenticate` |创建TGC会话（接受凭据作为参数或使用环境变量）|否|\r\n| `logout` |销毁当前TGC会话|是|\r\n| `get_game_catalog` |浏览可打印的组件类型（卡、板、盒）|否|\r\n| `get_component_sizes` |获取组件类型的像素尺寸和成品英寸|否|\r\n| `get_component_details` |获取组件类型或游戏部件的详细信息|否|\r\n| `get_my_designers` |列出已验证用户的设计器配置文件|是|\r\n| `get_my_games` |列出设计师的所有游戏（分页）|是|\r\n| `get_game_details` |获取包含组件、文件和定价的完整游戏信息|是|\r\n| `create_game` |在设计师的指导下创建新游戏项目|是|\r\n| `update_game` |更新游戏的名称、描述或可见性|是|\r\n| `delete_game` |永久删除游戏项目|是|\r\n| `add_component_to_game` |将可打印的组件或库存零件添加到游戏中|是|\r\n| `upload_file` |将图像上传到TGC文件夹（从磁盘或URL）|是|\r\n| `get_pricing_estimate` |获取游戏的每个组件成本明细|是|\r\n\r\n### 资源\r\n\r\n|URI|描述|\r\n|-----|-------------|\r\n| `tgc://catalog` |可打印组件类型的完整目录（缓存30分钟）|\r\n| `tgc://game/{id}/summary` |游戏项目的完整摘要|\r\n| `tgc://component-sizes` |所有组件类型的像素尺寸（缓存30分钟）|\r\n\r\n### 提示\r\n\r\n|提示|描述|\r\n|--------|-------------|\r\n| `new_game_setup` |使用组件创建完整游戏项目的指导工作流程|\r\n| `estimate_game_cost` |现有游戏的逐步成本估算|\r\n\r\n## 示例提示\r\n\r\n试着对你的AI助手说：\r\n\r\n- “在The Game Crafter上显示我的所有游戏及其组件列表”\r\n- “使用标准扑克牌和暗箱创建一款名为Stellar Drift的新纸牌游戏”\r\n- “我需要什么像素尺寸来制作扑克牌脸图像？”\r\n- “上传此图像并将其指定为我的卡片组的正面”\r\n- “根据当前组件估算我的游戏成本”\r\n- “帮助我从头开始建立一个新的游戏项目——引导我完成它”\r\n- “棋盘游戏有哪些组件类型？”\r\n- “删除我的测试游戏项目”\r\n\r\n## 局限性\r\n\r\n- **费率限制** --服务器每秒向TGC强制执行3个请求（低于其每秒4个的限制），每个会话的预算为500次读取和200次写入。\r\n- **认证** --凭据可以传递为 `authenticate` 工具参数（远程使用所需）或通过环境变量（本地stdio）。OAuth 2.1支持计划在未来的版本中发布。\r\n- **文件上传** --每个文件最大50 MB。图像必须在50x50和10000x10000像素之间。支持的格式：PNG、JPG、GIF、BMP、TIFF、SVG、WebP、PDF。\r\n- **运输** --当地使用标准。远程HTTP可通过 [托管Apify端点](https://chillbot3000--tgc-mcp-server.apify.actor/mcp).\r\n- **只读目录** --组件目录和定价来自TGC，不能修改。\r\n\r\n## 贡献\r\n\r\n欢迎Bug报告和pull请求。请先打开一个问题，讨论您想更改的内容。\r\n\r\n要运行开发服务器，请执行以下操作：\r\n\r\n```bash\r\ncp .env.example .env    # fill in your credentials\r\nnpm run dev             # starts with tsx + hot reload\r\nnpm test                # run the test suite\r\n```\r\n\r\n## 许可证\r\n\r\n[MIT](LICENSE)\r\n",
+ "config": {
+  "thegamecrafter": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@alex-gon/tgc-mcp-server"
+   ],
+   "env": {
+    "TGC_API_KEY_ID": "your-api-key-id",
+    "TGC_USERNAME": "your-tgc-username",
+    "TGC_PASSWORD": "your-tgc-password"
+   }
+  }
+ }
+}

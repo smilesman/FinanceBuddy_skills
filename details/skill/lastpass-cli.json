@@ -1,0 +1,12 @@
+{
+ "id": "lastpass-cli",
+ "kind": "skill",
+ "name": "lastpass-cli",
+ "fingerprint_md5": "53a53adf5ef82861d92f2915cb20e9b4",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "# LastPass CLI Skill\r\n\r\n## 描述\r\n\r\n此技能使代理能够使用本地 `lpass` CLI从本地LastPass保险库检索凭据。它旨在将凭据获取到自动化流程中，而不是用于交互式保险库管理。\r\n\r\n## 工具\r\n\r\n- `lastpass_get_secret`: 使用本地 `lpass` CLI检索命名LastPass条目的特定字段（密码、用户名、备注）。\r\n\r\n## 何时使用\r\n\r\n- 当你需要存储在LastPass中的特定帐户的密码、用户名或备注时。\r\n- 在编排需要密钥的部署、API调用或登录时。\r\n\r\n## 工具: lastpass_get_secret\r\n\r\n### 调用\r\n\r\n使用JSON对象调用此工具：\r\n\r\n```json\r\n{\r\n  \"name\": \"Exact LastPass entry name\",\r\n  \"field\": \"password | username | notes | raw\"\r\n}\r\n```",
+ "config": {}
+}

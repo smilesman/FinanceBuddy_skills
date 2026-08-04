@@ -1,0 +1,21 @@
+{
+ "id": "1325",
+ "kind": "mcp",
+ "name": "agent-knowledge",
+ "fingerprint_md5": "0672e93e7d81b687fabf9ce93ab0e22a",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 代理知识MCP🔍\r\n\r\n**为AI助手提供全面的知识管理**\\\r\n带Elasticsearch搜索和文档管理的MCP服务器。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@itshare4u/AgentKnowledgeMCP\">\r\n  \r\n</a>\r\n\r\n[](https://python.org)\r\n[](https://modelcontextprotocol.io)\r\n[](LICENSE)\r\n\r\n## 🚀 特性\r\n\r\n**🔑 一体化解决方案：**\r\n\r\n- 🔍 **弹性搜索**：搜索、索引和管理文档\r\n- 📊 **文档验证**：架构强制结构\r\n- ⚙️ **配置**：完整的配置管理\r\n- 🛡️ **安全**：沙盒操作\r\n\r\n**✨ 优点：**\r\n\r\n- 🎯 **20工具** 知识管理\r\n- 🤖 **可与任何兼容MCP的AI配合使用** （克劳德、ChatGPT、VS Code等）\r\n- 📚 **智能文档管理** 通过验证\r\n- ⚡ **Elasticsearch集成** 用于强大的搜索\r\n\r\n## ⚡ 快速开始\r\n\r\n### 安装\r\n\r\n```bash\r\n# Install with uvx (recommended)\r\nuvx agent-knowledge-mcp\r\n```\r\n\r\n### Claude桌面设置\r\n\r\n增添 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agent-knowledge\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"agent-knowledge-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### VS代码设置\r\n\r\n[](https://insiders.vscode.dev/redirect/mcp/install?name=agent-knowledge&inputs=%5B%5D&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22agent-knowledge-mcp%22%5D%7D)\r\n\r\n## 🛠️ 你能做什么\r\n\r\n**用你的AI助手试试这些：**\r\n\r\n- *“在文档中搜索API身份验证信息”*\r\n- *“使用适当的标签对此文档进行索引”*\r\n- *“创建API文档模板”*\r\n- *“查找特定主题的相关文档”*\r\n- *“更新配置设置”*\r\n- *“验证文档结构”*\r\n\r\n## 🔧 工具概述\r\n\r\n**知识管理工具：**\r\n\r\n|类别|工具|描述|\r\n|----------|-------|-------------|\r\n| **🔍 弹性搜索** |9|搜索、索引、管理文档|\r\n| **⚙️ 行政** |11 |配置、安全、监控|\r\n\r\n## 🔒 安全与配置\r\n\r\n**企业级安全：**\r\n\r\n- ✅ **沙盒操作** -可配置的访问控制\r\n- ✅ **严格的模式验证** -强制执行文档结构\r\n- ✅ **审核跟踪** -完整操作日志记录\r\n- ✅ **无云依赖** -一切都在本地运行\r\n\r\n**配置示例：**\r\n\r\n```json\r\n{\r\n  \"security\": {\r\n    \"log_all_operations\": true\r\n  },\r\n  \"document_validation\": {\r\n    \"strict_schema_validation\": true,\r\n    \"allow_extra_fields\": false\r\n  }\r\n}\r\n```\r\n\r\n## 🤝 贡献与支持\r\n\r\n### 发展\r\n\r\n```bash\r\ngit clone https://github.com/itshare4u/AgentKnowledgeMCP.git\r\ncd AgentKnowledgeMCP\r\npip install -r requirements.txt\r\npython3 src/main_server.py\r\n```\r\n\r\n### 支持项目\r\n\r\n[](https://coff.ee/itshare4u)\r\n[](https://github.com/sponsors/itshare4u)\r\n\r\n______________________________________________________________________\r\n\r\n**将您的AI转化为强大的知识管理系统！ 🚀**\r\n\r\n*MIT License-面向AI助手的完整知识管理解决方案*\r\n",
+ "config": {
+  "agent-knowledge": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "agent-knowledge-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

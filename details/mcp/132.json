@@ -1,0 +1,18 @@
+{
+ "id": "132",
+ "kind": "mcp",
+ "name": "clinesweeper",
+ "fingerprint_md5": "7affb7af4ba7912327a8faf13fd8a438",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP诊所\r\n\r\n扫雷游戏服务器，允许您的Claude AI通过模型上下文协议（MCP）玩扫雷游戏。\r\n\r\n## 目的\r\n\r\n这个项目允许克劳德（或其他兼容MCP的AI助手）玩扫雷游戏。AI通过MCP界面进行移动，您可以在web前端实时查看游戏进度。\r\n\r\n## 运行服务器\r\n\r\n### 先决条件\r\n\r\n- 已安装Docker或Podman\r\n- 端口3100可用\r\n\r\n### 快速开始\r\n\r\n1. 构建并运行容器：\r\n\r\n   ```bash\r\n   ./deploy.sh\r\n   ```\r\n\r\n1. 服务器将在以下时间可用 `http://localhost:3100`\r\n\r\n这 `deploy.sh` 脚本会自动检测您是否安装了Docker或Podman，并使用相应的工具。\r\n\r\n## MCP配置\r\n\r\n要将Claude连接到Clinesweeper，您需要在Claude客户端中配置MCP服务器。\r\n\r\n### 对于光标\r\n\r\n编辑 `~/.cursor/mcp.json` 并添加：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"clinesweeper\": {\r\n      \"url\": \"http://localhost:3100/mcp\",\r\n      \"transport\": {\r\n        \"type\": \"streamable-http\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 适用于克劳德桌面\r\n\r\n**macOS：** 编辑 `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n**窗户：** 编辑 `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n添加与上述相同的配置。\r\n\r\n更新配置后，重新启动Claude客户端以连接到MCP服务器。\r\n\r\n## 运作原理\r\n\r\n- **后端**：Rails API服务器，实现扫雷游戏逻辑并通过MCP（JSON-RPC 2.0）公开该逻辑\r\n- **前端**：通过WebSockets显示当前游戏状态的实时web界面\r\n- **游戏玩法**：AI助手（Claude）通过MCP工具调用进行移动来玩游戏。前端是 **只读的** 只显示当前状态——你看，克劳德玩！\r\n\r\n随着人工智能的移动，前端会实时更新，因此您可以随着游戏的进展而跟随游戏。\r\n\r\n## 屏幕截图和演示\r\n\r\n- \r\n- 观看游戏演示 [Google 云端硬盘](https://drive.google.com/file/d/1T5Iul8kFiZzjgEhs-XKUMAr4rkudE8EQ/view?usp=sharing).\r\n",
+ "config": {
+  "clinesweeper": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:3100/mcp"
+  }
+ }
+}

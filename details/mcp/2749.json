@@ -1,0 +1,24 @@
+{
+ "id": "2749",
+ "kind": "mcp",
+ "name": "toolradar",
+ "fingerprint_md5": "e4939d1d042020941e246b3e384edbe7",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Toolradar MCP服务器\r\n\r\n> 让你的AI代理访问8400多种软件工具——搜索、比较、获取定价、寻找替代品，并为任何用例发现最佳工具。\r\n\r\n**一个MCP服务器，帮助人工智能助手推荐具有真实、经过验证的数据而不是幻觉答案的软件工具。**\r\n\r\nLLM自信地引用过时的定价，错过新工具，并生成没有真实数据的比较表。此MCP服务器将您的代理连接到Toolradar的实时数据库：每周验证定价、G2/Capterra评级、编辑评分和每天添加的新工具。\r\n\r\n适用于 **克劳德桌面** · **克劳德代码** · **光标** · **帆板运动** · **克莱恩** ·任何MCP客户端\r\n\r\n## 你的AI能用它做什么？\r\n\r\n问你的AI助手一些事情，比如：\r\n\r\n- “找到最好的免费项目管理工具”\r\n- 比较Notion、Clickup和Asana\r\n- “Jira的替代品是什么？”\r\n- “菲格玛要多少钱？”\r\n- “为每月50美元以下的5人创业公司推荐CRM”\r\n- “向我展示带有免费层的AI写作工具”\r\n\r\n您的代理在幕后调用Toolradar的工具，并返回结构化、准确的答案。\r\n\r\n## 快速设置\r\n\r\n### 克劳德桌面\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"toolradar\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"toolradar-mcp\"],\r\n      \"env\": {\r\n        \"TOOLRADAR_API_KEY\": \"your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add toolradar -- npx -y toolradar-mcp\r\n```\r\n\r\n### 光标\r\n\r\n在光标设置>MCP中，添加新服务器：\r\n\r\n```\r\nName: toolradar\r\nCommand: npx -y toolradar-mcp\r\nEnvironment: TOOLRADAR_API_KEY=your_key_here\r\n```\r\n\r\n### Windsurf/Cline/其他MCP客户\r\n\r\n```bash\r\nTOOLRADAR_API_KEY=your_key npx -y toolradar-mcp\r\n```\r\n\r\n## 获取API密钥\r\n\r\n登录并生成免费密钥（每天100个电话），网址为 **[toolradar.com/dashboard/api-keys](https://toolradar.com/dashboard/api-keys)**.\r\n\r\n## 6个MCP工具\r\n\r\n|工具|它的作用|示例提示|\r\n|------|-------------|----------------|\r\n| `search_tools` |按关键字、类别、定价模式搜索|“查找免费项目管理工具”|\r\n| `get_tool` |完整细节：定价、优缺点、功能、分数|“告诉我线性”|\r\n| `compare_tools` |2-4个工具的并排比较|“比较Notion、Clickup和Asana”|\r\n| `get_alternatives` |找到任何工具的真正竞争对手|“Jira的替代品是什么？”|\r\n| `get_pricing` |所有级别和功能的详细定价|“Figma的价格是多少？”|\r\n| `list_categories` |浏览所有软件类别|“有哪些类别可用？”|\r\n\r\n## 你得到了什么数据？\r\n\r\n数据库中的每个工具都包括：\r\n\r\n- **编辑评分** （0-100）——由Toolradar团队手动评分\r\n- **已验证定价** --每周检查层级、计划和价格\r\n- **G2和Capterra评级** --从主要审查平台汇总\r\n- **利弊** --基于真实用户数据\r\n- **太长，读不下去了** --该工具功能的3个小册子摘要\r\n- **功能列表** --结构化的、非自由形式的文本\r\n- **人工智能确定了替代方案** --真正的竞争对手，而不仅仅是“同类”\r\n- **资金数据** --通过Signalbase进行的最新一轮融资和收购\r\n\r\n## 为什么不直接问法学硕士？\r\n\r\n|问题|没有Toolradar |有Toolradar|\r\n|---------|-------------------|----------------|\r\n|定价|根据2023年的培训数据得出|本周已验证|\r\n|新工具|错过了去年推出的任何东西|每天更新（Product Hunt、HN、Techpresso）|\r\n|比较|没有真实数据的通用表格|按分数、定价、优缺点结构化|\r\n|替代方案|“同类”猜测|人工智能识别出的直接竞争对手|\r\n|评级|无或捏造|真实G2/Capterra/Trustpilot聚合|\r\n\r\n## 奖金： `/recommend-tool` 克劳德代码技能\r\n\r\n将Toolradar转化为结构化推荐引擎的现成技能：\r\n\r\n```bash\r\n# Install the skill\r\nclaude skill add --url https://raw.githubusercontent.com/Nadeus/toolradar-mcp/main/skill-recommend-tool.md\r\n\r\n# Use it\r\n/recommend-tool \"best free CRM for a 5-person startup\"\r\n```\r\n\r\n它搜索、比较前三名，并给出一个格式化的推荐，包括首选+亚军+预算选择。\r\n\r\n## REST API\r\n\r\nMCP服务器是我们的REST API上的瘦客户端。直接从任何语言调用它：\r\n\r\n```bash\r\ncurl -H \"Authorization: Bearer tr_live_your_key\" \\\r\n  \"https://toolradar.com/api/v1/search?q=project+management&limit=5\"\r\n```\r\n\r\n完整文档： **[toolradar.com/docs](https://toolradar.com/docs)**\r\n\r\n## 环境变量\r\n\r\n|变量|必填|默认|描述|\r\n|----------|----------|---------|-------------|\r\n| `TOOLRADAR_API_KEY` |是|-|您的API密钥([免费获得一个](https://toolradar.com/dashboard/api-keys)) |\r\n| `TOOLRADAR_API_URL` |没有| `https://toolradar.com/api/v1` |自定义API终结点|\r\n\r\n## 速率限制\r\n\r\n免费等级： **每天100个API调用**。在UTC午夜重置。需要更多吗？ [联系我们](https://toolradar.com/contact).\r\n\r\n## 链接\r\n\r\n- [toolradar.com/for-agents](https://toolradar.com/for-agents) --登录页面\r\n- [toolradar.com/docs](https://toolradar.com/docs) -API文件\r\n- [toolradar.com/dashboard/api-keys](https://toolradar.com/dashboard/api-keys) -获取API密钥\r\n- [npmjs.com/package/toolradar-mcp](https://www.npmjs.com/package/toolradar-mcp) --npm包\r\n\r\n## 关键词\r\n\r\nMCP服务器、软件工具、SaaS比较、工具推荐、AI代理、Claude MCP、Cursor MCP、软件发现、查找最佳工具、比较工具、定价查找、G2评级、Capterra评级、软件替代方案、开发人员工具、产品比较、工具查找器、软件推荐引擎\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "toolradar": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "toolradar-mcp"
+   ],
+   "env": {
+    "TOOLRADAR_API_KEY": "your_key_here"
+   }
+  }
+ }
+}

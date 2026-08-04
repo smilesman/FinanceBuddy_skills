@@ -1,0 +1,24 @@
+{
+ "id": "1843",
+ "kind": "mcp",
+ "name": "bamm",
+ "fingerprint_md5": "7de865db5e792cbc5cce8ea39d1b5216",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# BAMM MCP服务器\r\n\r\n\r\n## 概述\r\n\r\nBAMM MCP服务器使AI代理能够与Fraxtal区块链上的Borrow Automated Market Maker（BAMM）合约进行交互。此服务器提供对BAMM头寸、借贷和抵押品管理操作的全面访问。\r\n\r\n通过实现模型上下文协议（MCP），该服务器允许大型语言模型（LLM）管理BAMM位置，借用LP令牌，并直接通过其上下文窗口执行与BAMM协议相关的其他操作。\r\n\r\n## 特性\r\n\r\n- **职位管理**：查看和管理您在所有池中的活动BAMM头寸。\r\n- **贷款业务**：将Fraxswap LP代币借给BAMM合约以赚取收益。\r\n- **借用**：从BAMM头寸中借用代币作为抵押品。\r\n- **抵押品管理**：添加或删除BAMM头寸中的抵押品。\r\n- **池分析**：所有BAMM池的访问统计信息。\r\n\r\n## 安装\r\n\r\n### 使用npx（推荐）\r\n\r\n要使用此服务器而不全局安装，请执行以下操作：\r\n\r\n```bash\r\nnpx @iqai/mcp-bamm\r\n```\r\n\r\n### 从源代码构建\r\n\r\n```bash\r\ngit clone https://github.com/IQAIcom/mcp-bamm.git\r\ncd mcp-bamm\r\npnpm install\r\npnpm run build\r\n```\r\n\r\n## 使用MCP客户端运行\r\n\r\n将以下配置添加到MCP客户端设置中（例如。， `claude_desktop_config.json`).\r\n\r\n### 最小配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bamm\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@iqai/mcp-bamm\"],\r\n      \"env\": {\r\n        \"WALLET_PRIVATE_KEY\": \"your_wallet_private_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 高级配置（本地构建）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bamm\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/absolute/path/to/mcp-bamm/dist/index.js\"],\r\n      \"env\": {\r\n        \"WALLET_PRIVATE_KEY\": \"your_wallet_private_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 配置（环境变量）\r\n\r\n|变量|必填|描述|默认值|\r\n| :--- | :--- | :--- | :--- |\r\n| `WALLET_PRIVATE_KEY` |是|用于签署交易的钱包私钥|-|\r\n\r\n**安全说明：** 小心处理您的私钥。确保其安全存储，并且仅提供给受信任的MCP客户端配置。\r\n\r\n## 用法示例\r\n\r\n### 职位管理\r\n\r\n- “我目前的BAMM职位是什么？”\r\n- “显示所有BAMM池的统计数据。”\r\n\r\n### 借贷\r\n\r\n- “将100个LP令牌借给地址0x处的BAMM…”\r\n- “从我的BAMM头寸中借50 FRAX。”\r\n- “向我的BAMM头寸偿还25 FRAX。”\r\n\r\n### 抵押品操作\r\n\r\n- “将100 FRAX作为抵押品添加到我的BAMM头寸中。”\r\n- “从我的头寸中删除50美元的抵押品。”\r\n- “从BAMM中提取我的LP代币。”\r\n\r\n## MCP工具\r\n\r\n\r\n### `ADD_COLLATERAL`\r\n\r\n为您的BAMM头寸添加抵押品\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `bammAddress` |string | Yes | BAMM合约的地址|\r\n| `amount` |string |是|要添加的抵押品金额|\r\n| `collateralToken` |string ||抵押令牌的地址|\r\n| `collateralTokenSymbol` |string ||抵押品令牌的符号（例如“IQT”）|\r\n\r\n### `BORROW`\r\n\r\n从BAMM头寸借用代币\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `bammAddress` |string | Yes | BAMM合约的地址|\r\n| `amount` |string |是|借款金额|\r\n| `borrowToken` |string ||借用令牌的地址|\r\n| `borrowTokenSymbol` |string ||借用令牌的符号（例如“IQT”）|\r\n\r\n### `LEND`\r\n\r\n将Fraxswap LP代币借给BAMM合约\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `bammAddress` |string | Yes | BAMM合约的地址|\r\n| `amount` |string | Yes |要借出的LP代币数量|\r\n\r\n### `REMOVE_COLLATERAL`\r\n\r\n从您的BAMM头寸中删除抵押品\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `bammAddress` |string | Yes | BAMM合约的地址|\r\n| `amount` |string |是|要移除的抵押品金额|\r\n| `collateralToken` |string ||抵押令牌的地址|\r\n| `collateralTokenSymbol` |string ||抵押品令牌的符号（例如“IQT”）|\r\n\r\n### `REPAY`\r\n\r\n将借来的代币偿还到BAMM头寸\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `bammAddress` |string | Yes | BAMM合约的地址|\r\n| `amount` |string |是|要偿还的金额|\r\n| `borrowToken` |string ||要偿还的令牌的地址|\r\n| `borrowTokenSymbol` |string ||要偿还的令牌的符号（例如“IQT”）|\r\n\r\n### `WITHDRAW`\r\n\r\n通过兑换BAMM代币从BAMM合约中提取LP代币\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `bammAddress` |string | Yes | BAMM合约的地址|\r\n| `amount` |string | Yes |要提取的BAMM代币数量|\r\n\r\n\r\n## 发展\r\n\r\n### 建设项目\r\n\r\n```bash\r\npnpm run build\r\n```\r\n\r\n### 开发模式（观看）\r\n\r\n```bash\r\npnpm run watch\r\n```\r\n\r\n### 装订和格式化\r\n\r\n```bash\r\npnpm run lint\r\npnpm run format\r\n```\r\n\r\n### 项目结构\r\n\r\n- `src/tools/`：单个工具定义\r\n- `src/services/`：API客户端和业务逻辑\r\n- `src/lib/`：共享公用设施\r\n- `src/index.ts`：服务器入口点\r\n\r\n## 资源\r\n\r\n- [BAMM文件](https://docs.frax.finance/frax-lending/bamm)\r\n- [模型上下文协议（MCP）](https://modelcontextprotocol.io)\r\n- [Fraxtal网络](https://frax.finance)\r\n\r\n## 免责声明\r\n\r\n该项目与区块链智能合约交互，并处理加密货币交易。用户应谨慎行事，独立验证所有数据，并了解DeFi操作中涉及的风险。\r\n\r\n## 许可证\r\n\r\n[MIT](LICENSE)\r\n",
+ "config": {
+  "bamm": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@iqai/mcp-bamm"
+   ],
+   "env": {
+    "WALLET_PRIVATE_KEY": "your_wallet_private_key_here"
+   }
+  }
+ }
+}

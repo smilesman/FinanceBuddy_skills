@@ -1,0 +1,24 @@
+{
+ "id": "1586",
+ "kind": "mcp",
+ "name": "mcp-sequentialthinking-tools",
+ "fingerprint_md5": "829a511102accc1d5c4323f609ab9c4d",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp顺序思维工具\r\n\r\n[](https://viteplus.dev)\r\n[](https://vitest.dev)\r\n\r\n用于记录顺序推理步骤的轻量级MCP服务器。它\r\n是一个包含历史、分支、修订元数据和\r\n对模型编写的工具计划进行可选验证。\r\n\r\n确实如此 **不** 发现您的其他MCP工具，确实如此 **不**\r\n为模型选择工具。如果你通过 `available_tools` 和\r\n`recommended_tools`，服务器验证推荐的名称\r\n存在并存储该步骤。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/zl990kfusy\">\r\n  \r\n</a>\r\n\r\n## 为什么要使用它？\r\n\r\n当任务受益于明确的、可检查的推理时，使用此方法：\r\n\r\n- 把一个棘手的问题分解成步骤；\r\n- 修改或分支计划；\r\n- 按会话记录一个小的推理历史；\r\n- 根据提供的工具列表验证工具计划名称；\r\n- 在长代理运行期间清除或检查推理历史。\r\n\r\n不要将其用于琐碎的请求。这增加了开销。\r\n\r\n## 工具\r\n\r\n### `sequentialthinking_tools`\r\n\r\n记录了一个想法。\r\n\r\n所需参数：\r\n\r\n- `thought` --当前推理步骤\r\n- `thought_number` --当前步骤编号\r\n- `total_thoughts` --当前估计；如果更低，则自动升高\r\n  比 `thought_number`\r\n- `next_thought_needed` --是否需要另一种思考\r\n\r\n可选参数：\r\n\r\n- `session_id` --历史桶；默认为 `default`\r\n- `is_revision`, `revises_thought`\r\n- `branch_from_thought`, `branch_id`\r\n- `needs_more_thoughts`\r\n- `available_tools` --工具名称数组或 `{ name, description }`\r\n  物体\r\n- `recommended_tools` --模型撰写的建议\r\n  验证/存储\r\n- `remaining_steps` --即将采取的步骤的简短列表\r\n\r\n例子：\r\n\r\n```json\r\n{\r\n\t\"session_id\": \"svelte-debug\",\r\n\t\"thought\": \"First inspect the route files, then run the failing check.\",\r\n\t\"thought_number\": 1,\r\n\t\"total_thoughts\": 3,\r\n\t\"next_thought_needed\": true,\r\n\t\"available_tools\": [\"read\", \"bash\"],\r\n\t\"recommended_tools\": [\r\n\t\t{\r\n\t\t\t\"tool_name\": \"read\",\r\n\t\t\t\"confidence\": 0.9,\r\n\t\t\t\"rationale\": \"Need to inspect the relevant files before editing.\",\r\n\t\t\t\"priority\": 1\r\n\t\t}\r\n\t]\r\n}\r\n```\r\n\r\n如果 `recommended_tools` 包含一个不存在的名称\r\n`available_tools`，呼叫返回 `isError: true` 并且不存储\r\n思想。\r\n\r\n## 安全态势\r\n\r\n服务器处理思想文本、工具描述、理由和\r\n剩余的步骤文本为不受信任的输入。像文本一样的提示注入\r\n在存储或返回历史记录之前进行扫描和编辑。呼叫\r\n修订内容包括 `security_warnings` 显示哪些字段\r\n匹配。\r\n\r\n这是防御性过滤，不能保证任意\r\n对抗性文本是安全的。不要把秘密放在思想或工具中\r\n描述。\r\n\r\n### `get_thinking_history`\r\n\r\n返回会话的存储想法。\r\n\r\n参数：\r\n\r\n- `session_id` --默认为 `default`\r\n- `branch_id` --可选分支过滤器\r\n- `limit` --返回的最大记录数；默认 `50`，最大值 `500`\r\n\r\n### `clear_thinking_history`\r\n\r\n清除一个会话或每个会话。\r\n\r\n参数：\r\n\r\n- `session_id` --默认为 `default`\r\n- `all_sessions` --清除所有历史记录桶\r\n\r\n## 提示\r\n\r\n### `sequential-thinking-guidance`\r\n\r\n告诉模型如何诚实地使用此服务器的简短提示：\r\n作为草稿和验证器，而不是作为外部推理引擎。\r\n\r\n## 配置\r\n\r\n### 克劳德桌面/兼容MCP客户端\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"mcp-sequentialthinking-tools\": {\r\n\t\t\t\"command\": \"npx\",\r\n\t\t\t\"args\": [\"-y\", \"mcp-sequentialthinking-tools\"],\r\n\t\t\t\"env\": {\r\n\t\t\t\t\"MAX_HISTORY_SIZE\": \"1000\"\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\n`MAX_HISTORY_SIZE` 为每次会话，默认为 `1000`.\r\n\r\n服务器使用 `tmcp` 并包括一个小型stdio传输\r\n接受这两种标准 `Content-Length` 帧化MCP消息和\r\n旧版本使用的换行符分隔的JSON `tmcp` 工具。\r\n\r\n## 发展\r\n\r\n```bash\r\npnpm install\r\npnpm test\r\npnpm build\r\npnpm check\r\n```\r\n\r\n此项目使用 `vite-plus` 用于构建、测试、格式化和lint\r\n编排。\r\n\r\n## 出版\r\n\r\n```bash\r\npnpm changeset\r\npnpm changeset version\r\npnpm release\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证——见 [许可证](LICENSE).\r\n\r\n## 致谢\r\n\r\n- 建立在\r\n  [模型上下文协议](https://github.com/modelcontextprotocol)\r\n- 改编自\r\n  [MCP顺序思维服务器](https://github.com/modelcontextprotocol/servers/blob/main/src/sequentialthinking/index.ts)\r\n",
+ "config": {
+  "mcp-sequentialthinking-tools": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-sequentialthinking-tools"
+   ],
+   "env": {
+    "MAX_HISTORY_SIZE": "1000"
+   }
+  }
+ }
+}

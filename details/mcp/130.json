@@ -1,0 +1,24 @@
+{
+ "id": "130",
+ "kind": "mcp",
+ "name": "clash-of-clans",
+ "fingerprint_md5": "21c8f40b4dbab3554c99afa802307aee",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://mseep.ai/app/saunved-mcp-server-clash-of-clans)\r\n\r\n部落冲突MCP服务器！\r\n\r\n对于Claude Desktop的使用，您可以更新 `claude_desktop_config.json` 注册此服务器的文件。\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"Clash of Clans\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\r\n                \"-y\",\r\n                \"mcp-server-clash-of-clans\"\r\n            ],\r\n            \"env\": {\r\n                \"CLASH_API_KEY\": \"<your-api-key>\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n# 可用工具\r\n\r\n## 获取玩家\r\n\r\n获取给定玩家标签的信息并对其进行汇总。\r\n\r\n## 获取氏族\r\n\r\n获取特定氏族的信息并对其进行总结。\r\n\r\n## 部落战争联盟信息\r\n\r\n获取有关最近CWL轮次的信息。\r\n\r\n## 氏族战争联盟战争\r\n\r\n根据回合获取有关特定CWL战争的信息。\r\n\r\n## 获取当前战争\r\n\r\n获取氏族的当前战争信息（前提是该信息是公开的）。\r\n\r\n## 获取战争日志\r\n\r\n获取部落的战争日志（前提是它是公开的）。\r\n\r\n## 获得资本突袭\r\n\r\n获取有关氏族首都突袭的信息。\r\n\r\n# 可用提示\r\n\r\n## 分析当前战争\r\n\r\n分析当前的战争。提供统计数据、表现最佳者和潜在战略变化的概述。\r\n\r\n## 分析战争日志\r\n\r\n分析一个部落的战争日志，并总结其整体表现。\r\n\r\n## cwl战争分析\r\n\r\n分析了一场特定的CWL战争，并总结了该家族在这场战争中的整体表现。\r\n\r\n## 分析玩家\r\n\r\n分析玩家的统计数据，并提出改进的空间。\r\n\r\n## 分析宗族\r\n\r\n分析一个给定的氏族，并根据成员、他们的TH等级、战争记录等对其进行评估。\r\n\r\n## 分析资本突袭\r\n\r\n分析一个氏族最近几次的资本突袭（默认为3次）。\r\n",
+ "config": {
+  "clash-of-clans": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-server-clash-of-clans"
+   ],
+   "env": {
+    "CLASH_API_KEY": "<your-api-key>"
+   }
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "166",
+ "kind": "mcp",
+ "name": "cowsay-mcp",
+ "fingerprint_md5": "beb5e3892967fbbfddbdceb334e495af",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# cowsay-mcp（可译为“牛说-MCP”，但具体翻译可能需根据上下文调整，MCP在此处可能是一个特定名称或缩写）\r\n\r\n[](https://smithery.ai/server/@mrseanchow/cowsay-mcp) [](https://github.com/mrseanchow/cowsay-mcp/stargazers) [](https://github.com/mrseanchow/cowsay-mcp/blob/main/LICENSE) [](https://github.com/mrseanchow/cowsay-mcp/issues/new)\r\n\r\nCowsay MCP 服务器，为大型语言模型（LLMs）提供ASCII艺术牛的功能。此实现允许语言模型生成带有自定义信息的趣味ASCII艺术牛。\r\n\r\n## 🛠️ 工具\r\n\r\n- `cowsay`生成ASCII艺术图，图中有一头奶牛说出你的信息\r\n- `cowthink`生成ASCII艺术，展示一头牛在思考你的信息\r\n- `list_cows`列出所有可用的牛角色\r\n\r\n## 📦 安装\r\n\r\n### 通过Smithery进行安装\r\n\r\n通过（某种方式）自动为 Claude Desktop 安装 cowsay-mcp [“Smithery”可以翻译为“铁匠铺”或“锻造工坊”。这个词汇来源于“smith”，意指从事金属加工或锻造工作的工匠或其工作场所](https://smithery.ai/server/@mrseanchow/cowsay-mcp)：\r\n\r\n```bash\r\nnpx -y @smithery/cli install @mrseanchow/cowsay-mcp --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n```shell\r\nnpm install -g cowsay-mcp\r\n```\r\n\r\n### 使用 npx\r\n\r\n```shell\r\nnpx -y cowsay-mcp\r\n```\r\n\r\n## 🚀 在Cursor上运行\r\n\r\n把这个加到你的（清单/计划/想法等）里 `mcp.json` 文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cowsay-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"cowsay-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🌊 风帆冲浪中\r\n\r\n把这个加到你的（列表/计划/等）里 `./codeium/windsurf/model_config.json` 文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cowsay-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"cowsay-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🎨 可用的牛形角色\r\n\r\n服务器提供了多种多样的牛角色，包括但不限于：\r\n\r\n- `default`经典的奶牛\r\n- `small`默认奶牛的缩小版\r\n- `tux`一个企鹅角色\r\n- `moose`一个麋鹿角色\r\n- `sheep`一个羊的角色\r\n- `dragon`一个龙形角色\r\n- `elephant`一个大象角色\r\n- `skeleton`一个骷髅角色\r\n- `stimpy`一个史提普（Stimpy）角色\r\n\r\n还有更多！使用 `list_cows` 查看所有可用字符的工具。\r\n\r\n## 📝 示例用法\r\n\r\n### cowsay 工具\r\n\r\n```json\r\n{\r\n  \"name\": \"cowsay\",\r\n  \"parameters\": {\r\n    \"message\": \"Hello from LLM!\",\r\n    \"cow\": \"tux\"\r\n  }\r\n}\r\n```\r\n\r\n### “cowthink Tool”可以翻译为“牛思考工具”或根据具体语境稍作调整，但直接翻译可能不太符合中文表达习惯，因为“cowthink”并不是一个常见的英文词汇组合。如果这是一个虚构的或特定领域的工具名称，建议根据其实际功能或用途来翻译，以确保准确传达其含义。例如，如果它是一个用于农业数据分析的工具，可以翻译为“农业数据分析牛思考工具”或简化为“农业数据牛思考工具”。不过，在没有具体上下文的情况下，“牛思考工具”是一个较为通用的翻译\r\n\r\n```json\r\n{\r\n  \"name\": \"cowthink\",\r\n  \"parameters\": {\r\n    \"message\": \"What should I say next?\",\r\n    \"cow\": \"moose\"\r\n  }\r\n}\r\n```\r\n\r\n### list_cows 工具\r\n\r\n```json\r\n{\r\n  \"name\": \"list_cows\",\r\n  \"parameters\": {}\r\n}\r\n```\r\n\r\n## 📄 许可证\r\n\r\nMIT 许可证 - 详见 [许可证](./LICENSE) 文件中有详细信息。\r\n",
+ "config": {
+  "cowsay-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "cowsay-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

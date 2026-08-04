@@ -1,0 +1,29 @@
+{
+ "id": "1303",
+ "kind": "mcp",
+ "name": "vanna-ai",
+ "fingerprint_md5": "da2af2c3dfb752af8b167a9c58881fa5",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# Vanna AI MCP服务器\r\n\r\n**目的：**\\\r\n一种模型上下文协议（MCP）服务器，使用Vanna AI为SQL数据库提供自然语言接口。它允许AI助手（如Claude或Gemini）基于简单的英语问题生成和执行SQL查询。\r\n\r\n**为什么存在：**\\\r\n实现无缝的自然语言数据探索。通过将LLM与您的私有SQL数据库桥接（通过SSH隧道），此服务器允许您在不手动编写SQL的情况下“与您的数据聊天”，同时确保您的数据库凭据在远程服务器（如DGX）上的安全。\r\n\r\n### 💰 自由的本地选择\r\n\r\n该项目被设计为 **完全免费、本地、开源的替代方案** 到昂贵的企业数据平台（与中的AI到SQL功能相当 **数据砖块** 或 **雪花**).\r\n\r\n- **成本：** 0美元（不收取每代币费用或每月订阅费）。\r\n- **隐私：** 您的数据保留在您的基础设施中。\r\n- **演出** 当它在任何东西上运行时，结果都会随着你的硬件而变化。越多 **GPU马力** （例如，NVIDIA A100/H100或Apple M系列芯片），您提供的数据洞察力越快、越准确。\r\n\r\n## 特性\r\n\r\n- **SQL的自然语言：** 将用户问题转换为可执行的SQL查询。\r\n- **SSH隧道：** 从任何环境安全连接到远程数据库（例如DGX上的MySQL）。\r\n- **多个LLM提供商：** 支持Ollama（本地）、LM Studio（本地），Claude（Anthropic）、Gemini（谷歌）和ChatGPT（OpenAI）。\r\n- **矢量存储培训：** 使用ChromaDB记住数据库模式和常见查询，以提高准确性。\r\n- **苏格兰和南方能源公司运输：** 专为使用服务器发送事件的高性能容器化部署而构建。\r\n\r\n> \\[！警告\\]\r\n> **Olama业绩说明：** 与当地Ollama一起跑步(`LLM_TYPE=ollama`)可以是 **缓慢且可能不可靠** 这取决于你的硬件。如果您遇到超时或不一致的SQL生成，请考虑使用Gemini或OpenAI等云提供商进行生产使用。\r\n\r\n## 设置\r\n\r\n### 1.先决条件\r\n\r\n- Python 3.11+\r\n- 正在运行的SQL数据库（或SSH访问数据库）。\r\n- **本地AI：** [下载Ollama](https://ollama.com/download) 用于局部推理。\r\n\r\n### 🍎 Mac用户？\r\n\r\n跟随 **[Mac和本地Ollama安装指南（50步）](MAC_SETUP_GUIDE.md)** 了解从零到正在运行的服务器的详细演练。\r\n\r\n### 2.安装\r\n\r\n```bash\r\ngit clone https://github.com/lilgreml1n/vanna-mcp\r\ncd vanna-mcp\r\nuv pip install -e .\r\n```\r\n\r\n### 3.配置\r\n\r\n创建一个 `.env` 根目录中的文件：\r\n\r\n```ini\r\n# --- LLM CONFIG ---\r\nLLM_TYPE=ollama  # choices: ollama, lmstudio, claude, gemini, openai\r\n\r\n# OLLAMA CONFIG\r\nOLLAMA_MODEL=codellama\r\n\r\n# CLAUDE CONFIG\r\n# ANTHROPIC_API_KEY=your_key_here\r\n# CLAUDE_MODEL=claude-3-5-sonnet-20241022\r\n\r\n# GEMINI CONFIG\r\n# GEMINI_API_KEY=your_key_here\r\n# GEMINI_MODEL=gemini-1.5-flash\r\n\r\n# OPENAI CONFIG\r\n# OPENAI_API_KEY=your_key_here\r\n# OPENAI_MODEL=gpt-4o\r\n```\r\n\r\n## 提供的工具\r\n\r\n- `ask_database`：将问题转换为SQL，并可选择执行它。\r\n- `train_vanna`：提供DDL或示例SQL来“教导”您的模式模型。\r\n- `get_tables`：列出所有可用表。\r\n- `get_schema`：获取特定表的列详细信息。\r\n- `execute_sql`：运行手动SQL进行验证。\r\n\r\n## 🧪 快速开始使用示例数据\r\n\r\n如果您还没有准备好数据库，可以设置一个示例库存数据库进行测试：\r\n\r\n1. **创建示例数据库：**\r\n   在MySQL环境中运行附带的安装脚本：\r\n   ```bash\r\n   mysql -u root -p < setup_test_db.sql\r\n   ```\r\n   这创建了一个 `inventory_db` 带着一个 `inventory` 表格和20个样品。\r\n\r\n### 📋 样本数据中有什么？\r\n\r\n该脚本预加载了各种项目，因此您可以立即进行测试：\r\n\r\n- **耐克** B-12行李箱中的Air Max 90（男式10.5，黑/白）。\r\n- **巴塔哥尼亚** A-10箱子里有更好的毛衣（中性款L）。\r\n- **阿迪达斯** Ultraboost 21（女子8号）在B-05垃圾箱。\r\n- **李维斯牛仔裤** C-22箱子里有501条原装牛仔裤（32x34）。\r\n- …以及来自不同品牌的16件更逼真的物品！\r\n\r\n2. **配置 `.env`:**\r\n   指出你的 `.env` 到这个新数据库：\r\n   ```ini\r\n   MYSQL_DATABASE=inventory_db\r\n   # ... rest of your MySQL credentials ...\r\n   ```\r\n\r\n## 💻 硬件测试和验证\r\n\r\n该项目已在两个主要环境中经过严格测试，以确保从本地开发到生产级AI计算的可扩展性。\r\n\r\n### 1.高性能AI服务器（DGX级）\r\n\r\n- **CPU：** 20核高性能处理器（Cortex-X925/A725架构）\r\n- **猛撞：** 128GB LPDDR5x\r\n- **储存：** 4TB NVMe Gen4固态硬盘\r\n- **用途：** Vanna AI、MySQL数据库和大型矢量存储的主要主机。以亚秒级的响应时间运行多个并发LLM流（Ollama/Docker）。\r\n\r\n### 2.本地开发（MacBook Air）\r\n\r\n- **型号：** MacBook Air（M1/M2/M3硅）\r\n- **猛撞：** 16GB统一内存（建议本地Ollama使用最低容量）\r\n- **用途：** 用于客户端MCP代理和小型LLM模型（Llama3-8B）的本地测试。\r\n- **注：** 由于集成了GPU/NPU加速，Apple Silicon的性能非常出色。\r\n\r\n## 🚀 零到人工智能设置（适用于人工智能代理）\r\n\r\n**我们的目标：** 您应该能够将任何AI（Claude、Gemini或Copilot）指向此自述文件，并在几分钟内运行。\r\n\r\n### 1.适用于克劳德台式机（Mac）\r\n\r\n将此添加到您的 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"vanna-ai\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"--network=host\", \"-v\", \"vanna_chroma_data:/app/chroma_data\", \"--env-file\", \"/path/to/your/vanna-mcp/.env\", \"vanna-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 2.适用于Gemini CLI（本地）\r\n\r\n在你的 `gemini-cli-mcp` 项目，更新 `main_mcp.py` 指向此服务器：\r\n\r\n```python\r\nMCP_SERVERS = {\r\n    \"vanna-ai\": {\r\n        \"command\": \"docker\",\r\n        \"args\": [\"run\", \"-i\", \"--rm\", \"--network=host\", \"vanna-mcp-server\"]\r\n    }\r\n}\r\n```\r\n\r\n### 3.GitHub副本/VS代码\r\n\r\n1. 安装 **MCP扩展** 在VS代码中。\r\n1. 使用以下命令添加Vanna MCP服务器： `docker run -i --rm --network=host vanna-mcp-server`.\r\n1. 你现在可以问Copilot： `@mcp /ask_database \"Show me all items in bin B-12\"`\r\n\r\n## 💡 测试你的AI\r\n\r\n连接后，尝试以下提示：\r\n\r\n- “我们总共有多少件耐克商品？”\r\n- “我们最近卖的最贵的东西是什么？”（使用join-on `ebay_orders`)\r\n- “列出所有未售出的阿迪达斯商品。”\r\n\r\n## 与SparkForge集成\r\n\r\n此服务器通常部署在DGX或高性能服务器上，作为 [SparkForge](https://github.com/lilgreml1n/sparkforge) 生态系统。它充当其他MCP代理的“大脑”，如 `inventory-mcp`.\r\n",
+ "config": {
+  "vanna-ai": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "--network=host",
+    "-v",
+    "vanna_chroma_data:/app/chroma_data",
+    "--env-file",
+    "/path/to/your/vanna-mcp/.env",
+    "vanna-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

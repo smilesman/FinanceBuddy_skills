@@ -1,0 +1,21 @@
+{
+ "id": "1282",
+ "kind": "mcp",
+ "name": "sqlite-3",
+ "fingerprint_md5": "6ac99131656148925f20b3652807cc94",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp服务器sqlite\r\n\r\n\r\n查询SQLite数据库，检查模式，并解释来自AI助手的查询。为安全起见，默认情况下为只读。\r\n\r\n```bash\r\nnpx mcp-sqlite-server\r\n```\r\n\r\n> 适用于Claude Desktop、Cursor、VS Code Copilot和任何MCP客户端。阅读本地 `.db` 文件，无需身份验证。\r\n\r\n\r\n使用构建的演示 [远程自述工具包](https://github.com/ofershap/remotion-readme-kit)\r\n\r\n## 为什么\r\n\r\nSQLite无处不在。它是移动应用程序、Electron应用程序、本地优先工具的默认数据库，也越来越多地用于服务器端项目（Turso、Cloudflare D1、Bun的内置SQLite）。官方的MCP参考包括一个基本的SQLite服务器，但它只是Python。如果你在TypeScript/Node.js环境中工作，想问你的助手“这个数据库中有什么表？”或“运行这个查询并向我显示结果”，这个服务器会处理这个问题。默认情况下，它以只读方式打开数据库，因此您可以安全地浏览，并且可以在需要时选择写入模式。\r\n\r\n## 工具\r\n\r\n|工具|它做什么|\r\n| ---------------- | ------------------------------------------------------------------------ |\r\n| `query` |执行SQL（SELECT、PRAGMA、EXPLAIN、WITH）。以表格形式返回结果。 |\r\n| `schema` |获取完整模式：所有具有列、类型和行数的表。         |\r\n| `table_info` |单个表的详细信息：列、约束、行数。       |\r\n| `explain` |运行EXPLAIN QUERY PLAN以优化查询。                              |\r\n| `list_databases` |列出目录中的.db、.sqlite、.sqlite3文件。                        |\r\n\r\n## 快速开始\r\n\r\n### 光标\r\n\r\n添加 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sqlite\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-sqlite-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德桌面版\r\n\r\n添加 `claude_desktop_config.json` （macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sqlite\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-sqlite-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### VS Code\r\n\r\n在VS代码设置中配置MCP服务器以运行 `npx mcp-sqlite-server`.\r\n\r\n## 示例提示\r\n\r\n- “显示./data.db处的数据库架构”\r\n- “查询用户表：SELECT\\*FROM用户限制10”\r\n- “解释此复杂联接的查询计划”\r\n- “此数据库中有哪些表？”\r\n- “查找当前目录中的所有.db文件”\r\n\r\n## 安全\r\n\r\n默认情况下为只读。这 `query` 该工具在只读模式下只接受SELECT、PRAGMA、EXPLAIN和WITH。集 `readonly=false` 在工具args中启用INSERT、UPDATE、DELETE等。\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm install\r\nnpm run typecheck\r\nnpm run build\r\nnpm test\r\nnpm run format\r\nnpm run lint\r\n```\r\n\r\n## 另见\r\n\r\n更多MCP服务器和开发工具 [投资组合](https://gitshow.dev/ofershap).\r\n\r\n## 作者\r\n\r\n\r\n______________________________________________________________________\r\n\r\nREADME构建于 [README生成器](https://ofershap.github.io/readme-builder/)\r\n\r\n## 许可证\r\n\r\nMIT© 2026 招标\r\n",
+ "config": {
+  "sqlite": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-sqlite-server"
+   ],
+   "env": {}
+  }
+ }
+}

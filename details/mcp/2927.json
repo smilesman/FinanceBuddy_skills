@@ -1,0 +1,21 @@
+{
+ "id": "2927",
+ "kind": "mcp",
+ "name": "otp",
+ "fingerprint_md5": "1120d568979eef1c6bae2d3fd6ca9961",
+ "download_count": 0,
+ "category": "金融与商业",
+ "tags": "",
+ "version": "",
+ "readme": "# OTP MCP服务器\r\n\r\n\r\n提供OTP（一次性密码）生成的模型上下文协议（MCP）服务器\r\n\r\n基于FastMCP构建的模型上下文协议（MCP）服务器\r\n提供安全的OTP（一次性密码）生成。\r\n支持TOTP（基于时间）和HOTP（基于HMAC）算法\r\n以及多种传输选项，包括stdio、SSE和HTTP流\r\n与人工智能助手和应用程序无缝集成。\r\n\r\n## 快速开始\r\n\r\n### 安装\r\n\r\n```bash\r\n# Use uvx for isolated execution\r\nuvx otp-mcp-server\r\n\r\n# Or install from PyPI\r\npip install otp-mcp-server\r\n```\r\n\r\n### 基本用法\r\n\r\n```bash\r\n# Run with STDIO (default, for Claude Desktop)\r\notp-mcp-server\r\n\r\n# Run with HTTP Stream transport\r\notp-mcp-server --http-stream --host 127.0.0.1 --port 8000\r\n\r\n# Run with SSE transport\r\notp-mcp-server --sse --host 127.0.0.1 --port 8000\r\n```\r\n\r\n### 与Claude Desktop一起使用\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"otp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"otp-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 配置\r\n\r\n您可以使用命令行参数或环境变量配置服务器。\r\n\r\n|环境变量|描述|\r\n|---------------------------|----------------------------------------------|\r\n| `OTP_MCP_SERVER_DB` |令牌数据库文件的路径|\r\n| `OTP_MCP_SERVER_HOST` |将服务器绑定到的主机|\r\n| `OTP_MCP_SERVER_PORT` |将服务器绑定到的端口|\r\n| `OTP_MCP_SERVER_TRANSPORT`|要使用的传输协议|\r\n| `OTP_MCP_SERVER_PATH` |HTTP传输路径|\r\n| `OTP_MCP_SERVER_LOG_LEVEL`|日志记录级别|\r\n",
+ "config": {
+  "otp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "otp-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

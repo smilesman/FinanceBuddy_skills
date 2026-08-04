@@ -1,0 +1,18 @@
+{
+ "id": "2756",
+ "kind": "mcp",
+ "name": "tw-gov-data",
+ "fingerprint_md5": "ce345bab00bd134870653c829c48c982",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 台湾政府开放数据MCP服务器\r\n\r\n这是一个使用模型上下文协议（MCP）和Cloudflare Workers AI AutoRAG搜索和查询台湾政府开放数据的远程服务器。\r\n\r\n## 在线服务\r\n\r\n此项目部署在Cloudflare Workers上，可供适度使用：\r\n\r\n- **服务URL**: https://tw-gov-data-mcp.funtuan.workers.dev/\r\n\r\n> ⚠️ 这是一个资源有限的个人副项目。请避免过多的要求。\r\n\r\n## 可用工具\r\n\r\n### `search_dataset`\r\n\r\n使用AI搜索搜索相关的政府开放数据集，并从D1数据库中检索完整信息。\r\n\r\n**参数：**\r\n\r\n- `query` （string）：搜索关键字，如交通事故、健康保险、环境监测等。\r\n- `max_results` （number，可选）：返回的最大结果数，默认值为10。\r\n\r\n**流程：**\r\n\r\n1. 使用AI搜索找到前N个最相关的数据集。\r\n1. 从文件名中提取数据集ID（例如10001.json→ 10001).\r\n1. 从D1数据库中查询完整的数据集信息。\r\n\r\n## GitHub Copilot中的用法\r\n\r\n将以下内容添加到您的GitHub Copilot MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tw-gov-data\": {\r\n      \"url\": \"https://tw-gov-data-mcp.funtuan.workers.dev/sse\",\r\n      \"type\": \"http\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重启后，您可以使用这些工具搜索台湾政府开放数据！\r\n\r\n## 查询示例\r\n\r\n与Copilot聊天时，您可以问：\r\n\r\n- “查找与交通事故相关的数据集”\r\n- “健康保险有哪些开放数据？”\r\n- “搜索环境监测数据”\r\n- “查找与空气质量相关的公开数据”\r\n- “有关于人口统计的数据集吗？”\r\n\r\n## 数据源\r\n\r\n本项目中使用的数据来自 [台湾政府开放数据平台](https://data.gov.tw/).\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n\r\n## 参考文献\r\n\r\n- [模型上下文协议](https://modelcontextprotocol.io/)\r\n- [Cloudflare人工智能](https://developers.cloudflare.com/workers-ai/)\r\n- [Cloudflare AutoRAG](https://developers.cloudflare.com/workers-ai/autorag/)\r\n- [台湾政府开放数据平台](https://data.gov.tw/)\r\n",
+ "config": {
+  "tw-gov-data": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://tw-gov-data-mcp.funtuan.workers.dev/sse"
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "id": "3266",
+ "kind": "mcp",
+ "name": "weather-18",
+ "fingerprint_md5": "6ae596290d63a36cb6241dcae99b6d7a",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 气象MCP服务器🌤️\r\n\r\n模型上下文协议（MCP）服务器，使用Open-Meteo API为任何城市提供实时天气信息。\r\n\r\n## 特性\r\n\r\n- 🌍 获取全球任何城市的当前天气\r\n- 🌡️ 返回温度（摄氏度）\r\n- 💨 提供风速（km/h）\r\n- 📍 包括地理坐标\r\n- 🐳 完全容器化Docker\r\n- 🚀 易于部署和使用\r\n\r\n## 快速开始\r\n\r\n### 使用Docker（推荐）\r\n\r\n从Docker Hub拉取并运行预构建映像：\r\n\r\n```bash\r\ndocker pull 125478963/weather-mcp:latest\r\ndocker run -d -p 8000:8000 125478963/weather-mcp:latest\r\n```\r\n\r\n服务器将在以下位置可用： `http://localhost:8000/mcp`\r\n\r\n### 从源头构建\r\n\r\n1. 克隆此存储库：\r\n\r\n```bash\r\ngit clone https://github.com/rajeevchandra/weather-mcp-docker.git\r\ncd weather-mcp-docker\r\n```\r\n\r\n2. 构建Docker镜像：\r\n\r\n```bash\r\ndocker build -t weather-mcp .\r\n```\r\n\r\n3. 运行容器：\r\n\r\n```bash\r\ndocker run -d -p 8000:8000 weather-mcp\r\n```\r\n\r\n## 用法\r\n\r\n此MCP服务器公开了 `weather` 该工具可供Claude Desktop等MCP客户端使用。\r\n\r\n### 可用工具\r\n\r\n**`weather(city: str)`**\r\n\r\n- 返回指定城市的当前温度（°C）和风速（km/h）\r\n- 默认城市：费城\r\n\r\n### 示例响应\r\n\r\n```json\r\n{\r\n  \"city\": \"London\",\r\n  \"latitude\": 51.5074,\r\n  \"longitude\": -0.1278,\r\n  \"temperature_c\": 15.2,\r\n  \"windspeed_kmh\": 12.5\r\n}\r\n```\r\n\r\n## 配置\r\n\r\n服务器运行在：\r\n\r\n- **主机**: `0.0.0.0` （可从容器外部进入）\r\n- **端口**: `8000`\r\n- **端点**: `/mcp`\r\n\r\n## 与MCP客户端一起使用\r\n\r\n### 克劳德桌面\r\n\r\n将此添加到您的Claude Desktop MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"url\": \"http://localhost:8000/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n### 先决条件\r\n\r\n- Python 3.11+\r\n- Docker（可选，用于容器化）\r\n\r\n### 地方发展\r\n\r\n1. 安装依赖项：\r\n\r\n```bash\r\npip install -r requirements.txt\r\n```\r\n\r\n2. 运行服务器：\r\n\r\n```bash\r\npython server.py\r\n```\r\n\r\n### 测试\r\n\r\n运行完整的测试脚本以验证服务器是否正常工作：\r\n\r\n```bash\r\npython complete_test.py\r\n```\r\n\r\n这将：\r\n\r\n1. 初始化与MCP服务器的会话\r\n1. 列出可用工具\r\n1. 在多个城市（伦敦、巴黎、东京）测试天气工具\r\n1. 显示实时天气数据\r\n\r\n**预期产量：**\r\n\r\n```\r\n✅ Session initialized successfully!\r\nServer: WeatherMCP\r\nVersion: 1.20.0\r\n\r\n🌍 Getting weather for London...\r\n   ✅ Success!\r\n      Temperature: 14.2°C\r\n      Wind Speed: 15.3 km/h\r\n```\r\n\r\n或者使用快速健康检查：\r\n\r\n```bash\r\ncurl http://localhost:8000/mcp\r\n```\r\n\r\n## 项目结构\r\n\r\n```\r\nweather-mcp/\r\n├── server.py           # Main MCP server implementation\r\n├── requirements.txt    # Python dependencies\r\n├── Dockerfile         # Docker configuration\r\n├── easy_test.py       # Simple test script\r\n└── README.md          # This file\r\n```\r\n\r\n## 运作原理\r\n\r\n1. **地理编码**：使用Open-Meteo Geocoding API将城市名称转换为坐标\r\n1. **天气数据**：使用Open-Meteo weather API获取当前天气数据\r\n1. **MCP协议**：通过模型上下文协议公开天气数据\r\n\r\n## API学分\r\n\r\n此服务器使用 [开放气象API](https://open-meteo.com/) 其是免费的并且不需要API密钥。\r\n\r\n## Docker Hub\r\n\r\nDocker Hub上提供了预构建映像：\r\n\r\n- 最新的： `125478963/weather-mcp:latest`\r\n- 版本1： `125478963/weather-mcp:v1`\r\n\r\n[Docker Hub视图](https://hub.docker.com/r/125478963/weather-mcp)\r\n\r\n## 故障排除\r\n\r\n### 服务器没有响应？\r\n\r\n检查容器是否正在运行：\r\n\r\n```bash\r\ndocker ps | grep weather-mcp\r\n```\r\n\r\n查看日志：\r\n\r\n```bash\r\ndocker logs\r\n```\r\n\r\n### 端口已在使用中？\r\n\r\n使用其他端口：\r\n\r\n```bash\r\ndocker run -d -p 8080:8000 125478963/weather-mcp:latest\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证-可根据需要自由使用和修改。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 支持\r\n\r\n有关问题和疑问，请在GitHub上打开问题。\r\n\r\n______________________________________________________________________\r\n\r\n由以下材料制成❤️ 使用模型上下文协议\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:8000/mcp"
+  }
+ }
+}

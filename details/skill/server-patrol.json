@@ -1,0 +1,12 @@
+{
+ "id": "server-patrol",
+ "kind": "skill",
+ "name": "server-patrol",
+ "fingerprint_md5": "854426a7af31eaf5d602ad6ee58cca3c",
+ "download_count": 0,
+ "category": "基础设施",
+ "tags": "",
+ "version": "",
+ "readme": "# 基础设施巡检 (server-patrol)\n\n面向 **Linux 服务器** 与 **网络设备**（路由器、交换机、防火墙等）的**只读**巡检 Skill。\n\n| 对象 | 检查项 |\n|------|--------|\n| Linux | uptime、负载、CPU、内存、磁盘、systemd 服务、Docker |\n| 网络设备 | Ping 连通、TCP 端口、SNMP（可选）、SSH 只读命令（Cisco / 华为 / H3C） |\n\n## 何时使用\n\n- 「服务器巡检」「网络设备巡检」「路由器状态」「交换机健康」「定时巡检」\n- **不适用**：改配置、重启设备、下发 ACL 等写操作\n\n## 用户目标\n\n- 一份报告汇总 Linux 与网络设备的 OK / WARN / CRIT\n- 明确 unreachable、高 CPU、端口不通等风险及处理建议\n\n## Agent 执行规则（必读）\n\n巡检目标与凭证由 **FinanceBuddy 平台**在运行 `patrol.sh` 前注入进程环境（来自 Skill 包内 `config.env` + Config Vault），**不对大模型暴露**。\n\n1. **直接运行脚本**，不要预先检查环境变量：\n   - 禁止 `env`、`printenv`、`echo $PATROL_*`、`grep PATROL`\n   - 禁止 `cat`/`read_file` 读取 `config.env`\n   - 禁止在对话中复述密码、密钥、community 等敏感值\n2. 进入 Skill 目录后执行（路径以实际挂载为准）：\n\n```bash\nchmod +x scripts/patrol.sh\n./scripts/patrol.sh --list          # 查看已配置目标（无目标时再报错）\n./scripts/patrol.sh --all           # 批量 Linux + 网络\n./scripts/patrol.sh --servers       # 仅 Linux\n./scripts/patrol.sh --network       # 仅网络设备\n./scripts/patrol.sh --network --tag core\n./scripts/patrol.sh --all --format json\n```\n\n3. 若 `--list` 为空或脚本报「未配置目标」，告知用户：需在控制台 Config Vault / Skill `config.env` 中配置巡检目标，**不要**自行构造 `export PATROL_*`。\n4. 根据脚本 stdout / `reports/` 下报告解读结果，按下方「处理思路」给出建议。\n\n## 分析思路\n\n1. 运行 `./scripts/patrol.sh --list` 或 `./scripts/patrol.sh --all`\n2. **Linux**：磁盘/内存/负载超阈值 → WARN/CRIT（逻辑见脚本）\n3. **网络**：Ping 丢包、RTT、端口、SSH 采集 CPU/内存 → WARN/CRIT\n4. 报告分「Linux 服务器」「网络设备」两节呈现\n\n## 处理思路\n\n| 发现 | 建议 |\n|------|------|\n| Ping CRIT | 查链路、ARP、ACL、设备电源 |\n| 端口 closed | 确认服务监听、防火墙、安全组 |\n| Cisco/华为 CPU 高 | 查会话数、路由震荡、广播风暴 |\n| 接口 down | 查物理链路、光模块、对端端口 |\n| Linux 磁盘/内存 CRIT | 同服务器巡检常规处理 |\n| SSH/SNMP 失败 | 查凭证、SNMP ACL、管理 VLAN（勿向用户索要明文密码） |\n\n## 输出要求\n\n- 以脚本输出为准，分 Linux / 网络两节\n- CRIT/WARN 项附简短 remediation\n- SSH/SNMP 失败单独说明，不阻塞其他目标\n\n## 注意事项\n\n- **只读**：禁止配置写入、reload、reboot\n- 网络设备 SSH 命令集因厂商/版本而异\n- 运维配置格式（`PATROL_*` 列表、Config Vault 引用）见 **[README.md](./README.md)** 与 **config.env**，Agent **无需**阅读\n\n## 能力依赖\n\n- bash、ping、ssh；密码认证时需 **sshpass**（由运维在 Runtime 镜像中安装）\n- 可选：python3、nc、snmpwalk",
+ "config": {}
+}

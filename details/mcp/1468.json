@@ -1,0 +1,21 @@
+{
+ "id": "1468",
+ "kind": "mcp",
+ "name": "github-issue",
+ "fingerprint_md5": "1b651e568891c0490731aff3e2128abd",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP GitHub问题服务器\r\n\r\n[](https://smithery.ai/protocol/mcp-github-issue)\r\n\r\n[](https://smithery.ai/server/mcp-github-issue)\r\n\r\n一个MCP服务器，为LLM提供使用GitHub issues作为完成任务的能力。此服务器允许LLM获取GitHub问题详细信息并将其用作任务描述。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/enk3b2bcjr\"></a>\r\n\r\n## 安装\r\n\r\n### 手动安装\r\n\r\n```bash\r\nnpx mcp-github-issue\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装MCP GitHub Issue Server for Claude Desktop [史密瑟里](https://smithery.ai/server/mcp-github-issue):\r\n\r\n```bash\r\nnpx -y @smithery/cli install mcp-github-issue --client claude\r\n```\r\n\r\n## 用法\r\n\r\n### 作为MCP服务器\r\n\r\n添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"github-issue\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-github-issue\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 可用工具\r\n\r\n#### 获取问题任务\r\n\r\n获取GitHub问题详细信息以用作任务。\r\n\r\n**输入架构：**\r\n\r\n```json\r\n{\r\n  \"type\": \"object\",\r\n  \"properties\": {\r\n    \"url\": {\r\n      \"type\": \"string\",\r\n      \"description\": \"GitHub issue URL (https://github.com/owner/repo/issues/number)\"\r\n    }\r\n  },\r\n  \"required\": [\"url\"]\r\n}\r\n```\r\n\r\n**示例用法：**\r\n\r\n```typescript\r\n<use_mcp_tool>\r\n<server_name>github-issue</server_name>\r\n<tool_name>get_issue_task</tool_name>\r\n<arguments>\r\n{\r\n  \"url\": \"https://github.com/owner/repo/issues/123\"\r\n}\r\n</arguments>\r\n</use_mcp_tool>\r\n```\r\n\r\n**响应格式：**\r\n\r\n```json\r\n{\r\n  \"task\": {\r\n    \"title\": \"Issue Title\",\r\n    \"description\": \"Issue Description/Body\",\r\n    \"source\": \"https://github.com/owner/repo/issues/123\"\r\n  }\r\n}\r\n```\r\n\r\n## 特性\r\n\r\n- 从公共存储库获取GitHub问题详细信息\r\n- 公共存储库不需要身份验证\r\n- 返回结构化任务数据，包括标题、描述和源URL\r\n- 与模型上下文协议（MCP）兼容\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build the project\r\nnpm run build\r\n\r\n# Run the server locally\r\nnpm run serve\r\n\r\n# Format code\r\nnpm run format\r\n\r\n# Run MCP inspector\r\nnpm run inspector\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 作者\r\n\r\n萨姆·麦克劳德(https://smcleod.net)\r\n",
+ "config": {
+  "github-issue": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-github-issue"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "3547",
+ "kind": "mcp",
+ "name": "open-deep-research",
+ "fingerprint_md5": "7681e5ca35b1a2ed8b9015ffd19fa55a",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# OpenDeepSearch\r\n\r\n使用模型上下文协议（MCP）的困惑深度研究的开源替代方案。\r\n\r\n## 概述\r\n\r\nOpenDeepSearch是一个强大的研究工具，可以对复杂的主题进行全面、深入的研究。它将顺序思维的结构化思维方法与Brave search的搜索功能相结合，提供详细、来源丰富的研究报告。\r\n\r\n## 特性\r\n\r\n- **综合研究**：将复杂问题分解为可管理的子问题\r\n- **迭代搜索**：执行多次搜索以收集各种信息\r\n- **智能分析**：分析搜索结果以提取相关信息\r\n- **合成**：将调查结果合并成一份连贯、结构良好的报告\r\n- **引用**：包括报告中所有信息的来源\r\n- **MCP集成**：与Claude Desktop、Cursor和其他MCP客户端无缝集成\r\n- **WebSockets**：支持与Smithery和其他MCP客户端的集成\r\n- **出版物**：允许在Smithery平台上发布研究工具，以便于访问\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Node.js 16或更高版本\r\n- 勇敢的搜索API密钥（在 [https://brave.com/search/api/](https://brave.com/search/api/))\r\n\r\n### NPM安装\r\n\r\n```bash\r\nnpm install -g open-deep-research\r\n```\r\n\r\n### 使用NPX运行\r\n\r\n```bash\r\nBRAVE_API_KEY=your_api_key npx open-deep-research\r\n```\r\n\r\n### 本地安装\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/tositon/open-deep-research.git\r\ncd open-deep-research\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build the project\r\nnpm run build\r\n\r\n# Run with Brave Search API\r\nBRAVE_API_KEY=your_api_key npm start\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n```bash\r\n# Install for Claude\r\nnpx @smithery/cli install open-deep-research --client claude\r\n\r\n# Install for Cursor\r\nnpx @smithery/cli install open-deep-research --client cursor\r\n```\r\n\r\n通过Smithery安装时，系统将提示您输入Brave Search API密钥。\r\n\r\n## 用法\r\n\r\n### 使用克劳德桌面\r\n\r\n将以下内容添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"open-deep-research\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"open-deep-research\"\r\n      ],\r\n      \"env\": {\r\n        \"BRAVE_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 带光标\r\n\r\n在Cursor中，您可以通过以下方式添加MCP服务器：\r\n\r\n```\r\nclaude mcp add \"open-deep-research\" npx open-deep-research\r\n```\r\n\r\n确保设置 `BRAVE_API_KEY` 运行Cursor之前的环境变量。\r\n\r\n### 查询示例\r\n\r\n- “量子计算的最新进展是什么？”\r\n- “比较和对比缓解气候变化的不同方法”\r\n- “解释文艺复兴对欧洲艺术的历史和影响”\r\n- “不同可再生能源的优缺点是什么？”\r\n\r\n## 运作原理\r\n\r\n1. **问题分析**：该系统分析主要问题并将其分解为子问题\r\n1. **迭代搜索**：对于每个子问题，系统使用Brave Search API进行搜索\r\n1. **结果分析**：系统分析搜索结果以提取相关信息\r\n1. **合成**：该系统将调查结果合并为一份连贯的报告\r\n1. **引用**：所有信息均正确引用来源\r\n\r\n## 发展\r\n\r\n### 设置\r\n\r\n```bash\r\ngit clone https://github.com/tositon/open-deep-research.git\r\ncd open-deep-research\r\nnpm install\r\n```\r\n\r\n### 构建\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n### 以开发模式运行\r\n\r\n```bash\r\nBRAVE_API_KEY=your_api_key npm run dev\r\n```\r\n\r\n## 测试\r\n\r\n### MCP检验员测试\r\n\r\n您可以使用MCP Inspector测试MCP服务器，它提供了一个方便的接口，用于与工具交互：\r\n\r\n```bash\r\n# Установка и запуск MCP Inspector\r\nnpx @modelcontextprotocol/inspector\r\n\r\n# Запуск сервера в другом терминале\r\nBRAVE_API_KEY=your_api_key npm start\r\n```\r\n\r\n启动Inspector后，打开浏览器并转到http://localhost:5173.使用URL连接到WebSocket服务器 `ws://localhost:3000`.\r\n\r\n### 测试工具的查询示例\r\n\r\n在MCP Inspector界面中，您可以选择工具并配置查询设置：\r\n\r\n#### Brave Web Search测试\r\n\r\n```json\r\n{\r\n  \"query\": \"latest quantum computing advancements\",\r\n  \"count\": 5\r\n}\r\n```\r\n\r\n#### Sequential Thinking测试\r\n\r\n```json\r\n{\r\n  \"thought\": \"Начинаю анализ проблемы глобального потепления\",\r\n  \"thoughtNumber\": 1,\r\n  \"totalThoughts\": 5,\r\n  \"nextThoughtNeeded\": true\r\n}\r\n```\r\n\r\n#### Deep Research测试\r\n\r\n```json\r\n{\r\n  \"query\": \"Сравнение различных источников возобновляемой энергии\",\r\n  \"action\": \"start\",\r\n  \"maxSubQuestions\": 3\r\n}\r\n```\r\n\r\n### 使用Claude或Cursor进行测试\r\n\r\n通过Smithery或本地安装服务器后，可以通过在设置中选择相应的MCP服务器与Claude Desktop或Cursor一起使用它。\r\n\r\n## Smithery出版社\r\n\r\n要在Smithery平台上发布服务器，请执行以下操作：\r\n\r\n1. 确保存储库托管在GitHub上并且是公开的\r\n1. 在 [史密瑟里](https://smithery.ai/) 平台\r\n1. 通过GitHub进行身份验证以连接存储库\r\n1. 转到服务器页面上的“部署”选项卡\r\n1. 点击“在Smithery部署”按钮\r\n1. 按照部署设置说明进行操作\r\n\r\n发布后，用户可以使用Smithery CLI安装服务器：\r\n\r\n```bash\r\nnpx @smithery/cli install open-deep-research --client claude\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。\r\n\r\n## 致谢\r\n\r\n- 受到困惑深度研究的启发\r\n- 基于模型上下文协议构建\r\n- 使用顺序思维方法进行结构化研究\r\n- 由Brave Search API提供支持\r\n",
+ "config": {
+  "open-deep-research": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "open-deep-research"
+   ],
+   "env": {
+    "BRAVE_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

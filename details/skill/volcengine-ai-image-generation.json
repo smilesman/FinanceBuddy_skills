@@ -1,0 +1,12 @@
+{
+ "id": "volcengine-ai-image-generation",
+ "kind": "skill",
+ "name": "volcengine-ai-image-generation",
+ "fingerprint_md5": "51ba5d382953993491c40c9cd67aeedc",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# volcengine-ai-image-generation\r\n\r\n使用清晰的提示词结构和参数控制来生成和迭代图像。\r\n\r\n## 执行清单\r\n\r\n1. 确认模型/端点和输出约束（尺寸、数量、风格）。\r\n2. 将提示词规范化为主体、风格、场景、光照、相机术语。\r\n3. 设置生成参数并运行请求。\r\n4. 返回图像链接/文件以及提示词和参数。\r\n\r\n## 提示词结构\r\n\r\n- 主体\r\n- 构图\r\n- 风格\r\n- 光照\r\n- 质量约束\r\n\r\n## 参考\r\n\r\n- `references/sources.md`",
+ "config": {}
+}

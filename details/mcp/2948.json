@@ -1,0 +1,23 @@
+{
+ "id": "2948",
+ "kind": "mcp",
+ "name": "rekko",
+ "fingerprint_md5": "4ae52ba625341814d1a2d8a01e3b2b27",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 雷科·麦克普\r\n\r\n\r\nAI编码助手的预测市场情报。24个MCP工具，用于市场数据、深度分析、交易信号、套利检测和跨平台筛选 **卡尔希**, **多市场**, **罗宾汉**，以及 **Coinbase**.\r\n\r\n## 安装\r\n\r\n```bash\r\nuvx rekko-mcp\r\n# or\r\npip install rekko-mcp\r\n```\r\n\r\n需要Python 3.11+和 [Rekko API密钥](https://rekko.ai/dashboard?utm_source=github&utm_medium=readme&utm_campaign=rekko-mcp) （免费版可用）。\r\n\r\n## 配置\r\n\r\n**克劳德代码：**\r\n\r\n```bash\r\nclaude plugin install rekko\r\n```\r\n\r\n或添加到 `.mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"rekko\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"rekko-mcp\"],\r\n      \"env\": { \"REKKO_API_KEY\": \"rk_free_your_key_here\" }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**光标** --同样的 `.mcp.json` 格式在 `.cursor/mcp.json`.\r\n\r\n## 所得\r\n\r\n- **市场数据** --浏览、搜索并获取Kalshi、Polymarket、Robinhood和Coinbase的价格历史记录\r\n- **深度分析** --具有概率估计和因果分解的多阶段人工智能研究管道（30-90s）\r\n- **交易信号** --边缘评估、置信度评分、凯利标准位置大小\r\n- **套利** --Kalshi和Polymarket之间的跨平台价差检测\r\n- **筛查** --按数量、走势和机会对市场进行批量评分\r\n- **演出** --交易记录和校准指标\r\n- **网络钩子** --价格变动和鲸鱼交易的实时警报\r\n- **快速启动** --Python、curl和MCP配置的工作代码片段，可在5分钟内开始使用\r\n\r\n## 快速示例\r\n\r\n```\r\n\"What are the top prediction markets right now?\"\r\n\"Analyze the Fed rate decision market on Kalshi\"\r\n\"Find arbitrage opportunities above 3% spread\"\r\n\"Screen the top 50 Kalshi markets and analyze anything actionable\"\r\n\"Show me a quickstart for Python\"\r\n```\r\n\r\n## 教程\r\n\r\n- [预测市场API比较](https://rekko.ai/docs/guides/prediction-market-api-comparison?utm_source=github&utm_medium=readme&utm_campaign=rekko-mcp) --Kalshi vs Polymarket vs Robinhood vs Coinbase API比较\r\n- [用Python构建交易机器人](https://rekko.ai/docs/guides/build-trading-bot-python?utm_source=github&utm_medium=readme&utm_campaign=rekko-mcp) --具有筛选、分析和信号的端到端机器人\r\n- [卡尔希API指南](https://rekko.ai/docs/guides/kalshi-api-guide?utm_source=github&utm_medium=readme&utm_campaign=rekko-mcp) --RSA-PSS身份验证、端点和添加AI分析\r\n- [Polymarket API指南](https://rekko.ai/docs/guides/polymarket-api-guide?utm_source=github&utm_medium=readme&utm_campaign=rekko-mcp) --CLOB、py-CLOB客户端和人工智能分析\r\n- [MCP交易工作流程](https://rekko.ai/docs/guides/mcp-trading-workflow?utm_source=github&utm_medium=readme&utm_campaign=rekko-mcp) --从IDE进行自然语言市场研究\r\n- [跨平台套利](https://rekko.ai/docs/guides/prediction-market-arbitrage?utm_source=github&utm_medium=readme&utm_campaign=rekko-mcp) --找出平台之间的价格差距\r\n- [凯利标准尺寸](https://rekko.ai/docs/guides/kelly-criterion-position-sizing?utm_source=github&utm_medium=readme&utm_campaign=rekko-mcp) --最佳位置尺寸\r\n\r\n## 定价\r\n\r\n|级别|每次通话|包括|\r\n|------|----------|----------|\r\n|免费|$0.00|校准、健康检查|\r\n|上市|$0.01|市场数据，价格历史|\r\n|洞察| 0.10美元|分析、筛选、解决|\r\n|策略|2.00|信号、投资组合规模、共识|\r\n|深度| 5.00美元|套利、相关性、webhooks|\r\n\r\n免费计划：每月100次上市+10次洞察电话。 [升级到专业版](https://rekko.ai/dashboard?utm_source=github&utm_medium=readme&utm_campaign=rekko-mcp&utm_content=pricing) 更高的限制。\r\n\r\n## 链接\r\n\r\n- [说。](https://rekko.ai?utm_source=github&utm_medium=readme&utm_campaign=rekko-mcp) --主页\r\n- [文档](https://rekko.ai/docs?utm_source=github&utm_medium=readme&utm_campaign=rekko-mcp) -API完整参考和教程\r\n- [状态](https://status.rekko.ai) -API正常运行时间和事件历史记录\r\n- [OpenAPI规范](https://api.rekko.ai/openapi.json) -可机读API架构\r\n- [拉皮达皮](https://rapidapi.com/rekko-ai-rekko-ai-default/api/rekko-ai-prediction-market-intelligence) --市场列表\r\n",
+ "config": {
+  "rekko": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "rekko-mcp"
+   ],
+   "env": {
+    "REKKO_API_KEY": "rk_free_your_key_here"
+   }
+  }
+ }
+}

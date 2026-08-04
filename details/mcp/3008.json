@@ -1,0 +1,27 @@
+{
+ "id": "3008",
+ "kind": "mcp",
+ "name": "agriwiz",
+ "fingerprint_md5": "0576bc4af3dba42c9befc6f63ace1551",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# Agriwiz MCP服务器\r\n\r\n用于访问Agriwiz API的模型上下文协议（MCP）服务器。该服务器将Agriwiz农业数据和建议作为MCP工具公开，可供AI助手使用。\r\n\r\n## 特性\r\n\r\n服务器提供以下工具：\r\n\r\n1. **get_farm_field_info** -获取基本的客户、现场和农场信息，包括储罐混合信息\r\n1. **获取肥料推荐** -根据灌溉计划获取肥料和元素建议\r\n1. **获取_天气_预报\\_ \\_小时** -按农场按小时获取天气预报数据\r\n1. **get_climate_by_day** -获取农场按日汇总的天气预报/历史记录\r\n1. **get_user_detail** -获取用户详细信息\r\n1. **get_tank_mix选择** -获取肥料罐混合料选择详情\r\n1. **获取营养素_通过受精** -获取元素、肥料和灌溉建议以及应用细节\r\n\r\n## 快速入门（推荐）\r\n\r\n### 适用于Claude桌面用户\r\n\r\n使用此服务器最简单的方法是使用npx直接从GitHub安装。无需克隆或Python设置！\r\n\r\n将此添加到您的Claude Desktop配置文件中(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上， `%APPDATA%\\Claude\\claude_desktop_config.json` 在Windows上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agriwiz\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"github:RWMostert/agriwiz-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"AGRIWIZ_API_PASSWORD\": \"your_api_password_here\",\r\n        \"AGRIWIZ_BASE_URL\": \"https://apiext.agriwiz.net\",\r\n        \"AGRIWIZ_CLIENT_ID\": \"your_client_id\",\r\n        \"AGRIWIZ_FARM_ID\": \"your_farm_id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n就是这样！Claude Desktop将自动：\r\n\r\n1. 从GitHub下载服务器\r\n1. 安装Python依赖项（httpx、Python-dotenv）\r\n1. 使用您的凭据运行服务器\r\n\r\n### 先决条件\r\n\r\n- Node.js和npm（适用于npx）\r\n- Python 3.10或更高版本\r\n\r\n## 替代安装方法\r\n\r\n### 方法1：从GitHub直接安装npm\r\n\r\n```bash\r\nnpm install -g github:RWMostert/agriwiz-mcp\r\n```\r\n\r\n然后配置您的MCP客户端：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agriwiz\": {\r\n      \"command\": \"agriwiz-mcp-server\",\r\n      \"env\": {\r\n        \"AGRIWIZ_API_PASSWORD\": \"your_api_password_here\",\r\n        \"AGRIWIZ_BASE_URL\": \"https://apiext.agriwiz.net\",\r\n        \"AGRIWIZ_CLIENT_ID\": \"your_client_id\",\r\n        \"AGRIWIZ_FARM_ID\": \"your_farm_id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 方法2：手动安装Python（用于开发）\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/RWMostert/agriwiz-mcp.git\r\ncd agriwiz-mcp\r\n```\r\n\r\n2. 安装Python依赖项：\r\n\r\n```bash\r\npip install -r requirements.txt\r\n```\r\n\r\n3. 使用.env文件进行配置：\r\n\r\n```bash\r\n# Create .env file\r\ncat > .env << EOF\r\nAGRIWIZ_API_PASSWORD=your_api_password_here\r\nAGRIWIZ_BASE_URL=https://apiext.agriwiz.net\r\nAGRIWIZ_CLIENT_ID=your_client_id\r\nAGRIWIZ_FARM_ID=your_farm_id\r\nEOF\r\n```\r\n\r\n4. 运行服务器：\r\n\r\n```bash\r\npython agriwiz_mcp_server.py\r\n```\r\n\r\n或者配置您的MCP客户端以指向脚本：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agriwiz\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"/path/to/agriwiz-mcp/agriwiz_mcp_server.py\"],\r\n      \"env\": {\r\n        \"AGRIWIZ_API_PASSWORD\": \"your_api_password_here\",\r\n        \"AGRIWIZ_BASE_URL\": \"https://apiext.agriwiz.net\",\r\n        \"AGRIWIZ_CLIENT_ID\": \"your_client_id\",\r\n        \"AGRIWIZ_FARM_ID\": \"your_farm_id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## API终点\r\n\r\n服务器连接到以下Agriwiz API端点：\r\n\r\n- `FarmFieldInfo` -农田基本信息\r\n- `FertRecPerFieldPerHaPerWeek` -肥料建议\r\n- `WeatherForcastByHrByUser` -每小时天气预报\r\n- `ClimateByDayForFarm` -每日气候数据\r\n- `UserDetail` -用户信息\r\n- `TankMixSelection` -储罐混合详图\r\n- `NutrientsByFertigationRec` -营养素应用数据\r\n\r\n所有终结点都需要API密码，该密码应通过 `AGRIWIZ_API_PASSWORD` 环境变量。\r\n\r\n## 刀具参数\r\n\r\n### get_climate_by_day\r\n\r\n- `farmId` （必填）：整数-用于获取气候数据的农场ID\r\n\r\n### 获取营养素_通过受精\r\n\r\n- `startDate` （必填）：字符串-开始日期（ISO格式或YYYY-MM-DD）\r\n- `endDate` （必填）：字符串-结束日期（ISO格式或YYYY-MM-DD）\r\n- `fieldId` （可选）：整数-要筛选的字段ID\r\n\r\n## 发展\r\n\r\n服务器使用以下方式实现MCP协议：\r\n\r\n- stdio传输（stdin/stdout）\r\n- JSON-RPC 2.0协议\r\n- 使用httpx异步HTTP请求\r\n\r\n## 许可证\r\n\r\n本项目按原样提供，供Agriwiz API使用。\r\n",
+ "config": {
+  "agriwiz": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "github:RWMostert/agriwiz-mcp"
+   ],
+   "env": {
+    "AGRIWIZ_API_PASSWORD": "your_api_password_here",
+    "AGRIWIZ_BASE_URL": "https://apiext.agriwiz.net",
+    "AGRIWIZ_CLIENT_ID": "your_client_id",
+    "AGRIWIZ_FARM_ID": "your_farm_id"
+   }
+  }
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "id": "678",
+ "kind": "mcp",
+ "name": "grok",
+ "fingerprint_md5": "42132bc909b151a96ee0b20e787ed113",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Grok MCP\r\n\r\n用于xAI的Grok API的MCP服务器，提供对包括图像理解、图像生成、实时网络搜索和推理模型在内的功能的访问。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@merterbak/Grok-MCP\">\r\n</a>\r\n\r\n## 特性\r\n\r\n- **多种Grok型号**：访问Grok-4、Grok-4-Fast、Grok-3-Mini等\r\n- **图像生成**：使用Grok的图像生成模型创建图像\r\n- **视觉能力**：使用Grok的视觉模型分析图像\r\n- **实时网络搜索**：实时网络搜索，引用新闻、网络、X和RSS提要\r\n- **推理模型**：使用扩展思维模型进行高级推理（Grok-3-Mini、Grok-4）\r\n- **有状态的对话**：使用此新发布的功能在多个请求之间将对话上下文作为id进行维护\r\n- **对话历史**：打开或关闭它以使用先前的上下文\r\n\r\n## 先决条件\r\n\r\n- Python 3.11或更高版本\r\n- xAI API密钥([在这里买一个](https://console.x.ai))\r\n- `uv` 包管理器\r\n\r\n## 安装\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/merterbak/Grok-MCP.git\r\ncd Grok-MCP\r\n```\r\n\r\n2. 创建venv环境：\r\n\r\n```bash\r\nuv venv\r\nsource .venv/bin/activate\r\n```\r\n\r\n3. 安装：\r\n\r\n```bash\r\nuv pip install -e .\r\n```\r\n\r\n（可选）或者您可以同步依赖关系\r\n\r\n```bash\r\nuv sync --all-extras\r\n```\r\n\r\n## 配置\r\n\r\n### Claude桌面集成\r\n\r\n将此添加到您的Claude Desktop配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"grok\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/Grok-MCP\",\r\n        \"run\",\r\n        \"python\",\r\n        \"main.py\"\r\n      ],\r\n      \"env\": {\r\n        \"XAI_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 文件系统MCP（可选）\r\n\r\nClaude Desktop无法将聊天中上传的图像发送到MCP工具。\r\n直接从计算机访问文件的最简单方法是官方的文件系统MCP服务器。\r\n设置后，您只需在聊天中写入图像的文件路径（如/Users/mert/Destop/image.png），Claude就可以将其与任何视觉聊天工具一起使用。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"filesystem\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@modelcontextprotocol/server-filesystem\",\r\n        \"/Users/<your-username>/Desktop\",\r\n        \"/Users/<your-username>/Downloads\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n对于stdio：\r\n\r\n```bash\r\nuv run python main.py\r\n```\r\n\r\nDocker：\r\n\r\n```bash\r\ndocker compose up --build\r\n```\r\n\r\nMcp检查员：\r\n\r\n```bash\r\nmcp dev main.py\r\n```\r\n\r\n## 可用工具\r\n\r\n### 1. `list_models`\r\n\r\n列出所有可用的Grok型号，包括创建日期和所有权信息。\r\n\r\n### 2. `chat`\r\n\r\n标准聊天完成，具有广泛的自定义选项。\r\n\r\n**参数：**\r\n\r\n- `prompt` （必填）：您的留言\r\n- `model`：要使用的型号（默认：“grok-4-fast”）\r\n- `system_prompt`：可选系统说明\r\n- `use_conversation_history`：启用多回合对话\r\n- `temperature`, `max_tokens`, `top_p`：发电参数\r\n- `presence_penalty`, `frequency_penalty`, `stop`：高级控制\r\n- `reasoning_effort`：用于推理模型（“低”或“高”）\r\n\r\n### 3. `chat_with_reasoning`\r\n\r\n获得详细的推理和回应。\r\n\r\n**参数：**\r\n\r\n- `prompt` （必填）：您的问题或任务\r\n- `model`：“grok-4”、“grok-3-mini”或“grok-3-mini-fast”\r\n- `reasoning_effort`：“低”或“高”（不适用于grok-4）\r\n- `system_prompt`, `temperature`, `max_tokens`, `top_p`\r\n\r\n**退货：** 内容、推理内容和使用统计\r\n\r\n### 4. `chat_with_vision`\r\n\r\n使用自然语言查询分析图像。\r\n\r\n**参数：**\r\n\r\n- `prompt` （必填）：您对图片的问题\r\n- `image_paths`：本地映像文件路径列表\r\n- `image_urls`：图像URL列表\r\n- `detail`：“自动”、“低”或“高”\r\n- `model`：具有视觉功能的型号（默认：“grok-4-0709”）\r\n\r\n**支持的格式：** JPG、JPEG、PNG\r\n\r\n### 5. `generate_image`\r\n\r\n根据文本描述创建图像。\r\n\r\n**参数：**\r\n\r\n- `prompt` （必填）：图像描述\r\n- `n`：要生成的图像数量（默认值：1）\r\n- `response_format`：“url”或“b64_json”\r\n- `model`：图像生成模型（默认：“grok-2-Image 1212”）\r\n\r\n**退货：** 生成图像并修改提示\r\n\r\n### 6. `live_search`\r\n\r\n使用源引用实时搜索网络。\r\n\r\n**参数：**\r\n\r\n- `prompt` （必填）：您的搜索查询\r\n- `model`：要使用的模型（默认值：“grok-4”）\r\n- `mode`：“开”或“关”\r\n- `return_citations`：包括源引用（默认值：true）\r\n- `from_date`, `to_date`：日期范围（YYYY-MM-DD）\r\n- `max_search_results`：要获取的最大结果数（默认值：20）\r\n- `country`：本地化搜索的国家代码\r\n- `rss_links`：要搜索的RSS源URL列表\r\n- `sources`：自定义源配置\r\n\r\n**退货：** 内容、引用、使用统计数据和使用的来源数量\r\n\r\n### 7. `stateful_chat`\r\n\r\n在xAI服务器上跨多个请求维护对话状态。\r\n\r\n**参数：**\r\n\r\n- `prompt` （必填）：您的留言\r\n- `response_id`：继续对话的上一个响应ID\r\n- `model`：要使用的模型（默认值：“grok-4”）\r\n- `system_prompt`：系统说明（仅适用于新对话）\r\n- `include_reasoning`：包括推理总结\r\n- `temperature`, `max_tokens`\r\n\r\n**退货：** 带有ID的响应，用于继续对话（存储30天）\r\n\r\n### 8. `retrieve_stateful_response`\r\n\r\n检索以前存储的对话响应。\r\n\r\n**参数：**\r\n\r\n- `response_id` （必填）：要检索的响应ID\r\n\r\n### 9. `delete_stateful_response`\r\n\r\n从xAI服务器中删除已存储的对话。\r\n\r\n**参数：**\r\n\r\n- `response_id` （必填）：要删除的响应ID\r\n\r\n## 许可证\r\n\r\n这个项目是开源的，可以在MIT许可证下使用。\r\n",
+ "config": {
+  "grok": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/Grok-MCP",
+    "run",
+    "python",
+    "main.py"
+   ],
+   "env": {
+    "XAI_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

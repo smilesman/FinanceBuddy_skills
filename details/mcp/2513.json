@@ -1,0 +1,24 @@
+{
+ "id": "2513",
+ "kind": "mcp",
+ "name": "eips",
+ "fingerprint_md5": "51f63cf00959f5ecdefac5438cc62f87",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# EIP MCP\r\n\r\n一个MCP服务器，用于向AI代理提供语义相关的以太坊改进建议（EIP）。\r\n\r\n\r\n## 特性\r\n\r\n- **语义搜索**：利用向量嵌入在EIP文档中进行准确、上下文感知的搜索。\r\n- **Markdown支持**：使用分块处理EIP标记文件，以实现高效存储和检索。\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Python 3.10+\r\n- [紫外线](https://docs.astral.sh/uv/) （推荐）或pip用于依赖关系管理\r\n\r\n### 设置\r\n\r\n1. **克隆存储库**:\r\n\r\n   ```bash\r\n   git clone --recursive-submodules https://github.com/kukapay/eips-mcp.git\r\n   cd eips-mcp\r\n   ```\r\n\r\n1. **安装依赖项** （推荐）：\r\n\r\n   ```bash\r\n   uv sync\r\n   ```\r\n\r\n1. **加载EIP文档**:\r\n   使用提供的 `load_eips.py` 自动获取和处理EIP的脚本：\r\n\r\n   ```bash\r\n   uv run load_eips.py\r\n   ```\r\n\r\n1. **安装到克劳德桌面**:\r\n\r\n   将服务器安装为Claude Desktop应用程序：\r\n\r\n   ```bash\r\n   uv run mcp install main.py --name \"EIPs\"\r\n   ```\r\n\r\n   配置文件作为参考：\r\n\r\n   ```json\r\n   {\r\n      \"mcpServers\": {\r\n          \"EIPs\": {\r\n              \"command\": \"uv\",\r\n              \"args\": [ \"--directory\", \"/path/to/eips-mcp\", \"run\", \"main.py\" ]\r\n          }\r\n      }\r\n   }\r\n   ```\r\n\r\n   替换 `/path/to/eips-mcp` 使用您的实际安装路径。\r\n\r\n## 用法\r\n\r\n服务器公开单个MCP工具， `search`，它接受查询字符串并返回相关的EIP内容。MCP兼容客户端中的示例用法：\r\n\r\n您可以使用自然语言提示，例如：\r\n\r\n- “搜索与CREATE2相关的EIP”\r\n- “查找有关合约部署操作码的EIP”\r\n- “EIP讨论CREATE2实现细节”\r\n\r\n该工具处理这些查询，并返回多达5个相关的EIP文档块，为清晰起见，使用分隔符进行格式化。\r\n\r\n使用搜索“CREATE2”时 `search` 工具，输出可能看起来像：\r\n\r\n```\r\n--------------------eip-1014.md--------------------\r\n# EIP-1014: Skinny CREATE2\r\n**Abstract**: This EIP adds a new opcode at 0xf5, CREATE2, which allows for deterministic address generation...\r\n...\r\n--------------------eip-1014.md--------------------\r\n**Motivation**: The CREATE2 opcode enables predictable contract addresses, which is useful for...\r\n...\r\n```\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "eips": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/eips-mcp",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

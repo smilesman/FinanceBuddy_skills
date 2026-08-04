@@ -50,29 +50,31 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>FinanceBuddy Skills Warehouse · 数据源：<a href="https://www.openocta.com/skills" target="_blank">OpenOcta 资源市场</a> + 社区补充</p>
+      <p>FinanceBuddy Skills Warehouse · 官方市场全量目录 + 社区补充</p>
       <p>正式站点：https://www.financebuddyskills.com/skills（规划中）</p>
     </div>
   </footer>
 
-  <!-- 详情弹窗 -->
+  <!-- 详情视图（复刻官网详情页形态） -->
   <div id="modalMask" class="modal-mask hidden">
-    <div class="modal">
-      <div class="modal-head">
-        <div class="modal-title">
+    <div class="detail-view">
+      <div class="detail-topbar">
+        <button id="modalBack" class="back-btn">← 返回</button>
+        <div class="detail-actions">
+          <a id="modalDownload" class="btn download hidden" download>⬇ 下载 zip</a>
+          <button id="modalCopy" class="btn copy">复制内容</button>
+        </div>
+      </div>
+      <div class="detail-head">
+        <div class="detail-title">
           <span id="modalIcon"></span>
           <span id="modalName"></span>
-          <span id="modalStatus" class="status-tag"></span>
+          <span id="modalTags" class="detail-tags"></span>
         </div>
-        <button id="modalClose" class="modal-close">✕</button>
+        <span id="modalMd5" class="detail-md5"></span>
       </div>
-      <div class="modal-body">
-        <div id="modalMeta" class="modal-meta"></div>
+      <div class="detail-body">
         <div id="modalReadme" class="readme"></div>
-      </div>
-      <div class="modal-foot">
-        <a id="modalDownload" class="btn primary hidden" download>⬇ 下载安装包（zip）</a>
-        <span id="modalMd5" class="md5"></span>
       </div>
     </div>
   </div>

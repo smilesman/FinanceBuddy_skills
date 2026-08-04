@@ -1,0 +1,24 @@
+{
+ "id": "477",
+ "kind": "mcp",
+ "name": "stockfish-mcp",
+ "fingerprint_md5": "582aea4914fde4970002795f6753be2d",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# Stockfish MCP服务器\r\n\r\n一个模型上下文协议（MCP）服务器，将Stockfish国际象棋引擎与Claude Desktop集成在一起，允许您在人工智能的帮助下下棋。\r\n\r\n\r\n🗓️ 自然语言象棋\r\n\r\n[](https://choosealicense.com/licenses/mit/)\r\n[](https://www.python.org/downloads/)\r\n[](https://modelcontextprotocol.io)\r\n\r\n\r\n## 特性\r\n\r\n- 🎮 使用可定制的ELO评级启动和管理国际象棋游戏\r\n- 🤖 从Stockfish引擎获取最佳移动建议\r\n- 📊 使用Redis的持久游戏状态存储\r\n- ♟️ 完全支持UCI国际象棋符号\r\n- 🔄 实时游戏状态更新\r\n- 🖼️ 带有自动生成图像的可视化电路板表示\r\n\r\n## 先决条件\r\n\r\n- Python 3.13+\r\n- [Stockfish象棋引擎](https://stockfishchess.org/download/)\r\n- Redis服务器\r\n- [紫外线](https://github.com/astral-sh/uv) （推荐）或pip\r\n\r\n## 安装\r\n\r\n### 1.克隆存储库\r\n\r\n```bash\r\ngit clone https://github.com/sankalp0412/stockfish-mcp.git\r\ncd stockfish-mcp\r\n```\r\n\r\n### 2.安装Stockfish\r\n\r\n**macOS（Homebrew）：**\r\n\r\n```bash\r\nbrew install stockfish\r\nwhich stockfish  # Note the path for later\r\n```\r\n\r\n**Linux：**\r\n\r\n```bash\r\nsudo apt-get install stockfish  # Debian/Ubuntu\r\n# or\r\nsudo yum install stockfish      # RHEL/CentOS\r\n```\r\n\r\n**窗户：**\r\n下载自 [stockfishches.org/下载](https://stockfishchess.org/download/)\r\n\r\n### 3.安装Redis\r\n\r\n**macOS（Homebrew）：**\r\n\r\n```bash\r\nbrew install redis\r\nbrew services start redis\r\n```\r\n\r\n**Linux：**\r\n\r\n```bash\r\nsudo apt-get install redis-server\r\nsudo systemctl start redis\r\n```\r\n\r\n**窗户：**\r\n使用 [Windows版Redis](https://github.com/microsoftarchive/redis/releases)\r\n\r\n### 4.设置环境变量\r\n\r\n```bash\r\ncp .env.example .env\r\n```\r\n\r\n编辑 `.env` 并设置您的Stockfish路径：\r\n\r\n```env\r\nSTOCKFISH_PATH=/usr/local/bin/stockfish  # Update with your actual path\r\nREDIS_HOST=localhost\r\nREDIS_PORT=6379\r\n```\r\n\r\n### 5.安装Python依赖项\r\n\r\n**使用紫外线（推荐）：**\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n**使用pip：**\r\n\r\n```bash\r\npip install -e .\r\n```\r\n\r\n## 配置Claude桌面\r\n\r\n将以下内容添加到您的Claude Desktop配置文件中：\r\n\r\n**macOS：** `~/Library/Application Support/Claude/claude_desktop_config.json`\\\r\n**窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"stockfish-mcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/absolute/path/to/stockfish-mcp\",\r\n        \"run\",\r\n        \"stockfish-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**重要提示：** 替换 `/absolute/path/to/stockfish-mcp` 使用克隆存储库的实际绝对路径。\r\n\r\n**重新启动克劳德桌面** 完全（退出并重新打开）以使更改生效。\r\n\r\n## 用法\r\n\r\n配置后，您可以通过Claude与国际象棋引擎进行交互。以下是游戏方法：\r\n\r\n### 开始新游戏\r\n\r\n```\r\nStart a chess game with ELO rating 2000\r\n```\r\n\r\n### 下棋\r\n\r\n只需用自然语言告诉克劳德你的动作：\r\n\r\n```\r\nI want to play e4\r\nPlay knight to f3\r\nMove my bishop to c4\r\n```\r\n\r\n克劳德将：\r\n\r\n- 使用 `play_move` 应用您的移动\r\n- 使用 `get_best_moves` 内部分析立场\r\n- 选择并播放其响应动作\r\n- 在数据库中保持游戏状态的更新\r\n\r\n### 查看董事会\r\n\r\n```\r\nShow me the current board position\r\n```\r\n\r\n克劳德将在游戏的任何时候显示棋盘的视觉表示。\r\n\r\n### 关闭游戏\r\n\r\n```\r\nClose the game\r\n```\r\n\r\n**注：** 这 `get_best_moves` 克劳德自己使用该工具来分析位置并决定其动作。你不需要直接称呼它——只要自然地玩就行了！\r\n\r\n## MCP工具参考\r\n\r\n|工具|说明|参数|\r\n|------|-------------|------------|\r\n| `start_game` |初始化一个新的国际象棋游戏| `user_elo` （可选，默认值：3000）|\r\n| `get_best_moves` |获取当前位置的前3个动作| `game_id` |\r\n| `play_move` |验证并应用移动| `game_id`, `user_move` （UCI符号）|\r\n| `get_board_visual` |生成可视化电路板表示| `game_id` |\r\n| `close_game` |结束游戏并从数据库中删除| `game_id` |\r\n\r\n### MCP服务器未在Claude中显示\r\n\r\n1. 检查Claude Desktop日志是否有错误\r\n1. 验证中的绝对路径 `claude_desktop_config.json`\r\n1. 确保Redis正在运行： `redis-cli ping` （应该回来 `PONG`)\r\n1. 验证Stockfish路径： `$STOCKFISH_PATH --version`\r\n1. 完全重新启动克劳德桌面\r\n\r\n### 导入错误\r\n\r\n```bash\r\ncd /path/to/stockfish-mcp\r\nuv sync  # Reinstall dependencies\r\n```\r\n\r\n### Redis连接错误\r\n\r\n```bash\r\n# Check if Redis is running\r\nredis-cli ping\r\n\r\n# Start Redis\r\nbrew services start redis  # macOS\r\nsudo systemctl start redis # Linux\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 作者\r\n\r\n桑卡尔普·杜帕尔([@桑卡尔p0412](https://github.com/sankalp0412))\r\n\r\n## 致谢\r\n\r\n- [Stockfish象棋引擎](https://stockfishchess.org/)\r\n- [模型上下文协议](https://modelcontextprotocol.io/)\r\n- [人物克劳德](https://www.anthropic.com/)\r\n",
+ "config": {
+  "stockfish-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/absolute/path/to/stockfish-mcp",
+    "run",
+    "stockfish-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

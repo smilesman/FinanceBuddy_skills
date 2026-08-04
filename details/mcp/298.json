@@ -1,0 +1,22 @@
+{
+ "id": "298",
+ "kind": "mcp",
+ "name": "megaten-fusion",
+ "fingerprint_md5": "dd01f0f1187197251ed673fc76899f9e",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# Megaten Fusion MCP\r\n\r\n一个模型上下文协议（MCP）服务器，为40+Megami Tensei游戏提供融合工具数据。与Claude Desktop、Cursor或任何兼容MCP的AI一起使用。\r\n\r\n## 支持的游戏\r\n\r\n- **真女神转生**：SMT1、SMT2、SMT：如果…、SMT3：夜曲、SMT：奇异之旅、SMT4、SMT4A、SMT5\r\n- **角色**：P1，P2：IS，P2:EP，P3，P3R，P4，P5，P5S，P5T，PQ，PQ2\r\n- **恶魔召唤师**：灵魂黑客，Raidou 1&2，灵魂黑客2\r\n- **恶魔幸存者**：DS1、DS2\r\n- **其他**：玛金天成，金谷美加美天成\r\n  还有更多！使用megaten融合工具的子模块\r\n\r\n## 安装\r\n\r\n### 使用克劳德桌面\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"megaten-fusion\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"megaten-fusion-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 带光标\r\n\r\n添加到您的 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"megaten-fusion\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"megaten-fusion-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone --recursive https://github.com/kreatoo/megaten-fusion-mcp.git\r\ncd megaten-fusion-mcp\r\nbun install\r\nbun run start\r\n```\r\n\r\n## 可用工具\r\n\r\n### 核心工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_games` |列出所有支持的游戏|\r\n| `get_demon` |获取恶魔/角色的统计数据、技能和信息|\r\n| `search_demons` |按种族、等级、姓名、技能或元素属性搜索恶魔|\r\n| `get_skill` |获取技能信息以及哪些恶魔会学习它|\r\n| `search_skills` |按名称或元素搜索技能|\r\n\r\n### 聚变力学\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_fusion_recipes` |找出两个恶魔融合成了什么|\r\n| `get_fission_recipes` |找到创建恶魔的所有组合|\r\n| `get_fusion_chart` |获取游戏的种族融合图表|\r\n| `get_special_recipe` |获取特殊/多恶魔融合食谱|\r\n| `find_fusion_recipe_with_skills` |找到一个配方，创造一个具有特定遗传技能的恶魔|\r\n\r\n### 元素和电阻数据\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_demon_weaknesses` |获取恶魔的弱/强/无效/击退/耗尽元素|\r\n\r\n### 游戏特定功能\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_racial_skill` |获得比赛的独特技能（仅限某些游戏）|\r\n| `get_skill_inheritance` |获取恶魔可以继承的技能类型（仅限某些游戏）|\r\n| `get_demon_evolutions` |获取进化链（仅限部分游戏）|\r\n\r\n## 增强的search_demons过滤器\r\n\r\n这 `search_demons` 该工具现在支持其他过滤器：\r\n\r\n- `skill` -过滤学习特定技能的恶魔\r\n- `weakTo` -过滤对某种元素（如“火”、“冰”）较弱的恶魔\r\n- `resistTo` -过滤抵抗/消除/击退/耗尽元素的恶魔\r\n\r\n## 查询示例\r\n\r\n- “在《女神异闻录5》中，我可以和杰克·弗罗斯特一起塑造什么角色？”\r\n- “如何在SMT5中融合Yoshitsune？”\r\n- “在《女神异闻录3：重装》中，恶魔们学到了什么？”\r\n- “列出P5中70级以上的所有评判角色”\r\n- “《女神异闻录4》中哪些种族融合成了傻瓜？”\r\n- “在《女神异闻录5》中找到用迪亚拉马制作高精灵的食谱”\r\n- “Isis可以在P5继承哪些技能？”\r\n\r\n## 更新游戏数据\r\n\r\n该项目使用 [megaten聚变工具](https://github.com/aqiu384/megaten-fusion-tool) repo作为git子模块。要更新到最新的游戏数据：\r\n\r\n```bash\r\ngit submodule update --remote\r\n```\r\n\r\n## 数据源\r\n\r\n所有游戏数据来自 [aqiu384/megaten融合器](https://github.com/aqiu384/megaten-fusion-tool) -一个优秀的开源融合计算器。这个MCP服务器只是将这些数据包装起来，以便人工智能访问。\r\n\r\n## 许可证\r\n\r\n无许可-请参阅 [许可证](LICENSE) 了解详情。\r\n\r\n上游的megaten聚变工具也是未经许可的。\r\n",
+ "config": {
+  "megaten-fusion": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "megaten-fusion-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

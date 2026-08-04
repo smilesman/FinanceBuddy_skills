@@ -1,0 +1,30 @@
+{
+ "id": "1171",
+ "kind": "mcp",
+ "name": "mysqldb-mcp-server",
+ "fingerprint_md5": "d4e50df1207ae543271f6f76c0237c91",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# mysqldb-mcp服务器mcp服务器\r\n\r\n\r\nMySQL数据库MCP服务器项目。\r\n\r\n## 安装\r\n\r\n您可以使用以下命令安装该软件包 `uv`:\r\n\r\n```bash\r\nuv pip install mysqldb-mcp-server\r\n```\r\n\r\n或使用 `pip`:\r\n\r\n```bash\r\npip install mysqldb-mcp-server\r\n```\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n服务器提供两个工具：\r\n\r\n- `connect_database`：连接到特定的MySQL数据库\r\n\r\n  - `database` 参数：要连接的数据库的名称（字符串）\r\n  - 连接成功时返回确认消息\r\n\r\n- `execute_query`：执行MySQL查询\r\n\r\n  - `query` 参数：SQL查询/要执行的查询（字符串）\r\n  - 以JSON格式返回查询结果\r\n  - 可以发送多个查询，用分号分隔\r\n\r\n## 配置\r\n\r\n服务器使用以下环境变量：\r\n\r\n- `MYSQL_HOST`：MySQL服务器地址（默认：“localhost”）\r\n- `MYSQL_USER`：MySQL用户名（默认：“root”）\r\n- `MYSQL_PASSWORD`：MySQL密码（默认：“”）\r\n- `MYSQL_DATABASE`：初始数据库（可选）\r\n- `MYSQL_READONLY`：只读模式（设置为1/true以启用，默认值：false）\r\n\r\n## 快速启动\r\n\r\n### 安装\r\n\r\n#### 克劳德桌面\r\n\r\nMacOS： `~/Library/Application\\ Support/Claude/claude_desktop_config.json`\r\n\r\n窗户： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n\r\n  Development/Unpublished Server Configuration\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mysqldb-mcp-server\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/Users/burakdirin/Projects/mysqldb-mcp-server\",\r\n        \"run\",\r\n        \"mysqldb-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"MYSQL_HOST\": \"localhost\",\r\n        \"MYSQL_USER\": \"root\",\r\n        \"MYSQL_PASSWORD\": \"password\",\r\n        \"MYSQL_DATABASE\": \"[optional]\",\r\n        \"MYSQL_READONLY\": \"true\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\n  Published Server Configuration\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mysqldb-mcp-server\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"mysqldb-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"MYSQL_HOST\": \"localhost\",\r\n        \"MYSQL_USER\": \"root\",\r\n        \"MYSQL_PASSWORD\": \"password\",\r\n        \"MYSQL_DATABASE\": \"[optional]\",\r\n        \"MYSQL_READONLY\": \"true\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面版MySQL数据库集成服务器 [史密瑟里](https://smithery.ai/server/@burakdirin/mysqldb-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @burakdirin/mysqldb-mcp-server --client claude\r\n```\r\n\r\n## 发展\r\n\r\n### 建筑与出版\r\n\r\n准备分发包裹：\r\n\r\n1. 同步依赖关系并更新锁文件：\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n2. 构建包分发：\r\n\r\n```bash\r\nuv build\r\n```\r\n\r\n这将在 `dist/` 目录。\r\n\r\n3. 发布到PyPI：\r\n\r\n```bash\r\nuv publish\r\n```\r\n\r\n注意：您需要通过环境变量或命令标志设置PyPI凭据：\r\n\r\n- 令牌： `--token` 或 `UV_PUBLISH_TOKEN`\r\n- 或用户名/密码： `--username`/`UV_PUBLISH_USERNAME` 和 `--password`/`UV_PUBLISH_PASSWORD`\r\n\r\n### 调试\r\n\r\n由于MCP服务器在stdio上运行，调试可能具有挑战性。为了达到最佳调试效果\r\n经验，我们强烈建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector).\r\n\r\n您可以通过以下方式启动MCP检查器 [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) 使用此命令：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv --directory /Users/burakdirin/Projects/mysqldb-mcp-server run mysqldb-mcp-server\r\n```\r\n\r\n启动后，检查器将显示一个URL，您可以在浏览器中访问该URL以开始调试。\r\n",
+ "config": {
+  "mysqldb-mcp-server": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/Users/burakdirin/Projects/mysqldb-mcp-server",
+    "run",
+    "mysqldb-mcp-server"
+   ],
+   "env": {
+    "MYSQL_HOST": "localhost",
+    "MYSQL_USER": "root",
+    "MYSQL_PASSWORD": "password",
+    "MYSQL_DATABASE": "[optional]",
+    "MYSQL_READONLY": "true"
+   }
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "249",
+ "kind": "mcp",
+ "name": "itunescontrolserver",
+ "fingerprint_md5": "1ed34241f148e2fd1f975b04d6e247b9",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://mseep.ai/app/kennethreitz-mcp-applemusic)\r\n\r\n# MCP苹果音乐\r\n\r\nFastMCP服务器实现，用于通过AppleScript命令在macOS上控制Apple Music（以前的iTunes）。\r\n\r\n## 需求\r\n\r\n- Python 3.13+\r\n- 安装了Apple Music应用程序的macOS\r\n- MCP库≥1.2.1\r\n\r\n## 安装\r\n\r\n首先，确保您安装了紫外线：\r\n\r\n```bash\r\n$ brew install uv\r\n```\r\n\r\n然后，随着 **克劳德桌面**，添加以下内容 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"iTunesControlServer\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"-p\", \"3.13\", \"-n\", \"mcp-applemusic\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用命令\r\n\r\n以下命令可通过MCP服务器使用：\r\n\r\n```python\r\nitunes_play()         # Start playback\r\nitunes_pause()        # Pause playback\r\nitunes_next()         # Skip to next track\r\nitunes_previous()     # Go to previous track\r\nitunes_search(query)  # Search library for tracks\r\nitunes_play_song(song)  # Play specific song\r\nitunes_create_playlist(name, songs)  # Create new playlist\r\nitunes_library()      # Get library statistics\r\n```\r\n\r\n## 用法\r\n\r\n启动服务器：\r\n\r\n```bash\r\npython server.py\r\n```\r\n\r\n交互示例：\r\n\r\n```python\r\n# Search for a song\r\nresults = itunes_search(\"Hey Jude\")\r\n\r\n# Create a new playlist\r\nitunes_create_playlist(\"Beatles Favorites\", [\"Yesterday\", \"Hey Jude\", \"Let It Be\"])\r\n\r\n# Play a specific song\r\nitunes_play_song(\"Hey Jude\")\r\n```\r\n\r\n## 发展\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/yourusername/mcp-applemusic.git\r\ncd mcp-applemusic\r\n```\r\n\r\n2. 安装开发依赖项：\r\n\r\n```bash\r\npip install -e \".[dev]\"\r\n```\r\n\r\n## 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建功能分支(`git checkout -b feature/amazing-feature`)\r\n1. 提交您的更改(`git commit -m 'Add amazing feature'`)\r\n1. 推到分支(`git push origin feature/amazing-feature`)\r\n1. 打开拉取请求\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。\r\n\r\n## 备注\r\n\r\n- 由于其AppleScript依赖性，此工具仅适用于macOS系统\r\n- 需要安装Apple Music（以前的iTunes）\r\n",
+ "config": {
+  "itunescontrolserver": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "-p",
+    "3.13",
+    "-n",
+    "mcp-applemusic"
+   ],
+   "env": {}
+  }
+ }
+}

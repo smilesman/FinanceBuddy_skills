@@ -1,0 +1,18 @@
+{
+ "id": "222",
+ "kind": "mcp",
+ "name": "gensokyo-mcp",
+ "fingerprint_md5": "e9ca9b2ad80af8a4700fb75e55f5fa43",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# gensokyo\r\n\r\n_✨ 基于 [OneBot](https://github.com/howmanybots/onebot/blob/master/README.md) MCP-Onebot机器人Api Golang 原生实现 ✨_  \r\n\r\n\r\n文档\r\n  ·\r\n  下载\r\n  ·\r\n  开始使用\r\n  ·\r\n  参与贡献\r\n\r\n\r\n项目主页:gensokyo.bot\r\n\r\n\r\n### 兼容性\r\n\r\n**gensokyo** 兼容 [OneBot-v11](https://github.com/botuniverse/onebot-11)，详细信息请参考 OneBot 官方文档。\r\n支持将 OneBot-v11 标准机器人的反向 WebSocket 作为 MCP Server。\r\n\r\n以下项目均可无缝连接，包括：\r\n\r\n* koishi\r\n* nonebot2\r\n* trss\r\n* zerobot\r\n* MiraiCQ\r\n* hoshino\r\n* tata\r\n* 派蒙\r\n* 炸毛\r\n* 早苗\r\n* 修仙\r\n* yobot\r\n* Mirai (Overflow)\r\n* 以及其他支持 OneBot-v11 协议的相关项目\r\n\r\n同时，**gensokyo** 支持连接至 VScode-Cline、Claude、OpenAI 以及各类支持 MCP 的应用平台，可以与其他支持 OneBot-v11 适配器的项目协同使用。\r\n\r\n开发者和用户无需重新开发插件，可直接复用生态内的现有插件及使用体验。\r\n项目持续完善中，欢迎加入交流群（196173384）参与测试或交流使用问题，欢迎随时提问，我们会及时为您解答与协助。\r\n\r\n### 主要用途\r\n\r\n* 开发者测试\r\n* 截图展示\r\n* 个人娱乐\r\n* 工具使用与效率拓展\r\n\r\n\r\n### MCP 服务使用方式\r\n\r\n**第一步：启动服务**\r\n运行 gensokyo 后，项目会自动释放 `config.yml` 配置文件。\r\n\r\n**第二步：配置连接参数**\r\n在 `config.yml` 中，设置需要连接的 OneBot-v11 反向 WebSocket 地址。\r\n\r\n以 cline 为例，配置方式如下。请注意 `/sse/sse` 路径出现了两次，确保地址填写无误：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gensokyo-mcp\": {\r\n      \"autoApprove\": [\r\n        \"call_ws\"\r\n      ],\r\n      \"disabled\": false,\r\n      \"timeout\": 30,\r\n      \"url\": \"http://127.0.0.1:8090/sse/sse\",\r\n      \"transportType\": \"sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n* 支持本地连接（如示例所示），也支持远程连接，只需将 `url` 换为对应地址即可。\r\n* 其他 MCP 客户端的连接方式，可直接复制 cline 的配置模板，修改参数后使用。如有疑问，欢迎将配置发送至交流群，或询问 AI 获取针对性帮助。\r\n\r\n## 教程索引\r\n\r\n> [💙 Windows 端 VSCode-Cline + gensokyo-mcp 早苗接入完整教程](./doc/sanae.md)\r\n\r\n**常见问题**\r\n如遇到连接异常或配置相关问题，请加入交流群 196173384 进行反馈，我们将协助你快速解决。\r\n\r\n\r\n### 效果图（连接修仙插件）\r\n\r\n\r\n示例1：修仙插件界面\r\n\r\n\r\n示例2：效果\r\n\r\n\r\n* 任何onebotv11的插件类型,比如天气\\游戏查询\\娱乐均可作为MCP Server使用. 即刻将数千个Onebotv11生态插件转化为ai工具\r\n\r\n\r\n### 接口\r\n\r\n由于本项目是由gensokyo-wxmp重构的，目前仅支持传递文本，仅支持反向ws方式连接Onebotv11机器人应用.\r\n\r\n- [] HTTP API\r\n- [] 反向 HTTP POST\r\n- [] 正向 WebSocket\r\n- [x] 反向 WebSocket\r\n\r\n### 拓展支持\r\n\r\n> 拓展 API 可前往 [文档](docs/cqhttp.md) 查看\r\n\r\n- [x] 连接多个ws地址\r\n- [x] 将MCP用户信息虚拟成群事件/私聊事件\r\n- [x] 持续更新~\r\n\r\n\r\n### 实现\r\n\r\n\r\n已实现 API\r\n\r\n#### 符合 OneBot 标准的 API\r\n\r\n| API                      | 功能                   |\r\n| ------------------------ | ---------------------- |\r\n| /send_group_msg√         | [发送MCP回复消息]           |\r\n\r\n\r\n已实现 Event\r\n\r\n#### 符合 OneBot 标准的 Event（部分 Event 比 OneBot 标准多上报几个字段，不影响使用）\r\n\r\n| 事件类型 | Event            |\r\n| -------- | ---------------- |\r\n| 消息事件 | [MCP信息虚拟私聊信息]TODO       |\r\n| 消息事件 | [MCP信息虚拟群消息]         |\r\n\r\n\r\n## 关于 ISSUE\r\n\r\n以下 ISSUE 会被直接关闭\r\n\r\n- 提交 BUG 不使用 Template\r\n- 询问已知问题\r\n- 提问找不到重点\r\n- 重复提问\r\n\r\n> 请注意, 开发者并没有义务回复您的问题. 您应该具备基本的提问技巧。  \r\n> 有关如何提问，请阅读[《提问的智慧》](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md)\r\n\r\n## 性能\r\n\r\n10mb内存占用 端口错开可多开 稳定运行无报错\r\n",
+ "config": {
+  "gensokyo-mcp": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://127.0.0.1:8090/sse/sse"
+  }
+ }
+}

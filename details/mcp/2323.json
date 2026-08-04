@@ -1,0 +1,24 @@
+{
+ "id": "2323",
+ "kind": "mcp",
+ "name": "taiwan-weather",
+ "fingerprint_md5": "949eea6c2c02bfae956a427f7bf9e657",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 臺灣氣象 - 中央氣象署 MCP Server (非官方)\r\n\r\n用於取得臺灣中央氣象署 API 資料的 Model Context Protocol (MCP) Server。\r\n\r\n### Model Context Protocol (MCP) 是什麼？\r\n\r\nMCP 是一個開放協議，它標準化了應用程式如何為大型語言模型 (LLMs) 提供上下文。可以將 MCP 想像成 AI 應用程式的 USB-C 接口。就像 USB-C 為您的設備提供了一種標準化的方式來連接各種外圍設備和配件，MCP 提供了一種標準化的方式來將 AI 模型連接到不同的數據源和工具。\r\n\r\n詳細介紹請參考 [Model Context Protocol](https://modelcontextprotocol.io/introduction) 官方頁面。\r\n\r\n## 功能\r\n\r\n- 取得臺灣各縣市天氣預報資料 - 今明 36 小時天氣預報\r\n\r\n## API\r\n\r\n### Tools\r\n\r\n1. `get_taiwan_weather_forecast`\r\n   - 取得臺灣各縣市天氣預報資料 - 今明 36 小時天氣預報\r\n   - 輸入參數：\r\n     - `locationName` (string): 臺灣縣市名稱\r\n   - 返回值：中央氣象署 API `F-C0032-001` 資料 Json (key records)\r\n\r\n## 對話例子\r\n\r\n### 取得臺灣各縣市天氣預報資料 - 今明 36 小時天氣預報\r\n- 高雄今天天氣如何呢？\r\n- 我想知道屏東的天氣\r\n- 台北氣象預報\r\n\r\n## 設置\r\n\r\n### 臺灣中央氣象署 API 授權碼\r\n\r\n您必須先取得臺灣中央氣象署 API 授權碼：\r\n- 前往 https://opendata.cwa.gov.tw/user/authkey (需登入帳號，沒有的話請註冊)\r\n- 點擊 \"取得授權碼\" 按鈕\r\n- 複製授權碼\r\n\r\n### 用於 Claude Desktop 或其他支援 MCP 的應用程式\r\n\r\n要在 Claude Desktop 中使用，請將以下內容添加到您的 `claude_desktop_config.json`：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"taiwan-weather\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@gonetone/mcp-server-taiwan-weather\"\r\n      ],\r\n      \"env\": {\r\n        \"CWA_API_KEY\": \"\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果要在其他支援 MCP 的應用程式中使用，請參考該應用程式的設定文件。\r\n\r\n## Windows npx 問題\r\n\r\n如果在 Windows 上使用 npx 執行 MCP Server 時無法執行，可以改用以下其中一個方法嘗試：\r\n\r\n### 使用 cmd 執行 npx\r\n\r\n配置改用 `cmd` 執行 `npx`：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"taiwan-weather\": {\r\n      \"command\": \"cmd\",\r\n      \"args\": [\r\n        \"/c\",\r\n        \"npx\",\r\n        \"-y\",\r\n        \"@gonetone/mcp-server-taiwan-weather\"\r\n      ],\r\n      \"env\": {\r\n        \"CWA_API_KEY\": \"\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 改用 `node` 執行\r\n\r\n將 `@gonetone/mcp-server-taiwan-weather` 全域安裝：\r\n\r\n```bash\r\nnpm install -g @gonetone/mcp-server-taiwan-weather\r\n```\r\n\r\n然後配置改用 `node` 執行：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"taiwan-weather\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"/node_modules/@gonetone/mcp-server-taiwan-weather\"\r\n      ],\r\n      \"env\": {\r\n        \"CWA_API_KEY\": \"\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您可以使用 `npm root -g` 指令來查看全域安裝的 `node_modules` 目錄路徑。\r\n\r\n## 貢獻\r\n\r\nIssues 和 Pull requests 可以在 GitHub 上的 https://github.com/GoneTone/mcp-server-taiwan-weather 提出。\r\n\r\n### Build\r\n\r\n```bash\r\nyarn build\r\n```\r\n\r\n### Test\r\n\r\n可以使用 [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector) 來測試 MCP Server：\r\n\r\n```bash\r\nnpx -y @modelcontextprotocol/inspector -e CWA_API_KEY={您的中央氣象署 API 授權碼} node .\r\n```\r\n\r\n詳情請參考 [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector) 官方頁面。\r\n\r\n## License\r\n\r\nThis MCP server is licensed under the MIT License. This means you are free to use, modify, and distribute the software, subject to the terms and conditions of the MIT License. For more details, please see the LICENSE file in the project repository.\r\n",
+ "config": {
+  "taiwan-weather": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@gonetone/mcp-server-taiwan-weather"
+   ],
+   "env": {
+    "CWA_API_KEY": "<您的中央氣象署 API 授權碼>"
+   }
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "feishu-docx-powerwrite",
+ "kind": "skill",
+ "name": "feishu-docx-powerwrite",
+ "fingerprint_md5": "0282b6907f03b2609ae1f95ae3545d8b",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Feishu Docx PowerWrite\r\n\r\nThis skill focuses on **reliably writing great-looking Feishu Docx** using OpenClaw's Feishu OpenAPI tools.\r\n\r\nKey idea: prefer **`feishu_docx_write_markdown`** (Markdown → Docx blocks) for structure-preserving output.\r\n\r\n## Quick workflow\r\n\r\n1) Get `document_id` (Docx token)\r\n- From a Docx URL: `https://.../docx/<document_id>`\r\n\r\n2) Decide write mode\r\n- **Append**: add new content below existing content (most common)\r\n- **Replace**: overwrite the entire document (use carefully)\r\n\r\n3) Write markdown\r\n- Use headings + lists + short paragraphs\r\n- Avoid huge single paragraphs (harder to read)\r\n\r\n## Recommended defaults\r\n\r\n### Append mode (safe)\r\nUse when adding sections, meeting notes, daily logs.\r\n\r\n- `mode: append`\r\n- Keep each append chunk <= ~300-600 lines if possible\r\n\r\n### Replace mode (destructive)\r\nUse when generating the full doc from scratch.\r\n\r\n- `mode: replace`\r\n- MUST set `confirm: true`\r\n\r\n## Markdown patterns that render well\r\n\r\n### Title + summary\r\n```md\r\n# <Title>\r\n\r\n**Summary**\r\n- Point 1\r\n- Point 2\r\n\r\n---\r\n```\r\n\r\n### Sections\r\n```md\r\n## Section\r\n\r\nShort paragraph.\r\n\r\n- Bullet\r\n- Bullet\r\n\r\n### Subsection\r\n\r\n1) Step\r\n2) Step\r\n```\r\n\r\n### Code\r\nUse fenced blocks.\r\n\r\n```md\r\n```bash\r\nopenclaw skills check\r\n```\r\n```\r\n\r\n## Templates & references\r\n\r\n- Templates: `references/templates.md`\r\n- Troubleshooting: `references/troubleshooting.md`\r\n\r\n## Safety / privacy\r\n\r\n- Never hardcode tokens, chat_id, open_id, or document links inside this skill.\r\n- Always use the user's own Feishu app credentials and scopes.",
+ "config": {}
+}

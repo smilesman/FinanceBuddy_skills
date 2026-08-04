@@ -1,0 +1,28 @@
+{
+ "id": "1176",
+ "kind": "mcp",
+ "name": "neo4j-graphrag",
+ "fingerprint_md5": "a814efd7f244d88c8a0a747289e08d66",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Neo4j GraphRAG MCP服务器\r\n\r\n\r\n一个扩展了Neo4j的MCP服务器 **向量搜索**, **全文搜索**，以及 **搜索增强的Cypher查询** 用于GraphRAG应用程序。\r\n\r\n> **灵感源自** 这 [Neo4j实验室 `mcp-neo4j-cypher`](https://github.com/neo4j-contrib/mcp-neo4j/tree/main/servers/mcp-neo4j-cypher) 服务器。该服务器增加了矢量搜索、全文搜索和创新的 `search_cypher_query` 用于将搜索与图遍历相结合的工具。\r\n\r\n## 概述\r\n\r\n此服务器使LLM能够：\r\n\r\n- 🔍 使用语义相似度搜索Neo4j向量索引\r\n- 📝 使用Lucene语法搜索全文索引\r\n- ⚡ 通过以下方式将搜索与Cypher查询相结合 `search_cypher_query`\r\n- 🕸️ 执行只读Cypher查询\r\n\r\n建立在 [文学硕士](https://docs.litellm.ai/) 用于多提供商嵌入支持（OpenAI、Azure、Bedrock、Cohere等）。\r\n\r\n> **相关：** 有关官方Neo4j MCP服务器，请参阅 [neo4j/mcp](https://github.com/neo4j/mcp)有关Neo4j Labs MCP服务器（Cypher、内存、数据建模），请参阅 [neo4j控件/mcpneo4j](https://github.com/neo4j-contrib/mcp-neo4j).\r\n\r\n## 安装\r\n\r\n```bash\r\n# Using pip\r\npip install mcp-neo4j-graphrag\r\n\r\n# Using uv (recommended)\r\nuv pip install mcp-neo4j-graphrag\r\n```\r\n\r\n## 配置\r\n\r\n### 克劳德桌面版\r\n\r\n编辑配置文件：\r\n\r\n- **macOS/Linux：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"neo4j-graphrag\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-neo4j-graphrag\"],\r\n      \"env\": {\r\n        \"NEO4J_URI\": \"neo4j+s://demo.neo4jlabs.com\",\r\n        \"NEO4J_USERNAME\": \"recommendations\",\r\n        \"NEO4J_PASSWORD\": \"recommendations\",\r\n        \"NEO4J_DATABASE\": \"recommendations\",\r\n        \"OPENAI_API_KEY\": \"sk-...\",\r\n        \"EMBEDDING_MODEL\": \"text-embedding-ada-002\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **备注**: `uvx` 自动从PyPI下载并运行包。无需本地安装！\r\n\r\n### 光标\r\n\r\n编辑 `~/.cursor/mcp.json` 或 `.cursor/mcp.json` 在你的项目中。使用与上述相同的配置。\r\n\r\n### 重新加载配置\r\n\r\n- **克劳德桌面：** 退出并重新启动应用程序\r\n- **光标：** 重新加载窗口（Cmd/Ctrl+Shift+P→ “重新加载窗口”）\r\n\r\n## 工具\r\n\r\n### `get_neo4j_schema_and_indexes`\r\n\r\n发现图模式、向量索引和全文索引。\r\n\r\n💡 在使用其他工具理解数据库的模式和索引之前，代理应首先自动调用此工具。\r\n\r\n**示例提示：**\r\n\r\n> “数据库里面有什么？”\r\n\r\n### `vector_search`\r\n\r\n使用嵌入进行语义相似性搜索。\r\n\r\n**参数：** `text_query`, `vector_index`, `top_k`, `return_properties`\r\n\r\n**示例提示：**\r\n\r\n> “什么电影是关于人工智能的？”\r\n\r\n### `fulltext_search`\r\n\r\n使用Lucene语法（AND、OR、通配符、模糊）进行关键字搜索。\r\n\r\n**参数：** `text_query`, `fulltext_index`, `top_k`, `return_properties`\r\n\r\n**示例提示：**\r\n\r\n> “找个叫汤姆的人”\r\n\r\n### `read_neo4j_cypher`\r\n\r\n执行只读Cypher查询。\r\n\r\n**参数：** `query`, `params`\r\n\r\n**示例提示：**\r\n\r\n> “显示所有类型以及每种类型有多少部电影”\r\n\r\n### `search_cypher_query`\r\n\r\n将矢量/全文搜索与Cypher查询相结合。使用 `$vector_embedding` 和 `$fulltext_text` 占位符。\r\n\r\n**参数：** `cypher_query`, `vector_query`, `fulltext_query`, `params`\r\n\r\n**示例提示：**\r\n\r\n> “在一个问题中，关于‘时间旅行冒险’的电影导演和类型是什么？”\r\n\r\n## 环境变量\r\n\r\n|变量|必填|默认|描述|\r\n|----------|----------|---------|-------------|\r\n| `NEO4J_URI` |是的| `bolt://localhost:7687` |Neo4j连接URI|\r\n| `NEO4J_USERNAME` |是的| `neo4j` |Neo4j用户名|\r\n| `NEO4J_PASSWORD` |是的| `password` |Neo4j密码|\r\n| `NEO4J_DATABASE` |没有| `neo4j` |数据库名称|\r\n| `EMBEDDING_MODEL` |没有| `text-embedding-3-small` |嵌入模型（见下文）|\r\n\r\n### 嵌入提供者\r\n\r\n集 `EMBEDDING_MODEL` 以及相应的API密钥：\r\n\r\n|提供程序|模型格式| API密钥变量|\r\n|----------|-------------|------------------|\r\n|OpenAI| `text-embedding-ada-002` | `OPENAI_API_KEY` |\r\n|Azure| `azure/deployment-name` | `AZURE_API_KEY`, `AZURE_API_BASE` |\r\n|基岩| `bedrock/amazon.titan-embed-text-v1` | `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` |\r\n|科恩| `cohere/embed-english-v3.0` | `COHERE_API_KEY` |\r\n|奥拉马| `ollama/nomic-embed-text` | *（无-本地）* |\r\n\r\n## 高级主题\r\n\r\n看 [docs/ADVANCED.md](docs/ADVANCED.md) 用于：\r\n\r\n- 与Neo4j实验室的比较 `mcp-neo4j-cypher` 服务器\r\n- 生产特性（输出净化、令牌限制）\r\n- 详细的工具文档\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n",
+ "config": {
+  "neo4j-graphrag": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-neo4j-graphrag"
+   ],
+   "env": {
+    "NEO4J_URI": "neo4j+s://demo.neo4jlabs.com",
+    "NEO4J_USERNAME": "recommendations",
+    "NEO4J_PASSWORD": "recommendations",
+    "NEO4J_DATABASE": "recommendations",
+    "OPENAI_API_KEY": "sk-...",
+    "EMBEDDING_MODEL": "text-embedding-ada-002"
+   }
+  }
+ }
+}

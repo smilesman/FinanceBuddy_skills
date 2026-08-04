@@ -1,0 +1,24 @@
+{
+ "id": "848",
+ "kind": "mcp",
+ "name": "scriptivox",
+ "fingerprint_md5": "a65ee0b9c98d4d19ad226e8d98fee0c5",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# @scriptivox/mcp服务器\r\n\r\n\r\nMCP（模型上下文协议）服务器 [Scriptivox](https://scriptivox.com) --人工智能驱动的音频和视频转录。\r\n\r\n将任何AI助手变成转录引擎。以99%的准确率从URL或本地文件转录音频和视频， **119种语言**，以及字级时间戳。加上完整的转录CRUD（取消、删除、列表）和SRT/WebVTT/纯文本字幕导出。\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"scriptivox\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@scriptivox/mcp-server\"],\r\n      \"env\": {\r\n        \"SCRIPTIVOX_API_KEY\": \"sk_live_YOUR_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add scriptivox -- npx -y @scriptivox/mcp-server\r\n```\r\n\r\n然后设置环境变量 `SCRIPTIVOX_API_KEY=sk_live_YOUR_KEY`.\r\n\r\n### 其他MCP客户端\r\n\r\n任何兼容MCP的客户端都可以通过stdio传输使用此服务器：\r\n\r\n```bash\r\nSCRIPTIVOX_API_KEY=sk_live_YOUR_KEY npx -y @scriptivox/mcp-server\r\n```\r\n\r\n## 获取API密钥\r\n\r\n1. 注册地址： [platform.scriptivox.com](https://platform.scriptivox.com)\r\n1. 首选 **[钥匙](https://platform.scriptivox.com/keys)** 在仪表板中\r\n1. 创建API密钥（从 `sk_live_...`)\r\n1. 在以下位置添加学分 **[计费](https://platform.scriptivox.com/billing)** （最低5美元-API定价为每小时音频0.20美元）\r\n\r\n## 工具\r\n\r\n### 发现工具（不需要API密钥）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_supported_languages` |列出所有119种支持的ISO代码转录语言|\r\n| `get_pricing` |查看计划、API定价和上限|\r\n| `get_product_info` |了解Scriptivox功能(`transcription`, `audio-tools`, `video-tools`, `subtitle-tools`, `meeting-bot`, `api`, `all`) |\r\n| `get_api_docs` |API文件部分(`quickstart`, `transcribe`, `result`, `list`, `cancel`, `delete`, `upload`, `balance`, `webhooks`, `errors`, `all`) |\r\n\r\n### 转录工具（需要API密钥）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `transcribe_url` |从公共URL（Google Drive、Dropbox、OneDrive或直接文件URL）转录音频/视频。支持 `language`, `diarize`, `speaker_count`, `align`, `webhook_url`, `idempotency_key`, `await_completed`. |\r\n| `transcribe_upload` |转录一个本地文件。在内部驱动3步上传流。高达5 GB。 |\r\n| `transcribe_status` |按ID检查转录的状态。完成后返回完整转录。 |\r\n| `transcribe_cancel` |取消飞行中的转录。退还预留余额。我暂时没有。 |\r\n| `transcribe_delete` |软删除转录记录。我暂时没有。拒绝删除飞行中的作业。 |\r\n| `list_transcriptions` |列出最近的转录 `status`, `from`, `to`, `limit`, `cursor`, `order` 过滤器。 |\r\n| `export_transcript` |将完成的成绩单导出为SRT字幕、WebVTT字幕或纯文本。分段旋钮： `max_words`, `max_chars`, `max_duration`, `sentence_aware`, `include_speakers`, `strip_chars`. |\r\n| `check_balance` |查看您的API信用余额和预计可用小时数。 |\r\n\r\n### 提示：始终通过 `language` 当你知道的时候\r\n\r\n自动检测在大多数情况下都有效，但在短片、代码切换音频或以音乐开头的文件上失败率很小。传递ISO代码既更快又更准确。\r\n\r\n## 使用示例\r\n\r\n连接后，询问您的AI助手：\r\n\r\n- *“转录此播客：https://example.com/episode.mp3--是英文的”*\r\n- *“转录~/下载/meeting.m4a，带说话者标识”*\r\n- *“显示我最近的5个转录”*\r\n- *“取消转录abc123-…”*\r\n- *“将转录abc123-…导出为SRT字幕，每个字幕2个单词”*\r\n- *“Scriptivox支持哪些语言？”*\r\n- *“检查我的Scriptivox余额”*\r\n\r\n## 资源\r\n\r\n服务器公开这些MCP资源，供AI助手读取：\r\n\r\n- `scriptivox://pricing` --计划和费率\r\n- `scriptivox://languages` --支持的语言\r\n- `scriptivox://api-docs` -API参考\r\n\r\n## 提示\r\n\r\n- `transcribe-audio` --预构建的URL转录提示\r\n- `meeting-notes` --转录会议并生成结构化笔记\r\n\r\n## 配置\r\n\r\n|环境变量|描述|必填|\r\n|---------------------|-------------|----------|\r\n| `SCRIPTIVOX_API_KEY` |您的API密钥(`sk_live_...`)|用于转录工具|\r\n| `SCRIPTIVOX_API_URL` |自定义API基础URL |否（默认为生产版）|\r\n\r\n## 定价\r\n\r\n- **免费计划**：3次转录/天，最多30分钟\r\n- **专业版**：20美元/月--无限制转录\r\n- **API**：0.20美元/小时的音频（按需付费）\r\n\r\n## 链接\r\n\r\n- [Scriptivox](https://scriptivox.com) --主网站\r\n- [API文档](https://scriptivox.com/docs/api-reference) -API完整参考\r\n- [仪表板](https://platform.scriptivox.com) --管理您的帐户\r\n- [史密瑟里](https://smithery.ai) --MCP服务器注册表\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "scriptivox": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@scriptivox/mcp-server"
+   ],
+   "env": {
+    "SCRIPTIVOX_API_KEY": "sk_live_YOUR_KEY"
+   }
+  }
+ }
+}

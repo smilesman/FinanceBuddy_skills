@@ -1,0 +1,24 @@
+{
+ "id": "1702",
+ "kind": "mcp",
+ "name": "safe-local-python-executor",
+ "fingerprint_md5": "50b61455b9aa3c3e87a2fc64dd5dc495",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 安全的本地Python执行器\r\n\r\n封装Hugging Face的MCP服务器（stdio传输） [`LocalPythonExecutor`](https://github.com/huggingface/smolagents/blob/main/src/smolagents/local_python_executor.py)\r\n（从 [`smolagents`](https://huggingface.co/docs/smolagents/en/index) 框架）。这是一个自定义的Python运行时\r\n在本地运行LLM生成的Python代码时提供基本的隔离/安全性。它不需要Docker或VM。\r\n此包允许通过MCP（模型上下文协议）公开Python执行器，作为Claude Desktop、Cursor或任何其他MCP兼容客户端等LLM应用程序的工具。\r\n对于Claude Desktop，此工具是添加缺失的代码解释器的一种简单方法（作为ChatGPT中的插件已经有一段时间了）。\r\n\r\n\r\n## 特性\r\n\r\n- 暴露 `run_python` 工具\r\n- 与直接使用Python相比，更安全地执行Python代码 `eva()l`\r\n- 在Python venv中通过uv运行\r\n- 不允许文件I/O操作\r\n- 进口限制清单\r\n  - 收藏\r\n  - 日期时间\r\n  - itertools\r\n  - 数学\r\n  - 队列\r\n  - 随机\r\n  - 关于\r\n  - 状态\r\n  - 统计\r\n  - 时间\r\n  - 独角兽数据\r\n\r\n## 安全\r\n\r\n在您的机器上执行LLM生成的代码时要小心，远离通过命令行或使用 `eval()`最安全的选择是使用VM或docker容器，尽管它需要一些努力来设置，消耗资源/速度较慢。有第三方服务提供Python运行时，尽管它们需要注册、API密钥等。\r\n\r\n`LocalPythonExecutor` 在直接使用本地Python环境（更容易设置）和在Dokcer容器或VM/第三方服务中远程执行（更安全）之间提供了良好的平衡。Hugginng Face团队投入时间创建了一个快速安全的选项，用于运行其代码代理使用的LLM生成的代码。此MCP服务器在此基础上构建：\r\n\r\n> 为了增加第一层安全性，smolagents中的代码执行不是由vanilla Python解释器执行的。我们从头开始重新构建了一个更安全的LocalPythonExecutor。\r\n\r\n阅读更多 [这里](https://huggingface.co/docs/smolagents/en/tutorials/secure_code_execution#local-code-execution).\r\n\r\n## 安装和执行\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的安全本地Python执行器 [史密瑟里](https://smithery.ai/server/@maxim-saplin/mcp_safe_local_python_executor):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @maxim-saplin/mcp_safe_local_python_executor --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n1. 安装 `uv` （e.h。 `brew install uv` 在macOS上或使用 [官方文件](https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_2))\r\n1. 克隆仓库，更改目录 `cd mcp_safe_local_python_executor`\r\n1. 服务器可以通过命令行启动 `uv run mcp_server.py`，将自动创建venv，将安装依赖项（smollagents、mcp）\r\n\r\n## 配置Claude桌面\r\n\r\n1. 确保您已安装Claude for Desktop（从下载 [claude.ai](https://claude.ai/desktop))\r\n\r\n1. 编辑您的Claude for Desktop配置文件：\r\n\r\n   - macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n   - 或者打开克劳德桌面->设置->开发人员->点击“编辑配置”按钮\r\n\r\n1. 添加以下配置：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"safe-local-python-executor\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\", \r\n                \"/path/to/mcp_local_python_executor/\",\r\n                \"run\",\r\n                \"mcp_server.py\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n4. 重新启动桌面版的Claude\r\n1. Python执行器工具现在将在Claude中可用（您将在消息输入字段中看到锤子图标）\r\n\r\n## 示例提示\r\n\r\n配置后，您可以使用以下提示：\r\n\r\n- “使用Python计算5的阶乘”\r\n- “创建一个最多100的素数列表”\r\n- “求解此方程（使用Python）：x^2+5x+6=0”\r\n\r\n## 发展\r\n\r\n克隆仓库。使用 `uv` 要创建venv，安装dev依赖项，运行测试：\r\n\r\n```\r\nuv venv .venv\r\nuv sync --group dev\r\npython -m pytest tests/\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@maxim-saplin/mcp_safe_local_python_executor\">\r\n  \r\n</a>\r\n\r\n[](https://smithery.ai/server/@maxim-saplin/mcp_safe_local_python_executor)\r\n\r\n[](https://mseep.ai/app/maxim-saplin-mcp-safe-local-python-executor)\r\n",
+ "config": {
+  "safe-local-python-executor": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/mcp_local_python_executor/",
+    "run",
+    "mcp_server.py"
+   ],
+   "env": {}
+  }
+ }
+}

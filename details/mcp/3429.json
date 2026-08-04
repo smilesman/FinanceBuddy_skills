@@ -1,0 +1,21 @@
+{
+ "id": "3429",
+ "kind": "mcp",
+ "name": "everything-search",
+ "fingerprint_md5": "0446982a6f0b8616d54b16bff7a888ac",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 所有MCP服务器\r\n\r\n\r\n集成了MCP（模型上下文协议）的服务器 [一切](https://www.voidtools.com/) 使用Claude Desktop进行文件搜索。立即从Claude搜索整个Windows文件系统。\r\n\r\n## 特性\r\n\r\n- ⚡ **即时搜索** -利用Everything闪电般快速的文件索引\r\n- 🔍 **多种搜索模式** -基本、过滤、正则表达式、基于类型、基于属性\r\n- 📁 **文件夹操作** -在特定路径内搜索，查找空文件夹\r\n- 📊 **统计** -在不列出文件的情况下获取文件计数和总大小\r\n- 🕐 **最近使用的文件** -查找最近修改的文件\r\n- 📋 **重复查找器** -查找同名文件\r\n- 💾 **出口** -将结果保存为txt、csv、json等格式\r\n\r\n## 先决条件\r\n\r\n1. **视窗** -所有东西都只能在Windows上运行\r\n1. **[一切](https://www.voidtools.com/)** 必须安装并运行\r\n1. **e.exe** （Everything命令行）已安装\r\n   - 从以下位置安装：https://github.com/voidtools/es\r\n   - 一定在里面 `%LOCALAPPDATA%\\Microsoft\\WindowsApps`\r\n\r\n## 安装\r\n\r\n### 使用uvx（推荐）\r\n\r\n```bash\r\nuvx mcp-everything-search\r\n```\r\n\r\n### 使用pip\r\n\r\n```bash\r\npip install mcp-everything-search\r\n```\r\n\r\n## 配置\r\n\r\n将此添加到您的Claude Desktop配置文件中：\r\n\r\n**地点：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n### 使用uvx\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"everything-search\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-everything-search\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用pip\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"everything-search\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"-m\", \"mcp_everything_search\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Everything 1.5 Alpha用户\r\n\r\n如果你使用的是Everything 1.5 alpha，请添加 `EVERYTHING_INSTANCE` 环境变量：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"everything-search\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-everything-search\"],\r\n      \"env\": {\r\n        \"EVERYTHING_INSTANCE\": \"1.5a\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后 **重新启动克劳德桌面**.\r\n\r\n## 可用工具\r\n\r\n### 基本搜索\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_files` |使用通配符的基本文件搜索(`*`, `?`)，排序选项|\r\n| `search_with_filters` |仅使用扩展名、大小、路径过滤器、文件/文件夹进行搜索|\r\n| `search_regex` |使用正则表达式搜索|\r\n\r\n### 专用搜索\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_by_type` |按类别搜索：音频、视频、图像、文档、可执行文件、压缩文件、代码|\r\n| `search_folders` |仅查找目录|\r\n| `search_recent_files` |查找最近修改的文件|\r\n| `search_duplicates` |查找同名文件|\r\n| `search_by_attributes` |按隐藏、系统、只读、压缩、加密进行筛选|\r\n| `search_empty_folders` |查找空目录|\r\n| `search_large_files` |查找超过指定大小的文件|\r\n\r\n### 公用事业\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_with_details` |搜索详细输出（大小、日期）|\r\n| `get_result_count` |获取不列出的比赛计数（快速）|\r\n| `get_total_size` |获取所有匹配文件的总大小|\r\n| `open_file_location` |在资源管理器中打开包含文件夹|\r\n| `get_file_info` |获取文件大小、日期和详细信息|\r\n| `export_search_results` |导出为txt、csv、json、m3u、m3u8、tsv、efu|\r\n\r\n## 查询示例\r\n\r\n问克劳德这样的问题：\r\n\r\n- “查找D:\\\\Projects中的所有Python文件”\r\n- “搜索大于10mb的PDF文件”\r\n- “查找过去3天内修改的图像”\r\n- “查找名为config.json的重复文件”\r\n- “在我的下载文件夹中查找所有视频文件”\r\n- “搜索与正则表达式匹配的文件 `test_.*\\.py$`\"\r\n- “在D:\\\\Archive中查找空文件夹”\r\n- “所有MP3文件的总大小是多少？”\r\n- “此项目中有多少个JavaScript文件？”\r\n- “在C:\\\\Windows中查找隐藏文件”\r\n- “将所有日志文件导出到CSV”\r\n\r\n## 排序选项\r\n\r\n多种工具支持 `sort_by` 参数：\r\n\r\n- `name`, `path`, `size`, `extension`\r\n- `date-modified`, `date-created`, `date-accessed`\r\n- 添加 `-descending` 对于相反顺序（例如。， `size-descending`)\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone the repo\r\ngit clone https://github.com/essovius/mcp-everything-search.git\r\ncd mcp-everything-search\r\n\r\n# Create virtual environment\r\npython -m venv venv\r\n.\\venv\\Scripts\\activate\r\n\r\n# Install in development mode\r\npip install -e .\r\n\r\n# Run the server\r\npython -m mcp_everything_search\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 了解详情。\r\n\r\n## 致谢\r\n\r\n- [一切](https://www.voidtools.com/) 通过voidtools\r\n- [模型上下文协议](https://modelcontextprotocol.io/) 通过Anthropic\r\n",
+ "config": {
+  "everything-search": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-everything-search"
+   ],
+   "env": {}
+  }
+ }
+}

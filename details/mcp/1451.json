@@ -1,0 +1,22 @@
+{
+ "id": "1451",
+ "kind": "mcp",
+ "name": "fluxui-server",
+ "fingerprint_md5": "dd08a51bcc96e6218542c0e272bb8df6",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Flux UI MCP服务器\r\n\r\nFlux UI组件引用的MCP服务器\r\n\r\n这是一个基于TypeScript的MCP服务器，为Flux UI组件提供参考信息。它实现了一个模型上下文协议（MCP）服务器，帮助AI助手访问Flux UI组件文档和示例。\r\n\r\n## 特性\r\n\r\n### 工具\r\n\r\n- `list_flux_components` -获取所有可用Flux UI组件的列表\r\n- `get_flux_component_details` -获取特定组件的详细信息\r\n- `get_flux_component_examples` -获取特定组件的使用示例\r\n- `search_flux_components` -按关键字搜索组件\r\n\r\n### 功能\r\n\r\n此服务器从以下位置抓取和缓存信息：\r\n\r\n- Flux UI官方文档网站(https://fluxui.dev)\r\n\r\n它提供结构化数据，包括：\r\n\r\n- 部件说明\r\n- 使用示例\r\n- 属性\r\n- 代码示例\r\n\r\n## 发展\r\n\r\n安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n对于自动重建的开发：\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n## 安装\r\n\r\n### Claude桌面配置\r\n\r\n要与Claude Desktop一起使用，请添加服务器配置：\r\n\r\n在MacOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n#### 选项1：使用本地构建\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fluxui-server\": {\r\n      \"command\": \"/path/to/fluxui-mcp-server/build/index.js\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 选项2：使用npx命令\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fluxui-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"fluxui-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 风帆配置\r\n\r\n将此添加到您的 `./codeium/windsurf/model_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fluxui-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"fluxui-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标配置\r\n\r\n将此添加到您的 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fluxui-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"fluxui-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 调试\r\n\r\n由于MCP服务器通过stdio进行通信，调试可能具有挑战性。我们建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector)，可作为包脚本使用：\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n检查器将提供一个URL，用于访问浏览器中的调试工具。\r\n",
+ "config": {
+  "fluxui-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "fluxui-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

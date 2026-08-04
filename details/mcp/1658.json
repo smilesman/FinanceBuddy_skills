@@ -1,0 +1,18 @@
+{
+ "id": "1658",
+ "kind": "mcp",
+ "name": "opentofu",
+ "fingerprint_md5": "e0dd733d305359fe384a4b36d6f01ae7",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# OpenTofu MCP服务器\r\n\r\n用于访问OpenTofu注册表的模型上下文协议（MCP）服务器。此服务器允许语言模型助手搜索和检索有关OpenTofu提供者、模块、资源和数据源的信息。\r\n\r\n既可作为本地Node.js服务器，也可作为远程Cloudflare Worker部署。\r\n\r\n## 特性\r\n\r\n- 在OpenTofu注册表中搜索提供者、模块、资源和数据源\r\n- 获取有关特定提供商和模块的详细信息\r\n- 访问资源和数据源的文档\r\n- 检索全面的OpenTofu配置示例\r\n- 用于AI助手的MCP兼容接口\r\n\r\n## 安装\r\n\r\n您可以将此MCP服务器与支持模型上下文协议的任何AI助手一起使用。在托管服务或本地安装之间进行选择：\r\n\r\n### 托管服务（推荐）\r\n\r\n最简单的入门方法是使用我们的托管服务 `mcp.opentofu.org`.好处包括：\r\n\r\n- ✅ 无需本地安装\r\n- ✅ 始终保持最新的OpenTofu注册表数据\r\n- ✅ 通过Cloudflare Workers在全球范围内分发\r\n- ✅ 高可用性和高性能\r\n\r\n#### 克劳德代码\r\n\r\n将托管的OpenTofu MCP服务器添加到Claude代码中：\r\n\r\n```bash\r\nclaude mcp add opentofu -t streamable-http https://mcp.opentofu.org/mcp\r\n```\r\n\r\n#### 光标/VS代码\r\n\r\n[一键自动安装到Cursor](https://cursor.com/install-mcp?name=opentofu&config=eyJ0cmFuc3BvcnQiOiJzdHJlYW1hYmxlLWh0dHAiLCJ1cmwiOiJodHRwczovL21jcC5vcGVudG9mdS5vcmcvbWNwIn0%3D)\r\n\r\n将此添加到您的 `settings.json`.\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"opentofu\": {\r\n        \"type\": \"streamable-http\",\r\n        \"url\": \"https://mcp.opentofu.org/mcp\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您不需要定义任何输入。\r\n\r\n#### 通用MCP配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"opentofu\": {\r\n      \"transport\": \"streamable-http\",\r\n      \"url\": \"https://mcp.opentofu.org/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 本地服务器\r\n\r\n#### 基本用法\r\n\r\n您还可以使用npx在本地运行服务器：\r\n\r\n```bash\r\nnpx @opentofu/opentofu-mcp-server\r\n```\r\n\r\n#### 全球安装\r\n\r\n全局安装以供重复使用：\r\n\r\n```bash\r\nnpm install -g @opentofu/opentofu-mcp-server\r\nopentofu-mcp-server\r\n```\r\n\r\n#### 克劳德代码（本地）\r\n\r\n将本地服务器添加到Claude Code：\r\n\r\n```bash\r\nclaude mcp add opentofu -- npx @opentofu/opentofu-mcp-server\r\n```\r\n\r\n#### 通用MCP配置（本地）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"opentofu\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@opentofu/opentofu-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 可用工具\r\n\r\nOpenTofu MCP服务器提供以下工具：\r\n\r\n#### 注册表搜索和信息\r\n\r\n- `search-opentofu-registry`：搜索提供者、模块、资源和数据源\r\n- `get-provider-details`：获取特定提供商的详细信息\r\n- `get-module-details`：获取特定模块的详细信息\r\n- `get-resource-docs`：获取特定资源的文档\r\n- `get-datasource-docs`：获取特定数据源的文档\r\n",
+ "config": {
+  "opentofu": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.opentofu.org/mcp"
+  }
+ }
+}

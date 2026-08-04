@@ -1,0 +1,12 @@
+{
+ "id": "server-audit",
+ "kind": "skill",
+ "name": "server-audit",
+ "fingerprint_md5": "0759ec3c4b88d506522da8b6aeb03245",
+ "download_count": 0,
+ "category": "基础设施",
+ "tags": "",
+ "version": "",
+ "readme": "# server-audit — 远程服务器巡检\r\n\r\n通过 SSH 免密登录检查远程服务器环境与安全状况，生成巡检报告。\r\n\r\n## 前提条件\r\n\r\n- 已通过 `ssh-ops` skill 配置好免密登录\r\n- 或手动配置了 SSH 密钥认证\r\n\r\n## 工作流程\r\n\r\n### 1. 运行巡检脚本\r\n\r\n```bash\r\nbash <skill>/scripts/server-audit.sh <host> [user]\r\n```\r\n\r\n脚本会自动收集以下信息并输出快速安全判定：\r\n\r\n- **系统信息**: OS、内核、CPU、内存、磁盘、Swap\r\n- **运行服务**: systemd running services\r\n- **开放端口**: 所有 TCP 监听端口\r\n- **防火墙**: firewalld 状态和规则、SELinux 状态\r\n- **Web 服务**: Nginx/PHP-FPM/MariaDB/Node/Docker 版本和状态\r\n- **Nginx 虚拟主机**: server_name、root、监听\r\n- **网站文件**: /www/wwwroot 下的站点检测\r\n- **安全配置**: SSH 配置（密码认证、Root 登录、端口）\r\n- **可疑项目**: 失败登录记录、定时任务、高内存进程\r\n\r\n### 2. 基于脚本输出生成详细报告\r\n\r\n根据脚本收集的数据，生成结构化的 Markdown 报告。\r\n\r\n**⚠️ 报告保存位置：** `~/.openclaw/workspac/audits/<IP>-<日期>.md`\r\n\r\n报告只保存在本地 workspace，**不要上传到任何 GitHub 仓库**。\r\n\r\n文件命名格式：`119.91.38.151-20260319.md`\r\n\r\n报告模板：\r\n```markdown\r\n# 服务器巡检报告\r\n**主机:** <IP>\r\n**检查时间:** <时间>\r\n\r\n## 1. 基础信息\r\n## 2. 已安装服务\r\n## 3. 开放端口（标注风险）\r\n## 4. 安全问题（🔴严重/⚠️警告/💡建议）\r\n## 5. 快速修复命令\r\n```\r\n\r\n## 安全判定规则\r\n\r\n### 🔴 严重（需立即修复）\r\n- 数据库端口（3306/5432）监听 0.0.0.0\r\n- 管理面板端口（宝塔 8888、phpMyAdmin）监听 0.0.0.0\r\n- SSH 允许 root 密码登录\r\n\r\n### ⚠️ 警告（建议修复）\r\n- 防火墙未启用\r\n- SELinux 禁用\r\n- SSH 密码认证未禁用\r\n- 无 Swap 分区\r\n- 存在暴力破解尝试\r\n- 可疑定时任务\r\n\r\n### 💡 建议（优化项）\r\n- SSH 默认端口 22\r\n- 缺少运行时（Node.js 等）\r\n- 未使用的服务（Postfix 等）\r\n- 无自动备份策略\r\n\r\n## 多服务器批量巡检\r\n\r\n对多台服务器循环执行：\r\n```bash\r\nfor host in 192.168.1.1 192.168.1.2 10.0.0.1; do\r\n  echo \"=== $host ===\"\r\n  bash <skill>/scripts/server-audit.sh \"$host\"\r\n  echo \"\"\r\ndone\r\n```",
+ "config": {}
+}

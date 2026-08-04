@@ -1,0 +1,18 @@
+{
+ "id": "429",
+ "kind": "mcp",
+ "name": "screenshot-3",
+ "fingerprint_md5": "7322c1642b65c56e4313093b9d74f05e",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp屏幕截图\r\n\r\nMCP（模型上下文协议）服务器，用于截图、列出窗口和列出监视器。用Rust构建。\r\n\r\n## 特性\r\n\r\n- 全屏截图\r\n- 基于区域的屏幕截图\r\n- 窗口特定截图\r\n- 带有位置、大小和状态的窗口列表\r\n- 显示分辨率和布局信息的监控列表\r\n- 通过MCP图像内容返回的截图为base64编码的PNG\r\n- 可选文件保存\r\n\r\n## 后端\r\n\r\n|后端|平台|窗口支持|\r\n|---------|-----------|:-:|\r\n| **桌面** （默认）| X11、Wayland、macOS、Windows |是|\r\n| **密钥管理服务** |嵌入式Linux（DRM/KMS，无显示服务器）|否|\r\n\r\n启动时自动检测后端：\r\n\r\n1. `MCP_SCREENSHOT_BACKEND` 一个被推翻了(`desktop` 或 `kms`)\r\n1. `DISPLAY` / `WAYLAND_DISPLAY` 当前→ 桌面\r\n1. `/dev/dri/card*` 具有主动输出→ KMS\r\n1. 回退到桌面\r\n\r\n## 工具\r\n\r\n|工具|描述|桌面|kms|\r\n|------|-------------|:----:|:---:|\r\n| `take_screenshot` |全屏截图|是|是|\r\n| `take_screenshot_region` |区域截图|是|是|\r\n| `take_screenshot_window` |窗口截图|是|-|\r\n| `list_windows` |列出所有窗口|是|-|\r\n| `list_monitors` |列出所有监视器|是|是|\r\n\r\n在KMS后端，窗口工具完全从MCP工具列表中删除——客户端永远看不到它们。\r\n\r\n### 参数\r\n\r\n|工具|参数|\r\n|------|------------|\r\n| `take_screenshot` | `monitor_id?: u32`, `save_path?: string` |\r\n| `take_screenshot_region` | `x: i32`, `y: i32`, `width: u32`, `height: u32`, `monitor_id?: u32`, `save_path?: string` |\r\n| `take_screenshot_window` | `window_id: u32`, `save_path?: string` |\r\n| `list_windows` |（无）|\r\n| `list_monitors` |（无）|\r\n\r\n## 安装\r\n\r\n```sh\r\n# Default (desktop backend, stdio transport)\r\ncargo install mcp-screenshot\r\n\r\n# HTTP + KMS (headless server)\r\ncargo install mcp-screenshot --no-default-features --features http,kms\r\n```\r\n\r\n看 [构建.md](BUILD.md) 从源头上进行建设。\r\n\r\n## 运输\r\n\r\n默认情况下，服务器使用 **标准** 运输。随着 `http` 功能已启用，您可以切换到 **HTTP 流式传输** 传输——非常适合运行KMS后端的无头服务器。\r\n\r\n### HTTP传输\r\n\r\n通过CLI标志或环境变量在HTTP模式下启动：\r\n\r\n```sh\r\n# CLI flag (default port 8080)\r\nmcp-screenshot --http\r\n\r\n# Custom port\r\nmcp-screenshot --http --port 3000\r\n\r\n# Environment variables\r\nMCP_SCREENSHOT_TRANSPORT=http MCP_SCREENSHOT_PORT=3000 mcp-screenshot\r\n```\r\n\r\n服务器正在监听 `http://0.0.0.0:/mcp`.\r\n\r\n## 用法\r\n\r\n### 克劳德桌面（stdio）\r\n\r\n增添 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"screenshot\": {\r\n      \"command\": \"/path/to/mcp-screenshot\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德桌面（HTTP）\r\n\r\n启动服务器，然后添加到 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"screenshot\": {\r\n      \"url\": \"http://localhost:8080/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码（stdio）\r\n\r\n```sh\r\ncargo install mcp-screenshot\r\nclaude mcp add screenshot mcp-screenshot\r\n```\r\n\r\n### 克劳德代码（HTTP）\r\n\r\n```sh\r\ncargo install mcp-screenshot --no-default-features --features http\r\nclaude mcp add --transport http screenshot http://localhost:8080/mcp\r\n```\r\n\r\n## 技术栈\r\n\r\n- [rmcp](https://crates.io/crates/rmcp) 0.13-官方Rust MCP SDK（stdio和HTTP流传输）\r\n- [接入协议](https://crates.io/crates/xcap) 0.8-跨平台屏幕截图\r\n- [数字版权管理](https://crates.io/crates/drm) 0.14-DRM/KMS绑定（KMS后端）\r\n- [图像](https://crates.io/crates/image) 0.25-图像处理\r\n- [东京](https://crates.io/crates/tokio) -异步运行时\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "screenshot": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:8080/mcp"
+  }
+ }
+}

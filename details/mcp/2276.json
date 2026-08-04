@@ -1,0 +1,23 @@
+{
+ "id": "2276",
+ "kind": "mcp",
+ "name": "ocm",
+ "fingerprint_md5": "2d73b8a58aa8bf135aa52161bd149646",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# OCM MCP演示\r\n\r\n> \\[！警告\\]\r\n> 概念验证/演示——不用于生产用途。\r\n\r\n一个简单的web应用程序，演示了OCM（开放电荷映射）MCP（模型上下文协议）SDK，\r\n使用npm包https://github.com/andreibesleaga/ocm-sdkmcp服务器。\r\n\r\n现场演示：https://ocm-demo.up.railway.app/\r\n\r\n此应用程序生成 `ocm-mcp` 本地服务器(`npx ocm-mcp`)超过stdio。A单独\r\n同一MCP服务器的托管实例也可在https://ocm-mcp.stlmcp.com\r\n用于连接外部AI工具——它是一个可选的外部端点，不是必需的\r\n这个演示。\r\n\r\n## 特性\r\n\r\n- 显示电动汽车充电站的交互式地图\r\n- 使用MCP的AI风格命令界面\r\n- 来自Open Charge Map API的实时数据\r\n- 单击以选择地图坐标\r\n\r\n## 项目结构\r\n\r\n```\r\nocm-demo/\r\n├── index.js              # Main Express application\r\n├── mcp-server.js         # MCP client implementation (legacy name)\r\n├── mcp-client.js         # Clearer alias re-exporting the MCP client\r\n├── examples/\r\n│   └── standalone.js     # Use the MCP client without the web server\r\n├── docs/\r\n│   └── mcp-contract.md   # HTTP + MCP request/response contract\r\n├── public/\r\n│   ├── index.html        # Web interface\r\n│   └── app.js            # Client-side JavaScript\r\n├── package.json\r\n└── README.md\r\n```\r\n\r\n> 注： `mcp-server.js` 实际上实现了MCP **客户**. `mcp-client.js` 是一个\r\n> 名字更清晰的细别名；现有进口 `mcp-server.js` 继续工作。\r\n\r\n## 设置\r\n\r\n1. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n2. 设置环境变量（可选）：\r\n\r\n```bash\r\nexport OCM_API_KEY=your_ocm_api_key\r\n```\r\n\r\n3. 运行应用程序：\r\n\r\n```bash\r\nnpm start\r\n```\r\n\r\n4. 打开http://localhost:3000\r\n\r\n## 用法\r\n\r\n### Web界面命令\r\n\r\n输入以下命令：\r\n\r\n- “在美国查找充电站”或“在美国充电”\r\n- “在英国伦敦查找充电站”或“英国伦敦附近的充电站”\r\n- “法国巴黎充电站”或“巴黎站”\r\n- “搜索坐标51.5074，-0.1278”（来自地图点击）\r\n- “列出工具”或“工具”（显示可用的MCP工具）\r\n\r\n### 地图交互\r\n\r\n- **点击地图上的任意位置** 选择坐标\r\n- **点击“在此处搜索”** 查找选定点25km范围内的车站\r\n- **自动填充坐标** 在指挥领域\r\n\r\n该应用程序接受灵活的命令格式，只需提及“充电”、“车站”、“poi”或与位置的“坐标”即可。\r\n\r\n## 单独运行MCP服务器\r\n\r\n### 适用于Claude Desktop或其他人工智能工具\r\n\r\nMCP服务器可以独立运行，并连接到Claude Desktop或其他兼容MCP的AI工具。\r\n\r\n#### 选项1：直接NPX命令\r\n\r\n```bash\r\nnpm run mcp-server\r\n# or\r\nnpx ocm-mcp\r\n```\r\n\r\n#### 选项2:Claude桌面集成\r\n\r\n添加到您的Claude Desktop配置文件(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ocm\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"ocm-mcp\"],\r\n      \"env\": {\r\n        \"OCM_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 选项3：使用MCP客户端模块\r\n\r\n```javascript\r\nimport MCPClient from './mcp-server.js';\r\n\r\nconst client = new MCPClient();\r\n\r\n// List available tools\r\nconst tools = await client.listTools();\r\nconsole.log('Available tools:', tools);\r\n\r\n// Search for charging stations\r\nconst stations = await client.callTool('list_poi', {\r\n  latitude: 51.5074,\r\n  longitude: -0.1278,\r\n  distance: 25,\r\n  maxresults: 50\r\n});\r\n```\r\n\r\n### 可用的MCP工具\r\n\r\nOCM MCP服务器提供以下工具：\r\n\r\n- `list_poi` -按位置搜索充电站\r\n- `retrieve_referencedata` -获取参考数据（国家、运营商等）\r\n- `authenticate_profile` -验证用户配置文件\r\n- `submit_comment` -提交关于充电站的意见\r\n- `create_mediaitem` -创建媒体项目\r\n- `retrieve_openapi` -获取OpenAPI规范\r\n\r\n### 克劳德提示示例\r\n\r\n连接到Claude Desktop后：\r\n\r\n- “在伦敦寻找电动汽车充电站”\r\n- “给我看看巴黎50公里范围内的快速充电站”\r\n- “列出加利福尼亚州配备特斯拉连接器的充电站”\r\n- “坐标40.7128，-74.0060附近有哪些充电选项？”\r\n\r\n## 环境变量\r\n\r\n- `OCM_API_KEY` -用于更高费率限制的可选Open Charge Map API密钥\r\n- `PORT` -服务器端口（默认值：3000）\r\n- `RATE_LIMIT_WINDOW_MS` -速率限制窗口（毫秒）（默认值：60000）\r\n- `RATE_LIMIT_MAX_REQUESTS` -每个IP的每个窗口的最大请求数（默认值：120）\r\n- `NODE_ENV` -设置为 `production` 返回通用错误消息（无内部）\r\n\r\n## API终点\r\n\r\n- `POST /api/mcp` -向服务器发送MCP命令（请参阅 [docs/mcp-contract.md](docs/mcp-contract.md))\r\n- `GET /healthz` -活体探测，返回 `{ \"ok\": true }`\r\n- `GET /` -提供web界面\r\n\r\n## 测试\r\n\r\n```bash\r\nnpm test\r\n```\r\n\r\n运行Vitest套件 [测试/](tests/): `/healthz`，命令解析器\r\n空命令保护和经过净化的错误路径（模拟MCP层）。\r\n\r\n## 手动审查清单\r\n\r\n- **配置：** `.env` (`OCM_API_KEY` 可选），上面的环境变量\r\n- **运行：** `npm install` 然后 `npm start`，打开 `http://localhost:3000`\r\n- **示例：** `node examples/standalone.js`；上述“示例查询”下的web命令\r\n- **结果：** 地图上显示的充电站列表； `List tools` 显示了6个MCP工具\r\n- **路径：** 服务器 `index.js`，MCP客户端 `mcp-client.js`/`mcp-server.js`，UI `public/`\r\n",
+ "config": {
+  "ocm": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "ocm-mcp"
+   ],
+   "env": {
+    "OCM_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

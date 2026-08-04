@@ -1,0 +1,24 @@
+{
+ "id": "1547",
+ "kind": "mcp",
+ "name": "maintainx",
+ "fingerprint_md5": "a329bac8ada109ad49750d0f10810759",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 维护X MCP服务器\r\n\r\nMCP（模型上下文协议）服务器 [维护X](https://www.getmaintainx.com/) CMMS API。该服务器使Claude等AI助手能够与MaintainX交互，以管理工单、资产、维护操作等。\r\n\r\n## 特性\r\n\r\n- **工作指令**：创建、更新、完成和列出工作订单\r\n- **资产**：管理实物资产和设备\r\n- **工作请求**：处理收到的维护请求\r\n- **位置**：按物理位置组织资产\r\n- **零件和库存**：跟踪零件和库存水平\r\n- **用户和团队**：访问组织成员和团队\r\n- **米**：记录和跟踪仪表读数\r\n- **供应商**：管理供应商关系\r\n- **采购订单**：查看采购信息\r\n- **程序模板**：访问标准化维护程序\r\n\r\n## 安装\r\n\r\n### 使用npx（推荐）\r\n\r\n```bash\r\nnpx maintainx-mcp-server\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\nnpm install -g maintainx-mcp-server\r\n```\r\n\r\n## 配置\r\n\r\n### 环境变量\r\n\r\n将MaintainX API键设置为环境变量：\r\n\r\n```bash\r\nexport MAINTAINX_API_KEY=your_api_key_here\r\n```\r\n\r\n对于多组织帐户，可以选择设置：\r\n\r\n```bash\r\nexport MAINTAINX_ORGANIZATION_ID=your_org_id\r\n```\r\n\r\n### 获取API密钥\r\n\r\n1. 登录您的MaintainX帐户\r\n1. 首选 **设置** > **集成** > **API密钥**\r\n1. 生成新的API密钥\r\n\r\n### Claude桌面配置\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"maintainx\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"maintainx-mcp-server\"],\r\n      \"env\": {\r\n        \"MAINTAINX_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 工作指令\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_work_orders` |列出带有过滤器的工作订单（状态、优先级、受让人等）|\r\n| `get_work_order` |获取详细的工单信息|\r\n| `create_work_order` |创建新的工单|\r\n| `update_work_order` |更新现有工单|\r\n| `complete_work_order` |将工单标记为已完成|\r\n\r\n### 资产\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_assets` |列出带有过滤器的资产|\r\n| `get_asset` |获取详细的资产信息|\r\n| `create_asset` |创建新资产|\r\n| `update_asset` |更新现有资产|\r\n\r\n### 工作请求\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_work_requests` |列出工作请求|\r\n| `get_work_request` |获取工作请求详细信息|\r\n| `create_work_request` |提交新的工作请求|\r\n| `approve_work_request` |批准工作请求|\r\n| `decline_work_request` |拒绝工作请求|\r\n\r\n### 位置\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_locations` |列出地点|\r\n| `get_location` |获取位置详细信息|\r\n| `create_location` |创建新位置|\r\n| `update_location` |更新位置|\r\n\r\n### 用户和团队\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_users` |列出组织用户|\r\n| `get_user` |获取用户详细信息|\r\n| `list_teams` |列出团队|\r\n| `get_team` |获取团队详细信息|\r\n\r\n### 零件和库存\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_parts` |列出带有可选低库存过滤器的零件|\r\n| `get_part` |获取零件详细信息|\r\n| `create_part` |创建新零件|\r\n| `update_part` |更新零件|\r\n| `adjust_part_quantity` |调整库存数量|\r\n\r\n### 米\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_meters` |列出仪表|\r\n| `get_meter` |获取仪表详细信息|\r\n| `create_meter_reading` |记录仪表读数|\r\n| `list_meter_readings` |列出仪表的读数|\r\n\r\n### 供应商\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_vendors` |列出供应商|\r\n| `get_vendor` |获取供应商详细信息|\r\n| `create_vendor` |创建新供应商|\r\n\r\n### 采购订单\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_purchase_orders` |列出采购订单|\r\n| `get_purchase_order` |获取采购订单详细信息|\r\n\r\n### 程序模板\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_procedure_templates` |列出程序模板|\r\n| `get_procedure_template` |获取程序模板详细信息|\r\n\r\n## 用法示例\r\n\r\n配置后，您可以要求Claude：\r\n\r\n- “显示所有未结工单”\r\n- “创建主楼暖通空调维护工单”\r\n- “列出当前脱机的所有资产”\r\n- “哪些零件库存不足？”\r\n- “记录123号资产5000小时的仪表读数”\r\n- “谁被分配到456号工单？”\r\n\r\n## 速率限制\r\n\r\nMaintainX API具有以下速率限制：\r\n\r\n- **每60秒100个请求** 每用户\r\n- **每60秒500个请求** 每个组织\r\n\r\n当超过速率限制时，服务器将返回相应的错误消息。\r\n\r\n## 发展\r\n\r\n### 从源头构建\r\n\r\n```bash\r\ngit clone https://github.com/yourusername/maintainx-mcp-server.git\r\ncd maintainx-mcp-server\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n### 在发展中奔跑\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 了解详情。\r\n\r\n## 链接\r\n\r\n- [维护X](https://www.getmaintainx.com/)\r\n- [维护API文档](https://api.getmaintainx.com/v1/docs)\r\n- [模型上下文协议](https://modelcontextprotocol.io/)\r\n",
+ "config": {
+  "maintainx": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "maintainx-mcp-server"
+   ],
+   "env": {
+    "MAINTAINX_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

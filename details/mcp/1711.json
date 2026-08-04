@@ -1,0 +1,22 @@
+{
+ "id": "1711",
+ "kind": "mcp",
+ "name": "sequential-thinking-4",
+ "fingerprint_md5": "7e2da9f8feb949fd88cd1852a4707142",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 顺序思维MCP服务器\r\n\r\nMCP服务器实现，通过结构化思维过程提供动态和反思性问题解决的工具。\r\n\r\n## 特性\r\n\r\n- 将复杂问题分解为可管理的步骤\r\n- 随着理解的加深，修改和完善想法\r\n- 分支到其他推理路径\r\n- 动态调整想法总数\r\n- 生成并验证解决方案假设\r\n\r\n## 工具\r\n\r\n### 顺序思考\r\n\r\n为解决问题和分析提供详细的、循序渐进的思维过程。\r\n\r\n**输入：**\r\n\r\n- `thought` （string）：当前思考步骤\r\n- `nextThoughtNeeded` （boolean）：是否需要另一个思考步骤\r\n- `thoughtNumber` （整数）：当前思想数\r\n- `totalThoughts` （整数）：估计所需的总想法\r\n- `isRevision` （boolean，可选）：这是否改变了之前的想法\r\n- `revisesThought` （整数，可选）：正在重新考虑哪个想法\r\n- `branchFromThought` （整数，可选）：分支点思想数\r\n- `branchId` （字符串，可选）：分支标识符\r\n- `needsMoreThoughts` （boolean，可选）：如果需要更多想法\r\n\r\n## 用法\r\n\r\n顺序思维工具旨在：\r\n\r\n- 将复杂问题分解为步骤\r\n- 规划和设计，有修改空间\r\n- 可能需要修正航向的分析\r\n- 最初可能不清楚全部范围的问题\r\n- 需要在多个步骤中保持上下文的任务\r\n- 需要过滤掉无关信息的情况\r\n\r\n## 配置\r\n\r\n### 使用Claude Desktop\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n#### 新巴拿马型船舶\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sequential-thinking\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@modelcontextprotocol/server-sequential-thinking\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 码头工人\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sequentialthinking\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"mcp/sequentialthinking\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 建筑\r\n\r\nDocker：\r\n\r\n```bash\r\ndocker build -t mcp/sequentialthinking -f src/sequentialthinking/Dockerfile .\r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "sequential-thinking": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@modelcontextprotocol/server-sequential-thinking"
+   ],
+   "env": {}
+  }
+ }
+}

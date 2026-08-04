@@ -1,0 +1,21 @@
+{
+ "id": "522",
+ "kind": "mcp",
+ "name": "vrchat-mcp-osc",
+ "fingerprint_md5": "f71fb7d86daa97ca75f3c1ce740c6d0e",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# VRChat MCP OSC\r\n\r\n**VRChat MCP OSC** 使用模型上下文协议（MCP）在AI助手和VRChat之间提供桥梁，实现虚拟现实环境中AI驱动的化身控制和交互。\r\n\r\n## 概述\r\n\r\n通过利用OSC（开放式声音控制）与VRChat通信， **VRChat MCP OSC** 允许Claude等AI助手：\r\n\r\n- 控制化身参数和表达式\r\n- 在VRChat中发送消息\r\n- 应对各种VR事件\\\r\n  以及更多通过模型上下文协议提供的高级API。\r\n\r\n## 主要特点\r\n\r\n- **头像控制**：操纵化身参数和表达式\r\n- **部队移动控制**：直接化身移动和定向\r\n- **沟通**：通过VRChat的聊天框发送消息\r\n- **菜单访问**：切换VRChat菜单和界面元素\r\n- **头像信息**：查询头像属性和参数\r\n- **无缝VRChat集成**：自动检测化身配置\r\n\r\n## 系统要求\r\n\r\n- Node.js 18或更高版本\r\n- 启用OSC的VRChat\r\n- Claude Desktop（支持MCP）\r\n\r\n## 与Claude Desktop一起使用\r\n\r\n### 克隆和npm链接\r\n\r\n```bash\r\ngit clone https://github.com/Krekun/vrchat-mcp-osc\r\ncd vrchat-mcp-osc\r\nnpm link\r\n```\r\n\r\n### 配置Claude桌面\r\n\r\n通过编辑配置Claude Desktop `claude_desktop_config.json` 文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"vrchat-mcp-osc\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"vrchat-mcp-osc\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 命令行选项\r\n\r\n服务器支持各种命令行参数进行自定义：\r\n\r\n```bash\r\n# Claude Desktop configuration\r\n{\r\n  \"mcpServers\": {\r\n    \"vrchat-mcp-osc\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"vrchat-mcp-osc\",\r\n        \"--websocket-port\", \"8765\",\r\n        \"--websocket-host\", \"localhost\",\r\n        \"--osc-send-port\", \"9000\",\r\n        \"--osc-send-ip\", \"127.0.0.1\",\r\n        \"--osc-receive-port\", \"9001\",\r\n        \"--osc-receive-ip\", \"127.0.0.1\",\r\n        \"--debug\"             \r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 可用选项\r\n\r\n|选项|描述|默认值|注释|\r\n|--------|-------------|---------|-------|\r\n| `--websocket-port ` |WebSocket端口|8765|用于WebSocket通信|\r\n| `--websocket-host ` |WebSocket主机|localhost|用于WebSocket通信|\r\n| `--osc-send-port ` |OSC发送端口|9000|发送到VRChat的端口|\r\n| `--osc-send-ip ` |OSC发送IP |127.0.0.1|发送到VRChat的地址|\r\n| `--osc-receive-port ` |OSC接收端口|9001|用于从VRChat接收的端口|\r\n| `--osc-receive-ip ` |OSC接收IP |127.0.0.1|从VRChat接收的地址|\r\n| `--debug` |启用调试日志| false |输出详细日志|\r\n| `--no-relay` |禁用中继服务器|false |不使用中继服务器时|\r\n\r\n## 可用的MCP工具\r\n\r\nVRChat MCP OSC向AI助手公开以下MCP工具：\r\n\r\n|工具名称|描述|\r\n|-----------|-------------|\r\n| `get_avatar_name` |检索当前头像的名称|\r\n| `get_avatar_parameters` |列出可用的头像参数|\r\n| `set_avatar_parameter` |设置特定的头像参数|\r\n| `set_emote_parameter` |触发头像表情|\r\n| `move_avatar` |在特定方向上移动化身|\r\n| `look_direction` |控制化身的视图方向|\r\n| `jump` |使化身跳跃|\r\n| `menu` |切换VRChat菜单|\r\n| `voice` |切换语音功能|\r\n| `send_message` |向VRChat聊天框发送消息|\r\n\r\n## 故障排除\r\n\r\n### 常见问题\r\n\r\n1. **VRChat不响应命令**\r\n\r\n   - 确保在VRChat设置中启用OSC\r\n   - 检查VRChat和MCP配置之间的OSC端口是否匹配\r\n   - 重新启动VRChat和Claude桌面\r\n\r\n1. **MCP服务器未启动**\r\n\r\n   - 确保已安装Node.js 18+\r\n   - 检查命令行参数是否有错误\r\n   - 试着用 `--debug` 标记以获取更详细的日志\r\n   - 使用 `npx vrchat-mcp-osc -- --debug` 如果直接论证不起作用\r\n\r\n1. **NPX执行问题**\r\n\r\n   - 如果无法识别参数，请尝试使用双破折号格式： `npx vrchat-mcp-osc -- --debug`\r\n   - 在Windows上，尝试在具有管理员权限的命令提示符下运行\r\n   - 如果您在全局安装方面遇到问题，请尝试本地npm链接方法\r\n\r\n## 项目结构\r\n\r\n```\r\nvrchat-mcp-osc/\r\n├── packages/\r\n│   ├── mcp-server/    # MCP server implementation (main entry point)\r\n│   ├── relay-server/  # WebSocket to OSC relay\r\n│   ├── types/         # Shared TypeScript interfaces\r\n│   └── utils/         # Common utilities\r\n└── pnpm-workspace.yaml  # Workspace configuration\r\n```\r\n\r\n## 发展\r\n\r\n### 从源代码构建\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/Krekun/vrchat-mcp-osc\r\ncd vrchat-mcp-osc\r\n\r\n# Install dependencies\r\npnpm install\r\n\r\n# Build all packages\r\npnpm -r build\r\n\r\n# Development mode\r\npnpm -r dev\r\n```\r\n\r\n## 许可证\r\n\r\nVRChat MCP OSC具有以下双重许可：\r\n\r\n非商业用途：\r\n您可以根据MIT许可证的条款使用、修改和重新分发软件。\r\n（有关详细信息，请参阅MIT许可证文件。）\r\n\r\n商业用途：\r\n此软件的商业使用需要单独的商业许可证。\r\n\r\n根据MIT许可证将此软件用于非商业目的，即表示您同意该许可证的条款。商业用户必须获得上述商业许可证。\r\n\r\n## 致谢\r\n\r\n- OSC集成的VRChat团队\r\n- 标准化AI接口的模型上下文协议\r\n- Claude MCP实现的拟人化\r\n",
+ "config": {
+  "vrchat-mcp-osc": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "vrchat-mcp-osc"
+   ],
+   "env": {}
+  }
+ }
+}

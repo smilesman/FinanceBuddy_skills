@@ -1,0 +1,24 @@
+{
+ "id": "711",
+ "kind": "mcp",
+ "name": "leanvox",
+ "fingerprint_md5": "0275e8683d566f92a4659815071c9e25",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# leanvox mcp\r\n\r\n> 直接从Claude、ChatGPT、Cursor和任何兼容MCP的AI助手使用Leanvox TTS。\r\n\r\n**零代码。一条配置行。在您的AI工具中实现即时文本到语音转换。**\r\n\r\n## 快速设置\r\n\r\n### 克劳德桌面版\r\n\r\n添加 `~/.claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"leanvox\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"leanvox-mcp\"],\r\n      \"env\": {\r\n        \"LEANVOX_API_KEY\": \"lv_live_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动克劳德桌面。完成。 ✨\r\n\r\n### 光标\r\n\r\n设置→ MCP → 添加服务器：\r\n\r\n```json\r\n{\r\n  \"leanvox\": {\r\n    \"command\": \"npx\",\r\n    \"args\": [\"-y\", \"leanvox-mcp\"],\r\n    \"env\": {\r\n      \"LEANVOX_API_KEY\": \"lv_live_your_key_here\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### VS代码（副本）\r\n\r\n添加 `.vscode/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"leanvox\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"leanvox-mcp\"],\r\n      \"env\": {\r\n        \"LEANVOX_API_KEY\": \"lv_live_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码（CLI）\r\n\r\n```bash\r\nclaude mcp add leanvox -- npx -y leanvox-mcp\r\n```\r\n\r\n设置API密钥：\r\n\r\n```bash\r\nexport LEANVOX_API_KEY=\"lv_live_your_key_here\"\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 你能做什么\r\n\r\n连接后，只需用自然语言询问您的AI助手：\r\n\r\n> “用播客_对话_女声大声朗读这段话”\r\n\r\n> “在两位演讲者之间创建一个关于人工智能的播客对话”\r\n\r\n> “从这个音频文件中克隆我的声音”\r\n\r\n> “有什么声音？”\r\n\r\n> “检查我的Leanvox余额”\r\n\r\nAI助手可以处理一切——不需要代码。\r\n\r\n______________________________________________________________________\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `leanvox_generate` |从文本生成语音|\r\n| `leanvox_stream` |将音频流式传输到文件|\r\n| `leanvox_dialogue` |创建多人对话|\r\n| `leanvox_list_voices` |浏览可用语音|\r\n| `leanvox_transcribe` |转录音频或安排异步STT作业|\r\n| `leanvox_get_job` |获取异步TTS/STT作业状态|\r\n| `leanvox_list_jobs` |列出异步TTS/STT作业|\r\n| `leanvox_clone_voice` |从音频中克隆语音|\r\n| `leanvox_design_voice` |根据描述设计声音|\r\n| `leanvox_check_balance` |检查账户余额|\r\n\r\n## 资源\r\n\r\n|资源|URI|描述|\r\n|----------|-----|-------------|\r\n|声音| `leanvox://voices` |所有可用声音|\r\n|策划| `leanvox://voices/curated` |14个精心策划的专业声音|\r\n|历史| `leanvox://generations` |过去几代人|\r\n账户 `leanvox://account` |平衡和使用|\r\n\r\n## 提示\r\n\r\n|提示|描述|\r\n|--------|-------------|\r\n| `narrate` |将文本转换为自然语音|\r\n| `podcast` |创建多人播客|\r\n| `voice-clone` |从参考音频中克隆语音|\r\n\r\n______________________________________________________________________\r\n\r\n## 认证\r\n\r\n获取API密钥： [leanvox.com/dashboard](https://leanvox.com/dashboard).\r\n\r\n通过以下方式传递：\r\n\r\n1. **环境变量** `LEANVOX_API_KEY` （推荐）\r\n1. **配置文件** `~/.lvox/config.toml`\r\n\r\n______________________________________________________________________\r\n\r\n## 需求\r\n\r\n- Node.js 18+\r\n- Leanvox API密钥([免费获得一个](https://leanvox.com))\r\n\r\n## 独立使用\r\n\r\n```bash\r\n# Run directly\r\nnpx leanvox-mcp\r\n\r\n# Or install globally\r\nnpm install -g leanvox-mcp\r\nleanvox-mcp\r\n```\r\n\r\n## 故障排除\r\n\r\n**“找不到工具”** --添加配置后重新启动AI应用程序。\r\n\r\n**“身份验证错误”** --检查你的 `LEANVOX_API_KEY` 设置正确。\r\n\r\n**“连接被拒绝”** --请确保已安装Node.js 18+： `node --version`\r\n\r\n______________________________________________________________________\r\n\r\n## 链接\r\n\r\n- [Leanvox](https://leanvox.com) --主网站\r\n- [API文件](https://leanvox.com/docs) -API完整参考\r\n- [开发包](https://pypi.org/project/leanvox/) — `pip install leanvox`\r\n- [Node.js SDK](https://www.npmjs.com/package/leanvox) — `npm install leanvox`\r\n- [GitHub](https://github.com/leanvox/mcp-server) --来源和问题\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n*leanvox mcp——人工智能时代的文本转语音。*\r\n",
+ "config": {
+  "leanvox": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "leanvox-mcp"
+   ],
+   "env": {
+    "LEANVOX_API_KEY": "lv_live_your_key_here"
+   }
+  }
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "id": "1080",
+ "kind": "mcp",
+ "name": "kaggle-mcp",
+ "fingerprint_md5": "5ffa0527c7b01197eb863f8786d00bcc",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Kaggle MCP服务器\r\n\r\n一个模型上下文协议（MCP）服务器，向MCP客户端（如Claude Desktop）公开Kaggle数据集搜索、下载和EDA提示生成。\r\n\r\n## 特性\r\n\r\n- 按关键字搜索Kaggle数据集。\r\n- 在本地下载并解压缩Kaggle数据集。\r\n- 为Kaggle数据集生成一个初步的探索性数据分析（EDA）提示。\r\n- 通过环境变量或标准支持Kaggle凭据 `kaggle.json` 文件。\r\n- 在本地、Docker中或通过Smithery运行。\r\n\r\n## 可用MCP功能\r\n\r\n### 工具\r\n\r\n#### `search_kaggle_datasets(query: str)`\r\n\r\n在Kaggle中搜索匹配的数据集 `query` 并以JSON格式返回多达10个结果。\r\n\r\n返回的字段包括：\r\n\r\n- `ref`\r\n- `title`\r\n- `subtitle`\r\n- `download_count`\r\n- `last_updated`\r\n- `usability_rating`\r\n\r\n#### `download_kaggle_dataset(dataset_ref: str, download_path: str | None = None)`\r\n\r\n下载并解压缩Kaggle数据集。\r\n\r\n- `dataset_ref`：Kaggle数据集参考 `owner/dataset-slug` 格式，例如 `kaggle/titanic`.\r\n- `download_path`：可选的本地输出路径。如果省略，文件将保存到 `./datasets//`.\r\n\r\n### 提示\r\n\r\n#### `generate_eda_notebook(dataset_ref: str)`\r\n\r\n为提供的Kaggle数据集参考创建生成基本Python EDA代码的提示。提示要求进行数据加载、缺失值检查、可视化和摘要统计。\r\n\r\n## 需求\r\n\r\n- Python 3.10+\r\n- Kaggle账户和API代币\r\n- MCP兼容客户端\r\n\r\n## Kaggle证书\r\n\r\n从您的Kaggle帐户设置创建Kaggle API令牌：\r\n\r\n1. 首选 .\r\n1. 选择 **创建新的API令牌**.\r\n1. 下载 `kaggle.json`.\r\n\r\n使用环境变量或标准Kaggle配置文件。\r\n\r\n### 选项1：环境变量\r\n\r\n创建 `.env` 项目根目录中的文件：\r\n\r\n```dotenv\r\nKAGGLE_USERNAME=your_kaggle_username\r\nKAGGLE_KEY=your_kaggle_api_key\r\n```\r\n\r\n### 选项2： `kaggle.json`\r\n\r\n地方 `kaggle.json` 在Kaggle的标准位置：\r\n\r\n- macOS/Linux： `~/.kaggle/kaggle.json`\r\n- 窗户： `C:\\Users\\\\.kaggle\\kaggle.json`\r\n\r\n在macOS/Linux上，请确保文件不是全球可读的：\r\n\r\n```bash\r\nchmod 600 ~/.kaggle/kaggle.json\r\n```\r\n\r\n## 安装\r\n\r\n```bash\r\ngit clone <repository-url>\r\ncd kaggle-mcp\r\n```\r\n\r\n创建并激活虚拟环境：\r\n\r\n```bash\r\npython -m venv .venv\r\nsource .venv/bin/activate  # Windows: .venv\\Scripts\\activate\r\n```\r\n\r\n使用以下方法之一安装依赖项。\r\n\r\n### 使用紫外线\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n### 使用pip\r\n\r\n```bash\r\npip install -r requirements.txt\r\n```\r\n\r\n## 本地运行\r\n\r\n随着 `uv`:\r\n\r\n```bash\r\nuv run kaggle-mcp\r\n```\r\n\r\n或者直接运行服务器模块：\r\n\r\n```bash\r\npython src/server.py\r\n```\r\n\r\n服务器通过MCP stdio进行通信，旨在由MCP客户端启动。\r\n\r\n## Claude桌面配置\r\n\r\n打开克劳德桌面设置，然后转到 **开发者** > **编辑配置** 并将此服务器添加到 `claude_desktop_config.json`.\r\n\r\n如果安装在项目环境中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kaggle-mcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"kaggle-mcp\"],\r\n      \"cwd\": \"/absolute/path/to/kaggle-mcp\",\r\n      \"env\": {\r\n        \"KAGGLE_USERNAME\": \"your_kaggle_username\",\r\n        \"KAGGLE_KEY\": \"your_kaggle_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果使用 `kaggle.json`，您可以省略 `env` 块。\r\n\r\n## 码头工人\r\n\r\n塑造形象：\r\n\r\n```bash\r\ndocker build -t kaggle-mcp .\r\n```\r\n\r\n使用来自的凭据运行 `.env`:\r\n\r\n```bash\r\ndocker run --rm -i --env-file .env kaggle-mcp\r\n```\r\n\r\n## 史密瑟里\r\n\r\n此存储库包括 `smithery.yaml`.Smithery通过stdio启动服务器，并将这些配置值作为环境变量传递：\r\n\r\n- `kaggleUsername` -> `KAGGLE_USERNAME`\r\n- `kaggleKey` -> `KAGGLE_KEY`\r\n\r\n## 工作流示例\r\n\r\n1. 询问您的MCP客户：“在Kaggle中搜索心脏病数据集。”\r\n1. 客户来电 `search_kaggle_datasets`.\r\n1. 从结果中选择一个数据集引用，例如 `user/heart-disease-dataset`.\r\n1. 询问：“下载 `user/heart-disease-dataset`.\"\r\n1. 询问：“生成EDA笔记本提示 `user/heart-disease-dataset`.\"\r\n\r\n## 项目结构\r\n\r\n```text\r\n.\r\n├── Dockerfile\r\n├── README.md\r\n├── pyproject.toml\r\n├── requirements.txt\r\n├── smithery.yaml\r\n├── src/\r\n│   ├── __init__.py\r\n│   └── server.py\r\n└── uv.lock\r\n```\r\n\r\n下载的数据集保存在 `datasets/` 默认情况下。此目录是在运行时请求下载时创建的。\r\n",
+ "config": {
+  "kaggle-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "kaggle-mcp"
+   ],
+   "env": {
+    "KAGGLE_USERNAME": "your_kaggle_username",
+    "KAGGLE_KEY": "your_kaggle_api_key"
+   }
+  }
+ }
+}

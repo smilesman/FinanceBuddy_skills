@@ -1,0 +1,24 @@
+{
+ "id": "941",
+ "kind": "mcp",
+ "name": "youtube-data",
+ "fingerprint_md5": "73dbe3ea76c1cce5414f799a352ff619",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# YouTube数据MCP服务器\r\n\r\n用于提取YouTube视频转录、评论和搜索结果的模型上下文协议（MCP）服务器。支持两者 **工作室** 和 **流式HTTP** 运输。\r\n\r\n## 特性\r\n\r\n- `getTranscript` -提取带有可选时间戳的字幕/转录本\r\n- `getVideoInfo` -获取视频元数据（标题、视图、评论数）\r\n- `getComments` -通过分页和排序获取评论\r\n- `getCommentReplies` -获取对特定评论的回复\r\n- `searchYoutube` -搜索视频、频道和播放列表\r\n\r\n## v2.0中的新增功能\r\n\r\n- **双重运输**：Stdio（默认）+StreamableHTTP用于web集成\r\n- **可靠的成绩单**：已更换 `youtube-transcript` 随着 `youtube-caption-extractor` （机器人检测旁路，无服务器支持）\r\n- **时间戳支持**：每个转录片段的可选开始时间和持续时间\r\n- **模块化架构**：关注点（配置、类型、服务、工具）的清晰分离\r\n- **MCP SDK v1.25.2**：最新SDK，稳定性得到提升\r\n\r\n## 需求\r\n\r\n- Node.js 18+\r\n- SerpAPI密钥（用于搜索、评论、视频信息）\r\n\r\n## 安装\r\n\r\n```bash\r\ngit clone https://github.com/diasm3/serpapi-youtube-mcp-server.git\r\ncd serpapi-youtube-mcp-server\r\nnpm install\r\n```\r\n\r\n## 配置\r\n\r\n创建一个 `.env` 文件：\r\n\r\n```\r\nSERPAPI_KEY=your_serpapi_key_here\r\nPORT=3000  # optional, for HTTP mode\r\n```\r\n\r\n获取您的SerpAPI密钥 [蛇网](https://serpapi.com/).\r\n\r\n## 运行服务器\r\n\r\n```bash\r\n# Build\r\nnpm run build\r\n\r\n# Stdio mode (default) - for Claude Desktop, Cursor, etc.\r\nnpm start\r\n\r\n# HTTP mode - for web applications\r\nnpm start -- --http\r\n# or\r\nMCP_TRANSPORT=http npm start\r\n```\r\n\r\n### HTTP端点\r\n\r\n在HTTP模式下运行时：\r\n\r\n- `GET /health` -健康检查\r\n- `POST /mcp` -MCP请求处理程序\r\n\r\n## MCP客户端配置\r\n\r\n### 克劳德桌面/光标\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube-data\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/serpapi-youtube-mcp-server/build/index.js\"],\r\n      \"env\": {\r\n        \"SERPAPI_KEY\": \"your_serpapi_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用npx\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube-data\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"youtube-data-mcp\"],\r\n      \"env\": {\r\n        \"SERPAPI_KEY\": \"your_serpapi_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## API工具\r\n\r\n### getTranscript\r\n\r\n从YouTube视频中提取文字/字幕。\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `url` |string |是| YouTube URL或视频ID|\r\n| `lang` |string |否|语言代码（默认值：'en'）|\r\n| `includeTimestamps` |boolean |否|包括每个分段的开始/持续时间|\r\n\r\n```\r\nGet the Korean transcript for https://youtube.com/watch?v=xxxxx with timestamps\r\n```\r\n\r\n### 获取视频信息\r\n\r\n使用SerpAPI获取视频元数据。\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `url` |string |是| YouTube URL或视频ID|\r\n\r\n返回：标题、视图、发布日期、频道、评论数、分页标记\r\n\r\n### 获取评论\r\n\r\n获取带分页的视频评论。\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `url` |string |条件|首页必填|\r\n| `limit` |number | No |最大评论数（默认值：100）|\r\n| `sort` |string |否|“相关性”或“时间”|\r\n| `pageToken` |string |否|用于分页|\r\n\r\n### 获取评论回复\r\n\r\n获取对特定评论的回复。\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `pageToken` |string |是| `repliesToken` 来自评论|\r\n\r\n### 搜索YouTube\r\n\r\n在YouTube上搜索视频、频道、播放列表。\r\n\r\n|参数|类型|必填|说明|\r\n|-----------|------|----------|-------------|\r\n| `query` |string |是|搜索查询|\r\n| `limit` |number | No |最大结果数（默认值：10）|\r\n| `gl` |string |否|国家代码（us、kr、jp）|\r\n| `hl` |string |否|语言代码（en、ko、ja）|\r\n| `sp` |string |否|筛选参数|\r\n| `pageToken` |string |否|用于分页|\r\n\r\n## 项目结构\r\n\r\n```\r\nsrc/\r\n├── index.ts          # Server entry (Stdio + HTTP)\r\n├── config/           # Environment configuration\r\n├── types/            # Zod schemas + TypeScript types\r\n├── services/\r\n│   ├── serpapi.ts    # SerpAPI integration\r\n│   └── youtube.ts    # Transcript extraction\r\n├── tools/            # MCP tool definitions\r\n└── utils/            # Helper functions\r\n```\r\n\r\n## 故障排除\r\n\r\n### 成绩单不可用\r\n\r\n- 某些视频未启用字幕\r\n- 尝试不同的语言代码（en、ko、ja等）\r\n- 自动生成的字幕可能并非适用于所有视频\r\n\r\n### SerpAPI错误\r\n\r\n- 验证您的API密钥是否有效\r\n- 检查您的SerpAPI配额/限制\r\n- 确保视频可供公众访问\r\n\r\n### HTTP模式未启动\r\n\r\n- 检查端口是否已在使用中\r\n- 验证是否设置了环境变量\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "youtube-data": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "youtube-data-mcp"
+   ],
+   "env": {
+    "SERPAPI_KEY": "your_serpapi_key_here"
+   }
+  }
+ }
+}

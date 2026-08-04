@@ -1,0 +1,22 @@
+{
+ "id": "2801",
+ "kind": "mcp",
+ "name": "cryptoquant",
+ "fingerprint_md5": "f9a59404ba830275696ded045a67d07e",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# CryptoQuant MCP服务器\r\n\r\n\r\n  <strong>On-Chain Analytics for Claude and AI Coding Agents</strong>\r\n\r\n\r\n  [Installation](#installation) •\r\n  [MCP Tools](#mcp-tools) •\r\n  [Authentication](#authentication)\r\n\r\n\r\n______________________________________________________________________\r\n\r\n## 这是什么？\r\n\r\nCryptoQuant MCP Server将链上分析直接引入您的AI助手：\r\n\r\n- **自然语言查询**：Ask in any language-“比特币价格预测？”或“是否BTC被高估？”\r\n- **实时度量**：MVRV、SOPR、汇率、资金率\r\n- **市场洞察力**：基于人工智能的链上数据解读\r\n- **鲸鱼追踪**：监控大型支架的移动\r\n\r\n______________________________________________________________________\r\n\r\n## 安装\r\n\r\n### 快速入门（克劳德桌面、光标等）\r\n\r\n**步骤1**：添加到MCP配置文件：\r\n\r\n|应用程序|配置文件|\r\n|-----|-------------|\r\n| **克劳德台式机（Mac）** | `~/Library/Application Support/Claude/claude_desktop_config.json` |\r\n| **克劳德桌面（Windows）** | `%APPDATA%\\Claude\\claude_desktop_config.json` |\r\n| **克劳德代码** | `~/.claude/mcp.json` 或项目 `.mcp.json` |\r\n| **光标** |项目 `.cursor/mcp.json` |\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cryptoquant\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"cryptoquant-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**步骤2**：重新启动应用程序\r\n\r\n**步骤3**：呼叫 `initialize()` 以验证连接。完成！\r\n\r\n### 本地开发\r\n\r\n对于贡献者：\r\n\r\n```bash\r\ngit clone https://github.com/CryptoQuantOfficial/cryptoquant-mcp.git\r\ncd cryptoquant-mcp\r\nnpm install && npm run build\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## MCP工具\r\n\r\nMCP服务器为API访问提供了以下工具：\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `initialize` |使用API键启动会话，返回计划信息|\r\n| `discover_endpoints` |浏览245+个可用端点|\r\n| `get_endpoint_info` |获取端点参数详细信息|\r\n| `query_data` |查询原始API数据|\r\n| `describe_metric` |获取度量描述和阈值|\r\n| `list_assets` |列出支持的资产|\r\n| `reset_session` |清除会话（注销）|\r\n\r\n### 支持资产\r\n\r\nBTC、ETH、ALT、稳定币、ERC20、TRX、XRP\r\n\r\n______________________________________________________________________\r\n\r\n## 自然语言查询\r\n\r\n用任何语言提问——克劳德都会找到正确的指标：\r\n\r\n|查询|意图|度量|\r\n|-------|--------|--------|\r\n“比特币价格预测如何？”VALUATIONMVRV\r\n|“BTC被高估了吗？”|估值|MVRV|\r\n“让我们看看鲸鱼的动作”WHALE_ACTIVITY whale-ratio\r\n|“融资率是多少？”|杠杆|融资率|\r\n“溺水/失水情况？”PROFIT_BEHAVIOR SOPR\r\n\r\n______________________________________________________________________\r\n\r\n## 认证\r\n\r\n### 选项A.环境变量（推荐）\r\n\r\n将您的API密钥添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cryptoquant\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"cryptoquant-mcp\"],\r\n      \"env\": {\r\n        \"CRYPTOQUANT_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 选项B.直接参数\r\n\r\n呼叫 `initialize()` 使用API密钥：\r\n\r\n```\r\ninitialize(api_key=\"your-api-key\")\r\n```\r\n\r\n密钥将保存到 `~/.cryptoquant/credentials` 为今后的会议。\r\n\r\n**获取API密钥**: [https://cryptoquant.com/settings/api](https://cryptoquant.com/settings/api)\r\n\r\n### 管理凭据\r\n\r\n```bash\r\n# Switch accounts\r\nreset_session(clear_stored=true)\r\ninitialize(api_key=\"new-api-key\")\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 需求\r\n\r\n|组件|要求|\r\n|-----------|-------------|\r\n|Node.js | v18+|\r\n|API访问| [CryptoQuant API密钥](https://cryptoquant.com/settings/api) |\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE)\r\n\r\n______________________________________________________________________\r\n\r\n## 发展\r\n\r\n### 设置\r\n\r\n克隆存储库后，安装依赖项以设置git挂钩：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n这将自动配置 [哈士奇](https://typicode.github.io/husky/) 用于预提交钩子。\r\n\r\n### 预提交钩子\r\n\r\n提交更改时 `src/`，ESLint自动运行：\r\n\r\n- Lint检查仅在文件处于以下状态时运行 `src/` 上演\r\n- 如果发现lint错误，则提交被阻止\r\n- 提交前修复错误： `npm run lint`\r\n\r\n______________________________________________________________________\r\n\r\n\r\n  [CryptoQuant](https://cryptoquant.com) •\r\n  [Docs](https://docs.cryptoquant.com) •\r\n  [Issues](https://github.com/CryptoQuantOfficial/cryptoquant-mcp/issues)\r\n",
+ "config": {
+  "cryptoquant": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "cryptoquant-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "id": "1073",
+ "kind": "mcp",
+ "name": "jdbc-explorer",
+ "fingerprint_md5": "01469d99a3bf06aa058024b21e0c1287",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# JDBC资源管理器\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io/introduction) 用于通过JDBC将LLM连接到数据库的服务器。此服务器使用 [春季AI MCP](https://docs.spring.io/spring-ai/reference/api/mcp/mcp-overview.html) 服务器公开了与连接的数据库交互的工具、提示和资源。\r\n\r\n\r\n## 工具🛠\r\n\r\n服务器包含以下工具。\r\n\r\n- **addBusinessInsight**\r\n\r\n  - 将数据分析过程中发现的业务见解添加到“业务见解”资源中。通常作为提示“数据浏览器”的一部分执行\r\n  - 输入：\r\n    - `insight` （String）：数据分析过程中发现的业务洞察力\r\n\r\n- **执行查询**\r\n\r\n  - 对连接的数据库执行SQL查询，返回结果\r\n  - 输入：\r\n    - `query` （string）：要执行的SQL查询\r\n\r\n- **getTableNames**\r\n\r\n  - 获取表名，包括类型、架构和备注\r\n  - 输入：无\r\n\r\n- **描述表**\r\n\r\n  - 描述数据库中的一个表，包括列信息、主键、外键和索引。\r\n  - 输入：\r\n    - `catalog` （字符串，可选）：目录名称\r\n    - `schema` （字符串，可选）：架构名称\r\n    - `tableName` （string）：要获取描述的表的名称\r\n\r\n- **获取数据库信息**\r\n\r\n  - 获取有关数据库的信息，包括SQL方言、关键字、数据库产品名称等。\r\n  - 输入：无\r\n\r\n## 鼓励📄\r\n\r\n服务器包含1个提示符。\r\n\r\n- **数据浏览器**\r\n\r\n此提示可帮助用户浏览其数据库中的数据。它应该向用户提供LLM可以创建的仪表板选项。然后，LLM将执行必要的查询，并使用工件创建所选的仪表板。\r\n\r\nClaude Desktop中的提示结果\r\n\r\n## 资源🗂️\r\n\r\n服务器包含1个资源。\r\n\r\n- **商业洞察**\r\n\r\n  - 包含LLM在数据分析期间提出的业务见解列表。\r\n  - `uri`: \"memo://insights\"\r\n\r\n## 支持的JDBC变体\r\n\r\n此服务器当前支持以下数据库。\r\n\r\n|数据库|\r\n|----------|\r\n|sqlite|\r\n|PostgreSQL|\r\n|Oracle|\r\n|h2|\r\n|MySQL|\r\n\r\n## 示例数据库\r\n\r\n**Netflix电影**\r\n\r\n基于Netflix目录的示例电影数据\r\n[Netflix示例数据库](https://github.com/lerocha/netflixdb)\r\n\r\n**罗斯文**\r\n\r\n经典的微软示例数据库，包含客户、订单、产品等。\r\n\r\n[西北亚硫酸矿](https://github.com/jpwhite3/northwind-SQLite3)\r\n\r\n**支奴干直升机**\r\n\r\n示例音乐商店数据，包括艺术家、专辑、曲目、发票等。\r\n\r\n[奇努克数据库](https://github.com/lerocha/chinook-database)\r\n\r\n## 使用Claude Desktop\r\n\r\n### 从罐子里\r\n\r\n1. 从下载jar [发布](https://github.com/mikechao/jdbc-explorer/releases)\r\n1. 或者克隆仓库并使用maven构建jar\r\n\r\n```bash\r\nmvn clean package\r\n```\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n#### 亚硫酸矿\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n\t\t  \"jdbc-explorer\": {\r\n\t\t\t\"command\": \"java\",\r\n\t\t\t\"args\": [\r\n\t\t\t  \"-jar\",\r\n\t\t\t  \"C:\\\\\\\\mcp\\\\\\\\jdbc.explorer-0.4.0.jar\",\r\n\t\t\t  \"--db.url=jdbc:sqlite:C:\\\\\\\\mcp\\\\\\\\jdbc-explorer\\\\\\\\netflixdb.sqlite\"\r\n\t\t\t]\r\n\t\t  }\r\n\t}\r\n}\r\n```\r\n\r\n#### 带有用户名和密码的数据库\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n\t\t  \"jdbc-explorer\": {\r\n\t\t\t\"command\": \"java\",\r\n\t\t\t\"args\": [\r\n\t\t\t  \"-jar\",\r\n\t\t\t  \"C:\\\\\\\\mcp\\\\\\\\jdbc.explorer-0.4.0.jar\",\r\n\t\t\t  \"--db.url=jdbc:postgresql://localhost:5432/chinook\",\r\n\t\t\t  \"--db.username=dbuser\",\r\n\t\t\t  \"--db.password=dbpassword\"\r\n\t\t\t]\r\n\t\t  }\r\n\t}\r\n}\r\n```\r\n\r\n### 来自Docker镜像\r\n\r\n您可以在本地构建映像，也可以从GitHub容器注册表中提取映像：\r\n\r\n#### 选项1：从GitHub容器注册表中提取\r\n\r\n```bash\r\ndocker pull ghcr.io/mikechao/jdbc-explorer:latest\r\n```\r\n\r\n#### 选项2：在本地构建\r\n\r\n1. 克隆仓库\r\n1. 构建docker镜像\r\n\r\n```bash\r\ndocker build -t jdbc-explorer .\r\n```\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n#### 带有用户名和密码的数据库\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n\t\t  \"jdbc-explorer\": {\r\n\t\t\t\"command\": \"docker\",\r\n\t\t\t\"args\": [\r\n\t\t\t  \"run\",\r\n\t\t\t  \"-i\",\r\n\t\t\t  \"--rm\",\r\n\t\t\t  \"-e\",\r\n\t\t\t  \"DB_URL=jdbc:postgresql://host.docker.internal:5432/chinook\",\r\n\t\t\t  \"-e\",\r\n\t\t\t  \"DB_USERNAME=dbuser\",\r\n\t\t\t  \"-e\",\r\n\t\t\t  \"DB_PASSWORD=dbpassword\",\r\n\t\t\t  \"ghcr.io/mikechao/jdbc-explorer\"\r\n\t\t\t]\r\n\t\t  }\r\n\t}\r\n}\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "jdbc-explorer": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "DB_URL=jdbc:postgresql://host.docker.internal:5432/chinook",
+    "-e",
+    "DB_USERNAME=dbuser",
+    "-e",
+    "DB_PASSWORD=dbpassword",
+    "ghcr.io/mikechao/jdbc-explorer"
+   ],
+   "env": {}
+  }
+ }
+}

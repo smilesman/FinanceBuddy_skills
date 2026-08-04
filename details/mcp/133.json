@@ -1,0 +1,22 @@
+{
+ "id": "133",
+ "kind": "mcp",
+ "name": "cloudflare",
+ "fingerprint_md5": "3ab0356216dd75d2ef3b0396935add86",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# Cloudflare浏览器渲染MCP服务器📡\r\n\r\n这是一个 [模型上下文协议（MCP）](https://modelcontextprotocol.io/introduction) 支持远程MCP的服务器\r\n连接，内置Cloudflare OAuth。\r\n\r\n它集成了由 [Cloudflare浏览器渲染API](https://developers.cloudflare.com/browser-rendering/) 拿来\r\n网页，将其转换为markdown，并截图。\r\n\r\n## 🔨 可用工具\r\n\r\n目前可用的工具：\r\n\r\n| **工具** | **描述** |\r\n| ---------------------- | ---------------------------------------------------------------------------- |\r\n| `get_url_html_content` |检索指定URL的HTML内容|\r\n| `get_url_markdown` |获取网页内容并将其转换为Markdown格式。            |\r\n| `get_url_screenshot` |捕获网页的屏幕截图。（可选）指定视口大小。 |\r\n\r\n**注：** 这些工具是帐户范围的。单个帐户凭据（以及帐户范围的API令牌）将自动检测到。如果您的凭据可以访问多个帐户，请通过 `account_id` 到工具，或设置 `cf-account-id` MCP客户端配置中的请求标头。\r\n\r\n此MCP服务器仍在开发中，我们计划在未来添加更多工具。\r\n\r\n### 提示示例\r\n\r\n- `Get the HTML content of https://example.com.`\r\n- `Convert https://example.com to Markdown.`\r\n- `Take a screenshot of https://example.com.`\r\n\r\n## 从任何MCP客户端访问远程MCP服务器\r\n\r\n如果您的MCP客户端对远程MCP服务器具有一流的支持，则客户端将提供一种接受服务器URL的方法(`https://browser.mcp.cloudflare.com`)直接在其界面内（例如[Cloudflare AI游乐场](https://playground.ai.cloudflare.com/)).\r\n\r\n如果您的客户端尚不支持远程MCP服务器，则需要使用MCP-remote设置其相应的配置文件(https://www.npmjs.com/package/mcp-remote)指定您的客户端可以访问哪些服务器。\r\n\r\n用以下配置替换内容：\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"cloudflare\": {\r\n\t\t\t\"command\": \"npx\",\r\n\t\t\t\"args\": [\"mcp-remote\", \"https://browser.mcp.cloudflare.com/mcp\"]\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\n设置好配置文件后，重新启动MCP客户端，将打开一个浏览器窗口，显示您的OAuth登录页面。继续执行身份验证流程，以授予客户端访问MCP服务器的权限。授予访问权限后，这些工具将可供您使用。\r\n\r\n有兴趣贡献并在本地运行此服务器吗？看 [贡献.md](CONTRIBUTING.md) 开始吧。\r\n",
+ "config": {
+  "cloudflare": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://browser.mcp.cloudflare.com/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "id": "2564",
+ "kind": "mcp",
+ "name": "gsc-3",
+ "fingerprint_md5": "adef6e93d84e44d44ce6680888668680",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP GSC多账户\r\n\r\n用于Google搜索控制台的模型上下文协议（MCP）服务器 **多账户支持**.\r\n\r\n从单个MCP服务器管理多个GSC帐户。非常适合代理商、SEO专业人员或管理多个物业的任何人。\r\n\r\n## 特性\r\n\r\n- 🔄 **多账户** -动态切换帐户\r\n- 📊 **搜索分析** -使用正则表达式过滤最多25000行\r\n- 🎯 **速赢检测** -自动识别SEO机会\r\n- 📈 **期间比较** -比较时间段之间的性能\r\n- 🔍 **URL检查** -检查任何URL的索引状态\r\n- 📤 **URL索引** -通过索引API提交用于索引的URL\r\n- 🗺️ **网站地图管理** -列出并提交网站地图\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install mcp-gsc-multi-account\r\n```\r\n\r\n或者直接运行：\r\n\r\n```bash\r\nnpx mcp-gsc-multi-account\r\n```\r\n\r\n## 配置\r\n\r\n### 所需的环境变量\r\n\r\n```bash\r\nGOOGLE_GSC_CLIENT_ID=your-client-id.apps.googleusercontent.com\r\nGOOGLE_GSC_CLIENT_SECRET=your-client-secret\r\n```\r\n\r\n### 帐户配置\r\n\r\n#### 选项1：单一账户（简单）\r\n\r\n```bash\r\nGSC_REFRESH_TOKEN=1//your-refresh-token\r\nGSC_EMAIL=user@gmail.com  # optional, defaults to \"default\"\r\n```\r\n\r\n#### 选项2：通过JSON创建多个帐户\r\n\r\n```bash\r\nGSC_ACCOUNTS_JSON='{\"accounts\":[{\"id\":\"main\",\"email\":\"main@gmail.com\",\"refreshToken\":\"1//...\"},{\"id\":\"client1\",\"email\":\"client@gmail.com\",\"refreshToken\":\"1//...\"}]}'\r\n```\r\n\r\n#### 选项3：通过文件创建多个帐户\r\n\r\n```bash\r\nGSC_ACCOUNTS_FILE=/path/to/accounts.json\r\n```\r\n\r\naccounts.json格式：\r\n\r\n```json\r\n{\r\n  \"accounts\": [\r\n    {\r\n      \"id\": \"main\",\r\n      \"email\": \"main@gmail.com\",\r\n      \"refreshToken\": \"1//...\"\r\n    },\r\n    {\r\n      \"id\": \"client1\",\r\n      \"email\": \"client@gmail.com\",\r\n      \"refreshToken\": \"1//...\"\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n#### 选项4：运行时注册\r\n\r\n使用 `register_account` 运行时添加帐户的工具：\r\n\r\n```json\r\n{\r\n  \"tool\": \"register_account\",\r\n  \"arguments\": {\r\n    \"id\": \"newclient\",\r\n    \"email\": \"newclient@gmail.com\",\r\n    \"refreshToken\": \"1//...\"\r\n  }\r\n}\r\n```\r\n\r\n## MCP配置\r\n\r\n### 克劳德桌面/光标\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gsc\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-gsc-multi-account\"],\r\n      \"env\": {\r\n        \"GOOGLE_GSC_CLIENT_ID\": \"your-client-id\",\r\n        \"GOOGLE_GSC_CLIENT_SECRET\": \"your-secret\",\r\n        \"GSC_ACCOUNTS_FILE\": \"/path/to/accounts.json\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 麦克波特\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gsc\": {\r\n      \"command\": \"npx -y mcp-gsc-multi-account\",\r\n      \"env\": {\r\n        \"GOOGLE_GSC_CLIENT_ID\": \"your-client-id\",\r\n        \"GOOGLE_GSC_CLIENT_SECRET\": \"your-secret\",\r\n        \"GSC_REFRESH_TOKEN\": \"1//your-token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 账户管理\r\n\r\n#### 注册_帐户\r\n\r\n在运行时注册新帐户。\r\n\r\n- `id` （必填）：唯一标识符\r\n- `email` （必填）：谷歌帐户电子邮件\r\n- `refreshToken` （必需）：OAuth2刷新令牌\r\n\r\n#### list_计数\r\n\r\n列出所有注册帐户。\r\n\r\n#### list_网站\r\n\r\n列出帐户可访问的所有网站。\r\n\r\n- `account` （可选）：帐户ID或电子邮件\r\n\r\n### 搜索分析\r\n\r\n#### 搜索分析\r\n\r\n获取搜索性能数据。\r\n\r\n- `siteUrl` （必填）：站点URL（例如。， `https://example.com` 或 `sc-domain:example.com`)\r\n- `startDate` （必填）：开始日期（YYYY-MM-DD）\r\n- `endDate` （必填）：结束日期（YYYY-MM-DD）\r\n- `account` （可选）：要使用的帐户\r\n- `dimensions` （可选）：查询、页面、国家、设备、日期\r\n- `rowLimit` （可选）：最多25000行\r\n- `pageFilter`, `queryFilter`, `countryFilter`, `deviceFilter`\r\n- `filterOperator`：等于，包含，包括正则表达式，不包括正则表达式\r\n\r\n#### detect_quick_wins\r\n\r\n寻找SEO优化机会——关键词排名4-20，展示率高，点击率低。\r\n\r\n- `siteUrl`, `startDate`, `endDate` （必填）\r\n- `minImpressions` （默认值：100）\r\n- `maxCtr` （默认值：3.0%）\r\n- `positionRangeMin/Max` （默认值：4-20）\r\n- `limit` （默认值：50）\r\n\r\n#### 比较时段\r\n\r\n比较两个时间段之间的指标。\r\n\r\n- `siteUrl` （必填）\r\n- `currentStartDate`, `currentEndDate` （必填）\r\n- `previousStartDate`, `previousEndDate` （必填）\r\n- `dimensions` （可选）\r\n\r\n### 网址管理器\r\n\r\n#### inspect_url\r\n\r\n检查URL索引状态。\r\n\r\n- `siteUrl`, `inspectionUrl` （必填）\r\n\r\n#### submit_url_for_indexing\r\n\r\n提交Google索引的URL（需要启用索引API）。\r\n\r\n- `url` （必填）\r\n- `type`：URL_UPDATED（索引）或URL_DELETED（删除）\r\n\r\n### 网站地图\r\n\r\n#### list_sitemaps\r\n\r\n列出站点的站点地图。\r\n\r\n- `siteUrl` （必填）\r\n\r\n#### 提交站点地图\r\n\r\n提交站点地图。\r\n\r\n- `siteUrl`, `feedpath` （必填）\r\n\r\n## 获取OAuth凭据\r\n\r\n1. 首选 [谷歌云控制台](https://console.cloud.google.com/)\r\n1. 创建或选择项目\r\n1. 启用 **搜索控制台API** 和 **API索引**\r\n1. 首选 **凭证** → **创建凭据** → **OAuth 2.0客户端ID**\r\n1. 应用程序类型： **桌面应用程序**\r\n1. 下载凭据\r\n\r\n### 获取刷新令牌\r\n\r\n使用Google OAuth Playground或运行：\r\n\r\n```bash\r\nnpx -y google-search-console-mcp-server google-search-console-mcp-setup\r\n```\r\n\r\n## 例子\r\n\r\n```\r\n\"List my GSC accounts\"\r\n\r\n\"Show quick wins for https://example.com using the main account\"\r\n\r\n\"Compare last 7 days vs previous 7 days for sc-domain:example.com\"\r\n\r\n\"Submit https://example.com/new-article for indexing\"\r\n\r\n\"Get top 100 queries for https://example.com from 2024-01-01 to 2024-01-31\"\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请先阅读投稿指南。\r\n",
+ "config": {
+  "gsc": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-gsc-multi-account"
+   ],
+   "env": {
+    "GOOGLE_GSC_CLIENT_ID": "your-client-id",
+    "GOOGLE_GSC_CLIENT_SECRET": "your-secret",
+    "GSC_ACCOUNTS_FILE": "/path/to/accounts.json"
+   }
+  }
+ }
+}

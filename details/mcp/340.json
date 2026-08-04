@@ -1,0 +1,24 @@
+{
+ "id": "340",
+ "kind": "mcp",
+ "name": "obs",
+ "fingerprint_md5": "03c4f842cdb740aca2448a295084d377",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# OBS MCP服务器\r\n\r\nOBS Studio的MCP服务器，提供通过OBS WebSocket协议控制OBS的工具。\r\n\r\n## 特性\r\n\r\n- 连接到OBS WebSocket服务器\r\n- 通过MCP工具控制OBS\r\n- 提供以下工具：\r\n  - 一般业务\r\n  - 场景管理\r\n  - 源代码管理\r\n  - 场景项目操作\r\n  - 流媒体和录制\r\n  - 过渡\r\n\r\n## 用法\r\n\r\n1. 确保OBS Studio在启用WebSocket服务器的情况下运行（工具>WebSocket服务器设置）。注意WS的密码。\r\n1. 在环境变量中设置WebSocket密码（如果需要）：\r\n\r\n```bash\r\nexport OBS_WEBSOCKET_PASSWORD=\"your_password_here\"\r\n```\r\n\r\n3. 使用MCP服务器设置将MCP服务器添加到Claude桌面：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"obs\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"obs-mcp@latest\"],\r\n      \"env\": {\r\n        \"OBS_WEBSOCKET_PASSWORD\": \"<password_from_obs>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n4. 使用克劳德来控制你的OBS！\r\n\r\n## 发展\r\n\r\n如果您想使用此git repo中的代码在本地运行服务器，可以执行以下操作：\r\n\r\n```bash\r\nnpm run build\r\nnpm run start\r\n```\r\n\r\n然后配置Claude桌面：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"obs\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"<obs-mcp_root>/build/index.js\"\r\n      ],\r\n      \"env\": {\r\n        \"OBS_WEBSOCKET_PASSWORD\": \"<password_from_obs>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n服务器提供按类别组织的工具：\r\n\r\n- 通用工具：版本信息、统计数据、热键、工作室模式\r\n- 场景工具：列出场景、切换场景、创建/删除场景\r\n- 源工具：管理源、设置、音频级别、静音/取消静音\r\n- 场景项工具：管理场景中的项（位置、可见性等）\r\n- 流媒体工具：启动/停止流媒体、录制、虚拟相机\r\n- 过渡工具：设置过渡、持续时间、触发过渡\r\n\r\n## 环境变量\r\n\r\n- `OBS_WEBSOCKET_URL`：websocket URL（默认值：WS://localhost:4455）\r\n- `OBS_WEBSOCKET_PASSWORD`：使用OBS-WebSocket进行身份验证的密码（如果需要）\r\n\r\n## 需求\r\n\r\n- Node.js 16+\r\n- OBS Studio 31+已启用WebSocket服务器\r\n- 克劳德桌面\r\n\r\n## 许可证\r\n\r\n请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "obs": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "obs-mcp@latest"
+   ],
+   "env": {
+    "OBS_WEBSOCKET_PASSWORD": "<password_from_obs>"
+   }
+  }
+ }
+}

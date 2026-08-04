@@ -1,0 +1,12 @@
+{
+ "id": "clawshield",
+ "kind": "skill",
+ "name": "clawshield",
+ "fingerprint_md5": "9217bf81bd7718d3b65dfb94a1ddecd5",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "# ClawShield\r\n\r\n## 目的\r\n审计本地 OpenClaw 安装的安全态势和常见的提示注入指标。生成 JSON 报告以供审查和警报。\r\n\r\n## 工作流\r\n1. **展示面板**：启动面板服务器并展示 UI。\r\n2. **用户配置**：更新 `config.yaml`（扫描频率、警报、灵敏度）。\r\n3. **Cron 设置**：按所选频率安排 `scripts/audit.sh`。\r\n4. **报告/警报**：审查 JSON 输出，并在发现提示注入命中或意外开放端口时发出警报。\r\n\r\n## 用法\r\n### 面板（推荐）\r\n```bash\r\nnode scripts/panel-server.js\r\n```\r\n然后展示 UI：\r\n- `canvas.present` → `http://localhost:8133` (扫描 / 设置 / 日志)\r\n\r\n### 配置 (CLI)\r\n```bash\r\nnode scripts/config.js get\r\nnode scripts/config.js set Scan_freq daily alerts telegram sensitivity high\r\n```\r\n\r\n### 审计 (CLI)\r\n```bash\r\nbash scripts/audit.sh > report.json\r\n```\r\n\r\n## 说明\r\n- 仅限本地扫描；除 localhost 外不进行网络调用。\r\n- 面板服务器是本地的，并将最后一份报告存储在 `logs/last-report.json`。\r\n- `config.yaml` 默认值：Scan_freq=daily, alerts=telegram, sensitivity=high。\r\n- 适用于常规安全检查和 \"frenzy-proofing\"。\r\n\r\n联系：Jeffrey Coleman | smallbizailab79@gmail.com | 定制审计/企业版。",
+ "config": {}
+}

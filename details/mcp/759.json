@@ -1,0 +1,22 @@
+{
+ "id": "759",
+ "kind": "mcp",
+ "name": "morning-tech-news",
+ "fingerprint_md5": "1b6cf2c25a4f10f6ae29a195cfe5364a",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 晨报-MCP服务器\r\n\r\nMCP（模型上下文协议）服务器，用于获取最新的技术新闻并生成简洁的早间简报。与官方合作建造 `@modelcontextprotocol/sdk`.\r\n\r\n## 特性\r\n\r\n- **工具： `get_morning_news`** --从技术来源（目前是Anthropic）中抓取最新文章，并返回一个包含标题、日期、网址和摘要的格式化列表。\r\n- **提示： `morning_tech_brief`** --预构建的提示，调用该工具并将结果格式化为面向前端/WordPress/Vue.js开发人员的结构化早间简报。\r\n- 具有类型的可扩展架构 `NewsSource` 界面——易于添加新源。\r\n\r\n## 项目结构\r\n\r\n```\r\nsrc/\r\n├── index.ts                  # MCP server entry point (tool + prompt registration)\r\n├── types.ts                  # NewsArticle & NewsSource interfaces\r\n├── tools/\r\n│   └── get_morning_news.ts   # Aggregates news from all sources\r\n└── sources/\r\n    ├── anthropic.ts          # Scrapes anthropic.com/news using Cheerio\r\n    └── openai.ts             # Scrapes openai.com/news using Cheerio\r\n```\r\n\r\n## 先决条件\r\n\r\n- **Node.js** >= 18\r\n\r\n### 在Claude桌面中配置\r\n\r\n将服务器添加到Claude Desktop配置文件中(`claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"morning-tech-news\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-morning-tech-news\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后重新启动Claude Desktop。您现在可以：\r\n\r\n1. 使用 **`get_morning_news`** 获取原始科技新闻的工具。\r\n1. 使用 **`morning_tech_brief`** 提示获取格式化的每日简报。\r\n\r\n## 技术栈\r\n\r\n- **TypeScript** --严格模式，ES2022目标\r\n- **@模型上下文协议/sdk** --MCP服务器框架\r\n- **再见** --HTML解析/网页抓取\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "morning-tech-news": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-morning-tech-news"
+   ],
+   "env": {}
+  }
+ }
+}

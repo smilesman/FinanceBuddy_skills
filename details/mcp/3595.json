@@ -1,0 +1,21 @@
+{
+ "id": "3595",
+ "kind": "mcp",
+ "name": "ripgrep-2",
+ "fingerprint_md5": "0d9447224f5b0e7ee31df17aceaa991f",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# @atef_andrus/mcp-ripgrep\r\n\r\n\r\n提供以下功能的MCP服务器 [ripgrep](https://github.com/BurntSushi/ripgrep) 搜索能力。\r\n\r\n## 先决条件\r\n\r\n- [ripgrep](https://github.com/BurntSushi/ripgrep) (`rg`)已安装并可在PATH上使用\r\n- Node.js 22+或Bun 1.3+\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install @atef_andrus/mcp-ripgrep\r\n```\r\n\r\n## 用法\r\n\r\n### 用作MCP服务器\r\n\r\n将以下内容添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ripgrep\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@atef_andrus/mcp-ripgrep\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 启动选项\r\n\r\n|选项|描述|\r\n|---|---|\r\n| `--allow-dir <path>` |将搜索范围限制在指定目录（可以多次指定）|\r\n| `--max-result-chars <number>` |结果中的最大字符数。超过线边界时截断（默认值：50000）|\r\n| `--max-output-bytes <number>` |ripgrep输出的最大字节数。超出时终止进程并截断结果（默认值：20 MB）|\r\n\r\n带有启动选项的配置示例：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ripgrep\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"@atef_andrus/mcp-ripgrep\",\r\n        \"--allow-dir\", \"/home/user/project\",\r\n        \"--max-result-chars\", \"50000\",\r\n        \"--max-output-bytes\", \"20000000\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 工具\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `search` |使用正则表达式、文字字符串、多行匹配、OR匹配、上下文行和各种过滤器进行模式搜索。在结果前显示匹配计数和文件计数的摘要|\r\n| `search-and-replace` |搜索并替换预览（只读）。支持多行匹配和捕获组（$1，${name}）|\r\n| `search-count` |统计每个文件的匹配项（按行数或总匹配项）。支持排序结果|\r\n| `search-files` |列出与模式匹配或不匹配的文件|\r\n| `list-files` |列出搜索范围内的所有文件|\r\n| `list-file-types` |列出ripgrep支持的文件类型|\r\n\r\n### 关键参数\r\n\r\n|参数|说明|\r\n|---|---|\r\n| `pattern` |搜索模式（默认为正则表达式）|\r\n| `path` |要搜索的目录或文件|\r\n| `fixedStrings` |将模式视为文字字符串|\r\n| `caseSensitive` | `true` =区分大小写， `false` =不区分大小写，省略=智能大小写|\r\n| `fileType` |按文件类型过滤（例如。， `\"ts\"`, `[\"ts\", \"js\"]`).字符串或数组|\r\n| `fileTypeNot` |排除文件类型（例如。， `\"json\"`, `[\"json\", \"md\"]`).字符串或数组|\r\n| `glob` |按球状图案过滤（例如。， `\"*.test.ts\"`, `[\"src/**\", \"!vendor/**\"]`).字符串或数组|\r\n| `includeHidden` |包含隐藏文件|\r\n| `followSymlinks` |遵循符号链接|\r\n| `maxDepth` |最大目录遍历深度|\r\n| `noIgnore` |忽略.gitignore规则和通常被排除在外的搜索文件|\r\n| `multiline` |启用多行匹配（函数签名、导入块等）|\r\n| `additionalPatterns` |OR匹配的其他模式（数组）|\r\n| `sortBy` |对结果进行排序。搜索/搜索文件/列出文件： `\"path\"` `\"modified\"` `\"created\"`.搜索计数： `\"path\"` `\"count\"` `\"count-asc\"` |\r\n| `maxCharacters` |结果中的最大字符数。在线条边界处截断，并在超出时附加摘要|\r\n\r\n### 工具参数支持\r\n\r\n<!-- params-table-start -->\r\n\r\n|参数| `list-file-types` | `list-files` | `search` | `search-and-replace` | `search-count` | `search-files` |\r\n|---|:---:|:---:|:---:|:---:|:---:|:---:|\r\n| `pattern` |-|-|o|o|o|\r\n| `path` |-|o|o|o|o|o|\r\n| `fixedStrings` |-|-|o|o|o|\r\n| `caseSensitive` |-|-|o|o|o|\r\n| `wordMatch` |-|-|o|o|o|\r\n| `multiline` |-|-|o|o|-|-|\r\n| `fileType` |-|o|o|o|o|o|\r\n| `fileTypeNot` |-|o|o|o|o|o|\r\n| `glob` |-|o|o|o|o|o|\r\n| `maxResults` |-|-|o|o|-|-|\r\n| `contextLines` |-|-|o|-|-|-|\r\n| `beforeContext` |-|-|o|-|-|-|\r\n| `afterContext` |-|-|o|-|-|-|\r\n| `invertMatch` |-|-|o|-|-|| o|\r\n| `includeHidden` |-|o|o|o|o|o|\r\n| `followSymlinks` |-|o|o|o|o|o|\r\n| `maxDepth` |-|o|o|o|o|o|\r\n| `additionalPatterns` |-|-|o|-|-|-|\r\n| `jsonOutput` |-|-|o|-|-|-|\r\n| `maxColumns` |-|-|o|-|-|-|\r\n| `noIgnore` |-|o|o|o|o|o|\r\n| `sortBy` |-|o|o|-|o|o|\r\n| `maxCharacters` |o|o|o| o|o|| o|\r\n| `replacement` |-|-|-|o|-|-|\r\n| `onlyMatching` |-|-|-|o|-|-|\r\n| `countMode` |-|-|-|||\r\n| `includeZero` |-|-|-|||\r\n\r\n<!-- params-table-end -->\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nbun install\r\n\r\n# Run tests\r\nbun test\r\n\r\n# Type check\r\nbunx tsc --noEmit\r\n\r\n# Lint and format\r\nbunx biome check --write .\r\n\r\n# Build\r\nbunx tsc\r\n\r\n# Start in development mode\r\nbun run dev\r\n```\r\n\r\n## 安全\r\n\r\n- 此服务器通过以下方式将参数作为数组传递 `spawn(\"rg\", args)` （无外壳插值）。图案和路径放置在 `--` 分离器，防止旗帜注入。\r\n- 这 `--allow-dir` 选项将搜索范围限制为指定的目录。使用以下命令将路径解析为绝对路径 `path.resolve()` 并通过前缀匹配进行验证。\r\n- **限制**：何时 `followSymlinks` 如果启用，符号链接可能允许访问允许范围之外的目录。使用时请注意这一点 `--allow-dir` 连同 `followSymlinks`.\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "ripgrep": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@atef_andrus/mcp-ripgrep"
+   ],
+   "env": {}
+  }
+ }
+}

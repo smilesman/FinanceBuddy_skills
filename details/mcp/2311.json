@@ -1,0 +1,22 @@
+{
+ "id": "2311",
+ "kind": "mcp",
+ "name": "solana-mcp-explorer",
+ "fingerprint_md5": "f15a44f45a6f8547fe3e2bfc65933607",
+ "download_count": 0,
+ "category": "路线规划",
+ "tags": "",
+ "version": "",
+ "readme": "# 🛰️ Solana MCP浏览器\r\n\r\n### 探索Solana生态系统中的MCP服务器！\r\n\r\n______________________________________________________________________\r\n\r\n## 🚀 之前和之后\r\n\r\n**之前：**\\\r\n\r\n**之后：**\\\r\n\r\n______________________________________________________________________\r\n\r\n## 🔗 什么是Solana MCP Explorer？\r\n\r\nSolana MCP Explorer允许您发现和探索Solana生态系统中的所有MCP服务器。只需将此MCP服务器添加到您的MCP主机，即可轻松导航网络！\r\n\r\n______________________________________________________________________\r\n\r\n## 🛠️ 安装说明\r\n\r\n要将此MCP服务器与MCP主机集成，请按照以下步骤操作。\r\n\r\n### 📌 示例：克劳德桌面\r\n\r\n将以下配置添加到您的 **克劳德桌面** 设置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"solana-mcp-explorer\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"solana-mcp-explorer@latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🤝 贡献\r\n\r\n💡 **您是否为Solana构建了MCP服务器？** 我们很乐意把它包括在探险家中！\r\n\r\n### 📜 如何添加MCP服务器\r\n\r\n1. **编辑** 这 [`servers.js`](./servers.js) 包含服务器详细信息的文件。\r\n1. **提交拉取请求（PR）** 随着你的改变。\r\n\r\n🚀 您的贡献有助于使Solana MCP Explorer更好地为每个人服务！\r\n",
+ "config": {
+  "solana-mcp-explorer": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "solana-mcp-explorer@latest"
+   ],
+   "env": {}
+  }
+ }
+}

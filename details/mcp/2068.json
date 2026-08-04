@@ -1,0 +1,24 @@
+{
+ "id": "2068",
+ "kind": "mcp",
+ "name": "toleno-network",
+ "fingerprint_md5": "a5e9860ce4bd661b03c59b422f6103a6",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# @托勒诺/mcp\r\n\r\n\r\n**Toleno网络MCP服务器** --使用自然语言直接从Claude AI控制您的Toleno挖矿帐户。\r\n\r\n> 检查余额·开始挖矿·查看推荐——所有这些都不需要打开应用程序。\r\n\r\n______________________________________________________________________\r\n\r\n<!--\r\n  📹 DEMO GIF — Kayıt talimatı:\r\n  1. Claude Desktop'u aç\r\n  2. \"What is my Toleno mining status?\" yaz\r\n  3. Yanıtı göster\r\n  demo.gif olarak bu klasöre kaydet, sonra aşağıdaki satırı aktif et:\r\n-->\r\n\r\n\r\n______________________________________________________________________\r\n\r\n## 快速开始\r\n\r\n```bash\r\nnpx @toleno/mcp setup\r\n```\r\n\r\n安装向导将：\r\n\r\n1. 索取您的Toleno API密钥\r\n1. 根据API对其进行验证\r\n1. 自动更新您的Claude Desktop配置\r\n1. 提醒您重新启动Claude Desktop\r\n\r\n或非交互式：\r\n\r\n```bash\r\nnpx @toleno/mcp setup --key tlno_your_key_here\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 获取API密钥\r\n\r\n1. 打开 **Toleno应用程序** 在你的手机上\r\n1. 首选 **设置→ API密钥**\r\n1. 轻按 **“创建新密钥”**\r\n1. 命名（例如。 `Claude Desktop`)\r\n1. **立即复制** --开始于 `tlno_`，仅显示一次\r\n\r\n______________________________________________________________________\r\n\r\n## 手动设置\r\n\r\n### 克劳德桌面版\r\n\r\n|操作系统|配置文件|\r\n|----|-------------|\r\n|Windows（经典）| `%APPDATA%\\Claude\\claude_desktop_config.json` |\r\n|Windows（应用商店）| `%LOCALAPPDATA%\\Packages\\Claude_*\\LocalCache\\Roaming\\Claude\\claude_desktop_config.json` |\r\n|macOS| `~/Library/Application Support/Claude/claude_desktop_config.json` |\r\n|Linux| `~/.config/Claude/claude_desktop_config.json` |\r\n\r\n> **提示：** `npx @toleno/mcp setup` 自动检测两个Windows路径并写入所有路径。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Toleno Network\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@toleno/mcp\"],\r\n      \"env\": {\r\n        \"TOLENO_API_KEY\": \"tlno_paste_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n添加 `.mcp.json` 到您的项目根目录：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Toleno Network\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@toleno/mcp\"],\r\n      \"env\": {\r\n        \"TOLENO_API_KEY\": \"tlno_paste_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 可用工具\r\n\r\n|工具|它做什么|需要钥匙吗？ |\r\n|------|-------------|------------|\r\n| `get_global_stats` |挖掘的代币总数，平台范围内的用户数|否|\r\n| `get_profile` |你的平衡、挖矿能力、连胜、水平|是|\r\n| `get_mining_status` |活动会话、剩余时间、获得的令牌|是|\r\n| `start_mining` |开始新的24小时挖矿会话|是|\r\n| `claim_mining` |完成会话后领取奖励|是|\r\n| `get_wallet_info` |钱包地址、可提取余额、限额|是|\r\n| `get_referral_info` |推荐代码、团队规模、主动推荐|是|\r\n\r\n______________________________________________________________________\r\n\r\n## 你可以问克劳德什么\r\n\r\n```\r\n\"What is my Toleno mining status?\"\r\n\"Start mining\"\r\n\"How many TOL tokens do I have?\"\r\n\"Show my wallet info\"\r\n\"How many referrals do I have?\"\r\n\"What are the global Toleno stats?\"\r\n\"When does my mining session end?\"\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 示例会话\r\n\r\n```\r\nYou:    What is my mining status?\r\n\r\nClaude: Your mining session is active!\r\n        ⛏  Started: 3 hours ago\r\n        ⏱  Time remaining: 21 hours\r\n        💰 Earned so far: 3.5 / 28 TOL\r\n        ✅ Keep it running to earn the full reward!\r\n\r\n---\r\n\r\nYou:    How many referrals do I have?\r\n\r\nClaude: Your referral stats:\r\n        👥 Total referrals: 12\r\n        ✅ Active today: 7\r\n        🔗 Your code: TOLENO-ABC123\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 常见问题解答\r\n\r\n**Q： 我的API密钥安全吗？**\r\n您的密钥存储在本地的Claude配置文件中，从不发送到Claude的服务器。随时从Toleno应用程序中撤销。\r\n\r\n**Q： 克劳德能对我的账户做任何有害的事情吗？**\r\n不可以。Claude只能读取数据、开始挖掘会话和领取已完成的奖励。它无法更改您的钱包地址、提取代币或删除您的帐户。\r\n\r\n**Q： 这些工具不会出现在Claude Desktop中。**\r\n安装后完全退出并重新启动Claude Desktop。寻找🔨 聊天工具栏中的锤子图标。\r\n\r\n**Q： 我需要Node.js吗？**\r\n是的，Node.js 18或更高版本。下载自 [nodejs.org](https://nodejs.org).\r\n\r\n**Q： 它显示“TOLENO_API_KEY未配置”。**\r\n跑 `npx @toleno/mcp setup` 再次或手动将密钥添加到配置文件中。\r\n\r\n______________________________________________________________________\r\n\r\n## 链接\r\n\r\n- **Toleno应用程序：** [tolenocoin.com](https://tolenocoin.com)\r\n- **npm包：** [npmjs.com/package/@toleno/mcp](https://www.npmjs.com/package/@toleno/mcp)\r\n- **github：** [github/tolenonetwork/toleno-mcp](https://github.com/tolenonetwork/toleno-mcp)\r\n\r\n______________________________________________________________________\r\n\r\nMIT© [Toleno网络](https://tolenocoin.com)\r\n",
+ "config": {
+  "toleno-network": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@toleno/mcp"
+   ],
+   "env": {
+    "TOLENO_API_KEY": "tlno_paste_your_key_here"
+   }
+  }
+ }
+}

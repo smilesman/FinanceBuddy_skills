@@ -1,0 +1,12 @@
+{
+ "id": "openclaw-echo-agent",
+ "kind": "skill",
+ "name": "openclaw-echo-agent",
+ "fingerprint_md5": "90ceb3434cc32b607e69df71319467f1",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# EchoAgent\r\n\r\nEchoAgent 是一个最小的 OpenClaw 兼容技能。\r\n\r\n## 功能\r\n- 接受文本输入\r\n- 使用工具处理它\r\n- 返回确定性输出\r\n\r\n## 用例\r\n此技能旨在作为构建和发布 OpenClaw 代理的参考示例。\r\n\r\n## 入口点\r\nagent.py\r\n\r\n## 互操作性\r\n\r\n此技能设计为供其他 OpenClaw 代理使用。\r\n\r\n### 输入\r\n- text (string)\r\n\r\n### 输出\r\n- result (string)\r\n\r\n此代理可以安全地在多代理工作流中链接。",
+ "config": {}
+}

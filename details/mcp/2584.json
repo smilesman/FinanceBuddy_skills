@@ -1,0 +1,22 @@
+{
+ "id": "2584",
+ "kind": "mcp",
+ "name": "joomil",
+ "fingerprint_md5": "db5675713efab9bb764d270997af65c2",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 乔米尔·麦克普\r\n\r\n> MCP服务器 [Joomil.ch](https://www.joomil.ch) --瑞士领先的法语分类广告市场，自2007年以来一直活跃。\r\n\r\n浏览和搜索34个类别的45000多个活跃房源：房地产、汽车、工作、动物、电子、时尚等，全部来自瑞士的法语区（罗曼迪）。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_classifieds` |使用过滤器搜索列表：关键字、类别、州、位置、价格范围、排序、分页|\r\n| `get_classified` |按ID获取列表的完整详细信息：描述、图像、供应商、到期日期|\r\n| `get_categories` |通过以下方式列出具有层次结构的活动类别 `parent_id` |\r\n\r\n## 快速开始\r\n\r\n这是一个 **远程MCP服务器** --无需本地安装。\r\n\r\n**端点：** `https://joomil-mcp.snowy-surf-deec.workers.dev/mcp`\r\n\r\n### 克劳德桌面版\r\n\r\n添加 `~/.claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"joomil\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-remote\", \"https://joomil-mcp.snowy-surf-deec.workers.dev/mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n添加到MCP设置中：\r\n\r\n```json\r\n{\r\n  \"joomil\": {\r\n    \"url\": \"https://joomil-mcp.snowy-surf-deec.workers.dev/mcp\"\r\n  }\r\n}\r\n```\r\n\r\n## 示例提示\r\n\r\n- *“在日内瓦Joomil上查找500瑞士法郎以下的二手公路自行车”*\r\n- *“给我看看沃州的公寓出租情况”*\r\n- *“Joomil有哪些电子产品类别？”*\r\n- *“在瓦莱州地区找一张复古沙发”*\r\n- *“寻找纳沙泰尔酒店业的工作机会”*\r\n\r\n## API 参考\r\n\r\n### `search_classifieds`\r\n\r\n|参数|类型|说明|\r\n|-----------|------|-------------|\r\n| `q` |string |全文搜索（标题+描述）|\r\n| `cat_id` |number |类别ID--包括子类别|\r\n| `canton` |string |瑞士州： `Geneve`, `Vaud`, `Valais`, `Fribourg`, `Neuchatel`, `Berne`, `Jura`... |\r\n| `location` |string |城市名称或邮政编码（部分匹配）|\r\n| `price_min` |number |最低价格（瑞士法郎）|\r\n| `price_max` |number |最高价格（瑞士法郎）|\r\n| `sort` |字符串| `recent` （默认）， `price_asc`, `price_desc`, `views` |\r\n| `limit` |number |每页结果数（1-50，默认20）|\r\n| `offset` |number |分页偏移量--使用 `next_offset` 来自之前的回复|\r\n\r\n### `get_classified`\r\n\r\n|参数|类型|说明|\r\n|-----------|------|-------------|\r\n| `id` |number |列表ID（来自搜索结果或列表URL）|\r\n\r\n### `get_categories`\r\n\r\n|参数|类型|说明|\r\n|-----------|------|-------------|\r\n| `parent_id` |number |可选--全部省略， `0` 对于根类别，或其子类别的任何类别ID|\r\n\r\n## 数据\r\n\r\n- **源**：Joomil.ch公共REST API\r\n- **覆盖**：45000多个活跃列表，34个顶级类别，190000多个注册用户\r\n- **位置**：瑞士（法语区----罗曼迪）\r\n- **语言**：法语\r\n- **更新频率**：实时\r\n- **认证**：无需\r\n\r\n## 部署您自己的\r\n\r\n```bash\r\ngit clone https://github.com/Valmo-Sarl/joomil-mcp\r\ncd joomil-mcp\r\nnpm install\r\nnpx wrangler login\r\nnpm run deploy\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "joomil": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://joomil-mcp.snowy-surf-deec.workers.dev/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

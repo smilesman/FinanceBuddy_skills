@@ -1,0 +1,12 @@
+{
+ "id": "skywalking-compiling",
+ "kind": "skill",
+ "name": "skywalking-compiling",
+ "fingerprint_md5": "1a122facdd7e1c5ecff8cbdc1e643cb2",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 编译 SkyWalking BanyanDB\r\n\r\n按照以下步骤编译项目。\r\n\r\n## 步骤 1：生成 protobuf 和 mock 代码\r\n\r\n首先运行 `make generate`。这会从 `.proto` 定义重新生成 `.pb.go` 文件，\r\n并通过 mockgen 生成 mock 文件。\r\n\r\n每当以下情况时，此步骤是**必需的**：\r\n- Proto 文件 (`.proto`) 已被添加或修改\r\n- Go 接口 (mockgen 使用的) 已更改\r\n\r\n如果 generate 失败，检查：\r\n- `protoc` 和 Go protobuf plugins 已安装\r\n- Proto 文件语法有效\r\n- 接口签名匹配 mock 期望\r\n\r\n## 步骤 2：构建所有二进制文件\r\n\r\n运行 `make build` 编译所有项目组件：ui, banyand, bydbctl, mcp, fodc/agent, fodc/proxy。\r\n\r\n二进制文件输出到每个组件的 `build/bin/dev/` 目录。\r\n\r\n## 故障排除\r\n\r\n- **.pb.go 中缺少字段**: Proto 文件已更新但未运行 `make generate`。先运行它。\r\n- **Mock 生成失败**: 接口已更改但 mock 未重新生成。`make generate` 修复此问题。\r\n- **导入错误**: 检查导入别名是否匹配 CLAUDE.md 约定 (例如 `commonv1`, `databasev1`)。\r\n\r\n## 其他有用的 targets\r\n\r\n- `make clean` — 清理所有构建产物\r\n- `make clean-build` — 仅清理构建二进制文件\r\n- `make lint` — 运行 linters\r\n- `make test` — 运行测试",
+ "config": {}
+}

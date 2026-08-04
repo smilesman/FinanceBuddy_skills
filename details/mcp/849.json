@@ -1,0 +1,24 @@
+{
+ "id": "849",
+ "kind": "mcp",
+ "name": "sdrm",
+ "fingerprint_md5": "49dc56e0fb03d41274071284cfe33f45",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# @侧臂drm/mcp\r\n\r\nMCP服务器 [API侧臂](https://sdrm.io) --保护媒体免受人工智能训练，检测人工智能生成的内容，并搜索被盗作品。\r\n\r\n此包将Sidearm REST API公开为 [模型上下文协议](https://modelcontextprotocol.io) AI代理（Cursor、Claude Desktop、Windsurf等）可以直接调用的（MCP）工具。\r\n\r\n## 快速开始\r\n\r\n### 1.获取API密钥\r\n\r\n注册地址： [sdm.io](https://sdrm.io) 并在以下位置创建API密钥 [sdm.io/api-keys](https://sdrm.io/api-keys).\r\n\r\n### 2.配置您的代理\r\n\r\n添加到MCP配置文件中：\r\n\r\n**光标** (`.cursor/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sdrm\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@sidearmdrm/mcp\"],\r\n      \"env\": {\r\n        \"SDRM_API_KEY\": \"sk_live_...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**克劳德桌面版** (`claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sdrm\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@sidearmdrm/mcp\"],\r\n      \"env\": {\r\n        \"SDRM_API_KEY\": \"sk_live_...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**帆板运动** (`~/.codeium/windsurf/mcp_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sdrm\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@sidearmdrm/mcp\"],\r\n      \"env\": {\r\n        \"SDRM_API_KEY\": \"sk_live_...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n就是这样。你的代理现在可以调用Sidearm工具了。\r\n\r\n## 工具（27）\r\n\r\n### 发现\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_algorithms` |浏览可用的保护算法。按类别或媒体类型筛选。 |\r\n\r\n### 保护和提取\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `run_algorithm` |按ID在媒体上运行特定算法。返回异步处理的作业。 |\r\n| `protect_media` |使用预设级别（标准/最大）保护媒体。自动选择算法。 |\r\n| `extract_embeddings` |从媒体中提取原始嵌入向量，用于下游相似性搜索或机器学习管道。 |\r\n\r\n### 工作\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `check_job` |轮询异步作业状态。完成后返回进度和结果。 |\r\n\r\n### 检测\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `detect_ai` |检测媒体是否由人工智能生成。支持图像、视频、音频和文本。 |\r\n| `detect_fingerprint` |检查媒体之前是否已使用指纹匹配注册。 |\r\n| `detect_membership` |测试你的内容是否被用来训练可疑的人工智能模型。 |\r\n\r\n### 搜索\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_media` |在索引库中搜索类似的媒体。 |\r\n| `list_searches` |列出您帐户上以前的搜索。 |\r\n\r\n### 媒体管理\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `register_media` |使用可选保护模式（注册、搜索就绪、标准、最大）注册和索引媒体。 |\r\n| `list_media` |列出库中的媒体资源（分页、可过滤）。 |\r\n| `get_media` |获取特定媒体资产的详细信息，包括保护状态和应用的算法。 |\r\n| `update_media` |更新媒体元数据（例如，原始URL）。 |\r\n| `delete_media` |永久删除媒体资产和所有相关数据。 |\r\n\r\n### 帐户、权限和账单\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_account` |获取您的帐户详细信息——ID、姓名、电子邮件、信用余额和计划信息。 |\r\n| `get_rights` |获取媒体资产的C2PA、IPTC和权限信息。 |\r\n| `get_billing` |查看信用余额、使用明细、每算法成本和计费门户链接。 |\r\n\r\n### 来源与识别\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_provenance` |获取资产的完整来源链——算法、C2PA清单、成员结果。 |\r\n| `identify_media` |通过嵌入的侧臂指纹识别介质，并提取其C2PA来源链。 |\r\n\r\n### 股份\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `create_share` |为检测、搜索或来源结果创建可共享的链接（从私有开始）。 |\r\n| `get_share` |通过共享ID获取共享结果|\r\n| `publish_share` |使共享结果可公开访问。 |\r\n\r\n### 删除记录\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_deletions` |列出记录永久删除资产的删除记录。 |\r\n| `get_deletion` |获取特定删除记录的详细信息，包括已清除的算法和存储状态。 |\r\n\r\n### 文档\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_docs` |搜索Sidearm API文档。返回完整开发人员参考中的相关部分。 |\r\n| `navigate_ui` |在Sidearm仪表板中查找如何执行操作。返回分步说明。 |\r\n\r\n## 代理对话示例\r\n\r\n> “保护此图像免受人工智能训练”\r\n>\r\n> 客服电话 `protect_media` 使用图像URL，然后 `check_job` 以获取受保护的文件。\r\n\r\n> “音频有哪些算法？”\r\n>\r\n> 客服电话 `list_algorithms` 随着 `media_type: \"audio\"`.\r\n\r\n> “在我的艺术品上运行Nightshade和Glaze”\r\n>\r\n> 客服电话 `run_algorithm` 随着 `algorithms: [\"nightshade\", \"glaze\"]`.\r\n\r\n> “这张照片是人工智能生成的吗？”\r\n>\r\n> 客服电话 `detect_ai` 有了图像，然后 `check_job` 为了获得结果。\r\n\r\n> “我的艺术作品是用来训练稳定扩散的吗？”\r\n>\r\n> 客服电话 `detect_membership` 使用您的媒体ID和型号名称。\r\n\r\n> “如何在仪表板中上传文件？”\r\n>\r\n> 客服电话 `navigate_ui` 随着 `query: \"upload files\"` 获取分步说明。\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `SDRM_API_KEY` |是|您的Sidearm API密钥(`sk_live_...` 或 `sk_test_...`) |\r\n| `SDRM_BASE_URL` |否|覆盖API基础URL（默认值： `https://api.sdrm.io`) |\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/sidearmDRM/mcp-server.git\r\ncd mcp-server\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n在本地进行测试 [MCP检查员](https://modelcontextprotocol.io/docs/tools/inspector):\r\n\r\n```bash\r\nSDRM_API_KEY=sk_test_... npx @modelcontextprotocol/inspector node dist/index.js\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "sdrm": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@sidearmdrm/mcp"
+   ],
+   "env": {
+    "SDRM_API_KEY": "sk_live_..."
+   }
+  }
+ }
+}

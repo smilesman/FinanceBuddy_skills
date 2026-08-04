@@ -1,0 +1,24 @@
+{
+ "id": "2117",
+ "kind": "mcp",
+ "name": "au-weather",
+ "fingerprint_md5": "b0a6ef24850c9e93f3b41fdb0981d626",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 澳大利亚天气MCP服务器\r\n\r\n一个MCP（模型上下文协议）服务器，提供来自澳大利亚气象局（BOM）的澳大利亚天气数据访问服务。该服务器允许AI助手和其他MCP客户端搜索地点，并获取澳大利亚各地的天气预报和当前观测数据。\r\n\r\n## 特点/特性\r\n\r\n此MCP服务器提供以下工具：\r\n\r\n- **搜索位置**通过郊区名称或邮政编码搜索澳大利亚地点\r\n- **获取每日天气预报**获取某地的多日天气预报\r\n- **获取每三小时的天气预报**获取详细的每3小时预报数据\r\n- **获取观测数据**获取当前天气观测数据\r\n- **获取指定地点的天气信息**获取全面的天气信息（便捷工具，集搜索+预报+观测于一体）\r\n\r\n## 安装\r\n\r\n### 使用 pip\r\n\r\n```bash\r\npip install -e /path/to/au-weather-mcp\r\n```\r\n\r\n### 使用紫外线（推荐）\r\n\r\n```bash\r\nuv pip install -e /path/to/au-weather-mcp\r\n```\r\n\r\n### 使用 Docker Desktop\r\n\r\n如果你更倾向于使用 Docker，你可以在容器中构建并运行服务器：\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone git@github.com:craigles75/au-weather-mcp.git\r\ncd au-weather-mcp\r\n\r\n# Build the Docker image\r\ndocker build -t au-weather-mcp .\r\n\r\n# Or use docker compose\r\ndocker compose build\r\n```\r\n\r\n## 配置\r\n\r\n### Claude Desktop（可译为“Claude桌面版”或保持原样，根据上下文决定是否需要具体翻译）\r\n\r\n将此添加到您的Claude桌面配置文件中：\r\n\r\n**MacOS（苹果电脑操作系统）**： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n**Windows**： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"au-weather\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"/path/to/au-weather-mcp/server.py\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者如果你在使用uv：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"au-weather\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"/path/to/au-weather-mcp\", \"run\", \"server.py\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者，如果你正在使用 Docker：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"au-weather\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"au-weather-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**注**当使用 Docker 时，请确保首先已使用以下命令构建镜像： `docker build -t au-weather-mcp .` 或者 `docker compose build`。\r\n\r\n### 其他MCP客户端\r\n\r\n对于其他MCP客户端，请将其配置为运行：\r\n\r\n**python**\r\n\r\n```bash\r\npython /path/to/au-weather-mcp/server.py\r\n```\r\n\r\n**Docker：**\r\n\r\n```bash\r\ndocker run -i --rm au-weather-mcp\r\n```\r\n\r\n服务器通过标准输入/输出（stdio）进行通信。\r\n\r\n## 使用示例\r\n\r\n配置完成后，您可以通过您的MCP客户端（如Claude Desktop）使用这些工具：\r\n\r\n### 搜索地点\r\n\r\n```\r\nUse the search_location tool to find \"Melbourne\"\r\n```\r\n\r\n这返回了一个包含与“墨尔本”匹配的位置及其地理哈希标识符的列表。\r\n\r\n### 获取某地的天气信息\r\n\r\n```\r\nUse the get_weather_for_location tool for \"Sydney\"\r\n```\r\n\r\n这个搜索功能可以查找悉尼，并返回每日天气预报以及当前的天气观测数据。\r\n\r\n### 获取详细预报\r\n\r\n```\r\nFirst search for \"Parkdale 3195\", then use the geohash to get the daily forecast\r\n```\r\n\r\n这样，在有多个匹配项时，您可以更精确地控制想要选择的具体位置。\r\n\r\n## 工具参考\r\n\r\n### 搜索位置\r\n\r\n通过郊区名称或邮政编码搜索澳大利亚地点。\r\n\r\n**参数：**\r\n\r\n- `query` (字符串，必填)：郊区名称（例如，“Parkdale”，“Sydney”）或邮政编码（例如，“3195”，“2000”）\r\n\r\n**返回值：** 带有地理哈希标识符的匹配位置列表\r\n\r\n### 获取每日预报\r\n\r\n获取某地每日天气预报。\r\n\r\n**参数：**\r\n\r\n- `geohash` （字符串，必填）：地理位置geohash标识符（从search_location获取）\r\n\r\n**返回值：** 多日天气预报，包括温度、天气状况和降雨预测\r\n\r\n### 获取每三小时天气预报\r\n\r\n获取详细的每三小时天气预报。\r\n\r\n**参数：**\r\n\r\n- `geohash` （字符串，必填）：地理位置geohash标识符（从search_location获取）\r\n\r\n**返回值：** 详细的每三小时预报数据\r\n\r\n### 获取观测值\r\n\r\n获取当前天气观测数据。\r\n\r\n**参数：**\r\n\r\n- `geohash` (字符串，必填): 地理哈希位置标识符（从search_location获取）\r\n\r\n**返回值：** 当前的天气状况包括温度、湿度、风力等。\r\n\r\n### 获取指定地点的天气信息\r\n\r\n获取全面的天气信息（便捷工具）。\r\n\r\n**参数：**\r\n\r\n- `location` （字符串，必填）：郊区名称或邮政编码\r\n\r\n**返回值：** 位置信息、每日预报和当前观测数据\r\n\r\n## 发展\r\n\r\n### 运行测试\r\n\r\n```bash\r\n# Install dev dependencies\r\npip install -e \".[dev]\"\r\n\r\n# Run tests\r\npytest\r\n```\r\n\r\n### 手动测试服务器\r\n\r\n你可以通过直接运行服务器来测试它：\r\n\r\n**python**\r\n\r\n```bash\r\npython server.py\r\n```\r\n\r\n**Docker：**\r\n\r\n```bash\r\ndocker run -i --rm au-weather-mcp\r\n```\r\n\r\n服务器将启动并通过标准输入输出进行通信。您可以发送MCP协议消息来测试这些工具。\r\n\r\n### 使用 Docker 构建和运行\r\n\r\n```bash\r\n# Build the image\r\ndocker build -t au-weather-mcp .\r\n\r\n# Run the server\r\ndocker run -i --rm au-weather-mcp\r\n\r\n# Or using docker compose\r\ndocker compose build\r\ndocker compose run --rm au-weather-mcp\r\n```\r\n\r\n## 数据源\r\n\r\n这个服务器从气象局的公共API中获取数据，地址为 `https://api.weather.bom.gov.au/v1`。\r\n\r\n## 许可证\r\n\r\nMIT（MIT）\r\n\r\n## 做出贡献\r\n\r\n欢迎贡献！请随时提交问题或拉取请求。\r\n",
+ "config": {
+  "au-weather": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/au-weather-mcp",
+    "run",
+    "server.py"
+   ],
+   "env": {}
+  }
+ }
+}

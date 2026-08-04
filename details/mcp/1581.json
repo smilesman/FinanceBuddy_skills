@@ -1,0 +1,21 @@
+{
+ "id": "1581",
+ "kind": "mcp",
+ "name": "mcp-notifier",
+ "fingerprint_md5": "f9287c97ba094a38c2541278fd86a0e3",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP通知器\r\n\r\n[](https://www.npmjs.com/package/@uehaj/mcp-notifier)\r\n[](https://smithery.ai/server/@uehaj/mcp-notifier)\r\n\r\n一种使用节点通知器提供桌面通知功能的模型上下文协议（MCP）服务器。\r\n\r\n## 特性\r\n\r\n- 简单的通知工具\r\n- 具有附加选项的高级通知工具\r\n- 支持不同的通知类型（信息、成功、警告、错误）\r\n- 可自定义的通知设置\r\n\r\n## 平台支持\r\n\r\n此MCP服务器使用 [节点通知器](https://www.npmjs.com/package/node-notifier) 并跨多个平台工作：\r\n\r\n- **macOS**：使用macOS通知中心\r\n- **视窗**：使用Windows吐司通知（Windows 8+）或任务栏气球（\\<Windows 8）\r\n- **Linux**：使用notify send命令发送Gnome/Ubuntu通知\r\n\r\n有关平台特定行为的更多详细信息，请访问 [节点通知器文档](https://www.npmjs.com/package/node-notifier).\r\n\r\n## 使用选项\r\n\r\n您可以通过两种方式使用MCP通知程序：\r\n\r\n### 选项1：直接使用npx运行\r\n\r\n使用MCP Notifier的最简单方法是使用npx：\r\n\r\n```bash\r\n# Run directly with npx\r\nnpx @uehaj/mcp-notifier\r\n```\r\n\r\n这将使用单个命令下载并执行该包。\r\n\r\n### 选项2：从源代码克隆和构建\r\n\r\n```bash\r\n# Clone repository\r\ngit clone https://github.com/uehaj/mcp-notifier.git\r\ncd mcp-notifier\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build the project\r\nnpm run build\r\n\r\n# Run the server\r\nnode build/index.js\r\n```\r\n\r\n## 与Claude Desktop集成\r\n\r\n1. 编辑您的Claude Desktop配置文件：\r\n\r\n   - macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n1. 选择以下配置方法之一：\r\n\r\n### 对于npx方法（推荐）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-notifier\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"@uehaj/mcp-notifier\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 对于本地git clone方法：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-notifier\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"/absolute/path/to/cloned/mcp-notifier/build/index.js\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. 重新启动克劳德桌面\r\n\r\n## Smithery集成\r\n\r\n此MCP服务器可在 [史密瑟里](https://smithery.ai/server/@uehaj/mcp-notifier)。由于它需要桌面访问才能正常运行，因此必须在本地安装，而不是用作托管服务。\r\n\r\n### 通过Smithery CLI运行：\r\n\r\n```bash\r\n# Run using Smithery CLI\r\nnpx @smithery/cli run @uehaj/mcp-notifier\r\n```\r\n\r\n### 从存储库手动设置：\r\n\r\n按照上面的“从源代码克隆和构建”说明进行操作。\r\n\r\n## 可用工具\r\n\r\n### 通知\r\n\r\n具有以下参数的基本通知工具：\r\n\r\n- `title`：通知标题（必填）\r\n- `message`：通知消息（必填）\r\n- `icon`：图标文件的可选路径\r\n- `sound`：是否播放声音（可选布尔值）\r\n- `wait`：是否等待通知关闭（可选布尔值）\r\n\r\n### 通知高级\r\n\r\n具有更多选项的高级通知工具：\r\n\r\n- `title`：通知标题（必填）\r\n- `message`：通知消息（必填）\r\n- `type`：通知类型-“信息”、“成功”、“警告”或“错误”（可选）\r\n- `timeout`：自动关闭超时（毫秒）（可选）\r\n- `closeLabel`：关闭按钮文本（仅限macOS，可选）\r\n- `actions`：操作按钮标签数组（仅限macOS，可选）\r\n\r\n## 测试\r\n\r\n运行测试：\r\n\r\n```bash\r\n# For npx method\r\nnpx @modelcontextprotocol/inspector npx @uehaj/mcp-notifier\r\n\r\n# For git clone method\r\ncd mcp-notifier\r\nnpx @modelcontextprotocol/inspector node build/index.js\r\n```\r\n\r\n## 发展\r\n\r\n### 发布到npm\r\n\r\n该包包括几个npm脚本来帮助发布：\r\n\r\n```bash\r\n# Publish the current version\r\nnpm run release\r\n\r\n# Increment patch version (1.0.0 -> 1.0.1) and publish\r\nnpm run release:patch\r\n\r\n# Increment minor version (1.0.0 -> 1.1.0) and publish\r\nnpm run release:minor\r\n\r\n# Increment major version (1.0.0 -> 2.0.0) and publish\r\nnpm run release:major\r\n```\r\n\r\n这些命令将：\r\n\r\n1. 自动运行构建过程\r\n1. 根据需要更新版本号\r\n1. 将包发布到具有公共访问权限的npm\r\n\r\n你需要登录到npm(`npm login`)在运行这些命令之前。\r\n\r\n## 需求\r\n\r\n- Node.js 18或更高版本\r\n- npm 6或更高版本\r\n- 桌面环境（Windows、macOS或Linux）\r\n- 通知系统的访问权限\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "mcp-notifier": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@uehaj/mcp-notifier"
+   ],
+   "env": {}
+  }
+ }
+}

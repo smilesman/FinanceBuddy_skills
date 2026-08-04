@@ -1,0 +1,12 @@
+{
+ "id": "volcengine-storage-tos",
+ "kind": "skill",
+ "name": "volcengine-storage-tos",
+ "fingerprint_md5": "735865cf7820a53e42bdfe78b5a3f113",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# volcengine-storage-tos\r\n\r\n使用显式的路径映射和权限验证来管理 TOS buckets 和 objects。\r\n\r\n## 执行清单\r\n\r\n1. 确认 bucket、region 和 object 路径。\r\n2. 验证认证和 bucket policy。\r\n3. 执行上传/下载/同步任务。\r\n4. 返回包含 object keys 和 URLs 的结果清单。\r\n\r\n## 安全规则\r\n\r\n- 没有明确的确认输入时，避免执行破坏性删除。\r\n- 上传时保留 metadata 和 content type。\r\n- 尽可能提供 checksum 或 size 验证。\r\n\r\n## 参考\r\n\r\n- `references/sources.md`",
+ "config": {}
+}

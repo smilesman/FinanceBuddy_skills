@@ -1,0 +1,24 @@
+{
+ "id": "3014",
+ "kind": "mcp",
+ "name": "amap-maps",
+ "fingerprint_md5": "39427a58f48b1617a65f62d54ae781da",
+ "download_count": 0,
+ "category": "地图服务",
+ "tags": "",
+ "version": "",
+ "readme": "# AMap地图MCP服务器\r\n\r\n用于AMap Map API的MCP服务器。\r\n\r\n## 设置\r\n\r\n### API密钥\r\n\r\n获取AMap Maps API密钥：\r\nhttps://lbs.amap.com/api/webservice/create-project-and-key.\r\n\r\n### NPX\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"amap-maps\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\r\n                \"-y\",\r\n                \"@amap/amap-maps-mcp-server\"\r\n            ],\r\n            \"env\": {\r\n                \"AMAP_MAPS_API_KEY\": \"\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n",
+ "config": {
+  "amap-maps": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@amap/amap-maps-mcp-server"
+   ],
+   "env": {
+    "AMAP_MAPS_API_KEY": ""
+   }
+  }
+ }
+}

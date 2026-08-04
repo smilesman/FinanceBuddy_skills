@@ -1,0 +1,12 @@
+{
+ "id": "publish-skill-vettr",
+ "kind": "skill",
+ "name": "publish-skill-vettr",
+ "fingerprint_md5": "ca840d3961a2c4e810e9b7e405ccc10c",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "# skill-vettr v2.0.1\r\n\r\n第三方 OpenClaw 技能的安全扫描器。在安装前使用 tree-sitter AST 解析和正则表达式模式匹配分析源代码、依赖和元数据。\r\n\r\n## 命令\r\n\r\n- `/skill:vet --path <directory>` — 审查本地技能目录\r\n- `/skill:vet-url --url <https://...>` — 从 URL 下载并审查\r\n- `/skill:vet-clawhub --skill <slug>` — 从 ClawHub 获取并审查\r\n\r\n## 检测类别\r\n\r\n| 类别 | 方法 | 示例 |\r\n|----------|--------|----------|\r\n| 代码执行 | AST | eval(), new Function(), vm.runInThisContext() |\r\n| Shell 注入 | AST | exec(), execSync(), spawn(\"bash\"), child_process 导入 |\r\n| 动态 require | AST | require(变量), require(模板字符串) |\r\n| 原型污染 | AST | __proto__ 赋值 |\r\n| Prompt 注入 | 正则 | 指令覆盖、控制 token（在字符串字面量中） |\r\n| 同形异义字攻击 | 正则 | 标识符中的西里尔/希腊相似字符 |\r\n| 编码名称 | 正则 | Unicode/十六进制转义的 \"eval\", \"exec\" |\r\n| 凭证路径 | 正则 | .ssh/, .aws/, keychain 路径引用 |\r\n| 网络调用 | AST | fetch() 带有字面量 URL（根据允许列表检查） |\r\n| 恶意依赖 | 配置 | 已知的恶意包、生命周期脚本、git/http 依赖 |\r\n| Typosquatting | Levenshtein | 技能名称与目标编辑距离在 2 以内 |\r\n| 危险权限 | 配置 | SKILL.md 中的 shell:exec, credentials:read |\r\n\r\n## 限制\r\n\r\n> ⚠️ **这是一个启发式扫描器，具有固有局限性。它不能保证安全。**\r\n\r\n- **仅静态分析** — 无法检测运行时行为（例如，安装后获取恶意软件的代码）\r\n- **可能被规避** — 复杂的混淆或多阶段字符串构造可以规避检测\r\n- **仅 JS/TS** — 跳过二进制载荷、图像和非文本文件\r\n- **有限的网络检测** — 仅检测带有字面量 URL 字符串的 `fetch()`；遗漏 axios、http 模块、动态 URL\r\n- **无沙箱** — 不执行或隔离目标代码\r\n- **注释扫描** — Prompt 注入检测扫描字符串字面量，不扫描注释\r\n\r\n对于高安全环境，请结合沙箱和手动源代码审查使用。",
+ "config": {}
+}

@@ -1,0 +1,24 @@
+{
+ "id": "793",
+ "kind": "mcp",
+ "name": "overseerr",
+ "fingerprint_md5": "af6fd9d1f806dbb9f7e598932ce7a4f6",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 监督MCP服务器\r\n\r\nMCP服务器 [监督员](https://overseerr.dev/) 媒体请求管理。使AI助手能够通过模型上下文协议搜索媒体、查看请求和管理媒体请求。\r\n\r\n## 特性\r\n\r\n- **搜索媒体** -按标题和可用性状态查找电影和电视节目\r\n- **媒体状态** -检查内容是否可用、是否正在处理或是否需要请求\r\n- **查看请求** -列出包含用户信息的请求，按审批状态、可用性状态或时间段进行筛选\r\n- **用户管理** -列出用户并查看单个请求历史记录\r\n- **请求媒体** -提交新的请求，包括每季电视节目的选择\r\n- **用户相关性** -轻松回答“列出上周的所有请求以及请求者”等问题\r\n\r\n## 需求\r\n\r\n- Python 3.10+\r\n- [紫外线](https://github.com/astral-sh/uv) 包管理器\r\n- 具有管理员API密钥的Overserr实例\r\n\r\n## 安装\r\n\r\n### Docker（推荐）\r\n\r\n```bash\r\ndocker pull ghcr.io/suckerfish/overseerr-mcp:latest\r\n```\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone https://github.com/suckerfish/overseerr-mcp.git\r\ncd overseerr-mcp\r\n\r\n# Create virtual environment and install dependencies\r\nuv venv && uv pip install -e .\r\n```\r\n\r\n## 配置\r\n\r\n复制 `.env.example` 到 `.env` 并配置：\r\n\r\n```env\r\nOVERSEERR_URL=http://your-overseerr-ip:5055\r\nOVERSEERR_API_KEY=your-admin-api-key-here\r\n```\r\n\r\n**重要提示：** 使用来自的管理员API密钥 **设置→ 将军→ API密钥** 在Overseer中（不是用户级密钥）。\r\n\r\n## 用法\r\n\r\n### 本地（标准传输）\r\n\r\n```bash\r\nuv run python -m src.server\r\n```\r\n\r\n### HTTP传输（适用于Docker/remote）\r\n\r\n```bash\r\nuv run python -m src.server --transport streamable-http --host 0.0.0.0 --port 8080\r\n```\r\n\r\n### 码头工人\r\n\r\n预构建图像可用于 `linux/amd64` 和 `linux/arm64`.\r\n\r\n```bash\r\n# Using docker compose (recommended)\r\ndocker compose up -d\r\n\r\n# Or run directly\r\ndocker run -d \\\r\n  -e OVERSEERR_URL=http://your-overseerr:5055 \\\r\n  -e OVERSEERR_API_KEY=your-api-key \\\r\n  -p 8080:8080 \\\r\n  ghcr.io/suckerfish/overseerr-mcp:latest\r\n```\r\n\r\n## MCP工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_media` |按标题搜索电影/电视节目。返回TMDB ID、额定值和可用性状态。 |\r\n| `get_media_status` |检查特定TMDB ID的详细可用性状态。显示电视的请求状态、媒体可用性和季节计数|\r\n| `get_requests` |列出带有用户信息的媒体请求。筛选依据 `status` （待定/批准）， `media_status` （可用/正在处理/不可用/失败），或 `days`.使用 `show_all=true` 以获取所有匹配项，而不是默认的20。 |\r\n| `get_users` |列出所有Overseer用户的请求计数。 |\r\n| `get_user_requests` |获取特定用户的请求。筛选依据 `media_status` （正在处理/可用等）。默认20个结果，使用 `show_all=true` 为了所有人。 |\r\n| `request_media` |请求观看电影或电视节目。电视节目需要为多季节目选择季节。 |\r\n| `health_check` |检查Overseer服务器连接和版本。 |\r\n\r\n## 查询示例\r\n\r\n连接到MCP客户端后，您可以问：\r\n\r\n- “搜索矩阵”-在线显示可用性状态\r\n- “《绝命毒师》可用吗？”-检查媒体状态\r\n- “列出上周的所有请求以及请求者”\r\n- “显示所有待处理的请求”\r\n- “哪些请求仍在处理中？”-按媒体可用性筛选\r\n- “用户ID 5请求了什么？”\r\n- “请求电影《黑客帝国》”\r\n- “《绝命毒师》第1-3季的请求”-每季电视请求\r\n\r\n## MCP客户端配置\r\n\r\n### 克劳德桌面版\r\n\r\n添加到 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"overseerr\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"python\", \"-m\", \"src.server\"],\r\n      \"cwd\": \"/path/to/plexrequest_mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### HTTP/Docker\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"overseerr\": {\r\n      \"url\": \"http://localhost:8080/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "overseerr": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "python",
+    "-m",
+    "src.server"
+   ],
+   "env": {}
+  }
+ }
+}

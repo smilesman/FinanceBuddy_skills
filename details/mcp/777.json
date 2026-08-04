@@ -1,0 +1,22 @@
+{
+ "id": "777",
+ "kind": "mcp",
+ "name": "note",
+ "fingerprint_md5": "9285a358cd87e23f9b2c36ee1eca49f7",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# note.com MCP服务器\r\n\r\n从Claude Desktop [note.com](https://note.com) 中描述的场景，使用下列步骤创建明细表，以便在概念设计中分析体量的周长。\r\n\r\n已部署到Cloudflare Workers中，任何人都可以注册URL。\r\n\r\n> **注：** 使用note.com的非正式API。规格可能会在没有预告的情况下变更。\r\n\r\n## 交付工具\r\n\r\n｜工具名称｜说明｜认证｜\r\n|---------|------|------|\r\n| `get_user_profile` 获取用户的基本信息\r\n| `get_user_articles` 获取用户的文章列表｜不需要｜\r\n| `get_article` 获取文章全文\r\n| `get_comments` 获取文章评论\r\n| `create_draft` 创建草稿文章 **必要** |\r\n\r\n## 安装，安装\r\n\r\n### 方法1:Claude Desktop自定义连接器（推荐）\r\n\r\n1. 打开Claude Desktop\r\n1. 设置>连接器>添加自定义连接器\r\n1. 输入：\r\n   - **名前**: `note`（任意）\r\n   - **统一资源定位符**: `https://note-mcp-server.noisy-brook-6917.workers.dev/mcp`\r\n\r\n### 方法 2: mcp-remote 経由\r\n\r\n`claude_desktop_config.json` 添加：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"note\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-remote\",\r\n        \"https://note-mcp-server.noisy-brook-6917.workers.dev/mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n### 浏览文章（无需认证）\r\n\r\n在Claude Desktop上，只需进行以下对话即可使用：\r\n\r\n```\r\nefil_devさんのnoteの記事一覧を見せて\r\n```\r\n\r\n```\r\nこの記事の全文を読みたい: n5829f47dd4da\r\n```\r\n\r\n```\r\nこの記事のコメントを見せて\r\n```\r\n\r\n### 草稿文章的制作（需要认证）\r\n\r\n创建草稿需要note.com会话Cookie。\r\n\r\n#### 获取会话Cookie的步骤\r\n\r\n1. 在浏览器中 [note.com](https://note.com) 登录\r\n1. 打开DevTools（`F12` 键）\r\n1. **应用** > **Cookie** > `https://note.com` 列表框中，此格式对应于条目“无”\r\n1. `_note_session_v5` 的，之 **价值** 复制\r\n\r\n#### 创建草稿\r\n\r\n委托Claude Desktop：\r\n\r\n```\r\n以下の内容でnoteに下書きを作成して。\r\n\r\nsession_cookie: （ここにコピーした値を貼り付け）\r\n\r\nタイトル: Claude Code で開発効率を上げる方法\r\n\r\n本文:\r\n## はじめに\r\n\r\nこの記事では、Claude Code を使った開発の効率化について解説します。\r\n\r\n## ポイント\r\n\r\n- **コード生成**: 自然言語で指示するだけでコードを生成\r\n- **デバッグ支援**: エラーメッセージを貼るだけで原因を特定\r\n- **リファクタリング**: 既存コードの改善提案\r\n\r\n## まとめ\r\n\r\nClaude Code を活用することで、開発スピードが大幅に向上します。\r\n```\r\n\r\n#### 重要信息：正文以Markdown格式书写\r\n\r\n`create_draft` 工具自动将Markdown转换为note.com的HTML格式。虽然也可以在纯文本中投稿，但是使用Markdown可以反映标题和粗体等格式。\r\n\r\n**相应的标记：**\r\n\r\n|记法|表示|\r\n|------|------|\r\n| `## 見出し` 标题（大）\r\n| `### 小見出し` 标题（小）\r\n| `**太字**` | **太字** |\r\n| `*斜体*` | *斜体* |\r\n| `` `コード` `` 在线代码\r\n| `[テキスト](URL)` 链接\r\n| `> 引用文` 引用块\r\n| `- 箇条書き` ｜项目符号列表｜\r\n| `1. 番号付き` ｜编号列表｜\r\n| ```` ```コードブロック``` ```` 代码块\r\n| `---` |水平线|\r\n\r\n#### 会话Cookie注意事项\r\n\r\n- Cookie有一个有效期。过期时请重新获取\r\n- 出现认证错误时：请在浏览器中重新登录note.com，获取新Cookie\r\n- Cookie绑定到你的账号信息。不要和别人分享\r\n- 制作的文章是**草稿**中所述修改相应参数的值。不公开\r\n\r\n## 正在使用的API\r\n\r\n｜端点｜用途｜\r\n|---------------|------|\r\n| `GET /api/v2/creators/{username}` 获取简介\r\n| `GET /api/v2/creators/{username}/contents` |记事一覧取得|\r\n| `GET /api/v3/notes/{key}` |记事本文取得|\r\n| `GET /api/v3/notes/{key}/note_comments` 获取注释\r\n| `POST /api/v1/text_notes` |记事作成|\r\n| `POST /api/v1/text_notes/draft_save` 保存草稿正文\r\n\r\n## 技术栈\r\n\r\n- **运行时**：Cloudflare员工\r\n- **MCP-SDK**: `@modelcontextprotocol/sdk` + `agents` （耐用物品）\r\n- **语言**：TypeScript\r\n\r\n## 本地开发\r\n\r\n```bash\r\nnpm install\r\nnpm run dev      # ローカル開発サーバー起動\r\nnpm run deploy   # Cloudflare にデプロイ\r\n```\r\n\r\n## 制限事项\r\n\r\n- 由于是非正式API，note.com的规格变更可能会导致无法运行\r\n- 不能取得收费报道、会员限定报道的全文\r\n- 不支持上传图像\r\n- 只支持草稿制作，不支持报道的公开\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "note": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://note-mcp-server.noisy-brook-6917.workers.dev/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

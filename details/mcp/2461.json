@@ -1,0 +1,26 @@
+{
+ "id": "2461",
+ "kind": "mcp",
+ "name": "brave-search-5",
+ "fingerprint_md5": "351974833fc648a4cf8b334958fa8627",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Brave Search MCP服务器\r\n\r\n\r\n该项目为Brave Search实现了一个模型上下文协议（MCP）服务器，允许与Claude等人工智能助手集成。\r\n\r\n## 先决条件\r\n\r\n- Python 3.11+\r\n- [紫外线](https://github.com/astral-sh/uv) -一个快速的Python包安装程序和解析器\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动为Claude Desktop安装Brave Search MCP服务器 [史密瑟里](https://smithery.ai/server/@thomasvan/mcp-brave-search):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @thomasvan/mcp-brave-search --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n1. 克隆存储库：\r\n\r\n   ```\r\n   git clone https://github.com/thomasvan/mcp-brave-search.git\r\n   cd mcp-brave-search\r\n   ```\r\n\r\n1. 使用uv创建虚拟环境并安装依赖项：\r\n\r\n   ```\r\n   uv venv\r\n   source .venv/bin/activate  # On Windows, use: .venv\\Scripts\\activate\r\n   uv pip install -r requirements.txt\r\n   ```\r\n\r\n1. 设置Brave Search API密钥：\r\n\r\n   ```\r\n   export BRAVE_API_KEY=your_api_key_here\r\n   ```\r\n\r\n   在Windows上，使用： `set BRAVE_API_KEY=your_api_key_here`\r\n\r\n## 用法\r\n\r\n1. 配置您的MCP设置文件（例如。， `claude_desktop_config.json`)包括Brave Search MCP服务器：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"brave-search\": {\r\n         \"command\": \"uv\",\r\n         \"args\": [\r\n           \"--directory\",\r\n           \"path-to\\\\mcp-python\\\\mcp-brave-search\\\\src\",\r\n           \"run\",\r\n           \"server.py\"\r\n         ],\r\n         \"env\": {\r\n           \"BRAVE_API_KEY\": \"YOUR_BRAVE_API_KEY_HERE\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n   替换 `YOUR_BRAVE_API_KEY_HERE` 使用您的Brave API密钥。\r\n\r\n1. 使用更新的配置运行兼容MCP的AI助手，启动Brave Search MCP服务器。\r\n\r\n1. 服务器现在将运行并准备接受来自MCP客户端的请求。\r\n\r\n1. 现在，您可以通过调用可用工具在MCP兼容的AI助手（如Claude）中使用Brave搜索功能。\r\n\r\n## 可用工具\r\n\r\n服务器提供两个主要工具：\r\n\r\n1. `brave_web_search`：使用Brave search API执行web搜索。\r\n1. `brave_local_search`：搜索当地企业和地点。\r\n\r\n请参阅中的工具文档字符串 `src/server.py` 了解详细的使用信息。\r\n\r\n## 发展\r\n\r\n要更改项目，请执行以下操作：\r\n\r\n1. 修改代码 `src` 目录根据需要。\r\n1. 更新 `requirements.txt` 如果添加或删除依赖项，请使用文件：\r\n   ```\r\n   uv pip freeze > requirements.txt\r\n   ```\r\n1. 重新启动服务器以应用更改。\r\n\r\n## 测试\r\n\r\n该项目包括单元测试和集成测试：\r\n\r\n### 安装测试依赖项\r\n\r\n```bash\r\nuv pip install pytest pytest-asyncio pytest-cov\r\n```\r\n\r\n### 运行单元测试\r\n\r\n单元测试可以在没有API密钥的情况下运行，并使用模拟来模拟API响应：\r\n\r\n```bash\r\n# Run all unit tests\r\npython -m pytest tests/unit/\r\n\r\n# Run with verbose output\r\npython -m pytest tests/unit/ -v\r\n```\r\n\r\n### 运行集成测试\r\n\r\n集成测试需要一个有效的Brave API密钥，并进行真正的API调用：\r\n\r\n```bash\r\n# Run integration tests with your API key\r\nBRAVE_API_KEY_INTEGRATION=\"your_api_key_here\" python -m pytest tests/integration/ -v\r\n```\r\n\r\n### 测试覆盖率\r\n\r\n检查测试覆盖率：\r\n\r\n```bash\r\npython -m pytest --cov=src/mcp_brave_search\r\n```\r\n\r\n## 故障排除\r\n\r\n如果您遇到任何问题：\r\n\r\n1. 确保Brave API密钥设置正确。\r\n1. 检查是否安装了所有依赖项。\r\n1. 验证您使用的是兼容的Python版本。\r\n1. 如果对代码进行了更改，请确保重新启动服务器。\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "brave-search": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "path-to\\mcp-python\\mcp-brave-search\\src",
+    "run",
+    "server.py"
+   ],
+   "env": {
+    "BRAVE_API_KEY": "YOUR_BRAVE_API_KEY_HERE"
+   }
+  }
+ }
+}

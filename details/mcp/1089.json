@@ -1,0 +1,28 @@
+{
+ "id": "1089",
+ "kind": "mcp",
+ "name": "kuzu-2",
+ "fingerprint_md5": "d8fc7182689679998961c0e3bcb8a46f",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# kuzu mcp服务器\r\n\r\n提供对Kuzu数据库访问的模型上下文协议服务器。此服务器使LLM能够检查数据库模式并在提供的kuzu数据库上执行查询。\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n- getSchema\r\n\r\n  - 获取Kuzu数据库的完整模式，包括所有节点和关系表及其属性\r\n  - 输入：无\r\n\r\n- 怎么翻译\r\n\r\n  - 在Kuzu数据库上运行Cypher查询\r\n  - 输入： `cypher` （string）：要运行的Cypher查询\r\n\r\n### 提示\r\n\r\n- 生成KuzuCypher\r\n  - 为Kuzu生成Cypher查询\r\n  - 论点： `question` （string）：用自然语言生成Cypher查询的问题\r\n\r\n## 使用Claude Desktop\r\n\r\n### 使用Docker（推荐）\r\n\r\n- 编辑配置文件 `config.json`:\r\n  - 在 macOS 上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n  - 在Windows上： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- 将以下配置添加到 `mcpServers` 对象：\r\n  ```json\r\n  {\r\n    \"mcpServers\": {\r\n        \"kuzu\": {\r\n            \"command\": \"docker\",\r\n            \"args\": [\r\n                \"run\",\r\n                \"-v\",\r\n                \"{Path to the directory containing Kuzu database file}:/database\",\r\n                \"-e\",\r\n                \"KUZU_DB_FILE={Kuzu database file name}\",\r\n                \"--rm\",\r\n                \"-i\",\r\n                \"kuzudb/mcp-server\"\r\n            ]\r\n        }\r\n    }\r\n  }\r\n  ```\r\n  更改 `{Path to the directory containing Kuzu database file}` 到实际路径\r\n- 重新启动克劳德桌面\r\n\r\n### 使用Node.js和npm（用于开发）\r\n\r\n- 安装依赖项： `npm install`\r\n- 编辑配置文件 `config.json`:\r\n  - 在 macOS 上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n  - 在Windows上： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- 将以下配置添加到 `mcpServers` 对象：\r\n  ```json\r\n  {\r\n    \"mcpServers\": {\r\n        \"kuzu\": {\r\n            \"command\": \"node\",\r\n            \"args\": [\r\n                \"{Absolute Path to this repository}/index.js\",\r\n                \"{Absolute Path to the Kuzu database file}\",\r\n            ]\r\n        }\r\n    }\r\n  }\r\n  ```\r\n  更改 `{Absolute Path to this repository}` 和 `{Absolute Path to the Kuzu database file}` 到实际路径\r\n- 重新启动克劳德桌面\r\n\r\n### 只读模式\r\n\r\n通过设置以下参数，服务器可以在只读模式下运行 `KUZU_READ_ONLY` 环境变量 `true`。在此模式下，运行任何试图修改数据库的查询都会导致错误。此标志可以在配置文件中设置，如下所示：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"kuzu\": {\r\n            \"command\": \"docker\",\r\n            \"args\": [\r\n                \"run\",\r\n                \"-v\",\r\n                \"{Path to the directory containing Kuzu database file}:/database\",\r\n                \"-e\",\r\n                \"KUZU_DB_FILE={Kuzu database file name}\",\r\n                \"-e\",\r\n                \"KUZU_READ_ONLY=true\",\r\n                \"--rm\",\r\n                \"-i\",\r\n                \"kuzudb/mcp-server\"\r\n            ],\r\n        }\r\n    }\r\n}\r\n```\r\n",
+ "config": {
+  "kuzu": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-v",
+    "{Path to the directory containing Kuzu database file}:/database",
+    "-e",
+    "KUZU_DB_FILE={Kuzu database file name}",
+    "--rm",
+    "-i",
+    "kuzudb/mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

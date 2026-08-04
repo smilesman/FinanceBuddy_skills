@@ -1,0 +1,23 @@
+{
+ "id": "534",
+ "kind": "mcp",
+ "name": "wechat-devtools",
+ "fingerprint_md5": "ef05eb92a420d2193c6e0f8995ae75f0",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# wechat-devtools-mcp\r\n\r\n微信开发者工具自动化的 MCP（Model Context Protocol）服务。\r\n\r\n## 功能特点\r\n\r\n- 通过 MCP 协议与 AI 代理（如 Claude、Cursor）集成\r\n- 支持启动微信开发者工具并连接小程序项目\r\n- 提供页面导航、元素操作、获取页面信息等自动化能力\r\n- 支持控制台日志和异常监听\r\n\r\n## 安装\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"wechat-devtools\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"wechat-devtools-mcp\",\r\n        \"--projectPath=/path/to/your/miniprogram\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 命令行参数\r\n\r\n| 参数 | 类型 | 说明 |\r\n|------|------|------|\r\n| `--projectPath` | string | 小程序项目路径（必填） |\r\n| `--cliPath` | string | 微信开发者工具 CLI 路径 |\r\n| `--timeout` | number | 连接超时时间（毫秒），默认 30000 |\r\n| `--port` | number | WebSocket 端口号，默认 9420 |\r\n| `--account` | string | 用户 openid |\r\n| `--ticket` | string | 开发者工具登录票据 |\r\n| `--projectConfig` | string | 覆盖 project.config.json 中的配置 |\r\n\r\n## 🙇🏻‍♂️[赞助](https://afdian.com/a/flippedround)\r\n",
+ "config": {
+  "wechat-devtools": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "wechat-devtools-mcp",
+    "--projectPath=/path/to/your/miniprogram"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "1761",
+ "kind": "mcp",
+ "name": "terminal-2",
+ "fingerprint_md5": "45ed15479a81b3befbae877428127e87",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# ITerm MCP服务器\r\n\r\niTerm2终端集成的模型上下文协议（MCP）服务器实现。该服务器允许AI助手通过模型上下文协议与iTerm2终端进行交互。\r\n\r\n## 特性\r\n\r\n- 创建和管理iTerm2终端会话\r\n- 在终端中执行命令\r\n- 读取终端输出\r\n- 列出活动终端\r\n- 关闭终端\r\n\r\n## 需求\r\n\r\n- Node.js>=14.x\r\n- iTerm2\r\n- macOS（因为iTerm2仅适用于macOS）\r\n\r\n## 配置\r\n\r\n### 标准配置\r\n\r\n服务器使用标准MCP配置选项。不需要额外的配置。\r\n\r\n### 光标配置\r\n\r\n要将此服务器与Cursor一起使用，请将以下配置添加到您的 `~/.cursor/mcp.json` 文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"terminal\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"iterm_mcp_server\"]\r\n    }\r\n  }\r\n}\r\n\r\n```\r\n\r\n## 工具\r\n\r\n- `open_terminal`：打开一个新的终端实例\r\n- `execute_command`：在特定终端中执行命令\r\n- `read_output`：读取特定终端的输出\r\n- `close_terminal`：关闭特定终端\r\n- `list_terminals`：列出所有活动终端及其信息\r\n\r\n## 安全考虑\r\n\r\n- 服务器使用Zod模式验证所有输入\r\n- 命令在隔离的终端会话中执行\r\n- 实施了适当的错误处理和输入净化\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 许可证\r\n\r\n国际协调委员会\r\n\r\n## 作者\r\n\r\n里沙布·库尔\r\n",
+ "config": {
+  "terminal": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "iterm_mcp_server"
+   ],
+   "env": {}
+  }
+ }
+}

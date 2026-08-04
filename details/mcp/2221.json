@@ -1,0 +1,25 @@
+{
+ "id": "2221",
+ "kind": "mcp",
+ "name": "ip2location",
+ "fingerprint_md5": "087cecd7f0bb9884bd86b1558b92ff07",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# IP2Location.io MCP服务器\r\n\r\n这是一个用于IP2Location.io API的简单模型上下文协议（MCP）服务器实现。它将返回任何给定IPv4或IPv6地址的详细地理位置信息。\r\n\r\n# 特性\r\n\r\n- **综合地理定位数据**：检索广泛的信息，包括国家、地区、城市、纬度、经度、邮政编码、时区等。\r\n- **网络详细信息**：提供网络相关数据，如ASN、ISP、域和网络速度。\r\n- **安全洞察**：检测代理信息，包括代理类型和提供程序。\r\n- **简单集成**：作为一个 `FastMCP` 该工具允许轻松集成到兼容系统中。\r\n- **异步**：利用 `httpx` 用于非阻塞异步API请求。\r\n\r\n# 需求\r\n\r\n要求 [规格](https://www.ip2location.io/sign-up) 此MCP服务器支持无API密钥的查询，每天查询次数限制为1000次。你也可以\r\n\r\n注册 `npx`获得免费的API密钥，每月最多可享受50000次查询。 `uv`如果你使用云托管的MCP服务器，你只需要Claude Desktop和 [，因为服务器是远程托管的。如果要在本地运行原始MCP服务器，本地安装程序将使用](https://modelcontextprotocol.io/quickstart/server#set-up-your-environment)，可以通过以下方式安装\r\n\r\n# 指南\r\n\r\n.\r\n\r\n- **设置**您可以通过以下任一方式在Claude Desktop中使用此MCP服务器：\r\n- **云托管MCP服务器**：如果您想直接连接到托管的IP2Location.io MCP服务器，建议使用。\r\n\r\n## 本地MCP服务器\r\n\r\n：如果您想在自己的计算机上下载并运行原始MCP服务器，请使用此选项。\r\n\r\n1. 选项1：云托管MCP服务器 [按照以下步骤将云托管的IP2Location.io MCP服务器与Claude Desktop一起使用：](https://claude.ai/download) 请确保您已安装Claude Desktop。如果您尚未安装，请从以下网址下载 [这里](https://modelcontextprotocol.io/quickstart/client) 适用于Windows和macOS，或遵循\r\n1. 本指南 `claude_desktop_config.json` 对于Linux用户。 [打开](https://modelcontextprotocol.io/quickstart/server#testing-your-server-with-claude-for-desktop) 您可以选择编辑器中的文件。如果你还没有，请跟随\r\n1. 本指南 `claude_desktop_config.json`创建一个。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ip2location\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"mcp-remote@latest\",\r\n        \"https://mcp.ip2location.io/\",\r\n        \"--header\",\r\n        \"X-API-Key:YOUR_API_KEY\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n4. 将以下内容添加到您的 `YOUR_API_KEY` : [替换](https://www.ip2location.io/log-in) 使用您的实际IP2Location.io API密钥。要获取API密钥，\r\n1. 登录 `Connectors` 到您的仪表板。\r\n\r\n## 保存更改后重新启动Claude Desktop，您应该会看到MCP服务器出现在\r\n\r\n菜单。\r\n\r\n1. 选项2：本地MCP服务器 `uv` 如果您想使用Claude Desktop在本地运行原始MCP服务器，请按照以下步骤操作： [设置](https://modelcontextprotocol.io/quickstart/server#set-up-your-environment) 包管理器。你可以参考\r\n1. 指南 [这样做。](https://claude.ai/download) 请确保您已安装Claude Desktop。如果您尚未安装，请从以下网址下载 [这里](https://modelcontextprotocol.io/quickstart/client) 适用于Windows和macOS，或遵循\r\n1. 本指南 `claude_desktop_config.json` 对于Linux用户。 [打开](https://modelcontextprotocol.io/quickstart/server#testing-your-server-with-claude-for-desktop) 您可以选择编辑器中的文件。如果你还没有，请跟随\r\n1. 本指南 `claude_desktop_config.json`创建一个。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ip2locationio\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"mcp-ip2location-io\"\r\n      ],\r\n      \"env\": {\r\n        \"IP2LOCATION_API_KEY\": \"\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n5. 将以下内容添加到您的 [:](https://www.ip2location.io/log-in) 要获取API密钥， `` 登录\r\n1. 到您的仪表板。替换 `Connectors` 在上面的示例中使用您的实际API密钥。\r\n\r\n# 保存更改后重新启动Claude Desktop，您应该会看到它出现在\r\n\r\n菜单。\r\n\r\n- 用法\r\n- 只需在Claude Desktop的聊天中输入您对IP的查询。以下是一些示例查询：\r\n- （IP）的位置在哪里？\r\n\r\n（IP）位于何处？\r\n\r\n（IP）的坐标是什么？\r\n\r\n例如，以下是IP 8.8.8.8的结果： `8.8.8.8 8.8.6.6`在Claude Desktop中，模型将根据IP2Location.io MCP服务器返回的结果自动生成输出。\r\n\r\n> 您还可以使用IP2Location.io批量IP地理定位API来查询多个IP地址。只需输入所有IP地址，每个IP地址之间留有空格。例如\\\r\n> .\r\n\r\n# \\[！注意\\]\r\n\r\n`IP2LOCATION_API_KEY`\r\n\r\nIP2Location.io批量IP地理定位API需要付费计划才能工作。 [环境变量](https://www.ip2location.io/sign-up) IP2Location.io API密钥，允许您每月查询多达50000个IP地址和更多IP地址的详细信息。你可以 [注册](https://www.ip2location.io/pricing) 免费API密钥，或\r\n\r\n# 订阅\r\n\r\n`get_geolocation`\r\n\r\n**享受更多福利的计划。**\r\n工具\r\n\r\n**描述**\r\n\r\n- `ip` 获取给定IP地址或一批IP地址的地理位置。它帮助用户检索任何IPv4或IPv6地址的详细信息，如国家、地区、城市、纬度、经度、邮政编码、时区、ASN和代理信息。当检测到多个IP时，它会自动将请求路由到IP2Location.io Bulk API以进行高效处理。 `\"1.1.1.1, 2.2.2.2\"`参数\r\n\r\n**（str）：要分析的IP地址（IPv4或IPv6）。您可以通过将多个IP作为逗号、空格或换行符分隔的单个字符串传递来同时查询它们（例如。，**\r\n).\r\n\r\n- **退货** 包含地理位置数据的JSON字符串。如果查询多个IP，它将返回一个JSON对象，其中每个键都是映射到其各自数据的IP地址。根据您的API计划，结果可能包括以下字段：\r\n- **位置和地理：** 国家、地区、地区、城市、邮政编码、经纬度、时区。\r\n- **网络和连接：** ASN（自治系统号）、ISP（互联网服务提供商）、域、网速、IDD码、区号、地址类型、使用类型。\r\n- **手机信息：** MNC（移动网络代码）、MCC（移动国家代码）、移动品牌。\r\n- **货币和语言：** 货币代码、货币名称、货币符号、语言代码、语言名称。\r\n- **代理和安全：** 代理类型、最后出现时间、威胁级别/类型、代理提供商、欺诈评分。\r\n\r\n其他：\r\n\r\n# IAB类别、天气、海拔、人口等。\r\n\r\n如果单个IP请求失败或IP无效，该工具将以字符串形式返回错误消息。对于批量请求，任何单个失败的IP都将返回映射到该特定IP地址的错误对象，而不会导致整个批处理失败。\r\n",
+ "config": {
+  "ip2location": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-remote@latest",
+    "https://mcp.ip2location.io/",
+    "--header",
+    "X-API-Key:YOUR_API_KEY"
+   ],
+   "env": {}
+  }
+ }
+}

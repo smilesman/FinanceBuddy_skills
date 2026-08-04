@@ -1,0 +1,12 @@
+{
+ "id": "llm-supervisor-agent",
+ "kind": "skill",
+ "name": "llm-supervisor-agent",
+ "fingerprint_md5": "87c2f6e2f3f7be665b826ab69487668b",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# LLM Supervisor\r\n\r\nAutomatically switches OpenClaw between cloud and local Ollama models when rate limits occur.\r\n\r\n## Features\r\n\r\n- Detects rate-limit / overload errors from Anthropic/OpenAI\r\n- Switches to a local Ollama fallback model\r\n- Requires explicit confirmation before local code generation\r\n- Supports manual commands:\r\n\r\n### Commands\r\n\r\n- `/llm status`\r\n- `/llm switch cloud`\r\n- `/llm switch local`\r\n\r\n## Default Local Model\r\n\r\n- `qwen2.5:7b`\r\n\r\n## Safety\r\n\r\nLocal code generation requires the user to type:\r\n\r\n`CONFIRM LOCAL CODE`",
+ "config": {}
+}

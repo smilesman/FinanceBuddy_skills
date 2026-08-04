@@ -1,0 +1,28 @@
+{
+ "id": "3484",
+ "kind": "mcp",
+ "name": "inspire",
+ "fingerprint_md5": "4199c5ffc79744735822095053e2c653",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Inspire MCP服务器\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io) 使用的服务器 [激励](https://github.com/tech-inspire) 后端图像搜索功能。\r\n\r\n[https://glama.ai/mcp/servers/@tech-inspire/mcp-server](https://glama.ai/mcp/servers/@tech-inspire/mcp-server)\r\n\r\n### 可用工具\r\n\r\n- `get-similar-images-by-description` -通过文字描述获取相似的图像\r\n  - 必需参数：\r\n    - `description` （string）：图像描述\r\n    - `limit` （数量）：分页限制\r\n    - `offset` （数字）：分页偏移\r\n\r\n\r\n## 配置\r\n\r\n- `INSPIRE_API_BASE`：后端网关的基本路径。违约： `http://localhost:7080`\r\n- `IMAGES_BASE_PATH`：图像的基本路径。例子： `https://<some-bucket>.s3.com/`\r\n\r\n变量可以使用环境变量或命令行参数进行配置，具体取决于运行时平台（Docker/Node）。\r\n\r\n## 建筑\r\n\r\nDocker：\r\n\r\n```bash\r\ndocker build -t tech-inspire/mcp .\r\n```\r\n\r\n节点：\r\n\r\n```bash\r\nnpm ci && npm run build\r\n```\r\n\r\n## 使用Claude Desktop\r\n\r\n将此添加到 `claude_desktop_config.json`\r\n\r\n### 码头工人\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"inspire\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"-e\",\r\n        \"INSPIRE_API_BASE=<API_URL>\",\r\n        \"-e\",\r\n        \"IMAGES_BASE_PATH=<IMAGE_BASE_PATH>\",\r\n        \"tech-inspire/mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 节点\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"inspire\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"/path/to/repo/build/index.js\",\r\n        \"--INSPIRE_API_BASE=<INSPIRE_API_BASE>\",\r\n        \"--IMAGES_BASE_PATH=<IMAGES_BASE_PATH>\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据 **通用公共许可证**，如所述 `LICENSE` 文件。\r\n",
+ "config": {
+  "inspire": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "-e",
+    "INSPIRE_API_BASE=<API_URL>",
+    "-e",
+    "IMAGES_BASE_PATH=<IMAGE_BASE_PATH>",
+    "tech-inspire/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

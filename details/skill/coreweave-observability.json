@@ -1,0 +1,12 @@
+{
+ "id": "coreweave-observability",
+ "kind": "skill",
+ "name": "coreweave-observability",
+ "fingerprint_md5": "c75bc79df7752bfa8caea3020400bbfe",
+ "download_count": 0,
+ "category": "监控与可观测性",
+ "tags": "",
+ "version": "",
+ "readme": "# CoreWeave 可观测性\r\n\r\n## GPU 指标 (DCGM Exporter)\r\n\r\nCKS 集群预装了 DCGM exporter。关键指标：\r\n\r\n| 指标 | 描述 |\r\n|--------|-------------|\r\n| `DCGM_FI_DEV_GPU_UTIL` | GPU 核心利用率 % |\r\n| `DCGM_FI_DEV_FB_USED` | GPU 内存已使用 (MB) |\r\n| `DCGM_FI_DEV_FB_FREE` | GPU 内存空闲 (MB) |\r\n| `DCGM_FI_DEV_POWER_USAGE` | 功耗 (W) |\r\n| `DCGM_FI_DEV_GPU_TEMP` | GPU 温度 (C) |\r\n\r\n## Prometheus 告警规则\r\n\r\n```yaml\r\ngroups:\r\n  - name: coreweave-gpu\r\n    rules:\r\n      - alert: GPUUtilizationLow\r\n        expr: avg(DCGM_FI_DEV_GPU_UTIL) < 20\r\n        for: 30m\r\n        labels: { severity: warning }\r\n        annotations:\r\n          summary: \"GPU 利用率低于 20%，持续 30 分钟 — 考虑缩减规模\"\r\n\r\n      - alert: GPUMemoryHigh\r\n        expr: DCGM_FI_DEV_FB_USED / (DCGM_FI_DEV_FB_USED + DCGM_FI_DEV_FB_FREE) > 0.95\r\n        for: 5m\r\n        labels: { severity: critical }\r\n        annotations:\r\n          summary: \"GPU 内存 >95% — OOM 风险\"\r\n\r\n      - alert: InferencePodDown\r\n        expr: kube_deployment_status_replicas_available{deployment=~\".*inference.*\"} == 0\r\n        for: 2m\r\n        labels: { severity: critical }\r\n```\r\n\r\n## 资源\r\n\r\n- [CoreWeave 可观测性](https://www.coreweave.com/observability)\r\n\r\n## 下一步\r\n\r\n有关事件响应，请参阅 `coreweave-incident-runbook`。",
+ "config": {}
+}

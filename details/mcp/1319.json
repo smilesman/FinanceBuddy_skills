@@ -1,0 +1,21 @@
+{
+ "id": "1319",
+ "kind": "mcp",
+ "name": "a11y",
+ "fingerprint_md5": "0310f1dd91043e6a5a1328c2a1924e1d",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# A11y MCP服务器\r\n\r\nMCP（模型上下文协议）服务器，用于使用axe-core对网页执行可访问性审计。在代理循环中使用您最喜欢的AI助手（Cline/Cursor/GH Copilot）的结果，让他们为您解决所有问题！\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@priyankark/a11y-mcp\">\r\n  \r\n</a>\r\n\r\n## 特性\r\n\r\n- 对任何网页进行详细的可访问性审核\r\n- 获取可访问性问题的摘要\r\n- 根据特定的WCAG标准过滤审核\r\n- 在结果中包含HTML代码片段，以便于调试\r\n\r\n## 安装\r\n\r\n```bash\r\n# Install globally\r\nnpm install -g a11y-mcp\r\n\r\n# Or use directly with npx\r\nnpx a11y-mcp\r\n```\r\n\r\n## 配置\r\n\r\n要将此MCP服务器与Cline一起使用，您需要将其添加到MCP设置配置文件中。\r\n\r\n### MCP配置\r\n\r\n将以下内容添加到 `mcpServers` 对象：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"a11y\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"a11y-mcp\"],\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### audit_网页\r\n\r\n对网页执行详细的可访问性审核。\r\n\r\n**参数：**\r\n\r\n- `url` （必填）：要审核的网页的URL\r\n- `includeHtml` （可选）：是否在结果中包含HTML代码段（默认值：false）\r\n- `tags` （可选）：要检查的特定可访问性标签数组（例如，wcag2a、wcag2aa、wcag21a、最佳实践）\r\n\r\n**例子：**\r\n\r\n```\r\nUse the a11y MCP server to audit example.com for accessibility issues\r\n```\r\n\r\n### get_summary\r\n\r\n获取网页的可访问性问题摘要。\r\n\r\n**参数：**\r\n\r\n- `url` （必填）：要审核的网页的URL\r\n\r\n**例子：**\r\n\r\n```\r\nGive me an accessibility summary of example.com\r\n```\r\n\r\n## 示例用法\r\n\r\n配置后，您可以要求Claude使用MCP服务器执行可访问性审核：\r\n\r\n1. “你能检查example.com的可访问性问题吗？”\r\n1. “审核我的网站https://mywebsite.com符合WCAG 2.1 AA标准”\r\n1. “给我一个关于无障碍问题的总结https://example.com\"\r\n1. “检查我的本地开发服务器是否位于http://localhost:3000存在任何关键的可访问性问题”\r\n\r\n## 发展\r\n\r\n要在本地运行服务器进行开发，请执行以下操作：\r\n\r\n```bash\r\nnpm start\r\n```\r\n\r\n## 释放\r\n\r\n该项目包括一个发布脚本，以帮助进行版本控制和发布到npm。该脚本处理版本碰撞、运行测试、git标记和npm发布。\r\n\r\n要发布新版本，请执行以下操作：\r\n\r\n```bash\r\n# Make sure the script is executable\r\nchmod +x release.sh\r\n\r\n# Release a patch version (default)\r\n./release.sh\r\n\r\n# Release a minor version\r\n./release.sh --minor\r\n\r\n# Release a major version\r\n./release.sh --major\r\n\r\n# Release a specific version\r\n./release.sh --version=1.2.3\r\n\r\n# Skip git operations\r\n./release.sh --skip-git\r\n\r\n# Dry run (no changes will be made)\r\n./release.sh --dry-run\r\n\r\n# Force release even with uncommitted changes\r\n./release.sh --force\r\n```\r\n\r\n有关详细信息，请运行：\r\n\r\n```bash\r\n./release.sh --help\r\n```\r\n\r\n## 许可证\r\n\r\nMPL 2.0\r\n\r\n## 鸣谢\r\n\r\n这个项目建立在以下出色工作的基础上 [斧头核心](https://github.com/dequelabs/axe-core)\r\n",
+ "config": {
+  "a11y": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "a11y-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

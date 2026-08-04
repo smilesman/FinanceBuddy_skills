@@ -1,0 +1,24 @@
+{
+ "id": "38",
+ "kind": "mcp",
+ "name": "aow4_tomes",
+ "fingerprint_md5": "01051ae1653cb78a6d0554c8ced22df5",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "## 介绍\r\n该项目是一个MCP+SKills的AI试验项目。主要想看看AI可否对于策略游戏进行指导和辅助。奇迹时代4 中的魔典是游戏中非常重要的一个元素，玩家可以通过魔典来提升自己的属性，从而获得更强的战斗力。魔典的选择和技能的选择，对于玩家来说是一个非常重要的决策。AI可以帮助玩家进行魔典的选择和技能的选择。有任何想法和建议，欢迎提issue。\r\n\r\n相关魔典数据来源:\r\nhttps://aow4.paradoxwikis.com/Tomes\r\n\r\n## 安装\r\n- 使用UV\r\n```\r\n$ git clone <repo>\r\n$ cd aow4_mcp\r\n$ uv sync\r\n```\r\n\r\n- 配置redis server\r\n\r\n直接使用docker创建redis server\r\n```\r\n$ docker run -d -p 6379:6379 redis\r\n```\r\n\r\n## Agent Skills 安装\r\n- aow4_tome 为Agent Skills插件，按使用的Agent工具，安装至对应的目录\r\n\r\n## MCP server 配置 \r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"AOW4_Tomes\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/aow4_mcp\",\r\n        \"run\",\r\n        \"aow4_mcp.py\"\r\n      ],\r\n      \"disabled\": false,\r\n      \"timeout\": 60\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用\r\n\r\n在Agent工具中，配置MCP server 及 Skills\r\n\r\n```\r\n@ 奇迹时代4\r\n种族点数： 秩序+2；暗影+1;  物质+1\r\n起始魔典：纪律\r\n如何构建最佳魔典BUILD\r\n\r\n@AI: 用户想知道如何构建最佳魔典BUILD。\r\n\r\n根据available_skills中有一个aow4_tome技能，描述是：\r\n\"当询问奇迹时代4(AOW4)魔典(Tome)信息，或者询问相关魔典问题，魔典出发什么技能；提供初始魔典后，后续魔典如何选择；最佳的魔典选择路径，最优的魔典选择路径\"\r\n...\r\n```\r\n具体查看>>> 该结果由codebuddy+GLM5生成 [sample1](https://github.com/spookyzn/aow4_mcp/blob/main/samples/test1.md)\r\n\r\n## CLI\r\n- list-tomes: 列出所有魔典\r\n```\r\n$ uv run aow4-tome list-tomes\r\n                  AOW4 Tomes                  \r\n┏━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━┓\r\n┃ Category ┃ Name                     ┃ Tier ┃\r\n┡━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━┩\r\n│ Astral   │ Evocation                │  I   │\r\n│          │ Warding                  │  I   │\r\n│          │ Scrying                  │  II  │\r\n│          │ Summoning                │  II  │\r\n│          │ Amplification            │ III  │\r\n│          │ Teleportation            │ III  │\r\n│          │ Astral Convergence       │  IV  │\r\n│          │ The Astral Mirror        │  IV  │\r\n│          │ The Arch Mage            │  V   │\r\n```\r\n\r\n- show tome: 显示魔典的详细信息\r\n```\r\n$ uv run aow4-tome show --json \"Evocation\"\r\n{\r\n  \"name\": \"Evocation\",\r\n  \"tier\": 1,\r\n  \"category\": \"Astral\",\r\n  \"summary\": \"Tier I - Grants excellent and cheap attack spells to any aspiring wizard.\",\r\n  \"tome_skills\": [\r\n    {\r\n      \"name\": \"Lightning Focus\",\r\n      \"tier\": 1,\r\n      \"type\": \"Unit enchantment\",\r\n      \"effects\": \"Makes base Magic attacks of enchanted units: Deal +2 Lightning Damage. Gains base 30% chance of\r\ninflicting Electrified, a damage-over-time effect. Effects are increased for non-repeating attacks.\\nAffected \r\nunit types: Support Unit Battle Mage Unit\"\r\n    },\r\n  ... ]\r\n...\r\n}\r\n```\r\n\r\n## 主要文件 \r\n\r\n- **aow4_mcp.py**: MCP server\r\n- **src/cli.py**: Typer CLI interface\r\n- **src/config.py**: Configuration settings\r\n",
+ "config": {
+  "aow4_tomes": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/aow4_mcp",
+    "run",
+    "aow4_mcp.py"
+   ],
+   "env": {}
+  }
+ }
+}

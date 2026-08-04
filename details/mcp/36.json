@@ -1,0 +1,24 @@
+{
+ "id": "36",
+ "kind": "mcp",
+ "name": "annict",
+ "fingerprint_md5": "e32d1c07a31518bbe382fba0422e8245",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# ruru annict mcp\r\n\r\n[纪念日](https://annict.com/) 的REST API v1的MCP服务器。可以从AI助手进行动画的作品检索、小故事、评论、记录的阅览等。\r\n\r\n## 交付工具\r\n\r\n工具名称｜说明｜\r\n| --- | --- |\r\n| `search_works` 搜索作品（可以通过标题、季节等缩小范围）\r\n| `get_my_works` 取得自己有状态的作品的一览表\r\n| `get_episodes` 取得作品的插曲一览表\r\n| `get_records` 获取对小故事的记录（感想、评价）一览表\r\n| `get_reviews` 获取作品的评论一览表\r\n| `get_me` ｜获取认证用户的信息｜\r\n| `get_following_activities` 获取正在跟踪的用户的活动\r\n| `get_my_programs` 取得自己的广播预定\r\n| `get_casts` 取得作品的演员（声优）一览表\r\n| `get_staffs` 取得作品的工作人员一览表\r\n\r\n## 安装，安装\r\n\r\n### 获取访问令牌\r\n\r\n[Annict开发者页面](https://annict.com/settings/apps) 求值时使用曲面法线的原始方向。\r\n\r\n### 克劳德桌面版\r\n\r\n`claude_desktop_config.json` 将条目添加到文档注册表。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"annict\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"ruru-annict-mcp\"],\r\n      \"env\": {\r\n        \"ANNICT_ACCESS_TOKEN\": \"<your-access-token>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 可流HTTP模式\r\n\r\n`--http` 标记后，可在可流HTTP传输中启动。\r\n\r\n```bash\r\nANNICT_ACCESS_TOKEN=<your-access-token> npx ruru-annict-mcp --http\r\n```\r\n\r\n`PORT` 可以使用环境变量指定端口（未指定时为随机）。MCP端点是 `http://localhost:/mcp` 是。\r\n\r\n## 开発\r\n\r\n```bash\r\nnpm install\r\nnpm run dev          # 開発サーバー起動（stdio）\r\nnpm run build        # ビルド\r\nnpm test             # テスト\r\nnpm run check        # Biome lint / format\r\nnpm run typecheck    # 型チェック\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "annict": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "ruru-annict-mcp"
+   ],
+   "env": {
+    "ANNICT_ACCESS_TOKEN": "<your-access-token>"
+   }
+  }
+ }
+}

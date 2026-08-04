@@ -1,0 +1,24 @@
+{
+ "id": "2413",
+ "kind": "mcp",
+ "name": "app-insight-mcp",
+ "fingerprint_md5": "8db27712803576c3a988b606bc52ef58",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "[https://glama.ai/mcp/servers/@JiantaoFu/AppInsightMCP](https://glama.ai/mcp/servers/@JiantaoFu/AppInsightMCP)\r\n\r\n# 应用市场情报MCP\r\n\r\nMCP服务器，通过分析苹果应用商店和谷歌应用商店的数据提供全面的市场情报。了解主要移动应用市场中的应用程序、市场趋势、竞争对手和用户反馈。\r\n\r\n## API覆盖范围\r\n\r\n### 应用商店API覆盖范围\r\n\r\n|API功能|已执行| MCP工具名称|说明|\r\n|-------------|-------------|---------------|-------------|\r\n|应用程序|✅ | 应用商店详细信息|获取应用商店应用的详细信息|\r\n|列表|✅ | 应用商店列表|从iTunes收藏中检索应用|\r\n|搜索|✅ | 应用商店搜索|在应用商店中搜索应用|\r\n|开发者|✅ | 应用商店开发者|由开发者获取应用|\r\n|隐私|✅ | 应用商店隐私|获取应用程序的隐私详细信息|\r\n|建议|✅ | 应用商店建议|获取搜索建议|\r\n|类似|✅ | 应用商店相似|获取相似应用|\r\n|评论|✅ | 应用商店评论|获取应用评论|\r\n|评级|✅ | 应用商店评级|获取应用评级|\r\n|版本历史|✅ | 应用商店版本历史记录|获取应用版本历史记录|\r\n\r\n### Google Play API覆盖范围\r\n\r\n|API功能|已执行| MCP工具名称|说明|\r\n|-------------|-------------|---------------|-------------|\r\n|应用程序|✅ | 谷歌游戏详情|获取详细的应用程序信息|\r\n|列表|✅ | 谷歌播放列表|从收藏中检索应用|\r\n|搜索|✅ | 谷歌游戏搜索|搜索应用|\r\n|开发者|✅ | google play开发者|按开发者获取应用|\r\n|建议|✅ | 谷歌播放建议|获取搜索建议|\r\n|评论|✅ | 谷歌游戏评论|获取应用评论|\r\n|类似|✅ | 谷歌播放类似|获取类似应用|\r\n|权限|✅ | googleplay权限|获取应用程序权限|\r\n|数据安全|✅ | 谷歌播放数据安全|获取数据安全信息|\r\n|类别|✅ | 谷歌游戏类别|获取类别列表|\r\n\r\n## 用法\r\n\r\n启动MCP服务器：\r\n\r\n```bash\r\nnode src/server.js\r\n```\r\n\r\n服务器公开了可以通过任何MCP客户端使用的工具。例如，使用Claude For Desktop，您可以：\r\n\r\n- 在两个商店中搜索应用程序\r\n- 获取详细的应用程序信息\r\n- 阅读评论和评分\r\n- 查找类似的应用程序\r\n- 检查应用程序隐私和权限\r\n- 还有更多\r\n\r\n## 使用示例\r\n\r\n```javascript\r\n// Get top free iOS apps\r\n{\r\n  \"name\": \"app-store-list\",\r\n  \"params\": {\r\n    \"collection\": \"topfreeapplications\",\r\n    \"num\": 10\r\n  }\r\n}\r\n\r\n// Get top paid Android games\r\n{\r\n  \"name\": \"google-play-list\",\r\n  \"params\": {\r\n    \"collection\": \"TOP_PAID\",\r\n    \"category\": \"GAME\",\r\n    \"num\": 10\r\n  }\r\n}\r\n```\r\n\r\n## 使用MCP检查员进行测试\r\n\r\n```\r\nnpm run test:inspector\r\n```\r\n\r\n\r\n## 使用mcp-cli进行测试\r\n\r\n```\r\nnpx @wong2/mcp-cli npx -y \"app-insight-mcp\"\r\n```\r\n\r\n## 使用Claude Desktop\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的App Market Intelligence [史密瑟里](https://smithery.ai/server/@JiantaoFu/appinsightmcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @JiantaoFu/appinsightmcp --client claude\r\n```\r\n\r\n### 码头工人\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"app-insight-mcp\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"app-insight-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"app-insight-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@jeromyfu/app-insight-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 构建\r\n\r\nDocker构建：\r\n\r\n```bash\r\ndocker build -t app-insight-mcp -f Dockerfile .\r\n```\r\n\r\n## 错误处理\r\n\r\n所有工具都包括错误处理，并在以下情况下返回相应的错误消息：\r\n\r\n- 缺少必需的参数\r\n- API调用失败\r\n- 已达到费率限制\r\n- 提供的ID或参数无效\r\n\r\n## 贡献\r\n\r\n欢迎通过以下方式做出贡献：\r\n\r\n1. 实现缺失的功能\r\n1. 改进错误处理\r\n1. 添加更多API功能\r\n1. 加强文件编制\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "app-insight-mcp": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "app-insight-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

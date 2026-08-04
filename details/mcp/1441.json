@@ -1,0 +1,22 @@
+{
+ "id": "1441",
+ "kind": "mcp",
+ "name": "ffmpeg",
+ "fingerprint_md5": "27f9e0f4d6f9c601b2f86c5186199349",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP FFmpeg视频处理器\r\n\r\n[](https://smithery.ai/server/@bitscorp-mcp/mcp-ffmpeg)\r\n\r\n一个使用FFmpeg处理视频文件的Node.js服务器。此服务器提供以下API：\r\n\r\n- 将视频调整为不同的分辨率（360p、480p、720p、1080p）\r\n- 从各种格式的视频中提取音频（MP3、AAC、WAV、OGG）\r\n\r\n## 先决条件\r\n\r\n在运行此应用程序之前，您需要安装以下内容：\r\n\r\n1. **Node.js** （v14或更高版本）\r\n1. **转码** -这是视频处理所必需的\r\n\r\n### 安装FFmpeg\r\n\r\n#### 在 macOS 上：\r\n\r\n```bash\r\nbrew install ffmpeg\r\n```\r\n\r\n#### 在Ubuntu/Debian上：\r\n\r\n```bash\r\nsudo apt update\r\nsudo apt install ffmpeg\r\n```\r\n\r\n#### 在Windows上：\r\n\r\n1. 从下载FFmpeg [官方网站](https://ffmpeg.org/download.html)\r\n1. 将文件解压缩到文件夹（例如。， `C:\\ffmpeg`)\r\n1. 添加 `bin` 将文件夹添加到PATH环境变量\r\n\r\n## 安装\r\n\r\n1. 克隆此存储库：\r\n\r\n```bash\r\ngit clone https://github.com/bitscorp-mcp/mcp-ffmpeg.git\r\ncd mcp-ffmpeg\r\n```\r\n\r\n2. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装mcp ffmpeg for Claude Desktop [史密瑟里](https://smithery.ai/server/@bitscorp-mcp/mcp-ffmpeg):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @bitscorp-mcp/mcp-ffmpeg --client claude\r\n```\r\n\r\n## 运行服务器\r\n\r\n使用以下命令启动服务器：\r\n\r\n```bash\r\nnpm start\r\n```\r\n\r\n对于在文件更改时自动重启的开发：\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装mcp ffmpeg for Claude Desktop [史密瑟里](https://smithery.ai/server/bitscorp-mcp/mcp-ffmpeg):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @bitscorp-mcp/mcp-ffmpeg --client claude\r\n```\r\n\r\n要为Cursor安装mcp-ffmpeg，请转到设置->光标设置->功能->mcp服务器->+添加\r\n\r\n选择类型：命令并使用Adjust中的API键粘贴以下内容\r\n\r\n```\r\nnpx -y @smithery/cli@latest run @bitscorp/mcp-ffmpeg\r\n```\r\n\r\n## 与Claude Desktop一起使用\r\n\r\n此MCP FFmpeg服务器可以与Claude Desktop集成，通过自然语言请求处理视频。\r\n\r\n### 使用npx运行\r\n\r\n您可以直接使用npx运行服务器：\r\n\r\n```bash\r\nnpx /path/to/mcp-ffmpeg\r\n```\r\n\r\n或者，如果你已经将包发布到npm：\r\n\r\n```bash\r\nnpx mcp-ffmpeg\r\n```\r\n\r\n### 配置Claude桌面\r\n\r\n要将此服务器添加到Claude Desktop，请更新您的Claude Desktop配置文件：\r\n\r\n1. 找到您的Claude Desktop配置文件：\r\n\r\n   - macOS： `~/.config/claude-desktop/config.json` 或 `~/Library/Application Support/Claude Desktop/config.json`\r\n   - 窗户： `%APPDATA%\\Claude Desktop\\config.json`\r\n   - Linux： `~/.config/claude-desktop/config.json`\r\n\r\n1. 将FFmpeg MCP服务器添加到 `mcpServers` 章节：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"ffmpeg\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\r\n                \"--yes\",\r\n                \"/absolute/path/to/mcp-ffmpeg\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n如果你已经将包发布到npm：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"ffmpeg\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\r\n                \"--yes\",\r\n                \"mcp-ffmpeg\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n3. 重新启动Claude Desktop以使更改生效。\r\n\r\n### 克劳德提示示例\r\n\r\n配置后，您可以使用以下提示：\r\n\r\n```\r\nUsing the ffmpeg MCP server, please resize the video at /path/to/video.mp4 to 720p resolution.\r\n```\r\n\r\n## 备注\r\n\r\n- 上传的视频暂时存储在 `uploads` 目录\r\n- 处理后的视频和音频文件存储在 `output` 目录\r\n- 服务器上传的文件大小限制为500MB\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "ffmpeg": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "--yes",
+    "/absolute/path/to/mcp-ffmpeg"
+   ],
+   "env": {}
+  }
+ }
+}

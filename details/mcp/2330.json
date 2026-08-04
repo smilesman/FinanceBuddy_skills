@@ -1,0 +1,18 @@
+{
+ "id": "2330",
+ "kind": "mcp",
+ "name": "timezone",
+ "fingerprint_md5": "994c36f8ec2eddcfb86ee64d1ea28ec3",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp时区\r\n\r\n时区MCP--包装timeapi.io（免费，无身份验证）\r\n\r\n部分 [Pipeworx](https://pipeworx.io) --MCP网关，将AI代理连接到673+个实时数据源。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_timezones` |列出timeapi.io提供的所有590+IANA时区字符串|\r\n\r\n## 快速开始\r\n\r\n添加到您的MCP客户端（Claude Desktop、Cursor、Windsurf等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"timezone\": {\r\n      \"url\": \"https://gateway.pipeworx.io/timezone/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者连接到完整的Pipeworx网关，以访问所有673+数据源：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pipeworx\": {\r\n      \"url\": \"https://gateway.pipeworx.io/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用ask_pipeworx\r\n\r\n您可以用简单的英语提问，而不是直接调用工具：\r\n\r\n```\r\nask_pipeworx({ question: \"your question about Timezone data\" })\r\n```\r\n\r\n网关选择正确的工具并自动填充参数。\r\n\r\n## 更多\r\n\r\n- [所有工具和指南](https://github.com/pipeworx-io/examples)\r\n- [pipeworx.io](https://pipeworx.io)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "timezone": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://gateway.pipeworx.io/timezone/mcp"
+  }
+ }
+}

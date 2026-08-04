@@ -1,0 +1,22 @@
+{
+ "id": "1257",
+ "kind": "mcp",
+ "name": "redis-3",
+ "fingerprint_md5": "f5c5bfdb42c8f6bfce9379cd52160bef",
+ "download_count": 0,
+ "category": "缓存",
+ "tags": "",
+ "version": "",
+ "readme": "# Redis MCP服务器（@gongrzhe/server-redis-mcp@1.0.0)\r\n\r\n\r\n用于与Redis数据库交互的Redis模型上下文协议（MCP）服务器实现。该服务器使LLM能够通过一组标准化的工具与Redis键值存储进行交互。\r\n\r\n## 更新\r\n\r\n62 Redis MCP工具https://github.com/GongRzhe/REDIS-MCP-Server/tree/redis-plus\r\n\r\n## 安装与使用\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Redis MCP Server for Claude Desktop [史密瑟里](https://smithery.ai/server/@gongrzhe/server-redis-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @gongrzhe/server-redis-mcp --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\n# Using npx with specific version (recommended)\r\nnpx @gongrzhe/server-redis-mcp@1.0.0 redis://your-redis-host:port\r\n\r\n# Example:\r\nnpx @gongrzhe/server-redis-mcp@1.0.0 redis://localhost:6379\r\n```\r\n\r\n或全局安装：\r\n\r\n```bash\r\n# Install specific version globally\r\nnpm install -g @gongrzhe/server-redis-mcp@1.0.0\r\n\r\n# Run after global installation\r\n@gongrzhe/server-redis-mcp redis://your-redis-host:port\r\n```\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n- **集**\r\n\r\n  - 设置一个可选过期的Redis键值对\r\n  - 输入：\r\n    - `key` （string）：Redis密钥\r\n    - `value` （string）：要存储的值\r\n    - `expireSeconds` （数字，可选）：到期时间（秒）\r\n\r\n- **得到**\r\n\r\n  - 从Redis按键获取值\r\n  - 输入： `key` （string）：要检索的Redis密钥\r\n\r\n- **删除**\r\n\r\n  - 从Redis中删除一个或多个密钥\r\n  - 输入： `key` （string | string\\[\\]）：要删除的键或键数组\r\n\r\n- **列表**\r\n\r\n  - 列出与模式匹配的Redis密钥\r\n  - 输入： `pattern` （字符串，可选）：匹配键的模式（默认值：\\*）\r\n\r\n## 配置\r\n\r\n### 使用Claude Desktop\r\n\r\n要将此服务器与Claude Desktop应用程序一起使用，请将以下配置添加到您的“mcpServers”部分 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"redis\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"@gongrzhe/server-redis-mcp@1.0.0\",\r\n        \"redis://localhost:6379\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者，如果已安装软件包，则可以直接使用node命令：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"redis\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"path/to/build/index.js\",\r\n        \"redis://10.1.210.223:6379\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Docker使用\r\n\r\n使用Docker时：\r\n\r\n- 对于macOS，请使用 `host.docker.internal` 如果Redis服务器正在主机网络上运行\r\n- Redis URL可以指定为参数，默认为“redis://localhost:6379\"\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"redis\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\", \r\n        \"-i\", \r\n        \"--rm\", \r\n        \"mcp/redis\", \r\n        \"redis://host.docker.internal:6379\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n### 从源头构建\r\n\r\n1. 克隆存储库\r\n1. 安装依赖项：\r\n   ```bash\r\n   npm install\r\n   ```\r\n1. 构建项目：\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n### Docker构建\r\n\r\n```bash\r\ndocker build -t mcp/redis .\r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据ISC许可证获得许可。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "redis": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@gongrzhe/server-redis-mcp@1.0.0",
+    "redis://localhost:6379"
+   ],
+   "env": {}
+  }
+ }
+}

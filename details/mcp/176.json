@@ -1,0 +1,22 @@
+{
+ "id": "176",
+ "kind": "mcp",
+ "name": "decent-sampler-drums",
+ "fingerprint_md5": "8f4fba0f72017ee64ddef7305934e55a",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 体面的采样鼓MCP服务器\r\n\r\n用于生成的模型上下文协议服务器 [体面的采样器](https://www.decentsamples.com/product/decent-sampler-plugin/) 鼓套件配置。\r\n\r\n这个基于TypeScript的MCP服务器为创建DecentSampler鼓套件预设提供了专门的工具和提示，包括WAV文件分析和XML生成。\r\n\r\n[](https://glama.ai/mcp/servers/phypkuqwcn)\r\n\r\n## 演示视频\r\n\r\n[](https://www.youtube.com/watch?v=cftEq62gfDE)\r\n\r\n**警告：** 创建复杂的预设可能会超过Claude Desktop的最大消息长度。我们仍在努力简化此工具，以克服这一限制。如果您正在创建没有很多麦克风或其他变体的简单预设，那么xml文件应该足够小，以便Claude写入文件。\r\n\r\n## 特性\r\n\r\n- [WAV文件分析和验证](docs/tools.md#analyze_wav_samples)\r\n- [全局音调和包络控制](docs/tools.md#configure_drum_controls)\r\n- [带MIDI控制的多麦克风路由](docs/tools.md#configure_mic_routing)\r\n- [循环播放样本](docs/tools.md#configure_round_robin)\r\n- [灵活的速度层处理](docs/schemas.md#generate_drum_groups)\r\n- [Muting群组支持](docs/schemas.md#generate_drum_groups)\r\n- [辅助输出路由](docs/tools.md#configure_mic_routing)\r\n\r\n## 文档\r\n\r\n- [我该如何使用这些工具？](docs/workflows.md) -带有真实示例的分步工作流程\r\n- [工具文档](docs/tools.md) -每个可用工具的详细信息\r\n- [输入模式](docs/schemas.md) -TypeScript接口和参数描述\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Node.js（v14或更高版本）\r\n- npm（通常随Node.js一起提供）\r\n- Claude桌面应用程序（与Claude一起使用）\r\n\r\n### 设置\r\n\r\n1. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n2. 构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n3. 添加到您的Claude Desktop配置中：\r\n\r\n**窗户：** `%APPDATA%/Claude/claude_desktop_config.json`\r\n**MacOS：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"decent-sampler-drums\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@dandeliongold/mcp-decent-sampler-drums\"\r\n      ],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n对于自动重建的开发：\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n对于调试，请使用MCP检查器：\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n## 使用指南\r\n\r\n使用此MCP服务器生成简单预设时，应始终参考 `simple_preset_guidelines` 提示。\r\n\r\n对于更复杂的预设（包括总线、效果等部分），请参考 `advanced_preset_guidelines` 提示。请注意，使用大量样本创建复杂的预设仍然可能不稳定，并且可能超过Claude Desktop的最大消息长度。\r\n\r\n这两个提示都会要求您提供samplesDirectory参数-这应该是鼓样本文件夹的绝对路径（例如，“C:/Users/username/Documents/DrumSamples”）。然后，提示符将在所有示例和配置中自动使用此目录，从而更容易遵循系统的正确路径。\r\n\r\n## 关于Decent采样器\r\n\r\nDecent Sampler是一个免费的采样插件，允许您以Decent Sampleer格式播放样本。\r\n\r\n### 实用链接\r\n\r\n- [下载体面的采样器插件](https://www.decentsamples.com/product/decent-sampler-plugin/)\r\n- [体面的Sampler开发人员资源](https://www.decentsamples.com/decent-sampler-developer-resources/)\r\n\r\n### 样本来源\r\n\r\n此MCP服务器的目标是让您更容易设置自己的预设，无论您是在手机上播放厨房用具，还是在录音室录制全套设备。要创建自己的鼓套件，您还需要样品。\r\n\r\n如果你还没有准备好样本，这里有一些资源可以开始使用：\r\n\r\n#### 免费和低成本的样本资源\r\n\r\n- **99sounds.org**\r\n\r\n  - [滚筒样本采集](https://99sounds.org/drum-samples/) -各种鼓套件和打击乐器样品\r\n  - [配音和雷鬼音乐](https://99sounds.org/dub-reggae-sounds/) -雷鬼鼓声的专业收藏\r\n\r\n- **Archive.org：** [样品包收集](https://archive.org/search?query=subject%3A%22Sample+Pack%22+drums&sort=-downloads) -社区贡献的鼓样本，按受欢迎程度排序。包括一些很酷的东西，比如老式鼓机和CMI Fairlight样品。\r\n\r\n- **样品包国家：** [奥伯海姆DMX/DX鼓套件](https://samplepacknation.bandcamp.com/album/oberheim-dmx-dx-drumkits-50-sounds) -经典鼓机声音（10美元/欧元以下）\r\n",
+ "config": {
+  "decent-sampler-drums": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@dandeliongold/mcp-decent-sampler-drums"
+   ],
+   "env": {}
+  }
+ }
+}

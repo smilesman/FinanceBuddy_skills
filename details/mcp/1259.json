@@ -1,0 +1,28 @@
+{
+ "id": "1259",
+ "kind": "mcp",
+ "name": "redis-cloud",
+ "fingerprint_md5": "6545f766d0ae25e6a694a208f66a288a",
+ "download_count": 0,
+ "category": "缓存",
+ "tags": "",
+ "version": "",
+ "readme": "# Redis Cloud API MCP服务器\r\n\r\n模型上下文协议（MCP）是一种用于管理大型语言模型（LLM）和外部系统之间上下文的标准化协议。该存储库为Redis Cloud的API提供了一个MCP服务器，允许您使用自然语言管理Redis Cloud资源。\r\n\r\n这使您可以使用Claude Desktop或任何MCP客户端使用自然语言在Redis Cloud帐户上完成任务，例如：\r\n\r\n- “在AWS中创建新的Redis数据库”\r\n- “我目前的订阅是什么？”\r\n- “帮助我为我的电子商务应用程序选择合适的Redis数据库”\r\n\r\n## 特性\r\n\r\n### 账户管理\r\n\r\n- `get_current_account`：获取您当前Redis Cloud帐户的详细信息\r\n- `get_current_payment_methods`：列出为您的帐户配置的所有付款方式\r\n\r\n### 订阅管理\r\n\r\n#### 专业订阅\r\n\r\n- `get_pro_subscriptions`：列出您帐户中的所有Pro订阅\r\n- `create_pro_subscription`：使用高级配置选项创建新的Pro订阅\r\n  - 支持多云部署\r\n  - 配置内存、持久性和模块\r\n  - 设置主动-主动部署\r\n  - 自定义网络配置\r\n\r\n#### 基本订阅\r\n\r\n- `get_essential_subscriptions`：列出所有基本订阅（分页）\r\n- `get_essential_subscription_by_id`：获取特定Essential订阅的详细信息\r\n- `create_essential_subscription`：创建新的Essential订阅\r\n- `delete_essential_subscription`：删除基本订阅\r\n\r\n### 数据库功能\r\n\r\n- `get_database_modules`：列出您的帐户中支持的所有可用数据库模块（功能）\r\n  - Redis模块\r\n  - 数据库功能\r\n  - 性能选项\r\n\r\n### 云提供商管理\r\n\r\n- `get_pro_plans_regions`：跨云提供商获取可用区域\r\n  - AWS区域\r\n  - GCP地区\r\n  - 网络选项\r\n  - 可用区\r\n\r\n### 方案与价格\r\n\r\n- `get_essentials_plans`：列出可用的基本订阅计划（分页）\r\n  - 支持AWS、GCP和Azure\r\n  - Redis Flex选项\r\n  - 固定计划\r\n\r\n### 任务管理\r\n\r\n- `get_tasks`：列出您帐户中的所有当前任务\r\n- `get_task_by_id`：获取特定任务的详细信息\r\n  - 跟踪部署状态\r\n  - 监控订阅更改\r\n  - 查看任务进度\r\n\r\n## 用法\r\n\r\n#### 先决条件\r\n\r\n- 有效的Redis Cloud API凭据（API密钥和密钥）\r\n- 长时间运行的操作会返回任务ID，并且可以对其进行监控\r\n- 分页响应需要多次调用才能检索所有数据\r\n\r\n### 克劳德桌面\r\n\r\n要使用Claude Desktop运行MCP服务器，请执行以下步骤：\r\n\r\n1. 构建包：\r\n\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n1. 将服务器添加到Claude Desktop：\r\n\r\n   - 打开克劳德桌面设置\r\n   - 导航到“开发人员”选项卡（确保已启用“开发人员模式”）\r\n   - 点击“编辑配置”\r\n   - 打开 `claude_desktop_config.json` 在文本编辑器中添加文件，并添加以下配置：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"mcp-redis-cloud\": {\r\n         \"command\": \"node\",\r\n         \"args\": [\"--experimental-fetch\", \"<absolute_path_to_project_root>/dist/index.js\"],\r\n         \"env\": {\r\n           \"API_KEY\": \"<redis_cloud_api_key>\",\r\n           \"SECRET_KEY\": \"<redis_cloud_api_secret_key>\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. 关闭Claude Desktop并重新启动。服务器现在应该在MCP服务器部分可用。\r\n\r\n### 光标IDE\r\n\r\n要使用Cursor IDE运行MCP服务器，请执行以下步骤：\r\n\r\n1. 构建包：\r\n\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n1. 将服务器添加到游标：\r\n\r\n   - 打开光标设置\r\n   - 导航到MCP选项卡\r\n   - 点击“添加新的全局MCP服务器”\r\n   - 更新自动打开的 `mcp.json` 具有以下配置的文件：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"mcp-redis-cloud\": {\r\n         \"command\": \"node\",\r\n         \"args\": [\"--experimental-fetch\", \"<absolute_path_to_project_root>/dist/index.js\"],\r\n         \"env\": {\r\n           \"API_KEY\": \"<redis_cloud_api_key>\",\r\n           \"SECRET_KEY\": \"<redis_cloud_api_secret_key>\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. 重新启动游标。现在，服务器应该可以在MCP服务器部分中使用。\r\n\r\n## 发展\r\n\r\n### 先决条件\r\n\r\n1. nvm（节点版本管理器）\r\n1. 节点v22.14.0\r\n1. npm 10.9.2\r\n\r\n### 入门指南\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   nvm use v22.14.0\r\n   npm install\r\n   ```\r\n\r\n1. 构建项目：\r\n\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n1. 使用MCP检查器进行测试：\r\n\r\n   ```bash\r\n   npx @modelcontextprotocol/inspector node dist/index.js --api-key=<api_key> --secret-key=<secret_key>\r\n   ```\r\n\r\n### 项目结构\r\n\r\n```\r\nsrc/\r\n├── index.ts              # Entry point\r\n├── clients/              # API Clients for external services\r\n│   └── generated         # Generated Redis Cloud API client\r\n└── tools/                # Tool implementations\r\n    └── accounts/         # Account tools\r\n    └── subscriptions/    # Subscription tools\r\n    └── tasks/            # Task tools\r\n```\r\n\r\n注意：如果您对代码进行了更改，请记住重建并重新启动Claude Desktop/Coursor：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n## Docker使用\r\n\r\n### 构建Docker镜像\r\n\r\n要为MCP服务器构建Docker镜像，请运行以下命令：\r\n\r\n```bash\r\ndocker build -t mcp/redis-cloud .\r\n```\r\n\r\n### 运行Docker容器\r\n\r\n要运行容器，请使用以下命令：\r\n\r\n```bash\r\ndocker run -i --rm \\\r\n  -e API_KEY=<your_redis_cloud_api_key> \\\r\n  -e SECRET_KEY=<your_redis_cloud_api_secret_key> \\\r\n  mcp/redis-cloud\r\n```\r\n\r\n### Docker与Claude Desktop的集成\r\n\r\n要将Docker化的MCP服务器与Claude Desktop集成，请执行以下步骤：\r\n\r\n1. 构建Docker镜像（如果你还没有）：\r\n\r\n   ```bash\r\n   docker build -t mcp/redis-cloud .\r\n   ```\r\n\r\n1. 将服务器添加到Claude Desktop：\r\n\r\n   - 打开克劳德桌面设置\r\n   - 导航到“开发人员”选项卡（确保启用了“开发人员模式”）\r\n   - 点击“编辑配置”\r\n   - 打开 `claude_desktop_config.json` 文本编辑器中的文件\r\n   - 添加以下配置：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"redis-cloud\": {\r\n         \"command\": \"docker\",\r\n         \"args\": [\r\n           \"run\",\r\n           \"-i\",\r\n           \"--rm\",\r\n           \"-e\",\r\n           \"API_KEY=<your_redis_cloud_api_key>\",\r\n           \"-e\",\r\n           \"SECRET_KEY=<your_redis_cloud_api_secret_key>\",\r\n           \"mcp/redis-cloud\"\r\n         ]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. 将占位符值替换为实际的API凭据。\r\n\r\n1. 保存配置文件并重新启动Claude Desktop。\r\n\r\n### 备注\r\n\r\n- 确保所需的环境变量(`API_KEY`, `SECRET_KEY`)设置正确。\r\n",
+ "config": {
+  "redis-cloud": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "API_KEY=<your_redis_cloud_api_key>",
+    "-e",
+    "SECRET_KEY=<your_redis_cloud_api_secret_key>",
+    "mcp/redis-cloud"
+   ],
+   "env": {}
+  }
+ }
+}

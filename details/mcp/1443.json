@@ -1,0 +1,22 @@
+{
+ "id": "1443",
+ "kind": "mcp",
+ "name": "file-tools",
+ "fingerprint_md5": "9c70eed343f8cdc3ccf38bed06c9e831",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP文件工具服务器\r\n\r\n一个MCP（模型上下文协议）服务器，为Claude提供文件系统和实用工具。\r\n\r\n## 特性\r\n\r\n### 工具\r\n\r\n- **获取时间**：获取任何时区的当前时间\r\n- **搜索文件**：在目录中按模式搜索文件\r\n- **read_file**：读取文件内容（可选行数限制）\r\n- **list_directory**：列出目录内容\r\n- **file_info**：获取详细的文件/目录信息\r\n- **运行命令**：运行安全shell命令（有限集）\r\n\r\n### 资源\r\n\r\n- **env://system**：系统和环境信息\r\n\r\n## 先决条件\r\n\r\n- Node.js 18+\r\n- npm或纱线\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n## 用法\r\n\r\n### 发展\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n### 生产\r\n\r\n```bash\r\nnpm run build\r\nnpm start\r\n```\r\n\r\n### 检验员测试\r\n\r\n```bash\r\nnpm run inspect\r\n```\r\n\r\n这将打开一个web UI，以交互方式测试您的工具。\r\n\r\n## 连接到克劳德\r\n\r\n### 克劳德代码\r\n\r\n增添 `~/.claude/config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"file-tools\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"/absolute/path/to/src/index.ts\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德桌面\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"file-tools\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"/absolute/path/to/src/index.ts\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 示例提示\r\n\r\n连接后，与Claude一起尝试以下操作：\r\n\r\n- “东京现在几点了？”\r\n- “查找我项目中的所有TypeScript文件”\r\n- “读取package.json文件”\r\n- “显示src目录中的内容”\r\n- “获取有关此文件的信息：./tsconfig.json”\r\n\r\n## 项目结构\r\n\r\n```\r\n├── src/\r\n│   └── index.ts     # Main MCP server\r\n├── package.json\r\n├── tsconfig.json\r\n└── README.md\r\n```\r\n\r\n## 技术\r\n\r\n- **@模型上下文协议/sdk**：官方MCP SDK\r\n- **萨德**：架构验证\r\n- **TypeScript**：类型安全\r\n\r\n## 安全说明\r\n\r\n- 这 `run_command` 该工具只允许安全命令的白名单\r\n- 文件操作仅限于进程有权访问的内容\r\n- 考虑在生产环境中以适当的权限运行\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 文章\r\n\r\n阅读完整教程： *\\[链接到Medium文章\\]*\r\n",
+ "config": {
+  "file-tools": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "tsx",
+    "/absolute/path/to/src/index.ts"
+   ],
+   "env": {}
+  }
+ }
+}

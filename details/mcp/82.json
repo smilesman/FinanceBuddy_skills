@@ -1,0 +1,21 @@
+{
+ "id": "82",
+ "kind": "mcp",
+ "name": "browser-kit",
+ "fingerprint_md5": "cdc5036a9dbf5e07ebcb0b2bb57deb3e",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP浏览器套件\r\n\r\n[](https://www.npmjs.com/package/@mcp-browser-kit/server)\r\n[](https://github.com/ndthanhdev/mcp-browser-kit/actions/workflows/workspace-check.yml)\r\n[](https://biomejs.dev)\r\n[](https://archestra.ai/mcp-catalog/ndthanhdev__mcp-browser-kit)\r\n\r\n[](https://glama.ai/mcp/servers/ndthanhdev/mcp-browser-kit)\r\n\r\n> 🚀 **在 `main` 分支？** 您正在查看最前沿的开发文档！对于其他版本，请查看 `release/*` 分支。\r\n\r\nMCP服务器，使AI助手能够与您的本地浏览器进行交互。\r\n\r\nhttps://github.com/user-attachments/assets/1fbf87fd-06d1-42bf-a06f-cc2bbdf375a8\r\n\r\n## 用法\r\n\r\n1. 将MCP浏览器套件添加到MCP客户端：\r\n\r\n   ```json\r\n   {\r\n   \t\"mcpServers\": {\r\n   \t\t\"browser-kit\": {\r\n   \t\t\t\"command\": \"npx\",\r\n   \t\t\t\"args\": [\"@mcp-browser-kit/server@latest\"]\r\n   \t\t}\r\n   \t}\r\n   }\r\n   ```\r\n\r\n1. 为您的浏览器选择正确的扩展版本：\r\n\r\n   - 检查 [兼容性表](#compatibility-table) 下面查看哪个版本（M2或M3）与您的浏览器兼容\r\n   - 请注意，M2版本提供的功能比M3版本更多，因此如果您的浏览器同时支持M2和M3版本，请选择M2\r\n\r\n1. 从下载最新的兼容版本 [最新发布](https://github.com/ndthanhdev/mcp-browser-kit/releases/latest).\r\n\r\n1. [加载扩展](#load-extension) 进入兼容的浏览器并启用它。\r\n\r\n1. 刷新打开的选项卡以确保加载了扩展脚本。\r\n\r\n1. 在MCP客户端上开始发送消息：\r\n\r\n   ```\r\n   Use browser-kit, star the last open GitHub repo on my browser\r\n   ```\r\n\r\n1. 可选，检查 [用户注释](#user-notes) 了解更多信息。\r\n\r\n## 兼容性表\r\n\r\n> M2版本支持比M3版本更多的功能。\r\n> 扩展文件名模式：\r\n>\r\n> - M2建筑：\r\n>   - 铬： `mcp_browser_kit_m2-.zip` （例如。， `mcp_browser_kit_m2-5.0.0.zip`)\r\n>   - 火狐浏览器： `mcp_browser_kit_m2-.xpi` （例如。， `mcp_browser_kit_m2-5.0.0.xpi`)\r\n> - M3构建： `mcp_browser_kit_m3-.zip` （例如。， `mcp_browser_kit_m3-5.0.0.zip`)\r\n\r\n|浏览器|M2版本|M3版本|\r\n| ------- | -------- | -------- |\r\n|Chrome |❌       | ✅       |\r\n|勇敢|✅       | ✅       |\r\n|边缘|✅       | ✅       |\r\n|火狐浏览器|✅       | ❌       |\r\n|Safari |✅       | ❌       |\r\n\r\n## 负载扩展\r\n\r\n- 基于Chromium的浏览器（Chrome、Brave、Edge）\r\n  1. 解压缩下载的文件 `.zip` 文件\r\n  1. 打开 [chrome://extensions/](chrome://extensions/)\r\n  1. 启用 `Developer mode`\r\n  1. 点击 `Load unpacked`\r\n  1. 选择解压缩的扩展文件夹\r\n- 火狐\r\n  1. 打开 [关于：插件](about:addons)\r\n  1. 点击齿轮图标并选择 `Install Add-on From File`\r\n  1. 选择已下载的 `.xpi` 文件\r\n- 游猎\r\n  1. 解压缩下载的文件 `.zip` 文件\r\n  1. 打开 `Develop > Show Extension Builder`\r\n  1. 点击 `+` 并选择 `Add Extension`\r\n  1. 选择解压缩的扩展文件夹\r\n  1. 点击 `Install` 安装扩展程序\r\n\r\n# 用户注释\r\n\r\n> **Alpha阶段注意事项**：考虑在此MCP中使用单独的浏览器配置文件或专用浏览器实例，以防止敏感数据无意中暴露给AI模型提供商。\r\n\r\n> **安全**：BrowserKit当前缺少对传入请求的身份验证。仅将端口59089和2769-2799保留在设备网络上。\r\n\r\n## 托管部署\r\n\r\n托管部署可在 [Frontier AI](https://fronteir.ai/mcp/ndthanhdev-mcp-browser-kit).\r\n",
+ "config": {
+  "browser-kit": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@mcp-browser-kit/server@latest"
+   ],
+   "env": {}
+  }
+ }
+}

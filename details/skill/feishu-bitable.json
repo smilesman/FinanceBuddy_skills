@@ -1,0 +1,12 @@
+{
+ "id": "feishu-bitable",
+ "kind": "skill",
+ "name": "feishu-bitable",
+ "fingerprint_md5": "29ccbfbbf9e87714db0ecd4b2f51ad2e",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# 飞书多维表格 Skill\r\n\r\n操作飞书多维表格（Bitable/Base）记录。\r\n\r\n## 功能\r\n- 列出 Base 内的表\r\n- 向表中新增记录/任务\r\n\r\n## 使用方式\r\n该技能目前主要作为库/模板使用：\r\n\r\n```javascript\r\nconst { addRecord } = require('./add_task');\r\n// addRecord(appToken, tableId, fields)\r\n```\r\n\r\n## 配置\r\n- `FEISHU_APP_ID`\r\n- `FEISHU_APP_SECRET`",
+ "config": {}
+}

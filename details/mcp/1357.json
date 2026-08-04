@@ -1,0 +1,24 @@
+{
+ "id": "1357",
+ "kind": "mcp",
+ "name": "blowback-2",
+ "fingerprint_md5": "17572b859e17c9e26ea36819f57a15e6",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 反吹\r\n\r\n> Vite MCP服务器现在出现故障\r\n>\r\n> Blowback旨在支持各种FE开发服务器，而不仅仅是Vite\r\n\r\n模型上下文协议（MCP）服务器，将FE开发服务器与Claude Desktop和Cursor等AI工具集成在一起。\r\n\r\n## 如何使用\r\n\r\n命令（克劳德代码）：\r\n\r\n```bash\r\nclaude mcp add blowback -s project -e PROJECT_ROOT=/path/to/your/project -- npx -y blowback-context\r\n```\r\n\r\n或者使用json配置：\r\n\r\n- 克劳德代码： `{PROJECT_ROOT}/.mcp.json`\r\n- 光标： `{PROJECT_ROOT}/.cursor/mcp.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"blowback\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"blowback-context\"],\r\n      \"env\": {\r\n        \"PROJECT_ROOT\": \"/path/to/your/project\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 环境变量\r\n\r\n- `PROJECT_ROOT`：项目根路径（可选，默认为当前工作目录）\r\n- `ENABLE_BASE64`：在工具响应中包含base64编码的图像（默认值：false/启用时影响令牌使用和上下文窗口）\r\n\r\n## 主要特点\r\n\r\n- 本地开发服务器与MCP服务器的集成\r\n- 通过MCP捕获和传输浏览器控制台日志\r\n- 基于检查点的日志管理\r\n- 屏幕截图和SQLite数据库管理\r\n- HMR（热模块更换）事件监测\r\n- 浏览器自动化和元件检查\r\n\r\n## 初始化提示\r\n\r\n这 `init` prompt为AI助手提供如何有效使用以下功能的指导：\r\n\r\n**光标聊天** 不支持MCP提示功能，因此此功能不可用。（建议使用Claude Code）\r\n如果需要，手动输入以下提示：\r\n\r\n> 您可以通过插入以下内容来使用检查点功能 `<meta name=\"__mcp_checkpoint\" data-id=\"\">` 创建当前状态的命名快照。\r\n> data-id属性是检查点的唯一标识符。\r\n>\r\n> 当检查点处于活动状态时，浏览器中生成的控制台日志用检查点ID标记，可以单独查询。\r\n>\r\n> 注意：在某些开发环境中，保存文件时会触发热重新加载，因此请仔细考虑元标记更改与要观察的更改之间的顺序。在进行要跟踪的更改之前，请确保设置检查点元标记。\r\n>\r\n> 您可以使用截图工具进行截图。捕获的屏幕截图存储在@.mcp_screscent/目录中。\r\n\r\n## 工具\r\n\r\n### HMR工具\r\n\r\n|工具名称|描述|\r\n|-----------|-------------|\r\n| `get-hmr-events` |检索最近的HMR事件|\r\n| `check-hmr-status` |检查HMR状态|\r\n\r\n> **备注**：HMR连接是可选的，不是必需的。浏览器启动时，HMR事件监视会自动启动。\r\n\r\n### 浏览器工具\r\n\r\n|工具名称|描述|\r\n|-----------|-------------|\r\n| `start-browser` |启动浏览器实例并导航到开发服务器。HMR监测自动启动|\r\n| `capture-screenshot` |捕获当前页面或特定元素的屏幕截图。返回屏幕截图ID和资源URI|\r\n| `get-element-properties` |检索特定元素的属性和状态信息|\r\n| `get-element-styles` |检索特定元素的样式信息|\r\n| `get-element-dimensions` |检索特定元素的维度和位置信息|\r\n| `monitor-network` |在指定的持续时间内监视浏览器中的网络请求|\r\n| `get-element-html` |检索特定元素及其子元素的HTML内容|\r\n| `get-console-logs` |使用可选筛选从浏览器会话中检索控制台日志|\r\n| `execute-browser-commands` |安全执行预定义的浏览器命令|\r\n\r\n### 帮助工具\r\n\r\n|工具名称|描述|\r\n|-----------|-------------|\r\n| `how-to-use` |提供有关如何使用服务器特定功能的说明|\r\n\r\n## 资源\r\n\r\n### 截图\r\n\r\n用于查询所有捕获的屏幕截图的资源。您可以查询由捕获的屏幕截图参考ID `capture-screenshot` 使用各种标准的工具。\r\n\r\n与参考ID对应的图像在 `{PROJECT_ROOT}/.mcp_screenshot/` 目录。\r\n\r\n- URI： `screenshot://`\r\n- 返回所有屏幕截图的列表\r\n\r\n### 按url截图\r\n\r\n基于URL路径查询特定屏幕截图的资源。\r\n\r\n> **备注**：从1.0版本开始，默认情况下禁用通过资源的Blob响应，而是返回文件引用信息\r\n\r\n- URI模板： `screenshot://{+path}`\r\n- 例子： `screenshot://localhost:5173/about`\r\n- 使用没有协议的URL路径（http://，https://）\r\n\r\n## 数据存储结构\r\n\r\n### 屏幕截图存储\r\n\r\n- 屏幕截图：存储在 `{PROJECT_ROOT}/.mcp_screenshot/` 目录\r\n- 元数据：在SQLite数据库的临时目录中管理\r\n- 建议添加 `.mcp_screenshot/` 目录到 `.gitignore`\r\n\r\n### 日志管理系统\r\n\r\n- 捕获浏览器控制台日志并将其保存到文件中以供查询\r\n- 检查点日志仅在检查点处于活动状态时保存\r\n\r\n## 检查点系统\r\n\r\n### 检查点如何工作\r\n\r\n- 检查点用于管理特定版本的快照、日志、屏幕截图等\r\n- 当 `<meta name=\"__mcp_checkpoint\" data-id=\"\">` 插入 `head`，使用数据id属性作为标识符单独记录数据\r\n\r\n## 架构和数据流\r\n\r\n### 核心组件\r\n\r\n1. **MCP服务器**：使用模型上下文协议SDK向AI工具公开工具和资源的中央模块。\r\n\r\n1. **浏览器自动化**：使用Playwright控制Chrome进行视觉检查、屏幕截图捕获和DOM操作。\r\n\r\n1. **检查点系统**：维护浏览器状态的快照，以便进行比较和测试。\r\n\r\n1. **SQLite数据库**：高效管理屏幕截图元数据，并支持基于URL的快速查询。\r\n\r\n### 数据源和状态管理\r\n\r\n服务器维护着几个重要的数据存储：\r\n\r\n- **HMR事件记录**：从开发服务器跟踪最近的HMR事件（更新、错误）。\r\n- **控制台消息日志**：捕获浏览器控制台输出以进行调试。\r\n- **检查点存储**：存储浏览器状态的命名快照，包括DOM快照。\r\n- **屏幕截图存储**：将图像保存在项目目录中，并使用SQLite管理元数据。\r\n\r\n### 通信流\r\n\r\n1. **MCP客户端→ 开发服务器**:\r\n\r\n   - MCP客户端更改源代码，开发服务器检测到更改\r\n   - 开发服务器自动更新浏览器或发出HMR事件\r\n\r\n1. **Web浏览器→ MCP服务器**:\r\n\r\n   - HMR事件和控制台日志通过Playwright捕获\r\n   - MCP服务器查询浏览器的当前状态或捕获屏幕截图\r\n\r\n1. **MCP服务器→ MCP客户端**:\r\n\r\n   - 服务器将HMR事件转换为结构化响应\r\n   - 为MCP客户端提供查询HMR状态、捕获屏幕截图等工具\r\n\r\n### 状态维护\r\n\r\n服务器维护以下引用对象：\r\n\r\n- 当前浏览器和页面实例\r\n- 最近的HMR活动\r\n",
+ "config": {
+  "blowback": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "blowback-context"
+   ],
+   "env": {
+    "PROJECT_ROOT": "/path/to/your/project"
+   }
+  }
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "id": "2051",
+ "kind": "mcp",
+ "name": "stargate-bridge",
+ "fingerprint_md5": "fd608b6e87fe959e912d99969f443d29",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# 星门大桥MCP\r\n\r\n通过Stargate协议实现跨链令牌传输的MCP服务器。\r\n\r\n\r\n## 特性\r\n\r\n- **链发现**：列出所有支持的区块链及其关键细节。\r\n- **令牌发现**：跨链查找可桥接的令牌。\r\n- **报价获取**：获取包含费用、估算和交易步骤的实时过桥报价。\r\n- **自动桥接**：使用您的私钥执行自动签名和广播传输。\r\n- **MCP集成**：完全符合MCP规范，便于在Claude、Cursor或其他MCP客户端中使用。\r\n\r\n|工具|说明|关键参数|\r\n|------|-------------|----------------|\r\n| `list_chains` |在排序的Markdown表中列出支持的链。|无|\r\n| `list_bridgeable_tokens` |列出源令牌的可桥接目标。 | `src_chain_key`, `src_token` |\r\n| `get_quotes` |获取桥梁路线的详细报价。 | `src_chain_key`, `dst_chain_key`, `src_token`, `dst_token`, `src_amount`, `dst_amount_min` （可选： `src_address`, `dst_address`) |\r\n| `bridge_transfer` |执行桥接传输（使用第一个引号）。 | `src_chain_key`, `dst_chain_key`, `src_token`, `dst_token`, `src_amount`, `dst_amount_min` （可选： `dst_address`) |\r\n\r\n## 已知限制\r\n\r\n目前仅支持EVM兼容链（例如以太坊、Polygon、Arbitrum）之间的跨链桥接。像Solana这样的非EVM链计划在未来得到支持。\r\n\r\n## 快速开始\r\n\r\n### 先决条件\r\n\r\n- Python 3.10+\r\n- [紫外线](https://docs.astral.sh/uv/) 用于依赖关系管理（推荐；回退到pip）\r\n- A. `.env` 使用您的以太坊兼容私钥（例如。， `PRIVATE_KEY=0x...`). **永远不要提交此文件！**\r\n\r\n### 安装\r\n\r\n1. 克隆仓库：\r\n\r\n   ```\r\n   git clone https://github.com/kukapay/stargate-bridge-mcp.git\r\n   cd stargate-bridge-mcp\r\n   ```\r\n\r\n1. 使用uv安装依赖项：\r\n\r\n   ```\r\n   uv sync  # Or uv add requests web3 python-dotenv \"mcp[cli]\"\r\n   ```\r\n\r\n1. 安装到Claude桌面：\r\n\r\n   将服务器安装为Claude Desktop应用程序：\r\n\r\n   ```bash\r\n   uv run mcp install main.py --name \"Stargate Bridge\"\r\n   ```\r\n\r\n   配置文件作为参考：\r\n\r\n   ```json\r\n   {\r\n      \"mcpServers\": {\r\n          \"Stargate Bridge\": {\r\n              \"command\": \"uv\",\r\n              \"args\": [ \"--directory\", \"/path/to/stargate-bridge-mcp\", \"run\", \"main.py\" ],\r\n              \"env\": { \"PRIVATE_KEY\": \"your_private_key\"}\r\n          }\r\n      }\r\n   }\r\n   ```\r\n\r\n   替换 `/path/to/stargate-bridge-mcp` 使用您的实际安装路径，并替换 `your_private_key` 使用您的钱包私钥。\r\n\r\n## 使用示例\r\n\r\n这些示例模拟了像Claude Desktop这样的MCP客户端中的交互。每个都包括一个自然语言提示、工具调用和示例输出。\r\n\r\n### 1.列出支持的链\r\n\r\n**提示**：“给我看看星际之门为桥接而支撑的所有链条。”\r\n\r\n**工具调用**: `list_chains()`\r\n\r\n**示例输出** （Markdown表，按chainKey排序）：\r\n\r\n```\r\n| chainKey | Name | Chain Type | Chain ID | Native Symbol |\r\n|----------|------|------------|----------|---------------|\r\n| arbitrum | Arbitrum One | evm | 42161 | ETH |\r\n| avalanche | Avalanche C-Chain | evm | 43114 | AVAX |\r\n| base | Base | evm | 8453 | ETH |\r\n| bnbchain | BNB Smart Chain | evm | 56 | BNB |\r\n| ethereum | Ethereum | evm | 1 | ETH |\r\n| ... (additional chains)\r\n```\r\n\r\n### 2.列出可桥接令牌\r\n\r\n**提示**：“我可以用什么代币将USDC从以太坊连接到其他链？”\r\n\r\n**工具调用**: `list_bridgeable_tokens(\"ethereum\", \"0xA0b86a33E641b9E649bEe6b2D5D7b5b4D8f3a0a\")` （以太坊上的美元）\r\n\r\n**示例输出** （Markdown表，按链键排序）：\r\n\r\n```\r\n| Chain Key | Symbol | Address |\r\n|-----------|--------|---------|\r\n| arbitrum | USDC | 0xA0b86a33E641b9E649bEe6b2D5D7b5b4D8f3a0a |\r\n| avalanche | USDC | 0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E |\r\n| polygon | USDC | 0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174 |\r\n| ... (additional destinations)\r\n```\r\n\r\n### 3.获取桥梁报价\r\n\r\n**提示**：“获得从以太坊到Polygon桥接10 USDC的报价，滑点为1%。”\r\n\r\n**工具调用**: `get_quotes(\"ethereum\", \"polygon\", \"0xA0b86a33E641b9E649bEe6b2D5D7b5b4D8f3a0a\", \"0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174\", 10.0, 9.9)`\r\n\r\n**示例输出** （简明Markdown）：\r\n\r\n```\r\n# Stargate Bridge Quotes\r\n\r\n**Src**: ETHEREUM USDC 10.0 → **Dst**: POLYGON USDC\r\n\r\n## Quote 1 (stargate/v2/taxi)\r\n- **Expected Receive**: 9.98 USDC\r\n- **Min Receive**: 9.90 USDC\r\n- **Est. Time**: 180s\r\n- **Fees**:\r\n  - 0.000050 ETH on ethereum (message)\r\n\r\n### Steps\r\n  - **Step 1 (bridge)**: To 0x77b204... | Value: 0.0100 ETH | Data: 0xc7c7f5b3...\r\n\r\n**Note**: Use `bridge_transfer` to execute (uses first quote).\r\n```\r\n\r\n### 4.执行桥接转移\r\n\r\n**提示**：“执行从以太坊到Polygon的10美元桥梁。”\r\n\r\n**工具调用**: `bridge_transfer(\"ethereum\", \"polygon\", \"0xA0b86a33E641b9E649bEe6b2D5D7b5b4D8f3a0a\", \"0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174\", 10.0, 9.9)`\r\n\r\n**示例输出** （关于成功；Markdown）：\r\n\r\n```\r\n## Bridge Transfer Successful\r\n\r\nTransaction hashes:\r\n- Step 1: 0x1234abcd...efgh5678\r\n```\r\n\r\n**备注**：如果失败（例如，气体不足），则返回类似以下的错误 `# Error\\nStep 1 failed (reverted).`\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 了解详情。\r\n",
+ "config": {
+  "stargate-bridge": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/stargate-bridge-mcp",
+    "run",
+    "main.py"
+   ],
+   "env": {
+    "PRIVATE_KEY": "your_private_key"
+   }
+  }
+ }
+}

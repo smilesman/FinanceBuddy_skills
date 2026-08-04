@@ -1,0 +1,24 @@
+{
+ "id": "450",
+ "kind": "mcp",
+ "name": "sport-suggest",
+ "fingerprint_md5": "00728cac71f49ee66881a4e0a0417832",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# 运动建议MCP\r\n\r\n### 安装\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/yourusername/sport-suggest-mcp.git\r\ncd sport-suggest-mcp\r\n\r\n# Install with uv\r\nuv pip install -e .\r\n```\r\n\r\n### 配置\r\n\r\n添加到您的Claude Desktop配置文件中：\r\n\r\n**macOS：** `~/Library/Application Support/Claude/claude_desktop_config.json`\\\r\n**窗户：** `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sport-suggest\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/ABSOLUTE/PATH/TO/sport-suggest-mcp\",\r\n        \"run\",\r\n        \"sport-suggest-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**重要提示：** 替换 `/ABSOLUTE/PATH/TO/sport-suggest-mcp` 使用项目目录的实际绝对路径。\r\n\r\n重新启动Claude Desktop，您就可以开始发现游戏了！\r\n",
+ "config": {
+  "sport-suggest": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/ABSOLUTE/PATH/TO/sport-suggest-mcp",
+    "run",
+    "sport-suggest-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

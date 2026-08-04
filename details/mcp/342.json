@@ -1,0 +1,21 @@
+{
+ "id": "342",
+ "kind": "mcp",
+ "name": "officemcp",
+ "fingerprint_md5": "eabf288d1fc04363ab7f6345159bf4f8",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# OfficeMCP v1.0.5\r\n\r\n>通过人工智能模型控制微软应用程序的最直观、最自由的方式。\r\n\r\n[](https://pypi.org/project/fastmcp)\r\n\r\n\r\n# 办公室MCP\r\n\r\nOfficeMCP服务器专为人工智能而设计，通过Windows操作系统中的COM接口自动化Microsoft Office应用程序（Word、Excel、PowerPoint、Access、OneNote、Visio、Project、WPS.Word、WPS.PowerPoint、WPS.Excel等）。无法在Linux/MacOS上运行。\r\n\r\n# 警告\r\n\r\n请记住，OfficeMCP不限制python的使用。特别是有一个工具RunPython（…）来执行由Ai模型创建的python代码。但这也是OfficeMCP最精彩的部分。我们不能保证你的人工智能模型不会对你的电脑造成不良影响。我们不承担任何责任。\r\n\r\n# 系统要求\r\n\r\n1. windows系统\r\n\r\n1. 已安装python 3.1或更高版本\r\n\r\n1. 紫外线已安装\r\n   打开一个shell窗口并运行命令\r\n\r\n   > pip安装uv\r\n\r\n## 如何安装OfficeMCP\r\n\r\n安装OfficeMCP有两种方式或两种模式（它们也可以同时使用）：\r\n\r\n### 1.使用OfficeMCP作为stdio服务器：\r\n\r\n- 一个OfficeMCP服务器用于一个mcp客户端模式\r\n- 将以下设置放入vscode的MCP.json文件或其他AI IDE的适当位置：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"OfficeMCP\": {\r\n            \"type\": \"stdio\",\r\n            \"command\": \"uvx\",\r\n            \"args\": [\r\n                \"officemcp\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n### 2.使用OfficeMCP作为sse服务器：\r\n\r\n- 一个用于多mcp客户端模式的OfficeMCP服务器\r\n- 您可以根据需要更改端口和主机\r\n- 这是使用OfficeMCP服务器的推荐方式。\r\n\r\n#### 步骤1：\r\n\r\n**在shell或power shell中运行一个命令：**\r\n\r\n> uvx办公室mcp sse\r\n\r\nMcp服务器url将是：“http://127.0.0.1:8888/sse“或”http://127.0.0.1:8888/sse\"\r\n默认工作文件夹为D:@officemcp\r\n\r\n##### 或者类似下面的东西\r\n\r\n> uvx officemcp sse--端口7777--主机127.0.0.8--文件夹D:\\\\myfolder\r\n\r\n“url”将是：http://127.0.0.8:7777/sse\"\r\n\r\n#### 步骤2：\r\n\r\n**将以下设置放入vscode的MCP.json文件或其他AI IDE的适当位置：**\r\n\r\n```json\r\n{\r\n    \"servers\": {\r\n        \"OfficeMCP\": {\r\n            \"url\": \"http://127.0.0.1:8888/sse\"\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n#### 或\r\n\r\n```json\r\n{\r\n    \"servers\": {\r\n        \"OfficeMCP\": {\r\n            \"url\": \"http://{your_host}:{your_port}/sse\"\r\n        }\r\n    }\r\n}\r\n\r\n```\r\n\r\n## 用法\r\n\r\n在AI IDE上，您可以要求AI模型通过OfficeMCP服务器控制Office应用程序：\r\n\r\n- 您要求AI模型打开一个新的Office应用程序。\r\n  AI模型将向OfficeMCP服务器发送请求，OfficeMCP服务器将打开一个新的Office应用程序。\r\n\r\n- 你让AI模型在当前的Office应用程序中做任何你想做的事情。\r\n  AI模型将分析您的请求，并调用OfficeMCP服务器的工具来完成您的请求。\r\n\r\n## 工具参考\r\n\r\n工具：\r\n\r\n- AvailableApps（）：检查您的计算机上是否安装了Microsoft Office应用程序。\r\n\r\n- RunningApps（）：获取当前正在运行的Office应用程序的列表。\r\n\r\n- IsAppAvailable（…）：检查是否安装了特定的Office应用程序。\r\n\r\n- 启动（…）：启动新的Office应用程序并设置其可见性。\r\n\r\n- Visible（…）：将指定Office应用程序的可见性设置为True或False。\r\n\r\n- 退出（…）：退出指定的Office应用程序。\r\n\r\n- 演示（）：运行OfficeMCP自动化功能的演示。\r\n\r\n- 说话（…）：说出你传入的字符串。\r\n\r\n- 嘟嘟（…）：播放嘟嘟声。\r\n\r\n- DefaultFolder（…）：返回OfficeMCP根工作文件夹默认值为（“D:\\\\OfficeMCP”）\r\n\r\n- IsFileExists（sub_path）：检查OfficeMCP根文件夹中是否存在文件。\r\n\r\n- DownloadImage（…）：从给定的URL下载图像并将其保存到指定的路径。\r\n\r\n- RunPython（代码、数据）：在OfficeMCP服务器上下文中运行python代码。\r\n\r\n  - 这是OfficeMCP服务器中最强大的工具。AI可以使用此工具执行服务器支持的任何操作，包括自动化Office应用程序。\r\n  - python代码中可以使用一个对象“Officer”，例如。 `Officer.Excel` 持有当前的Excel com应用程序，更多的是Officer。话，警官。Powerpoint，办公室。Visio，警官。进入，警官。OneNote，警官。Visio，警官。项目。办公室。WPS单词的Kwps，Office。Ket for WPS excellent，Office。WPS powerpoint的Kwpp。\r\n  - 有一个对象“output”作为RunPython（…）返回，可以在python代码中使用，将自己的返回结果放入输出中，如output=“run python sccessed”，然后RunPython将“run python scccessed”返回给AI模型。\r\n  - 你可以使用Officer。Visio创建新的Visio文档，然后使用Officer。Visio。ActivePage获取活动页面，并使用Officer。Visio。活动页面。DrawRectangle（…）在页面上绘制矩形。\r\n  - 你可以使用Officer。Excel创建一个新的Excel文档，然后使用Officer。擅长。ActiveSheet获取活动表，并使用Officer。擅长。活动表。细胞（…）获取细胞，并使用警官。擅长。活动表。细胞（…）。值=“hello”以设置单元格值。\r\n  - 您可以使用RunPython工具运行代码来控制它们。\r\n\r\n- 未来将添加更多工具。\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/officemcp/officemcp\r\n```\r\n",
+ "config": {
+  "officemcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "officemcp"
+   ],
+   "env": {}
+  }
+ }
+}

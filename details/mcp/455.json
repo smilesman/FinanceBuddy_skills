@@ -1,0 +1,28 @@
+{
+ "id": "455",
+ "kind": "mcp",
+ "name": "spotify-13",
+ "fingerprint_md5": "a6c244a9aca38ea14b9d7a2398308ddf",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 🎵 SpotiMCP（注：SpotiMCP可能是一个特定应用或服务的名称，在中文中直接保留原名，若需具体翻译需更多上下文信息）\r\n\r\n[](https://python.org)\r\n[](https://developer.spotify.com)\r\n[](https://modelcontextprotocol.io)\r\n[](https://claude.ai)\r\n[](https://oauth.net/2/)\r\n[](https://github.com/astral-sh/uv)\r\n[](https://json.org)\r\n[](https://restfulapi.net)\r\n[](https://12factor.net)\r\n\r\n\r\n### 使用模型上下文协议（MCP）实现AI驱动的Spotify集成\r\n\r\n> 连接Claude Desktop与Spotify Web API的MCP服务器\r\n\r\n## 🎯 它的作用\r\n\r\n这个项目在Claude Desktop和Spotify之间搭建了一座桥梁，使您能够通过自然语言指令来控制音乐。\r\n\r\n### 特点/特性\r\n\r\n- **搜索** 对于歌曲、专辑、艺术家和播放列表\r\n- **获取信息** 关于音乐项目\r\n- **控制播放** (播放，暂停，跳过) - *需要Spotify高级会员*\r\n- **管理播放列表** （创建，添加/删除轨道，修改细节）\r\n- **排队管理** - *需要Spotify高级会员*\r\n\r\n## 🚀 快速入门\r\n\r\n### 先决条件\r\n\r\n- Python 3.12及以上版本\r\n- 紫外线（UV）包管理器\r\n- Spotify高级会员账户（用于播放功能）\r\n- Claude Desktop（可译为“Claude桌面版”或根据具体语境简化为“Claude桌面”）\r\n\r\n### 设置\r\n\r\n1. **获取Spotify API凭据** 来自 [Spotify 开发者仪表板](https://developer.spotify.com/dashboard)\r\n\r\n   - 创建一个带有重定向URI的应用程序： `http://127.0.0.1:8080/callback`\r\n\r\n1. **安装依赖项**\r\n\r\n   ```bash\r\n   uv sync\r\n   ```\r\n\r\n1. **设置环境变量**\r\n\r\n   ```bash\r\n   export SPOTIFY_CLIENT_ID=\"your_client_id\"\r\n   export SPOTIFY_CLIENT_SECRET=\"your_client_secret\"\r\n   export SPOTIFY_REDIRECT_URI=\"http://127.0.0.1:8080/callback\"\r\n   ```\r\n\r\n1. **运行MCP服务器**\r\n\r\n   ```bash\r\n   uv run spotify-mcp\r\n   ```\r\n\r\n1. **配置Claude桌面版**\r\n\r\n   在你的Claude桌面配置中添加：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"spotify\": {\r\n         \"command\": \"uv\",\r\n         \"args\": [\r\n           \"--directory\",\r\n           \"/path/to/spotify-mcp\",\r\n           \"run\",\r\n           \"spotify-mcp\"\r\n         ],\r\n         \"env\": {\r\n           \"SPOTIFY_CLIENT_ID\": \"YOUR_CLIENT_ID\",\r\n           \"SPOTIFY_CLIENT_SECRET\": \"YOUR_CLIENT_SECRET\",\r\n           \"SPOTIFY_REDIRECT_URI\": \"http://127.0.0.1:8080/callback\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n## 💬 使用示例\r\n\r\n配置完成后，您可以在Claude桌面版中使用自然语言命令：\r\n\r\n```\r\n\"Search for songs by The Beatles\"\r\n\"Play 'Here Comes the Sun'\"\r\n\"Create a playlist called 'My Favorites'\"\r\n\"Show me my playlists\"\r\n\"Add this song to my queue\"\r\n```\r\n\r\n## 🛠 技术细节\r\n\r\n### 建筑\r\n\r\n```\r\nClaude Desktop → MCP Protocol → Python Server → Spotify Web API\r\n```\r\n\r\n### 关键组件\r\n\r\n- **`server.py`** - 带有工具定义的MCP服务器\r\n- **`spotify_api.py`** 带OAuth处理的Spotify API客户端\r\n- **`utils.py`** - 数据解析和验证工具\r\n\r\n### 可用工具\r\n\r\n- **搜索** - 查找曲目、专辑、艺术家、播放列表\r\n- **获取信息** - 获取音乐项目的详细信息\r\n- **回放** - 控制音乐播放（需订阅高级服务）\r\n- **队列** - 管理播放队列（需订阅高级服务）\r\n- **播放列表** - 创建和管理播放列表\r\n\r\n## 🔧 开发\r\n\r\n### 项目结构\r\n\r\n```\r\nsrc/spotify_mcp/\r\n├── __init__.py      # Package entry point\r\n├── server.py        # MCP server implementation\r\n├── spotify_api.py   # Spotify API client\r\n└── utils.py         # Utility functions\r\n```\r\n\r\n### 依赖项\r\n\r\n- `mcp==1.3.0` - 模型上下文协议\r\n- `spotipy==2.24.0` Spotify Web API 客户端\r\n- `python-dotenv>=1.0.1` - 环境变量加载\r\n\r\n## 🐛 故障排除\r\n\r\n### 常见问题\r\n\r\n**认证失败：**\r\n\r\n- 检查您的Spotify应用重定向URI是否完全匹配\r\n- 确保环境变量设置正确\r\n- 尝试重启Claude桌面版\r\n\r\n**无活动设备：**\r\n\r\n- 确保Spotify已打开且正在播放\r\n- 检查您是否拥有Spotify高级会员（播放所需）\r\n\r\n**MCP连接问题：**\r\n\r\n- 验证服务器是否正在运行： `uv run spotify-mcp`\r\n- 检查 Claude Desktop 的日志以查找连接错误\r\n\r\n### 调试模式\r\n\r\n使用MCP检查器进行调试：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv --directory . run spotify-mcp\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n*人工智能与音乐控制之间的简洁、流畅集成*\r\n",
+ "config": {
+  "spotify": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/spotify-mcp",
+    "run",
+    "spotify-mcp"
+   ],
+   "env": {
+    "SPOTIFY_CLIENT_ID": "YOUR_CLIENT_ID",
+    "SPOTIFY_CLIENT_SECRET": "YOUR_CLIENT_SECRET",
+    "SPOTIFY_REDIRECT_URI": "http://127.0.0.1:8080/callback"
+   }
+  }
+ }
+}

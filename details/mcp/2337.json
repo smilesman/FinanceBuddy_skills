@@ -1,0 +1,26 @@
+{
+ "id": "2337",
+ "kind": "mcp",
+ "name": "tripadvisor",
+ "fingerprint_md5": "9c55e40f6a36c175a2a7b39160fecedf",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# Tripadvisor MCP服务器\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io) （MCP）服务器，用于Tripadvisor Content API。\r\n\r\n这通过标准化的MCP界面提供了对Tripadvisor位置数据、评论和照片的访问，允许AI助手搜索旅行目的地和体验。\r\n\r\n## 特性\r\n\r\n- \\[x\\] 在Tripadvisor上搜索地点（酒店、餐厅、景点）\r\n\r\n- \\[x\\] 获取有关特定位置的详细信息\r\n\r\n- \\[x\\] 检索地点的评论和照片\r\n\r\n- \\[x\\] 根据坐标搜索附近的位置\r\n\r\n- \\[x\\] API密钥验证\r\n\r\n- \\[x\\] Docker容器化支持\r\n\r\n- \\[x\\] 为AI助手提供交互式工具\r\n\r\n工具列表是可配置的，因此您可以选择要向MCP客户端提供哪些工具。\r\n\r\n## 用法\r\n\r\n1. 从获取Tripadvisor Content API密钥 [Tripadvisor开发者门户](https://developer.tripadvisor.com/).\r\n\r\n1. 通过 `.env` 文件或系统环境变量：\r\n\r\n```env\r\n# Required: Tripadvisor Content API configuration\r\nTRIPADVISOR_API_KEY=your_api_key_here\r\n```\r\n\r\n3. 将服务器配置添加到客户端配置文件中。例如，对于Claude Desktop：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tripadvisor\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"\",\r\n        \"run\",\r\n        \"src/tripadvisor_mcp/main.py\"\r\n      ],\r\n      \"env\": {\r\n        \"TRIPADVISOR_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> 注意：如果你看到 `Error: spawn uv ENOENT` 在Claude Desktop中，您可能需要指定以下内容的完整路径 `uv` 或设置环境变量 `NO_UV=1` 在配置中。\r\n\r\n## Docker使用\r\n\r\n该项目包括Docker支持，便于部署和隔离。\r\n\r\n### 构建Docker镜像\r\n\r\n使用以下命令构建Docker镜像：\r\n\r\n```bash\r\ndocker build -t tripadvisor-mcp-server .\r\n```\r\n\r\n### 使用Docker运行\r\n\r\n您可以通过多种方式使用Docker运行服务器：\r\n\r\n#### 直接使用docker运行：\r\n\r\n```bash\r\ndocker run -it --rm \\\r\n  -e TRIPADVISOR_API_KEY=your_api_key_here \\\r\n  tripadvisor-mcp-server\r\n```\r\n\r\n#### 使用docker编写：\r\n\r\n创建一个 `.env` 使用Tripadvisor API密钥文件，然后运行：\r\n\r\n```bash\r\ndocker-compose up\r\n```\r\n\r\n### 在Claude Desktop中运行Docker\r\n\r\n要将容器化服务器与Claude Desktop一起使用，请更新配置以使用Docker和环境变量：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tripadvisor\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"-e\", \"TRIPADVISOR_API_KEY\",\r\n        \"tripadvisor-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"TRIPADVISOR_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n此配置通过使用以下命令将环境变量从Claude Desktop传递到Docker容器 `-e` 仅使用变量名标记，并在 `env` 对象。\r\n\r\n## 发展\r\n\r\n欢迎投稿！如果您有任何建议或改进，请打开问题或提交拉取请求。\r\n\r\n此项目使用 [`uv`](https://github.com/astral-sh/uv) 管理依赖关系。安装 `uv` 按照您平台的说明进行操作：\r\n\r\n```bash\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n然后，您可以创建一个虚拟环境，并使用以下命令安装依赖项：\r\n\r\n```bash\r\nuv venv\r\nsource .venv/bin/activate  # On Unix/macOS\r\n.venv\\Scripts\\activate     # On Windows\r\nuv pip install -e .\r\n```\r\n\r\n## 项目结构\r\n\r\n该项目由 `src` 目录结构：\r\n\r\n```\r\ntripadvisor-mcp/\r\n├── src/\r\n│   └── tripadvisor_mcp/\r\n│       ├── __init__.py      # Package initialization\r\n│       ├── server.py        # MCP server implementation\r\n│       ├── main.py          # Main application logic\r\n├── Dockerfile               # Docker configuration\r\n├── docker-compose.yml       # Docker Compose configuration\r\n├── .dockerignore            # Docker ignore file\r\n├── pyproject.toml           # Project configuration\r\n└── README.md                # This file\r\n```\r\n\r\n### 测试\r\n\r\n该项目包括一个测试套件，可确保功能并帮助防止回归。\r\n\r\n使用pytest运行测试：\r\n\r\n```bash\r\n# Install development dependencies\r\nuv pip install -e \".[dev]\"\r\n\r\n# Run the tests\r\npytest\r\n\r\n# Run with coverage report\r\npytest --cov=src --cov-report=term-missing\r\n```\r\n\r\n### 工具\r\n\r\n|工具|类别|描述|\r\n| --- | --- | --- |\r\n| `search_locations` |搜索|按查询文本、类别和其他筛选器搜索位置|\r\n| `search_nearby_locations` |搜索|查找特定坐标附近的位置|\r\n| `get_location_details` |检索|获取有关位置的详细信息|\r\n| `get_location_reviews` |检索|检索某个地点的评论|\r\n| `get_location_photos` |检索|获取某个位置的照片|\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n______________________________________________________________________\r\n",
+ "config": {
+  "tripadvisor": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "<full path to tripadvisor-mcp directory>",
+    "run",
+    "src/tripadvisor_mcp/main.py"
+   ],
+   "env": {
+    "TRIPADVISOR_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

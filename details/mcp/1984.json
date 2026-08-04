@@ -1,0 +1,24 @@
+{
+ "id": "1984",
+ "kind": "mcp",
+ "name": "mcp-akshare",
+ "fingerprint_md5": "86b55b54793dbc200303866afc6c2ca7",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP Akshare Stock Server\r\n\r\n基于 FastMCP 的中国股票数据分析 MCP 服务器，提供完整的股票数据获取和技术分析功能。\r\n\r\n## 功能特性\r\n\r\n- 🔄 **实时股票数据** - 获取 A 股实时价格和交易信息\r\n- 📊 **历史数据** - 查询股票历史价格和技术指标\r\n- 📈 **支撑压力位** - 自动计算支撑位和压力位\r\n- 🏛️ **市场指数** - 获取主要市场指数数据\r\n- 🔍 **股票基本信息** - 查询股票基本信息和行业分类\r\n\r\n## 快速开始\r\n\r\n### 环境要求\r\n\r\n- uv (推荐)\r\n\r\n### 安装和运行\r\n\r\n```bash\r\ngit clone https://github.com/Alucardzh/mcp-stock-server.git\r\ncd mcp-stock-server\r\nuv sync\r\nuv run server.py\r\n```\r\n\r\n### 配置 CherryStudio\r\n\r\n在 CherryStudio 中配置 MCP 服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-akshare\": {\r\n      \"isActive\": true,\r\n      \"name\": \"mcp-akshare\",\r\n      \"type\": \"stdio\",\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"/path/to/your/git_dir\", \"run\", \"server.py\"],\r\n      \"installSource\": \"unknown\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具列表\r\n\r\n### `get_stock_symbol_by_name`\r\n\r\n通过股票名称获取股票代码\r\n\r\n- **name**: 股票名称，类似 '中国平安' or '平安'\r\n\r\n### `get_stock_history`\r\n\r\n获取股票历史数据\r\n\r\n- **symbol**: 股票代码 (6 位数字，如 \"000001\")\r\n- **start_date**: 开始日期 (YYYY-MM-DD，可选)\r\n- **end_date**: 结束日期 (YYYY-MM-DD，可选)\r\n- **period**: 数据周期 (\"daily\", \"weekly\", \"monthly\")\r\n- **adjust**: 价格调整 (\"qfq\" 前复权, \"hfq\" 后复权, \"none\" 不复权)\r\n\r\n### `get_stock_realtime`\r\n\r\n获取实时股票数据\r\n\r\n- **symbol**: 股票代码 (6 位数字)\r\n\r\n### `get_stock_basic`\r\n\r\n获取股票基本信息\r\n\r\n- **symbol**: 股票代码 (6 位数字)\r\n\r\n### `calculate_support_resistance`\r\n\r\n计算支撑位和压力位\r\n\r\n- **symbol**: 股票代码 (6 位数字)\r\n- **n_levels**: 支撑/压力位级别数量 (1-10，默认 5)\r\n- **lookback_period**: 分析周期天数 (30-365，默认 60)\r\n\r\n### `get_market_index`\r\n\r\n获取市场指数数据\r\n\r\n- **index_code**: 指数代码 (默认 \"000001\" 上证指数)\r\n\r\n## 使用示例\r\n\r\n```python\r\n# 通过 MCP 客户端调用\r\nresult = await client.call_tool(\"get_stock_realtime\", {\r\n    \"symbol\": \"000001\"\r\n})\r\n```\r\n\r\n## 开发\r\n\r\n### 项目结构\r\n\r\n```txt\r\nmcp-stock-server/\r\n├── server.py     # 主服务器文件\r\n├── pyproject.toml         # 项目配置\r\n└── README.md             # 项目文档\r\n```\r\n\r\n### 依赖\r\n\r\n- fastmcp: MCP 服务器框架\r\n- akshare: 股票数据源\r\n- pandas: 数据处理\r\n- numpy: 数值计算\r\n\r\n## 许可证\r\n\r\nMIT License\r\n",
+ "config": {
+  "mcp-akshare": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/your/git_dir",
+    "run",
+    "server.py"
+   ],
+   "env": {}
+  }
+ }
+}

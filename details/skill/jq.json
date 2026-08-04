@@ -1,0 +1,12 @@
+{
+ "id": "jq",
+ "kind": "skill",
+ "name": "jq",
+ "fingerprint_md5": "bfc3bb3fb4fe731a56e7b6cefe3039e7",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# jq\r\n\r\n用于提取、过滤和转换JSON的命令行JSON处理器。\r\n\r\n## 安装\r\n\r\n**macOS / Linux (Homebrew):**\r\n```bash\r\nbrew install jq\r\n```\r\n\r\n**所有平台:** 有关包、二进制文件和构建说明，请参阅 [jqlang.org/download](https://jqlang.org/download/)。\r\n\r\n## 用法\r\n\r\n```bash\r\njq '[filter]' [file.json]\r\ncat file.json | jq '[filter]'\r\n```\r\n\r\n## 快速参考\r\n\r\n```bash\r\n.key                    # 获取键\r\n.a.b.c                  # 嵌套访问\r\n.[0]                    # 第一个元素\r\n.[]                     # 迭代数组\r\n.[] | select(.x > 5)    # 过滤\r\n{a: .x, b: .y}          # 重塑\r\n. + {new: \"val\"}        # 添加字段\r\ndel(.key)               # 删除字段\r\nlength                  # 计数\r\n[.[] | .x] | add        # 求和\r\nkeys                    # 列出键\r\nunique                  # 数组去重\r\ngroup_by(.x)            # 分组\r\n```\r\n\r\n## 标志\r\n\r\n`-r` 原始输出（无引号） · `-c` 紧凑 · `-s` 读取为数组 · `-S` 按键排序\r\n\r\n## 示例\r\n\r\n```bash\r\njq '.users[].email' data.json          # 提取电子邮件\r\njq -r '.name // \"default\"' data.json   # 带默认值\r\njq '.[] | select(.active)' data.json   # 过滤活跃项\r\njq -s 'add' *.json                     # 合并文件\r\njq '.' file.json                       # 美化打印\r\n```",
+ "config": {}
+}

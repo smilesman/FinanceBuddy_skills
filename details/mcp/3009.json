@@ -1,0 +1,24 @@
+{
+ "id": "3009",
+ "kind": "mcp",
+ "name": "agrobr",
+ "fingerprint_md5": "b89969ac391d082c86e843581730c142",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# agrobr mcp\r\n\r\n**MCP服务器，使LLM能够访问实时巴西农业数据** --来自agrobr的10个公共来源的价格、作物估计、气候、森林砍伐等。\r\n\r\n______________________________________________________________________\r\n\r\n## 安装\r\n\r\n```bash\r\npip install agrobr-mcp\r\n```\r\n\r\n## 设置\r\n\r\n### 克劳德桌面版\r\n\r\n添加 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agrobr\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"-m\", \"agrobr_mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n设置>MCP服务器>添加：\r\n\r\n```json\r\n{\r\n  \"agrobr\": {\r\n    \"command\": \"python\",\r\n    \"args\": [\"-m\", \"agrobr_mcp\"]\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add agrobr python -- -m agrobr_mcp\r\n```\r\n\r\n> 如果由于以下原因导致上述失败 `-m` 标志解析，创建包装器脚本：\r\n>\r\n> **Linux/macOS：** `echo 'python -m agrobr_mcp' > run.sh && chmod +x run.sh && claude mcp add agrobr ./run.sh`\r\n>\r\n> **窗户：** `echo python -m agrobr_mcp > run.bat && claude mcp add agrobr run.bat`\r\n\r\n### 码头工人\r\n\r\n```bash\r\ndocker build -t agrobr-mcp .\r\ndocker run --rm -i agrobr-mcp\r\n```\r\n\r\n添加 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agrobr\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"--rm\", \"-i\", \"agrobr-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 工具\r\n\r\n10种开箱即用的工具：\r\n\r\n### 价格与市场\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `preco_diario` |农产品每日现货价格（CEPEA/ESALQ）|\r\n| `futuros_b3` |B3交易所农产品期货日结算价格|\r\n\r\n### 生产和作物\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `estimativa_safra` |各州当前作物季节估算（国家农业委员会/巴西地理统计局）|\r\n| `producao_anual` |各州历史年产量（IBGE PAM）|\r\n| `balanco` |供需平衡----库存、消费、出口（国家统计委员会）|\r\n| `progresso_safra` |按州分列的每周种植和收获进度（CONAB）|\r\n\r\n### 气候与环境\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `clima` |各州气候数据——温度、降水、辐射（美国国家航空航天局电力）|\r\n| `desmatamento` |森林砍伐率和生物群落实时警报（INPE）|\r\n\r\n### 元\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `listar_produtos` |列出每个工具的有效产品|\r\n| `health_check` |检查所有数据源的状态|\r\n\r\n______________________________________________________________________\r\n\r\n## 查询示例\r\n\r\n```\r\n\"Qual o preço da soja nos últimos 5 dias?\"\r\n\"Estimativa de safra de milho por estado\"\r\n\"Progresso da colheita de soja\"\r\n\"Dados de desmatamento na Amazônia\"\r\n\"Quais produtos estão disponíveis?\"\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 运作原理\r\n\r\n```\r\nUser (natural language)\r\n    │\r\nMCP Client (Claude Desktop / Cursor / Claude Code)\r\n    │\r\nagrobr-mcp (this server — thin layer, text formatting)\r\n    │\r\nagrobr library (data collection, parsing, caching)\r\n    │\r\n19 public APIs (CEPEA, CONAB, IBGE, INPE, B3, NASA POWER…)\r\n```\r\n\r\nagrobr mcp是一种薄包装。所有数据逻辑都存在于 [农业](https://github.com/bruno-portfolio/agrobr) 图书馆。\r\n\r\n______________________________________________________________________\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/bruno-portfolio/agrobr-mcp.git\r\ncd agrobr-mcp\r\npip install -e \".[dev]\"\r\n\r\n# Run tests\r\npytest tests/ -m \"not integration\" -v\r\n\r\n# Lint\r\nruff check src/ tests/\r\nruff format src/ tests/\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n______________________________________________________________________\r\n\r\n## 葡萄牙语\r\n\r\n### 什么是agrobr-mcp？\r\n\r\nMCP服务器，为法学硕士提供实时访问巴西农业数据。价格、收成、气候、砍伐森林等，都来自CEPEA、CONAB、IBGE、INPE和B3等公共来源。\r\n\r\n### 安装\r\n\r\n```bash\r\npip install agrobr-mcp\r\n```\r\n\r\n### 配置\r\n\r\n按照上述说明将 MCP（Claude Desktop、Cursor 或 Claude Code）添加到客户端。\r\n\r\n### 码头工人\r\n\r\n```bash\r\ndocker build -t agrobr-mcp .\r\ndocker run --rm -i agrobr-mcp\r\n```\r\n\r\n### 10个可用工具\r\n\r\n- **prec_diario** — 农产品现货价格（CEPEA/ESALQ）\r\n- **未来_b3** B3农业期货的每日调整\r\n- **estimativa_safra** — 当前UF产量估计（CONAB/IBGE）\r\n- **产品手册** — UF（IBGE PAM）的历史生产\r\n- **平衡** 供求平衡（CONAB）\r\n- **progress_safra** 每周播种和收获进度（CONAB）\r\n- **气候** UF（NASA POWER）气候数据\r\n- **砍伐森林** 森林砍伐率和生物群体警报（INPE）\r\n- **产品列表** — 按工具列出有效产品\r\n- **健康检查** 数据源的状态\r\n\r\n### 链接\r\n\r\n- [农业图书馆](https://github.com/bruno-portfolio/agrobr) 农业数据库\r\n- [MCP协议](https://modelcontextprotocol.io) --模型上下文协议\r\n\r\nmcp名称：io.github.bruno-portfolio/grobr\r\n",
+ "config": {
+  "agrobr": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "agrobr-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

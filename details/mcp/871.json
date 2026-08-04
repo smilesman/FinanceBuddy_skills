@@ -1,0 +1,22 @@
+{
+ "id": "871",
+ "kind": "mcp",
+ "name": "structured-argumentation",
+ "fingerprint_md5": "d59d2e6f12db7cb33f906a1064d866e0",
+ "download_count": 0,
+ "category": "翻译与语言",
+ "tags": "",
+ "version": "",
+ "readme": "# 认知增强MCP服务器\r\n\r\n一组模型上下文协议服务器，为大型语言模型提供认知增强工具。\r\n\r\n## 服务器\r\n\r\n此monorepo包含以下MCP服务器：\r\n\r\n1. **结构化论证** -形式辩证推理服务器\r\n1. **视觉推理** -用于图形思维和空间表示的服务器\r\n1. **科学方法** -用于假设检验和证据评估的服务器\r\n1. **类比推理** -结构化隐喻思维服务器\r\n1. **元认知监控** -用于知识评估和信心跟踪的服务器\r\n1. **决策框架** -结构化决策分析服务器\r\n1. **协作推理** -用于多视角问题解决的服务器\r\n1. **伦理推理** -用道德框架评估行为的服务器\r\n1. **偏差检测** -用于标记可能存在偏见的措辞的服务器\r\n1. **约束解算器** -用于验证逻辑和数字约束的服务器\r\n1. **叙事策划师** -用于生成简单故事大纲的服务器\r\n1. **目标跟踪器** -用于维护和完成目标的服务器\r\n1. **多模态合成器** -用于组合文本和图像描述的服务器\r\n\r\n## 未来潜在的服务器\r\n\r\n正在考虑以下服务器想法，以进一步扩展模型推理能力：\r\n\r\n1. **情感感知互动** -提供情绪跟踪和情绪感知反应，以改善移情沟通。\r\n1. **长时程记忆** -在会话中保持持久的上下文，以保持连续性和回忆过去的交互。\r\n\r\n## 安装\r\n\r\n每个服务器都可以单独安装：\r\n\r\n```bash\r\n# Using npm\r\nnpm install @waldzellai/structured-argumentation\r\n\r\n# Using yarn\r\nyarn add @waldzellai/structured-argumentation\r\n```\r\n\r\n## 使用Claude Desktop\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"structured-argumentation\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@waldzellai/structured-argumentation\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 码头工人\r\n\r\n所有服务器都可以作为Docker镜像使用：\r\n\r\n```bash\r\ndocker run --rm -i waldzellai/structured-argumentation\r\n```\r\n\r\n## 发展\r\n\r\n克隆存储库并安装依赖项：\r\n\r\n```bash\r\ngit clone https://github.com/waldzellai/model-enhancement-servers.git\r\ncd model-enhancement-servers\r\nnpm install\r\n```\r\n\r\n构建所有包：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。\r\n",
+ "config": {
+  "structured-argumentation": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@waldzellai/structured-argumentation"
+   ],
+   "env": {}
+  }
+ }
+}

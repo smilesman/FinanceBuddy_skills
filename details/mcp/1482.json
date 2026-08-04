@@ -1,0 +1,23 @@
+{
+ "id": "1482",
+ "kind": "mcp",
+ "name": "graphql-schema",
+ "fingerprint_md5": "8485fde2e892bb1143d50f991f326ade",
+ "download_count": 0,
+ "category": "API 调试",
+ "tags": "",
+ "version": "",
+ "readme": "# GraphQL模式模型上下文协议服务器\r\n\r\n[](https://smithery.ai/server/@hannesj/mcp-graphql-schema)\r\n一个模型上下文协议（MCP）服务器，将GraphQL模式信息暴露给像Claude这样的大型语言模型（LLM）。此服务器允许LLM通过一组专用工具探索和理解GraphQL模式。\r\n\r\n## 特性\r\n\r\n- 加载通过命令行参数指定的任何GraphQL架构文件\r\n- 探索查询、变异和订阅字段\r\n- 查找详细的类型定义\r\n- 使用模式匹配搜索类型和字段\r\n- 获取简化的字段信息，包括类型和参数\r\n- 过滤掉内部GraphQL类型以获得更清晰的结果\r\n\r\n## 用法\r\n\r\n### 命令行\r\n\r\n使用特定的架构文件运行MCP服务器：\r\n\r\n```bash\r\n# Use the default schema.graphqls in current directory\r\nnpx -y mcp-graphql-schema\r\n\r\n# Use a specific schema file (relative path)\r\nnpx -y mcp-graphql-schema ../schema.shopify.2025-01.graphqls\r\n\r\n# Use a specific schema file (absolute path)\r\nnpx -y mcp-graphql-schema /absolute/path/to/schema.graphqls\r\n\r\n# Show help\r\nnpx -y mcp-graphql-schema --help\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的GraphQL Schema [史密瑟里](https://smithery.ai/server/@hannesj/mcp-graphql-schema):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @hannesj/mcp-graphql-schema --client claude\r\n```\r\n\r\n### Claude桌面集成\r\n\r\n要将此MCP服务器与Claude Desktop一起使用，请编辑您的 `claude_desktop_config.json` 配置文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"GraphQL Schema\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-graphql-schema\", \"/ABSOLUTE/PATH/TO/schema.graphqls\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n配置文件的位置：\r\n\r\n- macOS/Linux： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- 窗户： `$env:AppData\\Claude\\claude_desktop_config.json`\r\n\r\n### Claude代码集成\r\n\r\n要将此MCP服务器与Claude Code CLI一起使用，请执行以下步骤：\r\n\r\n1. **将GraphQL Schema MCP服务器添加到Claude代码中**\r\n\r\n   ```bash\r\n   # Basic syntax\r\n   claude mcp add graphql-schema npx -y mcp-graphql-schema\r\n\r\n   # Example with specific schema\r\n   claude mcp add shopify-graphql-schema npx -y mcp-graphql-schema  ~/Projects/work/schema.shopify.2025-01.graphqls\r\n   ```\r\n\r\n1. **验证MCP服务器是否已注册**\r\n\r\n   ```bash\r\n   # List all configured servers\r\n   claude mcp list\r\n\r\n   # Get details for your GraphQL schema server\r\n   claude mcp get graphql-schema\r\n   ```\r\n\r\n1. **如果需要，请删除服务器**\r\n\r\n   ```bash\r\n   claude mcp remove graphql-schema\r\n   ```\r\n\r\n1. **使用Claude Code中的工具**\r\n\r\n   配置后，您可以在Claude Code会话中通过询问有关GraphQL模式的问题来调用该工具。\r\n\r\n**提示：**\r\n\r\n- 使用 `-s` 或 `--scope` 旗与 `project` （默认）或 `global` 指定配置的存储位置\r\n- 为具有不同名称的不同架构添加多个MCP服务器（例如，主API架构、Shopify架构）\r\n\r\n## MCP工具\r\n\r\n服务器为LLM提供了以下工具来与GraphQL模式交互：\r\n\r\n- `list-query-fields`：列出GraphQL查询的所有可用根级字段\r\n- `get-query-field`：获取SDL格式的特定查询字段的详细定义\r\n- `list-mutation-fields`：列出GraphQL突变的所有可用根级别字段\r\n- `get-mutation-field`：获取SDL格式的特定变异字段的详细定义\r\n- `list-subscription-fields`：列出GraphQL订阅的所有可用根级字段（如果存在于架构中）\r\n- `get-subscription-field`：获取特定订阅字段的详细定义（如果架构中存在）\r\n- `list-types`：列出GraphQL架构中定义的所有类型（不包括内部类型）\r\n- `get-type`：获取SDL格式的特定GraphQL类型的详细定义\r\n- `get-type-fields`：获取特定GraphQL对象类型的字段及其类型的简化列表\r\n- `search-schema`：按名称模式搜索模式中的类型或字段（不区分大小写的正则表达式）\r\n\r\n## 例子\r\n\r\n要尝试的示例查询：\r\n\r\n```\r\nWhat query fields are available in this GraphQL schema?\r\nShow me the details of the \"user\" query field.\r\nWhat mutation operations can I perform in this schema?\r\nList all types defined in this schema.\r\nShow me the definition of the \"Product\" type.\r\nList all fields of the \"Order\" type.\r\nSearch for types and fields related to \"customer\".\r\n```\r\n",
+ "config": {
+  "graphql-schema": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-graphql-schema",
+    "/ABSOLUTE/PATH/TO/schema.graphqls"
+   ],
+   "env": {}
+  }
+ }
+}

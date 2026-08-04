@@ -1,0 +1,21 @@
+{
+ "id": "1401",
+ "kind": "mcp",
+ "name": "cursor-mcp-installer",
+ "fingerprint_md5": "e433de3421cfb1831737ed5f87e6bebc",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 🚀 Cursor MCP 安装工具\r\n\r\n> 为 Cursor 设计的 MCP 服务器安装程序，轻松扩展 AI 能力\r\n\r\n## 📋 功能简介\r\n\r\n这是一个元服务器，专为 Cursor 用户设计，可帮助您一键安装和配置其他 MCP 服务器。支持从 npm 或 PyPi 安装服务器，并自动处理配置过程。\r\n\r\n**技术要求**：\r\n- 需安装 `npx` 用于 Node.js 服务器\r\n- 需安装 `uv` 用于 Python 服务器\r\n\r\n## 🔧 安装方法\r\n\r\n将以下配置添加到 Cursor MCP 配置文件：\r\n\r\n- **Windows**: `C:\\Users\\用户名\\.cursor\\mcp.json`\r\n- **macOS**: `~/.cursor/mcp.json`\r\n\r\n### 方法一（推荐）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cursor-mcp-installer\": {\r\n      \"command\": \"cmd\",\r\n      \"args\": [\r\n        \"/c\",\r\n        \"npx\",\r\n        \"-y\",\r\n        \"@yumia-pretty/cursor-mcp-installer@latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 方法二：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cursor-mcp-installer\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"@yumia-pretty/cursor-mcp-installer\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 📊 兼容性\r\n\r\n该工具兼容所有标准 MCP 服务器，包括 npm 包和本地开发的服务器。\r\n\r\n## 📦 源代码\r\n\r\n此项目的源代码托管在GitHub上：[yumia-pretty/cursor-mcp-installer](https://github.com/yumia-pretty/cursor-mcp-installer)\r\n",
+ "config": {
+  "cursor-mcp-installer": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@yumia-pretty/cursor-mcp-installer"
+   ],
+   "env": {}
+  }
+ }
+}

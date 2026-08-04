@@ -1,0 +1,21 @@
+{
+ "id": "1714",
+ "kind": "mcp",
+ "name": "shadcn-ui-server-2",
+ "fingerprint_md5": "9b1f5851b901d29425e469a1d3994cc0",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Shadcn UI MCP服务器\r\n\r\n一个强大而灵活的MCP（模型控制协议）服务器，旨在增强Shadcn UI组件的开发体验。此服务器为使用高级工具和功能构建和管理UI组件提供了坚实的基础。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@heilgar/shadcn-ui-mcp-server\">\r\n  \r\n</a>\r\n\r\n## 特性\r\n\r\n### 工具\r\n\r\nMCP服务器提供了一组可通过模型控制协议使用的工具：\r\n\r\n- `list-components`：获取可用shadcn/ui组件的列表\r\n- `get-component-docs`：获取特定组件的文档\r\n- `install-component`：安装shadcn/ui组件\r\n- `list-blocks`：获取可用shadcn/ui块的列表\r\n- `get-block-docs`：获取特定块的文档\r\n- `install-blocks`：安装shadcn/ui块\r\n\r\n### 功能\r\n\r\n- **组件管理**\r\n\r\n  - 列出可用的shadcn/ui组件\r\n  - 获取特定组件的详细文档\r\n  - 安装支持多个包管理器（npm、pnpm、yarn、bun）的组件\r\n\r\n- **区块管理**\r\n\r\n  - 列出可用的shadcn/ui块\r\n  - 获取特定块的文档和代码\r\n  - 安装支持多个包管理器的块\r\n\r\n- **软件包管理器支持**\r\n\r\n  - 对npm、pnpm、yarn和bun的灵活运行时支持\r\n  - 自动检测用户首选的包管理器\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Node.js（v18或更高版本）\r\n- npm或yarn包管理器\r\n\r\n### Claude桌面配置\r\n\r\n要与Claude Desktop一起使用，请添加服务器配置：\r\n\r\n在MacOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"shadcn-ui-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@heilgar/shadcn-ui-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 风帆配置\r\n\r\n将此添加到您的 `./codeium/windsurf/model_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"shadcn-ui-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@heilgar/shadcn-ui-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标配置\r\n\r\n将此添加到您的 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"shadcn-ui-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@heilgar/shadcn-ui-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 开发与调试\r\n\r\n### 地方发展\r\n\r\n1. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n2. 构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n### 调试\r\n\r\n由于MCP服务器通过stdio进行通信，调试可能具有挑战性。我们建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector) 用于调试：\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n检查器将提供一个URL，用于访问浏览器中的调试工具，使您能够：\r\n\r\n- 监控MCP通信\r\n- 检查工具调用和响应\r\n- 调试服务器行为\r\n- 查看实时日志\r\n\r\n## 相关项目和依赖关系\r\n\r\n此项目使用以下工具和库构建：\r\n\r\n- [模型上下文协议TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk) -MCP服务器和客户端的官方TypeScript SDK\r\n- [MCP检查员](https://github.com/modelcontextprotocol/inspector) -MCP服务器的调试工具\r\n- [再见](https://github.com/cheeriojs/cheerio) -专为服务器设计的核心jQuery的快速、灵活和精益实现\r\n\r\n## 许可证\r\n\r\nMIT许可证-您可以自由地将此项目用于您自己的目的。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n",
+ "config": {
+  "shadcn-ui-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@heilgar/shadcn-ui-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

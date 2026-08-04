@@ -1,0 +1,24 @@
+{
+ "id": "2388",
+ "kind": "mcp",
+ "name": "whattimeisit",
+ "fingerprint_md5": "b94e447ec01c7dc9807b9f64fc16c1c6",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# WhatTimeIsIt MCP服务器\r\n\r\n一个轻量级的mcp服务器，它告诉你确切的时间，由 [世界时间](http://worldtimeapi.org/).\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装WhatTimeIsIt for Claude Desktop [史密瑟里](https://smithery.ai/server/@kukapay/whattimeisit-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @kukapay/whattimeisit-mcp --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n1. **克隆存储库**\r\n\r\n   ```bash\r\n   git clone https://github.com/kukapay/whattimeisit-mcp.git\r\n   ```\r\n\r\n1. **客户端配置**\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"whattimeisit\": {\r\n         \"command\": \"uv\",\r\n         \"args\": [\"--directory\", \"path/to/whattimeisit-mcp\", \"run\", \"main.py\"]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n## 用法\r\n\r\n### MCP工具\r\n\r\n服务器提供了一个工具：\r\n\r\n- **工具名称**: `what_time_is_it`\r\n- **描述**：根据您当前的IP返回当前时间字符串。\r\n- **输出**：ISO 8601格式的字符串（例如。， `\"2025-03-17T03:17:00+11:00\"`).\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "whattimeisit": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "path/to/whattimeisit-mcp",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

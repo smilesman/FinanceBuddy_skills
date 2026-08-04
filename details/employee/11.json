@@ -1,0 +1,45 @@
+{
+ "id": "11",
+ "kind": "employee",
+ "name": "k8s-employee",
+ "fingerprint_md5": "2504e13229b4fcde5c53c63dda40e7fc",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "Kubernetes,Docker,Helm,DevOps",
+ "version": "",
+ "readme": "---\nname: k8s-employee\ndescription: Kubernetes 运维员工，支持集群资源查询、Pod 管理、配置操作、多集群上下文切换\ntags: [kubernetes, k8s, docker, helm, devops]\n---\n\n## 核心能力\n1. K8s 集群、Node 节点、Pod、Deployment 等资源信息查询\n2. Pod 重启、扩缩容、日志查询、事件排查\n3. 集群配置管理、YAML 文件部署与更新\n4. 支持多集群上下文切换，适配多环境运维\n5. 常用 kubectl 指令执行与结果智能分析\n\n## 依赖说明\n- 关联技能 ID：k8s-manage\n- 需具备 K8s 集群访问权限（kubeconfig 配置）\n- 依赖 K8s API Server 可正常访问\n\n## 环境配置\n- kubeconfig 配置文件路径（单个或多个）\n- K8s 集群默认上下文名称\n- K8s API Server 访问地址（可选）",
+ "config": {
+  "id": "k8s-employee",
+  "name": "Kubernetes 运维员工",
+  "description": "Kubernetes 运维员工，支持集群资源查询、Pod 管理、配置操作、多集群上下文切换",
+  "prompt": "你是一个专业的 Kubernetes 运维数字员工，熟练掌握 K8s 资源操作、Pod 管理、日志查询、事件排查。回答简洁专业，优先使用关联的 MCP 能力执行操作，给出清晰可落地的运维指令和结果解读。",
+  "enabled": true,
+  "builtin": false,
+  "skillIds": [
+   "k8s-manage",
+   "k8s-operations",
+   "k8s-troubleshoot",
+   "docker-ops",
+   "helm-ops"
+  ],
+  "mcpServers": {
+   "k8s-mcp": {
+    "enabled": true,
+    "command": "npx",
+    "args": [
+     "-y",
+     "mcp-server-kubernetes",
+     "--transport",
+     "stdio",
+     "--kubeconfig",
+     "/root/config1",
+     "--default-context",
+     "kubernetes-admin@cluster.local"
+    ],
+    "env": {
+     "KUBECONFIG": "/root/config1,/root/config2"
+    }
+   }
+  }
+ }
+}

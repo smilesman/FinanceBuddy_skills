@@ -1,0 +1,22 @@
+{
+ "id": "354",
+ "kind": "mcp",
+ "name": "pitchfork-list",
+ "fingerprint_md5": "e5fea5c79da1af9903f96b6699fbe17f",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "## Pitchfork列表MCP服务器\r\n\r\n用于音乐发现的MCP服务器，基于Pitchfork广受好评的2000年代200强专辑。\r\n\r\n## 特性\r\n\r\n- **整理数据集**：200张专辑，包括排名、艺术家、标题、年份（2000-2009）和流派标签\r\n- **MCP工具**：按文本搜索，按年份/流派/艺术家/排名过滤，并计算统计数据\r\n- **内置提示**：十年概述和特定年份背景\r\n- **资源端点**：以纯文本形式快速访问完整的流派列表\r\n- **Cloudflare原生**：工人+耐用物品 `McpAgent` +工人KV\r\n\r\n## 可用工具\r\n\r\n- `list_albums`：所有200张专辑按排名排序（1–200）\r\n- `list_genres`：独特的流派\r\n- `search_albums(query)`：按艺术家/标题进行不区分大小写的搜索\r\n- `get_album_by_rank(rank)`：特定排名的专辑\r\n- `get_albums_by_year(year)`：一年专辑（2000-2009）\r\n- `get_albums_by_artist(artist)`：精确的艺术家匹配\r\n- `get_albums_by_genre(genre)`：包含流派/标签的专辑\r\n- `get_year_statistics(sortBy?)`：每年计数\r\n- `get_genre_statistics(sortBy?, minCount?)`：按流派计数\r\n- `get_artist_statistics(sortBy?, minAlbums?, showSummary?)`：艺术家分布\r\n\r\n## 提示和资源\r\n\r\n- 提示\r\n  - `analyze_year_context(year)`：特定年份的背景\r\n  - `2000s_overview()`：数据集中的十年概述\r\n- 资源\r\n  - `genres`：所有流派的纯文本列表\r\n\r\n## 示例用法\r\n\r\n- **搜索和筛选**\r\n\r\n  - “搜索Radiohead的专辑”\r\n  - “显示2005年的专辑”\r\n  - “查找带有流派噪音流行的专辑”\r\n  - “排名第37位的是哪张专辑？”\r\n\r\n- **统计数据和摘要**\r\n\r\n  - “哪一年的专辑最多？”\r\n  - “显示按计数排序的流派计数”\r\n  - “仅显示至少出现在5张专辑中的流派”\r\n  - “哪些艺术家不止一次出现？”\r\n\r\n- **探索**\r\n\r\n  - “列出所有流派”\r\n  - “显示前10张专辑”\r\n\r\n- **深潜提示**\r\n\r\n  - “根据这份清单，给我介绍一下2000年代的音乐”\r\n  - “使用数据集分析2007年的音乐”\r\n\r\n## 连接MCP客户端\r\n\r\nhttps://pitchfork-list-mcp-server.dmamonov.workers.dev/\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pitchfork-list\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-remote\",\r\n        \"https://pitchfork-list-mcp-server.dmamonov.workers.dev/sse\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 鸣谢\r\n\r\n- 数据集来源于Pitchfork的“2000年代200张最佳专辑”。这个项目是出于教育和爱好的目的。\r\n",
+ "config": {
+  "pitchfork-list": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://pitchfork-list-mcp-server.dmamonov.workers.dev/sse"
+   ],
+   "env": {}
+  }
+ }
+}

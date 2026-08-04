@@ -1,0 +1,21 @@
+{
+ "id": "1778",
+ "kind": "mcp",
+ "name": "tmux-mcp-tools",
+ "fingerprint_md5": "36ec0d78d26f632e0d992bf94dd96f24",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# tmux mcp工具\r\n\r\nMCP服务器提供与tmux会话交互的工具。\r\n\r\n## 工具\r\n\r\n- **tmux_create_pane**：在运行后台服务器、REPL、远程shell或其他长时间运行的任务之前，必须创建一个专用窗格\r\n- **tmux_capture_pane**：使用可选延迟读取窗格内容并向后滚动\r\n- **tmux_send_keys**：发送交互式程序的原始按键（无自动输入）\r\n- **tmux_send_command**：使用自动Enter执行命令，可选等待模式\r\n- **tmux_writefile**：通过heredoc写入文件（用于远程/SSH环境）\r\n\r\n## 配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tmux-mcp-tools\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"tmux-mcp-tools\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 选项\r\n\r\n- `--transport`: `stdio` （默认）或 `http`\r\n- `--host`：HTTP主机（默认值：127.0.0.1）\r\n- `--port`：HTTP端口（默认值：8080）\r\n- `--enter-delay`：发送Enter之前的延迟（秒）（默认值：0.4）\r\n",
+ "config": {
+  "tmux-mcp-tools": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "tmux-mcp-tools"
+   ],
+   "env": {}
+  }
+ }
+}

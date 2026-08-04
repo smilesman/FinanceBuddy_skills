@@ -1,0 +1,24 @@
+{
+ "id": "3574",
+ "kind": "mcp",
+ "name": "polarsapifinder",
+ "fingerprint_md5": "1009f22f0de7845cca21e99f0104417a",
+ "download_count": 0,
+ "category": "知识库检索",
+ "tags": "",
+ "version": "",
+ "readme": "# 波拉斯文件MCP\r\n\r\n一个FastMCP工具，用于搜索和检索Polars API文档，支持多种传输方法。\r\n\r\n## 特性\r\n\r\n- 自动发现Polars公共组件（类、函数、子模块）。\r\n- 按组件或查询字符串搜索Polars API。\r\n- 获取当前Polars版本和软件包信息。\r\n- 返回带有API签名和描述的结构化JSON。\r\n- 支持多种传输方式：STDIO、流式HTTP和SSE。\r\n- 与集成 `mcp` 用于无缝LLM驱动的工作流程。\r\n\r\n> 通过利用Python的内置内省功能，在运行时反思性地发现Polars中的每个公共类、函数和子模块，我消除了网络抓取或管理外部文档数据库的成本、脆弱性和维护负担。这种方法保证了每个库版本100%的最新准确性，不需要复杂的文本清理或嵌入管道，并避免了语义搜索的沉重基础设施开销，使其在实时API查找中更简单、更高效。\r\n\r\n## 用法\r\n\r\n### 1.克劳德桌面配置（推荐）\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"polarsapifinder\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"/PATH/TO/polars-docs-mcp\",\r\n                \"run\",\r\n                \"polarsdocsfinder.py\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n### 2.使用传输选项手动执行\r\n\r\n#### STDIO（默认-最适合克劳德桌面）\r\n\r\n```bash\r\npython polarsdocsfinder.py\r\n# or explicitly:\r\npython polarsdocsfinder.py --transport stdio\r\n```\r\n\r\n#### 流式HTTP（最适合Web部署）\r\n\r\n```bash\r\npython polarsdocsfinder.py --transport streamable-http\r\n# With custom settings:\r\npython polarsdocsfinder.py --transport streamable-http --host 0.0.0.0 --port 8080 --path /api/mcp\r\n```\r\n\r\n#### SSE（用于传统客户端兼容性）\r\n\r\n```bash\r\npython polarsdocsfinder.py --transport sse\r\n# With custom settings:\r\npython polarsdocsfinder.py --transport sse --host 0.0.0.0 --port 9000\r\n```\r\n\r\n#### 命令行参数\r\n\r\n- `--transport`：选择运输方式(`stdio`, `streamable-http`, `sse`)-默认值： `stdio`\r\n- `--host`：HTTP/SSE传输的主机地址-默认值： `127.0.0.1`\r\n- `--port`：HTTP/SSE传输的端口号-默认值： `8111`\r\n- `--path`：可流式传输http的URL路径-默认值： `/mcp`\r\n\r\n### 3.MCP服务器的可视化测试\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv run polarsdocsfinder.py\r\n```\r\n\r\n\r\n需要Python 3.11+。\r\n\r\n## 工具端点\r\n\r\n- `get_polars_version()`：获取当前Polars版本和软件包信息。\r\n- `list_polars_components()`：列出所有高级Polars API组件。\r\n- `search_polars_docs(api_refs: list[str] | None, query: str | None, max_results: int = 1000)`：搜索和检索API签名。\r\n- `verify_polars_api(api_ref: str)`：验证Polars API引用是否有效。\r\n- `list_all_modern_data_stacks()`：列出与Polars兼容的现代数据栈。\r\n\r\n## 运输方式\r\n\r\n### STDIO（默认）\r\n\r\n- **最适合**：Claude Desktop、本地工具、命令行脚本\r\n- **用法**：与Claude Desktop配置直接集成\r\n- **沟通**：标准输入/输出流\r\n\r\n### 流式HTTP\r\n\r\n- **最适合**：Web部署、REST API集成、基于浏览器的客户端\r\n- **用法**：作为HTTP服务运行，通过HTTP请求连接\r\n- **沟通**：向指定端点发出HTTP POST请求\r\n\r\n### SSE（服务器发送事件）\r\n\r\n- **最适合**：与现有SSE客户端兼容，实时流媒体\r\n- **用法**：遗留系统集成\r\n- **沟通**：服务器通过HTTP发送事件\r\n\r\n## 快照示例\r\n\r\n\r\n## 测试HTTP传输\r\n\r\n如果使用HTTP传输运行，您可以测试服务器：\r\n\r\n```bash\r\n# Start server\r\npython polarsdocsfinder.py --transport streamable-http --port 8111\r\n\r\n# Test with curl\r\ncurl -X POST http://127.0.0.1:8111/mcp \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\"method\": \"tools/list\"}'\r\n```\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 联系\r\n\r\n由...创建 [ABC](mailto:abc@abhishekchoudhary.net).报告问题或请求功能https://github.com/HotTechStack/polars-docs-mcp/issues.\r\n",
+ "config": {
+  "polarsapifinder": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/PATH/TO/polars-docs-mcp",
+    "run",
+    "polarsdocsfinder.py"
+   ],
+   "env": {}
+  }
+ }
+}

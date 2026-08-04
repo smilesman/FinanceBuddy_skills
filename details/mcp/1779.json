@@ -1,0 +1,26 @@
+{
+ "id": "1779",
+ "kind": "mcp",
+ "name": "todo",
+ "fingerprint_md5": "540ab55a568e6333665c9af225746530",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Todo MCP服务器\r\n\r\n使用MCP（模型上下文协议）服务器构建的简单Todo应用程序，用于测试和演示MCP\r\n互动。\r\n\r\n## 概述\r\n\r\n此存储库包含一个作为MCP服务器实现的最小Todo应用程序。它允许您：\r\n\r\n- 列出所有待办事项\r\n- 查看特定待办事项\r\n- 添加新的所有项目\r\n- 删除待办事项\r\n- 清除所有待办事项\r\n- 使用元数据创建结构化待办事项任务\r\n\r\n该项目作为一个测试平台，用于与模型上下文协议服务器交互，并了解如何构建和\r\n通过MCP协议公开功能。关于模型上下文协议的更多信息，\r\n访问 [模型上下文协议.io](http://modelcontextprotocol.io/).\r\n\r\n## 需求\r\n\r\n- Python 3.10+\r\n- uv（Python包安装程序）\r\n\r\n## 安装\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/idsulik/todo-mcp-server.git\r\ncd todo-mcp-server\r\n```\r\n\r\n2. 使用uv安装依赖项：\r\n\r\n```bash\r\nuv pip install -e .\r\n```\r\n\r\n### 添加到MCP服务器列表\r\n\r\n要将此服务器添加到MCP服务器列表中，请使用以下命令：\r\n\r\n```bash\r\nmcp install server.py --name \"Todo MCP\"\r\n```\r\n\r\n这将向Claude Desktop应用程序或其他启用MCP的应用程序注册服务器。\r\n\r\n或者，如果您想使用MCP检查器测试服务器，可以使用：\r\n\r\n```bash\r\nmcp dev server.py\r\n```\r\n\r\n这将启动服务器以及MCP Inspector界面，以便于测试和调试。\r\n\r\n## API使用\r\n\r\n服务器公开以下MCP资源和工具：\r\n\r\n### 资源\r\n\r\n1. 列出所有待办事项：\r\n\r\n```\r\nGET todo://list\r\n```\r\n\r\n2. 查看特定待办事项：\r\n\r\n```\r\nGET todo://view/{item_idx}\r\n```\r\n\r\n哪里 `item_idx` 是您要查看的项目的索引。\r\n\r\n### 鼓励\r\n\r\n1. 创建结构化的todo任务：\r\n\r\n```python\r\ncreate_task(task_name: str, priority: str = \"medium\", due_date: str = \"\")\r\n```\r\n\r\n此提示有助于用优先级和截止日期格式化待办任务。参数：\r\n\r\n- `task_name`：任务的名称/描述\r\n- `priority`：任务优先级（低、中、高）\r\n- `due_date`当任务到期（可选）\r\n\r\n### 工具\r\n\r\n1. 添加新的Todo项目：\r\n\r\n```python\r\nadd_todo(value: str)\r\n```\r\n\r\n2. 删除待办事项：\r\n\r\n```python\r\nremove_todo(item_idx: int)\r\n```\r\n\r\n3. 清除所有待办事项：\r\n\r\n```python\r\nclear_todo()\r\n```\r\n\r\n### 手动添加到MCP配置\r\n\r\n如果您希望手动将服务器添加到MCP配置中，可以将以下JSON添加到Claude中\r\n桌面配置文件（通常位于 `~/.claude-desktop/claude_desktop_config.json` 在Mac/Linux或\r\n`C:\\Users\\YourUsername\\AppData\\Roaming\\Claude\\claude_desktop_config.json` 在Windows上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"todo\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--with\",\r\n        \"mcp[cli]\",\r\n        \"mcp\",\r\n        \"run\",\r\n        \"/path/to/your/server.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/path/to/your/server.py` 带有server.py文件的绝对路径。确保使用绝对路径，而不是\r\n相对路径。\r\n\r\n### 使用Docker\r\n\r\n您还可以使用Docker运行此MCP服务器，而无需在本地安装任何东西。将以下内容添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"todo\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"idsulik/todo-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果Docker镜像尚未在您的系统上，它将自动从Docker Hub中拉取。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n",
+ "config": {
+  "todo": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--with",
+    "mcp[cli]",
+    "mcp",
+    "run",
+    "/path/to/your/server.py"
+   ],
+   "env": {}
+  }
+ }
+}

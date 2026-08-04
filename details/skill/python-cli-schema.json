@@ -1,0 +1,12 @@
+{
+ "id": "python-cli-schema",
+ "kind": "skill",
+ "name": "python-cli-schema",
+ "fingerprint_md5": "ad11c1113806af5b9e3478042c8c67c7",
+ "download_count": 0,
+ "category": "区块链",
+ "tags": "",
+ "version": "",
+ "readme": "# Python CLI Schema\r\n\r\n## Trigger\r\n\r\n- The primary skill touches `src/vllm-sr/cli` schema or translation code\r\n\r\n## Workflow\r\n\r\n1. 读取 the vllm-sr CLI Docker playbook 迁移到 understand the schema and translation patterns\r\n2. 修改 CLI schema, parser, validator, merger, or config-translation code\r\n3. 运行 `make vllm-sr-test` 迁移到 验证 unit-level schema behavior\r\n4. 运行 `make vllm-sr-test-integration` 迁移到 验证 end-迁移到-end CLI contract alignment\r\n\r\n## 必须 读取\r\n\r\n- [docs/agent/playbooks/vllm-sr-cli-docker.md](../../../../docs/agent/playbooks/vllm-sr-cli-docker.md)\r\n\r\n## Standard 命令\r\n\r\n- `make vllm-sr-test`\r\n- `make vllm-sr-test-integration`\r\n\r\n## Acceptance\r\n\r\n- CLI schema, parser, validator, and merger express the same contract as the router config they translate",
+ "config": {}
+}

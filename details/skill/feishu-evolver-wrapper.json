@@ -1,0 +1,12 @@
+{
+ "id": "feishu-evolver-wrapper",
+ "kind": "skill",
+ "name": "feishu-evolver-wrapper",
+ "fingerprint_md5": "56fe1c3cccbdd19ad57879be7f515709",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Feishu Evolver Wrapper\r\n\r\n`capability-evolver` skill 的轻量级包装器。\r\n它注入飞书报告环境变量（`EVOLVE_REPORT_TOOL`）以在主环境中启用富卡片报告。\r\n\r\n## 用法\r\n\r\n```bash\r\n# 运行进化循环\r\nnode skills/feishu-evolver-wrapper/index.js\r\n\r\n# 生成进化仪表板 (Markdown)\r\nnode skills/feishu-evolver-wrapper/visualize_dashboard.js\r\n\r\n# 生命周期管理（启动/停止/状态/确保）\r\nnode skills/feishu-evolver-wrapper/lifecycle.js status\r\n```\r\n\r\n## 架构\r\n\r\n- **Evolution Loop**: 使用飞书报告运行 GEP 进化周期。\r\n- **Dashboard**: 从 `assets/gep/events.jsonl` 可视化指标和历史记录。\r\n- **Export History**: 将原始历史记录导出到飞书文档。\r\n- **Watchdog**: 通过 OpenClaw Cron 作业 `evolver_watchdog_robust` 管理（每 10 分钟运行一次 `lifecycle.js ensure`）。\r\n  - 替换脆弱的系统 crontab 逻辑。\r\n  - 确保循环在崩溃或挂起时重新启动。",
+ "config": {}
+}

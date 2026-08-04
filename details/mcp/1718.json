@@ -1,0 +1,24 @@
+{
+ "id": "1718",
+ "kind": "mcp",
+ "name": "shell-command",
+ "fingerprint_md5": "6a3c64bba2d8d9f84c2367806831f889",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# shell命令mcp\r\n\r\n用于执行shell命令的MCP服务器。\r\n\r\n该项目由以下机构赞助 [ChatWise](https://chatwise.app)，一个具有一流MCP支持的一体化LLM聊天机器人。\r\n\r\n## 用法\r\n\r\n### 手动配置\r\n\r\n```bash\r\n# stdio server\r\nnpx -y shell-command-mcp\r\n```\r\n\r\n### JSON配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"shell-command\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"shell-command-mcp\"],\r\n      \"env\": {\r\n        \"ALLOWED_COMMANDS\": \"cat,ls,echo\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 允许的命令\r\n\r\n使用 `ALLOWED_COMMANDS` 环境变量，明确允许此服务器可以运行的命令，用以下方式分隔每个命令 `,`。您可以使用 `*` 允许任何命令，但这有潜在的危险。\r\n\r\n## 许可证\r\n\r\nMIT。\r\n",
+ "config": {
+  "shell-command": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "shell-command-mcp"
+   ],
+   "env": {
+    "ALLOWED_COMMANDS": "cat,ls,echo"
+   }
+  }
+ }
+}

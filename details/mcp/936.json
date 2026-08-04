@@ -1,0 +1,22 @@
+{
+ "id": "936",
+ "kind": "mcp",
+ "name": "youtube",
+ "fingerprint_md5": "8a2104c82f33628c5763d0f54310b348",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# YouTube MCP服务器\r\n\r\n用途 `yt-dlp` 从YouTube下载字幕，并通过以下方式将其连接到claude.ai [模型上下文协议](https://modelcontextprotocol.io/introduction)。试着问克劳德：“总结一下YouTube视频\\<<URL>>“.需要 `yt-dlp` 例如通过Homebrew在本地安装。\r\n\r\n### 我怎样才能让它工作？\r\n\r\n安装 `yt-dlp` （Homebrew和WinGet在这里都很好用）\r\n\r\n```bash\r\n# macOS\r\nbrew install yt-dlp\r\n\r\n# Windows\r\nwinget install yt-dlp\r\n```\r\n\r\n### 参数\r\n\r\n- `url`：YouTube视频URL（必填）\r\n- `language`：字幕语言代码（可选，默认：“ja”）\r\n  - 用途 [国际标准化组织639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) 语言代码\r\n  - 通用语言代码：\r\n    - `ja`：日语\r\n    - `en`：英语\r\n    - `ko`：朝鲜语\r\n    - `zh`：中文\r\n    - `fr`：法语\r\n  - 注意：如果指定语言的字幕不存在，将发生错误\r\n\r\n### 示例\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@kazuph/mcp-youtube\"]\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "youtube": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@kazuph/mcp-youtube"
+   ],
+   "env": {}
+  }
+ }
+}

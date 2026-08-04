@@ -1,0 +1,24 @@
+{
+ "id": "3293",
+ "kind": "mcp",
+ "name": "weather-server",
+ "fingerprint_md5": "a50db944360c12fdce1468c9bd0fdd2b",
+ "download_count": 0,
+ "category": "地图服务",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp server demo\r\n\r\n## 环境\r\n\r\n```bash\r\nnpm i\r\n```\r\n\r\n## cursor 配置\r\n\r\n### stdio 方式\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"/weather-server-ts/src/index.ts\"],\r\n      \"env\": {\r\n        \"API_KEY\": \"\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### streamenable 方式\r\n\r\n启动 server\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n配置 cursor\r\nyour_api_key 是高德地图的 api key\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather-server-streamable-http\": {\r\n      \"type\": \"http\",\r\n      \"url\": \"http://localhost:8003/mcp?key=\"\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "weather-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "tsx",
+    "<your_project_path>/weather-server-ts/src/index.ts"
+   ],
+   "env": {
+    "API_KEY": "<your_api_key>"
+   }
+  }
+ }
+}

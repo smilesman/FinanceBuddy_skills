@@ -1,0 +1,25 @@
+{
+ "id": "2173",
+ "kind": "mcp",
+ "name": "f1",
+ "fingerprint_md5": "855a3d2e3fda5050357303e9be0b1860",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# F1 MCP服务器\r\n\r\n模型上下文协议（MCP）服务器，为Claude Desktop集成提供全面的F1数据和分析。\r\n\r\n## 特性\r\n\r\n此服务器提供了36多种访问F1数据的工具：\r\n\r\n### 种族数据\r\n\r\n- 比赛结果和分类\r\n- Sprint比赛结果\r\n- 合格进展（Q1、Q2、Q3）\r\n- 网格与完成比较\r\n- DNF名单和退休原因\r\n\r\n### 遥测与分析\r\n\r\n- 驾驶员之间的速度轨迹比较\r\n- 换档可视化\r\n- 制动和油门分析\r\n- RPM和发动机数据\r\n- DRS使用模式\r\n\r\n### 计时和圈数\r\n\r\n- 具有扇区时间的最快圈速数据\r\n- 逐圈计时\r\n- 已删除的圈数（赛道限制）\r\n- 圈一致性统计\r\n- 个人最佳圈数\r\n\r\n### 策略\r\n\r\n- 轮胎成分分析\r\n- 恶臭故障\r\n- 进站数据和最快进站\r\n- 开始轮胎选择\r\n- 战略比较\r\n\r\n### 立场与历史\r\n\r\n- 车手冠军榜\r\n- 建造商排名\r\n- 历史上的比赛获胜者\r\n- 业绩记录\r\n\r\n### 实时数据\r\n\r\n- 实时会话状态\r\n- 实时位置\r\n- 实时圈速\r\n- 实时遥测\r\n- 当前天气状况\r\n\r\n### 其他\r\n\r\n- 团队无线电链接\r\n- 比赛控制信息\r\n- 轨道状态（旗帜、安全车）\r\n- 天气数据\r\n- 电路信息\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Python 3.10或更高版本\r\n- 克劳德桌面版\r\n\r\n### 设置\r\n\r\n1. 克隆此存储库：\r\n\r\n```bash\r\ngit clone https://github.com/drivenrajat/f1.git\r\ncd f1\r\n```\r\n\r\n2. 创建虚拟环境：\r\n\r\n```bash\r\npython -m venv venv\r\nsource venv/bin/activate  # On Windows: venv\\Scripts\\activate\r\n```\r\n\r\n3. 安装依赖项：\r\n\r\n```bash\r\npip install -e .\r\n```\r\n\r\n### 配置Claude桌面\r\n\r\n将此服务器添加到您的Claude Desktop MCP配置中(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"f1\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"/path/to/f1/f1_server.py\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者，如果使用紫外线：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"f1\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/f1\", \"python\", \"f1_server.py\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n配置后，您可以向Claude提出以下问题：\r\n\r\n- “显示2024 F1日历”\r\n- “获取2024年摩纳哥的比赛结果”\r\n- “比较Verstappen和Norris在银石资格赛中的遥测数据”\r\n- “汉密尔顿在斯帕的轮胎策略是什么？”\r\n- “显示当前驾驶员排名”\r\n- “从意大利大奖赛中获得最快的进站”\r\n\r\n## 数据源\r\n\r\n- **FastF1**：历史遥测、圈速和会话数据\r\n- **埃加斯特API**：锦标赛排名和历史成绩\r\n- **OpenF1 API**：团队无线电录音\r\n\r\n## 缓存\r\n\r\n服务器自动将FastF1数据缓存在 `cache` 目录，以提高重复查询的性能。\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 了解详情。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n",
+ "config": {
+  "f1": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "/path/to/f1",
+    "python",
+    "f1_server.py"
+   ],
+   "env": {}
+  }
+ }
+}

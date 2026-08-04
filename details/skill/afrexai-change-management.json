@@ -1,0 +1,12 @@
+{
+ "id": "afrexai-change-management",
+ "kind": "skill",
+ "name": "afrexai-change-management",
+ "fingerprint_md5": "2deb537e1ad07428440e117a71e27df1",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Change Management Planner\r\n\r\n使用结构化框架规划、沟通并执行组织变革。涵盖技术推广、流程变更、重组和文化转型。\r\n\r\n## 它能做什么\r\n\r\n当给定一个变革计划时，生成：\r\n1. **利益相关者影响评估** —— 谁受影响、如何影响、阻力可能性（1-5）\r\n2. **沟通计划** —— 按受众（高管、经理、一线员工）划分的消息时间线\r\n3. **培训与赋能计划** —— 技能差距、培训形式、时间线\r\n4. **阻力缓解** —— 预期反对意见 + 具体回应\r\n5. **推广阶段** —— 试点 → 受控推广 → 全面部署，包含 go/no-go 关卡\r\n6. **成功指标** —— 采用率、生产力影响、情绪评分、时间线遵守度\r\n\r\n## 支持的框架\r\n\r\n- **ADKAR**（Awareness, Desire, Knowledge, Ability, Reinforcement）\r\n- **Kotter's 8-Step**（Urgency → Coalition → Vision → Communication → Empowerment → Quick Wins → Consolidation → Anchoring）\r\n- **Lewin's**（Unfreeze → Change → Refreeze）\r\n\r\n## 使用方法\r\n\r\n告诉 agent 你的变革计划：\r\n- 正在改变什么以及为什么\r\n- 时间线和预算限制\r\n- 组织规模和文化\r\n- 之前的变革尝试（成功/失败）\r\n\r\nagent 会选择最佳框架并生成完整的变革管理计划。\r\n\r\n## 输出格式\r\n\r\n结构化 markdown，包含：\r\n- 执行摘要（1 段）\r\n- 利益相关者地图（表格：group | impact | resistance | strategy）\r\n- 分阶段时间线，包含负责人和里程碑\r\n- 每个阶段的沟通模板\r\n- 风险登记册及缓解措施\r\n- 30/60/90 天成功指标\r\n\r\n## 何时使用\r\n\r\n- 推广新软件（ERP、CRM、AI 工具）\r\n- 重组团队或部门\r\n- 改变业务流程或工作流\r\n- 并购整合\r\n- 文化转型计划\r\n\r\n---\r\n\r\nBuilt by [AfrexAI](https://afrexai-cto.github.io/context-packs/) —— 面向业务自动化的 AI context packs。",
+ "config": {}
+}

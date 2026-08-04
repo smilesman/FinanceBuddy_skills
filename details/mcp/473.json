@@ -1,0 +1,24 @@
+{
+ "id": "473",
+ "kind": "mcp",
+ "name": "steam-6",
+ "fingerprint_md5": "66778e04809491e37f06023066d7cce3",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp蒸汽\r\n\r\n适用于Steam的MCP服务器，专注于游戏库管理、成就、统计数据和商店发现。20个工具专为与Claude和其他LLM代理一起使用而设计。\r\n\r\n## 先决条件\r\n\r\n- Python 3.14+\r\n- [紫外线](https://docs.astral.sh/uv/)\r\n- A. [Steam Web API密钥](https://steamcommunity.com/dev/apikey)\r\n- 您的Steam ID（数字，最多17位）\r\n\r\n## 设置\r\n\r\n### 1.获取您的Steam API密钥\r\n\r\n1. 去 [Steam Web API关键页](https://steamcommunity.com/dev/apikey)\r\n1. 使用您的Steam帐户登录\r\n1. 注册域名（任何名称均可供个人使用）\r\n1. 注意API密钥\r\n\r\n### 2.查找您的Steam ID\r\n\r\n您的Steam ID是您个人资料URL中的数字标识符。如果您的个人资料URL是 `https://steamcommunity.com/profiles/1111111111111111`，你的Steam ID是 `1111111111111111`.\r\n\r\n如果您使用自定义URL（例如。， `/id/username`)，使用a [蒸汽ID查找器](https://www.steamidfinder.com/) 查找数字ID。\r\n\r\n### 3.安装\r\n\r\n```bash\r\ncd mcp-steam\r\nuv sync\r\n```\r\n\r\n### 4.配置环境变量\r\n\r\n在运行服务器之前设置这些：\r\n\r\n```bash\r\nexport STEAM_API_KEY=\"your_api_key\"\r\nexport STEAM_ID=\"your_steam_id\"\r\n```\r\n\r\n### 5.测试连接\r\n\r\n```bash\r\nuv run mcp-steam\r\n```\r\n\r\n服务器在启动时通过获取玩家摘要来验证您的API密钥和Steam ID。\r\n\r\n## 克劳德桌面/Claude代码配置\r\n\r\n添加到您的MCP服务器配置中。如果从PyPI安装：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"steam\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-steam\"],\r\n      \"env\": {\r\n        \"STEAM_API_KEY\": \"your_api_key\",\r\n        \"STEAM_ID\": \"your_steam_id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者，如果从本地克隆运行：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"steam\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"/path/to/mcp-steam\", \"run\", \"mcp-steam\"],\r\n      \"env\": {\r\n        \"STEAM_API_KEY\": \"your_api_key\",\r\n        \"STEAM_ID\": \"your_steam_id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### 用户分辨率\r\n\r\n|工具|参数|说明|\r\n|------|-----------|-------------|\r\n| `resolve_vanity_url` | `vanity_name` |将自定义配置文件URL名称转换为64位Steam ID|\r\n\r\n### 图书馆\r\n\r\n|工具|参数|说明|\r\n|------|-----------|-------------|\r\n| `get_owned_games` | `sort_by=\"playtime\"`, `limit=50` |带游戏时间的游戏库。按播放时间、最近或姓名排序。 |\r\n| `get_recently_played` | `limit=10` |过去两周玩的游戏。 |\r\n\r\n### 游戏信息\r\n\r\n|工具|参数|说明|\r\n|------|-----------|-------------|\r\n| `get_game_details` | `app_id` |商店页面信息：描述、价格、流派、元符号、平台。 |\r\n| `search_games` | `query`, `limit=10` |搜索Steam商店。 |\r\n| `get_current_players` | `app_id` |游戏的实时并发玩家计数。 |\r\n| `get_game_schema` | `app_id` |游戏的成就和统计定义。 |\r\n| `get_app_reviews` | `app_id`, `review_type=\"all\"`, `limit=10` |用户评论，包括推荐、播放时间和帮助。 |\r\n| `get_package_details` | `package_id` |捆绑/套餐定价，包括应用程序和平台。 |\r\n\r\n### 成就与统计\r\n\r\n|工具|参数|说明|\r\n|------|-----------|-------------|\r\n| `get_achievements` | `app_id` |您的成就进度与全球稀有百分比。 |\r\n| `get_player_stats` | `app_id` |游戏特定的统计数据（击杀、死亡等）。 |\r\n| `get_global_achievement_stats` | `app_id` |所有成就的全局解锁百分比。 |\r\n\r\n### 愿望清单\r\n\r\n|工具|参数|说明|\r\n|------|-----------|-------------|\r\n| `get_wishlist` | `limit=50` |您的愿望清单按优先级排序，包括价格和折扣。 |\r\n\r\n### 新闻\r\n\r\n|工具|参数|说明|\r\n|------|-----------|-------------|\r\n| `get_game_news` | `app_id`, `count=5` |游戏的最新消息和更新。 |\r\n\r\n### 简介\r\n\r\n|工具|参数|说明|\r\n|------|-----------|-------------|\r\n| `get_player_summary` | `steam_id=\"\"` |配置文件摘要。接受Steam ID或虚荣名称；默认为您。 |\r\n| `get_friend_list` | `steam_id=\"\"` |好友列表。接受Steam ID或虚荣名称；默认为您。 |\r\n| `get_player_bans` | `steam_id=\"\"` |VAC、社区、游戏和贸易禁令状态。默认为您。 |\r\n| `get_steam_level` | `steam_id=\"\"` |玩家的蒸汽水平。默认为您。 |\r\n\r\n### 商店发现\r\n\r\n|工具|参数|说明|\r\n|------|-----------|-------------|\r\n| `get_featured_games` |（无）|目前有特色和在售游戏。 |\r\n| `get_featured_categories` |（无）|畅销书、新发行、特价、即将上市等。 |\r\n\r\n## Steam Web API注释\r\n\r\n- **API密钥安全性：** 您的配置文件包含您的Steam API密钥。永远不要将其提交给版本控制或公开共享。\r\n- **费率限制：** Steam Web API有未记录的费率限制。如果你点击了它们，服务器将返回一个速率限制错误。\r\n- **配置文件可见性：** 某些工具要求您的Steam个人资料公开（成就、游戏统计数据）。库数据无论如何都有效。\r\n- **游戏统计数据可用性：** 并非所有游戏都通过API公开统计数据。 `get_player_stats` 对于不支持的游戏，将返回错误。\r\n- **愿望清单访问：** 愿望清单数据要求您的个人资料的愿望清单公开。\r\n\r\n## 发展\r\n\r\n```bash\r\nuv run mcp-steam              # Run the server\r\nuv run ruff check src/       # Lint\r\nuv run ruff format src/      # Format\r\nuv run pyright src/          # Type check\r\n```\r\n\r\n### 预提交钩子\r\n\r\n此项目使用 [左钩](https://github.com/evilmartians/lefthook) 用于预提交检查。安装时使用 `brew install lefthook` （或参见 [其他安装方法](https://github.com/evilmartians/lefthook/blob/master/docs/install.md))那么：\r\n\r\n```bash\r\nlefthook install\r\n```\r\n",
+ "config": {
+  "steam": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-steam"
+   ],
+   "env": {
+    "STEAM_API_KEY": "your_api_key",
+    "STEAM_ID": "your_steam_id"
+   }
+  }
+ }
+}

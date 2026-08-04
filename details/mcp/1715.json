@@ -1,0 +1,22 @@
+{
+ "id": "1715",
+ "kind": "mcp",
+ "name": "shannon-thinking",
+ "fingerprint_md5": "9b869199244dff2f9b27a56b65481db1",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 香农思维\r\n\r\n演示Claude Shannon系统解决问题方法的MCP服务器。该服务器提供了一种工具，可以按照香农的问题定义、数学建模和实际实现方法，将复杂问题分解为结构化思维。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/iffffhwqqw\">\r\n  \r\n</a>\r\n\r\n## 概述\r\n\r\n被称为信息论之父的克劳德·香农通过系统的方法论来处理复杂的问题：\r\n\r\n1. **问题定义**：将问题分解为基本要素\r\n1. **约束条件**：确定系统限制和界限\r\n1. **模型**：开发数学/理论框架\r\n1. **证明/验证**：通过正式证明或实验测试进行验证\r\n1. **实施/实验**：设计和测试实用解决方案\r\n\r\n此MCP服务器演示了这种方法论，作为一种工具，有助于指导系统地解决这些阶段的问题。\r\n\r\n## 安装\r\n\r\n### NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"shannon-thinking\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"server-shannon-thinking@latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n服务器提供了一个名为 `shannonthinking` 根据香农的方法论构建问题解决思维。\r\n\r\n每个想法都必须包括：\r\n\r\n- 实际思想内容\r\n- 类型（问题_定义/约束/模型/证明/实现）\r\n- 思想数量和总思想估计\r\n- 置信水平（不确定性：0-1）\r\n- 对先前想法的依赖\r\n- 明确的假设\r\n- 是否需要另一个思考步骤\r\n\r\n附加功能：\r\n\r\n- **修订**：随着理解的发展，思想可以修改早期的步骤\r\n- **复查**：用新信息标记需要重新检查的步骤\r\n- **实验验证**：支持经验测试和正式证明\r\n- **实现注意事项**：实际制约因素和拟议解决方案\r\n\r\n### 示例用法\r\n\r\n```typescript\r\nconst thought = {\r\n  thought: \"The core problem can be defined as an information flow optimization\",\r\n  thoughtType: \"problem_definition\",\r\n  thoughtNumber: 1,\r\n  totalThoughts: 5,\r\n  uncertainty: 0.2,\r\n  dependencies: [],\r\n  assumptions: [\"System has finite capacity\", \"Information flow is continuous\"],\r\n  nextThoughtNeeded: true,\r\n  // Optional: Mark as revision of earlier definition\r\n  isRevision: false,\r\n  // Optional: Indicate step needs recheck\r\n  recheckStep: {\r\n    stepToRecheck: \"constraints\",\r\n    reason: \"New capacity limitations discovered\",\r\n    newInformation: \"System shows non-linear scaling\"\r\n  }\r\n};\r\n\r\n// Use with MCP client\r\nconst result = await client.callTool(\"shannonthinking\", thought);\r\n```\r\n\r\n## 特性\r\n\r\n- **迭代问题求解**：随着理解的发展，支持修订和重新检查\r\n- **灵活的验证**：将形式证明与实验验证相结合\r\n- **依赖项跟踪**：明确地跟踪思想是如何建立在先前思想的基础上的\r\n- **假设管理**：需要明确记录假设\r\n- **置信水平**：量化每个步骤中的不确定性\r\n- **丰富的反馈**：带有颜色编码、符号和验证结果的格式化控制台输出\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build\r\nnpm run build\r\n\r\n# Run tests\r\nnpm test\r\n\r\n# Watch mode during development\r\nnpm run watch\r\n```\r\n\r\n## 工具架构\r\n\r\n该工具接受具有以下结构的想法：\r\n\r\n```typescript\r\ninterface ShannonThought {\r\n  thought: string;\r\n  thoughtType: \"problem_definition\" | \"constraints\" | \"model\" | \"proof\" | \"implementation\";\r\n  thoughtNumber: number;\r\n  totalThoughts: number;\r\n  uncertainty: number; // 0-1\r\n  dependencies: number[];\r\n  assumptions: string[];\r\n  nextThoughtNeeded: boolean;\r\n  \r\n  // Optional revision fields\r\n  isRevision?: boolean;\r\n  revisesThought?: number;\r\n  \r\n  // Optional recheck field\r\n  recheckStep?: {\r\n    stepToRecheck: ThoughtType;\r\n    reason: string;\r\n    newInformation?: string;\r\n  };\r\n  \r\n  // Optional validation fields\r\n  proofElements?: {\r\n    hypothesis: string;\r\n    validation: string;\r\n  };\r\n  experimentalElements?: {\r\n    testDescription: string;\r\n    results: string;\r\n    confidence: number; // 0-1\r\n    limitations: string[];\r\n  };\r\n  \r\n  // Optional implementation fields\r\n  implementationNotes?: {\r\n    practicalConstraints: string[];\r\n    proposedSolution: string;\r\n  };\r\n}\r\n```\r\n\r\n## 何时使用\r\n\r\n这种思维模式在以下方面特别有价值：\r\n\r\n- 复杂系统分析\r\n- 信息处理问题\r\n- 工程设计挑战\r\n- 需要理论框架的问题\r\n- 优化问题\r\n- 需要实际实施的系统\r\n- 需要迭代改进的问题\r\n- 实验验证补充理论的案例\r\n",
+ "config": {
+  "shannon-thinking": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "server-shannon-thinking@latest"
+   ],
+   "env": {}
+  }
+ }
+}

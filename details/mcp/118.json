@@ -1,0 +1,23 @@
+{
+ "id": "118",
+ "kind": "mcp",
+ "name": "chrome-devtools-advanced-mcp",
+ "fingerprint_md5": "2f3d6cd002dbcd3373344b71ea0543e4",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# Chrome开发工具高级MCP\r\n\r\n\r\n**您在AI和浏览器之间的智能桥梁。**\r\n\r\n此模型上下文协议（MCP）服务器使Claude、Roo Code或Windsurf等人工智能助手能够在 **自然、强大、隐秘的方式**与其他自动化工具不同，此解决方案连接到您的实际浏览器配置文件，允许您在不被检测的情况下使用现有的登录会话、Cookie和扩展。\r\n\r\n______________________________________________________________________\r\n\r\n## ✨ 为什么使用这个？\r\n\r\n- **🕵️ “人工”导航：** 使用您的真实Chrome个人资料。如果你登录了LinkedIn、Gmail或你的企业ERP，你的人工智能助手也会登录。\r\n- **🛡️ 无法检测：** 先进的“影子配置文件”技术可防止复杂网站上的浏览器自动化阻止。\r\n- **🛠️ 强大的工具集：** 超过40种针对数据抓取、特定元素提取和可视化分析进行优化的专用工具。\r\n- **⚡ 快速安全：** 安全地执行脚本和屏幕截图，并具有智能输出截断功能，以防止AI上下文崩溃。\r\n\r\n______________________________________________________________________\r\n\r\n## 🚀 快速安装\r\n\r\n### 用户（VS码/克莱恩/基洛码/反重力/克劳德桌面）\r\n\r\n只需将此添加到您的 `mcp.json` 配置文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chrome-devtools-advanced-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"chrome-devtools-advanced-mcp\", \"--port=9223\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动您的助手（VS Code中的Ctrl+R），您将可以立即访问。\r\n\r\n______________________________________________________________________\r\n\r\n## 💡 简化使用指南\r\n\r\n### 1.启动浏览器\r\n\r\n首先，问问你的AI：\r\n\r\n> *“使用我的默认配置文件启动Chrome”*\r\n\r\n这会触发 `launch_chrome_with_profile`，在不关闭其他窗口的情况下创建一个可控的Chrome实例。\r\n\r\n### 2.导航和分析\r\n\r\n你可以问：\r\n\r\n- *“转到amazon.com搜索笔记本电脑”*\r\n- *“分析登录表单的HTML”* （使用优化 `get_html`)\r\n- *“截取定价表的屏幕截图”*\r\n\r\n### 3.互动\r\n\r\nAI可以智能地点击、键入和填写表单，等待元素自动加载。\r\n\r\n______________________________________________________________________\r\n\r\n## 🛠️ 工具列表\r\n\r\n\r\n👇 Click here to view all available tools\r\n\r\n### 🎭 浏览器和会话控制\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `launch_chrome_with_profile` | **从这里开始！** 使用您的Cookie/扩展程序启动Chrome。 |\r\n| `browser_action` |导航、重新加载、返回/前进。 |\r\n| `manage_tabs` |创建、关闭、切换或列出选项卡。 |\r\n| `close_browser` |安全关闭受控会话。 |\r\n\r\n### 🔍 分析和提取\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_html` | **关键。** 提取简化或完整的HTML。支持选择器。 |\r\n| `screenshot` |捕获视觉证明（png/jpeg）。 |\r\n| `get_page_metrics` |布局和视口分析。 |\r\n| `get_accessibility_tree` |像屏幕阅读器一样查看页面结构|\r\n\r\n### 🖱️ 交互\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `perform_interaction` |单击、键入、悬停、拖放并自动等待。 |\r\n| `execute_script` |安全运行自定义JavaScript（需要 `return`). |\r\n| `extract_element_data` |从元素中获取特定的文本或属性。 |\r\n| `set_viewport` |调整窗口大小以进行响应式测试。 |\r\n\r\n### 🛡️ 反检测和隐私\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `enable_stealth_mode` |隐藏自动化标志。 |\r\n| `set_user_agent` |伪造设备/浏览器身份。 |\r\n| `set_geolocation` |模拟GPS坐标。 |\r\n| `set_timezone` |更改浏览器时区。 |\r\n\r\n### 📡 网络（高级）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `capture_network_on_action` |执行操作时记录流量。 |\r\n| `resend_network_request` |回放捕获的API调用。 |\r\n| `start_har_recording` |保存完整的网络日志（HAR格式）。 |\r\n| `monitor_websocket_messages` |监听套接字流量。 |\r\n\r\n### 🍪 存储和Cookie\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_cookies` / `set_cookie` |管理浏览器Cookie。 |\r\n| `get_local_storage` |读取/写入本地存储数据。 |\r\n| `export_session` |将当前会话状态保存到文件。 |\r\n\r\n\r\n______________________________________________________________________\r\n\r\n## ❓ 常见问题解答\r\n\r\n**我需要关闭Chrome吗？**\r\n不！由于“Shadow Profile”技术，此服务器会创建您的个人资料的临时安全克隆。当AI并行工作时，您可以继续正常浏览。\r\n\r\n**它在Mac/Linux上工作吗？**\r\n是的，它完全跨平台。\r\n\r\n**我看到“用户禁用工具”错误**\r\n这是VS Code的安全功能。\r\n\r\n1. 重新加载VS代码(`Ctrl+R`).\r\n1. 当AI再次尝试使用工具时，单击 **“始终允许”** 在弹出窗口上。\r\n\r\n______________________________________________________________________\r\n\r\n## 👨‍💻 对于开发者\r\n\r\n要在本地贡献或运行：\r\n\r\n```bash\r\ngit clone https://github.com/Eddym06/devTools-Advance-mcp.git\r\ncd custom-chrome-mcp\r\nnpm install\r\nnpm run build\r\nnpm start\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n*与开发❤️ 作者@eddym06*\r\n",
+ "config": {
+  "chrome-devtools-advanced-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "chrome-devtools-advanced-mcp",
+    "--port=9223"
+   ],
+   "env": {}
+  }
+ }
+}

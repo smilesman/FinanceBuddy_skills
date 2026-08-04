@@ -1,0 +1,22 @@
+{
+ "id": "250",
+ "kind": "mcp",
+ "name": "janken",
+ "fingerprint_md5": "22ecb00e2dc96b393e5ce4a05be02999",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 猜拳MCP服务器\r\n\r\nModel Context Protocol（MCP）的规格化距离的幂函数。使用此服务器LLM可以玩猜拳，也可以取得随机的手。\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n- **播放**\r\n\r\n  - 猜拳\r\n  - 入力: `hand` (string): 玩家的手（“石头”、“剪刀”、“剪刀”中的任意一个）\r\n  - AI选择随机的手，返回猜拳的结果\r\n\r\n- **随机**\r\n\r\n  - AI随机的\r\n  - 输入：无\r\n  - AI返回随机选择的手（“格”、“剪刀”、“帕”之一）\r\n\r\n### 资源\r\n\r\n- **猜拳规则** (`janken://rules`)\r\n  - 说明猜拳规则的文本\r\n\r\n## 设定\r\n\r\n### Claude Desktop在中使用\r\n\r\nClaude Desktop要在应用程序中使用这个服务器`claude_desktop_config.json`请在的“mcpServers”部分添加以下设置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"janken\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"mcp-janken-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### NPX直接运行\r\n\r\n```bash\r\nnpx mcp-janken-server\r\n```\r\n\r\n### VS Code在中使用\r\n\r\nVS Code要在中使用此服务器，请在用户配置（JSON）文件中单击JSON添加块。这是`Ctrl + Shift + P`按钮`Preferences: Open User Settings (JSON)`中所述修改相应参数的值。\r\n\r\n在动态输入提示中单击`.vscode/mcp.json`中所述修改相应参数的值。这允许您与他人共享设置。\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"janken\": {\r\n        \"command\": \"npx\",\r\n        \"args\": [\r\n          \"-y\",\r\n          \"mcp-janken-server\"\r\n        ]\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 构建和开发\r\n\r\n```bash\r\n# 依存関係をインストール\r\nnpm install\r\n\r\n# TypeScriptをコンパイル\r\nnpm run build\r\n\r\n# 開発モード（ファイル変更を監視）\r\nnpm run dev\r\n\r\n# サーバーを実行\r\nnpm run start\r\n```\r\n\r\n## 项目结构\r\n\r\n```\r\nmcp-janken-server/\r\n├── src/\r\n│   ├── index.ts      - サーバー初期化と起動\r\n│   ├── handlers.ts   - MCPリクエストハンドラ\r\n│   ├── game.ts       - じゃんけんゲームロジック\r\n│   └── types.ts      - 型定義と定数\r\n├── index.ts          - エントリーポイント\r\n├── package.json      - プロジェクト設定\r\n└── tsconfig.json     - TypeScript設定\r\n```\r\n\r\n## 许可证\r\n\r\n这个MCP服务器是MIT在许可证下提供。这是MIT这意味着可以根据许可条件自由使用、修改和分发软件。有关详细信息，请参见LICENSE请参见文件。\r\n",
+ "config": {
+  "janken": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-janken-server"
+   ],
+   "env": {}
+  }
+ }
+}

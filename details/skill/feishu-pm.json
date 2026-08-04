@@ -1,0 +1,12 @@
+{
+ "id": "feishu-pm",
+ "kind": "skill",
+ "name": "feishu-pm",
+ "fingerprint_md5": "a261c59b7269400a2c71b153e49da37d",
+ "download_count": 0,
+ "category": "效率工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Feishu Project Manager (PM)\r\n\r\nManage tasks and project records in Feishu Bitables directly from the CLI.\r\n\r\n## Prerequisites\r\n\r\n- Install `feishu-common` first.\r\n- This skill depends on `../feishu-common/index.js` for token and API auth.\r\n\r\n## Usage\r\n\r\n### List Tasks\r\n\r\n```bash\r\nnode skills/feishu-pm/index.js list --app <BITABLE_TOKEN> --table <TABLE_ID>\r\n```\r\n\r\nOptions:\r\n- `--view <id>`: Filter by View ID.\r\n- `--limit <n>`: Limit number of records (default 20).\r\n- `--json`: Output raw JSON instead of markdown table.\r\n\r\n### Add Task\r\n\r\n```bash\r\nnode skills/feishu-pm/index.js add --app <BITABLE_TOKEN> --table <TABLE_ID> --title \"Fix Bug #123\" --priority \"High\"\r\n```\r\n\r\nOptions:\r\n- `--desc <text>`: Task description.\r\n- `--priority <text>`: Priority level (e.g. \"High\", \"Medium\", \"Low\").\r\n\r\n## Notes\r\n\r\n- Currently optimized for the \"Iter 11\" project structure (`需求`, `需求详述`, `优先级`).\r\n- Edit `index.js` to customize field mapping for other projects.",
+ "config": {}
+}

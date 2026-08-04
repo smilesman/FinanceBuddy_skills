@@ -1,0 +1,26 @@
+{
+ "id": "2354",
+ "kind": "mcp",
+ "name": "weather-15",
+ "fingerprint_md5": "3858da5e44f08aec486d74fdd2e9bf2a",
+ "download_count": 0,
+ "category": "地图服务",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP Weather Server\r\n\r\n這是一個基於Model Context Protocol (MCP)的天氣資訊服務器，使用OpenWeatherMap API提供即時天氣資訊和天氣預報功能。\r\n\r\n## 功能特點\r\n\r\n- 獲取城市當前天氣資訊\r\n- 獲取城市5天天氣預報\r\n- 支持中英文城市名稱查詢\r\n- 完整的錯誤處理機制\r\n- 豐富的天氣資訊顯示（溫度、濕度、風速等）\r\n\r\n## 系統要求\r\n\r\n- Python >= 3.10\r\n- OpenWeatherMap API金鑰\r\n\r\n## 安裝\r\n\r\n1. 確保您已安裝 Python 3.10 或更高版本\r\n2. 使用以下命令安裝依賴套件：\r\n\r\n```bash\r\nuv venv\r\nuv pip install -r requirements.txt\r\n```\r\n\r\n## 配置\r\n\r\n在 `mcp.json` 中配置您的OpenWeatherMap API金鑰：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \".\", \"run\", \"main.py\"],\r\n      \"description\": \"天氣資訊伺服器 - 取得當前天氣和天氣預報\",\r\n      \"env\": {\r\n        \"OPENWEATHER_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用方法\r\n\r\n### 作為MCP服務器運行\r\n\r\n```bash\r\npython main.py\r\n```\r\n\r\n### 使用客戶端\r\n\r\n```bash\r\npython client.py\r\n```\r\n\r\n## API參考\r\n\r\n### 獲取當前天氣\r\n```python\r\nget_current_weather(city: str) -> str\r\n```\r\n- 參數：\r\n  - city: 城市名稱（支持中英文）\r\n- 返回：格式化的當前天氣資訊\r\n\r\n### 獲取天氣預報\r\n```python\r\nget_weather_forecast(city: str, days: int = 5) -> str\r\n```\r\n- 參數：\r\n  - city: 城市名稱（支持中英文）\r\n  - days: 預報天數（1-5天，預設5天）\r\n- 返回：格式化的天氣預報資訊\r\n\r\n## 資源端點\r\n\r\n- `weather://current/{city}` - 獲取指定城市的當前天氣資源\r\n- `weather://forecast/{city}` - 獲取指定城市的天氣預報資源\r\n- `weather://api-status` - 獲取API狀態資訊\r\n\r\n## 授權\r\n\r\nMIT License\r\n\r\n## 貢獻\r\n\r\n歡迎提交問題和拉取請求！\r\n\r\n## 致謝\r\n\r\n- [OpenWeatherMap](https://openweathermap.org/) - 天氣數據提供\r\n- [Model Context Protocol](https://www.claudemcp.com/zh/docs/mcp-py-sdk-basic) - MCP協議支持\r\n\r\n## 部署\r\n\r\n關於部署的詳細信息，請參考 [部署指南](DEPLOY.md)。\r\n\r\n支持的部署方式：\r\n- 直接部署（Python 環境）\r\n- Docker 部署\r\n- Docker Compose 部署\r\n- 系統服務部署（Linux）\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    ".",
+    "run",
+    "main.py"
+   ],
+   "env": {
+    "OPENWEATHER_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

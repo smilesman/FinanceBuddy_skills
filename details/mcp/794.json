@@ -1,0 +1,26 @@
+{
+ "id": "794",
+ "kind": "mcp",
+ "name": "overseerr-mcp-server",
+ "fingerprint_md5": "083426ef949ff83df1c42836d21ed0d4",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Overseer的FastMCP服务器\r\n\r\nFastMCP服务器与Overserr API交互，用于电影和电视节目请求管理，使用 `fastmcp` 图书馆。\r\n\r\n项目存储库： [https://github.com/ptbsare/overseerr-mcp-server](https://github.com/ptbsare/overseerr-mcp-server)\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n服务器实现了以下工具来与Overseer交互：\r\n\r\n- `overseerr_status`：获取Overseer服务器的状态。\r\n- `overseerr_movie_requests`：获取电影请求的分页列表。接受可选 `status`, `start_date` （YYYY-MM-DDTHH:MM:SS.mmmZ格式）， `take` （默认值7），以及 `skip` （默认值0）。\r\n- `overseerr_tv_requests`：获取电视节目请求的分页列表。接受可选 `status`, `start_date` （YYYY-MM-DDTHH:MM:SS.mmmZ格式）， `take` （默认值7），以及 `skip` （默认值0）。\r\n- `overseerr_request_movie_to_library`：代表特定用户使用其TMDB ID向特定库提交电影请求。需要 `tmdb_id`, `library_name`，以及 `user_display_name`。在服务器启动时获取可用的库名称和用户显示名称（仅限唯一名称），并将其包含在工具的参数描述中。\r\n- `overseerr_request_tv_to_library`：代表特定用户使用其TMDB ID向特定库提交电视节目请求。需要 `tmdb_id`, `library_name`，以及 `user_display_name`。可选择接受 `seasons` （整数列表）。在服务器启动时获取可用的库名称和用户显示名称（仅限唯一名称），并将其包含在工具的参数描述中。\r\n- `overseerr_search_media`：在Overseer上搜索可用的电影和电视节目。接受 `query` 可选 `page` （默认值1）。\r\n- `overseerr_get_available_libraries`：从Overseer获取配置的Sonarr（电视）和Radarr（电影）服务器ID和名称。\r\n- `overseerr_get_users`：获取Overseer中配置的所有用户的列表，包括他们的ID、用户名、电子邮件、displayName等。\r\n\r\n### 示例提示\r\n\r\n最好先指导你的人工智能助手（例如Claude）使用Overseer工具。然后，它可以在需要时调用相应的工具。\r\n\r\n尝试以下提示：\r\n\r\n- 获取我们的Overseer服务器的状态。\r\n- 显示当前待处理的前5个电影请求。\r\n- 列出2024-01-01期间所有可用的电视节目请求。\r\n- 哪些电影已被要求但尚未上映？\r\n- 我们图书馆最近有哪些电视节目？\r\n- 在Overseer上搜索电影《沙丘：第二部分》。\r\n- Overseer中配置了哪些电影和电视库？\r\n- 列出Overseer中的所有用户。\r\n- 在“Movies HD”库中为用户“John Doe”请求TMDB ID为693134的电影。（用途 `user_display_name='John Doe'`, `library_name='Movies HD'`)\r\n- 在“TV Shows 4K”库中为用户“Jane Smith”请求TMDB ID为1396的电视节目的第一季和第二季。（用途 `user_display_name='Jane Smith'`)\r\n\r\n## 快速启动\r\n\r\n### 先决条件\r\n\r\n- `uv` （安装说明： [https://github.com/astral-sh/uv](https://github.com/astral-sh/uv))\r\n- 正在运行的Overseer实例。\r\n- Overserr实例中的API密钥（设置→ API密钥）。\r\n\r\n### 与一起跑步 `uvx` （推荐-无需安装）\r\n\r\n您可以使用以下命令直接从git存储库运行服务器 `uvx` --无需克隆或安装：\r\n\r\n```bash\r\nuvx --from git+https://github.com/ptbsare/overseerr-mcp-server.git overseerr-mcp-server\r\n```\r\n\r\n### Claude桌面配置\r\n\r\n将以下内容添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"overseerr-mcp-server\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--from\",\r\n        \"git+https://github.com/ptbsare/overseerr-mcp-server.git\",\r\n        \"overseerr-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"OVERSEERR_API_KEY\": \"<your_api_key_here>\",\r\n        \"OVERSEERR_URL\": \"<your_overseerr_url>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n*替换 `<your_api_key_here>` 和 `<your_overseerr_url>` 使用您的实际Overserr API密钥和URL。*\r\n\r\n### 环境变量\r\n\r\n需要以下环境变量：\r\n\r\n- `OVERSEERR_API_KEY`：您的Overserr API密钥（位于Overserr设置中→ API密钥）\r\n- `OVERSEERR_URL`：您的Overseer实例的URL（例如。， `http://localhost:5055`)\r\n\r\n对于像Claude Desktop这样的客户，请将这些添加到 `env` 如上图所示。对于本地使用，您可以导出它们或使用 `.env` 文件：\r\n\r\n```dotenv\r\nOVERSEERR_API_KEY=your_api_key_here\r\nOVERSEERR_URL=http://localhost:5055\r\n```\r\n\r\n### 本地开发安装\r\n\r\n如果您更喜欢在本地安装进行开发：\r\n\r\n```bash\r\ngit clone https://github.com/ptbsare/overseerr-mcp-server.git\r\ncd overseerr-mcp-server\r\nuv venv\r\nsource .venv/bin/activate # On Windows use `.venv\\Scripts\\activate`\r\nuv pip install -e .\r\n```\r\n\r\n## 发展\r\n\r\n### 设置\r\n\r\n按照安装步骤，使用 `uv pip install -e .` 用于可编辑安装。\r\n\r\n### 依赖项\r\n\r\n使用安装或同步依赖项 `uv`:\r\n\r\n```bash\r\nuv sync\r\n# or\r\nuv pip install -e .\r\n```\r\n\r\n### 调试\r\n\r\n由于MCP服务器在stdio上运行，调试可能具有挑战性。\r\n\r\n- **MCP检查员：** 这 [MCP检查员](https://github.com/modelcontextprotocol/inspector) 强烈推荐。\r\n\r\n  启动它，指向您的服务器脚本：\r\n\r\n  ```bash\r\n  # Using uvx (no local installation needed)\r\n  npx @modelcontextprotocol/inspector uvx --from git+https://github.com/ptbsare/overseerr-mcp-server.git overseerr-mcp-server\r\n\r\n  # Or using uv run (from local project directory)\r\n  npx @modelcontextprotocol/inspector uv run overseerr-mcp-server\r\n  ```\r\n\r\n  在浏览器中访问检查器提供的URL。\r\n\r\n- **登录中：** 服务器将基本信息记录到stdout/stderr。检查你跑步的终点站 `uv run overseerr-mcp-server`对于像Claude Desktop这样的客户端，请检查客户端的日志文件（例如。， `~/Library/Logs/Claude/mcp-server-overseerr-mcp.log` 在macOS上，但名称可能因您的配置而异）。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "overseerr-mcp-server": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/ptbsare/overseerr-mcp-server.git",
+    "overseerr-mcp-server"
+   ],
+   "env": {
+    "OVERSEERR_API_KEY": "<your_api_key_here>",
+    "OVERSEERR_URL": "<your_overseerr_url>"
+   }
+  }
+ }
+}

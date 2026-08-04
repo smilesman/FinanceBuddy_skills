@@ -1,0 +1,27 @@
+{
+ "id": "2975",
+ "kind": "mcp",
+ "name": "thetadata",
+ "fingerprint_md5": "86b98a32781227496cdaeacbdc3e7286",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Theta数据MCP服务器\r\n\r\nTheta Data API的本地MCP（模型上下文协议）包装器，为AI模型提供对实时和历史股票、期权和指数数据的访问。\r\n\r\n## 概述\r\n\r\n此MCP服务器由Theta Data OpenAPI规范生成，使用 [FastMCP](https://github.com/jlowin/fastmcp)。它将API端点公开为MCP工具，允许人工智能助手直接查询市场数据。\r\n\r\n### 支持的数据类型\r\n\r\n- **股票**：交易品种、EOD数据、OHLC、交易、报价、快照\r\n- **选项**：符号、到期、罢工、合同、希腊语、隐含波动率\r\n- **指数**：符号、价格、OHLC、市场价值\r\n- **日历**：市场开放日期\r\n\r\n## 先决条件\r\n\r\n1. Python 3.10+\r\n1. [紫外线](https://github.com/astral-sh/uv) 用于包管理\r\n1. Theta数据终端在本地运行（默认： `http://127.0.0.1:25503`)\r\n1. Theta数据订阅([在此处订阅](https://www.thetadata.net/))\r\n\r\n## 安装\r\n\r\n```bash\r\n# Create virtual environment and install all dependencies (including dev)\r\nuv sync\r\n```\r\n\r\n## 用法\r\n\r\n### 运行服务器\r\n\r\n```bash\r\n# Run with stdio transport (default)\r\nuv run server.py\r\n\r\n# Run with SSE transport\r\nuv run server.py --transport sse\r\n\r\n# Custom base URL\r\nuv run server.py --base-url http://localhost:25503/v3\r\n\r\n# Custom timeout\r\nuv run server.py --timeout 60.0\r\n```\r\n\r\n### 环境变量\r\n\r\n|变量|描述|默认值|\r\n|----------|-------------|---------|\r\n| `THETADATA_BASE_URL` |Theta数据API基础URL| `http://127.0.0.1:25503/v3` |\r\n| `THETADATA_TIMEOUT` |请求超时（秒）| `30.0` |\r\n\r\n### MCP客户端配置\r\n\r\n将以下内容添加到MCP客户端配置中，替换 `/path/to/thetadata-mcp` 使用此存储库的实际路径：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"thetadata\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/thetadata-mcp\",\r\n        \"run\",\r\n        \"server.py\"\r\n      ],\r\n      \"env\": {\r\n        \"THETADATA_BASE_URL\": \"http://127.0.0.1:25503/v3\",\r\n        \"THETADATA_TIMEOUT\": \"30.0\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n服务器将所有Theta Data v3 API端点公开为MCP工具，包括：\r\n\r\n**股票数据**\r\n\r\n- `stock_list_symbols` -列出所有股票代码\r\n- `stock_list_dates` -列出请求类型的可用日期\r\n- `stock_snapshot_ohlc` -实时OHLC数据\r\n- `stock_snapshot_trade` -实时交易数据\r\n- `stock_snapshot_quote` -实时报价数据\r\n- `stock_history_eod` -历史EOD数据\r\n- `stock_history_ohlc` -历史悠久的OHLC酒吧\r\n- `stock_history_trade` -历史贸易数据\r\n- `stock_history_quote` -历史报价数据\r\n\r\n**选项数据**\r\n\r\n- `option_list_symbols` -列出可选符号\r\n- `option_list_expirations` -列出某个符号的过期时间\r\n- `option_list_strikes` -列表因过期而罢工\r\n- `option_list_contracts` -列出期权合约\r\n- `option_snapshot_ohlc` -实时选项OHLC\r\n- `option_snapshot_greeks_all` -所有希腊人（δ、γ、θ、维加、ρ）\r\n- `option_snapshot_greeks_implied_volatility` -隐含波动性\r\n- `option_history_eod` -历史选项EOD数据\r\n- `option_history_greeks_all` -希腊历史数据\r\n\r\n**索引数据**\r\n\r\n- `index_list_symbols` -列出索引符号\r\n- `index_snapshot_price` -实时指数价格\r\n- `index_history_eod` -历史索引EOD数据\r\n\r\n**日历**\r\n\r\n- `calendar_open_today` -查看今天市场是否开放\r\n- `calendar_on_date` -检查市场是否在特定日期开放\r\n\r\n看 [Theta Data API文档](https://www.thetadata.net/) 有关参数和响应的完整详细信息。\r\n\r\n## 查询示例\r\n\r\n连接到MCP客户端后，您可以问：\r\n\r\n- “列出所有可用的股票代码”\r\n- “获取AAPL的当前OHLC数据”\r\n- “SPY的可用期权到期日是什么？”\r\n- “让我看看下周五到期的SPY 500电话的希腊人”\r\n- “今天市场开放吗？”\r\n\r\n## 发展\r\n\r\n### 预提交钩子\r\n\r\n此项目使用 [预承诺](https://pre-commit.com/) 跑 `ruff` 每次提交时自动进行linting和格式化。\r\n\r\n**安装程序（每个克隆一次）：**\r\n\r\n```bash\r\nuv run pre-commit install\r\n```\r\n\r\n钩子现在将在您提交更改时自动检查并修复代码格式。\r\n\r\n### 手动开发命令\r\n\r\n```bash\r\n# Run linting with uv\r\nuv run ruff check .\r\n\r\n# Format code with uv\r\nuv run ruff format .\r\n\r\n# Regenerate endpoints_by_subscription documentation\r\nuv run python generate_endpoint_docs.py\r\n```\r\n\r\n### 正在重新生成端点文档\r\n\r\n这 `generate_endpoint_docs.py` 脚本读取 `x-min-subscription` 场从 `openapiv3_updated.yaml` 并在中重新生成markdown文件 `endpoints_by_subscription/`。每个层文件显示该订阅级别及以下可用的所有端点（累积）：\r\n\r\n- `endpoints_free.md` -免费层端点\r\n- `endpoints_value.md` -免费+价值层端点\r\n- `endpoints_standard.md` -免费+价值+标准层端点\r\n- `endpoints_professional.md` -所有端点\r\n\r\n## 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件。\r\n\r\n## 资源\r\n\r\n- [FastMCP文档](https://gofastmcp.com/)\r\n- [Theta数据API](https://www.thetadata.net/)\r\n- [MCP协议](https://modelcontextprotocol.io/)\r\n",
+ "config": {
+  "thetadata": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/thetadata-mcp",
+    "run",
+    "server.py"
+   ],
+   "env": {
+    "THETADATA_BASE_URL": "http://127.0.0.1:25503/v3",
+    "THETADATA_TIMEOUT": "30.0"
+   }
+  }
+ }
+}

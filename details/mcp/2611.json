@@ -1,0 +1,24 @@
+{
+ "id": "2611",
+ "kind": "mcp",
+ "name": "mcp-server",
+ "fingerprint_md5": "0e54950f0de5a87f83b231e0b6ab15a7",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP服务器\r\n\r\n与AI API集成的MCP服务器实现，通过一个简单易用的工具提供网络搜索功能。\r\n\r\n## 特性\r\n\r\n- **人工智能集成**：通过API与人工智能模型直接集成\r\n- **网页搜索**：AI模型可以使用内置的网络搜索工具在网络上搜索当前信息\r\n- **单工具界面**：简单 `ai_model` 接受任何提示的工具\r\n- **柔性运输**：支持STDIO和HTTP传输\r\n- **生产就绪**：包括Docker支持和正确的错误处理\r\n\r\n## 工具\r\n\r\n- **ai模型**\r\n  - 向具有网络搜索功能的AI模型发送提示\r\n  - 输入：\r\n    - `prompt` （string）：发送给AI模型的提示或问题\r\n    - `maxTokens` （数字，可选）：要生成的最大令牌数（默认：16384，最大：16384）\r\n\r\n## 配置\r\n\r\n### 获取API密钥\r\n\r\n1. 注册API帐户\r\n1. 从仪表板生成API密钥\r\n1. 设置 `API_KEY` 环境变量\r\n\r\n### 使用Claude Desktop\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n#### NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"API_KEY\": \"YOUR_API_KEY_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 码头工人\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-server\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-e\",\r\n        \"API_KEY\",\r\n        \"mcp-server:latest\"\r\n      ],\r\n      \"env\": {\r\n        \"API_KEY\": \"YOUR_API_KEY_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用VS代码\r\n\r\n为了快速安装，请使用下面的一键安装按钮。..\r\n\r\n\r\n对于手动安装，请将以下JSON块添加到VS Code中的用户设置（JSON）文件中。您可以按 `Ctrl + Shift + P` 和打字 `Preferences: Open User Settings (JSON)`.\r\n\r\n您可以选择将其添加到名为的文件中 `.vscode/mcp.json` 在您的工作空间中。这将允许您与他人共享配置。\r\n\r\n> 请注意 `mcp` 中不需要密钥 `.vscode/mcp.json` 文件。\r\n\r\n#### NPX\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"inputs\": [\r\n      {\r\n        \"type\": \"promptString\",\r\n        \"id\": \"api_key\",\r\n        \"description\": \"API Key\",\r\n        \"password\": true\r\n      }\r\n    ],\r\n    \"servers\": {\r\n      \"mcp-server\": {\r\n        \"command\": \"npx\",\r\n        \"args\": [\"-y\", \"mcp-server\"],\r\n        \"env\": {\r\n          \"API_KEY\": \"${input:api_key}\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n### 先决条件\r\n\r\n- Node.js 18+\r\n- npm或纱线\r\n- API密钥\r\n\r\n### 安装\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone <repository-url>\r\ncd mcp-server\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Set your API key\r\nexport API_KEY=\"your-api-key-here\"\r\n```\r\n\r\n### 运行服务器\r\n\r\n#### STDIO模式（用于开发）\r\n\r\n```bash\r\nnpm run dev:stdio\r\n```\r\n\r\n#### HTTP模式\r\n\r\n```bash\r\nnpm run dev:http\r\n# or\r\nnpm start\r\n```\r\n\r\n### 建筑\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n## 示例用法\r\n\r\n服务器运行后，您可以使用 `ai_model` 带有任何提示的工具：\r\n\r\n```json\r\n{\r\n  \"name\": \"ai_model\",\r\n  \"arguments\": {\r\n    \"prompt\": \"What are the latest developments in AI?\",\r\n    \"maxTokens\": 4096\r\n  }\r\n}\r\n```\r\n\r\nAI模型将在需要时自动使用网络搜索来提供最新信息。\r\n\r\n## api参考\r\n\r\n### 工具：ai_model\r\n\r\n向具有网络搜索功能的AI模型发送提示。\r\n\r\n**参数：**\r\n\r\n- `prompt` （string，必填）：发送给AI模型的提示或问题\r\n- `maxTokens` （数字，可选）：要生成的最大令牌数（默认：16384，最大：16384）\r\n\r\n**退货：**\r\n\r\n- 人工智能模型的响应为文本，可能包括从网络搜索中收集的信息\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 支持\r\n\r\n有关问题和疑问，请在GitHub存储库上打开问题。\r\n",
+ "config": {
+  "mcp-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-server"
+   ],
+   "env": {
+    "API_KEY": "YOUR_API_KEY_HERE"
+   }
+  }
+ }
+}

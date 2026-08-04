@@ -1,0 +1,12 @@
+{
+ "id": "feishu-file",
+ "kind": "skill",
+ "name": "feishu-file",
+ "fingerprint_md5": "d5265c4b5f187082b30eb28ed09812bb",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Feishu File Skill\r\n\r\n通过飞书 API 管理文件上传和下载。\r\n\r\n## 前置条件\r\n\r\n- 先安装 `feishu-common`。\r\n- 此技能依赖 `../feishu-common/index.js` 获取 token 和 API 认证。\r\n\r\n## 命令\r\n\r\n### 发送文件\r\n上传本地文件并发送到聊天或用户。\r\n```bash\r\nnode skills/feishu-file/send.js --target <chat_id_or_user_id> --file <local_path>\r\n```\r\n\r\n### 仅上传\r\n上传文件并获取其 `file_key`（用于卡片或富文本）。\r\n```bash\r\nnode skills/feishu-file/upload.js --file <local_path>\r\n```\r\n\r\n### 下载文件\r\n从消息中下载文件资源。\r\n```bash\r\nnode skills/feishu-file/download.js --message-id <msg_id> --file-key <file_key> --output <local_path>\r\n```\r\n**注意：** Bot 必须有权访问该消息（在聊天中）。对于他人发送的文件，需要 `im:resource:read` 权限。",
+ "config": {}
+}

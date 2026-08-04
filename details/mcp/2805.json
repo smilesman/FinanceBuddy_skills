@@ -1,0 +1,25 @@
+{
+ "id": "2805",
+ "kind": "mcp",
+ "name": "defi",
+ "fingerprint_md5": "9d26c3fb08652de0deb632f11dd97d6b",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# 用于Claude桌面和光标的MCP DeFi代理\r\n\r\n使用 [模型上下文协议（MCP）](https://modelcontextprotocol.io).将Claude Desktop或Cursor连接到实时加密货币价格、钱包余额、掉期报价和链上分析。\r\n\r\n## 快速入门（独立演示）\r\n\r\n```bash\r\n# Get a free API key (200 free credits, no signup)\r\ncurl -X POST https://agent-gateway-kappa.vercel.app/api/keys/create\r\n\r\n# Run the demo\r\nAPI_KEY=gw_your_key node agent.js\r\n```\r\n\r\n## MCP与Claude Desktop的集成\r\n\r\n将DeFi MCP服务器添加到您的Claude Desktop配置中：\r\n\r\n**macOS：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"defi\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"defi-mcp@latest\"],\r\n      \"env\": {\r\n        \"API_GATEWAY\": \"https://agent-gateway-kappa.vercel.app\",\r\n        \"API_KEY\": \"gw_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动克劳德桌面。现在你可以问克劳德：\r\n\r\n- “ETH的当前价格是多少？”\r\n- “检查vitalik.eth的余额”\r\n- “给我1 ETH兑换USDC的掉期报价”\r\n- “以太坊目前的天然气价格是多少？”\r\n- “按市值显示顶级DeFi代币”\r\n\r\n## MCP与Cursor的集成\r\n\r\n添加 `.cursor/mcp.json` 在您的项目中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"defi\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"defi-mcp@latest\"],\r\n      \"env\": {\r\n        \"API_GATEWAY\": \"https://agent-gateway-kappa.vercel.app\",\r\n        \"API_KEY\": \"gw_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用的MCP工具\r\n\r\n|工具|说明|示例|\r\n|------|-------------|---------|\r\n| `get_prices` |500多种代币的实时价格|“什么是BTC、ETH、SOL价格？”|\r\n| `get_wallet_balance` |检查9条链上的钱包|“0xd8dA余额…”|\r\n| `get_swap_quote` |代币交换报价|“报价1 ETH→ USDC”|\r\n| `get_gas_prices` |任何区块链上的当前天然气价格|“以太坊天然气价格？”|\r\n| `get_token_info` |令牌元数据和统计数据|“告诉我有关AAVE的信息”|\r\n\r\n## 支持的链\r\n\r\n以太坊、Base、Polygon、Arbitrum、乐观主义、雪崩、BSC、Fantom、Solana\r\n\r\n## 使用的API\r\n\r\n|服务|端点|积分|\r\n|---------|----------|---------|\r\n|加密饲料| `/v1/crypto-feeds/prices` | 1 |\r\n|钱包API| `/v1/agent-wallet/balance/{chain}/{address}` | 1 |\r\n|冻伤钱包| `/v1/frostbyte-wallet/swap/quote` | 1 |\r\n|链上分析| `/v1/onchain-analytics/gas/{chain}` | 1 |\r\nDeFi交易 `/v1/defi-trading/prices` | 1 |\r\n\r\n## 尝试API（无代码）\r\n\r\n在浏览器中查看这些工具返回的数据：\r\n\r\n- [实时加密货币价格](https://api-catalog-three.vercel.app/tools/crypto-prices) --实时38令牌跟踪器\r\n- [IP地理位置查找](https://api-catalog-three.vercel.app/tools/ip-geolocation) --查找任何IP地址\r\n- [域名解析](https://api-catalog-three.vercel.app/tools/dns-lookup) --解析域记录\r\n- [所有免费工具](https://api-catalog-three.vercel.app/tools)\r\n\r\n## 免费层\r\n\r\n每个API密钥都附带 **200免费积分** （1个信用=1个API调用）。没有注册，没有信用卡。\r\n\r\n需要更多吗？ [充值USDC或门罗币→](https://api-catalog-three.vercel.app/pricing)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "defi": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "defi-mcp@latest"
+   ],
+   "env": {
+    "API_GATEWAY": "https://agent-gateway-kappa.vercel.app",
+    "API_KEY": "gw_your_key_here"
+   }
+  }
+ }
+}

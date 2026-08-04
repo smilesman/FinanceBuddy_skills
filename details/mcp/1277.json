@@ -1,0 +1,18 @@
+{
+ "id": "1277",
+ "kind": "mcp",
+ "name": "sql-schema",
+ "fingerprint_md5": "9406bda05b9beef91f3c710999b97f20",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# SQL架构MCP服务器\r\n\r\nMySQL模式文件HTTP经过MCP (Model Context Protocol) 作为服务器提供的工具。\r\n\r\n## 快速启动\r\n\r\n### 1.构建\r\n\r\n```bash\r\ngo build -o schemamcp .\r\n```\r\n\r\n### 2.创建配置文件\r\n\r\n`config.yaml` 创建：\r\n\r\n```yaml\r\ndatabases:\r\n  - name: main\r\n    type: mysql\r\n    schema_file: ./schemas/main.sql\r\n    description: メインデータベース\r\n```\r\n\r\n### 3.起动\r\n\r\n```bash\r\n# HTTPサーバーとして起動 (デフォルトポート: 8082)\r\n./schemamcp\r\n\r\n# カスタム設定ファイルを指定\r\n./schemamcp -config /path/to/config.yaml\r\n```\r\n\r\n起动后、`http://localhost:8082/mcp` 的MCP可以访问服务器。\r\n\r\n## MCP客户端设置\r\n\r\n### Claude Code 利用期间\r\n\r\n`.mcp.json` 创建：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sql-schema\": {\r\n      \"transport\": \"http\",\r\n      \"url\": \"http://localhost:8082/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 提供机能\r\n\r\n### 工具\r\n\r\n- **`list_tables`**：获取所有表列表\r\n- **`get_table_schema`**：获取特定表的架构信息\r\n- **`search_schema`**：从表列注释中查找关键字\r\n\r\n### 资源\r\n\r\n- **`schema://overview`**：所有数据库表概述\r\n- **`schema://table/{db}/{table}`**：特定表详细信息\r\n\r\n## 使用例\r\n\r\n```\r\n# テーブル一覧を表示\r\nlist_tablesツールを使って、全テーブルを表示してください\r\n\r\n# 特定テーブルのスキーマを取得\r\nusersテーブルのスキーマを教えてください\r\n\r\n# キーワード検索\r\n「QR」に関連するテーブルを検索してください\r\n```\r\n\r\n## 对应SQL构文\r\n\r\n- `CREATE TABLE` 文\r\n- 列定义（类型、NOT NULL、DEFAULT、COMMENT）\r\n- `PRIMARY KEY`, `UNIQUE KEY`, `INDEX`\r\n- 表格注释\r\n\r\n**未対応**：外键约束CHECK约束条件、触发器和视图\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "sql-schema": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:8082/mcp"
+  }
+ }
+}

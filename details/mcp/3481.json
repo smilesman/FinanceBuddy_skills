@@ -1,0 +1,21 @@
+{
+ "id": "3481",
+ "kind": "mcp",
+ "name": "hub",
+ "fingerprint_md5": "ac72cb2d35322c4ca16e264e7538f542",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP集线器🏪\r\n\r\n**MCP服务器应用商店** --从一个地方发现、搜索和安装MCP服务器。\r\n\r\n与其手动搜索GitHub并配置每台服务器，不如使用MCP Hub来准确找到所需内容并获得即时安装配置。\r\n\r\n## 特性\r\n\r\n- **搜索** --按关键字、功能或类别查找MCP服务器\r\n- **浏览** --探索15个以上类别的50多台服务器\r\n- **安装** --获取任何MCP客户端的复制粘贴配置\r\n- **提交** --将您自己的服务器添加到目录中（社区驱动）\r\n- **持久** --目录随着社区提交而增长\r\n\r\n## 安装\r\n\r\n```bash\r\npip install mcp-hub-server\r\n```\r\n\r\n## 使用Claude代码\r\n\r\n添加到您的 `.mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"hub\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-hub-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_servers` |按关键字搜索服务器|\r\n| `get_server_details` |完整细节+安装配置|\r\n| `list_categories` |浏览所有类别|\r\n| `list_servers` |列出服务器（可选按类别）|\r\n| `submit_server` |将新服务器添加到目录|\r\n| `get_install_config` |获取复制粘贴JSON配置|\r\n\r\n## 示例\r\n\r\n```\r\n\"Find me an MCP server for weather data\"\r\n\"What database servers are available?\"\r\n\"How do I install the GitHub MCP server?\"\r\n\"Show me all crypto and DeFi servers\"\r\n\"List all categories\"\r\n```\r\n\r\n## 预加载目录\r\n\r\n附带50多台服务器，包括：\r\n\r\n- **官方Anthropic服务器** （GitHub、文件系统、PostgreSQL等）\r\n- **公司服务器** （条纹、概念、线性、Docker、哨兵）\r\n- **社区服务器** 涵盖加密货币、天气、太空、农业等领域\r\n\r\n## 贡献\r\n\r\n直接通过提交新服务器 `submit_server` 工具，或打开PR将服务器添加到内置目录中。\r\n\r\n______________________________________________________________________\r\n\r\n## AiAgentKarl提供的更多MCP服务器\r\n\r\n|类别|服务器|\r\n|----------|---------|\r\n|🔗 区块链| [索拉纳](https://github.com/AiAgentKarl/solana-mcp-server) |\r\n| 🌍 数据| [天气](https://github.com/AiAgentKarl/weather-mcp-server) · [德国](https://github.com/AiAgentKarl/germany-mcp-server) · [农业](https://github.com/AiAgentKarl/agriculture-mcp-server) · [太空](https://github.com/AiAgentKarl/space-mcp-server) · [航空](https://github.com/AiAgentKarl/aviation-mcp-server) · [欧盟公司](https://github.com/AiAgentKarl/eu-company-mcp-server) |\r\n| 🔒 安全| [网络安全](https://github.com/AiAgentKarl/cybersecurity-mcp-server) · [策略网关](https://github.com/AiAgentKarl/agent-policy-gateway-mcp) · [审计跟踪](https://github.com/AiAgentKarl/agent-audit-trail-mcp) |\r\n| 🤖 代理基础设施| [记忆](https://github.com/AiAgentKarl/agent-memory-mcp-server) · [目录](https://github.com/AiAgentKarl/agent-directory-mcp-server) · [中心](https://github.com/AiAgentKarl/mcp-appstore-server) · [声誉](https://github.com/AiAgentKarl/agent-reputation-mcp-server) |\r\n| 🔬 研究| [学术的](https://github.com/AiAgentKarl/crossref-academic-mcp-server) · [LLM基准](https://github.com/AiAgentKarl/llm-benchmark-mcp-server) · [法律](https://github.com/AiAgentKarl/legal-court-mcp-server) |\r\n\r\n[→ 完整目录（40+台服务器）](https://github.com/AiAgentKarl)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "hub": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-hub-server"
+   ],
+   "env": {}
+  }
+ }
+}

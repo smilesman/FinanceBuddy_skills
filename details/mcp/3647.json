@@ -1,0 +1,24 @@
+{
+ "id": "3647",
+ "kind": "mcp",
+ "name": "sslmate",
+ "fingerprint_md5": "80eaec4bbad1781c141b3f90e7f73df5",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# SSLMate MCP服务器\r\n\r\n> 2025-07-02 |约书亚·赖特|与GitHub Copilot和克劳德·索内特合著4\r\n\r\n模型上下文协议（MCP）服务器，使用CertSpotter API提供SSL/TLS证书搜索功能。搜索证书透明度日志以发现任何域的证书，包括全面的子域发现。\r\n\r\n## 这个工具做什么\r\n\r\n此MCP服务器与Claude Desktop集成，提供强大的证书发现功能：\r\n\r\n- **证书搜索**：按域名在证书透明度日志中查找SSL/TLS证书\r\n- **子域发现**：搜索颁发给给定域的所有子域的证书（例如，查找所有 `*.example.com` 证书）\r\n- **详细信息**：获取全面的证书详细信息，包括DNS名称、颁发者、有效期等\r\n- **过期证书筛选**：从结果中包含或排除过期证书的选项\r\n- **实时数据**：通过CertSpotter API访问实时证书透明度日志数据\r\n\r\n## 需求\r\n\r\n- **Python 3.8或更高版本+**\r\n- **紫外线** 包管理器([安装uv](https://docs.astral.sh/uv/getting-started/installation/))\r\n- **SSLMessage API密钥** （可选-免费套餐可在 [SSLMate](https://sslmate.com/))\r\n- **MCP客户端** （用Claude Desktop测试）\r\n\r\n## MCP工具\r\n\r\n此服务器为Claude Desktop提供以下工具：\r\n\r\n### `search_certificates`\r\n\r\n在证书透明度日志中搜索SSL/TLS证书。\r\n\r\n**参数：**\r\n\r\n- `domain` （string，必填）：要搜索的域（例如“example.com”）\r\n- `include_subdomains` （布尔值，可选，默认值：false）：如果为true，则搜索所有子域的证书\r\n- `include_expired` （boolean，可选，默认值：false）：如果为true，则在结果中包含过期的证书\r\n- `limit` （整数，可选，默认值：100）：要返回的最大结果数（1-1000）\r\n\r\n## Claude桌面集成\r\n\r\n### 1.配置克劳德桌面\r\n\r\n将此服务器添加到您的Claude Desktop配置文件中：\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sslmate\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"/path/to/sslmate-mcp/sslmate_mcp.py\"],\r\n      \"env\": {\r\n        \"SSLMATE_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 2.重新启动克劳德桌面\r\n\r\n关闭并重新打开Claude Desktop以加载新服务器。\r\n\r\n### 3.验证集成\r\n\r\n在Claude Desktop中，您现在应该可以提出以下问题：\r\n\r\n- “搜索证书，例如.com”\r\n- “查找github的所有子域证书”\r\n- “显示我的域名.com的过期证书”\r\n\r\n## 故障排除和记录\r\n\r\n### 常见问题\r\n\r\n**服务器未出现在Claude Desktop中：**\r\n\r\n1. 检查中的文件路径 `claude_desktop_config.json`\r\n1. 确保紫外线已安装且可访问\r\n1. 验证服务器是否手动启动： `uv run sslmate_mcp.py`\r\n\r\n**API速率限制：**\r\n\r\n- 添加SSLGate API密钥以提高费率限制\r\n- 免费版允许合理使用以满足大多数需求\r\n\r\n**未返回任何结果：**\r\n\r\n- 尝试包含子域名： `include_subdomains=true`\r\n- 尝试包含过期的证书： `include_expired=true`\r\n- 验证域名是否正确\r\n\r\n### 日志记录\r\n\r\n默认情况下，服务器会登录到stderr以保持MCP协议的合规性。要启用文件日志记录，请执行以下操作：\r\n\r\n```bash\r\nexport LOG_TO_FILE=1\r\nuv run sslmate_mcp.py\r\n```\r\n\r\n这创建了一个 `sslmate-mcp.log` 当前目录中的文件。\r\n\r\n### 测试服务器\r\n\r\n直接测试MCP协议：\r\n\r\n```bash\r\n# Test basic functionality\r\npython test_mcp_protocol.py\r\n\r\n# Manual protocol test\r\necho '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"initialize\",\"params\":{\"protocolVersion\":\"2024-11-05\",\"capabilities\":{},\"clientInfo\":{\"name\":\"test\",\"version\":\"1.0\"}}}' | uv run sslmate_mcp.py\r\n```\r\n\r\n## 许可证\r\n\r\nMIT。有关详细信息，请参阅LICENSE文件。\r\n\r\n## SSLMate API公司\r\n\r\n本项目使用SSLGate API。您需要从获取API密钥 [SSLMate](https://sslmate.com) 使用此服务器。\r\n\r\n有关SSLMate API的更多信息，请访问：https://sslmate.com/api/\r\n",
+ "config": {
+  "sslmate": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "/path/to/sslmate-mcp/sslmate_mcp.py"
+   ],
+   "env": {
+    "SSLMATE_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "id": "1457",
+ "kind": "mcp",
+ "name": "geeknews-mcp-server",
+ "fingerprint_md5": "7499f526b6818769fa41091413e34935",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# GeekNews MCP服务器\r\n\r\n[](https://smithery.ai/server/@the0807/geeknews-mcp-server)\r\n\r\n这个项目 [极客新闻](https://news.hada.io)获取文章的Model Context Protocol（MCP）服务器。它是用Python实现的，使用Beautiful Soup执行Web抓取。为减少服务器负载，我们提供每天自动解析一次数据并将其存储在缓存中的功能。\r\n\r\n## 功能\r\n\r\n| | |\r\n|:-------------------------:|:-------------------------:|\r\n|||\r\n\r\n### “工具”（Tools）\r\n\r\n- `get_articles` 工具：从GeekNews获取文章的功能\r\n\r\n  - 可以指定文章类型（top、new、ask、show）和要返回的文章数量\r\n  - 每个响应都包含标题、URL、点、作者、时间、评论数量和排名信息。\r\n  - 使用缓存的数据减少服务器负载\r\n\r\n- `get_weekly_news` 工具：从GeekNews获取每周新闻的功能\r\n\r\n  - 可以指定特定的每周新闻ID或导入最近的每周新闻\r\n  - 提供每周新闻的标题、编号、ID、内容、URL、项目列表等信息\r\n  - 每个项目都包含标题、URL和排名信息\r\n  - 使用缓存的数据减少服务器负载\r\n\r\n### 缓存功能\r\n\r\n- 每天自动解析一次数据并将其保存在缓存中\r\n- 如果缓存的数据有效，请使用缓存的数据而不向GeekNews服务器请求\r\n- 缓存数据有效期为24小时，之后将自动刷新\r\n- 调度程序定期检查缓存的有效性，必要时更新\r\n\r\n## 使用方法\r\n\r\n- 使用Smithery安装\r\n\r\n  🚀 [极客新闻mcp服务器](https://smithery.ai/server/@the0807/geeknews-mcp-server)\r\n\r\n- 将服务器信息添加到MCP设置文件\r\n\r\n  ```json\r\n  {\r\n  \"mcpServers\": {\r\n     \"geeknews-mcp-server\": {\r\n        \"command\": \"npx\",\r\n        \"args\": [\r\n        \"-y\",\r\n        \"@smithery/cli@latest\",\r\n        \"run\",\r\n        \"@the0807/geeknews-mcp-server\",\r\n        \"--key\",\r\n        \"smithery에서 발급 받은 키\"\r\n        ]\r\n     }\r\n  }\r\n  }\r\n  ```\r\n\r\n## 本地安装方法\r\n\r\n1. 克隆\r\n\r\n   ```bash\r\n   git clone https://github.com/the0807/GeekNews-MCP-Server\r\n   cd GeekNews-MCP-Server\r\n   ```\r\n\r\n1. 用uv设置环境\r\n\r\n   ```bash\r\n   uv sync\r\n   ```\r\n\r\n1. 运行虚拟环境\r\n\r\n   ```bash\r\n   uv venv\r\n   source .venv/bin/activate\r\n   ```\r\n\r\n1. 使用MCP Inspector测试服务器\r\n\r\n   ```bash\r\n   uv run mcp\r\n   mcp dev main.py\r\n\r\n   # 터미널에 나오는 URL(MCP Inspector)로 접속하여 서버 테스트\r\n   ```\r\n\r\n## 代码结构\r\n\r\n- `src/models.py`：定义存储文章信息的数据类\r\n- `src/parser.py`：解析GeekNews网站的HTML以提取文章信息\r\n- `src/client.py`：从GeekNews网站获取数据的HTTP客户端\r\n- `src/config.py`：定义设置和常量\r\n- `src/cache.py`：提供缓存管理\r\n- `src/scheduler.py`：定期数据更新计划程序\r\n- `src/server.py`：实施MCP服务器\r\n- `main.py`：服务器运行入口\r\n\r\n> \\[！注意\\]\r\n>\r\n> - 此服务器依赖于GeekNews网站的HTML结构。如果网站结构发生更改，可能需要更新解析逻辑。\r\n> - 缓存数据位于用户的主目录下 `.cache/geeknews-mcp` 存储在文件夹中。\r\n",
+ "config": {
+  "geeknews-mcp-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@smithery/cli@latest",
+    "run",
+    "@the0807/geeknews-mcp-server",
+    "--key",
+    "smithery에서 발급 받은 키"
+   ],
+   "env": {}
+  }
+ }
+}

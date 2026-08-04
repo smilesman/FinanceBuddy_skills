@@ -1,0 +1,22 @@
+{
+ "id": "448",
+ "kind": "mcp",
+ "name": "sonic_pi_mcp",
+ "fingerprint_md5": "def231fedfeb292b47ceca2dbb01b8e1",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Sonic Pi MCP\r\n\r\n模型上下文协议（MCP）服务器 **[索尼克Pi](https://sonic-pi.net/)**用自然语言描述你的法学硕士客户的音乐；该模型生成Sonic Pi代码，该服务器将其发送 **开源协作**.使用随附的 **队列管理器** Sonic Pi中用于分段之间的交叉射击。\r\n\r\n## 特性\r\n\r\n- **`queue_segment`** --发送下一个完整的音乐片段（名为 `live_loop`s `use_bpm`等等）。\r\n- **`run_code`** --与 `queue_segment` （兼容性）。\r\n- **`stop_all`** --通过OSC进行硬停止(`/stop-all-jobs`)就像Sonic Pi的Stop一样。\r\n- **`play_note`** --快速测试笔记。\r\n- **资源** --DJ会话技巧、词汇和工具使用（从MCP客户端读取）。\r\n- **提示** `next_performance_segment` --帮助为更长的集合构建下一个块。\r\n- **环境** — `OSC_HOST`, `OSC_PORT`, `OSC_CODE_PATH`, `OSC_STOP_ALL_PATH`.\r\n\r\n## 先决条件\r\n\r\n- [索尼克Pi](https://sonic-pi.net/) v4.x\r\n- [Node.js](https://nodejs.org/) 18+ (`npx` / `node`)\r\n- 支持MCP的客户端（Cursor、Claude Desktop、带MCP的VS Code等）\r\n\r\n可选： [包子](https://bun.sh) 促进地方发展(`bun run dev`).\r\n\r\n## 一次性Sonic Pi设置（队列运行器）\r\n\r\n1. 打开Sonic Pi。\r\n1. 复制 **[sonic-pi-queue.rb](sonic-pi-queue.rb)** 进入缓冲区。\r\n1. 按 **跑** 让它继续运行。\r\n\r\n缓冲区在默认OSC端口上侦听，并在MCP发送的段之间交叉发送。\r\n\r\n## 安装MCP服务器\r\n\r\n```bash\r\nnpx -y sonic-pi-mcp\r\n```\r\n\r\n将您的客户指向以下命令 **标准** （见下文）。\r\n\r\n### 光标\r\n\r\n使用 **`~/.cursor/mcp.json`** 和 **`.cursor/mcp.json`** 在一个项目中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sonic_pi_mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"sonic-pi-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**本地克隆** （之后 `npm install` 或 `bun install` 和 `bun run build`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sonic_pi_mcp\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/absolute/path/to/sonic-pi-mcp/bin/cli.mjs\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**Bun无建筑** --一些客户忽略 `cwd`；使用 **绝对的** 通往 `src/server.ts`，或使用启动器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sonic_pi_mcp\": {\r\n      \"command\": \"/absolute/path/to/sonic-pi-mcp/bin/mcp-dev.sh\",\r\n      \"args\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n跑 `chmod +x bin/mcp-dev.sh` 一次。脚本更改为repo并运行 `bun run src/server.ts`.\r\n\r\n### 克劳德桌面版\r\n\r\n`~/Library/Application Support/Claude/claude_desktop_config.json` （Windows上的路径不同）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sonic_pi_mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"sonic-pi-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n对于一个 **本地克隆**，更喜欢 **`bin/mcp-dev.sh`** （见上文）如果你看到 `Module not found \"src/server.ts\"` 或 **`spawn bunx ENOENT`**。如果缓存了旧定义，请在应用程序中删除并重新添加MCP。\r\n\r\n### VS Code\r\n\r\n配置您的MCP扩展以运行 `npx` 随着 `-y` 和 `sonic-pi-mcp`, **标准** 运输，根据扩展文件。\r\n\r\n## 环境变量\r\n\r\n|变量|默认值|含义|\r\n| -------- | ------- | ------- |\r\n| `OSC_HOST` | `127.0.0.1` |Sonic Pi主机|\r\n| `OSC_PORT` | `4560` |Sonic Pi OSC端口|\r\n| `OSC_CODE_PATH` | `/run-code` |代码的OSC路径（必须与Sonic Pi缓冲区匹配）|\r\n| `OSC_STOP_ALL_PATH` | `/stop-all-jobs` |硬停车路径|\r\n\r\n允许 **传入OSC** 如果您从另一台机器连接，请使用Sonic Pi；集 `OSC_HOST` 因此。\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/abhishekjairath/sonic-pi-mcp.git\r\ncd sonic-pi-mcp\r\nbun install   # or npm install\r\nbun run build\r\nbun run dev\r\n```\r\n\r\nOSC烟雾测试（Sonic Pi+转轮运行）：\r\n\r\n```bash\r\nbun run test\r\n```\r\n\r\n### MCP检查员\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector\r\n```\r\n\r\n使用 `node` 有争论 `bin/cli.mjs` 此目录作为工作目录（之后 `bun run build`).\r\n\r\n## 故障排除\r\n\r\n- **没有声音** --Sonic Pi打开了吗？队列缓冲区正在运行？港口 **4560** 可达成的？\r\n- **无事发生** --Sonic Pi中启用了OSC； `OSC_HOST` / `OSC_PORT` 比赛。\r\n- **层层堆积** --使用 **`queue_segment`** 随着 **命名** `live_loop`s、 使用 **`stop_all`** 仅用于完全重置。\r\n- **`Module not found \"src/server.ts\"` （克劳德）** --使用 **`bin/mcp-dev.sh`** 作为 `command` 与空 `args`，或绝对路径；不要依赖 `cwd` 独自一人。\r\n- **`resources/list` / `prompts/list` → 未找到方法** --您使用的是只公开工具的旧版本。从这个仓库或npm重新安装/重启MCP，以便注册资源和提示。\r\n- **Sonic Pi日志中的Ruby错误** --生成的代码无法解析或运行；修复代码段（括号、示例、语法）并再次发送。队列运行器在失败时打印代码片段。\r\n\r\n## 许可证\r\n\r\nMIT——见 [许可证](LICENSE).\r\n",
+ "config": {
+  "sonic_pi_mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "sonic-pi-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

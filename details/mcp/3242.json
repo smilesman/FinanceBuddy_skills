@@ -1,0 +1,24 @@
+{
+ "id": "3242",
+ "kind": "mcp",
+ "name": "transport",
+ "fingerprint_md5": "dd98341dcc59af3f417848ff96609ab1",
+ "download_count": 0,
+ "category": "出行交通",
+ "tags": "",
+ "version": "",
+ "readme": "# 瑞典公共交通MCP服务器\r\n\r\n模型上下文协议（MCP）服务器，通过ResRobot API提供对瑞典公共交通信息的访问。该服务器允许AI助手检索瑞典公共交通的实时交通数据，以规划您从A到B的旅程。\r\n\r\n## 先决条件\r\n\r\n- Python 3.8+\r\n- UV包经理（负责本地开发）\r\n- 来自的ResRobot API密钥 [交通](https://www.trafiklab.se/api/resrobot-reseplanerare)\r\n- 谷歌云SDK（用于云运行部署）\r\n\r\n## 设置\r\n\r\n### 1.克隆仓库\r\n\r\n克隆此存储库并导航到以下目录：\r\n\r\n```bash\r\ngit clone\r\ncd sweden-public-transport-mcp-server\r\n```\r\n\r\n### 2.环境变量\r\n\r\n创建一个 `.env` 项目根目录中的文件：\r\n\r\n```bash\r\n# ResRobot API Configuration\r\nresbot_key=your_resrobot_api_key_here\r\n```\r\n\r\n## 地方发展\r\n\r\n### 在本地运行服务器\r\n\r\n1. **安装依赖项：**\r\n\r\n   ```bash\r\n   cd transport\r\n   uv sync\r\n   ```\r\n\r\n1. **运行本地MCP服务器：**\r\n\r\n   ```bash\r\n   uv run mcp_local.py\r\n   ```\r\n\r\n### Claude桌面配置（本地）\r\n\r\n将此添加到您的Claude Desktop配置文件（Claude Desktop的工作版本）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"transport\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/Users/jorpet/Documents/git/sweden-public-transport-mcp-server/transport\",\r\n        \"run\",\r\n        \"mcp_local.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 云部署\r\n\r\n### 部署到Google Cloud Run\r\n\r\n1. **部署到云运行：**\r\n   ```bash\r\n   gcloud run deploy mcp-server \\\r\n     --no-allow-unauthenticated \\\r\n     --region=us-central1 \\\r\n     --set-env-vars resbot_key=your_resrobot_api_key_here,local_run=false\r\n     --source .\r\n   ```\r\n\r\nObs：这是一种非常不安全的设置api密钥的方法。下一个版本将使用Google Secret Manager。\r\n\r\n2. **设置本地访问代理：**\r\n   ```bash\r\n   gcloud run services proxy mcp-server --region=us-central1\r\n   ```\r\n\r\n### Claude桌面配置（云运行）\r\n\r\n对于云部署版本，请将此添加到您的LLM配置（Claude桌面的工作版本）中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"transport_cloud_run\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-remote\", \"http://localhost:8080/mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 测试\r\n\r\n### 测试云运行部署\r\n\r\n使用提供的测试脚本验证您的Cloud Run部署：\r\n\r\n```bash\r\npython test_mcp_cloud_run.py\r\n```\r\n\r\n此脚本将：\r\n\r\n- 列出MCP服务器上的可用工具\r\n- 测试 `find_station_id_tool` 与“乌普萨拉”\r\n- 测试 `get_travel_options_tool` 带有示例站ID\r\n\r\n### 手动测试\r\n\r\n配置后，您还可以通过Claude Desktop手动测试这些工具：\r\n\r\n**获取旅行选项：**\r\n\r\n```\r\nWhat are the travel options from Uppsala to Stockholm?\r\n```\r\n\r\n## 可用工具\r\n\r\nMCP服务器为瑞典公共交通信息提供了两个主要工具：\r\n\r\n### `find_station_id_tool`\r\n\r\n使用ResRobot位置API按城市或车站名称查找车站ID。\r\n\r\n**参数：**\r\n\r\n- `city_name` （string，必填）：要搜索的城市或车站的名称\r\n\r\n**输入示例：**\r\n\r\n```json\r\n{\r\n  \"city_name\": \"Uppsala\"\r\n}\r\n```\r\n\r\n**输出示例：**\r\n\r\n```\r\nStation ID of Uppsala is 740000005\r\n\r\n```\r\n\r\n**Claude中的用法：**\r\n\r\n```\r\nFind the station ID for \"Stockholm\"\r\n```\r\n\r\n**克劳德回应：**\r\n该工具将返回斯德哥尔摩的车站信息，包括带有ID的斯德哥尔摩中央车站 `740000001`.\r\n\r\n______________________________________________________________________\r\n\r\n### `get_travel_options_tool`\r\n\r\n使用车站ID获取两个城市之间的旅行信息。\r\n\r\n**参数：**\r\n\r\n- `start_city_id` （string，必填）：出发城市的车站ID\r\n- `end_city_id` （string，必填）：目的地城市的车站ID\r\n\r\n**输入示例：**\r\n\r\n```json\r\n{\r\n  \"start_city_id\": \"740000005\",\r\n  \"end_city_id\": \"740000001\"\r\n}\r\n```\r\n\r\n**输出示例：**\r\n\r\n```\r\nTravel options from 740000005 to 740000001:\r\n1. Departure: 14:17 → Arrival: 14:55 (Duration: 38 minutes)\r\n2. Departure: 14:47 → Arrival: 15:25 (Duration: 38 minutes)\r\n3. Departure: 15:17 → Arrival: 15:55 (Duration: 38 minutes)\r\n```\r\n\r\n**Claude中的用法：**\r\n\r\n```\r\nWhat are the travel options from Uppsala to Stockholm?\r\n```\r\n\r\n**克劳德回应：**\r\n助理将：\r\n\r\n1. 先用 `find_station_id_tool` 查找乌普萨拉和斯德哥尔摩的车站ID\r\n1. 然后使用 `get_travel_options_tool` 使用找到的电台ID\r\n1. 向您展示格式化的出发时间、到达时间和行程持续时间\r\n\r\n**公用站ID：**\r\n\r\n- 斯德哥尔摩中央车站： `740000001`\r\n- 乌普萨拉中央车站： `740000005`\r\n- 哥德堡中央火车站： `740000002`\r\n- 马尔默中央火车站： `740000003`\r\n",
+ "config": {
+  "transport": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/Users/jorpet/Documents/git/sweden-public-transport-mcp-server/transport",
+    "run",
+    "mcp_local.py"
+   ],
+   "env": {}
+  }
+ }
+}

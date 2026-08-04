@@ -1,0 +1,22 @@
+{
+ "id": "2900",
+ "kind": "mcp",
+ "name": "mercadona",
+ "fingerprint_md5": "4df9cd144724de9e325395729b1737a1",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# Mercadona MCP服务器\r\n\r\n\r\n一 **MCP服务器** 为了 [Mercadona网上商店](https://tienda.mercadona.es).\r\n该服务器为人工智能助手（如Claude或Cursor）提供了管理杂货购物的超能力：搜索产品、构建购物车和分析历史记录。\r\n\r\n______________________________________________________________________\r\n\r\n## 🚀 快速开始\r\n\r\n将此添加到您的 `claude_desktop_config.json` 或光标MCP设置。无需手动安装！\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mercadona\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mercadona-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **首次运行：** 你需要登录。只需询问你的AI： **“让我登录梅尔卡多纳”** 并按照它给你的说明进行操作（它使用 `login` 工具）。\r\n\r\n______________________________________________________________________\r\n\r\n## ✨ 能力\r\n\r\n### 🛒 产品搜索和详细信息\r\n\r\n- **搜索**：按名称查找产品（例如“leche”、“hummus”）。服务器过滤掉不可用的项目。\r\n- **详情**：获取完整的规格、包装信息和营养事实。\r\n\r\n### 📦 完成购物车管理\r\n\r\n- **查看购物车**：查看您购物篮中的当前商品和总价。\r\n- **添加/删除**：添加单个项目或 **批量添加** 同时处理多个项目。\r\n- **清除**：一次性清空整个购物车。\r\n\r\n### 🧠 智能购物车（人工智能驱动）\r\n\r\n- **预测性购物**：The `calculate_smart_cart` 该工具分析您去年的订单，找出您定期购买的商品（例如每两周一次），并检查您是否需要补货。\r\n- **资源**：随时查看结果，网址为 `mercadona://smart_cart`.\r\n- **增量订单同步**：每次运行智能购物车都会首先检查Mercadona是否有新的可用订单，并且只下载尚未在本地缓存的订单。\r\n- **更快的重新计算**：以前下载的订单行从本地缓存中重复使用，以避免每次运行时重复调用API。\r\n\r\n### 📜 订单历史\r\n\r\n- **最近订单**：列出您最近购买的商品。\r\n- **资源**：在以下位置获取快速JSON转储 `mercadona://recent_orders`.\r\n\r\n### ⚡ 实时资源\r\n\r\n服务器暴露 **MCP资源**:\r\n|资源|描述|\r\n| :--- | :--- |\r\n| `mercadona://cart` |当前购物车的实时JSON视图。 |\r\n| `mercadona://smart_cart` |智能购物车算法的最新建议。 |\r\n| `mercadona://recent_orders` |你最近20个订单的清单。 |\r\n\r\n______________________________________________________________________\r\n\r\n## 🔐 认证\r\n\r\n此服务器需要有效的Mercadona会话(`MO-user` 令牌）和位置数据(`postal_code`, `warehouse_id`)工作。\r\n\r\n### 选项A：人工智能辅助（推荐）\r\n\r\n1. **问**：“让我登录梅尔卡多纳。”\r\n1. **跟随**：AI将使用 `login` 工具来指导你。它通常涉及：\r\n   - 打开浏览器进入登录页面。\r\n   - 您手动登录。\r\n   - AI从浏览器存储中获取凭据，并将其严格保存到您的本地计算机(`~/.mercadona_auth.json`).\r\n\r\n### 选项B：手动设置\r\n\r\n如果你更喜欢自己拿代币：\r\n\r\n1. 登录 [商店](https://tienda.mercadona.es).\r\n1. 打开 **开发人员工具（F12）** > **应用**.\r\n   - **本地存储**：复制的值 `MO-user`.\r\n   - **Cookie**：查找 `__mo_da` 并对其进行解码（它包含您的仓库/压缩包）。\r\n1. 创建 `~/.mercadona_auth.json`:\r\n   ```json\r\n   {\r\n       \"local_storage\": {\r\n           \"MO-user\": \"{\\\"token\\\": \\\"...\\\", \\\"uuid\\\": \\\"...\\\"}\"\r\n       },\r\n       \"location\": {\r\n           \"postal_code\": \"46001\",\r\n           \"warehouse_id\": \"4115\"\r\n       }\r\n   }\r\n   ```\r\n\r\n______________________________________________________________________\r\n\r\n## 🛠️ 配置\r\n\r\n您可以使用环境变量覆盖默认的身份验证文件位置：\r\n\r\n```json\r\n\"env\": {\r\n  \"MERCADONA_AUTH_FILE\": \"/absolute/path/to/my_auth.json\"\r\n}\r\n```\r\n\r\n### 智能购物车订单缓存\r\n\r\n为了支持增量订单同步，服务器将按客户UUID保存订单历史记录：\r\n\r\n- **路径**: `~/.mercadona_orders_cache_<uuid>.json`\r\n- **行为**:\r\n  - 在每一个 `calculate_smart_cart` 调用时，服务器会获取最近的订单，并只追加看不见的订单 `order.id` 条目。\r\n  - 缓存订单包括订单元数据+推荐引擎使用的准备订单行。\r\n  - 建议输出包括同步统计数据(`new order(s) downloaded` 和 `cached total`).\r\n- **为什么这很重要**:\r\n  - 加快重复的智能购物车呼叫。\r\n  - 减少到订单端点的重复网络流量。\r\n  - 在两次运行之间保持历史信号稳定，同时仍在吸收新的购买。\r\n\r\n## 👩‍💻 发展\r\n\r\n要从源代码运行，请执行以下操作：\r\n\r\n```bash\r\ngit clone https://github.com/aganoob/mercadona-mcp\r\ncd mercadona-mcp\r\nnpm install\r\nnpm run build\r\nnpm start\r\n```\r\n\r\n### 传统Python\r\n\r\n原始Python实现可在 `legacy_python/`.\r\n",
+ "config": {
+  "mercadona": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mercadona-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "973",
+ "kind": "mcp",
+ "name": "anndata-mcp-simple",
+ "fingerprint_md5": "f07f7cf48fd8a775d05724758a3409b3",
+ "download_count": 0,
+ "category": "数据库与数据",
+ "tags": "",
+ "version": "",
+ "readme": "# anndata mcp简单\r\n\r\n\r\n一段非常有趣的代码\r\n\r\n## 入门\r\n\r\n请参阅 [文档](https://anndata-mcp-simple.readthedocs.io),\r\n特别是 [API 文档](https://anndata-mcp-simple.readthedocs.io/en/latest/api.html).\r\n\r\n您还可以在上找到该项目 [BioContextAI](https://biocontext.ai)，生物医学MCP服务器的社区中心： [anndata mcp-simple在BioContextAI上的应用](https://biocontext.ai/registry/dschaub95/anndata-mcp-simple).\r\n\r\n## 安装\r\n\r\n您的系统上需要安装Python 3.10或更高版本。\r\n如果你没有安装Python，我们建议你安装 [紫外线](https://github.com/astral-sh/uv).\r\n\r\n安装anndata mcp simple有几个替代选项：\r\n\r\n### 1.使用 `uvx` 立即运行它\r\n\r\n发布到PyPI后：\r\n\r\n```bash\r\nuvx anndata_mcp_simple\r\n```\r\n\r\n或者从Git仓库：\r\n\r\n```bash\r\nuvx git+https://github.com/dschaub95/anndata-mcp-simple.git@main\r\n```\r\n\r\n### 2.将其包含在支持 `mcp.json` 标准\r\n\r\n如果您的MCP服务器已发布到PyPI，请使用以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"anndata-mcp-simple\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"anndata_mcp_simple\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果MCP服务器尚未发布到PyPI，请使用以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"anndata-mcp-simple\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"git+https://github.com/dschaub95/anndata-mcp-simple.git@main\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n对于纯本地开发（例如，在Cursor或VS Code中），请使用以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"anndata-mcp-simple\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--refresh\",\r\n        \"--from\",\r\n        \"path/to/repository\",\r\n        \"anndata_mcp_simple\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果要重用现有环境进行本地开发，请使用以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"anndata-mcp-simple\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"path/to/repository\", \"anndata_mcp_simple\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.通过安装 `pip`:\r\n\r\n```bash\r\npip install --user anndata_mcp_simple\r\n```\r\n\r\n### 4.安装最新开发版本：\r\n\r\n```bash\r\npip install git+https://github.com/dschaub95/anndata-mcp-simple.git@main\r\n```\r\n\r\n## 联系\r\n\r\n如果您发现错误，请使用 [问题跟踪系统](https://github.com/dschaub95/anndata-mcp-simple/issues).\r\n\r\n## 引用\r\n\r\n> t.b.a\r\n",
+ "config": {
+  "anndata-mcp-simple": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "anndata_mcp_simple"
+   ],
+   "env": {}
+  }
+ }
+}

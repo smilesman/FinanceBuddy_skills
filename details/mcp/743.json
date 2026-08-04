@@ -1,0 +1,27 @@
+{
+ "id": "743",
+ "kind": "mcp",
+ "name": "media-generator",
+ "fingerprint_md5": "c42e31d9c5dedaaff9209c0be0bc52cb",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# 媒体生成器MCP\r\n\r\n一个MCP（模型上下文协议）服务器，用于使用最先进的人工智能生成图像和视频。\r\n\r\n## 功能\r\n\r\n- **图像生成**通过 OpenRouter 使用 Nano Banana Pro （Gemini 3 Pro Image Preview） 从文本描述创建图像\r\n- **图像编辑**使用自然语言指令编辑现有图像\r\n- **动画 视频**通过 fal.ai 使用 Kling 2.6 Pro 将静态图像转换为视频\r\n- **工作流完成**直接从文本生成视频（文本→图像→视频）\r\n\r\n## 使用模型\r\n\r\n| 提供者 | 模型 |\r\n|----------|----------|---------|\r\n| 图像生成/编辑 | OpenRouter | `google/gemini-3-pro-image-preview` （Nano Banana Pro）|\r\n| 动画视频 | fal.ai | `fal-ai/kling-video/v2.6/pro/image-to-video` |\r\n\r\n## 要求\r\n\r\n- Python 3.10+\r\n- 账户 [开放路由](https://openrouter.ai) con API密钥\r\n- 账户 [fal.ai](https://fal.ai) con API密钥\r\n\r\n## 安装\r\n\r\n### 1. 克隆或下载项目\r\n\r\n```bash\r\ncd /path/to/media-generator-mcp\r\n```\r\n\r\n### 2. 创建虚拟环境 （推荐）\r\n\r\n```bash\r\npython -m venv venv\r\nsource venv/bin/activate  # Linux/macOS\r\n# oppure\r\n.\\venv\\Scripts\\activate   # Windows\r\n```\r\n\r\n### 3. 安装依赖关系\r\n\r\n```bash\r\npip install -r requirements.txt\r\n```\r\n\r\n### 4. 配置API密钥\r\n\r\n```bash\r\ncp .env.example .env\r\n# Modifica .env con le tue chiavi API\r\n```\r\n\r\n或者导出环境变量：\r\n\r\n```bash\r\nexport OPENROUTER_API_KEY=\"sk-or-v1-...\"\r\nexport FAL_KEY=\"...\"\r\n```\r\n\r\n## Claude 桌面配置\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"media-generator\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"/path/to/media-generator-mcp/server.py\"],\r\n      \"env\": {\r\n        \"OPENROUTER_API_KEY\": \"sk-or-v1-...\",\r\n        \"FAL_KEY\": \"...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用紫外线（替代）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"media-generator\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\", \"/path/to/media-generator-mcp\",\r\n        \"run\", \"server.py\"\r\n      ],\r\n      \"env\": {\r\n        \"OPENROUTER_API_KEY\": \"sk-or-v1-...\",\r\n        \"FAL_KEY\": \"...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 1. `image_generate` - 从文本生成图像\r\n\r\n从详细的文本描述创建图像。\r\n\r\n**参数 ：**\r\n\r\n- `prompt` （required）： 图片说明\r\n- `aspect_ratio`: `1:1`, `16:9`, `9:16`, `4:3`, `21:9` （默认值： `1:1`)\r\n- `image_size`: `1K`, `2K`, `4K` （默认值： `2K`)\r\n- `style_prompt`额外的风格说明\r\n\r\n**例如：**\r\n\r\n```\r\nGenera un'immagine di una citta futuristica al tramonto con grattacieli di vetro e macchine volanti\r\n```\r\n\r\n### 2. `image_edit` - 图像编辑\r\n\r\n按照文本说明编辑现有图像。\r\n\r\n**参数 ：**\r\n\r\n- `image_url` 哦 `image_base64` （必填）： 要编辑的图像\r\n- `edit_instructions` （需要）：修改什么\r\n- `aspect_ratio`, `image_size`如上所述\r\n\r\n**例如：**\r\n\r\n```\r\nModifica l'immagine cambiando il cielo in un tramonto drammatico con colori arancioni e viola\r\n```\r\n\r\n### 3. `video_animate` - 视频中的灵魂图像\r\n\r\n将静态图像转换为动画视频。\r\n\r\n**参数 ：**\r\n\r\n- `image_url` （required）： 要动画的图像 URL\r\n- `prompt` （required）： 想要的动作描述\r\n- `duration`: `5` 哦 `10` secondi（默认值： `5`)\r\n- `generate_audio`生成同步音频（默认： `true`)\r\n- `negative_prompt`： 避免什么\r\n\r\n**例如：**\r\n\r\n```\r\nAnima questa immagine con un lento zoom della camera, nuvole che si muovono nel cielo\r\n```\r\n\r\n### 4. `media_generate` -工作流完成文本到视频\r\n\r\n仅从文本生成完整视频。\r\n\r\n**参数 ：**\r\n\r\n- `prompt` （required） 场景描述\r\n- `animation_prompt`动画的具体说明\r\n- `duration`: `5` 哦 `10` 第二道菜\r\n- `generate_audio`：通用音频\r\n- `aspect_ratio`, `image_size`, `style_prompt`\r\n\r\n**例如：**\r\n\r\n```\r\nCrea un video di un gatto seduto su un davanzale che guarda la pioggia fuori dalla finestra.\r\nIl gatto gira lentamente la testa e sbatte le palpebre.\r\n```\r\n\r\n## 估计成本\r\n\r\n操作 | 大致成本 |\r\n|------------|---------------------|\r\n| 图像生成 | ~$0.15 |\r\n| 视频5s无音频 | ~$0.35 |\r\n|视频5s对比音频|~0.70美元|\r\n| 视频10s无音频 | ~$0.70 |\r\n|视频10秒对比音频| ~1.40美元|\r\n\r\n## 输出\r\n\r\n### 图片\r\n\r\n图像以格式返回 **base64 PNG**您可以通过解码base64来保存它们：\r\n\r\n```python\r\nimport base64\r\nwith open(\"image.png\", \"wb\") as f:\r\n    f.write(base64.b64decode(image_base64))\r\n```\r\n\r\n### 视频\r\n\r\n视频返回为 **直接 URL** MP4文件（托管在fal.ai）。URL有时限。\r\n\r\n## 故障排除\r\n\r\n### 错误“找不到OPENROUTER_API_KEY”\r\n\r\n确保设置了环境变量或文件 `.env`.\r\n\r\n### 错误“未找到FAL_KEY”\r\n\r\n检查 fal.ai 密钥的配置。\r\n\r\n### 错误 401/403\r\n\r\nAPI密钥可能无效或没有必要的权限。\r\n\r\n### 错误 402\r\n\r\n贷款不足。重新加载您的 OpenRouter 或 fal.ai 帐户。\r\n\r\n### 视频生成过程中超时\r\n\r\n视频可能需要30-120秒。如果超时持续，请尝试：\r\n\r\n- 将持续时间缩短至 5 秒\r\n- 关闭音频\r\n- 使用更简单的图像\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n",
+ "config": {
+  "media-generator": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/media-generator-mcp",
+    "run",
+    "server.py"
+   ],
+   "env": {
+    "OPENROUTER_API_KEY": "sk-or-v1-...",
+    "FAL_KEY": "..."
+   }
+  }
+ }
+}

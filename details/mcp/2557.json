@@ -1,0 +1,24 @@
+{
+ "id": "2557",
+ "kind": "mcp",
+ "name": "grants-gov",
+ "fingerprint_md5": "522284fff0c0e7c6e5aad7ca28f3b2da",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Grants.gov API MCP服务器\r\n\r\n模型上下文协议（MCP）服务器，提供对Grants.gov API的访问，用于搜索和检索联邦拨款机会。\r\n\r\n## 特性\r\n\r\n此MCP服务器使Claude能够：\r\n\r\n- 在所有机构中搜索联邦拨款机会\r\n- 检索有关特定机会的详细信息\r\n- 分析融资趋势和模式\r\n- 按关键字、机构、状态、资金类别等查询\r\n- 从整个联邦政府获得开放机会\r\n\r\n## 工具\r\n\r\n### 核心工具\r\n\r\n1. **搜索机会** -使用全面的筛选选项搜索资助机会\r\n\r\n   - 标题和描述中的关键字\r\n   - 联邦机构代码（HHS、DOE、NSF等）\r\n   - 机会状态（预测、发布、关闭、存档）\r\n   - 资金类别和工具\r\n   - 资格要求\r\n   - 协助列表编号（ALN）\r\n   - 每个查询最多支持1000个结果\r\n\r\n1. **获取机会_详细信息** -按ID获取特定机会的完整信息\r\n\r\n   - 完全资格要求\r\n   - 申请截止日期\r\n   - 资金数额\r\n   - 联系方式\r\n   - 应用说明\r\n\r\n### 效率工具\r\n\r\n3. **搜索机会灯** -轻量级搜索仅返回基本字段\r\n\r\n   - 减少大型结果集的响应大小\r\n   - 返回：机会ID、机会编号、机会标题、机构名称、开放日期、关闭日期、估计资金、机会状态\r\n\r\n1. **分析机会趋势** -服务器端趋势分析和聚合\r\n\r\n   - 在服务器端处理多达1000个机会\r\n   - 返回汇总摘要，包括：\r\n     - 机会总数和估计资金\r\n     - 按联邦机构分配\r\n     - 按资金类别分布\r\n     - 按机会状态分布\r\n     - 机会标题中的常见主题\r\n   - 设计用于在分析大型数据集时避免上下文限制\r\n\r\n## 安装\r\n\r\n### 使用Docker（推荐）\r\n\r\n1. 构建Docker镜像：\r\n\r\n```bash\r\ndocker build -t grants-gov-mcp .\r\n```\r\n\r\n2. 添加到克劳德代码：\r\n\r\n```bash\r\nclaude mcp add --transport stdio -s user grants-gov -- docker run -i --rm grants-gov-mcp\r\n```\r\n\r\n3. 添加到克劳德桌面(`claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"grants-gov\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"grants-gov-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 直接使用Python\r\n\r\n1. 安装依赖项：\r\n\r\n```bash\r\npip install -r requirements.txt\r\n```\r\n\r\n2. 添加到克劳德代码：\r\n\r\n```bash\r\nclaude mcp add --transport stdio -s user grants-gov -- python /path/to/server.py\r\n```\r\n\r\n## 使用示例\r\n\r\n### 按关键字搜索机会\r\n\r\n```\r\nFind current grant opportunities related to climate change\r\n```\r\n\r\n### 按机构搜索\r\n\r\n```\r\nWhat grant opportunities are currently open from the Department of Energy?\r\n```\r\n\r\n### 分析融资趋势\r\n\r\n```\r\nAnalyze health-related grant opportunities from HHS over the past year\r\n```\r\n\r\n### 获取具体机会详细信息\r\n\r\n```\r\nGet details for grant opportunity EPA-R-001\r\n```\r\n\r\n### 使用多个筛选器进行搜索\r\n\r\n```\r\nFind forecasted and posted opportunities from NSF in the education category\r\n```\r\n\r\n## API详细信息\r\n\r\n### 不要求进行验证\r\n\r\nGrants.gov search2和fetchOpportunity端点不需要身份验证或API密钥。\r\n\r\n### 机会状态\r\n\r\n- **预测的** -未来的机会尚未开放申请\r\n- **发布** -目前正在接受申请\r\n- **关闭** -不再接受申请\r\n- **归档** -历史机遇\r\n\r\n### 通用机构代码\r\n\r\n- HHS-卫生与公众服务部\r\n- DOE-能源部\r\n- 美国国家科学基金会\r\n- ED-教育部\r\n- USDA-农业部\r\n- 美国国防部\r\n- 美国国家航空航天局\r\n- 还有更多。..\r\n\r\n### 融资工具\r\n\r\n- G-格兰特\r\n- CA-合作协议\r\n- PC-采购合同\r\n- O-其他\r\n\r\n## Grants.gov搜索参数\r\n\r\nAPI支持多种搜索参数：\r\n\r\n- **关键词** -标题和描述中的文本搜索\r\n- **oppNum** -具体机会编号\r\n- **机构** -联邦机构代码（管道分隔）\r\n- **状态** -机会状态（管道分隔）\r\n- **基金类别** -资金类别代码（管道分隔）\r\n- **融资工具** -融资工具类型\r\n- **资格** -符合条件的申请人类型\r\n- **比对序列** -援助列表编号\r\n- **排序依据** -用于对结果进行排序的字段\r\n- **行** -结果数量（最多1000个）\r\n- **startRecordNum** -分页偏移\r\n\r\n## 发展\r\n\r\n服务器是使用以下方式构建的：\r\n\r\n- Python 3.11+\r\n- MCP-SDK\r\n- Grants.gov API v1\r\n\r\n## 实用链接\r\n\r\n- [Grants.gov](https://www.grants.gov/)\r\n- [Grants.gov API指南](https://www.grants.gov/api/api-guide)\r\n- [Search2 API文档](https://grants.gov/api/common/search2)\r\n- [模型上下文协议](https://modelcontextprotocol.io/)\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 相关项目\r\n\r\n- [MCP NIH记者](https://github.com/jhalsey87/MCP_NIH_Reporter) -美国国立卫生研究院研究奖\r\n- [MCP NSF奖](https://github.com/jhalsey87/MCP_NSF_Awards) -NSF研究奖\r\n",
+ "config": {
+  "grants-gov": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "grants-gov-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "id": "1509",
+ "kind": "mcp",
+ "name": "jenkins-mcp",
+ "fingerprint_md5": "dda84c9329bd9d220a32072008ac1c06",
+ "download_count": 0,
+ "category": "CI CD",
+ "tags": "",
+ "version": "",
+ "readme": "# 詹金斯MCP\r\n\r\n[](https://smithery.ai/server/@kjozsa/jenkins-mcp)\r\n用于管理Jenkins操作的MCP服务器。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/7j3zk84u5p\">\r\n  \r\n</a>\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Jenkins MCP for Claude Desktop [史密瑟里](https://smithery.ai/server/@kjozsa/jenkins-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @kjozsa/jenkins-mcp --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\nuvx install jenkins-mcp\r\n```\r\n\r\n## 配置\r\n\r\n使用以下JSON配置片段添加MCP服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"jenkins-mcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"jenkins-mcp\"],\r\n      \"env\": {\r\n        \"JENKINS_URL\": \"https://your-jenkins-server/\",\r\n        \"JENKINS_USERNAME\": \"your-username\",\r\n        \"JENKINS_PASSWORD\": \"your-password\",\r\n        \"JENKINS_USE_API_TOKEN\": \"false\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## CSRF碎屑处理\r\n\r\nJenkins使用“面包屑”（必须包含在POST请求中的令牌）实现CSRF保护。此MCP服务器以两种方式处理CSRF面包屑：\r\n\r\n1. **默认模式**：自动获取CSRF面包屑并将其包含在构建请求中\r\n\r\n   - 使用会话Cookie来维护网络会话\r\n   - 在幕后处理所有CSRF保护\r\n\r\n1. **API令牌模式**：使用不受CSRF保护的Jenkins API令牌\r\n\r\n   - 集 `JENKINS_USE_API_TOKEN=true`\r\n   - 集 `JENKINS_PASSWORD` 到API令牌而不是密码\r\n   - 与Jenkins 2.96+一起使用，这不需要API令牌身份验证的碎屑\r\n\r\n您可以在Jenkins中生成API令牌：User→ 配置→ API代币→ 添加新令牌\r\n\r\n## 特性\r\n\r\n- 列出Jenkins工作\r\n- 使用可选参数构建触发器\r\n- 检查构建状态\r\n- 用于安全访问API的CSRF碎屑处理\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nuv pip install -r requirements.txt\r\n\r\n# Run in dev mode with Inspector\r\nmcp dev jenkins_mcp/server.py\r\n```\r\n",
+ "config": {
+  "jenkins-mcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "jenkins-mcp"
+   ],
+   "env": {
+    "JENKINS_URL": "https://your-jenkins-server/",
+    "JENKINS_USERNAME": "your-username",
+    "JENKINS_PASSWORD": "your-password",
+    "JENKINS_USE_API_TOKEN": "false"
+   }
+  }
+ }
+}

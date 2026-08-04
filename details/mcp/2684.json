@@ -1,0 +1,24 @@
+{
+ "id": "2684",
+ "kind": "mcp",
+ "name": "research-papers",
+ "fingerprint_md5": "4261a4cc4f5f738978018a23c0223588",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# 研究论文MCP服务器\r\n\r\n\r\n该项目是一个用Python编写的模型上下文协议（MCP）服务器，作为学术论文库的智能接口，特别是arXiv API。它允许像Claude这样的大型语言模型（LLMs）搜索和检索学术论文。\r\n\r\n## 特性\r\n\r\n此服务器向LLM公开了一套工具，使其能够：\r\n\r\n- **`search_papers`**：对arXiv等来源的论文进行一般主题搜索。\r\n- **`find_papers_by_author`**：从arXiv等来源查找特定作者的最新论文。\r\n- **`get_latest_from_category`**：浏览给定arXiv类别中的最新提交（例如。， `cs.LG`).\r\n- **`get_paper_by_id`**：通过arXiv ID获取一篇论文的完整细节。\r\n- **`get_papers_by_ids`**：通过arXiv ID高效获取论文列表的详细信息。\r\n\r\n## 需求\r\n\r\n- Python 3.10+\r\n- [紫外线](https://github.com/astral-sh/uv) （用于环境和包装管理）\r\n- 类似MCP主机 [Claude桌面版](https://www.claude.ai/download)\r\n\r\n## 设置和安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动为Claude Desktop安装此研究论文MCP服务器 [史密瑟里](https://smithery.ai/server/@candenizkocak/research-papers-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @candenizkocak/research-papers-mcp-server --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n1. **克隆存储库：**\r\n\r\n   ```bash\r\n   git clone https://github.com/candenizkocak/research-papers-mcp-server.git research-papers-mcp-server\r\n   cd research-papers-mcp-server\r\n   ```\r\n\r\n1. **创建虚拟环境并安装依赖项：**\r\n\r\n   ```bash\r\n   uv venv\r\n   source .venv/bin/activate  # On Windows, use .venv\\Scripts\\activate\r\n   uv sync\r\n   ```\r\n\r\n   *（注： `uv sync` 将从安装依赖项 `pyproject.toml` 文件）。*\r\n\r\n## 使用Claude for Desktop\r\n\r\n1. 找到通往你的绝对之路 `research-papers-mcp-server` 目录。\r\n\r\n1. 打开Claude for Desktop配置文件(`claude_desktop_config.json`):\r\n\r\n   - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n1. 添加服务器配置，用绝对路径替换占位符：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"research-papers\": {\r\n         \"command\": \"uv\",\r\n         \"args\": [\r\n           \"--directory\",\r\n           \"/ABSOLUTE/PATH/TO/research-papers-mcp-server\",\r\n           \"run\",\r\n           \"arxiv_server.py\"\r\n         ]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. 完全重新启动Claude for Desktop。\r\n\r\n## 示例提示\r\n\r\n- **常规搜索**：“查找关于‘专家模型混合’的论文。”\r\n- **作者搜索**：“杰弗里·辛顿的最新论文是什么？”\r\n- **类别搜索**：“arXiv上cs.LG类别有什么新内容？”\r\n- **单一ID查找**“跟我说说arXiv论文1706.03762。”\r\n- **多ID查找**：“给我2307.09288和2203.02155号文件的详细信息。”\r\n\r\n## 致谢\r\n\r\n感谢arXiv使用其开放访问互操作性。\r\n\r\n## 合规说明\r\n\r\n该项目的开发人员和用户有责任熟悉官方 [arXiv API使用条款](https://arxiv.org/help/api/tou.html), [API基础](https://arxiv.org/help/api/basics.html)，以及 [API用户手册](https://arxiv.org/help/api/user-manual.html) 确保完全遵守arXiv的政策，包括任何费率限制或使用限制。\r\n",
+ "config": {
+  "research-papers": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/ABSOLUTE/PATH/TO/research-papers-mcp-server",
+    "run",
+    "arxiv_server.py"
+   ],
+   "env": {}
+  }
+ }
+}

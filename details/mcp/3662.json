@@ -1,0 +1,22 @@
+{
+ "id": "3662",
+ "kind": "mcp",
+ "name": "trademe",
+ "fingerprint_md5": "78450d79b03c7af355a9f3379786dd67",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Trade Me MCP服务器\r\n\r\nMCP（模型上下文协议）服务器，允许AI助手使用自然语言搜索Trade Me列表。不需要API密钥。\r\n\r\n## 设置\r\n\r\n### 先决条件\r\n\r\n- Node.js 18+\r\n\r\n### 安装\r\n\r\n```bash\r\ncd /path/to/TradeMeMCP\r\nnpm install\r\n```\r\n\r\n### 添加到克劳德代码\r\n\r\n创建或编辑 `.mcp.json` 在项目根目录中（或 `~/.claude/.mcp.json` 全球访问）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"trademe\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"/path/to/TradeMeMCP/src/index.ts\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动Claude Code以获取新服务器。\r\n\r\n## 工具\r\n\r\n### search_trademe\r\n\r\n在所有Trade Me市场类别中进行一般搜索——电子产品、服装、收藏品等。\r\n\r\n**参数：** `search_string` （必填）， `category`, `sort_order`, `condition`, `price_min`, `price_max`, `buy_now`, `region`, `page`, `rows`\r\n\r\n**示例提示：**\r\n\r\n- “给我找个200美元以下的二手帐篷”\r\n- “在惠灵顿搜索PS5控制器”\r\n- “今天有哪些任天堂Switch游戏上市？”\r\n\r\n### 搜索引擎\r\n\r\n在Trade Me Motors中搜索带有品牌/型号/年份过滤的车辆。\r\n\r\n**参数：** `search_string`, `make`, `model`, `year_min`, `year_max`, `price_min`, `price_max`, `odometer_min`, `odometer_max`, `transmission`, `body_style`, `sort_order`, `region`, `page`, `rows`\r\n\r\n**示例提示：**\r\n\r\n- “查找3万美元以下、行驶里程不到10万公里的自动SUV”\r\n- “给我看看2018年或更新的丰田Hiluxes”\r\n\r\n### 搜索_财产\r\n\r\n在Trade Me Property搜索住宅列表。\r\n\r\n**参数：** `search_string`, `price_min`, `price_max`, `bedrooms_min`, `bedrooms_max`, `bathrooms_min`, `property_type`, `district`, `region`, `sort_order`, `page`, `rows`\r\n\r\n**示例提示：**\r\n\r\n- “惠灵顿价值80万美元以下的三居室房屋”\r\n- “奥克兰待售公寓，带2间以上浴室”\r\n\r\n### get_list\r\n\r\n获取特定列表的完整详细信息，包括描述、照片、卖家信息和出价历史。\r\n\r\n**参数：** `listing_id` （必填）\r\n\r\n**示例提示：**\r\n\r\n- “显示第一个列表的完整细节”\r\n- “获取有关列表5858861442的更多信息”\r\n\r\n### get_类别\r\n\r\n浏览Trade Me的类别树，发现类别编号，以便进行更有针对性的搜索。\r\n\r\n**参数：** `category_number` （可选--顶级类别省略）\r\n\r\n**示例提示：**\r\n\r\n- “Trade Me有哪些类别？”\r\n- “显示电子产品下的子类别”\r\n\r\n## 提示\r\n\r\n- **新上市：** 要求按最新优先排序的结果——该工具支持 `StartDateDesc` 排序顺序，Claude可以按列表日期进行过滤。\r\n- **分页：** 每页显示25个结果。让克劳德“显示更多”或“下一页”继续浏览。\r\n- **细化：** 你可以通过对话来优化搜索——“更便宜的”、“只在奥克兰”、“只有使用过的条件”。\r\n- **跨类别：** 你不需要知道某样东西在哪个Trade Me部分。只需描述你想要什么。\r\n\r\n## 项目结构\r\n\r\n```\r\nsrc/\r\n  index.ts          — MCP server setup and tool registration\r\n  api.ts            — Trade Me API client\r\n  formatters.ts     — Response formatting (JSON → readable text)\r\n  tools/\r\n    search.ts       — search_trademe tool\r\n    motors.ts       — search_motors tool\r\n    property.ts     — search_property tool\r\n    listing.ts      — get_listing tool\r\n    categories.ts   — get_categories tool\r\n```\r\n",
+ "config": {
+  "trademe": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "tsx",
+    "/path/to/TradeMeMCP/src/index.ts"
+   ],
+   "env": {}
+  }
+ }
+}

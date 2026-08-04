@@ -1,0 +1,24 @@
+{
+ "id": "3703",
+ "kind": "mcp",
+ "name": "zendesk",
+ "fingerprint_md5": "96e89e217a985823b20c0aca2fdd675a",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Zendesk MCP服务器\r\n\r\n\r\nZendesk的模型上下文协议服务器。\r\n\r\n> **注：** 这是一把叉子 [reminia/zendesk mcp服务器](https://github.com/reminia/zendesk-mcp-server) 添加以下内容：\r\n>\r\n> - `search_tickets` 按文本、筛选器、自定义字段和日期范围搜索票证的工具\r\n\r\n此服务器提供了与Zendesk的全面集成。它提供：\r\n\r\n- 用于检索和管理Zendesk票证和评论的工具\r\n- **门票搜索** 支持自定义字段、筛选器和日期范围\r\n- 票务分析和响应起草的专门提示\r\n- 完全访问Zendesk帮助中心的文章作为知识库\r\n\r\n\r\n## 先决条件\r\n\r\n- **[紫外线](https://docs.astral.sh/uv/)** -Python包管理器（必填）\r\n\r\n  如果没有，请安装uv：\r\n\r\n  ```bash\r\n  # macOS/Linux\r\n  curl -LsSf https://astral.sh/uv/install.sh | sh\r\n\r\n  # Or with Homebrew\r\n  brew install uv\r\n  ```\r\n\r\n## 设置\r\n\r\n1. **克隆仓库** 并记下完整路径（您需要它进行配置）：\r\n\r\n   ```bash\r\n   git clone <repo-url> /path/to/zendesk-mcp-server\r\n   ```\r\n\r\n1. **构建项目：**\r\n\r\n   ```bash\r\n   cd /path/to/zendesk-mcp-server\r\n   uv venv && uv pip install -e .\r\n   ```\r\n\r\n1. **配置Zendesk凭据** 在一个 `.env` 文件：\r\n\r\n   ```bash\r\n   cp .env.example .env\r\n   # Edit .env with your Zendesk subdomain, email, and API key\r\n   ```\r\n\r\n1. **在Claude桌面中配置** （或克劳德代码）：\r\n\r\n   添加到MCP设置中，替换 `/path/to/zendesk-mcp-server` 随着 **绝对路径** 到您克隆repo的位置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n      \"zendesk\": {\r\n          \"command\": \"uv\",\r\n          \"args\": [\r\n              \"--directory\",\r\n              \"/path/to/zendesk-mcp-server\",\r\n              \"run\",\r\n              \"zendesk\"\r\n          ]\r\n      }\r\n  }\r\n}\r\n```\r\n\r\n**示例路径：**\r\n\r\n- macOS： `/Users/yourname/dev/zendesk-mcp-server`\r\n- Linux： `/home/yourname/projects/zendesk-mcp-server`\r\n- 窗户： `C:\\\\Users\\\\yourname\\\\dev\\\\zendesk-mcp-server`\r\n\r\n## zendesk帮助技能\r\n\r\n这 `zendesk-help` skill提供搜索和管理Zendesk票证的工具。如果你上传 `SKILL.md` 文件到克劳德桌面，您可以使用 `zendesk-help` 搜索和管理门票的技能。这将使克劳德对zendesk mcp服务器的使用更加无缝。\r\n\r\n## 资源\r\n\r\n- zendesk://knowledge-base，访问整个帮助中心文章。\r\n\r\n## 提示\r\n\r\n### 分析票\r\n\r\n分析Zendesk票证并提供票证的详细分析。\r\n\r\n### 草稿票响应\r\n\r\n起草对Zendesk票证的响应。\r\n\r\n## 工具\r\n\r\n### 获取门票\r\n\r\n获取支持分页的最新门票\r\n\r\n- 输入：\r\n\r\n  - `page` （整数，可选）：页码（默认为1）\r\n  - `per_page` （整数，可选）：每页票数，最多100张（默认为25张）\r\n  - `sort_by` （字符串，可选）：按-created_at、updated_at、优先级或状态排序的字段（默认为created_at）\r\n  - `sort_order` （字符串，可选）：排序顺序-asc或desc（默认为desc）\r\n\r\n- 输出：返回一个包含基本字段的票证列表，包括id、主题、状态、优先级、描述、时间戳和受让人信息，以及分页元数据\r\n\r\n### 获取门票\r\n\r\n通过ID检索Zendesk票证\r\n\r\n- 输入：\r\n  - `ticket_id` （整数）：要检索的票证的ID\r\n\r\n### 获取门票_备注\r\n\r\n按ID检索Zendesk票证的所有评论\r\n\r\n- 输入：\r\n  - `ticket_id` （整数）：用于获取评论的票证的ID\r\n\r\n### 创建门票\r\n\r\n在现有Zendesk票证上创建新注释\r\n\r\n- 输入：\r\n  - `ticket_id` （整数）：要评论的票的ID\r\n  - `comment` （string）：要添加的评论文本/内容\r\n  - `public` （boolean，可选）：注释是否应公开（默认为true）\r\n\r\n### 创建_票\r\n\r\n创建新的Zendesk票证\r\n\r\n- 输入：\r\n  - `subject` （string）：门票主题\r\n  - `description` （string）：票务描述\r\n  - `requester_id` （整数，可选）\r\n  - `assignee_id` （整数，可选）\r\n  - `priority` （字符串，可选）：其中之一 `low`, `normal`, `high`, `urgent`\r\n  - `type` （字符串，可选）：其中之一 `problem`, `incident`, `question`, `task`\r\n  - `tags` （array\\[string\\]，可选）\r\n  - `custom_fields` （数组\\[对象\\]，可选）\r\n\r\n### update_ticket\r\n\r\n更新现有Zendesk票证上的字段（例如，状态、优先级、受让人）\r\n\r\n- 输入：\r\n  - `ticket_id` （整数）：要更新的票证的ID\r\n  - `subject` （字符串，可选）\r\n  - `status` （字符串，可选）：其中之一 `new`, `open`, `pending`, `on-hold`, `solved`, `closed`\r\n  - `priority` （字符串，可选）：其中之一 `low`, `normal`, `high`, `urgent`\r\n  - `type` （字符串，可选）\r\n  - `assignee_id` （整数，可选）\r\n  - `requester_id` （整数，可选）\r\n  - `tags` （array\\[string\\]，可选）\r\n  - `custom_fields` （数组\\[对象\\]，可选）\r\n  - `due_at` （字符串，可选）：ISO8601日期时间\r\n\r\n### 搜索门票\r\n\r\n使用支持文本搜索、过滤器、自定义字段和日期范围的查询语法搜索Zendesk票证。\r\n\r\n- 输入：\r\n\r\n  - `query` （字符串，可选）：在主题/描述中搜索的文本\r\n  - `status` （字符串，可选）：按状态筛选- `new`, `open`, `pending`, `hold`, `solved`, `closed`\r\n  - `priority` （字符串，可选）：按优先级筛选- `low`, `normal`, `high`, `urgent`\r\n  - `assignee` （字符串，可选）：按受让人电子邮件筛选\r\n  - `requester` （字符串，可选）：按请求者电子邮件筛选\r\n  - `tags` （array\\[string\\]，可选）：按标签筛选\r\n  - `custom_field_id` （整数，可选）：要搜索的自定义字段ID\r\n  - `custom_field_value` （字符串，可选）：要在自定义字段中匹配的值\r\n  - `created_after` （字符串，可选）：ISO日期-在此日期之后创建的票证\r\n  - `created_before` （字符串，可选）：ISO日期-在此日期之前创建的票证\r\n  - `sort_by` （字符串，可选）：排序依据的字段- `created_at`, `updated_at`, `priority`, `status` （默认为 `updated_at`)\r\n  - `sort_order` （字符串，可选）：排序顺序- `asc` 或 `desc` （默认为 `desc`)\r\n  - `limit` （整数，可选）：最大结果，最多100个（默认为25个）\r\n\r\n- 输出：返回具有id、主题、状态、优先级、描述、时间戳、受让人信息和标签的匹配票，以及搜索元数据\r\n\r\n- 示例-按自定义字段搜索（例如，转账ID）：\r\n\r\n  ```json\r\n  {\r\n    \"custom_field_id\": 23301179390491,\r\n    \"custom_field_value\": \"txn_abc123\"\r\n  }\r\n  ```\r\n",
+ "config": {
+  "zendesk": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/zendesk-mcp-server",
+    "run",
+    "zendesk"
+   ],
+   "env": {}
+  }
+ }
+}

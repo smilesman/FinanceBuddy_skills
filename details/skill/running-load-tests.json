@@ -1,0 +1,12 @@
+{
+ "id": "running-load-tests",
+ "kind": "skill",
+ "name": "running-load-tests",
+ "fingerprint_md5": "44478d5943c117b3a9e23f746309d15b",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\n执行负载测试任务，管理测试生命周期，包括测试启动、监控、结果收集和报告生成。",
+ "config": {}
+}

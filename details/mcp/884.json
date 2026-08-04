@@ -1,0 +1,21 @@
+{
+ "id": "884",
+ "kind": "mcp",
+ "name": "textual-criticism",
+ "fingerprint_md5": "0a66033557be72758e608eb0679f1e01",
+ "download_count": 0,
+ "category": "翻译与语言",
+ "tags": "",
+ "version": "",
+ "readme": "# 考据学\r\n\r\n在考据学支持下的圣经文本分析。MCP服务器，用于希伯来语和希腊语圣经文本的形态分析、手稿变体和索引搜索。\r\n\r\n## 特性\r\n\r\n- **文本结构集成**：希伯来语（BHSA）和希腊语（N1904）文本的完整形态和句法分析\r\n- **经文鉴别学**：变量读数、手稿数据、仪器分析\r\n- **一致**：按引理、词法或语法模式搜索\r\n- **词典**：BDB（希伯来语）、塞耶数（希腊语）、斯特朗数\r\n- **多个翻译**：公共领域文本（KJV、WEB、ASV、YLT、Darby、BBE）\r\n\r\n## 安装\r\n\r\n```bash\r\n# Basic installation\r\npip install textual-criticism-mcp\r\n\r\n# With MCP server support\r\npip install textual-criticism-mcp[mcp]\r\n\r\n# With CLI\r\npip install textual-criticism-mcp[cli]\r\n\r\n# Everything\r\npip install textual-criticism-mcp[all]\r\n```\r\n\r\n## 快速开始\r\n\r\n### Python库\r\n\r\n```python\r\nfrom textual_criticism_mcp.lib import parse_verse, search\r\n\r\n# Parse a verse with full morphology\r\nverse = parse_verse(\"John 3:16\")\r\nfor word in verse.words:\r\n    print(f\"{word.text} ({word.lemma}) - {word.pos}\")\r\n\r\n# Search for a lemma\r\nresults = search(\"word lex=ἀγάπη\", corpus=\"greek\")\r\n```\r\n\r\n### MCP 服务器\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"textual-criticism\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"-m\", \"textual_criticism_mcp.mcp.server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用uvx：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"textual-criticism\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"textual-criticism-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## MCP工具\r\n\r\n### `parse_verse`\r\n\r\n用完整的形态分析来解析一首诗。\r\n\r\n```\r\nparse_verse(\"Gen 1:1\", detail_level=\"syntax\")\r\n```\r\n\r\n返回逐字分解，如下所示：\r\n\r\n- 原文+音译\r\n- 引理和斯特朗数\r\n- 全形态解析（词性、人称、性别、数字、时态、语态、语气、格、状态、词干）\r\n- 句法信息（短语函数、子句类型）\r\n\r\n### `search_lemma`\r\n\r\n查找一个单词的所有出现。\r\n\r\n```\r\nsearch_lemma(\"ἀγάπη\", corpus=\"nt\", limit=100)\r\n```\r\n\r\n### `search_morphology`\r\n\r\n按语法标准搜索。\r\n\r\n```\r\nsearch_morphology(language=\"hebrew\", pos=\"verb\", stem=\"qal\", mood=\"imperative\")\r\n```\r\n\r\n### `get_variants`\r\n\r\n获取文章的文本变体。\r\n\r\n```\r\nget_variants(\"Mark 16:9-20\", include_manuscripts=True)\r\n```\r\n\r\n退货：\r\n\r\n- 所有变量读数\r\n- 手稿支持（P46、B等）\r\n- 版本支持（NA28、SBLGNT、TR）\r\n- 变异分类和转录分析\r\n\r\n### `get_passage`\r\n\r\n检索多个翻译中的文章文本。\r\n\r\n```\r\nget_passage(\"Rom 8:1-4\", translations=[\"KJV\", \"WEB\", \"ASV\"], include_original=True)\r\n```\r\n\r\n## 数据源\r\n\r\n- **希伯来圣经**：BHSA（Biblia Hebraica Stuttgartensia Amstelodamensis）通过文本结构\r\n- **希腊语NT**：雀巢1904通过文本织物\r\n- **装置**：不稳定的标签/标签（CC BY 4.0）\r\n- **词典**：开放脚本BDB、斯特朗、塞耶\r\n- **翻译**: [wldeh/圣经api](https://github.com/wldeh/bible-api) （公共领域文本）\r\n\r\n## 首次运行\r\n\r\n文本结构语料库在首次使用时会自动下载（总计约300MB）。\r\n\r\n```python\r\nfrom textual_criticism_mcp.lib.corpus import get_corpus_manager\r\n\r\n# This will download BHSA and N1904 on first run\r\ncm = get_corpus_manager()\r\ncm.hebrew  # Downloads Hebrew corpus\r\ncm.greek   # Downloads Greek corpus\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone and install in dev mode\r\ngit clone https://github.com/yourusername/textual-criticism-mcp\r\ncd textual-criticism-mcp\r\npip install -e \".[all]\"\r\n\r\n# Run tests\r\npytest\r\n\r\n# Type check\r\nmypy src/textual_criticism_mcp\r\n\r\n# Lint\r\nruff check src/textual_criticism_mcp\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 致谢\r\n\r\n- [文字面料](https://github.com/annotation/text-fabric) -语料库基础设施\r\n- [ETCBC](https://github.com/ETCBC) -BHSA希伯来语圣经数据\r\n- [STEPBible](https://github.com/STEPBible/STEPBible-Data) -仪器和标记文本\r\n- [开放脚本](https://github.com/openscriptures) -词汇与形态学\r\n",
+ "config": {
+  "textual-criticism": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "textual-criticism-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

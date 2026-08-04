@@ -1,0 +1,24 @@
+{
+ "id": "1202",
+ "kind": "mcp",
+ "name": "pinecone",
+ "fingerprint_md5": "69273f98b4edfca86f90eface3152570",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 松果开发人员MCP服务器\r\n\r\n\r\n这 [模型上下文协议](https://modelcontextprotocol.io/introduction) （MCP）是一个标准，允许编码助手和其他人工智能工具与Pinecone等平台进行交互。Pinecone Developer MCP Server允许您将这些工具与Pinecone项目和文档连接起来。\r\n\r\n一旦连接，AI工具可以：\r\n\r\n- 搜索 [松果文件](https://docs.pinecone.io) 准确回答问题。\r\n- 帮助您根据应用程序的需要配置索引。\r\n- 根据索引配置和数据以及Pinecone文档和示例生成代码。\r\n- 在索引中查找和搜索数据，允许您在开发环境中测试查询和评估结果。\r\n\r\n请参阅 [文档](https://docs.pinecone.io/guides/operations/mcp-server) 了解更多详细信息。\r\n\r\n此MCP服务器专注于改善开发人员使用Pinecone的体验，作为其技术栈的一部分。它旨在与编码助手一起使用。松果还提供 [助理MCP](https://github.com/pinecone-io/assistant-mcp)，旨在为AI助手提供来自您的知识库的相关上下文。\r\n\r\n## 设置\r\n\r\n要配置MCP服务器以访问您的Pinecone项目，您需要使用 [控制台](https://app.pinecone.io).如果没有API密钥，您的人工智能工具仍然可以搜索文档。但是，它将无法管理或查询您的索引。\r\n\r\nMCP服务器需要 [Node.js](https://nodejs.org) v18或更高版本。确保 `node` 和 `npx` 可在您的 `PATH`.\r\n\r\n接下来，您需要配置您的AI助手以使用MCP服务器。\r\n\r\n### 配置光标\r\n\r\n要将Pinecone MCP服务器添加到项目中，请创建 `.cursor/mcp.json` 在项目根目录中创建文件（如果它不存在），并添加以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pinecone\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\", \"@pinecone-database/mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"PINECONE_API_KEY\": \"<your pinecone api key>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您可以在中检查服务器的状态 **光标设置>MCP**.\r\n\r\n要全局启用服务器，请将配置添加到 `.cursor/mcp.json` 请改为在您的主目录中。\r\n\r\n建议使用规则来指导Cursor正确使用MCP服务器。看看 [文档](https://docs.pinecone.io/guides/operations/mcp-server#configure-cursor) 对于一些建议。\r\n\r\n### 配置Claude桌面\r\n\r\n使用Claude桌面查找 `claude_desktop_config.json` 通过导航到文件 **设置>开发人员>编辑配置**.添加以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pinecone\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\", \"@pinecone-database/mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"PINECONE_API_KEY\": \"<your pinecone api key>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动Claude桌面。在新的聊天屏幕上，您应该看到一个锤子（MCP）图标出现，其中包含可用的新MCP工具。\r\n\r\n### 用作Gemini CLI扩展\r\n\r\n将其安装为 [Gemini CLI](https://github.com/google-gemini/gemini-cli) 扩展，运行以下命令：\r\n\r\n```bash\r\ngemini extensions install https://github.com/pinecone-io/pinecone-mcp\r\n```\r\n\r\n您需要在 `PINECONE_API_KEY` 环境变量。\r\n\r\n```bash\r\nexport PINECONE_API_KEY=<your pinecone api key>\r\n```\r\n\r\n当你奔跑时 `gemini` 并按下 `ctrl+t`, `pinecone` 现在应该显示在已安装的MCP服务器列表中。\r\n\r\n## 用法\r\n\r\n配置后，您的AI工具将自动使用MCP与Pinecone进行交互。在使用工具之前，系统可能会提示您获取权限。\r\n\r\n### 示例提示\r\n\r\n以下是您可以使用AI助手尝试的一些提示：\r\n\r\n- “在Pinecone文档中搜索有关元数据过滤的信息”\r\n- “列出我的所有松果索引并描述它们的配置”\r\n- “使用多语言e5-large模型创建一个名为“我的文档”的新索引”\r\n- “将这些文档插入我的索引：\\[粘贴您的文档\\]”\r\n- “在我的索引中搜索与“身份验证最佳实践”相关的记录”\r\n- 我的索引中存在哪些命名空间，每个命名空间中有多少条记录\r\n\r\n### 工具\r\n\r\nPinecone Developer MCP Server为AI助手提供了以下工具：\r\n\r\n- `search-docs`：搜索Pinecone官方文件。\r\n- `list-indexes`：列出所有松果索引。\r\n- `describe-index`：描述索引的配置。\r\n- `describe-index-stats`：提供有关索引中数据的统计信息，包括记录数和可用命名空间。\r\n- `create-index-for-model`：创建一个新的索引，该索引使用集成推理模型将文本作为向量嵌入。\r\n- `upsert-records`：使用集成推理在索引中插入或更新记录。\r\n- `search-records`：使用集成推理进行嵌入，根据文本查询在索引中搜索记录。具有元数据过滤和重新排序选项。\r\n- `cascading-search`：跨多个索引搜索记录，对结果进行重复数据删除和重新排序。\r\n- `rerank-documents`：使用专门的重新排序模型对一组记录或文本文档进行重新排序。\r\n\r\n### 局限性\r\n\r\n仅支持具有集成推理的索引。不支持助手、没有集成推理的索引、独立嵌入和向量搜索。\r\n\r\n## 故障排除\r\n\r\n### MCP服务器未出现在您的AI工具中\r\n\r\n- 确保安装了Node.js v18或更高版本： `node --version`\r\n- 验证 `npx` 在您的PATH中可用： `which npx`\r\n- 检查您的配置文件是否位于正确的位置，并且具有有效的JSON语法\r\n- 更改配置后重新启动AI工具\r\n\r\n### “API密钥无效”或身份验证错误\r\n\r\n- 在中验证您的API密钥是否正确 [松果控制台](https://app.pinecone.io)\r\n- 检查一下 `PINECONE_API_KEY` MCP配置中的环境变量设置正确\r\n- 确保API键值周围没有多余的空格或引号\r\n\r\n### 工具无法按预期工作\r\n\r\n- MCP服务器仅支持具有集成推理的索引。如果你试图在没有集成推理的情况下使用无服务器索引，你需要使用嵌入模型创建一个新的索引\r\n- 检查MCP服务器日志中的错误消息。在Cursor中，视图登录 **光标设置>MCP**\r\n\r\n### 连接问题\r\n\r\n- 如果使用公司网络，请确保您的防火墙允许连接到 `api.pinecone.io`\r\n- 尝试手动运行服务器以查看详细的错误输出： `PINECONE_API_KEY= npx @pinecone-database/mcp`\r\n\r\n## 贡献\r\n\r\n我们欢迎您在改善开发人员MCP体验方面的合作。请在 [GitHub问题跟踪器](https://github.com/pinecone-io/pinecone-mcp/issues)有关捐款的信息，请参阅 [贡献.md](CONTRIBUTING.md).\r\n",
+ "config": {
+  "pinecone": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@pinecone-database/mcp"
+   ],
+   "env": {
+    "PINECONE_API_KEY": "<your pinecone api key>"
+   }
+  }
+ }
+}

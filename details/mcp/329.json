@@ -1,0 +1,21 @@
+{
+ "id": "329",
+ "kind": "mcp",
+ "name": "music-mcp-server",
+ "fingerprint_md5": "e7742c2843708d5a22b8807cb50c3e23",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# music MCP server\r\n\r\n这是一个播放歌曲的mcp服务\r\n\r\n### 工具列表\r\n\r\n- `query_music` - 搜索相关歌曲.\r\n- `play_music` - 播放歌曲\r\n- `play_by_index` - 播放搜索到的第几首歌曲\r\n- `stop_music` - 停止播放歌曲\r\n- `pause_music` - 暂停播放歌曲\r\n- `unpause_music` - 恢复播放歌曲\r\n\r\n## 安装\r\n\r\n### 使用uv\r\n\r\n使用 [`uv`](https://docs.astral.sh/uv/) 时无需进行特定安装。我们将使用 [`uvx`](https://docs.astral.sh/uv/guides/tools/) 直接运行 *music-mcp-server*。\r\n\r\n### 下载源码\r\n\r\n```bash\r\ngit clone https://github.com/JXiuFen/music-mcp-server.git\r\n```\r\n\r\n## 配置\r\n\r\n### Claude.app配置\r\n\r\n在您的 Claude 设置中添加：\r\n\r\n\r\n使用 uvx\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"music-mcp-server\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"music-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\n使用 pip\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"music-mcp-server\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"music-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\n### VSCode配置\r\n\r\n如需快速安装，请使用下面的其中一个一键安装按钮。...\r\n\r\n[](https://insiders.vscode.dev/redirect/mcp/install?name=time&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22mcp-server-time%22%5D%7D) [](https://insiders.vscode.dev/redirect/mcp/install?name=time&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22mcp-server-time%22%5D%7D&quality=insiders)\r\n\r\n\r\n对于手动安装，请在 VS Code 中的“用户设置（JSON）”文件中添加以下 JSON 块。您可以通过按下 `Ctrl + Shift + P` 并输入“偏好设置：打开用户设置（JSON）”来完成此操作。\r\n\r\n您也可以选择将其添加到工作区中名为 `.vscode/mcp.json` 的文件中。这样您就可以与他人共享这些配置了。\r\n\r\n> 请注意，使用 `mcp.json` 文件时需要设置 `mcp` 键。\r\n\r\n\r\n使用 uvx\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"time\": {\r\n        \"command\": \"uvx\",\r\n        \"args\": [\"music-mcp-server\"]\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "music-mcp-server": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "music-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

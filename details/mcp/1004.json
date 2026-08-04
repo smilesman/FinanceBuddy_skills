@@ -1,0 +1,31 @@
+{
+ "id": "1004",
+ "kind": "mcp",
+ "name": "clickhouse",
+ "fingerprint_md5": "05905305ea2291cadef98dd8fc63133f",
+ "download_count": 0,
+ "category": "数据仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# ClickHouse MCP服务器\r\n\r\nClickHouse的模型上下文协议（MCP）服务器实现。\r\n\r\n该服务器为AI助手提供了一种安全和结构化的方式来探索和分析数据库。它使他们能够通过受控接口列出表、读取数据和执行SQL查询，从而确保负责任的数据库访问。\r\n\r\n# 配置\r\n\r\n设置以下环境变量：\r\n\r\n```bash\r\nCLICKHOUSE_HOST=localhost    \r\nCLICKHOUSE_PORT=8123         \r\nCLICKHOUSE_USER=default\r\nCLICKHOUSE_PASSWORD=CHANGE_TO_YOUR_PASSWORD\r\nCLICKHOUSE_DATABASE=default\r\n```\r\n\r\n或者通过命令行参数：\r\n\r\n- `--host` 数据库主机\r\n- `--port` 数据库端口\r\n- `--user` 数据库用户名\r\n- `--password` 数据库密码\r\n- `--database` 数据库名称\r\n\r\n# 用法\r\n\r\n## 在clickhouse中伪造一些数据\r\n\r\n有关详细信息，请检查dev_conibute.md中的SQL。\r\n\r\n## 将您的问题发布到Cline的AI助手\r\n\r\n```\r\nWhat is the sales volume in each region? Which product is the best - selling?\r\n```\r\n\r\n\r\n## 渐变群\r\n\r\n在VSCode、Cline扩展或其他MCP客户端中配置MCP服务器。:\r\n例子：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"clickhouse\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/clickhouse_mcp_server\",\r\n        \"run\",\r\n        \"-m\",\r\n        \"clickhouse_mcp_server.server\"\r\n      ],\r\n      \"env\": {\r\n        \"CLICKHOUSE_HOST\": \"localhost\",\r\n        \"CLICKHOUSE_PORT\": \"8123\",\r\n        \"CLICKHOUSE_USER\": \"default\",\r\n        \"CLICKHOUSE_PASSWORD\": \"CHANGE_TO_YOUR_PASSWORD\",\r\n        \"CLICKHOUSE_DATABASE\": \"default\"\r\n      }\r\n    }\r\n    \r\n  }\r\n}\r\n```\r\n\r\n# 许可证\r\n\r\nAPACHE-有关详细信息，请参阅许可证文件。\r\n\r\n# 贡献\r\n\r\n有关详细信息，请参阅dev_conibute.md。\r\n\r\n## 先决条件\r\n\r\n- Python与`uv`包管理器\r\n- ClickHouse安装\r\n- MCP服务器依赖关系\r\n\r\n# 致谢\r\n\r\n这个库的实现受到了以下三个存储库的启发，并整合了它们的代码，尊重开源精神！\r\n\r\n- [GreptimeTeam/greeptimedb-mcp服务器](https://github.com/GreptimeTeam/greptimedb-mcp-server)\r\n- [ktanak101/mcp服务器duckdb](https://github.com/ktanaka101/mcp-server-duckdb)\r\n- [设计计算机/mysql_mcp_server）](https://github.com/designcomputer/mysql_mcp_server)\r\n\r\n谢谢！\r\n",
+ "config": {
+  "clickhouse": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/clickhouse_mcp_server",
+    "run",
+    "-m",
+    "clickhouse_mcp_server.server"
+   ],
+   "env": {
+    "CLICKHOUSE_HOST": "localhost",
+    "CLICKHOUSE_PORT": "8123",
+    "CLICKHOUSE_USER": "default",
+    "CLICKHOUSE_PASSWORD": "CHANGE_TO_YOUR_PASSWORD",
+    "CLICKHOUSE_DATABASE": "default"
+   }
+  }
+ }
+}

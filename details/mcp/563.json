@@ -1,0 +1,22 @@
+{
+ "id": "563",
+ "kind": "mcp",
+ "name": "ai-humanizer",
+ "fingerprint_md5": "b0c9cffd55b42d8ca698876621cc061e",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 人工智能人性化MCP服务器\r\n\r\n______________________________________________________________________\r\n\r\n一个强大的模型上下文协议（MCP）服务器，有助于优化人工智能生成的内容，使其听起来更自然、更人性化。内置先进的AI检测和文本增强功能。\r\n\r\n由...驱动 [text2go](https://text2go.ai).\r\n\r\n______________________________________________________________________\r\n\r\n# 目录\r\n\r\n1. [主要特点](#-key-features)\r\n1. [截图](#screenshot)\r\n1. [先决条件](#prerequisites)\r\n1. [安装](#installation)\r\n1. [用法](#-usage)\r\n   - [AI文本检测](#ai-text-detection)\r\n\r\n______________________________________________________________________\r\n\r\n## 截图\r\n\r\n\r\n## ✨ 主要特点\r\n\r\n- 🤖 **AI检测** -准确识别人工智能生成的内容\r\n- 👤 **自然语言增强** -将机器人文本转化为自然的类人文字\r\n- ⭐ **语法完善** -确保语法准确无误\r\n- 📋 **可读性优化** -提高文本流畅性和理解能力\r\n- 📏 **长度控制** -在保持意义的同时调整内容长度\r\n- ⚖️ **期限保存** -维护特定的术语和关键短语\r\n\r\n## 先决条件\r\n\r\n- 节点版本>=16\r\n- Claude Desktop最新版本\r\n\r\n## 安装\r\n\r\n### 通过npx\r\n\r\n1. 配置Claude桌面：\r\n   - 打开克劳德桌面\r\n   - 导航到“设置”→ 开发者→ 编辑配置\r\n   - 添加以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ai-humanizer\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"ai-humanizer-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n2. 重新启动Claude Desktop以应用更改\r\n\r\n### 按源代码\r\n\r\n1. 克隆此存储库\r\n1. 再进行\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n3. 构建项目\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n4. 配置Claude桌面：\r\n   - 打开克劳德桌面\r\n   - 导航到“设置”→ 开发者→ 编辑配置\r\n   - 添加以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ai-humanizer\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"<YOUR_PROJECT_PATH>/build/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n5. 重新启动Claude Desktop以应用更改\r\n\r\n## 💡 用法\r\n\r\n### AI文本检测\r\n\r\n要检查文本是否是人工智能生成的，只需问Claude：\r\n\r\n```text\r\nIs this text ai-generated:  In a fast-paced world, where technology is advancing at an exponential rate, it is crucial for businesses to adapt to new trends and keep up with the changing demands of the market.\r\n```\r\n\r\n## 明星历史\r\n",
+ "config": {
+  "ai-humanizer": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "ai-humanizer-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

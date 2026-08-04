@@ -1,0 +1,12 @@
+{
+ "id": "Prometheus Ops",
+ "kind": "skill",
+ "name": "Prometheus Ops",
+ "fingerprint_md5": "",
+ "download_count": 0,
+ "category": "配置管理",
+ "tags": "",
+ "version": "",
+ "readme": "# Prometheus Ops\n\n当用户需要进行Prometheus监控相关操作，包括查询指标、查看告警、排查故障、生成报表、配置管理时，应使用此Skill。覆盖Prometheus监控管理的全场景，是Prometheus运维的统一入口。",
+ "config": {}
+}

@@ -1,0 +1,21 @@
+{
+ "id": "1650",
+ "kind": "mcp",
+ "name": "nrepl-mcp-server",
+ "fingerprint_md5": "0265cb93ec2082bd973afa5953c41ff8",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# nREPL MCP服务器\r\n\r\nA. [模型上下文协议（MCP）](https://github.com/modelcontextprotocol) 为MCP客户端设计的服务器，例如 **克劳德桌面** 或 **渐变群** 在VSCode中。当与CLine一起使用时，此服务器可以与任何LLM一起使用。此服务器允许与正在运行的 **Clojure nREPL实例**，允许通过MCP评估Clojure代码、命名空间检查和其他实用程序。\r\n\r\n______________________________________________________________________\r\n\r\n## 特性\r\n\r\n- **连接** 通过指定主机和端口连接到正在运行的nREPL服务器。\r\n- **评估Clojure代码** 在给定的命名空间或当前命名空间中。\r\n- **列出项目命名空间** 使用 `tools.namespace`.\r\n- **检索nREPL连接状态**，包括主机、端口和会话详细信息。\r\n- **检查公共车辆** 在任何Clojure名称空间中，显示文档字符串和值等元数据。\r\n\r\n______________________________________________________________________\r\n\r\n## 安装和设置\r\n\r\n### 在CLine（VSCode）或Claude Desktop中安装\r\n\r\n使用此服务器 **渐变群** 或 **克劳德桌面**，请按照以下步骤操作：\r\n\r\n1. 打开 **渐变群** 在VSCode中或 **克劳德桌面**.\r\n1. 导航到 **MCP设置**.\r\n1. 添加具有以下配置的新MCP服务器：\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"nrepl-mcp-server\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\r\n           \"nrepl-mcp-server\"\r\n         ],\r\n         \"disabled\": false,\r\n         \"autoApprove\": []\r\n       }\r\n     }\r\n   }\r\n   ```\r\n1. 保存并重新启动客户端以应用更改。\r\n\r\n这将允许客户端通过标准输入/输出与nREPL MCP服务器通信。\r\n\r\n### 通过安装 `npx`\r\n\r\n要快速运行服务器而不克隆存储库，请执行以下操作：\r\n\r\n```bash\r\nnpx nrepl-mcp-server\r\n```\r\n\r\n### 手动安装\r\n\r\n1. **克隆存储库**\r\n\r\n1. **安装依赖项**\r\n\r\n   ```bash\r\n   npm install\r\n   ```\r\n\r\n1. **构建项目** （将TypeScript转换为JavaScript）\r\n\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n1. **运行服务器**\r\n\r\n   - **生产模式**：从编译输出运行。\r\n     ```bash\r\n     npm start\r\n     ```\r\n   - **发展模式**：使用ts节点进行实时更改。\r\n     ```bash\r\n     npm run dev\r\n     ```\r\n\r\n这将启动服务器，监听 **标准输入输出** 对于MCP请求。Mcp客户端将为您启动服务器。\r\n\r\n______________________________________________________________________\r\n\r\n## 行动\r\n\r\n### 连接到nREPL\r\n\r\n允许通过指定以下参数建立与nREPL服务器的连接 **主机** 和 **端口**.\r\n\r\n### 评估Clojure代码\r\n\r\n执行任意Clojure表达式 **默认命名空间** 或a **指定的命名空间**.\r\n\r\n### 正在检索命名空间信息\r\n\r\n使用列出当前项目目录中的所有命名空间 `tools.namespace`.\r\n\r\n### 检查公共变量\r\n\r\n获取所有对象的元数据和当前值 **公共变量** 在指定的命名空间中。\r\n\r\n### 正在获取nREPL连接状态\r\n\r\n提供当前nREPL连接的详细信息，包括主机、端口、会话ID和上次错误（如果有）。\r\n\r\n______________________________________________________________________\r\n\r\n## 资源\r\n\r\n### `nrepl://status`\r\n\r\n提供有关当前nREPL连接的信息，包括：\r\n\r\n- 主机和端口\r\n- 连接状态\r\n- 活动会话ID\r\n\r\n### `nrepl://namespaces`\r\n\r\n列出项目目录中检测到的所有命名空间。\r\n\r\n______________________________________________________________________\r\n\r\n## 贡献\r\n\r\n欢迎投稿！如果您有功能建议或错误报告，请打开问题或拉取请求。\r\n\r\n## 许可证\r\n\r\n该项目根据 **MIT许可证**。请随时根据其条款进行修改和分发。\r\n",
+ "config": {
+  "nrepl-mcp-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "nrepl-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

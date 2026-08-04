@@ -1,0 +1,21 @@
+{
+ "id": "18",
+ "kind": "mcp",
+ "name": "adb-3",
+ "fingerprint_md5": "4a9eb36ec33a9b11d348032a657474a9",
+ "download_count": 0,
+ "category": "移动端自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# ADB MCP Server\r\n\r\n一个用于 Android Debug Bridge (ADB) 的 Model Context Protocol (MCP) 服务器。这个基于 TypeScript 的工具在 AI 模型和 Android 设备功能之间提供了桥梁，通过标准化协议实现与 Android 设备的程序化交互。\r\n\r\n## 功能特性\r\n\r\n- 📱 **设备管理** - 列出并与已连接的 Android 设备交互\r\n- 📦 **应用安装** - 将 APK 文件部署到已连接的设备\r\n- 📋 **日志记录** - 通过 logcat 访问设备日志\r\n- 🔄 **文件传输** - 在设备和主机之间推送和拉取文件\r\n- 📸 **UI 交互** - 捕获屏幕截图并分析 UI 层次结构\r\n- 🔧 **Shell 命令执行** - 在设备上运行自定义命令\r\n- 📦 **包管理** - 列出、安装和管理软件包\r\n- 🎯 **Activity 管理** - 启动活动和广播意图\r\n\r\n## 前置要求\r\n\r\n- Node.js (v16 或更高版本)\r\n- ADB (Android Debug Bridge) 已安装并在 PATH 中\r\n- 已启用 USB 调试的 Android 设备或模拟器\r\n- 访问设备的权限（在设备上接受调试授权）\r\n\r\n## 安装\r\n\r\n### 从 npm 安装（发布后）\r\n\r\n```bash\r\nnpm install -g adb-mcp\r\n```\r\n\r\n### 从源码安装\r\n\r\n```bash\r\n# 克隆仓库\r\ngit clone https://github.com/marvel1203/adb_mcp.git\r\ncd adb_mcp\r\n\r\n# 安装依赖\r\nnpm install\r\n\r\n# 构建 TypeScript 代码\r\nnpm run build\r\n\r\n# 运行服务器\r\nnpx adb-mcp\r\n```\r\n\r\n## 配置\r\n\r\n### ADB 路径配置\r\n\r\n服务器默认使用 PATH 中的 `adb` 命令。如需自定义 ADB 位置：\r\n\r\n```bash\r\nexport ADB_PATH=/path/to/adb\r\nnpx adb-mcp\r\n```\r\n\r\n### MCP 配置\r\n\r\n将 ADB MCP 服务器添加到 MCP 客户端配置中。例如，在 Claude Desktop 中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"adb\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"adb-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者从源码安装后：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"adb\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/adb_mcp/dist/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用方法\r\n\r\n### 启动服务器\r\n\r\n服务器通过 stdio 运行，通常由 MCP 客户端管理。如需手动运行：\r\n\r\n```bash\r\nnpx adb-mcp\r\n```\r\n\r\n您应该看到：\r\n```\r\nADB MCP 服务器运行在 stdio\r\n```\r\n\r\n### 可用工具\r\n\r\n#### 📱 设备管理\r\n\r\n- **adb_devices** - 列出所有已连接的设备\r\n  ```\r\n  无需参数\r\n  ```\r\n\r\n- **adb_shell** - 在设备上执行 shell 命令\r\n  ```\r\n  参数：\r\n  - command（必需）：要执行的 shell 命令\r\n  - device_serial（可选）：设备序列号\r\n  ```\r\n\r\n#### 📦 应用管理\r\n\r\n- **adb_install** - 安装 APK 文件\r\n  ```\r\n  参数：\r\n  - apk_path（必需）：APK 文件的本地路径\r\n  - device_serial（可选）：设备序列号\r\n  - reinstall（可选）：如果应用已存在则重新安装（默认：false）\r\n  ```\r\n\r\n- **adb_package_manager** - 执行包管理器（pm）命令\r\n  ```\r\n  参数：\r\n  - command（必需）：pm 命令（例如：'list packages'、'grant <package> <permission>'）\r\n  - device_serial（可选）：设备序列号\r\n  ```\r\n\r\n- **adb_activity_manager** - 执行活动管理器（am）命令\r\n  ```\r\n  参数：\r\n  - command（必需）：am 命令（例如：'start -n <component>'、'broadcast -a <action>'）\r\n  - device_serial（可选）：设备序列号\r\n  ```\r\n\r\n#### 📋 日志记录\r\n\r\n- **adb_logcat** - 查看设备日志，支持可选过滤\r\n  ```\r\n  参数：\r\n  - filter（可选）：过滤表达式（例如：'ActivityManager:I *:S'）\r\n  - device_serial（可选）：设备序列号\r\n  - max_lines（可选）：返回的最大行数（默认：100）\r\n  ```\r\n\r\n#### 🔄 文件传输\r\n\r\n- **adb_pull** - 从设备拉取文件\r\n  ```\r\n  参数：\r\n  - remote_path（必需）：设备上的路径\r\n  - local_path（必需）：本地目标路径\r\n  - device_serial（可选）：设备序列号\r\n  ```\r\n\r\n- **adb_push** - 向设备推送文件\r\n  ```\r\n  参数：\r\n  - local_path（必需）：本地文件路径\r\n  - remote_path（必需）：设备上的目标路径\r\n  - device_serial（可选）：设备序列号\r\n  ```\r\n\r\n#### 🔍 UI 交互\r\n\r\n- **adb_screenshot** - 截取屏幕截图\r\n  ```\r\n  参数：\r\n  - output_path（必需）：保存截图的本地路径\r\n  - device_serial（可选）：设备序列号\r\n  ```\r\n\r\n- **adb_ui_hierarchy** - 获取 XML 格式的 UI 层次结构\r\n  ```\r\n  参数：\r\n  - device_serial（可选）：设备序列号\r\n  ```\r\n\r\n## 故障排除\r\n\r\n### 设备连接问题\r\n\r\n- 验证设备连接：使用 `adb_devices` 工具\r\n- 如果显示\"未授权\"，请在设备上接受调试授权\r\n- 检查 USB/网络连接\r\n- 尝试重启 ADB：`adb kill-server && adb start-server`\r\n\r\n### ADB 问题\r\n\r\n- 验证 ADB 安装：`adb version`\r\n- 确保 ADB 在 PATH 中或设置 `ADB_PATH` 环境变量\r\n\r\n### 多设备\r\n\r\n当连接多个设备时，必须为每个工具调用指定 `device_serial` 参数。使用 `adb_devices` 获取序列号。\r\n\r\n## 兼容性\r\n\r\n- 推荐使用 Android 8.0 及更高版本\r\n- MCP 客户端（Claude Desktop 等）\r\n- 在 macOS 和 Linux 上测试通过\r\n- 支持 Windows\r\n\r\n## 开发\r\n\r\n```bash\r\n# 安装依赖\r\nnpm install\r\n\r\n# 构建\r\nnpm run build\r\n\r\n# 监听模式用于开发\r\nnpm run watch\r\n```\r\n\r\n## 许可证\r\n\r\nApache-2.0\r\n\r\n## 贡献\r\n\r\n欢迎贡献！请随时提交 Pull Request。\r\n",
+ "config": {
+  "adb": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "adb-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

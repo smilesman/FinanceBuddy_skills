@@ -1,0 +1,25 @@
+{
+ "id": "1278",
+ "kind": "mcp",
+ "name": "sql_access",
+ "fingerprint_md5": "a1e9d85cfee65ad187cf859f50b27598",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp sql\r\n\r\nMCP服务器，使客户端能够访问SQL数据库（支持MySQL、PostgreSQL、SQLite、SQL server和Oracle）\r\n\r\n# 用法\r\n\r\n要使此MCP服务器工作，请将以下配置添加到MCP配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sql_access\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"%USERPROFILE%/Documents/GitHub/mcp-sql\",\r\n        \"run\",\r\n        \"python\",\r\n        \"main.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "sql_access": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "%USERPROFILE%/Documents/GitHub/mcp-sql",
+    "run",
+    "python",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

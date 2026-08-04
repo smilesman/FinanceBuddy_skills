@@ -1,0 +1,21 @@
+{
+ "id": "2393",
+ "kind": "mcp",
+ "name": "wttr-mcp-server",
+ "fingerprint_md5": "8fcf242776bcac4d221a0853ac6a72fc",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# Wttr.in MCP Server\r\n\r\n一个基于 Model Context Protocol (MCP) 的天气服务器，通过 wttr.in 免费天气 API 提供天气查询和日期时间查询功能。\r\n\r\nA Model Context Protocol server that provides weather forecast and datetime query features through the free wttr.in weather API.\r\n\r\n## 功能特性 / Features\r\n\r\n- 获取实时天气数据 / Get real-time weather data\r\n- 获取三天天气预报 / Get 3-day weather forecast\r\n- 支持多种位置格式（城市名、邮政编码、经纬度坐标）/ Support multiple location formats (city name, postal code, coordinates)\r\n- 获取当前日期时间（支持自定义时区）/ Get current date and time (with timezone support)\r\n- 完整的中文天气描述 / Full Chinese weather description\r\n\r\n## 工具说明 / API Tools\r\n\r\n此 MCP 服务器提供以下两个工具：\r\n\r\n### get_weather_wttr\r\n\r\n获取指定地点的天气预报数据。\r\n\r\n**参数 / Parameters:**\r\n- `location` (必填): 需要查询的城市名称、邮政编码或经纬度坐标\r\n  - 示例: `'beijing'`, `'90210'`, `'40.71,-74.00'`\r\n- `days` (可选): 预报类型，默认为 `'3d'`\r\n  - `'now'` - 获取实时天气\r\n  - `'3d'` - 获取三天天气预报\r\n\r\n**返回内容:**\r\n- 实时天气：温度、体感温度、风速、风向、湿度、气压、紫外线指数\r\n- 三天预报：每日最高/最低温、平均温度、日出日落时间、降水概率等\r\n\r\n### get_datetime\r\n\r\n获取当前日期和时间。\r\n\r\n**参数 / Parameters:**\r\n- `timezone` (可选): 时区，默认为 `'Asia/Shanghai'`\r\n  - 示例: `'America/New_York'`, `'Europe/London'`\r\n\r\n**返回内容:**\r\n- 指定时区的当前日期和时间\r\n\r\n## 使用方法 / Usage with MCP Host\r\n\r\n### 在 Claude Desktop 中使用 / With Claude Desktop\r\n\r\n将以下配置添加到 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"wttr-mcp-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"wttr-mcp-server@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 本地开发 / Local Development\r\n\r\n```bash\r\n# 安装依赖\r\nnpm install\r\n\r\n# 构建项目\r\nnpm run build\r\n\r\n# 在配置文件中使用本地路径\r\n{\r\n  \"mcpServers\": {\r\n    \"wttr-mcp-server\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/wttr-mcp-server/dist/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 技术栈 / Tech Stack\r\n\r\n- TypeScript\r\n- Model Context Protocol SDK\r\n- Zod (参数验证)\r\n- wttr.in API (免费天气服务)\r\n\r\n## 许可证 / License\r\n\r\nISC\r\n",
+ "config": {
+  "wttr-mcp-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "wttr-mcp-server@latest"
+   ],
+   "env": {}
+  }
+ }
+}

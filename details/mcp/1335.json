@@ -1,0 +1,28 @@
+{
+ "id": "1335",
+ "kind": "mcp",
+ "name": "apisix-mcp",
+ "fingerprint_md5": "f3359fe206d560c80840c299f8e0b345",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://mseep.ai/app/api7-apisix-mcp)\r\n\r\n# APISIX模型上下文协议（MCP）服务器\r\n\r\n[](https://smithery.ai/server/@api7/apisix-mcp)\r\n\r\nAPISIX模型上下文协议（MCP）服务器用于桥接大型语言模型（LLM）和APISIX管理API。它旨在通过MCP兼容的AI客户端实现基于自然语言的交互，以查看和管理APISIX中的资源。\r\n\r\nhttps://github.com/user-attachments/assets/081e878c-225e-4ff8-a9c5-5813f4784cfe\r\n\r\n## 支持运营\r\n\r\n### 常见操作\r\n\r\n- `get_resource`：按类型检索资源（路线、服务、上游等）\r\n- `delete_resource`：按ID删除资源\r\n- `send_request_to_gateway`：向APISIX网关发送一个或多个请求\r\n\r\n### API资源运营\r\n\r\n- `create_route`/`update_route`/`delete_route`：管理路线\r\n- `create_service`/`update_service`/`delete_service`：管理服务\r\n- `create_upstream`/`update_upstream`/`delete_upstream`：上游管理\r\n- `create_ssl`/`update_ssl`/`delete_ssl`：管理SSL证书\r\n- `create_or_update_proto`：管理protobuf定义\r\n- `create_or_update_stream_route`：管理溪流路线\r\n\r\n### 插件操作\r\n\r\n- `get_all_plugin_names`：获取所有可用的插件名称\r\n- `get_plugin_info`/`get_plugins_by_type`/`get_plugin_schema`：检索插件配置\r\n- `create_plugin_config`/`update_plugin_config`：管理插件配置\r\n- `create_global_rule`/`update_global_rule`：管理插件全局规则\r\n- `get_plugin_metadata`/`create_or_update_plugin_metadata`/`delete_plugin_metadata`：管理插件元数据\r\n\r\n### 安全配置\r\n\r\n- `get_secret_by_id`/`create_secret`/`update_secret`：管理机密\r\n- `create_or_update_consumer`/`delete_consumer`：管理消费者\r\n- `get_credential`/`create_or_update_credential`/`delete_credential`/：管理消费者凭据\r\n- `create_consumer_group`/`delete_consumer_group`：管理消费者群体\r\n\r\n## AI客户端中的配置\r\n\r\n### 先决条件\r\n\r\n遵循APISIX [入门指南](https://docs.api7.ai/apisix/getting-started/) 设置和运行APISIX的指南。\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的APISIX模型上下文协议服务器 [史密瑟里](https://smithery.ai/server/@api7/apisix-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @api7/apisix-mcp --client claude\r\n```\r\n\r\n### 使用npm\r\n\r\n使用以下设置配置您的AI客户端（Cursor、Claude、Copilot等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"apisix-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"apisix-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"APISIX_SERVER_HOST\": \"your-apisix-server-host\",\r\n        \"APISIX_SERVER_PORT\": \"your-apisix-server-port\",\r\n        \"APISIX_ADMIN_API_PORT\": \"your-apisix-admin-api-port\",\r\n        \"APISIX_ADMIN_API_PREFIX\": \"your-apisix-admin-api-prefix\",\r\n        \"APISIX_ADMIN_KEY\": \"your-apisix-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用源代码\r\n\r\n首先克隆apisix-mcp存储库：\r\n\r\n```bash\r\ngit clone https://github.com/api7/apisix-mcp.git\r\ncd apisix-mcp\r\n```\r\n\r\n安装依赖项并构建项目：\r\n\r\n```bash\r\npnpm install\r\npnpm build\r\n```\r\n\r\n使用以下设置配置您的AI客户端（Cursor、Claude、Copilot等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"apisix-mcp\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"your-apisix-mcp-path/dist/index.js\"\r\n      ],\r\n      \"env\": {\r\n        \"APISIX_SERVER_HOST\": \"your-apisix-server-host\",\r\n        \"APISIX_SERVER_PORT\": \"your-apisix-server-port\",\r\n        \"APISIX_ADMIN_API_PORT\": \"your-apisix-admin-api-port\",\r\n        \"APISIX_ADMIN_API_PREFIX\": \"your-apisix-admin-api-prefix\",\r\n        \"APISIX_ADMIN_KEY\": \"your-apisix-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|描述|默认值|\r\n| ------------------------- | ------------------------------------------- | ---------------------------------- |\r\n| `APISIX_SERVER_HOST` |有权访问您的APISIX服务器的主机| `http://127.0.0.1` |\r\n| `APISIX_SERVER_PORT` |APISIX服务器端口| `9080` |\r\n| `APISIX_ADMIN_API_PORT` |管理员API端口| `9180` |\r\n| `APISIX_ADMIN_API_PREFIX` |管理员API前缀| `/apisix/admin` |\r\n| `APISIX_ADMIN_KEY` |管理员API身份验证密钥| `edd1c9f034335f136f87ad84b625c8f1` |\r\n\r\n要查看或修改APISIX中的管理API配置，请参阅 [管理员API](https://apisix.apache.org/docs/apisix/admin-api) 文档。\r\n\r\n## 资源\r\n\r\n### 开放式MCP市场API支持\r\n\r\n|[GitHub](https://github.com/AI-Agent-Hub/mcp-marketplace)|[文件](http://www.deepnlp.org/doc/mcp_marketplace)|[MCP市场](http://www.deepnlp.org/store/ai-agent/mcp-server)\r\n\r\n- 允许AI App/Agent/LLM通过常见的python/typescript API找到此MCP服务器，搜索并探索相关的服务器和工具\r\n\r\n***示例：搜索服务器和工具***\r\n\r\n```python\r\n    import anthropic\r\n    import mcp_marketplace as mcpm\r\n\r\n    result_q = mcpm.search(query=\"apisix mcp\", mode=\"list\", page_id=0, count_per_page=100, config_name=\"deepnlp\") # search server by category choose various endpoint\r\n    result_id = mcpm.search(id=\"api7/apisix-mcp\", mode=\"list\", page_id=0, count_per_page=100, config_name=\"deepnlp\")      # search server by id choose various endpoint \r\n    tools = mcpm.list_tools(id=\"api7/apisix-mcp\", config_name=\"deepnlp_tool\")\r\n\r\n    # Call Claude to Choose Tools Function Calls \r\n    client = anthropic.Anthropic()\r\n    response = client.messages.create(model=\"claude-3-7-sonnet-20250219\", max_tokens=1024, tools=tools, messages=[])\r\n```\r\n",
+ "config": {
+  "apisix-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "apisix-mcp"
+   ],
+   "env": {
+    "APISIX_SERVER_HOST": "your-apisix-server-host",
+    "APISIX_SERVER_PORT": "your-apisix-server-port",
+    "APISIX_ADMIN_API_PORT": "your-apisix-admin-api-port",
+    "APISIX_ADMIN_API_PREFIX": "your-apisix-admin-api-prefix",
+    "APISIX_ADMIN_KEY": "your-apisix-api-key"
+   }
+  }
+ }
+}

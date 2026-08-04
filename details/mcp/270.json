@@ -1,0 +1,24 @@
+{
+ "id": "270",
+ "kind": "mcp",
+ "name": "lol-client-mcp",
+ "fingerprint_md5": "ece1a6b1f84b4bf763df88709b5e9ac7",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# LoL客户端MCP\r\n\r\n用于访问英雄联盟客户端数据的MCP（模型控制器处理器）服务器。该服务器提供了一系列工具，这些工具与英雄联盟实时客户端数据API通信，以检索游戏中的数据。\r\n\r\n## 概述\r\n\r\n该项目使用英雄联盟游戏客户端的实时客户端数据API访问实时游戏数据。它利用FastMCP框架将各种端点作为工具公开。\r\n\r\nAPI信息可在https://developer.riotgames.com/docs/lol.\r\n\r\n## 安装和使用\r\n\r\n### 先决条件\r\n\r\n- Python 3.8或更高版本\r\n- [紫外线](https://github.com/astral-sh/uv) -快速可靠的Python包管理器\r\n  - 安装： `pip install uv`\r\n- 已安装英雄联盟客户端\r\n\r\n### 项目设置\r\n\r\n1. 克隆此存储库：\r\n\r\n```bash\r\ngit clone https://github.com/yourusername/lol-client-mcp.git\r\ncd lol-client-mcp\r\n```\r\n\r\n2. 使用uv安装所需的软件包：\r\n\r\n```bash\r\nuv pip install httpx fastmcp\r\n```\r\n\r\n### 运行MCP服务器\r\n\r\n要直接运行：\r\n\r\n```bash\r\npython main.py\r\n```\r\n\r\n### 与Claude整合\r\n\r\n有两种方法可以与Claude一起使用：\r\n\r\n#### 1.克劳德桌面配置\r\n\r\n将以下内容添加到您的 `claude_desktop_config.json` 文件：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"lol-client-mcp\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"C:\\\\ABSOLUTE\\\\PATH\\\\TO\\\\PARENT\\\\FOLDER\\\\lol-client-mcp\",\r\n                \"run\",\r\n                \"main.py\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n**重要**：替换 `C:\\\\ABSOLUTE\\\\PATH\\\\TO\\\\PARENT\\\\FOLDER\\\\lol-client-mcp` 了解项目的实际路径。\r\n\r\n#### 2.与Web应用程序一起使用\r\n\r\n要将MCP服务器连接到Claude web应用程序：\r\n\r\n1. 运行MCP服务器：\r\n\r\n   ```bash\r\n   python main.py\r\n   ```\r\n\r\n1. 在Claude web界面中配置服务器连接：\r\n\r\n   - 开始对话时，转到底部的MCP设置\r\n   - 选择“lol客户端mcp”并连接\r\n\r\n## API工具清单\r\n\r\n### 游戏数据\r\n\r\n- `get_all_game_data()`：Live League of Legends客户端数据API具有多个端点，这些端点返回/allgamedata端点返回的数据的子集。此端点非常适合测试Live客户端数据API，但除非您确实需要此端点的所有数据，否则请使用下面列出的返回响应子集的端点之一。\r\n- `get_game_stats()`：游戏的基本数据。\r\n- `get_event_data()`：获取游戏中发生的事件列表。\r\n\r\n### 活跃玩家数据\r\n\r\n- `get_active_player()`：获取有关当前玩家的所有数据。\r\n- `get_active_player_name()`：返回玩家名称。\r\n- `get_active_player_abilities()`：为活跃玩家获取技能。\r\n- `get_active_player_runes()`：检索当前玩家的符文完整列表。\r\n\r\n### 球员名单和个人球员数据\r\n\r\n- `get_player_list()`：检索游戏中的英雄列表及其统计数据。\r\n- `get_player_scores(riot_id)`：检索玩家的当前分数列表。\r\n- `get_player_summoner_spells(riot_id)`：检索玩家的召唤法术列表。\r\n- `get_player_main_runes(riot_id)`：检索任何玩家的基本符文。\r\n- `get_player_items(riot_id)`：检索玩家的物品列表。\r\n\r\n## 故障排除\r\n\r\n- **连接错误**：检查英雄联盟客户端是否正在运行。\r\n- **超时错误**：验证游戏是否已实际开始。此API不适用于游戏大厅。\r\n\r\n## 注意事项\r\n\r\n- 此API仅在英雄联盟客户端正在运行且游戏正在进行时才有效。\r\n- 按照Riot Games API政策使用。\r\n\r\n## 许可证\r\n\r\n所有权利属于Riot Games。\r\n",
+ "config": {
+  "lol-client-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "C:\\ABSOLUTE\\PATH\\TO\\PARENT\\FOLDER\\lol-client-mcp",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "1377",
+ "kind": "mcp",
+ "name": "cloudflare-2",
+ "fingerprint_md5": "0e12dbcecf6818394eca962d8dab2a27",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Cloudflare容器沙盒MCP服务器\r\n\r\n这是一个 [模型上下文协议（MCP）](https://modelcontextprotocol.io/introduction) 支持远程MCP连接的服务器，内置Cloudflare OAuth。\r\n\r\n它将运行沙盒容器的工具与MCP客户端集成在一起。使用此服务器，您可以允许LLM在安全的沙盒环境中运行任意代码，如Node或Python。\r\n\r\n## 工具\r\n\r\n| **类别** | **工具** | **描述** |\r\n| ----------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |\r\n| **容器生命周期** | `container_initialize` |（重新）启动容器。容器是短暂的，不保存任何状态。集装箱只能保证使用约10米。 |\r\n|                         | `container_ping` |Ping容器以实现连接|\r\n| **文件系统** | `container_file_write` |写入文件|\r\n|                         | `container_files_list` |列出工作目录中的所有文件|\r\n|                         | `container_file_read` |读取单个文件或目录的内容|\r\n|                         | `container_file_delete` |删除单个文件或目录|\r\n| **执行** | `container_exec` |在shell中运行命令|\r\n\r\n此MCP服务器仍在开发中，我们计划在未来添加更多工具。\r\n\r\n### 提示示例\r\n\r\n- `Create a visualization using matplotlib. Run it in the container that you can start`\r\n- `Clone and explore this github repo: [repo link]. Setup and run the tests in your development environment`\r\n- `Analyze this data using Python`\r\n\r\n## 从任何MCP客户端访问远程MCP服务器\r\n\r\n如果您的MCP客户端对远程MCP服务器具有一流的支持，则客户端将提供一种接受服务器URL的方法(`https://containers.mcp.cloudflare.com`)直接在其界面内（例如 [Cloudflare AI游乐场](https://playground.ai.cloudflare.com/)).\r\n\r\n如果您的客户端尚不支持远程MCP服务器，则需要使用设置其相应的配置文件 [mcp遥控器](https://www.npmjs.com/package/mcp-remote) 指定您的客户端可以访问哪些服务器。\r\n\r\n用以下配置替换内容：\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"cloudflare\": {\r\n\t\t\t\"command\": \"npx\",\r\n\t\t\t\"args\": [\"mcp-remote\", \"https://containers.mcp.cloudflare.com/mcp\"]\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\n设置好配置文件后，重新启动MCP客户端，将打开一个浏览器窗口，显示您的OAuth登录页面。继续执行身份验证流程，以授予客户端访问MCP服务器的权限。授予访问权限后，这些工具将可供您使用。\r\n\r\n有兴趣贡献并在本地运行此服务器吗？看 [贡献.md](CONTRIBUTING.md) 开始吧。\r\n",
+ "config": {
+  "cloudflare": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://containers.mcp.cloudflare.com/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

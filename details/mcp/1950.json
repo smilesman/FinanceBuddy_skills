@@ -1,0 +1,23 @@
+{
+ "id": "1950",
+ "kind": "mcp",
+ "name": "hkipo-mcp",
+ "fingerprint_md5": "1c920718a44fc1d71a172ad46f038fc3",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# 港股打新信息MCP服务\r\n\r\n为AI助手提供实时香港新股信息查询的MCP服务。\r\n\r\n## 快速使用\r\n\r\n### 1. 获取Token\r\n在Chrome中访问 https://aipo.myiqdii.com 并登录，按F12打开控制台：\r\n```javascript\r\nlocalStorage.getItem(\"token\")\r\n```\r\n复制返回的token值（不包括引号）。\r\n\r\n### 2. 配置ChatWise\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"hkipo-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"hkipo-mcp\"],\r\n      \"env\": {\r\n        \"TOKEN\": \"你的token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 功能特性\r\n\r\n- **新股列表查询** - 获取正在招股的新股\r\n- **详细信息查询** - 招股价格、募资金额、上市时间等\r\n- **暗盘数据** - 暗盘价格、成交量\r\n- **首日表现** - 开盘价、涨跌幅\r\n- **配售结果** - 各认购手数的中签比例、申请人数、需缴款金额等详细数据\r\n\r\n## 使用示例\r\n\r\n```\r\n查询当前正在招股的新股\r\n获取01304的详细招股信息\r\n06603暗盘情况\r\n查看06603的配售结果\r\n```\r\n\r\n## 技术信息\r\n\r\n- **数据源**:\r\n  - [AiPO数据网](https://aipo.myiqdii.com) - 新股基本信息、暗盘数据\r\n  - [交易宝数据](https://jybdata.iqdii.com) - 配售结果数据\r\n- **支持平台**: ChatWise等MCP兼容AI助手\r\n- **环境要求**: Node.js 18+\r\n\r\n## 许可证\r\n\r\nMIT License\r\n",
+ "config": {
+  "hkipo-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "hkipo-mcp"
+   ],
+   "env": {
+    "TOKEN": "你的token"
+   }
+  }
+ }
+}

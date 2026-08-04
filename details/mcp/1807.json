@@ -1,0 +1,24 @@
+{
+ "id": "1807",
+ "kind": "mcp",
+ "name": "xmind-generator",
+ "fingerprint_md5": "318afa0781df834cd1e13b17aab3ee25",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Xmind生成器MCP服务器\r\n\r\n用于生成Xmind思维导图的MCP（模型上下文协议）服务器。该服务器允许LLM通过MCP协议创建结构化思维导图。\r\n\r\n## 特性\r\n\r\n- 生成具有分层主题结构的Xmind思维导图\r\n- 支持主题注释、标签、标记和关系\r\n- 将思维导图保存到本地文件\r\n- **读取现有的.xmind文件并将大纲导出为Markdown**\r\n- 轻松集成Claude Desktop和其他MCP客户端\r\n\r\n## 先决条件\r\n\r\n- **Node.js**：需要版本18或更高版本\r\n- **思维导图**：安装 [思维导图](https://xmind.app/) 用于打开和编辑生成的思维导图的桌面应用程序\r\n- **克劳德桌面版**：需要将此工具用作扩展\r\n\r\n## 使用Claude Desktop进行设置\r\n\r\n### 选项1：使用npx（推荐）\r\n\r\n1. 创建或编辑Claude Desktop配置文件：\r\n\r\n   - macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n1. 添加以下配置：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"xmind-generator\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\"xmind-generator-mcp\"],\r\n         \"env\": {\r\n           \"outputPath\": \"/path/to/save/xmind/files\",\r\n           \"autoOpenFile\": \"false\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. 重新启动克劳德桌面\r\n\r\n1. 开始在对话中使用Xmind生成器\r\n\r\n### 选项2：本地安装\r\n\r\n1. 克隆存储库：\r\n\r\n   ```bash\r\n   git clone https://github.com/BangyiZhang/xmind-generator-mcp.git\r\n   cd xmind-generator-mcp\r\n   npm install\r\n   npm run build\r\n   ```\r\n\r\n1. 创建或编辑Claude Desktop配置文件：\r\n\r\n   - macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n1. 添加以下配置：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"xmind-generator\": {\r\n         \"command\": \"node\",\r\n         \"args\": [\"path/to/xmind-generator-mcp/dist/index.js\"],\r\n         \"env\": {\r\n           \"outputPath\": \"/path/to/save/xmind/files\",\r\n           \"autoOpenFile\": \"false\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. 替换 `path/to/xmind-generator-mcp` 带有克隆项目的实际路径\r\n\r\n1. 重新启动克劳德桌面\r\n\r\n1. 开始在对话中使用Xmind生成器\r\n\r\n**备注**：The `env` 部分是可选的。它允许您为服务器设置环境变量：\r\n\r\n- `outputPath`：保存Xmind文件的默认目录或文件路径。这可以被覆盖 `outputPath` 工具调用中的参数。\r\n- `autoOpenFile`：控制生成的Xmind文件是否在创建后自动打开。设置为“false”可禁用自动打开（默认值为“true”）。\r\n\r\n## 可用工具\r\n\r\n### 生成思维导图\r\n\r\n从主题的层次结构生成Xmind思维导图。\r\n\r\n参数：\r\n\r\n- `title` （string）：思维导图的标题（根主题）\r\n- `topics` （array）：思维导图中要包含的主题数组\r\n  - `title` （string）：主题的标题\r\n  - `ref` （字符串，可选）：主题的参考ID\r\n  - `note` （字符串，可选）：主题注释\r\n  - `labels` （字符串数组，可选）：主题的标签\r\n  - `markers` （字符串数组，可选）：主题的标记（格式：“Category.name”，例如“Arrow.refresh”）\r\n  - `children` （数组，可选）：子主题数组\r\n- `relationships` （array，可选）：主题之间关系的数组\r\n- `outputPath` （字符串，可选）：Xmind文件的自定义输出路径。如果设置了环境变量，则会覆盖该变量。\r\n\r\n### 阅读思维导图\r\n\r\n读取现有 `.xmind` 文件并将其导出为Markdown大纲。\r\n\r\n参数：\r\n\r\n- `inputPath` （string）：路径 `.xmind` 文件\r\n- `style` （字符串，可选）：Markdown样式。目前支持 `A` （大纲）。 (`B` 为未来更富裕的出口预留。)\r\n\r\n例子：\r\n\r\n```json\r\n{\r\n  \"inputPath\": \"/path/to/file.xmind\",\r\n  \"style\": \"A\"\r\n}\r\n```\r\n\r\n## 示例\r\n\r\n下面是一个如何使用 `generate-mind-map` 工具：\r\n\r\n```json\r\n{\r\n  \"title\": \"Project Plan\",\r\n  \"topics\": [\r\n    {\r\n      \"title\": \"Research\",\r\n      \"ref\": \"topic:research\",\r\n      \"note\": \"Gather information about the market\",\r\n      \"children\": [\r\n        {\r\n          \"title\": \"Market Analysis\",\r\n          \"labels\": [\"Priority: High\"]\r\n        },\r\n        {\r\n          \"title\": \"Competitor Research\",\r\n          \"markers\": [\"Task.quarter\"]\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"title\": \"Development\",\r\n      \"children\": [\r\n        {\r\n          \"title\": \"Frontend\",\r\n          \"markers\": [\"Arrow.refresh\"]\r\n        },\r\n        {\r\n          \"title\": \"Backend\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "xmind-generator": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "xmind-generator-mcp"
+   ],
+   "env": {
+    "outputPath": "/path/to/save/xmind/files",
+    "autoOpenFile": "false"
+   }
+  }
+ }
+}

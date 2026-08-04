@@ -1,0 +1,22 @@
+{
+ "id": "3376",
+ "kind": "mcp",
+ "name": "chaitin-ip-intelligence",
+ "fingerprint_md5": "13b965833b5c35d737bbdf7cf41fc993",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# chaitin ip情报搜索工具\r\n\r\n\r\n<h4 align=\"center\">\r\n  help you check IP reputations and supports direct subscription to complete malicious IP databases\r\n</h4>\r\n\r\n🏠 Website &nbsp; | &nbsp;\r\n  🔍 Online Search\r\n\r\n\r\n## 项目介绍 / Project Introduction\r\n\r\n长亭 IP 智能查询服务\\\r\n依托 Chaitin 全球蜜罐网络及百万级节点构建的IP情报分析平台，为移动内容提供商（MCP）提供精准的IP画像与威胁预警服务。\r\n\r\nChaitin IP智能查询服务\\\r\n一个基于Chaitin全球蜜罐网络和数百万节点的IP情报分析平台，为移动内容提供商（MCP）提供准确的IP分析和威胁警报。\r\n\r\n## 核心能力 / Core Capabilities\r\n\r\n• 蜜罐数据驱动：实时关联Chaitin蜜罐捕获的恶意IP行为特征库\\\r\n• 百万节点协同：整合全球防御节点的攻击拦截数据进行风险评估\\\r\n• 威胁情报聚合：融合公开威胁数据库与Chaitin私有情报源\\\r\n• 动态响应机制：基于防御节点反馈实时更新IP信誉评分\r\n\r\n•蜜罐驱动数据：与Chaitin蜜罐捕获的恶意IP行为特征数据库实时关联\\\r\n•百万节点协作：整合来自全球节点的攻击拦截数据以进行风险评估\\\r\n•威胁情报聚合：将公共威胁数据库与Chaitin的私人情报来源相结合\\\r\n•动态响应系统：基于节点反馈的实时IP信誉评分\r\n\r\n## 快速开始 / Quick Start\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chaitin-ip-intelligence\": {\r\n      \"isActive\": true,\r\n      \"name\": \"chaitin-ip-intelligence\",\r\n      \"description\": \"\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"chaitin-ip-intelligence-search-tool\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证 / License\r\n\r\nMIT\r\n",
+ "config": {
+  "chaitin-ip-intelligence": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "chaitin-ip-intelligence-search-tool"
+   ],
+   "env": {}
+  }
+ }
+}

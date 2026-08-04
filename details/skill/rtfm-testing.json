@@ -1,0 +1,12 @@
+{
+ "id": "rtfm-testing",
+ "kind": "skill",
+ "name": "rtfm-testing",
+ "fingerprint_md5": "71c5571254a303b79a7c59de269895c9",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# RTFM Testing\r\n\r\n一种文档质量方法论，通过生成新的 agent 来验证文档是否真正可用。\r\n\r\n## The Problem\r\n\r\n由构建者本人编写的文档几乎总是不完整的。他们会无意识地填补空白。他们假设了上下文。他们跳过了“显而易见”的步骤。\r\n\r\nRTFM Testing 通过生成一个零上下文的新 agent 并提问：你能否仅使用文档完成此任务？来解决这个问题。\r\n\r\n## When to Use\r\n\r\n- Before publishing docs, READMEs, tutorials, or setup guides\r\n- When users report confusion but you can't see why\r\n- After major refactors to validate docs still work\r\n- As part of CI for documentation-heavy projects\r\n\r\n## How It Works\r\n\r\n1. **Identify the task** — 某人在阅读文档后应该能够完成什么？\r\n2. **Bundle the docs** — 收集所有相关文档（且仅收集这些）\r\n3. **Spawn a fresh tester** — 使用 `sessions_spawn` 运行 TESTER.md prompt\r\n4. **Analyze failures** — 每一个困惑点都是一个文档 bug\r\n5. **Fix and repeat** — 更新文档，重新生成，重新测试，直到通过\r\n\r\n## Usage\r\n\r\n```\r\nsessions_spawn(\r\n  task: \"Complete the following task using ONLY the provided documentation. [TASK DESCRIPTION]\\n\\n---\\n\\n[PASTE DOCS HERE]\",\r\n  agentId: \"default\",\r\n  label: \"rtfm-test\"\r\n)\r\n```\r\n\r\nOr use the full TESTER.md prompt for more structured output.\r\n\r\n## Metrics\r\n\r\n- **Cold Start Score** — 直到任务完成的生成周期数（越低 = 文档越好）\r\n- **Gap Count** — 每次运行的 `[GAP]` 报告数量\r\n- **Gap Categories** — Missing steps, unclear language, wrong assumptions, missing prerequisites\r\n\r\n## Key Principles\r\n\r\n1. **No hints** — 不要帮助 tester。让它失败。\r\n2. **Literal reading** — Tester 不得推断或猜测\r\n3. **Docs only** — 没有外部知识，没有“常识”\r\n4. **Failures are signal** — 每一次绊倒都是可操作的反馈\r\n\r\n## Files\r\n\r\n- `SKILL.md` — 本文件\r\n- `TESTER.md` — 新 agent 的 system prompt\r\n- `GAPS.md` — 输出格式规范",
+ "config": {}
+}

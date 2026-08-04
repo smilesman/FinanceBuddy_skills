@@ -1,0 +1,24 @@
+{
+ "id": "2861",
+ "kind": "mcp",
+ "name": "howrisky",
+ "fingerprint_md5": "f7cfa4c375d372380002074fec7a7b24",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# HowRisky MCP服务器\r\n\r\n人工智能代理的蒙特卡洛风险分析。使用肥尾分布和专有KDE算法的机构级财务建模。\r\n\r\n**8工具：** 投资组合风险（CVaR、破产概率）、创业股权、房地产、凯利标准投注等。\r\n\r\n**兼容：** Claude桌面，ChatGPT桌面，游标，Windsurf，Cline，GitHub复制品，VS代码，Codex\r\n\r\n______________________________________________________________________\r\n\r\n## 标准配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"howrisky\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"howrisky-mcp-server\"],\r\n      \"env\": {\r\n        \"HOWRISKY_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n获取您的免费API密钥： **https://howrisky.ai/app/settings** （每月免费拨打100次电话）\r\n\r\n______________________________________________________________________\r\n\r\n## 入门指南\r\n\r\n**第一步：** 从获取API密钥https://howrisky.ai/app/settings\r\n\r\n**第二步：** 将上述标准配置添加到AI工具的MCP配置中\r\n\r\n就是这样！您的AI现在可以访问蒙特卡洛风险模拟。\r\n\r\n______________________________________________________________________\r\n\r\n## 安装\r\n\r\n\r\n**Claude Desktop**\r\n\r\n编辑配置文件：\r\n\r\n- MacOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n添加 **上述标准配置**.\r\n\r\n重新启动克劳德桌面。\r\n\r\n**测试一下：** 问克劳德 *“使用HowRisky，60/40投资组合的风险是什么？”*\r\n\r\n\r\n**ChatGPT Desktop**\r\n\r\n1. 打开ChatGPT桌面设置\r\n1. 首选 **应用程序和连接器** → **高级设置**\r\n1. 启用 **开发人员模式**\r\n1. 添加MCP服务器配置（使用 **上述标准配置**)\r\n\r\n重新启动ChatGPT桌面。\r\n\r\n**测试一下：** 询问ChatGPT *“使用HowRisky计算100%SPY投资组合的CVaR”*\r\n\r\n\r\n**Cursor**\r\n\r\n添加到Cursor的MCP配置文件中：\r\n\r\n使用 **上述标准配置**.\r\n\r\nCursor通过VS Code扩展兼容性支持MCP。\r\n\r\n\r\n**Windsurf**\r\n\r\n添加到Windsurf MCP设置：\r\n\r\n使用 **上述标准配置**.\r\n\r\nWindsurf的MCP集成工作原理与Cursor类似。\r\n\r\n\r\n**Cline (VS Code)**\r\n\r\n**通过Cline MCP市场：**\r\n\r\n1. 在VS代码中打开Cline\r\n1. 在MCP市场中搜索“多大风险”\r\n1. 单击安装\r\n1. 提示时输入API键\r\n\r\n**手动设置：**\r\n\r\n添加到VS代码设置→ 扩展→ 克莱恩→ MCP服务器：\r\n\r\n使用 **上述标准配置**.\r\n\r\n\r\n**GitHub Copilot / VS Code**\r\n\r\n添加到VS代码 `settings.json`:\r\n\r\n使用 **上述标准配置** 在MCP服务器配置部分。\r\n\r\n\r\n**Remote Server (HTTP)**\r\n\r\n对于自定义集成或基于web的AI工具：\r\n\r\n**端点：** `https://mcp.howrisky.ai`\r\n\r\n**身份验证：** 包含 `X-API-Key` 带有API密钥的标头\r\n\r\n**文档：** https://howrisky.ai/mcp/docs\r\n\r\n例子：\r\n\r\n```bash\r\ncurl -X POST https://mcp.howrisky.ai \\\r\n  -H \"X-API-Key: your-api-key\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\"jsonrpc\":\"2.0\",\"method\":\"tools/list\",\"id\":1}'\r\n```\r\n\r\n\r\n______________________________________________________________________\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `calculate_portfolio_risk` |CVaR、VaR、破产概率、生存概率|\r\n| `simulate_future_timelines` |百分位数逐年变化的投资组合|\r\n| `compare_portfolios` |多个投资组合的并排风险比较|\r\n| `text_to_portfolio` |自然语言→ 资产分配|\r\n| `add_startup` |具有退出情景的创业股权建模|\r\n| `add_real_estate` |具有现金流、内部收益率、抵押贷款分析的房地产|\r\n| `add_private_asset` |非流动性资产建模（私募股权基金等）|\r\n| `add_gamble` |凯利高风险投注策略标准|\r\n\r\n**完整文档：** https://howrisky.ai/mcp/docs\r\n\r\n______________________________________________________________________\r\n\r\n## 示例用法\r\n\r\n配置后，询问您的AI：\r\n\r\n> *“使用HowRisky计算20年内在60/40投资组合中投资10万美元的风险”*\r\n\r\nAI将：\r\n\r\n1. 通过以下方式了解HowRisky工具 `tools/list`\r\n1. 呼叫 `calculate_portfolio_risk` 参数正确\r\n1. 回报CVaR、生存概率、破产风险和其他指标\r\n\r\n______________________________________________________________________\r\n\r\n## 特性\r\n\r\n**肥尾造型** -高斯模型低估了3-10倍的碰撞风险。我们专有的KDE捕捉到了现实。\r\n\r\n**综合指标** -12个风险指标，包括CVaR 95/99、VaR、破产概率、百分位数\r\n\r\n**私人资产** -模型创业、房地产、私募股权基金和高风险赌博\r\n\r\n**税务意识** -支持15+个国家（美国、英国、德国、法国、IT、ES、JP、AU、CA等）\r\n\r\n**自定义场景** -用自己的市场假设覆盖历史数据\r\n\r\n______________________________________________________________________\r\n\r\n## 定价\r\n\r\n|级别|通话/月|价格|\r\n|------|-------------|-------|\r\n|免费|100|0美元|\r\n|开发者| 10000 | 99美元|\r\n|专业| 100000 | 299美元|\r\n|企业|1000000 |999美元|\r\n\r\n查看定价：https://howrisky.ai/mcp/pricing\r\n\r\n______________________________________________________________________\r\n\r\n## 支持\r\n\r\n- **问题：** https://github.com/howrisky/howrisky-mcp-server/issues\r\n- **文件：** https://howrisky.ai/mcp/docs\r\n- **电子邮件：** mcp@howrisky.ai\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\n专有-版权所有©2025 Diogo Seca/HowRisky.ai\r\n\r\n您可以使用此软件访问HowRisky MCP API。禁止修改和重新分发。看 `LICENSE` 了解详情。\r\n",
+ "config": {
+  "howrisky": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "howrisky-mcp-server"
+   ],
+   "env": {
+    "HOWRISKY_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "2456",
+ "kind": "mcp",
+ "name": "bowlly",
+ "fingerprint_md5": "f4ffa651613a71074a1c0c3bdc00bfe1",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Bowlly MCP服务器\r\n\r\n\r\n用于Bowlly猫粮产品搜索和成分分析的MCP（模型上下文协议）服务器。\r\n使Claude Desktop能够搜索、分析和比较猫粮产品。\r\n\r\n## 先决条件\r\n\r\n- **Node.js 22+** -运行MCP服务器所需\r\n- **克劳德桌面版** - [点击此处下载](https://claude.ai/download) 如果未安装\r\n\r\n## 快速开始\r\n\r\n### 选项1：一个命令设置（推荐）\r\n\r\n```bash\r\nnpx @bowlly/mcp-server --setup\r\n```\r\n\r\n运行后，重新启动Claude Desktop，您就可以开始了！\r\n\r\n### 选项2：手动配置\r\n\r\n1. **编辑您的Claude桌面配置** 在操作系统的适当路径上：\r\n\r\n   - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - **视窗**: `%APPDATA%/Claude/claude_desktop_config.json`\r\n   - **Linux**: `~/.config/Claude/claude_desktop_config.json`\r\n\r\n1. **添加Bowlly服务器配置**:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bowlly\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@bowlly/mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. **保存文件并重新启动Claude Desktop**\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n| -------------------- | --------------------------------------- |\r\n| `search_products` |按成分、条件、形式搜索|\r\n| `get_product_detail` |包含成分的完整产品信息|\r\n| `compare_products` |并排比较|\r\n| `analyze_nutrition` |成分分解和碳水化合物分析|\r\n| `get_curation_list` |最佳类别推荐|\r\n\r\n### 自然语言查询示例\r\n\r\n```\r\n\"Find grain-free dry cat foods\"\r\n\"Show me wet foods without chicken\"\r\n\"Analyze the nutrition of Blue Buffalo Wilderness\"\r\n\"Compare Orijen and Acana cat foods\"\r\n\"What are the best low-carb options?\"\r\n\"Show me foods for cats with sensitive stomachs\"\r\n```\r\n\r\n## 配置\r\n\r\n### 按平台配置文件位置\r\n\r\n|平台|路径|\r\n| -------- | ----------------------------------------------------------------- |\r\n|macOS| `~/Library/Application Support/Claude/claude_desktop_config.json` |\r\n|窗户| `%APPDATA%/Claude/claude_desktop_config.json` |\r\n|Linux| `~/.config/Claude/claude_desktop_config.json` |\r\n\r\n## 验证\r\n\r\n要确认MCP服务器正在工作：\r\n\r\n1. **重新启动克劳德桌面** （配置更改后需要）\r\n1. **打开工具菜单** -寻找左下角的锤子图标\r\n1. **验证Bowlly工具是否出现** -您应该看到列出的5个工具\r\n1. **使用查询进行测试**：试着问“寻找无谷物的干猫粮”\r\n\r\n## 故障排除\r\n\r\n### 工具未在Claude中显示？\r\n\r\n- **重新启动克劳德桌面** -配置更改需要重新启动\r\n- **检查配置文件路径** -确保您正在为操作系统编辑正确的文件\r\n- **验证JSON语法** -如果不确定，请使用JSON验证器\r\n- **检查克劳德桌面日志**:\r\n  - macOS： `~/Library/Logs/Claude/`\r\n  - 窗户： `%APPDATA%/Claude/Logs/`\r\n  - Linux： `~/.config/Claude/Logs/`\r\n\r\n### “找不到命令”错误？\r\n\r\n- **确保已安装Node.js 22+**: `node --version`\r\n- **尝试使用npx**: `npx @bowlly/mcp-server --setup`\r\n- **全局安装回退**: `npm install -g @bowlly/mcp-server`\r\n\r\n### 配置不持久？\r\n\r\n- **检查文件权限** -确保您具有配置目录的写入权限\r\n- **使用绝对路径** -相对路径可能无法正确解析\r\n- **验证JSON格式** -缺少逗号或括号是常见问题\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "bowlly": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@bowlly/mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

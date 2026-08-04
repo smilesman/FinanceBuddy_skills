@@ -1,0 +1,24 @@
+{
+ "id": "2967",
+ "kind": "mcp",
+ "name": "stripe-2",
+ "fingerprint_md5": "1dcf5b2e8840fc84b454fbc5435f3ad6",
+ "download_count": 0,
+ "category": "支付服务",
+ "tags": "",
+ "version": "",
+ "readme": "# 条纹支付MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，提供对条纹支付API的完全访问。直接从Claude、Cursor或任何兼容MCP的客户端管理客户、产品、价格、订阅、发票和账户余额。\r\n\r\n## 特性\r\n\r\n- **客户管理** -创建、读取、更新、删除和列出客户\r\n- **产品管理** -创建、读取和列出产品\r\n- **价格管理** -创建一次性和经常性价格\r\n- **订阅管理** -创建、取消和列出订阅\r\n- **发票访问** -检索并列出发票\r\n- **余额信息** -检查不同货币的账户余额\r\n- **内置速率限制** -自动节流（25个请求/秒），重试429次\r\n\r\n## 可用工具（18）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `stripe_create_customer` |创建新客户|\r\n| `stripe_get_customer` |按ID获取客户详细信息|\r\n| `stripe_update_customer` |更新客户属性|\r\n| `stripe_list_customers` |按页码列出客户|\r\n| `stripe_delete_customer` |删除客户|\r\n| `stripe_create_product` |创建新产品|\r\n| `stripe_get_product` |按ID获取产品详细信息|\r\n| `stripe_list_products` |列出产品|\r\n| `stripe_create_price` |创建价格（一次性或定期）|\r\n| `stripe_get_price` |按ID获取价格详细信息|\r\n| `stripe_list_prices` |标价|\r\n| `stripe_create_subscription` |创建新订阅|\r\n| `stripe_get_subscription` |获取订阅详细信息|\r\n| `stripe_cancel_subscription` |取消订阅|\r\n| `stripe_list_subscriptions` |列出订阅|\r\n| `stripe_get_invoice` |获取发票详细信息|\r\n| `stripe_list_invoices` |列出发票|\r\n| `stripe_get_balance` |获取当前账户余额|\r\n\r\n## 快速开始\r\n\r\n```bash\r\nnpx @cloud9-labs/mcp-stripe\r\n```\r\n\r\n## 先决条件\r\n\r\n- Node.js>=20.0.0\r\n- 条纹密钥来自 [条纹仪表板](https://dashboard.stripe.com/apikeys) （建议开发测试模式）\r\n\r\n## 安装\r\n\r\n### 通过npx（推荐）\r\n\r\n无需安装-将MCP客户端配置为使用npx。\r\n\r\n### 通过npm\r\n\r\n```bash\r\nnpm i -g @cloud9-labs/mcp-stripe\r\n```\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone https://github.com/cloud9-labs/mcp-stripe.git\r\ncd mcp-stripe\r\nnpm ci\r\nnpm run build\r\n```\r\n\r\n## 配置\r\n\r\n### 克劳德桌面\r\n\r\n增添 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"stripe\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@cloud9-labs/mcp-stripe\"],\r\n      \"env\": {\r\n        \"STRIPE_SECRET_KEY\": \"sk_test_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n增添 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"stripe\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@cloud9-labs/mcp-stripe\"],\r\n      \"env\": {\r\n        \"STRIPE_SECRET_KEY\": \"sk_test_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用示例\r\n\r\n- “创建客户john@example.com\"\r\n- “创建一个名为高级计划的产品”\r\n- “为产品prod_xxx创建0.99的月价”\r\n- “订阅客户cus_xxxx以获取价格_xxxx”\r\n- “列出所有活动订阅”\r\n- “显示当前账户余额”\r\n- “获取in_xxx的发票详细信息”\r\n\r\n## 构建人工智能销售自动化系统？\r\n\r\n此MCP服务器是用于AI驱动的销售自动化的开源工具包的一部分。我们正在构建连接您整个销售堆栈的MCP服务器。\r\n\r\n关注我们的进展并获取更新：\r\n\r\n- **X（推特）**: [@cloud9_ai_labs](https://x.com/cloud9_ai_labs)\r\n- **GitHub**: [cloud9实验室](https://github.com/cloud9-labs)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "stripe": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@cloud9-labs/mcp-stripe"
+   ],
+   "env": {
+    "STRIPE_SECRET_KEY": "sk_test_your_key_here"
+   }
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "557",
+ "kind": "mcp",
+ "name": "4o-image",
+ "fingerprint_md5": "11cab8031dbe16d2305e259d5846c95d",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# 4o映像MCP服务器\r\n\r\nMCP服务器实现与4o-image API集成，使LLM和其他人工智能系统能够通过标准化协议生成和编辑图像。使用简单的文本提示创建高质量的艺术、3D角色和自定义图像。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@Antipas/4oimage-mcp\">\r\n</a>\r\n\r\n\r\n## 特性\r\n\r\n- **文本到图像生成**：使用AI从文本描述中创建图像\r\n- **图像编辑**：使用文本提示转换现有图像\r\n- **实时进度更新**：获取发电状态的反馈\r\n- **浏览器集成**：在默认浏览器中自动打开生成的图像\r\n\r\n## 工具\r\n\r\n- **generateImage**\r\n  - 根据文本提示生成图像，并可选择图像编辑\r\n  - 输入：\r\n    - `prompt` （字符串，必填）：所需图像的文本描述\r\n    - `imageBase64` （字符串，可选）：用于编辑或样式转换的Base64编码图像\r\n\r\n## 配置\r\n\r\n### 获取API密钥\r\n\r\n1. 在以下网址注册帐户 [4o-image.app](https://4o-image.app/dashboard/)\r\n1. 从用户面板获取API密钥\r\n1. 运行服务器时，将API键设置为环境变量\r\n\r\n### 使用Claude Desktop\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"4o-image\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"4oimage-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"API_KEY\": \"YOUR_API_KEY_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 示例用法\r\n\r\n以下是将此MCP服务器与Claude一起使用的示例：\r\n\r\n```\r\nGenerate an image of a dog running on the beach at sunset\r\n```\r\n\r\nClaude将使用MCP服务器生成图像，该图像将在默认浏览器中自动打开。您还将在克劳德的回复中获得指向图像的直接链接。\r\n\r\n对于图像编辑，您可以包含一个基础图像并提示Claude对其进行修改：\r\n\r\n```\r\nEdit this image to make the sky more dramatic with storm clouds\r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。\r\n",
+ "config": {
+  "4o-image": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "4oimage-mcp"
+   ],
+   "env": {
+    "API_KEY": "YOUR_API_KEY_HERE"
+   }
+  }
+ }
+}

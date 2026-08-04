@@ -1,0 +1,23 @@
+{
+ "id": "928",
+ "kind": "mcp",
+ "name": "wordly",
+ "fingerprint_md5": "4a61a03407e4c6ce6a5cd65574c7f9d8",
+ "download_count": 0,
+ "category": "翻译与语言",
+ "tags": "",
+ "version": "",
+ "readme": "# 措辞MCP应用程序\r\n\r\n一个MCP（模型上下文协议）应用程序，提供交互式UI，用于可视化多个重写的文本变体。非常适合语法检查、风格调整和实时比较的文本改进。\r\n\r\n此应用程序展示了中描述的mcp-ui功能https://blog.modelcontextprotocol.io/posts/2026-01-26-mcp-apps/.\r\n\r\n\r\n## 配置\r\n\r\n添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"wordly\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"wordly-mcp-app\", \"--stdio\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 运作原理\r\n\r\n配置后，Wordly MCP应用程序提供 `visualize_rewrites` AI助手可以使用该工具在交互式UI中显示文本重写。\r\n\r\n### 示例用法\r\n\r\n**用户**：以多种样式重写此文本：感谢您分享的详细信息\r\n\r\n**AI助手** 将呼叫 `visualize_rewrites` 工具包括：\r\n\r\n```json\r\n{\r\n  \"original_text\": \"thanks for the details you shared\",\r\n  \"variations\": [\r\n    {\r\n      \"intent\": \"Professional & Formal\",\r\n      \"text\": \"Thank you for providing those details.\"\r\n    },\r\n    {\r\n      \"intent\": \"Clear & Conversational\",\r\n      \"text\": \"Thanks for sharing that information!\"\r\n    },\r\n    {\r\n      \"intent\": \"Constructive & Collaborative\",\r\n      \"text\": \"I appreciate you sharing those details with me.\"\r\n    },\r\n    {\r\n      \"intent\": \"Friendly & Direct\",\r\n      \"text\": \"Thanks for the info!\"\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n然后，该应用程序将呈现一个交互式UI，显示所有变体，并能够：\r\n\r\n- 在不同的重写样式之间切换\r\n- 将原始文本与重写文本进行比较\r\n- 一键复制任何变体\r\n\r\n## api参考\r\n\r\n### 工具： `visualize_rewrites`\r\n\r\n向用户显示重写的文本变体。\r\n\r\n**输入架构：**\r\n\r\n```typescript\r\n{\r\n  original_text: string;           // The original text to rewrite\r\n  variations: Array<{\r\n    intent: string;                // The rewrite style/intent\r\n    text: string;                  // The rewritten text\r\n  }>;\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\n[MIT](LICENSE)\r\n",
+ "config": {
+  "wordly": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "wordly-mcp-app",
+    "--stdio"
+   ],
+   "env": {}
+  }
+ }
+}

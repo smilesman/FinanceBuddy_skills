@@ -1,0 +1,24 @@
+{
+ "id": "1836",
+ "kind": "mcp",
+ "name": "arbitrum-mcp",
+ "fingerprint_md5": "eb8357b68e97ef0c09b67d94477c77ab",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 仲裁MCP服务器\r\n\r\n\r\n一种模型上下文协议（MCP）服务器，用于与自然语言中的Arbitrum Nitro节点和链进行接口连接。监控所有Arbitrum网络（包括核心链（Arbitrum One、Nova）和Orbit链）的链健康状况、批量发布、断言和天然气价格。\r\n\r\n## 演示\r\n\r\n\r\n*通过任何兼容MCP的客户端使用自然语言查询监控仲裁链*\r\n\r\n## 特性\r\n\r\n### 堆芯监测工具\r\n\r\n- **综合链状态** -任何Arbitrum连锁店的完整健康概述\r\n- **批量过账监控** -跟踪测序仪批量交付和积压\r\n- **断言监控** -监控节点创建与节点确认事件\r\n- **天然气价格监测** -跟踪当前的天然气价格并检测峰值\r\n- **ArbOS版本检测** -获取任何链的当前ArbOS版本\r\n\r\n### 链支持\r\n\r\n- **核心Arbitrum链** -Arbitrum One，Arbitrum Nova\r\n- **轨道链** -所有公共轨道链（Xai、Superposition等）\r\n- **自动分辨率** -从链名自动解析的合约地址\r\n\r\n### Arbitrum节点API\r\n\r\n- 健康检查和同步状态\r\n- 交易跟踪（arbtrace\\_\\*）\r\n- 调试和验证API\r\n- 维护操作\r\n- Timeboost快速车道\r\n\r\n## 使用示例\r\n\r\n**“赛的现状如何？”**\r\n\r\n```\r\ncomprehensive_chain_status --chainName \"Xai\"\r\n```\r\n\r\n**“Arbitrum One正在发布批次吗？”**\r\n\r\n```\r\nbatch_posting_status --chainName \"Arbitrum One\"\r\n```\r\n\r\n**“查看Nova上的天然气价格”**\r\n\r\n```\r\ngas_status --chainName \"Nova\"\r\n```\r\n\r\n### 可用工具\r\n\r\n#### 监视工具\r\n\r\n- `comprehensive_chain_status` -完整的链健康概述\r\n- `batch_posting_status` -批量过账监控\r\n- `assertion_status` -断言创建/确认跟踪\r\n- `gas_status` -当前天然气价格信息\r\n\r\n#### 连锁信息\r\n\r\n- `list_chains` -显示所有可用的Arbitrum链条\r\n- `search_chains` -按名称或ID查找链\r\n- `chain_info` -获取详细的链信息\r\n- `arbos_version` -获取任何链的ArbOS版本\r\n\r\n#### 节点操作\r\n\r\n- `node_health` -检查节点运行状况\r\n- `sync_status` -获取同步状态\r\n- `latest_block` -获取最新区块信息\r\n\r\n#### 账户操作\r\n\r\n- `get_balance` / `get_balance_ether` -检查账户余额\r\n- `get_transaction` / `get_transaction_receipt` -交易详情\r\n- `is_contract` -检查地址是否为合同\r\n\r\n## 关键利益\r\n\r\n- **综合监控** -在一个查询中完成链健康状况概述\r\n- **多链支持** -跨所有Arbitrum链的一致接口\r\n- **自然语言接口** -使用简明英语查询区块链数据\r\n- **实时数据** -具有自动链发现功能的实时区块链数据\r\n- **故障排除就绪** -快速健康检查以诊断问题\r\n- **气体和性能跟踪** -监控网络拥塞和成本\r\n\r\n## 设置和安装\r\n\r\n### Docker（推荐）\r\n\r\n以最大的客户端兼容性运行MCP服务器的最简单方法：\r\n\r\n```bash\r\n# Run directly from Docker Hub (no build required!)\r\ndocker run -i --rm dewanshparashar/arbitrum-mcp\r\n```\r\n\r\n### 直接Node.js\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build\r\nnpm run build\r\n\r\n# Run\r\nnpm start\r\n```\r\n\r\n### MCP客户端配置\r\n\r\n#### 克劳德桌面\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"arbitrum-mcp\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"dewanshparashar/arbitrum-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 克莱恩/克劳德代码\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"arbitrum-mcp\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"dewanshparashar/arbitrum-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build\r\nnpm run build\r\n\r\n# Run tests\r\nnpm test\r\n\r\n# Development mode with watch\r\nnpm run dev\r\n```\r\n\r\n## 码头工人\r\n\r\n看 [医生.md](DOCKER.md) 了解详细的Docker设置说明。\r\n\r\n**⚠️ 重要提示：** 当使用Docker容器连接到本地测试节点时，请使用 `http://host.docker.internal:8547` 而不是 `http://127.0.0.1:8547` 对于RPC URL。\r\n\r\n## 技术栈\r\n\r\n- **TypeScript** -类型安全开发\r\n- **我知道** -用于区块链交互的以太坊客户端\r\n- **@仲裁/sdk** -核心链数据的Arbitrum官方SDK\r\n- **MCP-SDK** -模型上下文协议实现\r\n- **码头工人** -集装箱化部署\r\n\r\n## 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建要素分支\r\n1. 添加新功能的测试\r\n1. 提交拉取请求\r\n\r\n## 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件。\r\n",
+ "config": {
+  "arbitrum-mcp": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "dewanshparashar/arbitrum-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

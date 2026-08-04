@@ -1,0 +1,12 @@
+{
+ "id": "wechat-article-search",
+ "kind": "skill",
+ "name": "wechat-article-search",
+ "fingerprint_md5": "af4e278141936ef13f700326436f5e96",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# 微信公众号文章搜索说明\r\n\r\n## 适用场景\r\n\r\n- 用户说“帮我搜某个关键词的公众号文章/最近文章”\r\n- 需要快速拿到：标题、摘要、发布时间、公众号名称、可访问链接\r\n\r\n## 工作流程\r\n\r\n### 步骤1: 确认已安装依赖包\r\n该脚本依赖NodeJS依赖包 `cheerio`，建议先执行全局安装或在项目中安装：\r\n\r\n```bash\r\nnpm install -g cheerio\r\n```\r\n\r\n### 步骤2: 确认搜索词语数量\r\n1、 确认关键词与数量\r\n\r\n### 步骤3: 执行搜索命令\r\n1、执行常规搜索命令\r\n\r\n```bash\r\nnode scripts/search_wechat.js \"关键词\" \r\n```\r\n\r\n## 特殊流程（可选）\r\n1) 执行包含数量限制的搜索命令\r\n\r\n```bash\r\nnode scripts/search_wechat.js \"关键词\"  -n 15\r\n```\r\n2) 如果用户需要保存结果到文件，执行命令\r\n\r\n```bash\r\nnode scripts/search_wechat.js \"关键词\" -n 20 -o result.json\r\n```\r\n3) 若想要获取微信文章域名的真实链接”，执行如下命令\r\n\r\n```bash\r\nnode scripts/search_wechat.js \"关键词\" -n 5 -r\r\n```\r\n\r\n## 参数说明\r\n\r\n- `query`：搜索关键词（必填）\r\n- `-n, --num`：返回数量（默认 10，最大 50）\r\n- `-o, --output`：输出 JSON 文件路径（可选）\r\n- `-r, --resolve-url`：尝试把中间链接解析成微信文章真实链接（会额外请求每条结果）\r\n\r\n## 输出字段（文章对象）\r\n文章标题、文章地址、文章概要、发布时间、来源公众号名称\r\n\r\n## 常见问题处理\r\n\r\n- 结果为空：尝试更换关键词、更少的特殊字符、或稍后重试\r\n- 解析真实 URL 失败：这是常态（反爬限制）；可提示用户用浏览器打开中间链接\r\n\r\n## 注意事项\r\n\r\n- 本工具仅用于学习和研究目的，请勿用于商业用途或大规模爬取。\r\n- 使用本工具时请遵守相关网站的使用条款和规定。\r\n- 过度使用可能导致 IP 被封禁，请谨慎使用。",
+ "config": {}
+}

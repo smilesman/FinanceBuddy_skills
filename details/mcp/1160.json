@@ -1,0 +1,28 @@
+{
+ "id": "1160",
+ "kind": "mcp",
+ "name": "mysql-21",
+ "fingerprint_md5": "7fa9c4a679d07065faba8e382f1c2c8b",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# @imrieul/mysql-mcp服务器\r\n\r\n[韩语](https://github.com/ImRieul/mysql-mcp-server/blob/main/README.ko.md) | [日本语](https://github.com/ImRieul/mysql-mcp-server/blob/main/README.ja.md) | [中文](https://github.com/ImRieul/mysql-mcp-server/blob/main/README.zh.md) | [西班牙语](https://github.com/ImRieul/mysql-mcp-server/blob/main/README.es.md) | [葡萄牙语](https://github.com/ImRieul/mysql-mcp-server/blob/main/README.pt.md) | [法语](https://github.com/ImRieul/mysql-mcp-server/blob/main/README.fr.md) | [俄语](https://github.com/ImRieul/mysql-mcp-server/blob/main/README.ru.md)\r\n\r\n一个简单的MySQL [主控程序](https://modelcontextprotocol.io/) 服务器。\r\n\r\n## 特性\r\n\r\n- **LLM友好** --紧凑的列/行格式、自动LIMIT、错误提示和下一步操作建议\r\n- **批量架构** — `describe_all_tables` 在一次调用中返回整个数据库模式\r\n- **只读模式** --应用程序级前缀检查+DB级 `SET SESSION TRANSACTION READ ONLY`\r\n- **查询超时** — `Promise.race()` 基于超时，保证连接清理\r\n- **SSL支持** --一个env变量来启用加密连接\r\n- **最小化** --3个依赖项，无需配置\r\n\r\n## 快速开始\r\n\r\n添加到MCP配置(`.mcp.json` 或 `claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mysql\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@imrieul/mysql-mcp-server\"],\r\n      \"env\": {\r\n        \"MYSQL_HOST\": \"localhost\",\r\n        \"MYSQL_PORT\": \"3306\",\r\n        \"MYSQL_USER\": \"root\",\r\n        \"MYSQL_PASSWORD\": \"your-password\",\r\n        \"MYSQL_DATABASE\": \"your-database\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用连接字符串：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mysql\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@imrieul/mysql-mcp-server\", \"mysql://root:password@localhost:3306/mydb\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 法典\r\n\r\nCodex使用TOML配置，而不是 `mcpServers` JSON。将此添加到 `~/.codex/config.toml` 或项目范围 `.codex/config.toml`:\r\n\r\n```toml\r\n[mcp_servers.mysql]\r\ncommand = \"npx\"\r\nargs = [\"-y\", \"@imrieul/mysql-mcp-server\"]\r\n\r\n[mcp_servers.mysql.env]\r\nMYSQL_HOST = \"localhost\"\r\nMYSQL_PORT = \"3306\"\r\nMYSQL_USER = \"root\"\r\nMYSQL_PASSWORD = \"your-password\"\r\nMYSQL_DATABASE = \"your-database\"\r\n```\r\n\r\n### 开放代码\r\n\r\n将此添加到 `opencode.json` 或 `opencode.jsonc`:\r\n\r\n```json\r\n{\r\n  \"$schema\": \"https://opencode.ai/config.json\",\r\n  \"mcp\": {\r\n    \"mysql\": {\r\n      \"type\": \"local\",\r\n      \"command\": [\"npx\", \"-y\", \"@imrieul/mysql-mcp-server\"],\r\n      \"enabled\": true,\r\n      \"environment\": {\r\n        \"MYSQL_HOST\": \"localhost\",\r\n        \"MYSQL_PORT\": \"3306\",\r\n        \"MYSQL_USER\": \"root\",\r\n        \"MYSQL_PASSWORD\": \"your-password\",\r\n        \"MYSQL_DATABASE\": \"your-database\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 带SSL的只读模式\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mysql\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@imrieul/mysql-mcp-server\", \"--readonly\"],\r\n      \"env\": {\r\n        \"MYSQL_HOST\": \"db.example.com\",\r\n        \"MYSQL_USER\": \"readonly_user\",\r\n        \"MYSQL_PASSWORD\": \"password\",\r\n        \"MYSQL_DATABASE\": \"production\",\r\n        \"MYSQL_SSL\": \"true\",\r\n        \"MYSQL_QUERY_TIMEOUT\": \"10000\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n|工具|描述|只读模式|\r\n|------|-------------|----------------|\r\n| `query` |执行选择、显示、描述、解释|允许|\r\n| `execute` |执行INSERT、UPDATE、DELETE、DDL |已阻止|\r\n| `list_databases` |列出所有数据库|允许|\r\n| `list_tables` |列出数据库中的表|允许|\r\n| `describe_table` |显示表架构|允许|\r\n| `describe_all_tables` |一次显示所有表架构|允许|\r\n\r\n## 配置\r\n\r\n### 环境变量\r\n\r\n|变量|必填|默认|描述|\r\n|----------|----------|---------|-------------|\r\n| `MYSQL_HOST` |是|--|MySQL主机|\r\n| `MYSQL_USER` |是|--|MySQL用户|\r\n| `MYSQL_PASSWORD` |是|--|MySQL密码|\r\n| `MYSQL_PORT` |没有| `3306` |MySQL端口|\r\n| `MYSQL_DATABASE` |否|--|默认数据库|\r\n| `MYSQL_READONLY` |没有| `false` |只读模式|\r\n| `MYSQL_MAX_ROWS` |没有| `100` |SELECT查询的自动限制|\r\n| `MYSQL_QUERY_TIMEOUT` |没有| `30000` |查询超时（毫秒）（0表示禁用）|\r\n| `MYSQL_SSL` |没有| `false` |启用SSL连接|\r\n\r\n### 连接字符串\r\n\r\n```\r\nmysql://user:password@host:port/database\r\n```\r\n\r\n作为第一个CLI参数传递。优先于环境变量。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "mysql": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@imrieul/mysql-mcp-server"
+   ],
+   "env": {
+    "MYSQL_HOST": "localhost",
+    "MYSQL_PORT": "3306",
+    "MYSQL_USER": "root",
+    "MYSQL_PASSWORD": "your-password",
+    "MYSQL_DATABASE": "your-database"
+   }
+  }
+ }
+}

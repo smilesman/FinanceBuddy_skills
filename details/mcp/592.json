@@ -1,0 +1,27 @@
+{
+ "id": "592",
+ "kind": "mcp",
+ "name": "brandfetch",
+ "fingerprint_md5": "c247c1bdffcb3af2a9013b43ac6ed7e6",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# 品牌获取MCP服务器\r\n\r\n\r\n模型上下文协议（MCP）服务器，允许人工智能助手从Brandfetch API获取徽标、颜色、字体和公司信息。\r\n\r\n## 特性\r\n\r\n- **获取品牌详细信息** –按域名列出的完整品牌简介\r\n- **搜索品牌** –关键字搜索匹配的品牌\r\n- **get_brand_logo** –浅色/深色主题的SVG/PNG资产\r\n- **get_brand_colors** –带有元数据的精选调色板\r\n- **get_logo_url** –按域快速查找徽标URL\r\n- **持续使用跟踪** –基于SQLite的配额管理\r\n\r\n## 智能API使用\r\n\r\n此服务器优先处理 **按域登录API** （高配额，无限制使用），只能退回到 **API品牌** （有限配额）必要时：\r\n\r\n1. **先查找域名** -具有高使用限制的直接登录域API调用\r\n1. **API品牌后备** -仅在域查找失败时使用，每月跟踪配额\r\n1. **持续使用跟踪** -基于SQLite的计数器可防止配额超限\r\n1. **预警系统** -接近API品牌限制时发出警报\r\n\r\n## 需求\r\n\r\n- Python 3.10+\r\n- Brandfetch API密钥（徽标和品牌API）\r\n- [紫外线](https://astral.sh/uv)\r\n\r\n## API密钥设置\r\n\r\n您需要来自Brandfetch的两个API密钥：\r\n\r\n1. **徽标API密钥** （高配额，用于域查找）\r\n1. **API品牌密钥** （配额有限，用于回退搜索）\r\n\r\n将两者都添加到您的 `.env` 文件：\r\n\r\n```bash\r\n# Brandfetch API Configuration\r\n# Get both keys from https://brandfetch.com/developers\r\n\r\n# Logo API Key (high quota, for domain lookups)\r\nBRANDFETCH_CLIENT_ID=\"paste_logo_key_here\"\r\n\r\n# Brand API Key (limited quota, for fallback searches)\r\nBRANDFETCH_API_KEY=\"paste_brand_key_here\"\r\n```\r\n\r\n## 快速入门（一页）\r\n\r\n1. **获取正确的API密钥**\\\r\n   访问 <https://brandfetch.com/developers> 并得到 **两者** 钥匙：\r\n\r\n   - **徽标API密钥** -用于高配额域查找\r\n   - **API品牌密钥** -用于回退搜索（配额有限）\\\r\n     → 需要截图吗？看 [API_KEY_SETUP.md](API_KEY_SETUP.md).\r\n\r\n1. **使用Python在本地运行**\r\n\r\n   ```bash\r\n   uv venv && source .venv/bin/activate\r\n   uv pip install -e \".[dev]\"\r\n   cp .env.example .env  # then add both BRANDFETCH_CLIENT_ID and BRANDFETCH_API_KEY\r\n   python manual_test.py\r\n   ```\r\n\r\n1. **使用Docker运行（可选）**\r\n\r\n   ```bash\r\n   docker build -t brandfetch-mcp .\r\n   docker run --rm \\\r\n     -e BRANDFETCH_CLIENT_ID=paste_logo_key \\\r\n     -e BRANDFETCH_API_KEY=paste_brand_key \\\r\n     brandfetch-mcp\r\n   ```\r\n\r\n1. **连接克劳德桌面**\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"brandfetch\": {\r\n         \"command\": \"uv\",\r\n         \"args\": [\"--directory\", \"/absolute/path/to/brandfetch_mcp\", \"run\", \"mcp-brandfetch\"],\r\n         \"env\": {\r\n           \"BRANDFETCH_CLIENT_ID\": \"paste_logo_key\",\r\n           \"BRANDFETCH_API_KEY\": \"paste_brand_key\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n   重新启动克劳德桌面；寻找锤子图标。\r\n\r\n## 项目结构\r\n\r\n关键文件：\r\n\r\n- `src/brandfetch_mcp/server.py`：主MCP服务器实现\r\n- `src/brandfetch_mcp/client.py`：Brandfetch API客户端\r\n- `src/brandfetch_mcp/brandfetch_logo_lookup_checked.py`：徽标查找功能\r\n\r\n## 用法\r\n\r\n### 快速健康检查\r\n\r\n```bash\r\ncurl -H \"Authorization: Bearer YOUR_KEY\" https://api.brandfetch.io/v2/brands/github.com\r\n```\r\n\r\n### 方便的提示\r\n\r\n- “获取stripe.com的品牌详细信息”\r\n- “搜索咖啡品牌”\r\n- “获取github的SVG徽标”\r\n- “netflix.com使用什么调色板？”\r\n- “获取github.com的徽标URL”（快速域名查找）\r\n- “查找GitHub的徽标”（使用启发式方法搜索名称）\r\n\r\n## 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建功能分支(`git checkout -b feature/fooBar`)\r\n1. 提交您的更改(`git commit -am 'Add some fooBar'`)\r\n1. 推到分支(`git push origin feature/fooBar`)\r\n1. 创建新的Pull请求\r\n\r\n## 许可证\r\n\r\n[MIT](LICENSE)\r\n\r\n## 故障排除\r\n\r\n|问题|修复|\r\n| --- | --- |\r\n|401未经授权|您抓取徽标API密钥生成 **API品牌** 取而代之的是钥匙。 |\r\n|Claude中没有锤子图标|检查Claude桌面→ 设置→ 开发者日志；验证JSON和绝对路径。 |\r\n|导入错误|激活venv并重新运行 `uv pip install -e \".[dev]\"`. |\r\n\r\n## 已知限制\r\n\r\n- **发展模式**：必须从项目根目录运行(`.env` 路径解析仅在开发模式下有效）\r\n- **测试覆盖率**：一些get_brand_logo测试模拟了错误的层-功能正常，但测试需要更新\r\n- **管道安装**：环境文件加载仅在从源代码运行时有效，不适用于pip安装的包\r\n\r\n## 支持\r\n\r\n- 打开GitHub问题以查找错误/请求\r\n- [Brandfetch API文档](https://docs.brandfetch.com)\r\n- [模型上下文协议](https://modelcontextprotocol.io)\r\n- 更多设置细节： [API_KEY_SETUP.md](API_KEY_SETUP.md)\r\n",
+ "config": {
+  "brandfetch": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/absolute/path/to/brandfetch_mcp",
+    "run",
+    "mcp-brandfetch"
+   ],
+   "env": {
+    "BRANDFETCH_CLIENT_ID": "paste_logo_key",
+    "BRANDFETCH_API_KEY": "paste_brand_key"
+   }
+  }
+ }
+}

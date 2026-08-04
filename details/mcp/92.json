@@ -1,0 +1,23 @@
+{
+ "id": "92",
+ "kind": "mcp",
+ "name": "card_magic",
+ "fingerprint_md5": "a9919c1dea44952037c609febf7fdbf9",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 卡片魔术mcp\r\n\r\n[](https://github.com/luochang212/card-magic-mcp)\r\n[](https://pypi.python.org/pypi/card-magic-mcp)\r\n[](https://pepy.tech/project/card-magic-mcp)\r\n[](https://github.com/luochang212/card-magic-mcp/actions?query=workflow:CI)\r\n[](https://smithery.ai/server/@luochang212/card-magic-mcp)\r\n\r\n[中文文档](https://github.com/luochang212/card-magic-mcp/blob/main/docs/README_CN.md)\r\n\r\n实现Chico&Dico卡魔术的模型上下文协议（MCP）服务器。\r\n\r\n> **Chico&Dico牌魔术**：随机抽取五张扑克牌，观众只需按照奇科安排的顺序背诵前四张牌，迪科就能知道第五张牌是什么。\r\n\r\n你可以在 [**Smithery游乐场**](https://smithery.ai/playground?prompt=connect%20to%20%40luochang212%2Fcard-magic-mcp).\r\n\r\n\r\n## 🎭 性能步骤\r\n\r\n1. 告诉魔术师： `Help me arrange these playing cards ♠J ♠4 ♣2 ♦3 ♦K`\r\n1. 这位魔术师会把牌分成两堆：前四张牌和第五张牌\r\n1. 告诉另一个魔术师前四张牌是什么，他们就可以告诉你第五张牌是什麼： `The first four playing cards are [card1 card2 card3 card4], what is the fifth card?`\r\n\r\n> \\[！注意\\]\r\n> 相信我，它不是通过记忆知道第五张牌是什么，而是通过纯粹的魔法。为了防止当前对话框记住第五张卡，您可以打开一个新的游乐场页面。告诉它前四张牌是什么，看看它是否还能猜对。\r\n\r\n## 📦 安装\r\n\r\n### 手动安装\r\n\r\n```bash\r\npip install card-magic-mcp\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装适用于Claude Desktop的Card Magic MCP服务器 [史密瑟里](https://smithery.ai/server/@luochang212/card-magic-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli@latest install @luochang212/card-magic-mcp --client claude\r\n```\r\n\r\n## 🚀 用法\r\n\r\n此MCP服务器可以与 [Qwen代理商](https://github.com/QwenLM/Qwen-Agent) 使用两种连接方法： `stdio` 和 `sse`.\r\n\r\n> 有关更多示例，请参见 [examples/usage_remote.py](examples/usage_remote.py)\r\n\r\n### `stdio`：本地电话\r\n\r\n将以下配置添加到 `function_list` 参数：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"card_magic\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--from\",\r\n        \"card-magic-mcp\",\r\n        \"card_magic_stdio\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### `sse`：远程呼叫\r\n\r\n调用之前，在命令行中运行以下代码以启动MCP服务：\r\n\r\n```bash\r\nHOST=0.0.0.0 PORT=8385 uvx --from card-magic-mcp card_magic_sse\r\n```\r\n\r\n将以下配置添加到 `function_list`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"card_magic_sse\": {\r\n      \"url\": \"http://0.0.0.0:8385/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🔧 可用工具\r\n\r\nMCP服务器为卡片魔术提供了两个工具：\r\n\r\n- **`encode_cards`**：对5张卡进行编码，将第5张卡的信息隐藏在前4张卡的排列中\r\n- **`decode_cards`**：从前4张可见卡的排列信息中解码隐藏的第5张卡\r\n\r\n## 🃏 卡片格式\r\n\r\n- **套装**: `♠` （黑桃）， `♥` （心）， `♦` （钻石）， `♣` （俱乐部）\r\n- **等级**: `A，2，3，4，5，6，7，8，9，10，J，Q，K`\r\n- **格式**：每张卡片应写为 `{suit}{rank}` 用空格分隔多张卡片\r\n",
+ "config": {
+  "card_magic": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "card-magic-mcp",
+    "card_magic_stdio"
+   ],
+   "env": {}
+  }
+ }
+}

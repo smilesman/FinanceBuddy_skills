@@ -1,0 +1,25 @@
+{
+ "id": "3072",
+ "kind": "mcp",
+ "name": "dwd-weather",
+ "fingerprint_md5": "3af711ce915689f12185df8424b8dc15",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# DWD MCP服务器\r\n\r\nMCP服务器（模型上下文协议），用于通过以下方式从德国气象局（DWD）获取天气数据 [蓝天API](https://brightsky.dev/).\r\n\r\n## 特性\r\n\r\n- **当前天气** (`get_current_weather`)-温度、风、降水、云量等。\r\n- **天气预报** (`get_weather_forecast`)-每小时预测和每日总结\r\n- **天气警报** (`get_weather_alerts`)-官方DWD警告（风暴、雷暴、霜冻等）\r\n- **气象站** (`find_weather_station`)-查找最近的DWD站\r\n\r\n## 安装\r\n\r\n### 紫外线（推荐）\r\n\r\n```bash\r\n# Clone repository\r\ngit clone https://github.com/your-username/dwd-mcp-server.git\r\ncd dwd-mcp-server\r\n\r\n# Install dependencies\r\nuv sync\r\n\r\n# Development dependencies (optional)\r\nuv sync --extra dev\r\n```\r\n\r\n### 使用pip\r\n\r\n```bash\r\npip install -e .\r\n\r\n# With development dependencies\r\npip install -e \".[dev]\"\r\n```\r\n\r\n## 用法\r\n\r\n### 以MCP服务器身份启动\r\n\r\n```bash\r\n# With uv\r\nuv run dwd-mcp-server start\r\n\r\n# Or directly with Python\r\npython -m dwd_mcp_server.cli start\r\n```\r\n\r\n### 与Claude Desktop集成\r\n\r\n将以下配置添加到您的Claude桌面 `config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dwd-weather\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"/path/to/dwd-mcp-server\", \"run\", \"dwd-mcp-server\", \"start\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 与Claude Code集成\r\n\r\n```bash\r\nclaude mcp add dwd-weather -- uv --directory /path/to/dwd-mcp-server run dwd-mcp-server start\r\n```\r\n\r\n## MCP工具\r\n\r\n### `get_current_weather`\r\n\r\n获取某个地点的当前天气。\r\n\r\n**参数：**\r\n\r\n- `location` （字符串，必填）：城市名称（例如“亚琛”、“慕尼黑”）或坐标（例如“50.7753,6.0839”）\r\n\r\n**示例响应：**\r\n\r\n```json\r\n{\r\n  \"timestamp\": \"Sat, 15.02.2026 14:00\",\r\n  \"temperature_c\": 8.2,\r\n  \"feels_like_c\": 5.5,\r\n  \"humidity_percent\": 78,\r\n  \"wind_speed_kmh\": 22.3,\r\n  \"wind_direction\": \"W\",\r\n  \"precipitation_mm\": 0.0,\r\n  \"cloud_cover_percent\": 75,\r\n  \"condition\": \"cloudy\",\r\n  \"station_name\": \"Aachen-Orsbach\"\r\n}\r\n```\r\n\r\n### `get_weather_forecast`\r\n\r\n获取某个地点的天气预报。\r\n\r\n**参数：**\r\n\r\n- `location` （字符串，必填）：城市名称或坐标\r\n- `days` （整数，可选）：天数（1-10，默认值：3）\r\n\r\n**退货：** 每小时数据和每日总结，包括最低/最高温度。\r\n\r\n### `get_weather_alerts`\r\n\r\n获取官方天气警报。\r\n\r\n**参数：**\r\n\r\n- `location` （字符串，可选）：城市名称或坐标。如果省略：所有针对德国的警报。\r\n\r\n**退货：** 活动警报列表，包括类型、严重性、描述和有效期。\r\n\r\n### `find_weather_station`\r\n\r\n查找最近的DWD气象站。\r\n\r\n**参数：**\r\n\r\n- `location` （字符串，必填）：城市名称或坐标\r\n\r\n**退货：** 包含名称、ID和距离的站点列表。\r\n\r\n## 地理编码\r\n\r\n服务器接受各种位置输入：\r\n\r\n1. **直接坐标：** `\"50.7753,6.0839\"` 或 `\"50.7753, 6.0839\"`\r\n1. **德国城市：** `\"Aachen\"`, `\"Munich\"`, `\"Cologne\"` （包括约100个城市）\r\n1. **提名回退：** 对于未知位置，查询OpenStreetMap/Nomingim\r\n\r\n## 测试\r\n\r\n```bash\r\n# With uv\r\nuv run pytest\r\n\r\n# With pytest directly\r\npytest\r\n```\r\n\r\n## 技术栈\r\n\r\n- **MCP框架：** [mcp Python SDK](https://github.com/modelcontextprotocol/python-sdk) （快速MCP）\r\n- **HTTP客户端：** httpx（异步）\r\n- **数据来源：** [蓝天API](https://brightsky.dev/) （DWD开放数据）\r\n- **地理编码：** 内置城市表+提名回退\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 数据源\r\n\r\n- 天气数据： [DWD开放数据](https://www.dwd.de/EN/ourservices/opendata/opendata.html)\r\n- API [明亮的天空](https://brightsky.dev/)\r\n- 地理编码： [提名/开放街道地图](https://nominatim.openstreetmap.org/)\r\n",
+ "config": {
+  "dwd-weather": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/dwd-mcp-server",
+    "run",
+    "dwd-mcp-server",
+    "start"
+   ],
+   "env": {}
+  }
+ }
+}

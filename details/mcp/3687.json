@@ -1,0 +1,22 @@
+{
+ "id": "3687",
+ "kind": "mcp",
+ "name": "webresearch-3",
+ "fingerprint_md5": "36b469b5cb8ef45c2bf8046cfca4caad",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP Web研究服务器\r\n\r\n用于网络研究的模型上下文协议（MCP）服务器。\r\n\r\n将实时信息带入克劳德，轻松研究任何主题。\r\n\r\n## 特性\r\n\r\n- 谷歌搜索集成\r\n- 网页内容提取\r\n- 研究会话跟踪（访问页面列表、搜索查询等）\r\n- 屏幕截图\r\n\r\n## 先决条件\r\n\r\n- [Node.js](https://nodejs.org/) >=18（包括 `npm` 和 `npx`)\r\n- [克劳德桌面应用程序](https://claude.ai/download)\r\n\r\n## 安装\r\n\r\n首先，确保您已下载并安装 [克劳德桌面应用程序](https://claude.ai/download) 你已经安装了npm。\r\n\r\n接下来，将此条目添加到您的 `claude_desktop_config.json` （在Mac上，可在以下网址找到 `~/Library/Application\\ Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"webresearch\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@mzxrai/mcp-webresearch@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n此配置允许Claude Desktop在需要时自动启动web研究MCP服务器。\r\n\r\n## 用法\r\n\r\n只需与克劳德开始聊天，并发送一条有益于网络研究的提示。如果你想为更深入的网络研究定制一个预构建的提示，你可以使用 `agentic-research` 提示我们通过此套餐提供。通过单击聊天输入中的回形针图标，然后选择 `Choose an integration` → `webresearch` → `agentic-research`.\r\n\r\n\r\n### 工具\r\n\r\n1. `search_google`\r\n\r\n   - 执行谷歌搜索并提取结果\r\n   - 论据： `{ query: string }`\r\n\r\n1. `visit_page`\r\n\r\n   - 访问网页并提取其内容\r\n   - 论据： `{ url: string, takeScreenshot?: boolean }`\r\n\r\n1. `take_screenshot`\r\n\r\n   - 截取当前页面的屏幕截图\r\n   - 无需任何论据\r\n\r\n### 鼓励\r\n\r\n#### `agentic-research`\r\n\r\n一个有指导的研究提示，帮助克劳德进行彻底的网络研究。提示指示克劳德：\r\n\r\n- 从广泛的搜索开始，了解主题格局\r\n- 优先考虑高质量、权威的来源\r\n- 根据研究结果迭代完善研究方向\r\n- 让你了解情况，让你以互动的方式指导研究\r\n- 始终使用URL引用来源\r\n\r\n### 资源\r\n\r\n我们公开了两件事作为MCP资源：（1）捕获的网页截图，以及（2）研究会议。\r\n\r\n#### 截图\r\n\r\n当你截图时，它会被另存为MCP资源。您可以通过Paperclip图标在Claude Desktop中访问捕获的屏幕截图。\r\n\r\n#### 研究会议\r\n\r\n服务器维护一个研究会话，其中包括：\r\n\r\n- 搜索查询\r\n- 已访问的页面\r\n- 提取内容\r\n- 截图\r\n- 时间戳\r\n\r\n### 建议\r\n\r\n为了获得最佳效果，如果您选择不使用 `agentic-research` 在进行研究时，建议克劳德在研究一般主题时使用高质量的资源可能会有所帮助。例如，您可以提示 `news today from reuters or AP` 而不是 `news today`.\r\n\r\n## 问题\r\n\r\n这是非常前alpha代码。而且它也是AIGC，所以预计会有bug。\r\n\r\n如果您遇到问题，检查Claude Desktop的MCP日志可能会有所帮助：\r\n\r\n```bash\r\ntail -n 20 -f ~/Library/Logs/Claude/mcp*.log\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\npnpm install\r\n\r\n# Build the project\r\npnpm build\r\n\r\n# Watch for changes\r\npnpm watch\r\n\r\n# Run in development mode\r\npnpm dev\r\n```\r\n\r\n## 需求\r\n\r\n- Node.js>=18\r\n- Playwright（作为依赖项自动安装）\r\n\r\n## 已验证平台\r\n\r\n- \\[x\\] macOS\r\n- \\[\\]Linux\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 作者\r\n\r\n[mzxrai](https://github.com/mzxrai)\r\n",
+ "config": {
+  "webresearch": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@mzxrai/mcp-webresearch@latest"
+   ],
+   "env": {}
+  }
+ }
+}

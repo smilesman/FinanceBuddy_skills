@@ -1,0 +1,24 @@
+{
+ "id": "3253",
+ "kind": "mcp",
+ "name": "variflight",
+ "fingerprint_md5": "677bcfb3cfe361ded017bcd9b557afb6",
+ "download_count": 0,
+ "category": "出行交通",
+ "tags": "",
+ "version": "",
+ "readme": "# Variflight MCP服务器\r\n\r\nVariFlight航班信息服务的模型上下文协议（MCP）服务器实现。该服务器提供各种工具来查询航班信息、天气数据和航班舒适度指标。\r\n\r\n# 可变API密钥\r\n\r\n要使用Variflight MCP服务器，您需要一个Variflight API密钥。你可以从 [这里](https://mcp.variflight.com).\r\n\r\n## 安装\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"variflight\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\r\n                \"-y\",\r\n                \"@variflight-ai/variflight-mcp\"\r\n            ],\r\n            \"env\": {\r\n                \"VARIFLIGHT_API_KEY\": \"your_api_key_here\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 1.按出发和到达搜索航班\r\n\r\n按特定日期的城市或机场代码搜索直达航班。使用城市代码，如 `BJS` 或精确的机场代码，如 `PEK`，但不要将同一侧的城市和机场代码混合使用：\r\n\r\n```typescript\r\nsearchFlightsByDepArr({\r\n  dep: \"PEK\",  // Beijing\r\n  arr: \"SHA\",  // Shanghai\r\n  date: \"2024-03-20\"\r\n})\r\n```\r\n\r\n### 2.按编号搜索航班\r\n\r\n按航班号和日期搜索特定航班：\r\n\r\n```typescript\r\nsearchFlightsByNumber({\r\n  fnum: \"MU2157\",\r\n  date: \"2024-03-20\"\r\n})\r\n```\r\n\r\n### 3.获取航班转机信息\r\n\r\n搜索出发和到达城市之间的转机航班选项：\r\n\r\n```typescript\r\ngetFlightTransferInfo({\r\n  depcity: \"BJS\",\r\n  arrcity: \"LAX\",\r\n  depdate: \"2024-03-20\"\r\n})\r\n```\r\n\r\n### 4.飞行幸福指数\r\n\r\n获取已知航班的舒适细节，如准点率、飞机类型、客舱配置、餐饮和娱乐：\r\n\r\n```typescript\r\nflightHappinessIndex({\r\n  fnum: \"MU2157\",\r\n  date: \"2024-03-20\"\r\n})\r\n```\r\n\r\n### 5.实时飞机位置\r\n\r\n使用飞机注册号（也称为机尾号）跟踪实时航班位置：\r\n\r\n```typescript\r\ngetRealtimeLocationByAnum({\r\n  anum: \"B2021\"\r\n})\r\n```\r\n\r\n### 6.机场天气预报\r\n\r\n获取机场三天天气预报：\r\n\r\n```typescript\r\ngetFutureWeatherByAirport({\r\n  airport: \"PEK\"\r\n})\r\n```\r\n\r\n### 7.搜索航班行程\r\n\r\n获取自然语言摘要，包括推荐的航班选项、整体最低价格、最短持续时间和几个建议的行程：\r\n\r\n```typescript\r\nsearchFlightItineraries({\r\n  depCityCode: \"BJS\",  // Beijing\r\n  arrCityCode: \"SHA\",  // Shanghai\r\n  depDate: \"2025-04-20\"\r\n})\r\n```\r\n\r\n### 8.按城市获取航班价格\r\n\r\n获取两个城市之间结构化的原始销售航班数据，每个航班返回客舱级别的价格：\r\n\r\n```typescript\r\ngetFlightPriceByCities({\r\n  dep_city: \"BJS\",  // Beijing\r\n  arr_city: \"SHA\",  // Shanghai\r\n  dep_date: \"2026-04-20\"\r\n})\r\n```\r\n\r\n## 许可证\r\n\r\nISC许可证-请参阅 [许可证](LICENSE) 了解详情。\r\n\r\nVariflight(https://mcp.variflight.com)\r\n\r\n## 版本\r\n\r\n当前版本：1.0.3\r\n",
+ "config": {
+  "variflight": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@variflight-ai/variflight-mcp"
+   ],
+   "env": {
+    "VARIFLIGHT_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

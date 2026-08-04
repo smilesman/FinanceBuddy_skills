@@ -1,0 +1,45 @@
+{
+ "id": "1522",
+ "kind": "mcp",
+ "name": "kestra",
+ "fingerprint_md5": "c2ac32079016653daff1bf2753084b18",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "## Kestra Python MCP服务器\r\n\r\n您可以在Docker容器中运行MCP服务器。如果你想避免在本地计算机上管理Python环境或依赖关系，这很有用。\r\n\r\n### 使用Kestra AI代理\r\n\r\n看 [kestra_mcp_docker](docs/flows/kestra_mcp_docker.yaml).\r\n\r\n### OSS用户的最低配置\r\n\r\n将以下配置粘贴到MCP设置中（例如，Cursor、Claude或VS Code）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kestra\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"--pull\",\r\n        \"always\",\r\n        \"-e\",\r\n        \"KESTRA_BASE_URL\",\r\n        \"-e\",\r\n        \"KESTRA_TENANT_ID\",\r\n        \"-e\",\r\n        \"KESTRA_MCP_DISABLED_TOOLS\",\r\n        \"-e\",\r\n        \"KESTRA_MCP_LOG_LEVEL\",\r\n        \"-e\",\r\n        \"KESTRA_USERNAME\",\r\n        \"-e\",\r\n        \"KESTRA_PASSWORD\",\r\n        \"ghcr.io/kestra-io/mcp-server-python:latest\"\r\n      ],\r\n      \"env\": {\r\n        \"KESTRA_BASE_URL\": \"http://host.docker.internal:8080/api/v1\",\r\n        \"KESTRA_TENANT_ID\": \"main\",\r\n        \"KESTRA_MCP_DISABLED_TOOLS\": \"ee\",\r\n        \"KESTRA_MCP_LOG_LEVEL\": \"ERROR\",\r\n        \"KESTRA_USERNAME\": \"admin@kestra.io\",\r\n        \"KESTRA_PASSWORD\": \"your_password\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### EE用户的最低配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kestra\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"--pull\",\r\n        \"always\",\r\n        \"-e\", \"KESTRA_BASE_URL\",\r\n        \"-e\", \"KESTRA_API_TOKEN\",\r\n        \"-e\", \"KESTRA_TENANT_ID\",\r\n        \"-e\", \"KESTRA_MCP_LOG_LEVEL\",\r\n        \"ghcr.io/kestra-io/mcp-server-python:latest\"\r\n      ],\r\n      \"env\": {\r\n        \"KESTRA_BASE_URL\": \"http://host.docker.internal:8080/api/v1\",\r\n        \"KESTRA_API_TOKEN\": \"<your_kestra_api_token>\",\r\n        \"KESTRA_TENANT_ID\": \"main\",\r\n        \"KESTRA_MCP_LOG_LEVEL\": \"ERROR\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用Docker进行详细配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kestra\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"--pull\",\r\n        \"always\",\r\n        \"-e\", \"KESTRA_BASE_URL\",\r\n        \"-e\", \"KESTRA_API_TOKEN\",\r\n        \"-e\", \"KESTRA_TENANT_ID\",\r\n        \"-e\", \"KESTRA_USERNAME\",\r\n        \"-e\", \"KESTRA_PASSWORD\",\r\n        \"-e\", \"KESTRA_MCP_DISABLED_TOOLS\",\r\n        \"-e\", \"KESTRA_MCP_LOG_LEVEL\",\r\n        \"ghcr.io/kestra-io/mcp-server-python:latest\"\r\n      ],\r\n      \"env\": {\r\n        \"KESTRA_BASE_URL\": \"http://host.docker.internal:8080/api/v1\",\r\n        \"KESTRA_API_TOKEN\": \"<your_kestra_api_token>\",\r\n        \"KESTRA_TENANT_ID\": \"main\",\r\n        \"KESTRA_USERNAME\": \"admin\",\r\n        \"KESTRA_PASSWORD\": \"admin\",\r\n        \"KESTRA_MCP_DISABLED_TOOLS\": \"ee\",\r\n        \"KESTRA_MCP_LOG_LEVEL\": \"ERROR\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**笔记：**\r\n\r\n- 替换 `<your_kestra_api_token>`, `<your_google_api_key>`，以及 `<your_helicone_api_key>` 凭你的真实证件。\r\n- 对于OSS安装，您可以使用 `KESTRA_USERNAME` 和 `KESTRA_PASSWORD` 而不是 `KESTRA_API_TOKEN`.\r\n- 要禁用OSS中的企业版工具，请设置 `KESTRA_MCP_DISABLED_TOOLS=ee`.\r\n- 这 `host.docker.internal` hostname允许Docker容器访问主机上运行的服务（例如端口8080上的Kestra API服务器）。这适用于macOS和Windows。在Linux上，您可能需要使用主机网络模式或设置自定义网桥。\r\n- 这 `-e` 标志将环境变量从MCP配置传递到Docker容器中。\r\n\r\n______________________________________________________________________\r\n\r\n### 可用工具\r\n\r\n- 🔄 回填\r\n- ⚙️ ee（企业版工具）\r\n- ▶️ 执行\r\n- 📁 文件\r\n- 🔀 流动\r\n- 🗝️ 千伏\r\n- 📋 日志\r\n- 🌐 命名空间\r\n- 🔁 重放\r\n- ♻️ 重新启动\r\n- ⏸️ 简历\r\n\r\n**注：** 这 `ee` 工具组包含企业版特定的功能，仅在EE/Cloud版本中可用。对于OSS用户，您可以通过添加以下内容来禁用EE工具 `KESTRA_MCP_DISABLED_TOOLS=ee` 到你的 `.env` 文件。\r\n\r\n您可以选择包括 `KESTRA_MCP_DISABLED_TOOLS` 在你的 `.env` 列出您希望禁用的工具的文件。例如，如果要禁用命名空间文件工具，请将其添加到您的 `.env` 文件：\r\n\r\n```dotenv\r\nKESTRA_MCP_DISABLED_TOOLS=files\r\n```\r\n\r\n要禁用多个工具，请用逗号分隔：\r\n\r\n```dotenv\r\nKESTRA_MCP_DISABLED_TOOLS=ee\r\n```\r\n\r\n### 日志记录配置\r\n\r\n默认情况下，MCP服务器只记录ERROR级别的消息，以尽量减少噪音。您可以使用以下命令控制日志记录级别 `KESTRA_MCP_LOG_LEVEL` 环境变量：\r\n\r\n```dotenv\r\n# Only show ERROR messages (default)\r\nKESTRA_MCP_LOG_LEVEL=ERROR\r\n\r\n# Show WARNING and ERROR messages\r\nKESTRA_MCP_LOG_LEVEL=WARNING\r\n\r\n# Show INFO, WARNING, and ERROR messages\r\nKESTRA_MCP_LOG_LEVEL=INFO\r\n\r\n# Show all messages including DEBUG\r\nKESTRA_MCP_LOG_LEVEL=DEBUG\r\n```\r\n\r\n使用Docker时，将环境变量添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kestra\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"--pull\",\r\n        \"always\",\r\n        \"-e\", \"KESTRA_BASE_URL\",\r\n        \"-e\", \"KESTRA_MCP_LOG_LEVEL\",\r\n        \"ghcr.io/kestra-io/mcp-server-python:latest\"\r\n      ],\r\n      \"env\": {\r\n        \"KESTRA_BASE_URL\": \"http://host.docker.internal:8080/api/v1\",\r\n        \"KESTRA_MCP_LOG_LEVEL\": \"ERROR\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n### 本地开发\r\n\r\n要在本地运行Kestra的MCP服务器（例如，如果你想用新工具扩展它），请确保先创建一个虚拟环境：\r\n\r\n```bash\r\nuv venv --python 3.13\r\nuv pip install -r requirements.txt\r\n```\r\n\r\n创建一个 `.env` 项目根目录中的文件类似于 [.env.example](.env_example) 文件。对于OSS安装，您可以使用基本身份验证 `KESTRA_USERNAME` 和 `KESTRA_PASSWORD`。对于EE/Cloud安装，请使用 `KESTRA_API_TOKEN`.要禁用OSS中的企业版工具，请添加 `KESTRA_MCP_DISABLED_TOOLS=ee` 到你的 `.env` 文件。\r\n\r\n然后，按照下面的说明解释如何在Cursor、Windsurf、VS Code或Claude Desktop中测试本地服务器。\r\n\r\n______________________________________________________________________\r\n\r\n### 在Cursor、Windsurf、VS Code或Claude Desktop中使用\r\n\r\n要将Python MCP Server与Claude或现代IDE一起使用，请首先检查计算机上uv的路径：\r\n\r\n```bash\r\nwhich uv\r\n```\r\n\r\n复制返回的路径 `which uv` 并将其粘贴到 `command` 部分。\r\n然后，更换 `--directory` 根据您克隆Kestra MCP Server存储库的路径。例如：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kestra\": {\r\n      \"command\": \"/Users/annageller/.local/bin/uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/Users/annageller/gh/mcp-server-python/src\",\r\n        \"run\",\r\n        \"server.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您可以将其粘贴到光标MCP设置或Claud Developer设置中。\r\n\r\n### VS代码设置\r\n\r\n在VS Code项目目录中，添加一个文件夹 `.vscode` 在该文件夹中，创建一个名为 `mcp.json`将您的MCP配置粘贴到该文件中（请注意，在VS Code中，密钥为 `servers` 而不是 `mcpServers`):\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"kestra\": {\r\n      \"command\": \"/Users/annageller/.local/bin/uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/Users/annageller/gh/mcp-server-python/src\",\r\n        \"run\",\r\n        \"server.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n小的 `Start` 按钮应该出现，单击它以启动服务器。\r\n\r\n\r\n如果您现在导航到GitHub Copilot选项卡并切换到代理模式，您将能够直接与Kestra MCP Server工具进行交互。例如，尝试键入提示：“列出教程名称空间中的所有流”。\r\n\r\n\r\n如果单击继续，您将在输出窗口中看到命令的结果。\r\n\r\n\r\n### 常见问题解答\r\n\r\n**问题：我必须手动启动服务器作为永远在线的进程吗？**\r\n\r\n不，您不必像使用 `stdio` 传输时，AI IDE/聊天界面（Cursor、Windsurf、VS Code或Claude Desktop）将MCP服务器作为子流程启动。此子流程通过标准输入和输出流上的JSON-RPC消息与AI IDE通信。服务器通过stdin接收消息，并通过stdout发送响应。\r\n\r\n**问题：我必须手动激活MCP服务器的虚拟环境吗？**\r\n\r\n不，因为我们使用 `uv`与传统的Python包管理器不同，虚拟环境激活会修改shell变量，如 `PATH`, `uv` 直接使用Python解释器和来自 `.venv` 目录，不需要先设置环境变量。只要确保你已经创建了一个紫外线虚拟环境 `uv venv` 并安装了所需的软件包 `uv pip install` 如前一节所述。\r\n",
+ "config": {
+  "kestra": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "--pull",
+    "always",
+    "-e",
+    "KESTRA_BASE_URL",
+    "-e",
+    "KESTRA_TENANT_ID",
+    "-e",
+    "KESTRA_MCP_DISABLED_TOOLS",
+    "-e",
+    "KESTRA_MCP_LOG_LEVEL",
+    "-e",
+    "KESTRA_USERNAME",
+    "-e",
+    "KESTRA_PASSWORD",
+    "ghcr.io/kestra-io/mcp-server-python:latest"
+   ],
+   "env": {
+    "KESTRA_BASE_URL": "http://host.docker.internal:8080/api/v1",
+    "KESTRA_TENANT_ID": "main",
+    "KESTRA_MCP_DISABLED_TOOLS": "ee",
+    "KESTRA_MCP_LOG_LEVEL": "ERROR",
+    "KESTRA_USERNAME": "admin@kestra.io",
+    "KESTRA_PASSWORD": "your_password"
+   }
+  }
+ }
+}

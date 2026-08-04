@@ -1,0 +1,21 @@
+{
+ "id": "617",
+ "kind": "mcp",
+ "name": "crossref-academic",
+ "fingerprint_md5": "c8d5764607f598e066f3328c36c7e5d2",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# Crossref学术MCP服务器\r\n\r\nMCP服务器，允许AI代理访问科学论文、引文和学术研究数据。查询 **Crossref**, **开放亚历克斯**，以及 **语义学者** --三个主要的开放学术API，涵盖1.5亿多项研究工作。\r\n\r\n不需要API密钥。所有数据源都是免费和开放的。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_papers` |同时在Crossref+OpenAlex上搜索科学论文|\r\n| `get_paper_details` |通过DOI获取论文的完整元数据（书目数据+摘要+影响指标）|\r\n| `get_citations` |查找引用给定论文的论文（通过语义学者）|\r\n| `get_author_profile` |查找作者的个人资料——出版物、h指数、所属机构、研究课题|\r\n| `search_topics` |查找某一主题领域被引用次数最多的最新论文（2023年以来的趋势研究）|\r\n\r\n## 安装\r\n\r\n### 带pip（推荐）\r\n\r\n```bash\r\npip install crossref-academic-mcp-server\r\n```\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone https://github.com/AiAgentKarl/crossref-academic-mcp-server.git\r\ncd crossref-academic-mcp-server\r\npip install -e .\r\n```\r\n\r\n## 配置\r\n\r\n添加到MCP客户端配置（例如Claude Desktop `claude_desktop_config.json`):\r\n\r\n### 使用pip安装\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"crossref-academic\": {\r\n      \"command\": \"crossref-server\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用uvx（无需安装）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"crossref-academic\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"crossref-academic-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 示例用法\r\n\r\n**搜索论文：**\r\n\r\n> “查找有关NLP中变压器架构的最新论文”\r\n\r\n**查阅一篇特定的论文：**\r\n\r\n> “获取DOI 10.1038/s41586-021-03819-2的详细信息”\r\n\r\n**探索引文：**\r\n\r\n> “哪些论文引用了最初的关注论文？”\r\n\r\n**作者查找：**\r\n\r\n> “给我看看Yoshua Bengio的出版物简介”\r\n\r\n**趋势研究：**\r\n\r\n> “过去两年中被引用最多的关于量子计算的论文是什么？”\r\n\r\n## 数据源\r\n\r\n- **Crossref** --150M+元数据记录、DOI分辨率、书目数据\r\n- **开放亚历克斯** --学术作品、作者、机构、主题的开放目录\r\n- **语义学者** --人工智能驱动的引文分析、摘要、影响指标\r\n\r\n______________________________________________________________________\r\n\r\n## AiAgentKarl提供的更多MCP服务器\r\n\r\n|类别|服务器|\r\n|----------|---------|\r\n|🔗 区块链| [索拉纳](https://github.com/AiAgentKarl/solana-mcp-server) |\r\n| 🌍 数据| [天气](https://github.com/AiAgentKarl/weather-mcp-server) · [德国](https://github.com/AiAgentKarl/germany-mcp-server) · [农业](https://github.com/AiAgentKarl/agriculture-mcp-server) · [太空](https://github.com/AiAgentKarl/space-mcp-server) · [航空](https://github.com/AiAgentKarl/aviation-mcp-server) · [欧盟公司](https://github.com/AiAgentKarl/eu-company-mcp-server) |\r\n| 🔒 安全| [网络安全](https://github.com/AiAgentKarl/cybersecurity-mcp-server) · [策略网关](https://github.com/AiAgentKarl/agent-policy-gateway-mcp) · [审计跟踪](https://github.com/AiAgentKarl/agent-audit-trail-mcp) |\r\n| 🤖 代理基础设施| [记忆](https://github.com/AiAgentKarl/agent-memory-mcp-server) · [目录](https://github.com/AiAgentKarl/agent-directory-mcp-server) · [中心](https://github.com/AiAgentKarl/mcp-appstore-server) · [声誉](https://github.com/AiAgentKarl/agent-reputation-mcp-server) |\r\n| 🔬 研究| [学术的](https://github.com/AiAgentKarl/crossref-academic-mcp-server) · [LLM基准](https://github.com/AiAgentKarl/llm-benchmark-mcp-server) · [法律](https://github.com/AiAgentKarl/legal-court-mcp-server) |\r\n\r\n[→ 完整目录（40+台服务器）](https://github.com/AiAgentKarl)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "crossref-academic": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "crossref-academic-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

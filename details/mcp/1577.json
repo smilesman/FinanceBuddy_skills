@@ -1,0 +1,28 @@
+{
+ "id": "1577",
+ "kind": "mcp",
+ "name": "mcp-logic",
+ "fingerprint_md5": "5578c9cfb4934f26b5aa44072b9363d8",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP逻辑\r\n\r\n[](https://github.com/angrysky56/mcp-logic/actions/workflows/ci.yml)\r\n\r\n使用Prover9和Mace4进行自动一阶逻辑推理的MCP服务器。\r\n\r\n## 特性\r\n\r\n- **定理证明** -用Prover9证明逻辑语句\r\n- **模型查找** -使用Mace4查找有限模型\r\n- **反例发现** -说明为什么陈述不成立\r\n- **语法验证** -使用有用的错误消息对公式进行预验证\r\n- **范畴推理** -内置对范畴理论证明的支持\r\n- **命题应急** -用于快速命题检查的纯分析HCC证明器\r\n- **溯因推理** -使用变分自由能（VFE）对假设进行排序\r\n- **独立** -所有依赖项都会自动安装\r\n\r\n## 快速开始\r\n\r\n### 安装\r\n\r\n**Linux/macOS：**\r\n\r\n```bash\r\ngit clone https://github.com/angrysky56/mcp-logic\r\ncd mcp-logic\r\n./linux-setup-script.sh\r\n```\r\n\r\n**窗户：**\r\n\r\n```cmd\r\ngit clone https://github.com/angrysky56/mcp-logic\r\ncd mcp-logic\r\nwindows-setup-mcp-logic.bat\r\n```\r\n\r\n安装脚本会自动执行以下操作：\r\n\r\n- 下载并构建LADR（Prover9+Mace4）\r\n- 创建Python虚拟环境\r\n- 安装所有依赖项\r\n- 生成Claude桌面配置\r\n\r\n### Claude桌面集成\r\n\r\n添加到您的Claude Desktop MCP配置（自动生成于 `claude-app-config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-logic\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/absolute/path/to/mcp-logic\",\r\n        \"run\",\r\n        \"python\",\r\n        \"-m\",\r\n        \"mcp_logic\",\r\n        \"--prover-path\",\r\n        \"/absolute/path/to/mcp-logic/ladr/bin\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**重要提示：** 替换 `/absolute/path/to/mcp-logic` 使用您的实际存储库路径。\r\n\r\n## 可用工具\r\n\r\n|工具|目的|\r\n| ------------------------ | ------------------------------------------------------ |\r\n| **证明** |使用Prover9证明语句|\r\n| **检查形状是否良好** |验证有详细错误的公式语法|\r\n| **find_model** |找到满足前提的有限模型|\r\n| **find_countrexample** |找到表明陈述不成立的反例|\r\n| **验证变异性** |生成用于分类图交换性的FOL|\r\n| **get_category_axioms** |获取范畴/函子/群/单体的公理|\r\n| **check_色调** |通过HCC证明器检查功能偶然性|\r\n| **绑架_解释** |找到观察结果的VFE最小化解释|\r\n\r\n## 示例用法\r\n\r\n### 证明一个定理\r\n\r\n```\r\nUse the mcp-logic prove tool with:\r\npremises: [\"all x (man(x) -> mortal(x))\", \"man(socrates)\"]\r\nconclusion: \"mortal(socrates)\"\r\n```\r\n\r\n**结果：** ✓ 定理证明\r\n\r\n### 分析命题偶然性\r\n\r\n```\r\nUse the mcp-logic check_contingency tool with:\r\nformula: \"(p -> q) | (q -> p)\"\r\n```\r\n\r\n**结果：** 标识公式为非条件公式 **同义反复**，返回证明痕迹。\r\n\r\n### 查找反例\r\n\r\n```\r\nUse the mcp-logic find-counterexample tool with:\r\npremises: [\"P(a)\"]\r\nconclusion: \"P(b)\"\r\n```\r\n\r\n**结果：** 模型在哪里找到 `P(a)` 确实如此，但 `P(b)` 是错误的，证明结论不成立。\r\n\r\n### 验证分类图\r\n\r\n```\r\nUse the mcp-logic verify-commutativity tool with:\r\npath_a: [\"f\", \"g\"]\r\npath_b: [\"h\"]\r\nobject_start: \"A\"\r\nobject_end: \"C\"\r\n```\r\n\r\n**结果：** FOL前提和结论证明 `f∘g = h`.\r\n\r\n## 本地运行\r\n\r\n**直接运行服务器而不是Claude Desktop：**\r\n\r\nLinux/macOS：\r\n\r\n```bash\r\n./run_mcp_logic.sh\r\n```\r\n\r\n窗户：\r\n\r\n```cmd\r\nrun_mcp_logic.bat\r\n```\r\n\r\n## 项目结构\r\n\r\n```\r\nmcp-logic/\r\n├── src/mcp_logic/\r\n│   ├── server.py              # Main MCP server (8 tools)\r\n│   ├── mace4_wrapper.py       # Mace4 model finder\r\n│   ├── syntax_validator.py    # Formula syntax validation\r\n│   ├── categorical_helpers.py # Category theory utilities\r\n│   ├── hcc_prover.py          # Hypersequent Contingency Calculus prover\r\n│   ├── vfe_engine.py          # Variational Free Energy abductive engine\r\n│   └── formula_ast.py         # Propositional logic AST and parser\r\n├── ladr/                      # Auto-installed Prover9/Mace4 binaries\r\n│   └── bin/\r\n│       ├── prover9\r\n│       └── mace4\r\n├── tests/                     # Test suite\r\n├── linux-setup-script.sh      # Linux/macOS setup\r\n├── windows-setup-mcp-logic.bat # Windows setup\r\n├── run_mcp_logic.sh           # Linux/macOS run script\r\n└── run_mcp_logic.bat          # Windows run script\r\n```\r\n\r\n## v0.3.0的新增功能\r\n\r\n**认知架构增强：**\r\n\r\n- ✅ **高频权变演算（HCC）：** 添加了一个严格的演绎检查器，用于在没有暴力建模的情况下立即评估命题公式的偶然性。\r\n- ✅ **可变自由能（VFE）发动机：** 实现了溯因推理，在优雅地满足奥卡姆剃刀之前，使用非教条的古诺-盖夫曼对假设进行排序。\r\n- ✅ **智能验证路由：** `prove` 该工具自动将纯命题查询路由到HCC引擎，并将一阶查询路由到Prover9。\r\n- ✅ **可配置模型查找器：** `find_model` 和 `find_counterexample` 现在支持自定义超时和结构化谓词/函数提取。\r\n\r\n## v0.2.0的新增功能\r\n\r\n**增强功能：**\r\n\r\n- ✅ Mace4模型发现和反例检测\r\n- ✅ 带有特定位置错误的详细语法验证\r\n- ✅ 范畴推理支持（范畴论公理、交换性验证）\r\n- ✅ 所有工具的结构化JSON输出\r\n- ✅ 独立安装（无需手动路径配置）\r\n\r\n## 发展\r\n\r\n运行测试：\r\n\r\n```bash\r\nsource .venv/bin/activate\r\npytest tests/ -v\r\n```\r\n\r\n直接测试组件：\r\n\r\n```bash\r\npython tests/test_enhancements.py\r\n```\r\n\r\n## 文档\r\n\r\n- [`ENHANCEMENTS.md`](ENHANCEMENTS.md) -v0.2.0功能的快速参考\r\n- [`Documents/`](Documents/) -详细分析和示例\r\n- [`walkthrough.md`](.gemini/antigravity/brain/.../walkthrough.md) -实施细节（以工件形式）\r\n\r\n## 故障排除\r\n\r\n**“未找到Prover9”错误：**\r\n\r\n- 运行安装脚本： `./linux-setup-script.sh` 或 `windows-setup-mcp-logic.bat`\r\n- 检查一下 `ladr/bin/prover9` 和 `ladr/bin/mace4` 存在\r\n\r\n**服务器未更新：**\r\n\r\n- 代码更改后重新启动服务器\r\n- 检查日志是否存在语法错误\r\n\r\n**语法验证警告：**\r\n\r\n- 谓词/函数使用小写（例如。， `man(x)` 不 `Man(x)`)\r\n- 为清楚起见，在运算符周围添加空格\r\n- 平衡所有括号\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 积分\r\n\r\n- **Prover9/Mace4**：威廉·麦卡恩的LADR图书馆\r\n- **LADR存储库**: [laitep/ladr](https://github.com/laitep/ladr)\r\n- **高频权变演算（HCC）**：基于Eugenio Orlandelli、Giannandrea Pulcini和Achille C.Varzi（2024）的“经典偶然性的超序列微积分”的逻辑框架。\r\n",
+ "config": {
+  "mcp-logic": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/absolute/path/to/mcp-logic",
+    "run",
+    "python",
+    "-m",
+    "mcp_logic",
+    "--prover-path",
+    "/absolute/path/to/mcp-logic/ladr/bin"
+   ],
+   "env": {}
+  }
+ }
+}

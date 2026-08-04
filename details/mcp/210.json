@@ -1,0 +1,22 @@
+{
+ "id": "210",
+ "kind": "mcp",
+ "name": "floorp",
+ "fingerprint_md5": "ba8c399183a48f9e0c683ab791aed97f",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# Floorp MCP服务器\r\n\r\n这是一个 [MCP（模型上下文协议）](https://modelcontextprotocol.io/) Floorp浏览器的服务器桥。\r\n\r\n它允许AI助手与Floorp进行交互，以：\r\n\r\n- 列出并创建选项卡\r\n- 获取浏览器历史记录和下载\r\n- 获取页面内容（HTML/文本）\r\n- 执行自动化（单击、导航、填写表单）\r\n\r\n## 需求\r\n\r\n- **要求** 规格\r\n- 楼层 `about:config`浏览器已安装并正在运行。 `floorp.mcp.enabled` 在 `true`，set\r\n\r\n## 到\r\n\r\n### .\r\n\r\n```bash\r\nnpx -y floorp-mcp-server\r\n```\r\n\r\n### 用法\r\n\r\nnpx\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"floorp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"floorp-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n\r\n```\r\n",
+ "config": {
+  "floorp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "floorp-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

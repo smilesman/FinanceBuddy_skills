@@ -1,0 +1,27 @@
+{
+ "id": "2093",
+ "kind": "mcp",
+ "name": "zoho-books",
+ "fingerprint_md5": "b6fb574526a894a51fa379a770e431e7",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# Zoho图书MCP服务器\r\n\r\n通过模型上下文协议（MCP）将您的Zoho Books帐户连接到Claude Desktop等人工智能助手。\r\n\r\n## 快速开始\r\n\r\n### 1.获取Zoho API证书\r\n\r\n1. 首选 [Zoho API控制台](https://api-console.zoho.com/)\r\n1. 创建“基于服务器的应用程序”\r\n1. 添加重定向URI: `http://localhost:8099/callback`\r\n1. 选择范围： `ZohoBooks.fullaccess.all`\r\n1. 保存您的客户端ID、客户端密码和组织ID\r\n\r\n### 2.通过uvx安装\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"zoho-books\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"zoho-books-mcp\"],\r\n      \"env\": {\r\n        \"ZOHO_CLIENT_ID\": \"your_client_id\",\r\n        \"ZOHO_CLIENT_SECRET\": \"your_client_secret\",\r\n        \"ZOHO_REFRESH_TOKEN\": \"your_refresh_token\",\r\n        \"ZOHO_ORGANIZATION_ID\": \"your_organization_id\",\r\n        \"ZOHO_REGION\": \"US\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n要获取刷新令牌，请执行以下操作： `uvx zoho-books-mcp --setup-oauth`\r\n\r\n### 3.重新启动克劳德桌面\r\n\r\n寻找🔌 图标以验证连接。\r\n\r\n## 地方发展\r\n\r\n```bash\r\n# Clone and setup\r\ngit clone https://github.com/kkeeling/zoho-mcp.git\r\ncd zoho-mcp\r\npython -m venv venv\r\nsource venv/bin/activate  # Windows: venv\\Scripts\\activate\r\npip install -r requirements.txt\r\n\r\n# Run tests\r\npytest\r\n\r\n# Run server\r\npython server.py\r\n```\r\n\r\n对于Claude Desktop中的本地开发：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"zoho-books\": {\r\n      \"command\": \"/path/to/venv/bin/python\",\r\n      \"args\": [\"/path/to/zoho-mcp/server.py\"],\r\n      \"env\": {\r\n        \"ZOHO_CLIENT_ID\": \"your_client_id\",\r\n        \"ZOHO_CLIENT_SECRET\": \"your_client_secret\",\r\n        \"ZOHO_REFRESH_TOKEN\": \"your_refresh_token\",\r\n        \"ZOHO_ORGANIZATION_ID\": \"your_organization_id\",\r\n        \"ZOHO_REGION\": \"US\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用特征\r\n\r\n### 工具\r\n\r\n**发票**：创建语音、电子邮件语音、记录支付、发送支付提醒、作废语音、列表语音、获取语音、标记语音发送\r\n\r\n**联系人**：create_customer、create_vender、update_contact、delete_contact，email_statement，list_contacts，get_contact\r\n\r\n**开支**：创建费用、更新费用、分类费用、上传费用、列表费用、获取费用\r\n\r\n**物品**：创建项、更新项、列表项、获取项\r\n\r\n**销售订单**：创建销售订单、更新销售订单、转换发票、列表销售订单、获取销售订单\r\n\r\n### 资源\r\n\r\n- **dashboard://summary** -业务指标概述\r\n- **invoice://overdue** -逾期发票清单\r\n- **invoice://unpaid** -未付发票\r\n- **payment://recent** -最近付款\r\n- **contact://list** -所有联系人\r\n- **expenses://summary** -费用概述\r\n\r\n### 提示\r\n\r\n- **发票收集工作流** -完成发票到付款周期\r\n- **每月发音** -批量发票创建\r\n- **费用跟踪工作流程** -费用记录和分类\r\n\r\n## 配置\r\n\r\n### 区域\r\n\r\n- 美国（zoho.com）、欧盟（zoho.EU）、印度（zoho.IN）、澳大利亚（zoho.com.AU）、日本（zoho.JP）、英国（zoho.UK）、加拿大（zoho.CA）\r\n\r\n### 故障排除\r\n\r\n- **工具未显示**：完全重新启动克劳德桌面\r\n- **认证错误**：使用重新生成刷新令牌 `uvx zoho-books-mcp --setup-oauth`\r\n- **模块错误**：确保虚拟环境已激活\r\n\r\n## 开发与发布\r\n\r\n### 创建发布\r\n\r\n要将新版本发布到PyPI并创建GitHub版本，请执行以下操作：\r\n\r\n1. **更新版本** 在……里面 `pyproject.toml`\r\n1. **更新CHANGELOG.md** 附发行说明\r\n1. **创建并推送一个git标签**:\r\n   ```bash\r\n   git tag v0.1.0\r\n   git push origin v0.1.0\r\n   ```\r\n1. **遵循手动发布步骤** 在……里面 `PUBLISHING.md` 构建、上传到PyPI并创建GitHub版本\r\n\r\n### 出版的先决条件\r\n\r\n- 带有API令牌的PyPI帐户\r\n- GitHub命令行界面(`gh`)已安装并验证\r\n- 构建工具： `pip install --upgrade pip build twine`\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 文件以获取详细信息。#� �z�o�h�o�b�o�o�k�s�-�m�c�p�-�s�e�r�v�e�r�\r\n�\r\n�#� �z�o�h�o�b�o�o�k�s�-�m�c�p�-�s�e�r�v�e�r�\r\n�\r\n�\r\n",
+ "config": {
+  "zoho-books": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "zoho-books-mcp"
+   ],
+   "env": {
+    "ZOHO_CLIENT_ID": "your_client_id",
+    "ZOHO_CLIENT_SECRET": "your_client_secret",
+    "ZOHO_REFRESH_TOKEN": "your_refresh_token",
+    "ZOHO_ORGANIZATION_ID": "your_organization_id",
+    "ZOHO_REGION": "US"
+   }
+  }
+ }
+}

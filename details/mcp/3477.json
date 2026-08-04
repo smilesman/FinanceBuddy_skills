@@ -1,0 +1,22 @@
+{
+ "id": "3477",
+ "kind": "mcp",
+ "name": "hexdocs-mcp-server",
+ "fingerprint_md5": "bbc0816a1cbd3f706cee5108fb079572",
+ "download_count": 0,
+ "category": "知识库检索",
+ "tags": "",
+ "version": "",
+ "readme": "# HexDocs MCP服务器\r\n\r\n实现模型上下文协议（MCP）的TypeScript服务器，为Hex包文档提供语义搜索功能。它旨在与由 [hexdocs_mcp](https://github.com/bradleygolden/hexdocs-mcp) Elixir软件包，使Hex文档在AI应用程序中易于搜索。\r\n\r\n## 特性\r\n\r\n- 用于搜索Hex软件包文档的MCP兼容服务器\r\n- 与由 [hexdocs_mcp](https://github.com/bradleygolden/hexdocs-mcp) Elixir套装\r\n- 基于模型上下文协议标准构建，与人工智能工具兼容\r\n- 通过以下方式轻松安装 `npx` 用于快速设置\r\n- 具有可定制数据库路径的简单配置\r\n\r\n## 需求\r\n\r\n- Node.js 18或更高版本\r\n- 访问a [hexdocs_mcp](https://github.com/bradleygolden/hexdocs-mcp) 生成的SQLite数据库（需要运行 `mix hex.docs.mcp fetch PACKAGE` 首先在所需的包装上）\r\n\r\n## 配置\r\n\r\n服务器查找由创建的SQLite数据库 `hexdocs_mcp` 包裹。默认情况下，它使用 `~/.hexdocs_mcp/hexdocs_mcp.db`，但您可以指定自定义路径：\r\n\r\n```bash\r\n# Example: Set custom database path\r\nexport HEXDOCS_MCP_PATH=/path/to/custom/directory\r\n```\r\n\r\n## 整合\r\n\r\n服务器可以与支持模型上下文协议的各种AI工具集成。以下是Cursor的示例：\r\n\r\n将此添加到您的 `mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"hexdocs-mcp-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"hexdocs-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 专业提示\r\n\r\n当你与代理交互时，发现你没有特定工具的给定文档，你可以让AI运行 `mix hex.docs.mcp fetch ...` 命令你，这样你就不必了。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。对于重大更改，请先打开一个问题来讨论您想要更改的内容。\r\n\r\n该项目在MIT获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "hexdocs-mcp-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "hexdocs-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

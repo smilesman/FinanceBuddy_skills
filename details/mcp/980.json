@@ -1,0 +1,22 @@
+{
+ "id": "980",
+ "kind": "mcp",
+ "name": "atlas",
+ "fingerprint_md5": "39b94049c65fd3243d6f9d7b79e97cc0",
+ "download_count": 0,
+ "category": "数据迁移",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP大图（或MCP地图集，具体翻译可能根据上下文调整）\r\n\r\n一个用于（某用途）的MCP（模型上下文协议）服务器 [阿里加阿特拉斯](https://atlasgo.io/)使AI助手能够通过模型上下文协议与Atlas迁移工具进行交互。\r\n\r\n## 这是什么？\r\n\r\n这个软件包在AI助手（如Claude）和Atlas之间架起了一座桥梁，使它们能够使用Atlas命令来管理数据库迁移、验证模式以及其他数据库相关操作。\r\n\r\n## 特点/特性\r\n\r\n- **迁移-应用**将待处理的迁移文件应用到数据库\r\n- **迁移差异（或迁移差异分析）**通过比较当前状态与期望的模式，生成新的迁移文件\r\n- **\\`migrate-lint\\` 翻译成中文是“迁移代码规范检查”或“迁移时的代码风格检查”。这里，“migrate”表示迁移，“lint”通常指的是代码规范检查或静态代码分析的过程。所以，\\`migrate-lint\\` 可以理解为在迁移过程中进行的代码规范检查或代码风格验证**对迁移目录运行分析以检测问题\r\n- **迁移新（系统/服务等）**创建新的空迁移文件\r\n- **迁移状态**报告数据库当前的迁移状态\r\n- **迁移-验证**验证迁移目录的完整性和一致性\r\n\r\n## 先决条件\r\n\r\n- [Atlas CLI（Atlas 命令行界面）](https://atlasgo.io/getting-started#installation) 必须安装并在您的 PATH 中可用\r\n- Node.js 18 或更高版本\r\n\r\n## 配置\r\n\r\n将此服务器添加到您的MCP客户端配置中。对于Claude Desktop，请在您的配置文件中添加：\r\n\r\n**MacOS（中文可译为“麦奥斯”或直接音译为“麦奥克斯”，但通常直接使用原名，因其已成为一个专有名词）**： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**Windows**： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"atlas\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@mpreziuso/mcp-atlas\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n这个（或“该”） `-y` 该标志会自动安装或更新软件包，无需提示。\r\n\r\n## 使用方法\r\n\r\n一旦配置完成，您的AI助手即可通过MCP协议使用Atlas命令。示例交互：\r\n\r\n- “检查我的数据库迁移状态”\r\n- “创建一个新的迁移文件”\r\n- “将待处理的迁移应用到数据库”\r\n- “验证迁移目录”\r\n- “根据我的模式生成迁移差异”\r\n\r\n## 示例命令\r\n\r\nMCP服务器封装了这些Atlas CLI命令：\r\n\r\n- `atlas migrate apply` - 应用迁移\r\n- `atlas migrate diff` - 生成迁移差异\r\n- `atlas migrate lint` - 代码迁移文件的清理（或“Lint 迁移文件”）\r\n- `atlas migrate new` - 创建新的迁移\r\n- `atlas migrate status` - 检查迁移状态\r\n- `atlas migrate validate` - 验证迁移\r\n\r\n## 许可证\r\n\r\nMIT（MIT）\r\n\r\n## 作者\r\n\r\n米歇尔·普雷齐索 \r\n\r\n## 仓库（或存储库）\r\n\r\n[https://github.com/mpreziuso/mcp-atlas 的中文翻译可以是：“https://github.com/mpreziuso/mcp-atlas（GitHub上的mpreziuso用户仓库，包含mcp-atlas项目）”。不过，通常在中文语境下，我们可能会直接使用网址，并加上一些解释性文字来说明这是哪个项目或仓库。所以，一个更自然的表达可能是：“访问GitHub上的mpreziuso用户的mcp-atlas项目：https://github.com/mpreziuso/mcp-atlas”](https://github.com/mpreziuso/mcp-atlas)\r\n",
+ "config": {
+  "atlas": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@mpreziuso/mcp-atlas"
+   ],
+   "env": {}
+  }
+ }
+}

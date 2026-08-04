@@ -1,0 +1,18 @@
+{
+ "id": "1270",
+ "kind": "mcp",
+ "name": "schemaflow",
+ "fingerprint_md5": "a9d17dc6ca3126a85e82384dca910508",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# SchemaFlow MCP服务器\r\n\r\n> 通过模型上下文协议（MCP）对AI IDE进行实时PostgreSQL和Supabase模式访问\r\n\r\nSchemaFlow MCP服务器通过模型上下文协议为您的AI-IDE提供对PostgreSQL和Supabase数据库模式的实时访问。获取实时模式上下文，以便在Cursor、Windsurf和VS code+Cline等工具中更智能地生成代码。\r\n\r\n## 🚀 快速开始\r\n\r\n**[访问SchemaFlow→](https://schemaflow.dev)**\r\n\r\n### 1.获取您的MCP令牌\r\n\r\n访问 [SchemaFlow仪表板](https://schemaflow.dev/dashboard) 致：\r\n\r\n- 连接PostgreSQL或Supabase数据库\r\n- 加载并缓存您的架构\r\n- 生成MCP令牌\r\n\r\n### 2.配置您的AI-IDE\r\n\r\n#### 对于游标IDE：\r\n\r\n1. 打开光标设置\r\n1. 转到功能→ MCP\r\n1. 点击“添加新MCP服务器”\r\n1. 使用此配置：\r\n\r\n```json\r\n{\r\n  \"name\": \"schemaflow\",\r\n  \"type\": \"sse\",\r\n  \"url\": \"https://api.schemaflow.dev/mcp/?token=your-token-here\"\r\n}\r\n```\r\n\r\n#### 对于Windsurf IDE：\r\n\r\n添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"schemaflow\": {\r\n      \"type\": \"sse\",\r\n      \"url\": \"https://api.schemaflow.dev/mcp/?token=your-token-here\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 对于VS Code+Cline：\r\n\r\n在Cline的MCP设置中配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"schemaflow\": {\r\n      \"type\": \"sse\", \r\n      \"url\": \"https://api.schemaflow.dev/mcp/?token=your-token-here\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🛠️ 可用的MCP工具\r\n\r\n### `get_schema`\r\n\r\n从PostgreSQL或Supabase数据库中检索完整的数据库模式信息，包括表、列、关系、函数、触发器、枚举和索引。\r\n\r\n**参数：**\r\n\r\n- `query_type` （可选）：筛选特定信息(`tables`, `columns`, `relationships`, `functions`, `triggers`, `enums`, `indexes`, `all`)\r\n\r\n**AI查询示例：**\r\n\r\n- “显示我的数据库架构”\r\n- “我有什么桌子？”\r\n- “显示所有关系”\r\n- “列出数据库功能”\r\n\r\n### `analyze_database`\r\n\r\n执行全面的数据库分析，包括性能洞察、安全评估以及PostgreSQL和Supabase数据库的结构建议。\r\n\r\n**AI查询示例：**\r\n\r\n- “分析我的数据库性能”\r\n- “检查数据库安全性”\r\n- “查看数据库结构”\r\n- “给我一个数据库概述”\r\n\r\n### `check_schema_alignment`\r\n\r\n根据最佳实践验证PostgreSQL或Supabase模式，并通过可操作的建议识别潜在问题。\r\n\r\n**AI查询示例：**\r\n\r\n- “检查架构对齐情况”\r\n- “验证我的数据库”\r\n- “有任何架构问题吗？”\r\n- “检查命名约定”\r\n\r\n## 🔧 运作原理\r\n\r\n1. **架构缓存**：当您在SchemaFlow仪表板中加载模式时，它会自动缓存以供MCP访问\r\n1. **安全连接**：您的AI-IDE使用具有安全令牌身份验证的MCP进行连接\r\n1. **实时访问**：您的AI助手可以实时查询模式数据，以更好地生成代码\r\n\r\n## 🔒 安全\r\n\r\n- **仅架构元数据** -没有实际数据被访问或存储\r\n- **基于令牌的身份验证** -每个用户都有一个唯一的、可撤销的令牌\r\n- **加密连接** -所有MCP通信均已加密\r\n- **用户特定访问** -令牌只能访问您自己的缓存模式数据\r\n\r\n## 📚 完整的文件\r\n\r\n有关详细的设置说明、故障排除和高级配置，请访问：\r\n\r\n**[完整的MCP集成指南](https://schemaflow.dev/mcp-guide)**\r\n\r\n## 🌐 SchemaFlow平台\r\n\r\n此MCP服务器是更大的SchemaFlow平台的一部分，该平台还提供：\r\n\r\n- **交互式架构可视化** -通过直观的图表探索PostgreSQL/Supabase数据库结构\r\n- **多格式导出** -以JSON、Markdown、SQL和Mermaid格式导出模式\r\n- **模式浏览器** -浏览表、关系和数据库组件\r\n- **性能分析** -深入了解您的数据库结构和优化机会\r\n- **Supabase集成** -直接连接Supabase项目的本地支持\r\n\r\n**[访问SchemaFlow→](https://schemaflow.dev)**\r\n\r\n## 🆘 支持\r\n\r\n- **文档**: [schemaflow.dev/mcp-guide](https://schemaflow.dev/mcp-guide)\r\n- **仪表盘**: [schemaflow.dev/仪表板](https://schemaflow.dev/dashboard)\r\n- **问题**：在此存储库中创建问题\r\n\r\n## 📄 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件。\r\n",
+ "config": {
+  "schemaflow": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://api.schemaflow.dev/mcp/?token=your-token-here"
+  }
+ }
+}

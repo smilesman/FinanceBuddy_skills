@@ -1,0 +1,24 @@
+{
+ "id": "645",
+ "kind": "mcp",
+ "name": "fal-ai",
+ "fingerprint_md5": "65b6186e6989db9b27a103e048b9e9e8",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# fal.ai MCP服务器\r\n\r\nMCP（模型上下文协议）服务器 [fal.ai](https://fal.ai) --直接从Claude访问600多种AI模型，用于图像生成、视频创建、语音到文本、文本到语音、音乐生成等。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `generate_image` |文本到图像生成（FLUX、Recraft等）|\r\n| `edit_image` |图像编辑、修复、放大|\r\n| `generate_video` |文本/图像到视频（Kling、Veo、Sora、LTX）|\r\n| `speech_to_text` |使用Whisper进行音频转录|\r\n| `text_to_speech` |文本到语音合成|\r\n| `generate_music` |根据文本提示生成音乐|\r\n| `search_models` |在fal.ai上搜索可用型号|\r\n| `run_model` |使用自定义参数运行任何fal.ai模型|\r\n\r\n## 设置\r\n\r\n### 1.获取fal.ai API密钥\r\n\r\n注册地址： [fal.ai](https://fal.ai) 并从 [仪表盘](https://fal.ai/dashboard/keys).\r\n\r\n### 2.配置克劳德桌面\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fal-ai\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"fal-ai-mcp\"],\r\n      \"env\": {\r\n        \"FAL_KEY\": \"your-fal-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.配置克劳德代码\r\n\r\n```bash\r\nclaude mcp add fal-ai -e FAL_KEY=your-fal-api-key -- npx -y fal-ai-mcp\r\n```\r\n\r\n### 替代方案：从源代码安装\r\n\r\n```bash\r\ngit clone https://github.com/enescanguven/fal-mcp.git\r\ncd fal-mcp\r\nnpm install\r\nnpm run build\r\nclaude mcp add fal-ai -e FAL_KEY=your-fal-api-key -- node dist/index.js\r\n```\r\n\r\n## 用法示例\r\n\r\n### 生成图像\r\n\r\n> “生成山脉上日落的逼真图像”\r\n\r\n用途 `fal-ai/flux/schnell` 默认情况下。您可以指定其他模型：\r\n\r\n> “使用fal-ai/flux pro/v1.1模型生成猫的图像”\r\n\r\n### 编辑图像\r\n\r\n> “放大此图像：https://example.com/photo.jpg\"\r\n\r\n### 生成视频\r\n\r\n> “制作海浪拍打海滩的视频”\r\n\r\n### 转录音频\r\n\r\n> “转录此音频文件：https://example.com/recording.mp3\"\r\n\r\n### 文本转语音\r\n\r\n> 将此文本转换为语音：您好，欢迎来到fal.ai\r\n\r\n### 生成音乐\r\n\r\n> “生成30秒低保真嘻哈节拍”\r\n\r\n### 运行任何模型\r\n\r\n> “运行fal-ai/nano-banna-2模型，并提示‘美丽的风景’”\r\n\r\n## 可用型号\r\n\r\nfal.ai拥有600多种型号。一些流行的：\r\n\r\n**图像生成：**\r\n\r\n- `fal-ai/flux/schnell` --快速生成FLUX（默认）\r\n- `fal-ai/flux/dev` --FLUX开发模型\r\n- `fal-ai/flux-pro/v1.1` --FLUX Pro\r\n- `fal-ai/recraft/v4/pro/text-to-image` --重新起草V4\r\n\r\n**视频生成：**\r\n\r\n- `fal-ai/kling-video/v3/pro/text-to-video` --克林视频V3\r\n- `fal-ai/veo3.1` --谷歌Veo 3.1\r\n- `fal-ai/sora-2` --索拉2\r\n\r\n**音频：**\r\n\r\n- `fal-ai/whisper` --语音转文本\r\n- `fal-ai/chatterbox/text-to-speech` --文本转语音\r\n\r\n浏览所有模特 [fal.ai/型号](https://fal.ai/models).\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "fal-ai": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "fal-ai-mcp"
+   ],
+   "env": {
+    "FAL_KEY": "your-fal-api-key"
+   }
+  }
+ }
+}

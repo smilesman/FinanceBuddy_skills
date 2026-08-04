@@ -1,0 +1,22 @@
+{
+ "id": "1737",
+ "kind": "mcp",
+ "name": "spec-driven",
+ "fingerprint_md5": "253b7f9ce8afb432cd69cdc83a60830f",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "# 规范驱动开发MCP服务器\r\n\r\n[\r\n](https://www.npmjs.com/package/mcp-server-spec-driven-development) [-VS_Code-0098FF>)](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%257B%2522name%2522%253A%2522spec-driven%2522%252C%2522command%2522%253A%2522npx%2522%252C%2522args%2522%253A%255B%2522-y%2522%252C%2522mcp-server-spec-driven-development%2540latest%2522%255D%257D)\r\n\r\n模型上下文协议（MCP）服务器，通过提供结构化提示，以系统的方法生成需求、设计文档和代码，从而促进规范驱动的开发工作流程。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@formulahendry/mcp-server-spec-driven-development\">\r\n  \r\n</a>\r\n\r\n## 🎯 目的\r\n\r\n此MCP服务器通过提供指导您完成以下步骤的提示，使开发人员能够遵循结构化规范驱动的开发方法：\r\n\r\n1. **需求生成** -使用EARS（需求语法简易方法）格式创建详细的需求文档\r\n1. **设计生成** -根据需求生成设计文档\r\n1. **代码生成** -根据设计文档生成实现代码\r\n\r\n## ✨ 特性\r\n\r\n- **结构化工作流**：遵循以下明确的进展 **需求** → **设计** → **代码**\r\n- **EARS格式支持**：使用行业标准EARS格式进行需求文档\r\n- **MCP协议**：与MCP兼容的工具和环境无缝集成\r\n\r\n## 🚀 快速开始\r\n\r\n### 先决条件\r\n\r\n- Node.js 20+\r\n\r\n### 安装\r\n\r\n#### VS代码\r\n\r\n使用以下按钮在VS Code中安装MCP服务器：\r\n\r\n[-VS_Code-0098FF>)](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%257B%2522name%2522%253A%2522spec-driven%2522%252C%2522command%2522%253A%2522npx%2522%252C%2522args%2522%253A%255B%2522-y%2522%252C%2522mcp-server-spec-driven-development%2540latest%2522%255D%257D) [-VS_Code_Insiders-24bfa5>)](https://insiders.vscode.dev/redirect?url=vscode-insiders%3Amcp%2Finstall%3F%257B%2522name%2522%253A%2522spec-driven%2522%252C%2522command%2522%253A%2522npx%2522%252C%2522args%2522%253A%255B%2522-y%2522%252C%2522mcp-server-spec-driven-development%2540latest%2522%255D%257D)\r\n\r\n或者，您可以在中添加配置 `mcp.json`:\r\n\r\n```json\r\n{\r\n    \"servers\": {\r\n        \"spec-driven\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\r\n                \"-y\",\r\n                \"mcp-server-spec-driven-development@latest\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n#### 光标，克劳德代码\r\n\r\n使用以下按钮在Cursor中安装MCP服务器：\r\n\r\n[](https://cursor.com/install-mcp?name=spec-driven&config=JTdCJTIyY29tbWFuZCUyMiUzQSUyMm5weCUyMC15JTIwbWNwLXNlcnZlci1zcGVjLWRyaXZlbi1kZXZlbG9wbWVudCU0MGxhdGVzdCUyMiU3RA%3D%3D)\r\n\r\n或者，您可以在中添加配置 `mcp.json`:\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"spec-driven\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\r\n                \"-y\",\r\n                \"mcp-server-spec-driven-development@latest\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 📋 可用提示\r\n\r\n### 1.生成需求文档\r\n\r\n- **名字**: `generate-requirements`\r\n- **描述**：使用EARS格式生成requirements.md\r\n- **输入**：应用程序的高级要求。示例：“一个具有任务创建、完成跟踪和本地存储持久性的Vue.js todo应用程序”\r\n- **输出**：结构化需求文档 `specs/requirements.md`\r\n\r\n### 2.根据需求生成设计\r\n\r\n- **名字**: `generate-design-from-requirements`\r\n- **描述**：根据需求.md生成设计.md\r\n- **输入**：阅读自 `specs/requirements.md`\r\n- **输出**：设计文件 `specs/design.md`\r\n\r\n### 3.从设计生成代码\r\n\r\n- **名字**: `generate-code-from-design`\r\n- **描述**：从design.md生成代码\r\n- **输入**：阅读自 `specs/design.md`\r\n- **输出**：根文件夹中的实现代码\r\n\r\n## 📖 工作流示例\r\n\r\n1. **从需求开始**：使用 `generate-requirements` 提示您的初始需求文本\r\n1. **创建设计**：使用 `generate-design-from-requirements` 根据您的要求创建设计文档\r\n1. **生成代码**：使用 `generate-code-from-design` 从设计中生成实现代码\r\n\r\n这创建了一条从需求到设计再到实现的可追溯路径，确保了开发过程的一致性和完整性。\r\n\r\n## 🤔 为什么选择规范驱动开发？\r\n\r\n从Vibe Coding转向结构化、规范驱动的方法，可以为您的开发工作流程带来清晰性、一致性和可维护性。规范驱动开发提供了一个系统的基础，可以根据项目的复杂性进行扩展，而不是仅凭直觉进行编码。\r\n\r\n了解更多好处： [再见，Vibe编码！您好，规范驱动开发MCP服务器！](https://dev.to/formulahendry/goodbye-vibe-coding-hello-spec-driven-development-mcp-server-2m17)\r\n",
+ "config": {
+  "spec-driven": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-server-spec-driven-development@latest"
+   ],
+   "env": {}
+  }
+ }
+}

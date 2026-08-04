@@ -1,0 +1,12 @@
+{
+ "id": "cloudphone",
+ "kind": "skill",
+ "name": "cloudphone",
+ "fingerprint_md5": "6cd5cb4061ec1b27e2a10d3c0fc068ff",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "## 此技能的功能\r\n\r\n`cloudphone` 引导 agent 通过 `mcporter` 调用 `cpc-mcp-server` 工具，在云手机环境中运行 Android 自动化任务。\r\n\r\n适用于：\r\n- 基于 AutoJS 的云手机自动化\r\n- App 回归/冒烟测试执行\r\n- 远程批量操作工作流\r\n- 云 Android 设备上的脚本交互\r\n\r\n---\r\n\r\n## 何时使用此技能\r\n\r\n当用户请求以下操作时，使用此技能：\r\n- “在云手机上运行脚本”\r\n- “使用 AutoJS 自动化此 App 流程”\r\n- “远程执行 Android UI 步骤并返回截图/日志”\r\n- “使用 cpc-mcp-server 进行云设备自动化”\r\n\r\n---\r\n\r\n## 何时不使用此技能\r\n\r\n以下情况请勿使用此技能：\r\n- 本地 ADB/模拟器自动化（非云设备）\r\n- iOS 自动化（例如 XCUITest）\r\n- 不涉及真实设备执行的静态脚本/代码审查\r\n- 没有可执行任务目标的纯咨询请求\r\n\r\n---\r\n\r\n## 必需的前提条件（执行前必须通过）\r\n\r\n在发起任何调用之前，请确保认证配置正确。\r\n\r\n`cpc-mcp-server` 需要：\r\n\r\n- `Authorization: Bearer <API_KEY>`\r\n\r\n此技能通过以下方式标准化 API key：\r\n\r\n- `CLOUDPHONE_API_KEY`（必需）\r\n\r\n### 要求\r\n\r\n1. 设置环境变量 `CLOUDPHONE_API_KEY`。\r\n2. 确保在执行前 MCP 服务器 header 注入已激活：\r\n   - `Authorization: Bearer $CLOUDPHONE_API_KEY`\r\n3. 切勿在仓库文件、`SKILL.md` 或 config JSON 中硬编码或提交真实 key。\r\n\r\n> 此技能仅定义命名和前置条件。  \r\n> Secret 注入的实现由运行时/环境配置处理。\r\n\r\n---\r\n\r\n## 调用模型（通过 mcporter）\r\n\r\n此技能不直接调用 MCP 工具。它使用 `mcporter` CLI 在 `cpc-mcp-server` 上调用工具。\r\n\r\n常用命令模式：\r\n- 列出已配置的 MCP 服务器：\r\n  - `mcporter list`\r\n- 查看服务器 schema：\r\n  - `mcporter list cpc-mcp-server --schema`\r\n- 使用 JSON 参数调用工具（推荐）：\r\n  - `mcporter call cpc-mcp-server.<tool> --args '<json>'`\r\n\r\n> 对于长指令、多语言文本和特殊字符，优先使用 `--args` JSON。\r\n\r\n---\r\n\r\n## 最小输入检查清单（创建任务前）\r\n\r\n首先收集以下字段（仅在缺失时追问）：\r\n1. 目标 app（名称/包名）\r\n2. 预期操作（要做什么）\r\n3. 成功标准（怎样算完成）\r\n4. 预期输出类型（截图/日志/文本结果）\r\n\r\n---\r\n\r\n## 工具 1：创建任务 (`createAutoJsAgentTask`)\r\n\r\n### 目标\r\n\r\n创建并派发 AutoJS Agent 任务，然后获取 `taskId`（以及可能的 `sessionId`）。\r\n\r\n### 推荐调用\r\n\r\n```bash\r\nmcporter call cpc-mcp-server.createAutoJsAgentTask --args '{\r\n  \"instruction\": \"在云手机上打开 <APP_NAME>，使用测试账号登录，导航到 Orders 页面，截取屏幕截图，并返回订单数量。\",\r\n  \"lang\": \"zh\"\r\n}'\r\n```",
+ "config": {}
+}

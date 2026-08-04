@@ -1,0 +1,24 @@
+{
+ "id": "204",
+ "kind": "mcp",
+ "name": "fetch",
+ "fingerprint_md5": "064b05a800af74c5344257d3c9c6eb72",
+ "download_count": 0,
+ "category": "网页抓取",
+ "tags": "",
+ "version": "",
+ "readme": "# 获取MCP服务器\r\n\r\n\r\n一种模型上下文协议服务器，使用浏览器自动化、OCR和多种提取方法提供web内容获取功能。此服务器使LLM能够从网页中检索和处理内容，即使是那些需要JavaScript渲染或使用防止简单抓取的技术的网页。\r\n\r\n### 可用工具\r\n\r\n- `fetch` -使用浏览器自动化和多方法提取（包括OCR）从互联网获取URL。\r\n  - `url` （字符串，必填）：要获取的URL\r\n  - `raw` （boolean，可选）：获取请求页面的实际HTML内容，不进行简化（默认值：false）\r\n\r\n服务器使用多种方法提取内容：\r\n\r\n1. 浏览器自动化，未检测到chromedriver\r\n1. 使用带有布局检测的pytesseract进行OCR\r\n1. 使用请求进行HTML提取/BeautifulSoup\r\n1. 文档解析（PDF、DOCX、PPTX）\r\n1. 原始降价转换方法\r\n\r\n服务器使用复杂的评分系统来选择最佳结果，考虑：\r\n\r\n1. 基础内容得分（最高50分）\r\n\r\n   - 根据内容长度获得的分数（每100个字符1分，最多50分）\r\n   - 惩罚极短的内容（\\<100个字符）\r\n\r\n1. 结构奖励（最高20分）\r\n\r\n   - 对结构良好的段落内容进行评分\r\n   - 更多段落表示更好的内容组织\r\n\r\n1. 质量处罚\r\n\r\n   - 检测并惩罚错误消息\r\n   - 降低包含错误指示符的内容的分数\r\n   - 验证内容结构和可读性\r\n\r\n评分系统确保选择最可靠和高质量的内容，无论使用何种提取方法。调试日志可用于跟踪评分决策。\r\n\r\n### 鼓励\r\n\r\n- **获取**\r\n  - 使用浏览器自动化获取URL并将其内容提取为markdown\r\n  - 论据：\r\n    - `url` （字符串，必填）：要获取的URL\r\n\r\n## 安装\r\n\r\n### 使用Docker\r\n\r\n安装并运行 `mcp-server-fetch` 使用Docker，请按照以下步骤操作：\r\n\r\n1. **构建Docker镜像：**\r\n\r\n   ```bash\r\n   docker build -t mcp-server-fetch .\r\n   ```\r\n\r\n1. **运行Docker容器：**\r\n\r\n   ```bash\r\n   docker run --rm -i mcp-server-fetch\r\n   ```\r\n\r\n## 配置\r\n\r\n### 配置Roo代码或Claude应用程序\r\n\r\n添加到您的Claude设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fetch\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"mcp-server-fetch\"\r\n      ],\r\n      \"disabled\": false,\r\n      \"alwaysAllow\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 定制-用户代理\r\n\r\n默认情况下，根据请求是来自模型（通过工具）还是由用户发起（通过提示）\r\n服务器将使用用户代理\r\n\r\n```\r\nModelContextProtocol/1.0 (Autonomous; +https://github.com/modelcontextprotocol/servers)\r\n```\r\n\r\n或\r\n\r\n```\r\nModelContextProtocol/1.0 (User-Specified; +https://github.com/modelcontextprotocol/servers)\r\n```\r\n\r\n这可以通过添加参数进行自定义 `--user-agent=YourUserAgent` 到 `args` 配置中的列表。\r\n\r\n### 浏览器自动化和OCR\r\n\r\n服务器现在包括高级内容提取功能：\r\n\r\n- 自动处理cookie同意横幅\r\n- 全页截图\r\n- 使用pytesseract进行OCR布局检测\r\n- 多种提取方法，自动选择最佳结果\r\n\r\n## 贡献\r\n\r\n我们鼓励捐款以帮助扩展和改进mcp服务器获取。无论您是想添加新工具、增强现有功能还是改进文档，您的意见都是有价值的。\r\n\r\n有关其他MCP服务器和实现模式的示例，请参阅：\r\nhttps://github.com/modelcontextprotocol/servers\r\n\r\n欢迎拉取请求！请随时贡献新想法、错误修复或增强功能，使mcp服务器fetch更加强大和有用。\r\n\r\n## 许可证\r\n\r\nmcp服务器获取是根据MIT许可证授权的。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "fetch": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "mcp-server-fetch"
+   ],
+   "env": {}
+  }
+ }
+}

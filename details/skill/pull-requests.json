@@ -1,0 +1,12 @@
+{
+ "id": "pull-requests",
+ "kind": "skill",
+ "name": "pull-requests",
+ "fingerprint_md5": "a39d2867157529b2a5761a85caf81e15",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Pull Request 指南\r\n\r\n## 创建 PR\r\n\r\n### 标签\r\n\r\n在使用 AI 辅助创建 PR 时，始终添加 **\"AI-Made\"** 标签。\r\n\r\n### PR 标题\r\n\r\n在开头包含问题编号：\r\n\r\n```\r\nRI-123 Add user profile editing\r\n#456 Fix memory leak in connection pool\r\n```\r\n\r\n### PR 描述模板\r\n\r\n```markdown\r\n# What\r\n\r\n描述变更内容。\r\n\r\n# Testing\r\n\r\n描述如何测试变更。\r\n\r\n---\r\n\r\nCloses #RI-123\r\n```\r\n\r\n**PR 描述指南：**\r\n\r\n- **保持简洁** - 避免冗长的描述\r\n- **专注于高级变更** - 不要在 #What 部分列出每个代码变更\r\n- **简短扼要** - diff 显示详细信息；在高层次描述\"为什么\"和\"什么\"\r\n- **技术决策** - 仅在相关时提及重要的架构或设计决策\r\n\r\n## 审查流程\r\n\r\n### 作为 PR 作者\r\n\r\n- **回应所有评论** - 处理每一条反馈\r\n- **不要对反馈个人化** - 审查提高代码质量\r\n- **根据反馈更新代码** - 进行请求的变更\r\n- **将对话标记为已解决** - 处理反馈后\r\n- **保持 PR 最新** - 定期在 main 上变基\r\n\r\n### 作为 PR 审查者\r\n\r\n- **建设性和尊重** - 专注于改进\r\n- **关注逻辑，而非风格** - 由 linter 处理格式化\r\n- **检查**：\r\n  - 逻辑错误和边缘情况\r\n  - 性能问题\r\n  - 安全问题\r\n  - 测试覆盖率\r\n  - 缺失的文档\r\n  - 架构问题\r\n\r\n### 审查检查清单\r\n\r\n- [ ] 代码遵循项目模式\r\n- [ ] 测试全面\r\n- [ ] 没有 console.log 或调试代码\r\n- [ ] TypeScript 类型正确\r\n- [ ] 错误处理充分\r\n- [ ] 文档已更新\r\n- [ ] 没有安全漏洞\r\n- [ ] 性能可接受",
+ "config": {}
+}

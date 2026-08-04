@@ -1,0 +1,12 @@
+{
+ "id": "asc-release-flow",
+ "kind": "skill",
+ "name": "asc-release-flow",
+ "fingerprint_md5": "691ead9ad8e17f0d0094f0ef22d27914",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# 发布流程 (TestFlight 和 App Store)\r\n\r\n当你需要将新构建上传到 TestFlight 或提交到 App Store 时使用此技能。\r\n\r\n## 前置条件\r\n- 确保凭据已设置 (`asc auth login` 或 `ASC_*` 环境变量)。\r\n- 每次上传使用新的构建号。\r\n- 优先使用 `ASC_APP_ID` 或显式传递 `--app`。\r\n\r\n## 首选端到端命令\r\n- TestFlight:\r\n  - `asc publish testflight --app <APP_ID> --ipa <PATH> --group <GROUP_ID>[,<GROUP_ID>]`\r\n  - 可选：`--wait`, `--notify`, `--platform`, `--poll-interval`, `--timeout`\r\n- App Store:\r\n  - `asc publish appstore --app <APP_ID> --ipa <PATH> --version <VERSION>`\r\n  - 可选：`--wait`, `--submit --confirm`, `--platform`, `--poll-interval`, `--timeout`\r\n\r\n## 手动序列（当你需要更多控制时）\r\n1. 上传构建：\r\n   - `asc builds upload --app <APP_ID> --ipa <PATH>`\r\n2. 如果需要，查找构建 ID：\r\n   - `asc builds latest --app <APP_ID> [--version <VERSION>] [--platform <PLATFORM>]`\r\n3. TestFlight 分发：\r\n   - `asc builds add-groups --build <BUILD_ID> --group <GROUP_ID>[,<GROUP_ID>]`\r\n4. App Store 附加 + 提交：\r\n   - `asc versions attach-build --version-id <VERSION_ID> --build <BUILD_ID>`\r\n   - `asc submit create --app <APP_ID> --version <VERSION> --build <BUILD_ID> --confirm`\r\n5. 检查或取消提交：\r\n   - `asc submit status --id <SUBMISSION_ID>` 或 `--version-id <VERSION_ID>`\r\n   - `asc submit cancel --id <SUBMISSION_ID> --confirm`\r\n\r\n## 注意事项\r\n- 始终使用 `--help` 验证确切命令的标志。\r\n- 使用 `--output table` / `--output markdown` 获取人类可读的输出；默认是 JSON。",
+ "config": {}
+}

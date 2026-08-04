@@ -1,0 +1,22 @@
+{
+ "id": "880",
+ "kind": "mcp",
+ "name": "svt-texttv",
+ "fingerprint_md5": "e11679067f2799d07784dfc67d08fe92",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# SVT Text-TV MCP Server\r\n\r\nMCP-server för SVT Text-TV - Exponerar svenskt text-tv-innehåll (nyheter, sport, väder, TV-tablåer) via Model Context Protocol.\r\n\r\n## Installation\r\n\r\n### NPM (Lokal)\r\n\r\n```bash\r\nnpm install -g svt-texttv-mcp\r\n```\r\n\r\n### Claude Desktop\r\n\r\nLägg till i din `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"svt-texttv\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"svt-texttv-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Remote (Render)\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"svt-texttv\": {\r\n      \"type\": \"http\",\r\n      \"url\": \"https://svt-texttv-mcp.onrender.com/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## Verktyg\r\n\r\n| Verktyg | Beskrivning |\r\n|---------|-------------|\r\n| `texttv_get_page` | Hämta en specifik Text-TV-sida (100-899) |\r\n| `texttv_get_subpages` | Hämta alla versioner av en sida |\r\n| `texttv_get_news` | Hämta nyheter (inrikes/utrikes/huvud) |\r\n| `texttv_get_sports` | Hämta sport (fotboll/hockey/resultat) |\r\n| `texttv_get_weather` | Hämta väderprognos (nationellt/Stockholm/Göteborg/Malmö) |\r\n| `texttv_get_tv_schedule` | Hämta TV-tablå (SVT1/SVT2) |\r\n| `texttv_search` | Sök i Text-TV-innehåll |\r\n| `texttv_browse_category` | Bläddra i en kategori |\r\n\r\n## Resurser\r\n\r\n| URI | Beskrivning |\r\n|-----|-------------|\r\n| `texttv://categories` | Lista alla kategorier med sidintervall |\r\n| `texttv://news/latest` | Senaste huvudnyheter |\r\n| `texttv://sports/latest` | Senaste sport |\r\n| `texttv://weather/national` | Nationell väderprognos |\r\n| `texttv://tv/today` | Dagens TV-tablå |\r\n\r\n## Prompts\r\n\r\n| Namn | Beskrivning |\r\n|------|-------------|\r\n| `swedish_news_summary` | Sammanfattning av svenska nyheter |\r\n| `sports_update` | Sportuppdatering |\r\n| `weather_forecast` | Väderprognos |\r\n| `tv_tonight` | Kvällens TV-program |\r\n| `texttv_page` | Analysera en specifik sida |\r\n\r\n## Exempel\r\n\r\n### Hämta nyheter\r\n\r\n```\r\nAnvänd texttv_get_news med category: \"domestic\" för att få inrikesnyheter\r\n```\r\n\r\n### Sök efter innehåll\r\n\r\n```\r\nAnvänd texttv_search med query: \"klimat\" för att hitta sidor om klimat\r\n```\r\n\r\n### Väderprognos\r\n\r\n```\r\nAnvänd texttv_get_weather med region: \"stockholm\" för Stockholms väder\r\n```\r\n\r\n## Sidkategorier\r\n\r\n| Intervall | Kategori |\r\n|-----------|----------|\r\n| 100-199 | Nyheter |\r\n| 300-399 | Sport |\r\n| 400-499 | Väder |\r\n| 500-699 | TV-tablå |\r\n| 700-899 | Övrigt |\r\n\r\n## Kända sidor\r\n\r\n| Sida | Beskrivning |\r\n|------|-------------|\r\n| 100 | Huvudnyheter |\r\n| 101-103 | Inrikesnyheter |\r\n| 104-109 | Utrikesnyheter |\r\n| 300 | Sporthuvudsida |\r\n| 330-339 | Fotboll |\r\n| 340-349 | Hockey |\r\n| 400 | Nationell väderprognos |\r\n| 402-404 | Lokala prognoser |\r\n| 600 | SVT1 tablå |\r\n| 650 | SVT2 tablå |\r\n\r\n## Utveckling\r\n\r\n```bash\r\n# Installera dependencies\r\nnpm install\r\n\r\n# Bygg\r\nnpm run build\r\n\r\n# Kör tester\r\nnpm test\r\n\r\n# Starta dev-server (stdio)\r\nnpm run dev\r\n\r\n# Starta HTTP-server\r\nnpm run dev:http\r\n```\r\n\r\n## API\r\n\r\nServern använder det inofficiella API:et från [texttv.nu](https://texttv.nu).\r\n\r\n## Licens\r\n\r\nMIT\r\n\r\n## Författare\r\n\r\nSkapad med Claude Code.\r\n\r\n---\r\n\r\n**Version:** 1.0.0\r\n",
+ "config": {
+  "svt-texttv": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "svt-texttv-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

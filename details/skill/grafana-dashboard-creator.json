@@ -1,0 +1,12 @@
+{
+ "id": "grafana-dashboard-creator",
+ "kind": "skill",
+ "name": "grafana-dashboard-creator",
+ "fingerprint_md5": "0e86cc2fab88e2e1b4bd829c304bf5a6",
+ "download_count": 0,
+ "category": "Grafana",
+ "tags": "",
+ "version": "",
+ "readme": "# Grafana 仪表板创建器\r\n\r\n## 概述\r\n\r\n此技能为 DevOps 高级领域内的 grafana dashboard creator 任务提供自动化协助。\r\n\r\n## 何时使用\r\n\r\n当您执行以下操作时，此技能会自动激活：\r\n- 在请求中提到 \"grafana dashboard creator\"\r\n- 询问 grafana dashboard creator 模式或最佳实践\r\n- 需要高级 devops 技能帮助，涵盖 kubernetes、terraform、高级 ci/cd、监控和基础设施即代码\r\n\r\n## 使用说明\r\n\r\n1. 为 grafana dashboard creator 提供分步指导\r\n2. 遵循行业最佳实践和模式\r\n3. 生成生产就绪的代码和配置\r\n4. 根据通用标准验证输出\r\n\r\n## 示例\r\n\r\n**示例：基本用法**\r\n请求：\"帮助我使用 grafana dashboard creator\"\r\n结果：提供分步指导并生成适当的配置\r\n\r\n\r\n## 先决条件\r\n\r\n- 配置了相关的开发环境\r\n- 访问必要的工具和服务\r\n- 对 devops 高级概念的基本理解\r\n\r\n\r\n## 输出\r\n\r\n- 生成的配置和代码\r\n- 最佳实践建议\r\n- 验证结果\r\n\r\n\r\n## 错误处理\r\n\r\n| 错误 | 原因 | 解决方案 |\r\n|-------|-------|----------|\r\n| 配置无效 | 缺少必填字段 | 查看文档了解所需参数 |\r\n| 找不到工具 | 依赖项未安装 | 根据先决条件安装所需工具 |\r\n| 权限被拒绝 | 访问权限不足 | 验证凭据和权限 |\r\n\r\n\r\n## 资源\r\n\r\n- 相关工具的官方文档\r\n- 最佳实践指南\r\n- 社区示例和教程\r\n\r\n## 相关技能\r\n\r\n属于 **DevOps 高级** 技能类别。\r\n标签：kubernetes、terraform、helm、monitoring、iac",
+ "config": {}
+}

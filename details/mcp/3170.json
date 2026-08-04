@@ -1,0 +1,23 @@
+{
+ "id": "3170",
+ "kind": "mcp",
+ "name": "mta-subway",
+ "fingerprint_md5": "3fc798188398cc1e6dcfeabd7a087768",
+ "download_count": 0,
+ "category": "路线规划",
+ "tags": "",
+ "version": "",
+ "readme": "# Sally——你的纽约通勤副驾驶🚇🚲⛴️\r\n\r\n> 把它想象成你在纽约市周围有一个自己的“坐在椅子上的人”。\r\n\r\n## 这是什么？\r\n\r\nSally是一个人工智能驱动的交通代理，可以连接到实时的纽约市交通数据，这样你就可以使用自然语言规划创造性的多模式通勤。\r\n\r\n问题是：乘坐地铁、花旗自行车和渡轮游览纽约市意味着要查看多个应用程序，在脑海中拼凑时间表，并希望在过去的5分钟内没有任何变化。Sally从这三个中提取实时数据，并为您提供具有个性的实际路线选项。\r\n\r\n你和萨莉说话的方式就像你给一个对交通系统了如指掌的朋友发短信一样：\r\n\r\n> “嘿，萨莉，我在汤普金斯广场公园，需要在绿点见一个朋友吃午饭。要迟到，所以要快点。”\r\n\r\nSally使用实时可用性数据带回了真实的选择：\r\n\r\n## 运作原理\r\n\r\n萨莉是建立在 [MCP（模型上下文协议）](https://modelcontextprotocol.io/) 提供LLM访问实时传输API的服务器。该架构故意简单——每个中转源都有自己的MCP服务器，LLM在它们之间进行协调以规划路线。\r\n\r\n```\r\nUser (natural language) → LLM + Sally prompt → MCP servers → Live transit APIs\r\n                                                  ├── MTA Subway (GTFS real-time)\r\n                                                  ├── Citi Bike (GBFS)\r\n                                                  └── NYC Ferry (GTFS + GTFS-RT)\r\n```\r\n\r\nLLM不会产生路线幻觉——它会调用工具来检查真实的车站可用性、实时列车到达情况和渡轮时刻表，然后再提出任何建议。\r\n\r\n## 特性\r\n\r\n### 🚇 MTA地铁\r\n\r\n- 通过GTFS馈送实时列车到达\r\n- 附近车站发现及步行时间估算\r\n- 任意两个地点之间的直接和单一换乘路线规划\r\n\r\n### 🚲 花旗自行车\r\n\r\n- 现场车站可用性（经典自行车、电动自行车、开放式码头）\r\n- 自行车腿的上下车站匹配\r\n- 基于半径的站点搜索\r\n\r\n### ⛴️ 纽约渡轮\r\n\r\n- 具有实时延迟更新的预定出发时间\r\n- 附近渡轮码头发现\r\n- 出发地和目的地之间的直达渡轮路线匹配\r\n\r\n## 入门\r\n\r\n### 先决条件\r\n\r\n- Python 3.10+\r\n- [紫外线](https://github.com/astral-sh/uv) （用于运行MCP服务器）\r\n- MCP兼容客户端（例如Claude Desktop）\r\n\r\n### 设置\r\n\r\n1. 克隆仓库：\r\n\r\n```bash\r\ngit clone https://github.com/YOUR_USERNAME/sally.git\r\ncd sally\r\n```\r\n\r\n2. 安装依赖项：\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n3. 使用提供的配置您的MCP客户端 `.mcp.json`，或手动添加服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mta-subway\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"python\", \"mta.py\"]\r\n    },\r\n    \"citibikes\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"python\", \"citibikes.py\"]\r\n    },\r\n    \"nyc-ferry\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"python\", \"ferry_data.py\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n4. 从加载Sally的系统提示 `prompts/sally_system_prompt.md` 进入您的MCP客户端，以获得完整的个性和路由行为。\r\n\r\n## 项目结构\r\n\r\n```\r\n├── mta.py              # MTA subway MCP server (GTFS real-time feeds)\r\n├── citibikes.py        # Citi Bike MCP server (GBFS API)\r\n├── ferry_data.py       # NYC Ferry MCP server (GTFS + GTFS-RT)\r\n├── prompts/\r\n│   └── sally_system_prompt.md  # Sally's personality and routing instructions\r\n├── data/\r\n│   ├── ferry_data.json                           # Pre-processed ferry stop/route data\r\n│   └── MTA_Subway_Stations_and_Complexes_*.csv   # MTA station reference data\r\n└── .mcp.json           # MCP server configuration\r\n```\r\n\r\n## 路线图\r\n\r\n- \\[x\\] 花旗自行车实时数据集成\r\n- \\[x\\] MTA地铁实时到达和路线\r\n- \\[x\\] 轮渡时刻表和实时延误数据\r\n- \\[x\\] 带有个性和路线指南的系统提示\r\n- \\[\\]WhatsApp聊天代理集成\r\n- \\[\\]多模式路线评分和排名\r\n- \\[\\]自主行程规划的代理框架\r\n- \\[\\]纽约市交通领域知识的微调模型\r\n\r\n## 数据源\r\n\r\n- [MTA GTFS实时馈送](https://api.mta.info/)\r\n- [花旗自行车GBFS Feed](https://citibikenyc.com/system-data)\r\n- [纽约市渡轮GTFS数据](https://www.ferry.nyc/)\r\n\r\n## 贡献\r\n\r\n这是一项正在进行的工作，我很乐意得到帮助。如果您对传输数据、MCP服务器或代理开发感兴趣，请提出问题或联系我们。\r\n\r\n______________________________________________________________________\r\n\r\n*内置于纽约市，适合厌倦了查看5个应用程序的纽约市通勤者。*\r\n",
+ "config": {
+  "mta-subway": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "python",
+    "mta.py"
+   ],
+   "env": {}
+  }
+ }
+}

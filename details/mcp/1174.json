@@ -1,0 +1,26 @@
+{
+ "id": "1174",
+ "kind": "mcp",
+ "name": "neo4j-2",
+ "fingerprint_md5": "63bcdb886043b51d05d49c5d4505896d",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP Neo4j服务器\r\n\r\n\r\n一个MCP服务器，提供Neo4j图形数据库和Claude Desktop之间的集成，通过自然语言交互实现图形数据库操作。\r\n\r\n## 快速开始\r\n\r\n您可以使用npx直接运行此MCP服务器：\r\n\r\n```bash\r\nnpx @alanse/mcp-neo4j\r\n```\r\n\r\n或者将其添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"neo4j\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@alanse/mcp-neo4j-server\"],\r\n      \"env\": {\r\n        \"NEO4J_URI\": \"bolt://localhost:7687\",\r\n        \"NEO4J_USERNAME\": \"neo4j\",\r\n        \"NEO4J_PASSWORD\": \"your-password\",\r\n        \"NEO4J_DATABASE\": \"neo4j\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 特性\r\n\r\n此服务器提供与Neo4j数据库交互的工具：\r\n\r\n### Neo4j企业支持\r\n\r\n此服务器现在支持连接到Neo4j Enterprise Edition中的特定数据库。默认情况下，它连接到“neo4j”数据库，但您可以使用 `NEO4J_DATABASE` 环境变量。\r\n\r\n### 工具\r\n\r\n- `execute_query`：在Neo4j数据库上执行Cypher查询\r\n\r\n  - 支持所有类型的Cypher查询（READ、CREATE、UPDATE、DELETE）\r\n  - 以结构化格式返回查询结果\r\n  - 可以传递参数以防止注射攻击\r\n\r\n- `create_node`：在图形数据库中创建新节点\r\n\r\n  - 指定节点标签和属性\r\n  - 返回创建的节点及其内部ID\r\n  - 支持属性的所有Neo4j数据类型\r\n\r\n- `create_relationship`：在两个现有节点之间创建关系\r\n\r\n  - 定义关系类型和方向\r\n  - 向关系添加属性\r\n  - 需要源节点和目标节点的节点ID\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装适用于Claude Desktop的MCP Neo4j服务器 [史密瑟里](https://smithery.ai/server/@alanse/mcp-neo4j-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @alanse/mcp-neo4j-server --client claude\r\n```\r\n\r\n### 为了发展\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/da-okazaki/mcp-neo4j-server.git\r\ncd mcp-neo4j-server\r\n```\r\n\r\n2. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n3. 构建项目：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n## 配置\r\n\r\n服务器需要以下环境变量：\r\n\r\n- `NEO4J_URI`：Neo 4 J数据库类型（默认值：bolt://localhost:7687)\r\n- `NEO4J_USERNAME`：Neo4j用户名（默认：Neo4j）\r\n- `NEO4J_PASSWORD`：Neo4j密码（必填）\r\n- `NEO4J_DATABASE`：Neo4j数据库名称（默认：Neo4j）-使用此名称连接到Neo4j Enterprise中的特定数据库\r\n\r\n## 使用示例\r\n\r\n以下是使用自然语言与Neo4j数据库交互的示例：\r\n\r\n### 连接到特定数据库\r\n\r\n对于拥有多个数据库的Neo4j Enterprise用户，您可以指定要连接到哪个数据库：\r\n\r\n```json\r\n{\r\n  \"env\": {\r\n    \"NEO4J_URI\": \"bolt://localhost:7687\",\r\n    \"NEO4J_USERNAME\": \"neo4j\",\r\n    \"NEO4J_PASSWORD\": \"your-password\",\r\n    \"NEO4J_DATABASE\": \"myCustomDatabase\"\r\n  }\r\n}\r\n```\r\n\r\n这将连接到“myCustomDatabase”，而不是默认的“neo4j”数据库。\r\n\r\n### 查询数据\r\n\r\n你可以问这样的问题：\r\n\r\n- “显示销售部门的所有员工”\r\n- “查找前5位最老客户”\r\n- “谁在上个月购买了3件以上的产品？”\r\n\r\n例子：\r\n\r\n```\r\nUser: \"Show me all employees in the Sales department\"\r\n\r\nClaude: Let me query the database for Sales department employees.\r\n\r\n[Executes query internally: MATCH (e:Employee)-[:WORKS_IN]->(d:Department {name: 'Sales'}) RETURN e.name, e.position]\r\n\r\nResult:\r\n- John Smith (Sales Manager)\r\n- Sarah Johnson (Sales Representative)\r\n- Mike Brown (Account Executive)\r\n```\r\n\r\n### 创建数据\r\n\r\n您可以给出如下指示：\r\n\r\n- “添加一个名为John Doe的30岁新用户”\r\n- “创造一款名为‘高级咖啡’的产品，价格为24.99美元”\r\n- “添加一个名为“研发”的新部门”\r\n\r\n例子：\r\n\r\n```\r\nUser: \"Add a new person named John Doe who is 30 years old\"\r\n\r\nClaude: I'll create a new Person node with the provided information.\r\n\r\n[Creates node internally with label 'Person' and properties {name: 'John Doe', age: 30}]\r\n\r\nResult: Created new person node with ID: 123\r\n```\r\n\r\n### 建立关系\r\n\r\n您可以请求以下关系：\r\n\r\n- “让无名氏和简·史密斯成为朋友”\r\n- “将产品A设置为产品B的组成部分”\r\n- “将John Doe分配到销售部门”\r\n\r\n例子：\r\n\r\n```\r\nUser: \"Make John Doe friends with Jane Smith\"\r\n\r\nClaude: I'll create a friendship relationship between these two people.\r\n\r\n[Creates relationship internally: MATCH (a:Person {name: 'John Doe'}), (b:Person {name: 'Jane Smith'})\r\nCREATE (a)-[:FRIENDS_WITH {since: '2024-01-05'}]->(b)]\r\n\r\nResult: Created friendship relationship between John Doe and Jane Smith\r\n```\r\n\r\n### 复杂操作\r\n\r\n您可以使用自然语言执行更复杂的操作：\r\n\r\n- “查找居住在纽约的客户购买的所有产品”\r\n- “给我看看无名氏的朋友”\r\n- “计算每个部门员工的平均年龄”\r\n\r\n例子：\r\n\r\n```\r\nUser: \"Find all products purchased by customers who live in New York\"\r\n\r\nClaude: I'll query the database for this information.\r\n\r\n[Executes query internally:\r\nMATCH (c:Customer {city: 'New York'})-[:PURCHASED]->(p:Product)\r\nRETURN c.name, collect(p.name) as products]\r\n\r\nResult:\r\n- Alice Wilson: [Premium Coffee, Tea Set, Cookies]\r\n- Bob Miller: [Premium Coffee, Water Bottle]\r\n```\r\n\r\n## 测试\r\n\r\n运行测试套件：\r\n\r\n```bash\r\nnpm test\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "neo4j": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@alanse/mcp-neo4j-server"
+   ],
+   "env": {
+    "NEO4J_URI": "bolt://localhost:7687",
+    "NEO4J_USERNAME": "neo4j",
+    "NEO4J_PASSWORD": "your-password",
+    "NEO4J_DATABASE": "neo4j"
+   }
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "id": "1983",
+ "kind": "mcp",
+ "name": "mcd-mcp-2",
+ "fingerprint_md5": "9323c1afe4ff26bb1359eff64c11514a",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# McDonald's MCP Demo\r\n\r\n麦当劳中国 MCP (Model Context Protocol) 集成示例项目，为 Claude Code 提供麦当劳优惠券和活动查询能力。\r\n\r\n## 功能\r\n\r\n- 查询麦当劳活动日历\r\n- 查询可领取的优惠券\r\n- 一键领取所有优惠券\r\n- 查询已领取的优惠券\r\n\r\n## 快速开始\r\n\r\n### 1. 获取 MCP Token\r\n\r\n1. 访问 [https://open.mcd.cn/mcp/doc](https://open.mcd.cn/mcp/doc)\r\n2. 点击右上角【登录】，使用手机号验证登录\r\n3. 登录后点击【控制台】\r\n4. 点击激活按钮，申请 MCP Token\r\n5. 复制生成的 Token\r\n\r\n### 2. 配置 MCP\r\n\r\n编辑 `.mcp.json`，将 `YOUR_MCP_TOKEN` 替换为你的 Token：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcd-mcp\": {\r\n      \"type\": \"http\",\r\n      \"url\": \"https://mcp.mcd.cn/mcp-servers/mcd-mcp\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer YOUR_MCP_TOKEN\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3. 重启 Claude Code\r\n\r\n配置完成后，重启 Claude Code 以加载 MCP 服务器。\r\n\r\n## 使用方式\r\n\r\n### Slash 命令\r\n\r\n| 命令 | 说明 |\r\n|------|------|\r\n| `/mcd` | 麦当劳 MCP 通用助手 |\r\n| `/mcd-activities` | 查询活动日历 |\r\n| `/mcd-coupons` | 查询可领取的优惠券 |\r\n| `/mcd-claim` | 一键领取所有优惠券 |\r\n| `/mcd-my-coupons` | 查询我的优惠券 |\r\n\r\n### 自然语言 (Skills)\r\n\r\n直接用中文提问，Claude 会自动识别并调用相应工具：\r\n\r\n- \"麦当劳有什么活动？\"\r\n- \"有什么券可以领？\"\r\n- \"帮我一键领券\"\r\n- \"我有哪些优惠券？\"\r\n\r\n## MCP 工具\r\n\r\n| 工具名称 | 说明 |\r\n|----------|------|\r\n| `campaign-calender` | 查询当月营销活动日历 |\r\n| `available-coupons` | 查询麦麦省可领取的优惠券 |\r\n| `auto-bind-coupons` | 自动领取所有可用优惠券 |\r\n| `my-coupons` | 查询已领取的优惠券 |\r\n| `now-time-info` | 获取当前服务器时间 |\r\n\r\n## 项目结构\r\n\r\n```\r\n.\r\n├── .mcp.json                       # MCP 服务器配置\r\n├── .claude/\r\n│   ├── settings.json               # Claude Code 设置\r\n│   ├── commands/                   # Slash 命令 (显式触发)\r\n│   │   ├── mcd.md\r\n│   │   ├── mcd-activities.md\r\n│   │   ├── mcd-coupons.md\r\n│   │   ├── mcd-claim.md\r\n│   │   └── mcd-my-coupons.md\r\n│   └── skills/                     # Skills (自然语言触发)\r\n│       ├── mcd/SKILL.md\r\n│       ├── mcd-activities/SKILL.md\r\n│       ├── mcd-coupons/SKILL.md\r\n│       ├── mcd-claim/SKILL.md\r\n│       └── mcd-my-coupons/SKILL.md\r\n├── CLAUDE.md                       # Claude Code 项目指南\r\n└── README.md\r\n```\r\n\r\n## 注意事项\r\n\r\n- MCP Token 代表你的麦当劳会员身份，请勿分享\r\n- 每个 Token 每分钟最多 600 次请求\r\n- 需要 Claude Code 支持 HTTP 协议的 MCP 服务器\r\n\r\n## 相关链接\r\n\r\n- [麦当劳 MCP 文档](https://open.mcd.cn/mcp/doc)\r\n- [Claude Code](https://claude.ai/code)\r\n- [MCP 协议规范](https://modelcontextprotocol.io/)\r\n\r\n## License\r\n\r\nMIT\r\n",
+ "config": {
+  "mcd-mcp": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.mcd.cn/mcp-servers/mcd-mcp"
+  }
+ }
+}

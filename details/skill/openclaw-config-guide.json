@@ -1,0 +1,12 @@
+{
+ "id": "openclaw-config-guide",
+ "kind": "skill",
+ "name": "openclaw-config-guide",
+ "fingerprint_md5": "f8a5a1757a22ad83e883ad47296c7237",
+ "download_count": 0,
+ "category": "配置管理",
+ "tags": "",
+ "version": "",
+ "readme": "# OpenClaw 配置管理指南\r\n\r\n本技能提供 OpenClaw 配置管理的最佳实践，帮助避免常见错误。\r\n\r\n## ⚠️ 黄金法则\r\n\r\n**永远不要用 `write` 或 `edit` 直接修改配置文件！**\r\n\r\n❌ 错误方式：\r\n- 直接编辑 `~/.openclaw/openclaw.json`\r\n- 猜测配置路径（如 `plugins.entries.discord.botToken`）\r\n- 裸写 JSON 没有验证\r\n\r\n✅ 正确方式：\r\n- 使用 `gateway config.get` 查看当前配置\r\n- 使用 `gateway config.patch` 做增量修改\r\n- 修改后用 `gateway config.get` 验证\r\n\r\n## 📋 配置前检查清单\r\n\r\n每次修改配置前，按此顺序执行：\r\n\r\n1. **读取现有配置**\r\n   ```\r\n   gateway config.get\r\n   ```\r\n   目的：确认当前结构，避免猜测路径\r\n\r\n2. **确认正确路径**\r\n   参考 `references/common-paths.md` 查找正确的配置项路径\r\n   原则：**不确定时，宁可多看一眼，不要盲猜**\r\n\r\n3. **使用 patch 修改**\r\n   ```\r\n   gateway config.patch\r\n   {\r\n     \"channels\": {\r\n       \"discord\": {\r\n         \"enabled\": true,\r\n         \"token\": \"YOUR_TOKEN\"\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n4. **验证修改结果**\r\n   ```\r\n   gateway config.get\r\n   ```\r\n   确认修改生效，无语法错误\r\n\r\n## 🔥 常见错误案例\r\n\r\n### 错误 1：Discord Token 路径错误\r\n```json\r\n// ❌ 错误路径\r\n{\r\n  \"plugins\": {\r\n    \"entries\": {\r\n      \"discord\": {\r\n        \"botToken\": \"xxx\"  // 错误！\r\n      }\r\n    }\r\n  }\r\n}\r\n\r\n// ✅ 正确路径\r\n{\r\n  \"channels\": {\r\n    \"discord\": {\r\n      \"token\": \"xxx\"  // 正确！\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 错误 2：直接覆盖整个配置\r\n```json\r\n// ❌ 危险！会丢失其他所有配置\r\ngateway config.apply\r\n{ ...新配置... }\r\n\r\n// ✅ 安全！只修改指定部分\r\ngateway config.patch\r\n{ ...部分配置... }\r\n```\r\n\r\n## 📚 参考资源\r\n\r\n- **配置路径速查表**: 见 `references/common-paths.md`\r\n  - 包含常用配置项的正确路径\r\n  - Provider 配置路径\r\n  - Channel 配置路径\r\n  - Agent 默认配置路径\r\n\r\n## 🛠️ 配置管理命令\r\n\r\n| 命令 | 用途 |\r\n|------|------|\r\n| `gateway config.get` | 查看当前完整配置 |\r\n| `gateway config.patch` | 增量修改配置（推荐）|\r\n| `gateway config.apply` | 完全替换配置（危险）|\r\n| `gateway config.schema` | 查看配置 JSON Schema |\r\n\r\n## 💡 最佳实践总结\r\n\r\n1. **先读后写** - 永远不要假设配置结构\r\n2. **用 patch 不用 apply** - 避免意外覆盖\r\n3. **验证闭环** - 修改后必须验证\r\n4. **参考速查表** - 不确定路径时查 `common-paths.md`\r\n5. **不要猜测** - 看到实际配置再动手\r\n\r\n---\r\n\r\n记住：**配置错误会导致 OpenClaw 无法启动，务必谨慎！**",
+ "config": {}
+}

@@ -1,0 +1,24 @@
+{
+ "id": "932",
+ "kind": "mcp",
+ "name": "writio",
+ "fingerprint_md5": "fa7af6147cb09971425748edfee29a44",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Writio MCP服务器\r\n\r\n人工智能原生LinkedIn内容创建、调度和分析——由 [模型上下文协议](https://modelcontextprotocol.io/).\r\n\r\n将Writio连接到Claude Desktop、Cursor、Windsurf或任何兼容MCP的AI客户端，通过自然语言管理您的整个LinkedIn工作流程。\r\n\r\n## 你能做什么\r\n\r\n- **职位草案** --“写一篇关于远程工作趋势的LinkedIn帖子”\r\n- **生成钩子** --“给我5个钩子，写一篇关于营销中的人工智能的帖子”\r\n- **生成标签** --“我应该在创业融资帖子中使用什么标签？”\r\n- **构建旋转木马** --“创建一个关于5个领导力课程的旋转木马” *（专业）*\r\n- **加强职位** --“让这篇文章更具对话性，并添加一个CTA”\r\n- **获取AI反馈** --“分析我的草稿，告诉我如何改进”\r\n- **安排职位** --“为下一个可用时段安排我的最新草稿”\r\n- **立即发布** --“立即将此发布到LinkedIn”\r\n- **检查分析** --“我的帖子本周表现如何？”\r\n- **管理公司页面** --“列出我的组织”/“将此作为我的公司页面发布”\r\n- **获得灵感** --“向我展示我的利基市场的热门内容创意”\r\n\r\n## 快速开始\r\n\r\n### 1.创建Writio帐户\r\n\r\n免费注册 **[书面.ai](https://writio.ai)** 并连接您的LinkedIn帐户。\r\n\r\n### 2.获取您的API代币\r\n\r\n首选 **[Writio](https://app.writio.ai) → 设置→ API访问** 以生成令牌。\r\n\r\n### 3.在Claude Desktop中配置\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"writio\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@writio/mcp-server\"],\r\n      \"env\": {\r\n        \"WRITIO_API_TOKEN\": \"your-token-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 4.在游标中配置\r\n\r\n添加到您的 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"writio\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@writio/mcp-server\"],\r\n      \"env\": {\r\n        \"WRITIO_API_TOKEN\": \"your-token-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 5.在Windsurf/其他客户端中配置\r\n\r\n任何兼容MCP的客户端都可以使用以下方式连接：\r\n\r\n```json\r\n{\r\n  \"command\": \"npx\",\r\n  \"args\": [\"-y\", \"@writio/mcp-server\"],\r\n  \"env\": {\r\n    \"WRITIO_API_TOKEN\": \"your-token-here\"\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具（23）\r\n\r\n### 内容创作\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `create_draft` |创建新的LinkedIn帖子草稿（支持个人和公司页面）|\r\n| `generate_hooks` |为一个主题生成5个吸引注意力的钩子|\r\n| `generate_hashtags` |生成20-30个相关标签，优化覆盖范围|\r\n| `generate_carousel` |生成完整的转盘结构（Pro）|\r\n| `enhance_post` |通过改进语气、风格和格式来混音/重写帖子|\r\n| `get_post_feedback` |获取关于钩子质量、清晰度、标签等方面的AI反馈|\r\n\r\n### 岗位管理\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_posts` |列出按状态筛选的帖子（草稿/计划/已发布）|\r\n| `get_post` |获取特定帖子的完整详细信息|\r\n\r\n### 日程安排和排队\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `schedule_post` |为下一个可用时段安排帖子|\r\n| `post_now` |立即在LinkedIn上发布帖子|\r\n| `list_queue` |在队列中列出即将发布的计划帖子|\r\n| `get_next_slot` |获取下一个可用的发布时间|\r\n| `get_schedule` |查看您的每周发布时间表|\r\n| `retry_failed_post` |重试失败的计划帖子|\r\n\r\n### 分析\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_dashboard` |帖子、使用情况和LinkedIn连接状态概述|\r\n| `get_analytics` |详细的参与度指标（印象、点赞、评论、转发）和最佳发布时间|\r\n| `get_followers` |当前LinkedIn关注者数量|\r\n| `get_usage` |帐户级别和使用限制|\r\n\r\n### 公司页面发布\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_organizations` |列出您可以发布的LinkedIn公司页面|\r\n| `get_org_analytics` |获取公司页面的分析（分享统计数据、关注者数量、热门帖子）|\r\n\r\n### 灵感\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_inspirations` |根据您的主题量身定制的基于新闻的LinkedIn帖子创意|\r\n| `use_inspiration_as_draft` |将灵感转化为草稿|\r\n\r\n## 示例工作流\r\n\r\n**晨间内容常规：**\r\n\r\n> “检查我的分析，生成3个关于人工智能生产力的挂钩，选择最好的一个，写一篇完整的帖子，并将其安排在下一个可用的时段”\r\n\r\n**公司页面管理：**\r\n\r\n> 列出我的组织，然后创建产品公告草稿并将其安排为我的公司页面\r\n\r\n**内容再利用：**\r\n\r\n> “从本周获得我表现最好的帖子，用不同的角度重新混音，并另存为草稿”\r\n\r\n## 环境变量\r\n\r\n|变量|必填|默认|描述|\r\n|----------|----------|---------|-------------|\r\n| `WRITIO_API_TOKEN` |是|-|Writio设置中的API令牌|\r\n| `WRITIO_API_URL` |没有| `https://app.writio.ai` |Writio API的基本URL|\r\n\r\n## 需求\r\n\r\n- Node.js 18+\r\n- A. [Writio](https://app.writio.ai) 帐户（可用免费等级）\r\n- 通过Writio连接的LinkedIn帐户\r\n\r\n## 建筑\r\n\r\n```\r\n@writio/mcp-server\r\n├── src/\r\n│   ├── index.ts        # MCP server — tool definitions and handlers\r\n│   └── api-client.ts   # Typed Writio REST API client\r\n├── package.json\r\n├── tsconfig.json\r\n└── README.md\r\n```\r\n\r\n服务器使用stdio传输（MCP的标准），并使用Bearer令牌根据Writio的REST API进行身份验证。所有工具都直接映射到现有的Writio API端点。\r\n\r\n## 链接\r\n\r\n- **网站：** [书面.ai](https://writio.ai)\r\n- **应用程序：** [app.writio.ai](https://app.writio.ai)\r\n- **技术支持：** [app.writio.ai/设置/反馈](https://app.writio.ai/settings/feedback)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "writio": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@writio/mcp-server"
+   ],
+   "env": {
+    "WRITIO_API_TOKEN": "your-token-here"
+   }
+  }
+ }
+}

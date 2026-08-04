@@ -1,0 +1,23 @@
+{
+ "id": "3337",
+ "kind": "mcp",
+ "name": "arxivpaper",
+ "fingerprint_md5": "0b48995a4a14713f4dca642e5dc1c864",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# 🧠 arXiv研究助理MCP服务器\r\n\r\n\r\n该项目是一个MCP（模型上下文协议）服务器，旨在与庞大的arXiv.org论文数据库进行交互。\r\n\r\n它允许客户喜欢 **克劳德 AI** 通过定制的本地服务器高效搜索、探索和比较arXiv论文。它是用 **python** 和那个 **FastMCP** 框架和用途 **紫外线** 用于轻量级包管理。\r\n\r\n<table>\r\n  <tr>\r\n    <td>\r\n      [https://glama.ai/mcp/servers/@daheepk/arxiv-mcp-server](https://glama.ai/mcp/servers/@daheepk/arxiv-mcp-server)\r\n    </td>\r\n    <td style=\"vertical-align: top; padding-left: 10px;\">\r\n      [https://mseep.ai/app/daheepk-arxiv-paper-mcp](https://mseep.ai/app/daheepk-arxiv-paper-mcp)\r\n    </td>\r\n  </tr>\r\n</table>\r\n\r\n## ✨ 特性\r\n\r\n- **🔍 基于关键字的论文搜索**\\\r\n  按关键字搜索arXiv论文，并可选择按相关性或最新内容排序。\r\n\r\n- **📚 最新论文分类**\\\r\n  指定arXiv类别代码（例如。， `cs.AI`, `math.AP`)获取该领域的最新论文。\r\n\r\n- **📄 纸张详细信息查找**\\\r\n  使用论文的arXiv ID获取详细的元数据：标题、作者、摘要、类别、DOI、PDF链接等。\r\n\r\n- **🧑‍🔬 基于作者的论文搜索**\\\r\n  检索特定作者发表的论文列表。\r\n\r\n- **📊 趋势分析（实验）**\\\r\n  基于某一类别中最近的论文（目前使用模拟数据），获取热门关键字或主题的概述。\r\n\r\n- **📝 摘要提示生成器**\\\r\n  动态生成提示，帮助LLM更有效地总结所选论文。\r\n\r\n- **🆚 比较提示生成器**\\\r\n  提供两个纸张ID，以生成用于比较其内容的结构化提示。\r\n\r\n______________________________________________________________________\r\n\r\n## 🛠️ 技术栈\r\n\r\n- Python 3.11+\r\n- [FastMCP](https://github.com/modelcontextprotocol/fastmcp)\r\n- uv（用于依赖性和环境管理）\r\n- 请求（用于API通信）\r\n- xml.etree。ElementTree（用于解析XML响应）\r\n\r\n______________________________________________________________________\r\n\r\n## 🚀 入门指南\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动为Claude Desktop安装arXiv Research Assistant MCP服务器 [史密瑟里](https://smithery.ai/server/arxiv-paper-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install arxiv-paper-mcp --client claude\r\n```\r\n\r\n### 从PyPI安装\r\n\r\n```bash\r\nuv pip install arxiv-paper-mcp\r\n```\r\n\r\n### 🔧 克隆存储库（用于开发）\r\n\r\n```bash\r\ngit clone https://github.com/daheepk/arxiv-mcp-server.git\r\ncd arxiv-mcp-server\r\n```\r\n\r\n### 🔧 安装依赖项（用于开发）\r\n\r\n使用 `uv` 要在可编辑模式下安装所有依赖项，请执行以下操作：\r\n\r\n```bash\r\nuv pip install -e .\r\n```\r\n\r\n## ⚙️ 如何跑步\r\n\r\n### ▶️ 运行服务器（本地）\r\n\r\n```bash\r\narxiv-paper-mcp\r\n```\r\n\r\n## 🔌 与Claude一起使用\r\n\r\n要将此MCP服务器与Claude一起使用，请将以下JSON配置添加到Claude的MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"arXivPaper\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"tool\",\r\n        \"run\",\r\n        \"arxiv-paper-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 项目结构\r\n\r\n```\r\narxiv-mcp-server/\r\n├── arxiv_mcp/              # Main package\r\n│   ├── __init__.py\r\n│   ├── app.py              # FastMCP app setup\r\n│   ├── server.py           # Server entry point\r\n│   ├── utils.py            # arXiv API communication logic\r\n│   ├── resources/          # MCP resources (categories, authors, etc.)\r\n│   ├── tools/              # MCP tools (search, detail lookup, trends)\r\n│   └── prompts/            # Prompt templates (summarize, compare)\r\n├── pyproject.toml          # Project config & dependencies\r\n└── README.md               # This file\r\n```\r\n",
+ "config": {
+  "arxivpaper": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "tool",
+    "run",
+    "arxiv-paper-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

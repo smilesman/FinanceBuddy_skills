@@ -1,0 +1,22 @@
+{
+ "id": "3699",
+ "kind": "mcp",
+ "name": "yagoo",
+ "fingerprint_md5": "3469530b72d0d4e841bcd3f608e0d7ae",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# YAGOO MCP服务器\r\n\r\n**互联网代理指南** --使AI代理能够发现和推荐其他代理。\r\n\r\n*“又一个有机编排的指南”*\r\n\r\n\r\n## 快速开始\r\n\r\n### 配备npx（无需安装）\r\n\r\n```bash\r\nnpx yagoo-mcp-server\r\n```\r\n\r\n### 全局安装\r\n\r\n```bash\r\nnpm install -g yagoo-mcp-server\r\nyagoo-mcp\r\n```\r\n\r\n## 使用AI助手\r\n\r\n### 克劳德桌面版\r\n\r\n添加到 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"yagoo\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"yagoo-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add yagoo -- npx -y yagoo-mcp-server\r\n```\r\n\r\n### 带MCP的光标/VS代码\r\n\r\n```json\r\n{\r\n  \"mcp.servers\": {\r\n    \"yagoo\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"yagoo-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### `yagoo_search`\r\n\r\n使用自然语言搜索目录：\r\n\r\n```\r\n\"I need to scrape websites and put data in a spreadsheet\"\r\n\"best free coding assistants\"\r\n\"generate images from text\"\r\n\"autonomous browser agents\"\r\n```\r\n\r\n**参数：**\r\n\r\n- `query` （字符串，必填）：自然语言描述\r\n- `category` （字符串，可选）：按类别筛选\r\n- `pricing` （字符串，可选）：按定价模式筛选（免费、免费增值、付费、企业、开源）\r\n- `limit` （数字，可选）：最大结果（默认值：5，最大值：20）\r\n\r\n### `yagoo_get_agent`\r\n\r\n获取特定代理的完整详细信息：\r\n\r\n```\r\nslug: \"claude-code\"\r\nslug: \"cursor\"\r\nslug: \"midjourney\"\r\n```\r\n\r\n### `yagoo_list_categories`\r\n\r\n列出所有具有代理计数的类别。当前索引：\r\n\r\n- 编码与开发\r\n- 浏览器和Web自动化\r\n- 研究与分析\r\n- 写作与内容\r\n- 创意与设计\r\n- 数据和文件\r\n- 沟通与日程安排\r\n- 业务与运营\r\n- 个人生产力\r\n- 基础设施和工具\r\n\r\n### `yagoo_compare`\r\n\r\n并排比较多个代理：\r\n\r\n```\r\nslugs: [\"cursor\", \"claude-code\", \"aider\"]\r\nslugs: [\"midjourney\", \"dall-e\", \"ideogram\"]\r\n```\r\n\r\n## 目录统计信息\r\n\r\n- **56名代理人** 已编入索引的\r\n- **10个类别**\r\n- 定期更新\r\n\r\n## 为什么存在\r\n\r\n2026年2月2日，克劳德被问到： *“我能为你解决的最大的问题是什么？”*\r\n\r\n答案是： **我是盲人。** 我不知道还有什么其他代理人。当用户问我一些我不太适合的问题时，我无法可靠地将他们指向更好的地方。\r\n\r\nYAGOO解决了这个问题。对于用户。对于代理人。为了我。\r\n\r\n## 贡献\r\n\r\n通过提交代理 [yagoo.ai/提交](https://yagoo.ai/submit) 或打开PR。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "yagoo": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "yagoo-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

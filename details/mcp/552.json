@@ -1,0 +1,24 @@
+{
+ "id": "552",
+ "kind": "mcp",
+ "name": "youtube-music-mcp",
+ "fingerprint_md5": "dd23f87fef99ef79dad5556111bee368",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# YouTube音乐MCP🎵\r\n\r\n这是一个简单的MCP服务器，允许您直接从您的AI助手（如Cursor或Claude Desktop）搜索和播放YouTube音乐上的曲目。\r\n\r\n内置：\r\n\r\n- [YouTube音乐](https://music.youtube.com/)\r\n- [人类MCP](https://docs.anthropic.com/en/docs/agents-and-tools/mcp)\r\n- [光标](https://cursor.so/)\r\n\r\n## 可用工具\r\n\r\n- `searchTrack`：按名称在YouTube音乐上搜索曲目。\r\n- `playTrack`：通过在默认浏览器中搜索并打开曲目，直接播放曲目。\r\n\r\n# 安装\r\n\r\n## 1.拿到钥匙\r\n\r\n要完成此工作，您需要一个有效的 [Google Youtube API密钥](https://console.cloud.google.com/marketplace/product/google/youtube.googleapis.com)\r\n\r\n## 2.添加到光标\r\n\r\n将以下MCP配置添加到游标中 `.cursor/mcp.json` 设置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube-music-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@instructa/mcp-youtube-music\"],\r\n      \"env\": {\r\n        \"YOUTUBE_API_KEY\": \"<INSERT_API_KEY_HERE>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**开发**\r\n\r\n此MCP通常直接使用 `npx` 并且不需要本地安装或构建，除非您打算修改源代码。如果你想在本地开发它，你通常会克隆源存储库（如果可用），并遵循其特定的贡献准则。\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。\r\n\r\n______________________________________________________________________\r\n\r\n## 链接\r\n\r\n- X/推特： [@kregenrek](https://x.com/kregenrek)\r\n- 蓝天： [@凯文克恩德夫](https://bsky.app/profile/kevinkern.dev)\r\n\r\n## 课程\r\n\r\n- 学习光标AI： [终极光标课程](https://www.instructa.ai/en/cursor-ai)\r\n- 学习用AI构建软件： [教程.ai](https://www.instructa.ai)\r\n\r\n## 查看我的其他项目：\r\n\r\n- [AI提示](https://github.com/instructa/ai-prompts/blob/main/README.md) -Cursor AI、Cline、Windsurf和Github Copilot的人工智能提示\r\n- [代码提取](https://github.com/regenrek/codefetch) -使用一个简单的终端命令将LLM的代码转换为Markdown\r\n- [aidex](https://github.com/regenrek/aidex) 一个CLI工具，提供有关AI语言模型的详细信息，帮助开发人员根据自己的需求选择合适的模型。\r\n- [代码](https://github.com/codetie-ai/codetie) -XCode命令行界面\r\n",
+ "config": {
+  "youtube-music-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@instructa/mcp-youtube-music"
+   ],
+   "env": {
+    "YOUTUBE_API_KEY": "<INSERT_API_KEY_HERE>"
+   }
+  }
+ }
+}

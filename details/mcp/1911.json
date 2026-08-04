@@ -1,0 +1,26 @@
+{
+ "id": "1911",
+ "kind": "mcp",
+ "name": "expense-tracker-server",
+ "fingerprint_md5": "dc25daffa77c5d558c380876a93eeff1",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 费用跟踪MCP服务器\r\n\r\n一个强大的模型上下文协议（MCP）服务器，用于跟踪和管理个人开支。该服务器与Claude Desktop集成，通过自然语言交互提供无缝的费用管理。\r\n\r\n## 特性\r\n\r\n### 🛠️ 工具\r\n\r\n- **添加费用**：通过灵活的日期解析添加新费用（支持“今天”、“昨天”、“2025年11月27日”等）\r\n- **list_费用**：按类别、日期范围和自然语言日期查询筛选列出费用\r\n- **费用汇总**：按类别获取费用汇总，包括总额和百分比\r\n- **更新_费用**：修改现有费用记录\r\n- **删除_费用**：按ID删除费用记录\r\n\r\n### 📋 资源\r\n\r\n- **expense://categories**：从以下位置访问预定义的支出类别和子类别 `categories.json`\r\n\r\n### ✨ 关键能力\r\n\r\n- **自然语言日期支持**：使用“上周”、“上个月”、“今年”、“过去30天”等短语\r\n- **SQLite数据库**：轻便高效的本地存储\r\n- **品类管理**：预定义的类别和子类别，以便更好地组织\r\n- **灵活过滤**：按日期范围、类别或特定条件筛选费用\r\n- **丰富的总结**：查看按类别细分和百分比的支出模式\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Python 3.8或更高版本\r\n- [紫外线](https://docs.astral.sh/uv/) 包管理器（推荐）\r\n- 克劳德桌面版\r\n\r\n### 步骤\r\n\r\n1. **克隆存储库**\r\n\r\n   ```bash\r\n   git clone <your-repo-url>\r\n   cd Expense-Tracker-MCP-Server\r\n   ```\r\n\r\n1. **安装依赖项**\r\n\r\n   使用紫外线（推荐）：\r\n\r\n   ```bash\r\n   uv pip install -r requirements.txt\r\n   ```\r\n\r\n   或者使用pip：\r\n\r\n   ```bash\r\n   pip install -r requirements.txt\r\n   ```\r\n\r\n1. **安装到Claude桌面**\r\n\r\n   ```bash\r\n   uv run fastmcp install claude-desktop main.py\r\n   ```\r\n\r\n   或者手动添加到您的Claude Desktop配置中(`~/.config/Claude/claude_desktop_config.json` 在Mac/Linux或 `%APPDATA%\\Claude\\claude_desktop_config.json` 在Windows上）：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"Expense Tracker Server\": {\r\n         \"command\": \"uv\",\r\n         \"args\": [\r\n           \"run\",\r\n           \"--with\",\r\n           \"fastmcp\",\r\n           \"fastmcp\",\r\n           \"run\",\r\n           \"/absolute/path/to/Expense-Tracker-MCP-Server/main.py\"\r\n         ]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. **重新启动克劳德桌面**\r\n\r\n   完全退出并重新启动Claude Desktop以加载MCP服务器。\r\n\r\n## 用法\r\n\r\n安装后，您可以使用自然语言在Claude Desktop中直接与Expense Tracker交互：\r\n\r\n### 增加费用\r\n\r\n```\r\n\"Add an expense of $45.50 for groceries yesterday\"\r\n\"I spent $20 on lunch today in the Food category\"\r\n\"Add expense: $100, Transport, Fuel, Nov 25, 2025, note: Monthly fuel\"\r\n```\r\n\r\n### 上市费用\r\n\r\n```\r\n\"Show me all expenses from last week\"\r\n\"List my Food expenses from this month\"\r\n\"Show expenses from last 30 days\"\r\n```\r\n\r\n### 费用汇总\r\n\r\n```\r\n\"Summarize my expenses for last month\"\r\n\"Show category-wise breakdown for this year\"\r\n\"Summarize Food expenses from last week\"\r\n```\r\n\r\n### 更新费用\r\n\r\n```\r\n\"Update expense ID 5, change amount to $55.50\"\r\n\"Change expense 3's category to Transport\"\r\n```\r\n\r\n### 删除费用\r\n\r\n```\r\n\"Delete expense with ID 7\"\r\n```\r\n\r\n## 数据库模式\r\n\r\n服务器使用具有以下模式的SQLite：\r\n\r\n```sql\r\nCREATE TABLE expenses (\r\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    date TEXT NOT NULL,\r\n    amount REAL NOT NULL,\r\n    category TEXT NOT NULL,\r\n    subcategory TEXT,\r\n    note TEXT\r\n);\r\n```\r\n\r\n## 分类\r\n\r\n服务器包括预定义的类别 `categories.json`:\r\n\r\n- 食品（杂货、外出就餐、咖啡、小吃等）\r\n- 交通（燃料、公共交通、驾驶室、停车场等）\r\n- 住房（租金、维护、修理等）\r\n- 公用事业（电、水、互联网、移动等）\r\n- 健康（药品、医生、保险、健身等）\r\n- 教育（书籍、课程、在线订阅等）\r\n- 娱乐（电影、流媒体、游戏等）\r\n- 购物（服装、电子产品、配饰等）\r\n- 还有更多。..\r\n\r\n您可以通过编辑自定义类别 `categories.json`.\r\n\r\n## 发展\r\n\r\n### 本地运行\r\n\r\n```bash\r\nuv run fastmcp dev main.py\r\n```\r\n\r\n### 项目结构\r\n\r\n```\r\nExpense-Tracker-MCP-Server/\r\n├── main.py                 # Main MCP server code\r\n├── categories.json         # Expense categories and subcategories\r\n├── requirements.txt        # Python dependencies\r\n├── pyproject.toml         # Project metadata\r\n├── expenses.db            # SQLite database (auto-created)\r\n└── README.md              # This file\r\n```\r\n\r\n## 需求\r\n\r\n- `fastmcp>=2.0.0` -用于构建MCP服务器的FastMCP框架\r\n- `python-dateutil>=2.8.0` -灵活的日期解析\r\n\r\n## 故障排除\r\n\r\n### 服务器未显示在Claude Desktop中\r\n\r\n1. 确保Claude Desktop已完全退出（而不仅仅是关闭）\r\n1. 检查配置文件是否具有正确的绝对路径\r\n1. 验证以下命令路径 `uv` 是正确的\r\n1. 重新启动克劳德桌面\r\n\r\n### 数据库问题\r\n\r\n这 `expenses.db` 文件在项目目录中自动创建。如果您遇到问题：\r\n\r\n- 删除 `expenses.db` 并重新启动服务器\r\n- 检查文件权限\r\n\r\n### 日期解析错误\r\n\r\n服务器支持各种日期格式。如果遇到解析错误：\r\n\r\n- 使用ISO格式：“YYYY-MM-DD”（例如，“2025-11-27”）\r\n- 使用常见格式：“2025年11月27日”、“2025年12月27日\r\n- 使用相对日期：“今天”、“昨天”、“上周”\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 许可证\r\n\r\nMIT许可证-您可以将此项目用于个人或商业目的。\r\n\r\n## 作者\r\n\r\n由FastMCP和Claude创建\r\n\r\n## 致谢\r\n\r\n- 内置于 [FastMCP](https://github.com/jlowin/fastmcp)\r\n- 由...驱动 [模型上下文协议](https://modelcontextprotocol.io/)\r\n",
+ "config": {
+  "expense-tracker-server": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--with",
+    "fastmcp",
+    "fastmcp",
+    "run",
+    "/absolute/path/to/Expense-Tracker-MCP-Server/main.py"
+   ],
+   "env": {}
+  }
+ }
+}

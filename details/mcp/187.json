@@ -1,0 +1,21 @@
+{
+ "id": "187",
+ "kind": "mcp",
+ "name": "digitone-2",
+ "fingerprint_md5": "812b91110c4463b1529dfe210d7a943f",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Elektron MCP\r\n\r\n一种模型上下文协议（MCP）服务器，允许Claude和其他兼容MCP的LLM通过MIDI与Elektron合成器交互和控制。\r\n\r\n#### 如果您有Moog Sub37/Subsequent37，请访问我们的专用MCP服务器 [moog-sub37-mcp](https://github.com/zerubeus/moog-sub37-mcp).\r\n\r\n#### 此MCP服务器的网络版本可以在以下网址找到 [senthgenie.com](https://www.synthgenie.com/).（如有异议，可免费索取API密钥）\r\n\r\n#### 如果您需要帮助或想为发展做出贡献，请加入我们 [不和谐社区](https://discord.gg/ZFuSuegBMS).\r\n\r\n# 提示示例\r\n\r\n```\r\n\"Use Digitone MCP to design an evolving dark pad using the Wavetone machine on track 1.\"\r\n\"Use Digitone MPC to design a Dark thick pad using Wavetone machine on track 1.\"\r\n```\r\n\r\n目前只支持Wavetone机器，其他机器很快就会添加，敬请期待！\r\n\r\n## 特性\r\n\r\n- \\[x\\] Elektron数字合成器的完整MIDI控制接口\r\n- \\[x\\] 适用于所有Digitone声音引擎的结构化控制器：\r\n  - \\[x\\] Wavetone（波形整形合成）\r\n  - \\[\\]FM音调（FM合成）\r\n  - \\[\\]FM鼓（打击乐FM合成）\r\n  - \\[\\]Swarmer（一致/群合成）\r\n- \\[x\\] 全面的参数控制：\r\n  - \\[x\\] 所有过滤器类型\r\n    - \\[x\\] 多模式\r\n    - \\[\\]低通4\r\n    - \\[\\]均衡器\r\n    - \\[\\]LegacyLpHp\r\n    - \\[\\]CombMinus\r\n    - \\[\\]CombPlus\r\n    - \\[\\]基底宽度\r\n  - \\[x\\] 振幅和包络设置\r\n  - \\[x\\] 效果处理（延迟、混响、合唱、比特减少等）\r\n  - \\[x\\] LFO控制\r\n- \\[x\\] MCP服务器将所有合成参数作为LLM的工具公开\r\n- \\[x\\] 使用Pydantic进行类型安全参数验证\r\n- \\[x\\] 模块化架构，便于扩展到其他Elektron设备\r\n\r\n## 演示\r\n\r\n观看克劳德实时控制Elektron Digitone合成器：\r\n\r\n[](https://www.youtube.com/watch?v=EXf6lOTjla8)\r\n\r\n## 安装和使用\r\n\r\n### 先决条件\r\n\r\n- Python 3.10+\r\n- [紫外线](https://github.com/astral-sh/uv) 用于包管理\r\n- 通过USB连接的Elektron Digitone\r\n- Claude Desktop应用程序（用于完全集成）\r\n\r\n### 安装依赖项\r\n\r\n本项目必须安装uv，因此请先安装它：\r\n\r\n#### 对于macOS：\r\n\r\n```bash\r\nbrew install uv\r\n```\r\n\r\n#### 对于Windows：\r\n\r\n按照说明 [这里](https://docs.astral.sh/uv/getting-started/installation/)\r\n\r\n### 3.使用Claude Desktop进行安装\r\n\r\n要与Claude AI一起使用，请在Claude Desktop中添加MCP服务器配置：\r\n\r\n⚠️ **重要**：您不需要克隆存储库或安装软件包，只需将MCP服务器配置添加到claude_desktop_config.json文件中即可，MPC服务器已在pypi上发布。\r\n\r\n转到Claude>设置>开发人员>编辑配置>Claude_desktop_Config.json，以包含以下内容：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Digitone 2\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"elektron-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 建筑\r\n\r\n- **基础控制器**：将通用功能抽象到基类中\r\n- **专用控制器**：每个合成器引擎和模块的专用控制器\r\n- **MCP工具**：LLM和合成器参数之间的直接接口\r\n- **MIDI接口**：与Digitone硬件可靠通信\r\n\r\n## 实现细节\r\n\r\n此库使用：\r\n\r\n- **FastMCP**：用于将合成器控件暴露给LLM\r\n- **Pydantic模型**：用于数据验证、序列化和类型安全\r\n- **美度**：用于MIDI通信\r\n\r\n## 用例\r\n\r\n- 允许Claude和其他LLM在Digitone上创建和修改声音\r\n- 用于自动声音设计的程序化控制数字参数\r\n- AI生成音乐和硬件合成之间的桥梁\r\n\r\n## 将来的扩展\r\n\r\n- 支持其他Elektron设备（模拟四、八轨等）\r\n- 模式排序和自动化\r\n- 声音预设管理\r\n- 其他合成参数\r\n",
+ "config": {
+  "digitone-2": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "elektron-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

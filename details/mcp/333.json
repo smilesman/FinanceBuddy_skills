@@ -1,0 +1,24 @@
+{
+ "id": "333",
+ "kind": "mcp",
+ "name": "musmcp",
+ "fingerprint_md5": "93bce54f6207af982ec9de6773d02ae6",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Csound MCP服务器\r\n\r\nCsound MCP服务器公开 [Csound](https://csound.com/) 通过模型上下文协议（MCP）向AI代理提供音频引擎功能。\r\n\r\n## 特性\r\n\r\n- **无状态架构：** 使用标准Csound进行轻量级执行。\r\n- **减法合成：** 暴露a `synthesize_sawtooth_lead_bass` 该工具提供LLM友好的0-255映射ADSR参数，以塑造通过低通滤波器运行的锯齿波振荡器。\r\n- **鼓合成：** 暴露a `synthesize_kick_drum` 该工具专门用于制作亚低音、强力House踢腿和扭曲的Hardstyle踢腿，使用直观的参数，如 `punch` 和 `drive`.\r\n- **语义护栏：** 工具参数大量记录在声学定义中（例如，将“快速攻击”与整数范围相匹配），以及MCP资源(`lore://sound_design`, `lore://drum_design`)提供这些工具来教代理人如何合成经典乐器。\r\n- **错误处理：** 优雅地捕捉并返回 `stdout` 和 `stderr` 如果满足以下条件，则向代理发送内容 `csound` 编译或执行失败。\r\n\r\n## 先决条件\r\n\r\n- [紫外线](https://github.com/astral-sh/uv) 包管理器\r\n- [csound](https://csound.com/download.html) 已安装并在系统中可用 `$PATH`\r\n\r\n## 安装与运行\r\n\r\n该包是用Python构建的，依赖于 `mcp`。您可以使用直接运行服务器 `uv`:\r\n\r\n```bash\r\nuv run musmcp\r\n```\r\n\r\n## 添加到MCP客户端\r\n\r\n要在MCP客户端（如Claude Desktop或Cursor）中配置此服务器，请将其添加到您的配置中（调整工作区目录的根路径）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"musmcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/your/workspace/musmcp\",\r\n        \"run\",\r\n        \"musmcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用示例（代理视角）\r\n\r\n在使用合成工具之前，代理人可以阅读提供的 `lore://sound_design` 和 `lore://drum_design` MCP资源，了解如何将声学概念映射到 `0-255` 整数。\r\n\r\n### 1. `synthesize_sawtooth_lead_bass`\r\n\r\n这 `synthesize_sawtooth_lead_bass` 该工具是专门设计的，便于LLM代理使用。它将复杂的Csound信封抽象为简单的 `0-255` 整数。\r\n\r\n以下是代理应如何将所需的声音映射到工具的参数：\r\n\r\n**1.勇敢/打击性低音（快速攻击，快速衰减，无持续）**\r\n\r\n```json\r\n{\r\n  \"pitch\": 55.0,\r\n  \"duration\": 1.5,\r\n  \"cutoff_hz\": 400.0,\r\n  \"attack\": 5,\r\n  \"decay\": 80,\r\n  \"sustain\": 0,\r\n  \"release\": 50,\r\n  \"output_filename\": \"bass_pluck.wav\"\r\n}\r\n```\r\n\r\n**2.暖垫（缓慢攻击、高维持、长释放）**\r\n\r\n```json\r\n{\r\n  \"pitch\": 220.0,\r\n  \"duration\": 4.0,\r\n  \"cutoff_hz\": 1200.0,\r\n  \"attack\": 150,\r\n  \"decay\": 100,\r\n  \"sustain\": 200,\r\n  \"release\": 200,\r\n  \"output_filename\": \"warm_pad.wav\"\r\n}\r\n```\r\n\r\n**3.攻击性领先（快速攻击、高维持、明亮滤镜）**\r\n\r\n```json\r\n{\r\n  \"pitch\": 880.0,\r\n  \"duration\": 2.0,\r\n  \"cutoff_hz\": 4500.0,\r\n  \"attack\": 10,\r\n  \"decay\": 50,\r\n  \"sustain\": 255,\r\n  \"release\": 20,\r\n  \"output_filename\": \"aggr_lead.wav\"\r\n}\r\n```\r\n\r\n### 2. `synthesize_kick_drum`\r\n\r\n一个专门的工具，用于创建从柔和的声学重击到蓬勃发展的808秒和扭曲的硬踢的一切。\r\n\r\n**1.808子踢（轰鸣，无硬点击）**\r\n\r\n```json\r\n{\r\n  \"fundamental_hz\": 45.0,\r\n  \"punch\": 20,\r\n  \"decay\": 220,\r\n  \"drive\": 10,\r\n  \"output_filename\": \"808_sub.wav\"\r\n}\r\n```\r\n\r\n**2.硬风格/工业踢腿（严重扭曲，伴随着巨大的点击）**\r\n\r\n```json\r\n{\r\n  \"fundamental_hz\": 50.0,\r\n  \"punch\": 200,\r\n  \"decay\": 150,\r\n  \"drive\": 220,\r\n  \"output_filename\": \"hard_kick.wav\"\r\n}\r\n```\r\n",
+ "config": {
+  "musmcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/your/workspace/musmcp",
+    "run",
+    "musmcp"
+   ],
+   "env": {}
+  }
+ }
+}

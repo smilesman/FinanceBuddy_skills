@@ -1,0 +1,12 @@
+{
+ "id": "tidb-sql",
+ "kind": "skill",
+ "name": "tidb-sql",
+ "fingerprint_md5": "074511a2c47b8ba01de01b166919f5c5",
+ "download_count": 0,
+ "category": "NoSQL",
+ "tags": "",
+ "version": "",
+ "readme": "# TiDB SQL（MySQL兼容聚焦）\r\n\r\n目标：默认生成在TiDB上正确运行的SQL，并避免\"在MySQL上工作但在TiDB上中断\"的构造。\r\n\r\n## 工作流程（每次使用）\r\n\r\n1. 识别目标引擎和版本：\r\n   - 运行`SELECT VERSION();`\r\n   - 如果结果包含`TiDB`，将其视为TiDB并解析版本（需要用于Vector/外键等功能门控）。\r\n   - 如果连接到TiDB Cloud，确保客户端启用SSL证书+身份验证（参见`skills/tidb-sql/references/tidb-cloud-ssl.md`）。\r\n2. 如果请求依赖于它们，询问2个快速能力问题：\r\n   - \"你有TiFlash吗？\"（向量索引需要）\r\n   - \"这是在支持全文搜索的区域的TiDB Cloud Starter/Essential吗？\"（可用性有限）\r\n3. 使用TiDB安全默认值生成SQL：\r\n   - 避免不支持的MySQL功能（存储过程/触发器/事件/UDF/GEOMETRY/SPATIAL等）\r\n   - 将视图视为只读\r\n   - 将主键更改视为迁移/重建工作\r\n4. 如果用户提供MySQL SQL，进行兼容性检查：\r\n   - 用TiDB替代方案替换不支持的功能\r\n   - 明确说明行为差异和版本先决条件\r\n5. 如果SQL运行缓慢或意外失败，使用TiDB原生诊断：\r\n   - 使用`EXPLAIN FORMAT = \"tidb_json\"`获取结构化计划和操作符树。\r\n   - 使用`EXPLAIN ANALYZE`比较`estRows`与`actRows`（它执行查询）。\r\n   - 如果计划看起来不正确，考虑`ANALYZE TABLE ...`刷新统计信息。\r\n\r\n## 高信号差异（牢记）\r\n\r\n- **向量**：TiDB支持`VECTOR`/`VECTOR(D)`类型和向量函数/索引；MySQL不支持。\r\n- **无GEOMETRY/SPATIAL**：避免`GEOMETRY`、空间函数和`SPATIAL`索引。\r\n- **无存储过程/函数/触发器/事件**：将逻辑移至应用层或外部调度器。\r\n- **全文搜索（TiDB功能）**：可用时使用TiDB全文搜索SQL；不要假设MySQL`FULLTEXT`到处都能工作。\r\n- **视图是只读的**：不能对视图执行`UPDATE/INSERT/DELETE`。\r\n- **外键**：TiDB v6.6.0+支持；否则，不要依赖FK强制。\r\n- **主键更改受限**：假设主键更改需要\"创建新表+回填+交换\"。\r\n- **AUTO_RANDOM**：适当时优先使用`AUTO_RANDOM`而不是`AUTO_INCREMENT`以避免写入热点。\r\n- **事务**：TiDB支持悲观和乐观模式；在应用逻辑中处理乐观`COMMIT`失败。\r\n\r\n## 使用这些参考（在此技能内）\r\n\r\n- `skills/tidb-sql/references/vector.md` - VECTOR类型、函数、向量索引DDL和查询模式。\r\n- `skills/tidb-sql/references/full-text-search.md` - 全文搜索SQL模式和可用性注意事项。\r\n- `skills/tidb-sql/references/auto-random.md` - `AUTO_RANDOM`规则、DDL模式和限制。\r\n- `skills/tidb-sql/references/transactions.md` - 悲观与乐观模式以及会话/全局参数。\r\n- `skills/tidb-sql/references/mysql-compatibility-notes.md` - 其他常见的\"MySQL vs TiDB\"差异。\r\n- `skills/tidb-sql/references/explain.md` - EXPLAIN/EXPLAIN ANALYZE用法、tidb_json和dot格式。\r\n- `skills/tidb-sql/references/flashback.md` - FLASHBACK TABLE/DATABASE和FLASHBACK CLUSTER恢复手册。\r\n- `skills/tidb-sql/references/tidb-cloud-ssl.md` - TiDB Cloud SSL验证要求和客户端标志。",
+ "config": {}
+}

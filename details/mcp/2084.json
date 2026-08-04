@@ -1,0 +1,21 @@
+{
+ "id": "2084",
+ "kind": "mcp",
+ "name": "yahoo-finance",
+ "fingerprint_md5": "7df4dd1e7a43ce633bdea46212febbad",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP雅虎金融\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io) （MCP）服务器，用于雅虎财经交互。此服务器提供获取定价、公司信息和生成财务可视化的工具。\r\n\r\n> 这个项目是 [maxscheijen/mcp雅虎金融](https://github.com/maxscheijen/mcp-yahoo-finance)，增加了可视化功能。\r\n\r\n## 特性\r\n\r\n- **财务数据**：获取当前股票价格、历史价格、股息、损益表等\r\n- **可视化分析**：为市场情绪、投资组合跟踪和技术分析生成精美的可视化效果\r\n- **易于集成**：适用于Claude Desktop、VS Code、Cursor和其他MCP客户端\r\n\r\n## 安装说明\r\n\r\n### 1.克隆存储库\r\n\r\n将此存储库克隆到本地计算机：\r\n\r\n```sh\r\ngit clone https://github.com/leoncuhk/mcp-yahoo-finance.git\r\ncd mcp-yahoo-finance\r\n```\r\n\r\n### 2.安装依赖项\r\n\r\n使用pip安装所需的依赖项：\r\n\r\n```sh\r\npip install -r requirements.txt\r\n```\r\n\r\n如果缺少requirements.txt文件，您可以直接安装依赖项：\r\n\r\n```sh\r\npip install mcp yfinance pandas matplotlib seaborn plotly kaleido numpy pillow base64io\r\n```\r\n\r\n### 3.配置MCP客户端\r\n\r\n#### 克劳德桌面\r\n\r\n将此添加到您的 `claude_desktop_config.json` （如果它不存在，请创建它）：\r\n\r\n- **macOS/Linux**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"yahoo-finance\": {\r\n            \"command\": \"uvx\",\r\n            \"args\": [\"mcp-yahoo-finance\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n你也可以使用docker：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"yahoo-finance\": {\r\n            \"command\": \"docker\",\r\n            \"args\": [\"run\", \"-i\", \"--rm\", \"IMAGE\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n#### VSCode\r\n\r\n将此添加到您的 `.vscode/mcp.json`:\r\n\r\n```json\r\n{\r\n    \"servers\": {\r\n        \"yahoo-finance\": {\r\n            \"command\": \"uvx\",\r\n            \"args\": [\"mcp-yahoo-finance\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n#### 光标\r\n\r\n将此添加到您的Cursor MCP配置中：\r\n\r\n```json\r\n{\r\n    \"mcp-servers\": {\r\n        \"yahoo-finance\": {\r\n            \"command\": \"uvx\",\r\n            \"args\": [\"mcp-yahoo-finance\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n### 4.重新启动MCP客户端\r\n\r\n配置后，重新启动Claude Desktop或您首选的MCP客户端以加载服务器。\r\n\r\n## 可用工具\r\n\r\n### 基础财务数据\r\n\r\n- **get_current_stock_price**：获取某个交易品种的当前股价\r\n- **get_stock_price_by_date**：获取特定日期的股票价格\r\n- **get_stock_price_date_range**：获取某个日期范围的股票价格\r\n- **获取历史库存价格**：获取具有可自定义期间的历史库存数据\r\n- **get_vidends**：获取股票的股息信息\r\n- **get_come_statement**：获取损益表数据\r\n- **get_cashflow**：获取现金流量表数据\r\n- **获取学习日期**：获取收入日期信息\r\n- **获取新闻**：获取股票的最新消息\r\n\r\n### 可视化工具\r\n\r\n- **generate_market_dashboard**：创建具有实时指数表现的市场情绪仪表板\r\n- **generate_投资组合_报告**：生成投资组合绩效跟踪报告\r\n- **发电机_库存_技术分析**：为股票创建技术分析报告\r\n\r\n## 可视化示例\r\n\r\n### 市场情绪仪表盘\r\n\r\n\r\n### 投资组合跟踪\r\n\r\n\r\n### 股票技术分析\r\n\r\n\r\n## 示例提示\r\n\r\n以下是一些尝试使用Claude的示例提示：\r\n\r\n### 基础财务数据\r\n\r\n1. “苹果目前的股价是多少？”\r\n1. “苹果和谷歌的股价有什么不同？”\r\n1. “在2025年1月1日至2025年3月31日期间，苹果的股价变化了多少？”\r\n\r\n### 可视化请求\r\n\r\n1. “生成一个显示主要指数表现的市场情绪仪表板。”\r\n1. “为科技股AAPL、MSFT、GOOGL、AMZN和NVDA创建投资组合跟踪报告。”\r\n1. “给我看一张特斯拉股票的技术分析图，包括移动平均线和支撑/阻力位。”\r\n1. “生成一个包含标准普尔500指数、道琼斯指数和纳斯达克指数的市场情绪仪表板。”\r\n1. “你能为我的能源股（XOM、CVX、BP、COP和SLB）创建一份投资组合报告吗？”\r\n1. “我需要对NVDA股票进行详细的技术分析，显示RSI和成交量模式。”\r\n\r\n## 测试\r\n\r\n要测试可视化功能：\r\n\r\n```sh\r\ncd tests\r\npython test_visualization.py\r\n```\r\n\r\n这将在中生成示例可视化图像 `examples` 目录。\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。\r\n\r\n## 致谢\r\n\r\n- 原始项目由 [Max Scheijen](https://github.com/maxscheijen)\r\n- 受以下启发，扩展了可视化功能 [托伊皮](https://github.com/tooyipjee)\r\n",
+ "config": {
+  "yahoo-finance": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-yahoo-finance"
+   ],
+   "env": {}
+  }
+ }
+}

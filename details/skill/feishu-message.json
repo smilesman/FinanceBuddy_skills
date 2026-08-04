@@ -1,0 +1,12 @@
+{
+ "id": "feishu-message",
+ "kind": "skill",
+ "name": "feishu-message",
+ "fingerprint_md5": "2a5bd072120b0701343154e3a7550e25",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Feishu Message Skill\r\n\r\n飞书消息操作的统一工具包，为常见任务提供单一 CLI 入口。\r\n\r\n## 用法\r\n\r\n通过 `index.js` 使用统一 CLI：\r\n```bash\r\nnode skills/feishu-message/index.js <command> [options]\r\n```\r\n\r\n## 命令\r\n\r\n### 1. 获取消息 (`get`)\r\n通过 ID 获取消息内容。支持合并消息的递归获取。\r\n```bash\r\nnode skills/feishu-message/index.js get <message_id> [--raw] [--recursive]\r\n```\r\n示例：\r\n```bash\r\nnode skills/feishu-message/index.js get om_12345 --recursive\r\n```\r\n\r\n### 2. 发送音频 (`send-audio`)\r\n将音频文件作为语音气泡发送。\r\n```bash\r\nnode skills/feishu-message/index.js send-audio --target <id> --file <path> [--duration <ms>]\r\n```\r\n- `--target`: User OpenID (`ou_`) 或 ChatID (`oc_`)。\r\n- `--file`: 音频文件路径 (mp3/wav 等)。\r\n- `--duration`: （可选）时长，单位为毫秒。\r\n\r\n### 3. 创建群聊 (`create-chat`)\r\n使用指定用户创建新群聊。\r\n```bash\r\nnode skills/feishu-message/index.js create-chat --name \"Project Alpha\" --users \"ou_1\" \"ou_2\" --desc \"Description\"\r\n```\r\n\r\n### 4. 列出置顶 (`list-pins`)\r\n列出聊天中的置顶消息。\r\n```bash\r\nnode skills/feishu-message/index.js list-pins <chat_id>\r\n```\r\n\r\n## 旧版脚本\r\n独立脚本仍然可用以保持向后兼容：\r\n- `get.js`\r\n- `send-audio.js`\r\n- `create_chat.js`\r\n- `list_pins_v2.js`\r\n\r\n## 依赖\r\n- axios\r\n- form-data\r\n- music-metadata\r\n- commander",
+ "config": {}
+}

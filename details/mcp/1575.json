@@ -1,0 +1,22 @@
+{
+ "id": "1575",
+ "kind": "mcp",
+ "name": "mcp-kroki",
+ "fingerprint_md5": "1b822303cf57a52de3d55951021c4a09",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP Kroki服务器\r\n\r\n一个MCP（模型上下文协议）服务器，用于使用Kroki.io将Mermaid图转换为SVG图像。\r\n\r\n## 特性\r\n\r\n- 使用Kroki.io为图表生成URL\r\n- 将图表下载为SVG、PNG、PDF或JPEG文件\r\n- 支持多种图表格式：\r\n  - 美人鱼\r\n  - PlantUML\r\n  - Graphviz\r\n  - 还有更多（请参阅Kroki.io文档）\r\n\r\n## 安装\r\n\r\n### 本地安装\r\n\r\n```bash\r\ngit clone https://github.com/tkoba1974/mcp-kroki.git\r\ncd mcp-kroki\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n## 用法\r\n\r\n服务器提供两个主要工具：\r\n\r\n### 1.生成图表URL\r\n\r\n使用Kroki.io为图表生成URL。\r\n\r\n参数：\r\n\r\n- `type`：图表类型（例如“美人鱼”、“plantuml”）\r\n- `content`：指定格式的图表内容\r\n- `outputFormat` （可选）：输出格式（svg、png、pdf、jpeg、base64）\r\n\r\n### 2.下载图表\r\n\r\n将图表下载到本地文件。\r\n\r\n参数：\r\n\r\n- `type`：图表类型（例如“美人鱼”、“plantuml”）\r\n- `content`：指定格式的图表内容\r\n- `outputPath`：应保存图表的路径\r\n- `outputFormat` （可选）：输出格式（svg、png、pdf、jpeg）\r\n- `scale` （可选，数字，默认值：1.0）：图表尺寸的缩放因子。目前，仅通过尝试修改宽度/高度属性来影响SVG输出。最小值为0.1。\r\n\r\n## 示例\r\n\r\n```javascript\r\n// Generate a URL for a Mermaid diagram\r\nconst result = await callTool('generate_diagram_url', {\r\n  type: 'mermaid',\r\n  content: 'graph TD; A-->B; B-->C; C-->D;',\r\n  outputFormat: 'svg'\r\n});\r\n\r\n// Download a Mermaid diagram\r\nconst result = await callTool('download_diagram', {\r\n  type: 'mermaid',\r\n  content: 'graph TD; A-->B; B-->C; C-->D;',\r\n  outputPath: '/path/to/diagram.svg'\r\n});\r\n```\r\n\r\n## 运作原理\r\n\r\n服务器使用Kroki.io API转换图表。图表内容在发送到Kroki.io之前经过压缩和编码。\r\n\r\n## 使用Claude Desktop\r\n\r\n添加到您的Claude Desktop配置文件（Claude_Desktop_config.json）：\r\n\r\n### 本地安装：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-kroki\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/mcp-kroki/build/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### npx：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-kroki\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@tkoba1974/mcp-kroki\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "mcp-kroki": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@tkoba1974/mcp-kroki"
+   ],
+   "env": {}
+  }
+ }
+}

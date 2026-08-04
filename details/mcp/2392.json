@@ -1,0 +1,18 @@
+{
+ "id": "2392",
+ "kind": "mcp",
+ "name": "winwin-travel",
+ "fingerprint_md5": "217edcbe8149e9d24ea17df477278ed2",
+ "download_count": 0,
+ "category": "出行交通",
+ "tags": "",
+ "version": "",
+ "readme": "# 🌍 WinWin.travel MCP服务器\r\n\r\n> **官方的WinWin.travel模型上下文协议服务器。**\r\n> 将您的AI代理直接连接到大量库存 **300多万家酒店** 具有实时预订功能。\r\n\r\n______________________________________________________________________\r\n\r\n## 🚀 为什么要使用此MCP？\r\n\r\n大多数旅行MCP只是刮刀。 **WinWin.travel** 是官方的企业门户。\r\n\r\n- **🏢 3M+库存：** 直接访问世界上最大的酒店数据库之一。\r\n- **⚡ 零点设置：** 没有Docker，没有 `npm install`，没有本地主机隧道。它完全托管。\r\n- **💰 在构建过程中赚取：** 我们支付 *你* 供使用。干 **10%现金返还** 通过您的代理进行的每一次预订。\r\n- **🧠 更智能的搜索：** 按500多个属性（设施、氛围、政策）过滤，而不仅仅是价格/位置。\r\n\r\n## 🗣️ 示例提示\r\n\r\n连接后，您的AI（Claude等）可以处理复杂的旅行请求：\r\n\r\n- *“在东京涩谷区给我找一家允许养狗的精品酒店，每晚200美元以下（查看 **宠物费**)并且已经 **遮光窗帘** 因为时差。\"*\r\n- *“查询纽约万豪侯爵酒店的空房情况。我需要一间带 **阵雨** 和一个 **城市景观**.\"*\r\n- *“目前巴厘岛的热门酒店有哪些？筛选出符合以下条件的酒店 **枕头菜单** 和 **残疾人友好床高度**.\"*\r\n- *“为2名成人预订第二种选择。确保有专门的 **宠物站** 附上请求，并将付款链接发送到我的电子邮件。\"*\r\n\r\n## 🛠️ 快速开始\r\n\r\n### 1.🔑 获取您的访问令牌\r\n\r\n您需要一个安全令牌才能连接。\r\n👉 **[生成访问令牌](https://tally.so/r/GxdpeO)**\r\n\r\n### 2.🔌 配置Claude桌面\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"winwin-travel\": {\r\n      \"url\": \"https://sandbox.api.winwin.travel/mcp/sse\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer YOUR_ACCESS_TOKEN_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n*就是这样。重新启动克劳德并开始预订。*\r\n\r\n## 🧰 能力\r\n\r\n|工具|说明|\r\n| :--- | :--- |\r\n| **`search_hotels`** | **深度搜索：** 使用500多个特定过滤器过滤酒店/房间/酒店交易，以找到完美匹配。 |\r\n| **`get_hotel_details`** | **丰富的智力：** 检索酒店、房间、设施、设施和评论的完整详细信息。 |\r\n| **`book_reservation`** | **全逻辑预订：** 端到端管理预订。通过Stripe MCP集成生成安全支付链接或处理交易。 |\r\n| **`rate_hotel`** | **偏好学习：** 给酒店“喜欢”和“不喜欢”来训练我们的人工智能辅助选择引擎，以获得更好的未来建议。 |\r\n| **`get_market_trends`** | **市场洞察：** 访问实时酒店统计数据，跟踪价格变化，并设置警报/触发器。 |\r\n\r\n## 🔒 安全与隐私\r\n\r\n- **官方端点：** 您正在直接连接到WinWin.travel的安全API网关。\r\n- **数据使用情况：** 您的偏好用于改善您的预订体验。我们不会将您的数据出售给第三方。\r\n\r\n______________________________________________________________________\r\n\r\nBuilt with ❤️ by the WinWin.travel Team [mcp@winwin.travel](mailto:mcp@winwin.travel)\r\n",
+ "config": {
+  "winwin-travel": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://sandbox.api.winwin.travel/mcp/sse"
+  }
+ }
+}

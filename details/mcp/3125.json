@@ -1,0 +1,24 @@
+{
+ "id": "3125",
+ "kind": "mcp",
+ "name": "hostaway",
+ "fingerprint_md5": "db3ceb8825bd59ac321845da3d55b039",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 托管MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，提供对旅舍API的访问，用于度假租赁管理。此服务器允许Claude Desktop从您的Hostaway帐户搜索属性、查看详细信息和访问定价信息。\r\n\r\n## 特性\r\n\r\n- 🔍 **搜索财产** -查找具有广泛过滤选项的度假租赁\r\n- 🏠 **查看物业详细信息** -获取有关特定房产的全面信息\r\n- 💰 **定价设置** -接入信道特定定价和服务水平配置\r\n- 🛏️ **床型** -检索物业配置的床型映射\r\n\r\n## 安装\r\n\r\nHostaway MCP服务器可以直接从GitHub安装：\r\n\r\n### 选项1：使用npx直接执行（推荐）\r\n\r\n无需安装-Claude Desktop将直接运行它：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"hostaway\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"github:atlasvrm/hostaway-mcp\"],\r\n      \"env\": {\r\n        \"HOSTAWAY_CLIENT_ID\": \"your-id\",\r\n        \"HOSTAWAY_CLIENT_SECRET\": \"your-secret\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 选项2：全局安装\r\n\r\n```bash\r\nnpm install -g github:atlasvrm/hostaway-mcp\r\n```\r\n\r\n然后在Claude Desktop中使用：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"hostaway\": {\r\n      \"command\": \"hostaway-mcp\",\r\n      \"args\": [],\r\n      \"env\": {\r\n        \"HOSTAWAY_CLIENT_ID\": \"your-id\",\r\n        \"HOSTAWAY_CLIENT_SECRET\": \"your-secret\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 配置\r\n\r\n### 1.获取您的Hostaway API凭据\r\n\r\n1. 登录到您的 [Hostaway 账户](https://www.hostaway.com)\r\n1. 导航到“设置”→ API\r\n1. 注意你的：\r\n   - **客户端ID** （例如，“12345”）\r\n   - **客户端密钥** （例如，“abcdef123456…”）\r\n\r\n### 2.配置克劳德桌面\r\n\r\n将安装部分的配置添加到Claude Desktop配置文件中：\r\n\r\n**macOS：** `~/Library/Application Support/Claude/claude_desktop_config.json`\\\r\n**窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\\\r\n**Linux：** `~/.config/claude/claude_desktop_config.json`\r\n\r\n⚠️ **重要**：替换 `\"your-id\"` 和 `\"your-secret\"` 使用步骤1中的实际Hostaway API凭据。\r\n\r\n### 3.重新启动克劳德桌面\r\n\r\n完全退出并重新启动Claude Desktop以使配置生效。\r\n\r\n## 可用工具\r\n\r\n### 搜索列表\r\n\r\n搜索具有广泛过滤选项的房产：\r\n\r\n- `limit` -最大结果数\r\n- `offset` -要跳过的结果数\r\n- `city` -按城市名称筛选\r\n- `country` -按国家代码筛选\r\n- `match` -按房源名称搜索\r\n- `sortOrder` -按各种标准对结果进行排序\r\n- `availabilityDateStart` / `availabilityDateEnd` -查看可用日期\r\n- `availabilityGuestNumber` -按客人容量筛选\r\n- 还有更多的过滤器。..\r\n\r\n### 获取列表详细信息\r\n\r\n获取有关特定列表的全面信息：\r\n\r\n- `listingId` -物业ID（必填）\r\n\r\n### 获取定价设置\r\n\r\n获取定价设置和特定渠道的配置：\r\n\r\n- `listingId` -物业ID（必填）\r\n\r\n### 获取床型\r\n\r\n获取所有可用的床型以进行酒店配置。\r\n\r\n## 使用示例\r\n\r\n配置后，您可以询问Claude：\r\n\r\n- “搜索迈阿密的房产”\r\n- “显示属性ID 12345的详细信息”\r\n- “12345房产的定价设置是什么？”\r\n- “列出所有可用的床型”\r\n\r\n## 令牌缓存\r\n\r\n服务器在本地缓存身份验证令牌 `~/.hostaway-mcp/token-cache.json` 以避免不必要的API调用。令牌过期时会自动刷新。\r\n\r\n## 发展\r\n\r\n### 地方发展\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/atlasvrm/hostaway-mcp.git\r\ncd hostaway-mcp\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Run in development mode\r\nnpm run dev\r\n```\r\n\r\n### 建筑\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n### 测试\r\n\r\n创建一个 `.env` 使用您的凭据文件：\r\n\r\n```bash\r\nHOSTAWAY_CLIENT_ID=your_client_id\r\nHOSTAWAY_CLIENT_SECRET=your_client_secret\r\n```\r\n\r\n然后运行测试脚本：\r\n\r\n```bash\r\nnpm run test:api\r\n```\r\n\r\n## 故障排除\r\n\r\n### “身份验证失败”错误\r\n\r\n- 验证您的客户端ID和客户端密码是否正确\r\n- 检查您的Hostaway API访问是否处于活动状态\r\n\r\n### “未找到属性”错误\r\n\r\n- 确保您的Hostaway帐户中存在该物业ID\r\n- 验证您是否有权访问该物业\r\n\r\n### 服务器未出现在Claude中\r\n\r\n- 确保配置后重新启动了Claude Desktop\r\n- 检查npx是否在系统PATH中\r\n- 验证配置文件是否为有效的JSON\r\n\r\n## 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件\r\n\r\n## 支持\r\n\r\n- **问题**: [GitHub问题](https://github.com/atlasvrm/hostaway-mcp/issues)\r\n- **托管API文档**: [api.hostaway.com/documentation](https://api.hostaway.com/documentation)\r\n\r\n______________________________________________________________________\r\n\r\n内置于❤️ 通过阿特拉斯度假租赁\r\n",
+ "config": {
+  "hostaway": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "github:atlasvrm/hostaway-mcp"
+   ],
+   "env": {
+    "HOSTAWAY_CLIENT_ID": "your-id",
+    "HOSTAWAY_CLIENT_SECRET": "your-secret"
+   }
+  }
+ }
+}

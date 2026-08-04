@@ -1,0 +1,22 @@
+{
+ "id": "361",
+ "kind": "mcp",
+ "name": "playwright-14",
+ "fingerprint_md5": "67648b981397b6e783a73cc9273fa7cf",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP Server Pentest\r\n\r\n\r\n## 特性\r\n\r\n- 全浏览器xss、sql漏洞自动检测\r\n- 整个页面或特定元素的截图\r\n- 全面的网络互动（导航、点击、填表）\r\n- 控制台日志监控\r\n- 浏览器上下文中的JavaScript执行\r\n\r\n## 安装\r\n\r\n### 安装\r\n\r\n```\r\nnpx playwright install firefox\r\nyarn install \r\nnpm run build \r\n```\r\n\r\n## 配置\r\n\r\n安装过程会自动将以下配置添加到您的Claude配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"playwright\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"/Users/...../dist/index.js\"\r\n      ],\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n#### `broser_url_reflected_xss`\r\n\r\n测试URL是否存在XSS漏洞\r\n\r\n```javascript\r\n{\r\n  \"url\": \"https://test.com\",\r\n  \"paramName\":\"text\"\r\n}\r\n```\r\n\r\n\r\n#### `browser_url_sql_injection`\r\n\r\n测试URL是否存在SQL注入漏洞\r\n\r\n```javascript\r\n{\r\n  \"url\": \"https://test.com\",\r\n  \"paramName\":\"text\"\r\n}\r\n```\r\n\r\n\r\n#### `browser_navigate`\r\n\r\n导航到浏览器中的任何URL\r\n\r\n```javascript\r\n{\r\n  \"url\": \"https://stealthbrowser.cloud\"\r\n}\r\n```\r\n\r\n#### `browser_screenshot`\r\n\r\n捕获整个页面或特定元素的屏幕截图\r\n\r\n```javascript\r\n{\r\n  \"name\": \"screenshot-name\",     // required\r\n  \"selector\": \"#element-id\",     // optional\r\n  \"fullPage\": true              // optional, default: false\r\n}\r\n```\r\n\r\n#### `browser_click`\r\n\r\n使用CSS选择器单击页面上的元素\r\n\r\n```javascript\r\n{\r\n  \"selector\": \"#button-id\"\r\n}\r\n```\r\n\r\n#### `browser_click_text`\r\n\r\n按文本内容单击页面上的元素\r\n\r\n```javascript\r\n{\r\n  \"text\": \"Click me\"\r\n}\r\n```\r\n\r\n#### `browser_hover`\r\n\r\n使用CSS选择器将鼠标悬停在页面上的元素上\r\n\r\n```javascript\r\n{\r\n  \"selector\": \"#menu-item\"\r\n}\r\n```\r\n\r\n#### `browser_hover_text`\r\n\r\n按文本内容将鼠标悬停在页面上的元素上\r\n\r\n```javascript\r\n{\r\n  \"text\": \"Hover me\"\r\n}\r\n```\r\n\r\n#### `browser_fill`\r\n\r\n填写输入字段\r\n\r\n```javascript\r\n{\r\n  \"selector\": \"#input-field\",\r\n  \"value\": \"Hello World\"\r\n}\r\n```\r\n\r\n#### `browser_select`\r\n\r\n使用CSS选择器在Select元素中选择一个选项\r\n\r\n```javascript\r\n{\r\n  \"selector\": \"#dropdown\",\r\n  \"value\": \"option-value\"\r\n}\r\n```\r\n\r\n#### `browser_select_text`\r\n\r\n按文本内容选择Select元素中的选项\r\n\r\n```javascript\r\n{\r\n  \"text\": \"Choose me\",\r\n  \"value\": \"option-value\"\r\n}\r\n```\r\n\r\n#### `browser_evaluate`\r\n\r\n在浏览器控制台中执行JavaScript\r\n\r\n```javascript\r\n{\r\n  \"script\": \"document.title\"\r\n}\r\n```\r\n",
+ "config": {
+  "playwright": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "/Users/...../dist/index.js"
+   ],
+   "env": {}
+  }
+ }
+}

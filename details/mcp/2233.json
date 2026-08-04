@@ -1,0 +1,23 @@
+{
+ "id": "2233",
+ "kind": "mcp",
+ "name": "kuaidi100",
+ "fingerprint_md5": "2559ff77bdd8db31e6f162f3a99569fa",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "## 快递100 MCP Server\r\n\r\n### 获取快递100 API KEY\r\n登录快递100获取： [快递100官方](https://api.kuaidi100.com/extend/register?code=d1660fe0390d4084b4f27b19d2feee02) （注意不要泄露授权key，以防被他人盗用！！！）\r\n\r\n### 一、STDIO方式：在线获取快递100 MCP服务运行\r\n#### Python方式：通过`uvx`命令一步获取kuaidi100_mcp并使用\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kuaidi100\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"kuaidi100-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"KUAIDI100_API_KEY\": \"YOUR_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n如果没有报错则MCP Server启动成功\r\n\r\n#### NodeJs方式：通过npx命令一步获取kuaidi100_mcp并使用\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kuaidi100\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@kuaidi100-mcp/kuaidi100-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"KUAIDI100_API_KEY\": \"YOUR_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n关联项目：[kuaidi100-MCP-Nodejs](https://github.com/kuaidi100-api/kuaidi100-MCP-Nodejs)\r\n\r\n### 二、Streamable方式：\r\n配置Http链接和KEY后使用\r\n```json\r\n\"kuaidi100\": {\r\n    \"url\": \"https://api.kuaidi100.com/mcp/streamable?key=YOUR_API_KEY\"\r\n}\r\n```\r\n\r\n### 三、SSE方式（更推荐Streamable连接方式）：\r\n配置SSE链接和KEY后使用\r\n```json\r\n\"kuaidi100\": {\r\n    \"url\": \"https://api.kuaidi100.com/mcp/sse?key=YOUR_API_KEY\"\r\n}\r\n```\r\n\r\n### 测试\r\n\r\n#### 物流轨迹查询：\r\n\r\n#### 快递预估时效：\r\n\r\n#### 快递预估价格\r\n\r\n### Tips\r\n如需获取账号信息（如 key、customer、secret），或免费试用100单，请访问[API开放平台](https://api.kuaidi100.com/home?code=d1660fe0390d4084b4f27b19d2feee02)进行注册\r\n",
+ "config": {
+  "kuaidi100": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "kuaidi100-mcp"
+   ],
+   "env": {
+    "KUAIDI100_API_KEY": "YOUR_API_KEY"
+   }
+  }
+ }
+}

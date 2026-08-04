@@ -1,0 +1,24 @@
+{
+ "id": "3040",
+ "kind": "mcp",
+ "name": "bc-tides",
+ "fingerprint_md5": "38f8fb3803a9c66e82b01a6c241614ea",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 不列颠哥伦比亚省潮汐MCP服务器\r\n\r\n模型上下文协议（MCP）服务器，提供从综合水位系统（IWLS）API对加拿大潮汐预测的访问。该服务器使人工智能应用程序能够检索加拿大各地监测站的潮汐预报。\r\n\r\n## 特性\r\n\r\n### 工具\r\n\r\n- **`get_tide_forecast`** -获取特定站点的7天潮高预测\r\n- **`list_stations`** -列出可用的潮汐监测站及其过滤选项\r\n\r\n## 安装\r\n\r\n1. **克隆或下载此存储库**\r\n\r\n   ```bash\r\n   git clone\r\n   cd bc-tide-mcp-server\r\n   ```\r\n\r\n1. **安装依赖项**\r\n\r\n   ```bash\r\n   pip install -r requirements.txt\r\n   # or using uv\r\n   uv sync\r\n   ```\r\n\r\n## 用法\r\n\r\n### 运行服务器\r\n\r\n**开发模式（stdio）：**\r\n\r\n```bash\r\npython main.py\r\n```\r\n\r\n**使用紫外线：**\r\n\r\n```bash\r\nuv run main.py\r\n```\r\n\r\n### 与Claude Desktop集成\r\n\r\n添加到您的Claude Desktop配置文件(`claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bc-tides\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"/absolute/path/to/bc-tide-mcp-server/main.py\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或使用紫外线：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bc-tides\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/absolute/path/to/bc-tide-mcp-server\", \"main.py\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## api参考\r\n\r\n### 工具\r\n\r\n#### `get_tide_forecast`\r\n\r\n为加拿大监测站获取7天潮位预报。\r\n\r\n**参数：**\r\n\r\n- `station_name` （必填）：监测站的名称（例如，“阿特金森点”、“温哥华”、“维多利亚”）。支持部分匹配。\r\n\r\n**退货：**\r\n\r\n```json\r\n{\r\n  \"success\": true,\r\n  \"station\": {\r\n    \"name\": \"Point Atkinson\",\r\n    \"id\": \"5cebf1de3d0f4a073c4bbcef\",\r\n    \"code\": \"07795\",\r\n    \"latitude\": 49.3299,\r\n    \"longitude\": -123.2633,\r\n    \"operating\": true\r\n  },\r\n  \"time_range\": {\r\n    \"from\": \"2024-01-01T00:00:00Z\",\r\n    \"to\": \"2024-01-08T00:00:00Z\"\r\n  },\r\n  \"resolution\": \"SIXTY_MINUTES (hourly)\",\r\n  \"total_predictions\": 168,\r\n  \"forecasts\": [\r\n    {\r\n      \"timestamp\": \"2024-01-01T00:00:00Z\",\r\n      \"water_level_meters\": 3.42,\r\n      \"qc_flag\": \"2\"\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n#### `list_stations`\r\n\r\n列出可用的潮汐监测站。\r\n\r\n**参数：**\r\n\r\n- `search_term` （可选）：按名称过滤站\r\n- `operating_only` （可选，默认值：true）：仅返回当前正在运行的工作站\r\n- `limit` （可选，默认值：20）：要返回的最大站数（1-100）\r\n\r\n**退货：**\r\n\r\n```json\r\n{\r\n  \"success\": true,\r\n  \"search_term\": \"vancouver\",\r\n  \"operating_only\": true,\r\n  \"total_matching\": 3,\r\n  \"stations\": [\r\n    {\r\n      \"name\": \"Point Atkinson\",\r\n      \"alternative_name\": null,\r\n      \"id\": \"5cebf1de3d0f4a073c4bbcef\",\r\n      \"code\": \"07795\",\r\n      \"latitude\": 49.3299,\r\n      \"longitude\": -123.2633,\r\n      \"operating\": true\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n## 车站名称示例\r\n\r\n- 阿特金森角（温哥华附近）\r\n- 维多利亚\r\n- 托菲诺\r\n- 鲁珀特王子\r\n- 纳奈莫\r\n- 坎贝尔河\r\n\r\n## 数据源\r\n\r\n该服务器使用加拿大渔业和海洋部（DFO-MPO）提供的综合水位系统（IWLS）API。\r\n\r\nAPI基本URL: `https://api-iwls.dfo-mpo.gc.ca/api/v1`\r\n\r\n## Claude中的示例用法\r\n\r\n设置服务器后，您可以在Claude Desktop中使用它：\r\n\r\n```\r\n\"What are the tide predictions for Point Atkinson for the next week?\"\r\n\r\n\"List all tide stations near Victoria\"\r\n\r\n\"Get the tide forecast for Tofino\"\r\n```\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。\r\n",
+ "config": {
+  "bc-tides": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "/absolute/path/to/bc-tide-mcp-server",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

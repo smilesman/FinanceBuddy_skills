@@ -1,0 +1,24 @@
+{
+ "id": "1938",
+ "kind": "mcp",
+ "name": "fugle-marketdata-mcp-server",
+ "fingerprint_md5": "c2037358f0ed5230a2c90546a38b2648",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Fugle MCP Server\r\n\r\n富果行情 MCP (Model Context Protocol) 服務器，用於與富果交易系統進行互動。此服務器支持股票行情查詢。\r\n\r\n## 功能特點\r\n\r\n- 📊 支持股票即時行情查詢\r\n- 📈 支持歷史數據查詢\r\n- 📚 使用 Fugle Developer MarketData SDK documentation\r\n\r\n## 事前準備\r\n\r\n- [NodeJs](https://nodejs.org/zh-tw)\r\n- [Fugle MarketData API Key](https://developer.fugle.tw/docs/key)\r\n- Claude Desktop or 其他 MCP Client\r\n\r\n## 使用方法\r\n\r\n### 環境變量\r\n\r\n服務器需要以下環境變量：\r\n\r\n- `API_KEY`: 富果行情 API Key\r\n\r\n###  配置 Claude Desktop\r\n\r\n在你的 `mcp config` 中添加：\r\n\r\n1. 開啟 Claude Desktop\r\n2. 點選 Settings\r\n3. 選取 \"Developer\" 與按下 \"Edit Config\"\r\n4. 將以下設定複製到 claude_desktop_config.json 檔案內\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"@fugle/marketdata-mcp-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"https://github.com/fugle-dev/fugle-marketdata-mcp-server/releases/download/v0.0.1/fugle-marketdata-mcp-server-0.0.1.tgz\"\r\n      ],\r\n      \"env\": {\r\n        \"API_KEY\": \"<API_KEY>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 範例 Promopt\r\n\r\n- 幫我抓取 2330 最新股價\r\n- 顯示 2330 最近 10 天的股價資訊\r\n- 更多的實用案例等你來一起發掘\r\n\r\n### 了解更多\r\n\r\n更多功能，可透過使用 [元富 / 富邦 MCP](https://github.com/fugle-dev/fugle-mcp-server/tree/main) 做部位管理、下單...... 等\r\n",
+ "config": {
+  "fugle-marketdata-mcp-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "https://github.com/fugle-dev/fugle-marketdata-mcp-server/releases/download/v0.0.1/fugle-marketdata-mcp-server-0.0.1.tgz"
+   ],
+   "env": {
+    "API_KEY": "<API_KEY>"
+   }
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "2356",
+ "kind": "mcp",
+ "name": "weather-17",
+ "fingerprint_md5": "ff579ec248591877066dfe8e81988be7",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 气象MCP服务器🌤️\r\n\r\nMCP服务器，用于全球天气、预报、空气质量和气候数据。由...驱动 [开放天气](https://open-meteo.com/) — **完全免费，不需要API密钥**.\r\n\r\n## 特性\r\n\r\n- **当前天气** --任何地点的温度、湿度、风、降水\r\n- **预测** --多达16天的每日降水概率预报\r\n- **空气质量** --欧盟/美国空气质量指数、PM2.5、PM10、臭氧、NO₂ 以及更多\r\n- **历史天气** --1940年以来的每日天气数据\r\n- **海洋天气** --沿海地区的波高、涌浪、洋流\r\n- **地理编码** --将城市名称转换为坐标\r\n\r\n## 安装\r\n\r\n```bash\r\npip install weather-mcp-server\r\n```\r\n\r\n## 使用Claude代码\r\n\r\n添加到您的 `.mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"weather-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_current_weather` |任何地点的当前天气状况|\r\n| `get_weather_forecast` |每日预报长达16天|\r\n| `get_air_quality` |空气质量指数和污染物水平|\r\n| `get_historical_weather` |历史每日天气数据（自1940年以来）|\r\n| `get_marine_weather` |波高、涌浪、洋流|\r\n| `geocode_location` |将城市名称转换为坐标|\r\n\r\n## 示例\r\n\r\n```\r\n\"What's the weather in Berlin?\"\r\n\"Give me a 10-day forecast for Tokyo\"\r\n\"How was the weather in New York on Christmas 2023?\"\r\n\"What's the air quality in Beijing?\"\r\n\"Wave conditions at Sylt for surfing?\"\r\n```\r\n\r\n## 数据源\r\n\r\n所有数据由 [开放天气](https://open-meteo.com/) --免费用于非商业用途。\r\n\r\n______________________________________________________________________\r\n\r\n## AiAgentKarl提供的更多MCP服务器\r\n\r\n|类别|服务器|\r\n|----------|---------|\r\n|🔗 区块链| [索拉纳](https://github.com/AiAgentKarl/solana-mcp-server) |\r\n| 🌍 数据| [天气](https://github.com/AiAgentKarl/weather-mcp-server) · [德国](https://github.com/AiAgentKarl/germany-mcp-server) · [农业](https://github.com/AiAgentKarl/agriculture-mcp-server) · [太空](https://github.com/AiAgentKarl/space-mcp-server) · [航空](https://github.com/AiAgentKarl/aviation-mcp-server) · [欧盟公司](https://github.com/AiAgentKarl/eu-company-mcp-server) |\r\n| 🔒 安全| [网络安全](https://github.com/AiAgentKarl/cybersecurity-mcp-server) · [策略网关](https://github.com/AiAgentKarl/agent-policy-gateway-mcp) · [审计跟踪](https://github.com/AiAgentKarl/agent-audit-trail-mcp) |\r\n| 🤖 代理基础设施| [记忆](https://github.com/AiAgentKarl/agent-memory-mcp-server) · [目录](https://github.com/AiAgentKarl/agent-directory-mcp-server) · [中心](https://github.com/AiAgentKarl/mcp-appstore-server) · [声誉](https://github.com/AiAgentKarl/agent-reputation-mcp-server) |\r\n| 🔬 研究| [学术的](https://github.com/AiAgentKarl/crossref-academic-mcp-server) · [LLM基准](https://github.com/AiAgentKarl/llm-benchmark-mcp-server) · [法律](https://github.com/AiAgentKarl/legal-court-mcp-server) |\r\n\r\n[→ 完整目录（40+台服务器）](https://github.com/AiAgentKarl)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "weather-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

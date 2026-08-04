@@ -1,0 +1,22 @@
+{
+ "id": "269",
+ "kind": "mcp",
+ "name": "local-fetch",
+ "fingerprint_md5": "4ad8d3d7b02118cc10b39e8dc63dd7c3",
+ "download_count": 0,
+ "category": "网页抓取",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP Local Fetch\r\n\r\n一个功能强大的 MCP (Model Context Protocol) 服务器，提供不受 robots.txt 限制的网页抓取功能。\r\n\r\n## 功能特性\r\n\r\n- 支持所有标准 HTTP 方法（GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS）\r\n- 自定义请求头\r\n- 请求体支持\r\n- 重定向控制\r\n- 超时设置\r\n- 不遵循 robots.txt 限制\r\n- 返回完整的响应信息（状态码、响应头、响应体）\r\n\r\n## 快速开始\r\n\r\n### 方式一：使用 npx（推荐）\r\n\r\n无需安装，直接在 Claude Desktop 配置文件中使用：\r\n\r\n**Windows** - 编辑 `%APPDATA%\\Claude\\claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"local-fetch\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-local-fetch\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**macOS** - 编辑 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"local-fetch\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-local-fetch\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**Linux** - 编辑 `~/.config/claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"local-fetch\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-local-fetch\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 方式二：本地开发\r\n\r\n如果你想修改源码或本地开发：\r\n\r\n```bash\r\ngit clone https://github.com/yuandeshoulian/mcp-local-fetch.git\r\ncd mcp-local-fetch\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n然后在配置文件中指向本地路径：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"local-fetch\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"path/to/mcp-local-fetch/dist/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用方法\r\n\r\n服务器提供一个 `fetch` 工具，支持以下参数：\r\n\r\n### 参数\r\n\r\n- `url` (必需): 要抓取的 URL\r\n- `method` (可选): HTTP 方法，默认 \"GET\"\r\n  - 可选值: GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS\r\n- `headers` (可选): 自定义请求头对象\r\n- `body` (可选): 请求体（字符串格式）\r\n- `follow_redirects` (可选): 是否跟随重定向，默认 true\r\n- `max_redirects` (可选): 最大重定向次数，默认 20\r\n- `timeout` (可选): 请求超时时间（毫秒），默认 30000\r\n\r\n### 示例\r\n\r\n#### 简单 GET 请求\r\n\r\n```json\r\n{\r\n  \"url\": \"https://example.com\"\r\n}\r\n```\r\n\r\n#### POST 请求带自定义头和请求体\r\n\r\n```json\r\n{\r\n  \"url\": \"https://api.example.com/data\",\r\n  \"method\": \"POST\",\r\n  \"headers\": {\r\n    \"Content-Type\": \"application/json\",\r\n    \"Authorization\": \"Bearer token123\"\r\n  },\r\n  \"body\": \"{\\\"key\\\": \\\"value\\\"}\"\r\n}\r\n```\r\n\r\n#### 禁用重定向\r\n\r\n```json\r\n{\r\n  \"url\": \"https://example.com\",\r\n  \"follow_redirects\": false\r\n}\r\n```\r\n\r\n#### 设置超时\r\n\r\n```json\r\n{\r\n  \"url\": \"https://example.com\",\r\n  \"timeout\": 5000\r\n}\r\n```\r\n\r\n### 响应格式\r\n\r\n工具返回 JSON 格式的响应：\r\n\r\n```json\r\n{\r\n  \"status\": 200,\r\n  \"statusText\": \"OK\",\r\n  \"headers\": {\r\n    \"content-type\": \"text/html\",\r\n    \"content-length\": \"1234\"\r\n  },\r\n  \"body\": \"响应内容...\",\r\n  \"url\": \"https://example.com\"\r\n}\r\n```\r\n\r\n## 开发\r\n\r\n### 构建\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n### 开发模式（自动重新编译）\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n## 安全说明\r\n\r\n此工具不遵循 robots.txt 限制，请负责任地使用：\r\n\r\n- 遵守目标网站的服务条款\r\n- 避免过于频繁的请求\r\n- 尊重网站的隐私政策\r\n- 仅用于合法目的\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 配合其他 MCP 使用\r\n\r\n### 处理需要 JavaScript 渲染的网站\r\n\r\n此 MCP 专注于简单快速的 HTTP 请求。对于需要 JavaScript 渲染的网站（如客户端渲染的 SPA），建议配合使用 **Playwright MCP**：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"local-fetch\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"E:\\\\workspace\\\\jasion\\\\jq-mcp\\\\mcp-local-fetch\\\\dist\\\\index.js\"]\r\n    },\r\n    \"playwright\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-playwright\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**使用场景：**\r\n- **mcp-local-fetch**: 快速抓取静态 HTML、API 接口、简单网页\r\n- **Playwright MCP**: 抓取需要 JavaScript 渲染的网站（如魔搭社区、现代 SPA 应用）\r\n\r\n## 注意事项\r\n\r\n- 默认使用浏览器 User-Agent 以提高兼容性\r\n- 自动处理超时和错误\r\n- 支持 HTTPS\r\n- 响应体始终以文本形式返回\r\n- 轻量级设计，启动快速，资源占用少\r\n",
+ "config": {
+  "local-fetch": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-local-fetch"
+   ],
+   "env": {}
+  }
+ }
+}

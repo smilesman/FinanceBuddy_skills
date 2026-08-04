@@ -1,0 +1,12 @@
+{
+ "id": "agent-builder",
+ "kind": "skill",
+ "name": "agent-builder",
+ "fingerprint_md5": "473afd772a0501c413e3ec2ad3c6ac07",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# Agent Builder (OpenClaw)\r\n\r\n设计和生成一个完整的 **OpenClaw agent 工作区**，具有强大的默认值和面向高级用户的澄清问题。\r\n\r\n## 规范参考\r\n\r\n- 工作区布局 + heartbeat 规则：**阅读** `references/openclaw-workspace.md`\r\n- 文件模板/片段：**阅读** `references/templates.md`\r\n- 可选背景（通用 agent 架构）：`references/architecture.md`\r\n\r\n## 工作流程：从零开始构建 agent\r\n\r\n### 第一阶段 — 访谈（提出澄清问题）\r\n\r\n只问你需要的内容；保持简洁。优先选择多轮简短问答，而不是一个巨大的问卷。\r\n\r\n最小问题集（高级）：\r\n\r\n1) **工作陈述**：agent 的主要使命是什么？用一句话概括。\r\n2) ** surfaces**：哪些渠道（Telegram/WhatsApp/Discord/iMessage）？仅 DM 还是群组？\r\n3) **自主性级别**：\r\n   - Advisor（仅建议）\r\n   - Operator（非破坏性操作可以；破坏性/外部操作前询问）\r\n   - Autopilot（广泛自主性；更高风险）\r\n4) **硬性禁止**：agent 绝对不能采取的任何行动？\r\n5) **记忆**：是否应该维护精选的 `MEMORY.md`？哪些类别重要？\r\n6) **语气**：简洁 vs 叙述性；严格 vs 温暖；脏话规则；在群组中 \"not the user's voice\"？\r\n7) **工具姿态**：tool-first vs answer-first；验证要求。\r\n\r\n### 第二阶段 — 生成工作区文件\r\n\r\n生成这些文件（最小可行的 OpenClaw agent）：\r\n\r\n- `IDENTITY.md`\r\n- `SOUL.md`\r\n- `AGENTS.md`\r\n- `USER.md`\r\n- `HEARTBEAT.md`（通常默认为空）\r\n\r\n可选：\r\n\r\n- `MEMORY.md`（仅 private sessions）\r\n- `memory/YYYY-MM-DD.md` 种子（今天），带有一个简短的 \"agent created\" 条目\r\n- `TOOLS.md` 起始（如果用户想要 per-environment 笔记）\r\n\r\n使用 `references/templates.md` 中的模板，但根据答案定制内容。\r\n\r\n### 第三阶段 — Guardrails 检查清单\r\n\r\n确保生成的 agent 包含：\r\n\r\n- 明确的 ask-before-destructive 规则。\r\n- 明确的 ask-before-outbound-messages 规则。\r\n- Stop-on-CLI-usage-error 规则。\r\n- Max-iteration / loop breaker 指导。\r\n- Group chat etiquette。\r\n- Sub-agent 说明：基本规则存在于 `AGENTS.md` 中。\r\n\r\n### 第四阶段 — 验收测试（快速）\r\n\r\n提供 5–10 个简短的情景提示来验证行为，例如：\r\n\r\n- \"Draft but do not send a message to X; ask me before sending.\"\r\n- \"Summarize current workspace status without revealing secrets.\"\r\n- \"You hit an unknown flag error; show how you recover using --help.\"\r\n- \"In a group chat, someone asks something generic; decide whether to respond.\"\r\n\r\n## 工作流程：迭代现有 agent\r\n\r\n在改进现有 agent 时，询问：\r\n\r\n1) 你见过的前 3 个失败模式是什么？（loops, overreach, verbosity 等）\r\n2) 你想要什么自主性更改？\r\n3) 任何新的安全边界？\r\n4) Heartbeat 行为有什么变化？\r\n\r\n然后提出针对性的 diff：\r\n\r\n- `SOUL.md`（persona/tone/boundaries）\r\n- `AGENTS.md`（operating rules + memory + delegation）\r\n- `HEARTBEAT.md`（小检查清单）\r\n\r\n保持更改最小且精确。",
+ "config": {}
+}

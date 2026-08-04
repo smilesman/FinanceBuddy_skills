@@ -1,0 +1,25 @@
+{
+ "id": "131",
+ "kind": "mcp",
+ "name": "cline-internal",
+ "fingerprint_md5": "92bf592f38abb4ba65f04078baaa3d3a",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP服务器集合\r\n\r\n为Cline、Roo和Claude Desktop设计的模型上下文协议（MCP）服务器集合。\r\n\r\n## 概述\r\n\r\n该存储库包含一套全面的MCP服务器，使AI助手能够通过标准化协议与本地和远程资源进行交互。\r\n\r\n### 可用服务器\r\n\r\n1. **临床MCP服务器** （端口8080）\r\n\r\n   - 内部工作流编排\r\n   - 代理任务执行\r\n   - 内存管理\r\n   - 系统执行能力\r\n\r\n1. **Roo MCP服务器** （端口8081）\r\n\r\n   - Web抓取和自动化\r\n   - 使用Playwright进行浏览器控制\r\n   - 表单填写自动化\r\n   - 截图/PDF截图\r\n   - 监督会议\r\n\r\n1. **克劳德桌面MCP服务器** （端口8082）\r\n\r\n   - 本地文件操作\r\n   - Shell命令执行\r\n   - 桌面提醒\r\n   - LLM集成（Ollama）\r\n   - 系统信息访问\r\n\r\n## 快速开始\r\n\r\n### 使用Docker\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/mows21/mcp-servers.git\r\ncd mcp-servers\r\n\r\n# Start all servers\r\ndocker-compose up -d\r\n\r\n# Check server health\r\ndocker-compose ps\r\n\r\n# View logs\r\ndocker-compose logs -f\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\n# Install requirements for each server\r\ncd cline-mcp && pip install -r requirements.txt\r\ncd ../roo-mcp && pip install -r requirements.txt\r\ncd ../claude-desktop-mcp && pip install -r requirements.txt\r\n\r\n# Start servers individually\r\ncd cline-mcp && python main.py\r\ncd ../roo-mcp && python main.py\r\ncd ../claude-desktop-mcp && python main.py\r\n```\r\n\r\n## 配置\r\n\r\n### Claude桌面集成\r\n\r\n增添 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cline-internal\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"exec\", \"-i\", \"cline-mcp-server\", \"python\", \"main.py\"]\r\n    },\r\n    \"roo-automation\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"exec\", \"-i\", \"roo-mcp-server\", \"python\", \"main.py\"]\r\n    },\r\n    \"claude-desktop-local\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"exec\", \"-i\", \"claude-desktop-mcp-server\", \"python\", \"main.py\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 建筑\r\n\r\nMCP服务器通过以下方式进行通信：\r\n\r\n- 统一 `/mcp` 端点\r\n- JSON-RPC协议\r\n- Docker网络隔离\r\n- 事件驱动架构\r\n\r\n## API文档\r\n\r\n### 临床MCP服务器\r\n\r\n- `POST /agent/run` -执行代理任务\r\n- `POST /workflow` -运行工作流\r\n- `GET/POST/DELETE /memory` -内存管理\r\n- `POST /exec` -系统命令执行\r\n\r\n### Roo MCP服务器\r\n\r\n- `POST /scrape/url` -网络抓取\r\n- `POST /form/fill` -表单自动化\r\n- `POST /watchdog` -会话监控\r\n- `POST /snapshot` -页面捕获\r\n\r\n### 克劳德桌面MCP服务器\r\n\r\n- `POST /ask` -LLM互动\r\n- `GET /file/read` -文件读取\r\n- `POST /file/write` -文件写入\r\n- `POST /shell/run` -Shell执行\r\n- `POST /notify` -桌面通知\r\n\r\n## 安全\r\n\r\n- 通过Docker实现网络隔离\r\n- 基于令牌的身份验证\r\n- 输入验证和净化\r\n- 资源限制和健康检查\r\n\r\n## 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建功能分支\r\n1. 提交您的更改\r\n1. 推到分支\r\n1. 创建拉取请求\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 详细信息文件\r\n\r\n## 联系\r\n\r\n如有疑问和支持，请在GitHub上发布问题。\r\n\r\n## 致谢\r\n\r\n为模型上下文协议生态系统构建，以增强AI代理功能。\r\n",
+ "config": {
+  "cline-internal": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "exec",
+    "-i",
+    "cline-mcp-server",
+    "python",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

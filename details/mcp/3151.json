@@ -1,0 +1,28 @@
+{
+ "id": "3151",
+ "kind": "mcp",
+ "name": "mapflow",
+ "fingerprint_md5": "e389b6e9f228b3f68972275e8789b2e0",
+ "download_count": 0,
+ "category": "地图服务",
+ "tags": "",
+ "version": "",
+ "readme": "# mapflow mcp\r\n\r\nMCP服务器 [Mapflow](https://mapflow.ai) 地理空间人工智能平台。使AI助手能够运行卫星图像分析任务。\r\n\r\n## Docker快速入门\r\n\r\n```bash\r\ndocker run -i --rm -e MAPFLOW_TOKEN=your_token ghcr.io/geoalert/mapflow-mcp:latest\r\n```\r\n\r\n## 配置\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add mapflow -e MAPFLOW_TOKEN=your_token -- docker run -i --rm -e MAPFLOW_TOKEN ghcr.io/geoalert/mapflow-mcp:latest\r\n```\r\n\r\n### 克劳德桌面版\r\n\r\n编辑 `~/Library/Application Support/Claude/claude_desktop_config.json` （macOS）或 `%APPDATA%\\Claude\\claude_desktop_config.json` （Windows）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mapflow\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"-e\", \"MAPFLOW_TOKEN\", \"ghcr.io/geoalert/mapflow-mcp:latest\"],\r\n      \"env\": {\r\n        \"MAPFLOW_TOKEN\": \"your_token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n编辑 `~/.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mapflow\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"-e\", \"MAPFLOW_TOKEN\", \"ghcr.io/geoalert/mapflow-mcp:latest\"],\r\n      \"env\": {\r\n        \"MAPFLOW_TOKEN\": \"your_token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 帆板运动\r\n\r\n编辑 `~/.codeium/windsurf/mcp_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mapflow\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"-e\", \"MAPFLOW_TOKEN\", \"ghcr.io/geoalert/mapflow-mcp:latest\"],\r\n      \"env\": {\r\n        \"MAPFLOW_TOKEN\": \"your_token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### VS代码（副本）\r\n\r\n编辑 `.vscode/mcp.json` 在您的工作区或 `~/.vscode/mcp.json` 全球地：\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"mapflow\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"-e\", \"MAPFLOW_TOKEN\", \"ghcr.io/geoalert/mapflow-mcp:latest\"],\r\n      \"env\": {\r\n        \"MAPFLOW_TOKEN\": \"your_token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 从源代码运行\r\n\r\n```bash\r\nbun install\r\nMAPFLOW_TOKEN=your_token bun run src/server.ts\r\n```\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `start-processing` |使用GeoJSON AOI创建Mapflow处理任务|\r\n| `get-processing` |获取处理任务的状态和结果|\r\n| `calculate-cost` |开始前估算学分成本|\r\n| `get-geoboundary` |在OSM提名中搜索行政边界|\r\n\r\n## 资源\r\n\r\n|资源|描述|\r\n|----------|-------------|\r\n| `mapflow://models` |可用的AI模型|\r\n| `mapflow://models/{name}/blocks` |模型的后处理块|\r\n| `mapflow://limits` |用户处理限额和积分|\r\n| `mapflow://imagery-sources` |可用的卫星图像源|\r\n\r\n## 获取令牌\r\n\r\n在获取Mapflow API令牌 [附录mapflow.ai](https://app.mapflow.ai).\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "mapflow": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "MAPFLOW_TOKEN",
+    "ghcr.io/geoalert/mapflow-mcp:latest"
+   ],
+   "env": {
+    "MAPFLOW_TOKEN": "your_token"
+   }
+  }
+ }
+}

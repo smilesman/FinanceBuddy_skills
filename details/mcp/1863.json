@@ -1,0 +1,22 @@
+{
+ "id": "1863",
+ "kind": "mcp",
+ "name": "bitcoinjs",
+ "fingerprint_md5": "b2e56279fffdb6a326e842d57df7bfaf",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# BitcoinJS MCP 服务器\r\n\r\n一个模型上下文协议（MCP）服务器，使用bitcoinjs库提供比特币开发工具。此服务器使Claude Code和其他MCP客户端能够执行与比特币相关的操作，如地址生成、交易创建和脚本编译。\r\n\r\n## 特性\r\n\r\n- **地址生成**：生成所有类型的比特币地址（P2PKH、P2SH、P2WPKH、P2WSH、P2TR）\r\n- **交易处理**创建、签署和分析比特币交易\r\n- **PSBT支持**：处理部分签名的比特币交易\r\n- **脚本操作**：编译和分析比特币脚本\r\n- **网络支持**：主网、测试网和重新测试配置\r\n- **验证**：全面的输入验证和错误处理\r\n\r\n## 安装与使用\r\n\r\n### 对于MCP客户端（克劳德代码等）\r\n\r\n**步骤1:全局安装（必需）**\r\n\r\n```bash\r\nnpm install -g bitcoinjs-mcp-server\r\n```\r\n\r\n**步骤2：添加到MCP设置(`.claude.json` 或 `.mcp.json`)**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bitcoinjs\": {\r\n      \"command\": \"bitcoinjs-mcp-server\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n就是这样！服务器现在已准备好与您的MCP客户端一起使用。\r\n\r\n**替代方案：使用npx（自动安装）**\r\n\r\n\r\n**If you prefer not to install globally**\r\n\r\n添加到MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bitcoinjs\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"bitcoinjs-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n注意：此方法可能启动时间较慢，因为每次使用时都会下载包。\r\n\r\n\r\n**Development Setup**\r\n\r\n```bash\r\ngit clone https://github.com/Odyssey98/bitcoinjs-mcp-server.git\r\ncd bitcoinjs-mcp-server\r\nnpm install && npm run build\r\n```\r\n\r\n然后使用：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bitcoinjs\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"dist/index.js\"],\r\n      \"cwd\": \"/path/to/bitcoinjs-mcp-server\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\n### 为了发展\r\n\r\n```bash\r\n# Clone and install\r\ngit clone https://github.com/Odyssey98/bitcoinjs-mcp-server.git\r\ncd bitcoinjs-mcp-server\r\nnpm install\r\nnpm run build\r\n\r\n# Start the server\r\nnpm start\r\n```\r\n\r\n## 可用工具\r\n\r\n### 地址工具\r\n\r\n- `generate_address`生成不同类型的比特币地址\r\n- `validate_address`验证比特币地址格式和网络\r\n- `decode_address`：将地址解码为脚本和其他详细信息\r\n\r\n### 交易工具\r\n\r\n- `create_transaction`：创建新的比特币交易\r\n- `sign_transaction`：使用私钥签署交易\r\n- `decode_transaction`：解码原始交易十六进制\r\n- `estimate_tx_size`：估算交易规模和费用\r\n\r\n### PSBT工具\r\n\r\n- `create_psbt`：创建部分签名的比特币交易\r\n- `update_psbt`：向现有PSBT添加输入/输出\r\n- `sign_psbt`：用密钥签署PSBT\r\n- `finalize_psbt`：完成并提取交易\r\n\r\n### 实用工具\r\n\r\n- `generate_keypair`：生成新的密钥对\r\n- `create_multisig`：创建多重签名地址\r\n- `compile_script`：编译比特币脚本\r\n- `hash_message`：用于签名的哈希消息\r\n\r\n## 示例用法\r\n\r\n在MCP客户端中配置后，您可以使用以下工具：\r\n\r\n- 生成新的比特币地址：“生成P2WPKH测试网地址”\r\n- 创建交易：“创建一笔交易，从\\[地址\\]向\\[地址\\]发送0.001 BTC”\r\n- 使用多重签名：“使用这些公钥创建一个2-of-3的多重签名地址：\\[…\\]”\r\n- 对交易进行签名：“使用私钥对此交易进行十六进制签名”\r\n\r\n## 发展\r\n\r\n```bash\r\n# Development mode with hot reload\r\nnpm run dev\r\n\r\n# Run tests\r\nnpm test\r\n\r\n# Lint code\r\nnpm run lint\r\n\r\n# Format code\r\nnpm run format\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "bitcoinjs": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "bitcoinjs-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

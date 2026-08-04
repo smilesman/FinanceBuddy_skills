@@ -1,0 +1,24 @@
+{
+ "id": "1362",
+ "kind": "mcp",
+ "name": "cairo-coder",
+ "fingerprint_md5": "00b14d93f97df83b56825fb2708f23e3",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "<div align=\"center\">\r\n  \r\n\r\n[](https://www.npmjs.com/package/@kasarlabs/cairo-coder-mcp)\r\n[](https://www.npmjs.com/package/@kasarlabs/cairo-coder-mcp)\r\n[](https://github.com/kasarlabs/cairo-coder-mcp/stargazers)\r\n[](https://opensource.org/licenses/MIT)\r\n\r\n</div>\r\n\r\n# 开罗编码器MCP服务器\r\n\r\n通过开罗编解码器API为开罗和Starknet开发提供模型上下文协议（MCP）服务器。\r\n\r\n## ⚠️ 存储库已移动/已弃用\r\n\r\n该项目目前位于 [**询问Starknet monorepo**](https://github.com/KasarLabs/ask-starknet/tree/main/packages/mcps/cairo-coder)\r\n\r\nnpm包仍然发布 [**这里**](https://www.npmjs.com/package/@kasarlabs/cairo-coder-mcp)\r\n\r\n此仓库将不会收到进一步的更新。\r\n\r\n## 快速开始\r\n\r\n### 通过Claude代码安装\r\n\r\n```bash\r\n# Install Cairo Coder MCP\r\nclaude mcp add cairo-coder -e CAIRO_CODER_API_KEY=YOUR-API-KEY-HERE -- npx -y @kasarlabs/cairo-coder-mcp\r\n```\r\n\r\n**备注**：替换 `YOUR-API-KEY-HERE` 使用来自的实际API密钥 [cairo-coder.com](https://cairo-coder.com)\r\n\r\n### 手动使用\r\n\r\n将此MCP服务器直接与npx一起使用：\r\n\r\n```bash\r\nnpx -y @kasarlabs/cairo-coder-mcp\r\n```\r\n\r\n## 配置\r\n\r\n服务器支持两种操作模式：\r\n\r\n### 模式1：公共开罗编解码器API（默认）\r\n\r\n使用官方开罗编解码器API和您的API密钥。\r\n\r\n**环境变量：**\r\n\r\n- `CAIRO_CODER_API_KEY`：您的开罗编码程序API密钥（必需）\r\n\r\n**MCP客户端设置：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cairo-coder\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@kasarlabs/cairo-coder-mcp\"],\r\n      \"env\": {\r\n        \"CAIRO_CODER_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 模式2：本地/自定义端点\r\n\r\n使用本地或自定义Cairo Coder API端点（不需要API密钥）。\r\n\r\n**环境变量：**\r\n\r\n- `CAIRO_CODER_API_ENDPOINT`：您的本地端点URL（例如，“http://localhost:8000\")\r\n\r\n**MCP客户端设置：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cairo-coder\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@kasarlabs/cairo-coder-mcp\"],\r\n      \"env\": {\r\n        \"CAIRO_CODER_API_ENDPOINT\": \"http://localhost:8000\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **注：** 使用时 `CAIRO_CODER_API_ENDPOINT`，服务器自动切换到本地模式，并且不需要或使用API密钥。\r\n\r\n## 可用工具\r\n\r\n### 助理_与_凯罗\r\n\r\n获得开罗和斯塔克内特开发任务的帮助。\r\n\r\n**参数：**\r\n\r\n- `query` （string，必填）：您的开罗/斯塔克内特发展问题\r\n- `context` （字符串，可选）：其他上下文或代码片段\r\n\r\n**示例：**\r\n\r\n```typescript\r\n// Simple request\r\n{\r\n  \"query\": \"Write a simple Cairo contract that implements a counter\"\r\n}\r\n\r\n// With context\r\n{\r\n  \"query\": \"How can I optimize this contract?\",\r\n  \"context\": \"#[starknet::contract]\\nmod Counter {\\n    // existing code here\\n}\"\r\n}\r\n```\r\n\r\n## 你能做什么\r\n\r\n- **写开罗代码**：生成智能合约和开罗代码\r\n- **重构代码**：改进和优化现有代码\r\n- **机具功能**：完成TODO并实现特定功能\r\n- **学习Starknet**：获取有关Starknet生态系统的上下文信息\r\n- **最佳实践**：根据开罗/Starknet文件接受咨询\r\n\r\n## 获得更好结果的提示\r\n\r\n- 使用特定的查询（例如，“使用OpenZeppelin构建ERC20”而不仅仅是“ERC20”）\r\n- 使用现有代码时包含相关代码片段\r\n- 为更准确的回答提供必要的背景\r\n\r\n## 发展\r\n\r\n### 先决条件\r\n\r\n- Node.js>=18\r\n- npm或纱线\r\n\r\n### 本地安装\r\n\r\n```bash\r\ngit clone <repository-url>\r\ncd cairo-coder-mcp\r\nnpm install\r\n```\r\n\r\n### 可用脚本\r\n\r\n```bash\r\nnpm run build    # Build the project\r\nnpm run dev      # Start in development mode\r\nnpm start        # Start in production mode\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 支持\r\n\r\n对于问题和疑问：\r\n\r\n- GitHub问题： [创建问题](https://github.com/kasarlabs/cairo-coder-mcp/issues)\r\n- MCP文件： [模型上下文协议](https://modelcontextprotocol.io/)\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请在提交PR之前查看捐款指南。\r\n",
+ "config": {
+  "cairo-coder": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@kasarlabs/cairo-coder-mcp"
+   ],
+   "env": {
+    "CAIRO_CODER_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

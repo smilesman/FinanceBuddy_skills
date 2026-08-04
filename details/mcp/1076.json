@@ -1,0 +1,24 @@
+{
+ "id": "1076",
+ "kind": "mcp",
+ "name": "juridico",
+ "fingerprint_md5": "80cb60c830e609dbd24b4405c6539670",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# juridico-mcp-server\r\n\r\nMCP server para **jurisprudência brasileira** — consolida 4 fontes públicas num único server Python/FastMCP.\r\n\r\n## Fontes Integradas\r\n\r\n| Tool | Fonte | Sintaxe | Dados |\r\n|------|-------|---------|-------|\r\n| `cjf_buscar_jurisprudencia` | CJF Unificada | E, OU, NAO, ADJ, PROX | Acórdãos STF, STJ, TRF1-TRF6 |\r\n| `stj_buscar_jurisprudencia` | STJ SCON | Texto livre | Acórdãos, monocráticas STJ |\r\n| `bnp_buscar_precedentes` | Pangea/BNP (CNJ) | +termo, -termo, \"frase\" | Precedentes com tese firmada |\r\n| `tjdft_buscar_jurisprudencia` | JurisDF TJDFT | E, OU, NAO, \"aspas\", $ | Acórdãos, monocráticas TJDFT |\r\n| `bnp_listar_tipos` | BNP | — | Tipos de precedentes |\r\n| `listar_fontes` | — | — | Metadados das fontes |\r\n\r\n## Requisitos\r\n\r\n- Python >= 3.10\r\n- uv (recomendado) ou pip\r\n\r\n## Instalação\r\n\r\n```bash\r\ncd juridico-mcp-server\r\npip install -e .\r\n# ou com uv:\r\nuv pip install -e .\r\n```\r\n\r\n## Claude Desktop\r\n\r\nAdicione ao `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"juridico\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"-m\", \"juridico_mcp\"],\r\n      \"env\": {\r\n        \"PYTHONPATH\": \"C:\\\\GIT\\\\juridico-mcp-server\\\\src\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\nOu com uv:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"juridico\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"C:\\\\GIT\\\\juridico-mcp-server\", \"run\", \"juridico-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## Sintaxe de Busca por Fonte\r\n\r\n**IMPORTANTE:** Cada fonte tem sintaxe diferente.\r\n\r\n### CJF\r\n```\r\n\"dano moral\" E consumidor\r\npensao E morte NAO militar\r\naposentadoria ADJ especial\r\n```\r\n\r\n### STJ SCON\r\n```\r\nplano de saude reajuste abusivo\r\nsumula 7\r\n```\r\n\r\n### BNP/Pangea\r\n```\r\n+plano +saude +reajuste\r\n\"tema 1066\"\r\n+ICMS +\"base de calculo\" -importacao\r\n```\r\n\r\n### TJDFT JurisDF\r\n```\r\n\"dano moral\" E consumidor\r\nplano$ E saude (wildcard: plano, planos, planejamento...)\r\n```\r\n\r\n## Complementaridade com datajud-mcp-server\r\n\r\nEste server complementa o `datajud-mcp-server` (TypeScript):\r\n\r\n| datajud-mcp-server | juridico-mcp-server |\r\n|---------------------|---------------------|\r\n| Metadados processuais | Jurisprudência e precedentes |\r\n| Capa, partes, movimentações | Ementas, teses, inteiro teor |\r\n| Todos os 90+ tribunais | STF, STJ, TRFs, TJDFT |\r\n| API Elasticsearch DataJud | APIs variadas (REST, scraping) |\r\n\r\n## Licença\r\n\r\nMIT (código próprio). Baseado em endpoints públicos dos tribunais.\r\nBNP client inspirado em georgemarmelstein/bnp-api (MIT).\r\n",
+ "config": {
+  "juridico": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "C:\\GIT\\juridico-mcp-server",
+    "run",
+    "juridico-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

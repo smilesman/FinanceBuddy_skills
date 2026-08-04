@@ -1,0 +1,22 @@
+{
+ "id": "1848",
+ "kind": "mcp",
+ "name": "basicsec",
+ "fingerprint_md5": "04bdd0cd66925c0ad7dad9ee6a73923e",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# BasicSec MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，使用 [基本安全](https://pypi.org/project/basicsec/) 图书馆。\r\n\r\n## 特性\r\n\r\n- **MCP集成**：为AI助手提供完整的模型上下文协议支持\r\n- **DNS安全分析**：SPF、DMARC、DNSSEC验证\r\n- **电子邮件安全检查**：MX记录分析和SMTP测试\r\n- **批处理**：高效扫描多个域\r\n- **被动和主动模式**：在仅DNS或完整SMTP测试之间进行选择\r\n- **性能优化**：设计用于在MCP超时限制内工作\r\n\r\n## 安装\r\n\r\n```bash\r\npip install basicsec-mcp\r\n```\r\n\r\n## MCP服务器使用情况\r\n\r\n### 运行服务器\r\n\r\n```bash\r\nbasicsec-mcp\r\n```\r\n\r\n服务器将启动并监听默认接口上的MCP连接。\r\n\r\n### MCP工具可用\r\n\r\n服务器提供以下MCP工具：\r\n\r\n#### 域扫描工具\r\n\r\n- `passive_scan(domain, dns_timeout=5.0)` -仅DNS安全扫描\r\n- `active_scan(domain, dns_timeout=5.0, smtp_timeout=3.0, smtp_ports=[25,465,587])` -带SMTP测试的完整扫描\r\n- `scan_multiple_domains(domains, scan_type=\"active\", dns_timeout=3.0, smtp_timeout=2.0)` -批量域扫描\r\n- `quick_domain_check(domains, check_types=[\"live\",\"mx\",\"spf\",\"dmarc\"])` -快速批量检查\r\n\r\n#### 个人记录工具\r\n\r\n- `get_mx_records(domain, timeout=5.0)` -获取MX记录\r\n- `get_spf_record(domain, timeout=5.0)` -获取并验证SPF记录\r\n- `get_dmarc_record(domain, timeout=5.0)` -获取并验证DMARC记录\r\n- `check_dnssec_status(domain, timeout=5.0)` -检查DNSSEC状态\r\n- `validate_dnssec_chain(domain, timeout=5.0)` -验证DNSSEC信任链\r\n- `test_smtp_connection(hostname, port=25, timeout=3.0)` -测试SMTP连接\r\n\r\n### Claude桌面集成\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"basicsec\": {\r\n      \"command\": \"basicsec-mcp\",\r\n      \"args\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用uvx：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"basicsec\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--refresh\",\"basicsec-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用示例\r\n\r\n通过MCP连接后，您可以通过AI助手使用这些工具：\r\n\r\n```\r\n\"Scan example.com for email security issues\"\r\n-> Uses passive_scan() or active_scan()\r\n\r\n\"Check SPF and DMARC records for google.com\"\r\n-> Uses get_spf_record() and get_dmarc_record()\r\n\r\n\"Test SMTP connectivity for mail.example.com\"\r\n-> Uses test_smtp_connection()\r\n\r\n\"Quick check these domains: example.com, google.com, github.com\"\r\n-> Uses quick_domain_check()\r\n```\r\n\r\n## 已执行安全检查\r\n\r\n### DNS记录\r\n\r\n- **MX记录**：邮件服务器配置\r\n- **SPF记录**：发件人策略框架验证\r\n- **DMARC 记录**：基于域的消息身份验证\r\n- **域名系统安全扩展**：DNS安全扩展状态和链验证\r\n\r\n### SMTP测试（活动扫描）\r\n\r\n- **连接测试**：验证邮件服务器的可访问性\r\n- **STARTTLS支持**：检查加密能力\r\n- **多个端口**：测试常用SMTP端口（25、465、587）\r\n\r\n## 性能注意事项\r\n\r\nMCP服务器针对响应性进行了优化：\r\n\r\n- **超时管理**：减少批处理操作的超时时间\r\n- **域限制**：批量大小的自动限制\r\n- **快速检查**：最少的DNS查找可快速获得结果\r\n- **错误处理**：故障时的优雅降级\r\n\r\n## 配置\r\n\r\n### 环境变量\r\n\r\n- `BASICSEC_MCP_LOG_LEVEL`：设置日志记录级别（调试、信息、警告、错误）\r\n- `BASICSEC_MCP_DNS_TIMEOUT`：默认DNS超时（秒）\r\n- `BASICSEC_MCP_SMTP_TIMEOUT`：默认SMTP超时时间（秒）\r\n\r\n### 程序化使用\r\n\r\n您还可以直接使用服务器组件：\r\n\r\n```python\r\nfrom basicsec_mcp.server import passive_scan, active_scan\r\n\r\n# Direct function calls\r\nresult = passive_scan(\"example.com\")\r\nprint(f\"SPF Valid: {result['spf_valid']}\")\r\n\r\nresult = active_scan(\"example.com\")\r\nprint(f\"SMTP Working: {result['has_smtp_connection']}\")\r\n```\r\n\r\n## 需求\r\n\r\n- Python 3.8+\r\n- 基本秒>=1.0.0\r\n- mcp>=1.0.0\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install development dependencies\r\npip install -e \".[dev]\"\r\n\r\n# Run tests\r\npytest\r\n\r\n# Run server locally\r\npython -m basicsec_mcp.server\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件。\r\n\r\n## 安全考虑\r\n\r\n此MCP服务器专为 **仅用于防御安全分析**:\r\n\r\n✅ **允许的操作：**\r\n\r\n- DNS记录查找\r\n- 标准SMTP协议测试\r\n- 公共安全记录验证\r\n\r\n❌ **未执行：**\r\n\r\n- 漏洞利用\r\n- 未经授权的访问尝试\r\n- 激进的扫描技术\r\n\r\n始终确保您有扫描目标域的权限。\r\n\r\n## 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建要素分支\r\n1. 添加新功能的测试\r\n1. 确保MCP兼容性\r\n1. 提交拉取请求\r\n\r\n## 相关项目\r\n\r\n- [基本安全](https://pypi.org/project/basicsec/) -核心安全扫描库\r\n- [模型上下文协议](https://modelcontextprotocol.io/) -协议规范\r\n",
+ "config": {
+  "basicsec": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--refresh",
+    "basicsec-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

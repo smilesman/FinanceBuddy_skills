@@ -1,0 +1,21 @@
+{
+ "id": "261",
+ "kind": "mcp",
+ "name": "lemonade-stand",
+ "fingerprint_md5": "69f35caa9424381e56aec5e15381b6d1",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# 🍋 柠檬水支架MCP服务器\r\n\r\n一个简单的模型上下文协议（MCP）服务器的工作示例，允许您通过Claude Desktop玩经典的Lemonade Stand游戏。\r\n\r\n## 什么是MCP？\r\n\r\n模型上下文协议（MCP）是一个开放标准，使像Claude这样的AI模型能够与外部数据源和工具进行交互。此服务器通过将经典的Lemonade Stand游戏实现为Claude可以使用的一组工具来演示MCP的工作原理。\r\n\r\n## 特性\r\n\r\n- 🌤️ 影响销售的动态天气系统\r\n- 💰 供需商业模拟\r\n- 📊 战略定价和库存管理\r\n- 🏁 14天游戏周期，利润跟踪\r\n- 🎮 可通过Claude Desktop完全播放\r\n\r\n## 先决条件\r\n\r\n- [Node.js](https://nodejs.org/) （建议使用v20.11.1或更高版本）\r\n- [克劳德桌面](https://www.anthropic.com/claude/desktop)\r\n- npm（附带Node.js）\r\n\r\n## 快速开始\r\n\r\n1. 克隆此存储库：\r\n\r\n   ```bash\r\n   git clone https://github.com/yourusername/Lemonade-Stand-MCP-Server.git\r\n   cd Lemonade-Stand-MCP-Server\r\n   ```\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   npm install\r\n   ```\r\n\r\n1. 查找您的Claude Desktop配置文件：\r\n\r\n   - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n1. 配置Claude桌面：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"lemonade-stand\": {\r\n         \"command\": \"node\",\r\n         \"args\": [\r\n           \"/absolute/path/to/Lemonade-Stand-MCP-Server/server.js\"\r\n         ]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. 重新启动克劳德桌面\r\n\r\n1. 现在，您应该在Claude Desktop中看到一个锤子图标，表示MCP服务器已连接！\r\n\r\n## 玩游戏\r\n\r\n服务器连接后，只需与Claude开始新的聊天，然后说：\r\n\r\n> “使用可用的MCP工具玩完整的Lemonade Stand游戏。”\r\n\r\n克劳德将：\r\n\r\n1. 开始新游戏\r\n1. 分析天气状况\r\n1. 就供应和定价做出战略决策\r\n1. 报告每日结果\r\n1. 持续到第14天，否则您的业务将失败\r\n\r\n### 游戏机制\r\n\r\n- **天气系统**：温度和条件影响客户流量\r\n- **供应链**：以不同的价格购买杯子、柠檬、糖和冰\r\n- **价格策略**：设定每杯的价格，以平衡利润和需求\r\n- **库存管理**：冰每天融化；明智地管理你的物资\r\n- **客户需求**：基于天气、价格和可用库存\r\n\r\n### 可用工具\r\n\r\n服务器将这些MCP工具暴露给Claude：\r\n\r\n- `start_game`：开始新的游戏会话\r\n- `get_game_state`：检查当前状态、资金、库存和天气\r\n- `buy_supplies`：购买杯子、柠檬、糖和冰\r\n- `set_price`设定每杯柠檬水的价格\r\n- `sell_lemonade`：营业并查看每日业绩\r\n- `next_day`：提前到第二天\r\n\r\n## 配置示例\r\n\r\n### WSL用户\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"lemonade-stand\": {\r\n      \"command\": \"wsl.exe\",\r\n      \"args\": [\r\n        \"/home/username/.nvm/versions/node/v20.11.1/bin/node\",\r\n        \"/home/username/projects/Lemonade-Stand-MCP-Server/server.js\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"lemonade-stand\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"/path/to/Lemonade-Stand-MCP-Server/server.js\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 故障排除\r\n\r\n1. **Claude Desktop中没有锤子图标**:\r\n\r\n   - 确保Claude Desktop是最新的\r\n   - 检查配置文件路径是否正确\r\n   - 验证Node.js是否已安装且可访问\r\n   - 检查克劳德桌面登录：\r\n     - 窗户： `%APPDATA%\\Claude\\logs\\`\r\n     - macOS： `~/Library/Logs/Claude/`\r\n\r\n1. **服务器连接错误**:\r\n\r\n   - 验证配置中的服务器路径是否为绝对路径\r\n   - 使用直接测试服务器 `node server.js`\r\n   - 检查Claude Desktop日志中是否有任何错误\r\n\r\n1. **WSL特定问题**:\r\n\r\n   - 确保WSL中安装了Node.js\r\n   - 使用Node.js二进制文件的完整路径\r\n   - 检查WSL是否正确安装并运行\r\n\r\n## 发展\r\n\r\n要修改服务器，请执行以下操作：\r\n\r\n1. 编辑 `server.js` 更改游戏机制或添加新工具\r\n1. 本地测试 `node server.js`\r\n1. 重新启动Claude Desktop以加载更改\r\n\r\n## 项目结构\r\n\r\n```\r\nLemonade-Stand-MCP-Server/\r\n├── server.js              # Main MCP server implementation\r\n├── package.json           # Node.js dependencies\r\n└── README.md             # This file\r\n```\r\n\r\n## 运作原理\r\n\r\n此MCP服务器实现了一个简单的游戏循环：\r\n\r\n1. 服务器在内存中维护游戏状态\r\n1. 每个工具代表一个游戏动作（买入、卖出等）\r\n1. 当Claude调用工具时，服务器会更新游戏状态\r\n1. 结果以JSON格式返回给Claude\r\n1. 克劳德分析结果并决定下一步行动\r\n\r\n这展示了MCP如何用于创建交互体验，其中AI模型可以维护状态、做出决策并与复杂系统交互。\r\n\r\n## 贡献\r\n\r\n如果您有改进的想法或发现错误，请随时打开问题或提交pull请求。\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n______________________________________________________________________\r\n\r\n**作为模型上下文协议实际应用的示例而构建。**\r\n",
+ "config": {
+  "lemonade-stand": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "/path/to/Lemonade-Stand-MCP-Server/server.js"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "612",
+ "kind": "mcp",
+ "name": "cookwith",
+ "fingerprint_md5": "24a989b599add00170a6d6b6e5228a5a",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 使用MCP服务器进行烹饪\r\n\r\nMCP（模型上下文协议）服务器，使用Cookwith的高级烹饪人工智能提供人工智能驱动的食谱生成和转换工具。\r\n\r\n## 特性\r\n\r\n- **配方生成**：根据自然语言描述创建自定义食谱\r\n- **配方转换**：根据饮食需求、份量或其他要求修改现有食谱\r\n- **饮食支持**：处理过敏、饮食限制和营养目标\r\n- **智能适应**：根据卡路里、蛋白质目标和食用次数进行调整\r\n\r\n## 安装\r\n\r\n### 通过MCP注册表\r\n\r\n```bash\r\nnpx @modelcontextprotocol/create-server install @cookwith/mcp-server\r\n```\r\n\r\n### 通过npm\r\n\r\n```bash\r\nnpm install -g @cookwith/mcp-server\r\n```\r\n\r\n### 适用于克劳德桌面\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cookwith\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@cookwith/mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### `generate_recipe`\r\n\r\n根据自然语言指令生成新配方。\r\n\r\n**参数：**\r\n\r\n- `prompt` （字符串，必填）：所需配方的自然语言描述\r\n- `dietaryRestrictions` （数组）：饮食限制（例如素食、纯素、无麸质）\r\n- `allergies` （数组）：因过敏而应避免的成分\r\n- `dislikes` （array）：用户不喜欢的食物\r\n- `calories` （string）：每份目标卡路里\r\n- `protein` （string）：每份目标蛋白质的克数\r\n- `servings` （number）：份数（1-20，默认值：4）\r\n\r\n**例子：**\r\n\r\n```javascript\r\n{\r\n  \"prompt\": \"A healthy pasta dish with lots of vegetables\",\r\n  \"dietaryRestrictions\": [\"vegetarian\"],\r\n  \"calories\": \"500\",\r\n  \"servings\": 2\r\n}\r\n```\r\n\r\n### `transform_recipe`\r\n\r\n根据说明转换或修改现有配方。\r\n\r\n**参数：**\r\n\r\n- `recipe` （object，必填）：要转换的配方\r\n  - `title` （字符串）：配方标题\r\n  - `description` （string）：配方说明\r\n  - `ingredients` （array）：成分列表\r\n  - `instructions` （数组）：烹饪说明\r\n  - `servings` （数量）：份数\r\n  - 营养、时间等其他可选字段。\r\n- `instructions` （string，必填）：如何转换配方\r\n- `calories` （string）：每份新的目标卡路里\r\n- `protein` （string）：每份新的目标蛋白\r\n- `servings` （数量）：新的份数\r\n\r\n**例子：**\r\n\r\n```javascript\r\n{\r\n  \"recipe\": {\r\n    \"title\": \"Classic Spaghetti Carbonara\",\r\n    \"description\": \"Traditional Italian pasta dish\",\r\n    \"ingredients\": [\"400g spaghetti\", \"200g guanciale\", \"4 eggs\", \"100g pecorino\"],\r\n    \"instructions\": [\"Cook pasta\", \"Fry guanciale\", \"Mix eggs and cheese\", \"Combine\"],\r\n    \"servings\": 4\r\n  },\r\n  \"instructions\": \"Make it vegetarian and reduce calories\",\r\n  \"calories\": \"400\"\r\n}\r\n```\r\n\r\n## 使用示例\r\n\r\n### 与克劳德\r\n\r\n配置后，您可以使用自然语言与工具进行交互：\r\n\r\n```\r\n\"Generate a healthy dinner recipe for 2 people with chicken and vegetables, around 500 calories per serving\"\r\n\r\n\"Transform this pasta recipe to be gluten-free and dairy-free\"\r\n```\r\n\r\n### 程序化使用\r\n\r\n```javascript\r\nimport { Client } from '@modelcontextprotocol/sdk';\r\n\r\nconst client = new Client({\r\n  name: 'my-app',\r\n  version: '1.0.0'\r\n});\r\n\r\nawait client.connect('npx', ['@cookwith/mcp-server']);\r\n\r\n// Generate a recipe\r\nconst result = await client.callTool('generate_recipe', {\r\n  prompt: 'Quick and healthy breakfast',\r\n  calories: '350',\r\n  servings: 1\r\n});\r\n```\r\n\r\n## 发展\r\n\r\n### 从源头构建\r\n\r\n```bash\r\ngit clone https://github.com/blaideinc/cookwith-mcp\r\ncd cookwith-mcp\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n### 本地运行\r\n\r\n```bash\r\nnpm start\r\n```\r\n\r\n### 测试\r\n\r\n```bash\r\nnpm test\r\n```\r\n\r\n## API端点\r\n\r\nMCP服务器也可以通过HTTP访问：\r\n\r\n- 生产： `https://cookwith.co/api/mcp`\r\n- 发展： `http://localhost:3000/api/mcp`\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 支持\r\n\r\n- GitHub问题： [https://github.com/blaideinc/cookwith-mcp/issues](https://github.com/blaideinc/cookwith-mcp/issues)\r\n- 网站： [https://cookwith.co](https://cookwith.co)\r\n\r\n## 关于Cookwith\r\n\r\nCookwith是一个基于人工智能的烹饪平台，可根据您的偏好、饮食限制和口味特征生成个性化食谱。了解更多信息，请访问 [cookwith.co](https://cookwith.co).\r\n",
+ "config": {
+  "cookwith": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@cookwith/mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

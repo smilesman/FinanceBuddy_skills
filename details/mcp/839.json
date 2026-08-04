@@ -1,0 +1,22 @@
+{
+ "id": "839",
+ "kind": "mcp",
+ "name": "reputation",
+ "fingerprint_md5": "e3089ee55ae50b1dd022cf68e58e47b5",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# 信誉情报MCP服务器\r\n\r\nMCP（模型上下文协议）服务器，使AI代理能够访问Reddit、Hacker News和YouTube的实时产品声誉情报。\r\n\r\n建在 [x402产品声誉API](https://github.com/andichen0420/x402-reputation-api).\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `analyze_product` |完整的声誉报告，维度评分（0-100）|\r\n| `compare_products` |2-5种产品的直接比较|\r\n| `monitor_sentiment` |快速7天情绪脉搏|\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"reputation\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"/path/to/reputation-mcp-server/src/index.ts\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n添加 `.cursor/mcp.json` 在您的项目中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"reputation\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"/path/to/reputation-mcp-server/src/index.ts\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 构建与运行\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\nnpm start\r\n```\r\n\r\n### 发展\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n### 使用MCP检查员进行测试\r\n\r\n```bash\r\nnpm run inspect\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|默认值|描述|\r\n|----------|---------|-------------|\r\n| `REPUTATION_API_URL` | `https://x402-reputation-api-production.up.railway.app` |API基本URL|\r\n| `REPUTATION_API_KEY` | _（空）_ |用于身份验证访问的可选API密钥|\r\n\r\n## 示例用法\r\n\r\n连接后，询问您的AI助手：\r\n\r\n- “分析Supabase的声誉”\r\n- “比较Vercel、Netlify和Cloudflare Pages”\r\n- “目前对Cursor IDE的看法是什么？”\r\n- “我应该在新项目中使用Firebase还是Supabase？”\r\n\r\n## 运作原理\r\n\r\n```\r\nUser → AI Agent (Claude/ChatGPT) → MCP Server → x402 Reputation API → Reddit + HN + YouTube\r\n                                                                          ↓\r\n                                                                    Claude Sonnet LLM\r\n                                                                          ↓\r\n                                                                 Structured Report ← ← ←\r\n```\r\n\r\n## 数据源\r\n\r\n- **红迪** -公共JSON API、社区讨论和评论\r\n- **黑客新闻** -Algolia API，以开发人员为中心的评论\r\n- **油管** -数据API v3+转录提取，视频评论\r\n\r\n## 链接\r\n\r\n- [实时API](https://x402-reputation-api-production.up.railway.app/health)\r\n- [x402扫描](https://www.x402scan.com/server/8ae848b3-ea71-4b2a-8ea1-fa6bec508ca5)\r\n- [API源代码](https://github.com/andichen0420/x402-reputation-api)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "reputation": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "tsx",
+    "/path/to/reputation-mcp-server/src/index.ts"
+   ],
+   "env": {}
+  }
+ }
+}

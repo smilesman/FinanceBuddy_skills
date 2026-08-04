@@ -1,0 +1,22 @@
+{
+ "id": "1337",
+ "kind": "mcp",
+ "name": "apple-shortcuts",
+ "fingerprint_md5": "21a95a327576b9107b8f3008caa53c46",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 苹果快捷方式MCP服务器🤖\r\n\r\n一个模型上下文协议（MCP）服务器，让像克劳德这样的人工智能助手控制苹果快捷方式的自动化。这使得AI模型能够在macOS上以安全和可控的方式触发快捷方式并自动化任务。\r\n\r\n<a href=\"https://www.npmjs.com/package/mcp-server-apple-shortcuts\"></a>\r\n\r\n<a href=\"https://glama.ai/mcp/servers/15z6abk6p2\"></a>\r\n\r\n## 什么是MCP？ 🤔\r\n\r\n模型上下文协议（MCP）是一个允许人工智能应用程序（如Claude Desktop）连接到外部工具和数据源的系统。它为AI助手提供了一种清晰安全的方式来使用本地服务和API，同时让用户保持控制。\r\n\r\n## 这个服务器做什么？ 🚀\r\n\r\n苹果快捷方式MCP服务器：\r\n\r\n- 使AI助手能够列出可用的快捷方式\r\n- 允许使用可选输入参数按名称运行快捷方式\r\n- 为自动化控制提供了一个简单的界面\r\n\r\n## 先决条件📋\r\n\r\n在开始之前，请确保您已经：\r\n\r\n- [Node.js](https://nodejs.org/) （v18或更高版本）\r\n- [克劳德桌面](https://claude.ai/download) 安装\r\n- 配置了快捷方式应用程序的macOS\r\n\r\n## 使用Apple快捷方式服务器的配置⚙️\r\n\r\n以下是使用Apple Shortcuts服务器的Claude Desktop配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"apple-shortcuts\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-server-apple-shortcuts\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 构建Apple快捷方式服务器并在本地运行🛠️\r\n\r\n1. 克隆此存储库：\r\n\r\n```sh\r\ngit clone git@github.com:recursechat/mcp-server-apple-shortcuts.git\r\n```\r\n\r\n2. 安装依赖项：\r\n\r\n```sh\r\nnpm install\r\n```\r\n\r\n3. 生成项目\r\n\r\n```sh\r\nnpm run build\r\n```\r\n\r\n以下是Claude Desktop配置，用于使用本地构建的Apple Shortcuts服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"apple-shortcuts\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"/path/to/mcp-server-apple-shortcuts/build/index.js\"],\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\n## 用法🎯\r\n\r\n你可以问克劳德“列出快捷方式”，或者用快捷方式名称运行特定的快捷方式，例如“获取当天的单词”或“播放一首歌”。\r\n\r\n## 许可证⚖️\r\n\r\n阿帕奇-2.0\r\n",
+ "config": {
+  "apple-shortcuts": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-server-apple-shortcuts"
+   ],
+   "env": {}
+  }
+ }
+}

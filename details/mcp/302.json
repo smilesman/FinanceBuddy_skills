@@ -1,0 +1,26 @@
+{
+ "id": "302",
+ "kind": "mcp",
+ "name": "midi-mcp",
+ "fingerprint_md5": "3febe5bce54a70929018ed7e348aec7d",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# midi mcp\r\n\r\n提供MIDI文件生成和播放功能的模型上下文协议（MCP）服务器。\r\n\r\n## 可用工具\r\n\r\n- **create_midi**：生成MIDI文件。\r\n\r\n  - 参数：\r\n    - `title`：MIDI文件标题（用作文件名）。\r\n    - `composition`：一本描述构成的词典（BPM、时间特征、轨迹、注释）。\r\n    - `composition_file`：包含合成数据的JSON文件的路径。\r\n    - `output_path`：输出文件名（仅名称，无路径），默认保存到指定的输出目录。\r\n  - 返回：成功消息和文件路径。\r\n\r\n- **play_midi**：播放指定的MIDI文件。\r\n\r\n  - 参数：\r\n    - `midi_path`：MIDI文件的完整路径。\r\n  - 返回：播放成功消息。\r\n\r\n## 快速安装和启动\r\n\r\n1. 安装依赖项：\r\n\r\n   从项目根目录运行：\r\n\r\n   ```bash\r\n   uv sync\r\n   ```\r\n\r\n1. 启动服务器（输出目录可自定义）：\r\n\r\n按如下方式配置您的MCP兼容客户端（例如Claude Desktop），其中 `\\\\PATH\\\\TO\\\\midi-mcp\\\\src` 是MIDI MCP源的实际路径，以及 `\\\\PATH\\\\TO\\\\midi_output` 是输出目录：\r\n\r\n### Claude桌面MCP服务器配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"midi-mcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"\\\\PATH\\\\TO\\\\midi-mcp\\\\src\",\r\n        \"run\",\r\n        \"server.py\",\r\n        \"--output_directory\",\r\n        \"\\\\PATH\\\\TO\\\\midi_output\"\r\n      ]\r\n    },\r\n    \"sequential-thinking\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-sequential-thinking\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### VSCode MCP服务器配置\r\n\r\n在您的项目中，配置 [.vcode/mcp.json](.vscode/mcp.json):\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"midi-mcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"\\\\PATH\\\\TO\\\\midi-mcp\\\\src\",\r\n        \"run\",\r\n        \"server.py\",\r\n        \"--output_directory\",\r\n        \"\\\\PATH\\\\TO\\\\midi_output\"\r\n      ]\r\n    },\r\n    \"sequential-thinking\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-sequential-thinking\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n您可以通过提供所需乐曲的描述来告诉LLM生成MIDI乐曲。服务器将处理MIDI文件的创建和播放。\r\n\r\n### 示例提示\r\n\r\n> 我想创作一首纯钢琴曲。请用和弦生成一首C大调旋律并演奏。\r\n\r\n> 用150 BPM的鼓声和电贝司创造快节奏的摇滚风格MIDI。然后播放结果。\r\n\r\n> 创作一首D小调古典风格华尔兹，3/4次，90 BPM。左手包括琶音和弦，右手包括抒情旋律。生成并播放MIDI。\r\n\r\n> 我想要一首舒缓的F大调爵士钢琴独奏，4/4120 BPM。包括一些摇摆感。创建并播放MIDI。\r\n\r\n> 我感到忧郁。请用柔和的旋律和微妙的和声创作一首缓慢而悲伤的a小调钢琴曲。那就玩吧。\r\n\r\n> 我今天心情很好。创作一首欢快明亮的C大调钢琴曲，4/4120 BPM，节奏欢快，旋律朗朗上口。播放MIDI。\r\n\r\n> 我刚刚经历了心碎。创作一首D小调钢琴独奏曲，表达深沉的情感痛苦和渴望。慢节奏。那就玩吧。\r\n\r\n> 我想放松一下，理清思路。用柔和的钢琴和缓慢的BPM（约60）创作出极简主义、环境风格的作品。播放结果。\r\n\r\n> 我感到愤怒。创作一首具有快速、激进节奏和不和谐和弦的高强度MIDI作品，最好使用管弦乐打击乐器和弦乐。玩吧。\r\n\r\n> 我感到紧张和焦虑。用小调创作一个紧张、重复的钢琴主题，节奏不均，以反映不安。播放这篇作文。\r\n\r\n> 我坠入爱河了。请用英语写一首浪漫梦幻的钢琴曲♭ 大调，节奏适中，和声富有表现力。那就玩吧。\r\n\r\n> 使用多种乐器，包括钢琴、弦乐、铜管乐器、木管乐器和打击乐器，创作一首令人振奋的管弦乐作品。\r\n>\r\n> 构图应在4/4时间内以110 BPM的速度完成，并唤起冒险和胜利的感觉。\r\n>\r\n> 将其分为3个部分：\r\n>\r\n> 柔弦独奏长笛前奏曲\r\n>\r\n> 用圆号、钢琴和弦和有节奏的打击乐演奏\r\n>\r\n> 具有完整编排和分层和声的高潮\r\n>\r\n> 然后生成MIDI文件并播放。\r\n\r\nLLM将自动调用 `create_midi` 要生成作文，请调用 `play_midi` 玩它。\r\n\r\n### 示例组成结构：\r\n\r\n```json\r\n{\r\n  \"bpm\": 120,\r\n  \"timeSignature\": { \"numerator\": 4, \"denominator\": 4 },\r\n  \"tracks\": [\r\n    {\r\n      \"name\": \"Piano Melody\",\r\n      \"instrument\": 0,\r\n      \"notes\": [\r\n        { \"pitch\": 60, \"velocity\": 100, \"duration\": \"4\", \"beat\": 1 },\r\n        { \"pitch\": 62, \"velocity\": 100, \"duration\": \"4\", \"beat\": 2 },\r\n        { \"pitch\": 64, \"velocity\": 100, \"duration\": \"4\", \"beat\": 3 },\r\n        { \"pitch\": 65, \"velocity\": 100, \"duration\": \"4\", \"beat\": 4 }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"Piano Chords\",\r\n      \"instrument\": 0,\r\n      \"notes\": [\r\n        { \"pitch\": 48, \"velocity\": 80, \"duration\": \"2\", \"beat\": 1 },\r\n        { \"pitch\": 52, \"velocity\": 80, \"duration\": \"2\", \"beat\": 1 },\r\n        { \"pitch\": 55, \"velocity\": 80, \"duration\": \"2\", \"beat\": 1 },\r\n        { \"pitch\": 53, \"velocity\": 80, \"duration\": \"2\", \"beat\": 3 },\r\n        { \"pitch\": 57, \"velocity\": 80, \"duration\": \"2\", \"beat\": 3 },\r\n        { \"pitch\": 60, \"velocity\": 80, \"duration\": \"2\", \"beat\": 3 }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n### 文件输出\r\n\r\n所有生成的MIDI文件都会自动保存在 `--output_directory` 启动服务器时指定（默认值为 `midi_output/`).\r\n\r\n## 参考\r\n\r\n- [tubone24/midi mcp服务器](https://github.com/tubone24/midi-mcp-server)\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。看 [../许可证](../LICENCE) 了解详情。\r\n",
+ "config": {
+  "midi-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "\\PATH\\TO\\midi-mcp\\src",
+    "run",
+    "server.py",
+    "--output_directory",
+    "\\PATH\\TO\\midi_output"
+   ],
+   "env": {}
+  }
+ }
+}

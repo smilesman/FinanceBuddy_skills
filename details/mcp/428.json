@@ -1,0 +1,21 @@
+{
+ "id": "428",
+ "kind": "mcp",
+ "name": "screenshot-2",
+ "fingerprint_md5": "f9a5559436c0c397b8c93eedbfd6789c",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# 屏幕截图mcp\r\n\r\nMCP服务器，用于捕获windows上桌面窗口的屏幕截图。允许AI助手查看屏幕上的内容，这对UI开发、调试视觉问题和迭代设计非常有用。\r\n\r\n## 特性\r\n\r\n- **屏幕截图_窗口** --按标题捕获特定窗口（部分匹配）\r\n- **屏幕截图_屏幕** --捕获整个屏幕\r\n- **截屏_地区** --捕获特定屏幕区域（x、y、宽度、高度）\r\n- **点击窗口** --单击窗口客户端区域内的某个位置\r\n- **获取窗口大小** --获取窗口的客户端区域大小\r\n- **list_windows** --列出所有可见的窗口及其标题和大小\r\n\r\n以base64编码的JPEG格式返回图像，并自动调整大小和压缩。\r\n\r\n## 需求\r\n\r\n- Windows 10/11\r\n- Python 3.10+\r\n\r\n## 安装\r\n\r\n```bash\r\npip install screenshot-mcp\r\n```\r\n\r\n或者从源代码安装：\r\n\r\n```bash\r\ngit clone https://github.com/ibuildrun/screenshot-mcp.git\r\ncd screenshot-mcp\r\npip install -e .\r\n```\r\n\r\n## MCP配置\r\n\r\n添加到您的 `.kiro/settings/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"screenshot\": {\r\n      \"command\": \"screenshot-mcp\",\r\n      \"disabled\": false\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用uvx（无需安装）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"screenshot\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"screenshot-mcp\"],\r\n      \"disabled\": false\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用示例\r\n\r\n```\r\n> list_windows\r\n> screenshot_window \"Teeworlds\"\r\n> screenshot_screen\r\n> screenshot_region 0 0 800 600\r\n> click_window \"Teeworlds\" 400 300\r\n> get_window_size \"Teeworlds\"\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "screenshot": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "screenshot-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

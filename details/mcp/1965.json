@@ -1,0 +1,29 @@
+{
+ "id": "1965",
+ "kind": "mcp",
+ "name": "kontomanager",
+ "fingerprint_md5": "90fff74c4e831f0ad6085dbf65642da2",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 用于Kontomanager的MCP服务器\r\n\r\n非官方 [主控程序](https://modelcontextprotocol.io) 奥地利移动品牌服务器 **是的！**, **乔治**，以及 **亲亲抱抱**.\r\n\r\n该服务器充当桥梁，通过一组结构化的MCP工具公开Kontomanager web界面的功能。它允许您以编程方式读取帐户信息、检查使用情况、下载账单以及修改呼叫转接等设置。\r\n\r\n## ✨ 特性\r\n\r\n此服务器设计有 **工具优先** 获得广泛客户支持的方法。它提供了一套全面的功能，反映了门户网站：\r\n\r\n- **读取帐户数据**：获取使用情况、信用、计划详细信息、电话号码和通话记录。\r\n- **管理账单**：列出过去的账单并下载其PDF内容。\r\n- **修改设置**：更改SIM卡设置，如漫游，并配置详细的呼叫转移规则。\r\n- **高级工作流**：使用简单的工具进行常见操作，如禁用语音邮件。\r\n\r\n## 🛠️ 可用工具\r\n\r\n服务器通过工具公开所有功能，MCP客户端或LLM可以调用这些工具。\r\n\r\n### 数据检索工具\r\n\r\n- `get_account_usage()`：检索主账户概述，包括计划详细信息、使用统计信息和信用余额。\r\n- `get_phone_numbers()`：列出与登录帐户关联的所有电话号码。\r\n- `list_bills()`：获取可用账单列表（仅元数据）。\r\n- `download_bill(bill_number, document_type)`：获取特定账单或其逐项记录（EGN），并返回其二进制内容（PDF）。\r\n- `get_call_history()`：检索最近通话和短信的列表。\r\n- `get_sim_settings()`：读取所有SIM卡相关设置的当前状态（例如漫游状态、数据限制）。\r\n- `get_call_forwarding_settings()`：读取当前的呼叫转移和语音邮件设置。\r\n\r\n### 操作和工作流工具\r\n\r\n- `switch_active_phone_number(subscriber_id)`：切换会话的活动电话号码。\r\n- `toggle_roaming(enabled)`：启用或禁用国际漫游的简单工具。\r\n- `set_sim_setting(setting_name, enabled)`：启用或禁用特定SIM卡设置的低级工具。\r\n- `set_call_forwarding_rule(...)`：一种配置特定呼叫转移规则的低级工具（例如，在忙时转移到特定号码）。\r\n\r\n## 🗣️ 示例用法\r\n\r\n您可以在兼容的MCP客户端中使用自然语言与此服务器交互。客户的LLM将选择并执行适当的工具。\r\n\r\n- **“我目前的数据使用情况和信用额度是多少？”**\r\n  - → Calls `get_account_usage()`\r\n- **“给我看看我最后几张账单。”**\r\n  - → Calls `list_bills()`\r\n- **“下载我的8177号账单及其详细记录。”**\r\n  - → Calls `download_bill(bill_number='8177', document_type='bill')`\r\n  - → Calls `download_bill(bill_number='8177', document_type='egn')`\r\n- **“为我的旅行打开漫游。”**\r\n  - → Calls `toggle_roaming(enabled=True)`\r\n- **“当我的电话占线时，将我所有的电话转接到+43681124567。”**\r\n  - → Calls `set_call_forwarding_rule(condition='wtel', target='a', target_number='+436811234567')`\r\n\r\n## ⚙️ 配置\r\n\r\n服务器需要您的Kontomanager凭据。这些必须通过环境变量提供，您将在MCP客户端的配置文件中设置这些变量。\r\n\r\n所需变量为：\r\n\r\n- `KONTOMANAGER_BRAND`：您的移动运营商的品牌。支持的值： `\"yesss\"`, `\"georg\"`, `\"xoxo\"`.\r\n- `KONTOMANAGER_USERNAME`：您的登录电话号码或用户名。\r\n- `KONTOMANAGER_PASSWORD`：您的Kontomanager帐户密码。\r\n\r\n## 🚀 设置和使用\r\n\r\n该项目是一个MCP服务器，旨在由MCP客户端启动和管理。您不能单独运行它。\r\n\r\n1. **克隆存储库：**\r\n\r\n   ```bash\r\n   git clone https://github.com/dhofer/mcp-server-kontomanager.git\r\n   ```\r\n\r\n1. **配置您的MCP客户端：**\r\n   将新的服务器定义添加到MCP客户端的配置文件中。该命令将使用 `uv run` 从服务器的本地目录执行服务器。确保使用 **绝对路径** 到克隆的存储库。\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"kontomanager\": {\r\n         \"command\": \"uv\",\r\n         \"args\": [\r\n           \"run\",\r\n           \"--directory\",\r\n           \"/absolute/path/to/mcp-server-kontomanager\",\r\n           \"python\",\r\n           \"src/server.py\"\r\n         ],\r\n         \"env\": {\r\n           \"KONTOMANAGER_BRAND\": \"yesss\",\r\n           \"KONTOMANAGER_USERNAME\": \"43681...\",\r\n           \"KONTOMANAGER_PASSWORD\": \"your_secret_password\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n______________________________________________________________________\r\n\r\n## ⚠️ 重要警告：使用前请阅读\r\n\r\n### **数据隐私**\r\n\r\n当您使用此MCP服务器时，工具检索到的任何数据（如您的帐户使用情况、电话号码或账单详细信息）都会发送到为您的MCP客户端提供动力的大型语言模型（LLM）。 **这意味着第三方公司（例如OpenAI、谷歌、Anthropic）将处理这些潜在的敏感信息。** 请注意隐私问题，并在使用此服务器之前查看您的LLM提供商的政策。\r\n\r\n### **财务风险**\r\n\r\n此服务器提供可以实时更改您的移动帐户设置的工具。行动如 `toggle_roaming` 或 `set_call_forwarding_rule` 可能导致 **您的电话账单上有大量真实的费用**尤其是如果配置错误。您全权负责因使用这些工具而产生的任何和所有费用。 **请极其谨慎地使用它们。**\r\n\r\n### 🧑‍💻 发展理念\r\n\r\n从所有意图和目的来看， **vibe编码**它是基于直觉和开发人员的特定需求而构建的。虽然它的目标是功能性的，但它可能不遵循最严格的工程实践，测试也有限。强烈建议使用Pull请求来提高健壮性、添加测试或改进代码！\r\n\r\n***免责声明：** 这是一个非官方项目，不隶属于A1 Telekom Austria AG或其任何品牌，也不认可或支持该项目。Kontomanager网站结构可能随时发生变化，这可能会破坏此服务器的功能。使用风险自负。*\r\n",
+ "config": {
+  "kontomanager": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "/absolute/path/to/mcp-server-kontomanager",
+    "python",
+    "src/server.py"
+   ],
+   "env": {
+    "KONTOMANAGER_BRAND": "yesss",
+    "KONTOMANAGER_USERNAME": "43681...",
+    "KONTOMANAGER_PASSWORD": "your_secret_password"
+   }
+  }
+ }
+}

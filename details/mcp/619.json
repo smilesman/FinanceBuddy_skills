@@ -1,0 +1,23 @@
+{
+ "id": "619",
+ "kind": "mcp",
+ "name": "danbooru-rag",
+ "fingerprint_md5": "9d38de785311f6aa11c6de5c56b86c42",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Danbooru标签RAG MCP服务器\r\n\r\n一种MCP（Model Context Protocol）服务器，提供Danbooru标记语义搜索。\r\n\r\n## 概要\r\n\r\n此MCP服务器提供了从自然语言查询中搜索Danbooru标记的功能。因为SDXL动画模型是在DanbooruTag中学习的，所以使用适当的标签可以提高图像生成的精度。\r\n\r\n### 特徴\r\n\r\n- **语义搜索**：查找在语义上相关的标签，而不是关键字匹配\r\n- **日本语・英语对应**：多语言支持multilingual-e5-small模型\r\n- **本地运行**：完全在本地运行，不使用外部API\r\n- **軽量**：使用LanceDB进行有效的矢量搜索\r\n\r\n## 技术栈\r\n\r\n｜组件｜技术｜原因｜\r\n|---------------|------|------|\r\n｜MCP SDK｜mcp（官方SDK）｜标准协议依据｜\r\n｜矢量数据库｜轻量，最适合本地执行｜\r\n嵌入式模型日英兼容、高精度、CPU兼容\r\n｜软件包管理｜现代高速｜\r\n\r\n## 安装\r\n\r\nClaude Desktop的配置文件（`claude_desktop_config.json`）中添加以下内容：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"danbooru-rag\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--from\", \"git+https://github.com/Zaozaotvk40/danbooru-rag-mcp.git\", \"danbooru-rag-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n首次启动时将自动构建索引（约60000个标记，需要几分钟）。\r\n\r\n### 使用例\r\n\r\n在Claude Desktop中启用该工具后，可以使用自然语言请求生成提示。\r\n\r\n**例1:角色描写**\r\n\r\n```\r\nあなた: 「青い髪のツインテールの女の子が魔法を使っているシーンのプロンプトを作って」\r\n\r\nClaude: semantic_searchで関連タグを検索し、以下のようなプロンプトを生成します：\r\n→ 1girl, blue hair, twintails, magic, casting spell, glowing, magical effects, ...\r\n```\r\n\r\n**示例2:风景场景**\r\n\r\n```\r\nあなた: 「夕焼けのファンタジー風景のプロンプトをお願い」\r\n\r\nClaude: 関連タグを検索して組み合わせます：\r\n→ scenery, sunset, fantasy, sky, clouds, orange sky, landscape, no humans, ...\r\n```\r\n\r\n**示例3:复杂场景**\r\n\r\n```\r\nあなた: 「カフェで本を読んでいる眼鏡の女の子、窓から光が差し込んでいる感じで」\r\n\r\nClaude: 複数の要素を検索して統合します：\r\n→ 1girl, glasses, book, reading, cafe, indoors, window, sunlight, sitting, ...\r\n```\r\n\r\nClaude将自动使用semantic_search工具创建基于Danbooru-标记的图像生成提示。\r\n\r\n## 项目结构\r\n\r\n```\r\ndanbooru-rag-mcp/\r\n├── README.md                 # このファイル\r\n├── pyproject.toml            # パッケージ設定\r\n├── danbooru-tags.txt         # ソースデータ\r\n├── src/\r\n│   └── danbooru_rag/\r\n│       ├── __init__.py       # パッケージ初期化\r\n│       ├── __main__.py       # モジュールエントリーポイント\r\n│       ├── config.py         # 設定定数\r\n│       ├── embeddings.py     # 埋め込み生成\r\n│       ├── database.py       # LanceDB操作\r\n│       ├── builder.py        # インデックス自動構築\r\n│       └── server.py         # MCPサーバー本体\r\n├── scripts/\r\n│   └── build_index.py        # インデックス手動構築\r\n└── tests/\r\n    └── ...                   # テスト\r\n```\r\n\r\n**数据库目标：**\r\n\r\n- 窗户： `%LOCALAPPDATA%\\danbooru-rag\\lancedb`\r\n- macOS： `~/Library/Application Support/danbooru-rag/lancedb`\r\n- Linux： `~/.local/share/danbooru-rag/lancedb`\r\n\r\n## 设计判断\r\n\r\n### 为什么是multilingual-e5-small？\r\n\r\n1. **日本语・英语両对应**：允许用户查询任何语言\r\n1. **高精度**：基准分数高于all-MiniLM-L6-v2\r\n1. **CPU対応**：即使没有GPU也能以实用的速度动作\r\n1. **E5前缀**：query:/passage：通过前缀提高精度\r\n\r\n### 为什么LanceDB？\r\n\r\n1. **不需要服务器**：最适合基于文件的本地运行\r\n1. **Python本地**：易于安装和使用\r\n1. **高速**：优化向量搜索\r\n\r\n### 为什么过滤出现频率100以下？\r\n\r\n1. **学习数据质量**：低频标记对SDXL模型的学习不够\r\n1. **索引效率**：99999件→减少到约60000件\r\n1. **検索精度向上**：排除干扰的低频标记\r\n\r\n## 开発\r\n\r\n### 测试运行\r\n\r\n```bash\r\nuv run pytest tests/\r\n```\r\n\r\n### 编码质量\r\n\r\n```bash\r\n# 型チェック\r\nuv run mypy src/\r\n\r\n# フォーマット\r\nuv run ruff format src/\r\n\r\n# リント\r\nuv run ruff check src/\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n\r\n## 数据源\r\n\r\n`danbooru-tags.txt` 啊 [ComfyUI自定义脚本](https://github.com/pythongosssss/ComfyUI-Custom-Scripts) 中使用的以下数据为基础：\r\n\r\nhttps://gist.githubusercontent.com/pythongosssss/1d3efa6050356a08cea975183088159a/raw/a18fb2f94f9156cf4476b0c24a09544d6c0baec6/danbooru-tags.txt\r\n\r\n原始标记名称以下划线分隔（例如： `blue_hair`），但在本项目中以空格分隔（例如： `blue hair`），模板名称将采用不同的格式。\r\n\r\n## 谢辞\r\n\r\n- [ComfyUI自定义脚本](https://github.com/pythongosssss/ComfyUI-Custom-Scripts) -Danboru标签数据来源\r\n- [模型上下文协议](https://modelcontextprotocol.io/) -LLM工具集成标准协议\r\n- [兰斯数据库](https://lancedb.com/) -快速矢量数据库\r\n- [句子转换](https://www.sbert.net/) -嵌入式模型库\r\n",
+ "config": {
+  "danbooru-rag": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/Zaozaotvk40/danbooru-rag-mcp.git",
+    "danbooru-rag-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

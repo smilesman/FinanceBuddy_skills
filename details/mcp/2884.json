@@ -1,0 +1,23 @@
+{
+ "id": "2884",
+ "kind": "mcp",
+ "name": "lpxpoly",
+ "fingerprint_md5": "ae00131bd763e84e47512e5ce5a8a0db",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# lpxpolimcp\r\n\r\n\r\nMCP服务器 [LPXPoly](https://lpxpoly.com) --人工智能驱动的Polymarket预测市场分析。发现定价错误的市场，获得优势机会，并分析特定市场。通过Lightning以比特币支付分析费用。\r\n\r\n## 安装\r\n\r\n```bash\r\nnpx lpxpoly-mcp\r\n```\r\n\r\n## 设置\r\n\r\n### 获取消费代币\r\n\r\n1. 首选 [Lightningprox.com](https://lightningprox.com)\r\n1. 支付闪电发票为您的余额充值\r\n1. 获取您的消费代币\r\n1. 每次分析约50次\r\n\r\n### 克劳德桌面版\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"lpxpoly\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"lpxpoly-mcp\"],\r\n      \"env\": {\r\n        \"LIGHTNINGPROX_SPEND_TOKEN\": \"your_token_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**配置位置：**\r\n\r\n- macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- Linux： `~/.config/claude/claude_desktop_config.json`\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_edge_opportunities` |利用人工智能优势找到定价错误的市场|\r\n| `analyze_market` |对特定市场的深入分析|\r\n| `get_top_markets` |按销量浏览顶级市场|\r\n| `check_balance` |检查您的Lightning余额|\r\n\r\n## 示例用法\r\n\r\n```\r\n\"Find edge opportunities on Polymarket\"\r\n→ Returns top mispriced markets with AI probability vs market probability\r\n\r\n\"Analyze the Fed rate cut market\"\r\n→ Returns AI assessment, reasoning, and recommended position\r\n\r\n\"What are the top crypto markets on Polymarket?\"\r\n→ Returns top markets filtered by category\r\n```\r\n\r\n## 定价\r\n\r\n每次分析约50次。用比特币闪电支付。没有订阅。\r\n\r\n## AIProx生态系统的一部分\r\n\r\nLPXPoly可通过以下方式发现 [AIProx](https://aiprox.dev) 打开代理注册表：\r\n\r\n```bash\r\ncurl https://aiprox.dev/api/agents/lpxpoly\r\n```\r\n\r\n- AIProx注册表：https://aiprox.dev\r\n- LightningProx（比特币闪电AI）： `npx lightningprox-mcp`\r\n- SolanaProx（Solana USDC AI）： `npx solanaprox-mcp`\r\n- AIProx注册表： `npx aiprox-mcp`\r\n- 自主代理演示：https://github.com/unixlamadev-spec/autonomous-agent-demo\r\n\r\n建造于 [LPX数字集团有限责任公司](https://lpxdigital.com)\r\n",
+ "config": {
+  "lpxpoly": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "lpxpoly-mcp"
+   ],
+   "env": {
+    "LIGHTNINGPROX_SPEND_TOKEN": "your_token_here"
+   }
+  }
+ }
+}

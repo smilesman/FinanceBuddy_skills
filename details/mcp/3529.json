@@ -1,0 +1,27 @@
+{
+ "id": "3529",
+ "kind": "mcp",
+ "name": "minimax_search",
+ "fingerprint_md5": "eb962475d5d2191122e90dfd9de35a68",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# MiniMax搜索MCP服务器\r\n\r\n[英文文档](./README.md) | [中文文档](./README_zh.md)\r\n\r\nMiniMax Search是一个MCP（模型上下文协议）服务器，提供网络搜索和浏览功能。\r\n\r\n## 🔧 版本说明\r\n\r\n该项目使用 **标准MCP服务器协议**，符合MCP规范：\r\n\r\n- ✅ 完成 `list_tools()` 实施\r\n- ✅ 完成 `call_tool()` 实施\r\n- ✅ 标准 `stdio_server()` 沟通\r\n\r\n## 特性\r\n\r\n- 🔍 **多引擎搜索**：支持谷歌搜索引擎\r\n- 🚀 **并行搜索**：原生支持并行多查询搜索\r\n- 🌐 **批量浏览**：支持批量浏览多个URL\r\n- 🤖 **智能理解**：使用MiniMax LLM了解网络内容并回答问题\r\n- 🎯 **高级搜索**：支持谷歌高级搜索语法\r\n- 🔄 **自动回退**：搜索失败时自动切换到其他引擎\r\n\r\n## 快速开始\r\n\r\n### 通过Git安装（推荐）\r\n\r\n```bash\r\n# Run directly from Git repository\r\nuvx --from git+ssh://git@github.com:MiniMax-AI/minimax_search.git minimax-search\r\n```\r\n\r\n### 通过本地路径安装（开发）\r\n\r\n```bash\r\n# Run from local directory\r\nuvx --from /xxx/minimax_search minimax-search\r\n```\r\n\r\n### MCP客户端配置\r\n\r\n添加到您的MCP客户端配置文件中（例如。， `mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"minimax_search\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--from\",\r\n        \"git+ssh://git@github.com:MiniMax-AI/minimax_search.git\",\r\n        \"minimax-search\"\r\n      ],\r\n      \"env\": {\r\n        \"MINIMAX_API_KEY\": \"your_minimax_api_key\",\r\n        \"SERPER_API_KEY\": \"your_serper_api_key\",\r\n        \"JINA_API_KEY\": \"your_jina_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 1.搜索-并行网络搜索\r\n\r\n同时搜索多个查询，返回简短结果（标题、URL、代码片段）。\r\n\r\n**参数**:\r\n\r\n- `queries` （字符串数组，必填）：查询列表，支持谷歌高级搜索语法\r\n\r\n**支持的搜索引擎**:\r\n\r\n- 谷歌搜索（通过Serper API）\r\n\r\n**高级搜索语法**:\r\n\r\n- `site:example.com` -限制在特定地点\r\n- `intitle:keyword` -标题包含关键字\r\n- `inurl:keyword` -URL包含关键字\r\n- `\"exact match\"` -精确短语匹配\r\n\r\n**示例**:\r\n\r\n```json\r\n{\r\n  \"queries\": [\"Python asyncio tutorial\", \"Python threading vs asyncio\"]\r\n}\r\n```\r\n\r\n### 2.浏览-批量智能浏览\r\n\r\n访问多个网页，使用MiniMax LLM了解内容并回答问题。\r\n\r\n**参数**:\r\n\r\n- `urls` （字符串数组，必填）：目标网页URL列表\r\n- `query` （string，必填）：待回答的问题\r\n\r\n**示例**:\r\n\r\n```json\r\n{\r\n  \"urls\": [\r\n    \"https://docs.python.org/3/library/asyncio.html\",\r\n    \"https://realpython.com/async-io-python/\"\r\n  ],\r\n  \"query\": \"Summarize the main features and use cases of asyncio\"\r\n}\r\n```\r\n\r\n## 环境变量配置\r\n\r\n### 所需的环境变量\r\n\r\n**基本搜索功能**:\r\n\r\n- `SERPER_API_KEY`：谷歌搜索\r\n  - 从以下网址获取：https://serper.dev/\r\n  - 免费套餐：2500次/月\r\n\r\n**Web浏览功能**:\r\n\r\n- `JINA_API_KEY`：Web内容阅读\r\n  - 从以下网址获取：https://jina.ai/\r\n  - 免费套餐可用\r\n\r\n**浏览功能（LLM理解）**:\r\n\r\n- `MINIMAX_API_KEY`：MiniMax API密钥\r\n  - 从以下网址获取：https://platform.minimax.io/\r\n\r\n## 使用示例\r\n\r\n### 在代理中使用\r\n\r\nMCP服务器启动后，代理可以使用以下工具：\r\n\r\n**并行搜索多个查询**:\r\n\r\n```\r\nUser: Search for \"Python asyncio\" and \"Python threading\" differences simultaneously\r\n\r\nAgent: [Calls search tool]\r\n→ search(queries=[\"Python asyncio\", \"Python threading\"])\r\n→ Returns search results for both queries (executed in parallel)\r\n```\r\n\r\n**批量浏览多个网页**:\r\n\r\n```\r\nUser: Visit these links and summarize the main features of asyncio\r\n     - https://docs.python.org/3/library/asyncio.html\r\n     - https://realpython.com/async-io-python/\r\n\r\nAgent: [Calls browse tool]\r\n→ browse(\r\n    urls=[\"https://docs.python.org/...\", \"https://realpython.com/...\"],\r\n    query=\"Summarize the main features of asyncio\"\r\n  )\r\n→ Returns comprehensive summary and answer\r\n```\r\n\r\n## 技术实现\r\n\r\n### 项目结构\r\n\r\n```\r\nminimax_search/\r\n├── server.py                    # MCP Server entry point (2 tools)\r\n├── minimax_search_browse.py     # Core search and browse implementation\r\n├── pyproject.toml              # Project configuration\r\n└── README.md\r\n```\r\n\r\n### 核心功能\r\n\r\n**并行搜索**:\r\n\r\n- 对查询数组的原生支持\r\n- 使用线程池并发执行\r\n- 自动格式化和分组结果\r\n\r\n**批量浏览**:\r\n\r\n- 原生支持url数组\r\n- Jina Reader提取网络内容（转换为Markdown）\r\n- MiniMax LLM了解内容并生成全面的答案\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n该项目基于 [MiniMax-M2型号](https://github.com/MiniMax-AI/MiniMax-M2) 项目\r\n",
+ "config": {
+  "minimax_search": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+ssh://git@github.com:MiniMax-AI/minimax_search.git",
+    "minimax-search"
+   ],
+   "env": {
+    "MINIMAX_API_KEY": "your_minimax_api_key",
+    "SERPER_API_KEY": "your_serper_api_key",
+    "JINA_API_KEY": "your_jina_api_key"
+   }
+  }
+ }
+}

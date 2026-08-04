@@ -1,0 +1,25 @@
+{
+ "id": "3674",
+ "kind": "mcp",
+ "name": "web-content",
+ "fingerprint_md5": "687d8a657a6a999e76dfd477970a8120",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Web内容MCP服务器\r\n\r\n一个强大的 **模型上下文协议（MCP）服务器** 它提供智能网络搜索和内容提取功能。该服务器使人工智能助手能够搜索谷歌并获取网页内容，自动将所有内容转换为干净、可读的markdown格式。\r\n\r\n## 🚀 特性\r\n\r\n- **谷歌搜索集成**：使用可定制的结果计数执行谷歌搜索\r\n- **内容提取**：自动从网页中提取主要内容\r\n- **Markdown转换**：将HTML内容转换为干净、可读的markdown\r\n- **智能内容过滤**：删除广告、导航和无关元素\r\n- **多种内容策略**：使用智能选择器查找主要内容\r\n- **错误处理**：具有回退机制的强大错误处理\r\n- **类型安全**：使用TypeScript和Zod验证构建\r\n\r\n## 🛠️ 可用工具\r\n\r\n### 1.网络搜索(`web_search`)\r\n\r\n搜索谷歌并返回带有提取内容的格式化结果。\r\n\r\n**参数：**\r\n\r\n- `query` （string，必填）：要执行的搜索查询\r\n- `numResults` （number，可选）：要返回的结果数（1-20，默认值：5）\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"name\": \"web_search\",\r\n  \"arguments\": {\r\n    \"query\": \"TypeScript best practices\",\r\n    \"numResults\": 3\r\n  }\r\n}\r\n```\r\n\r\n### 2.获取网页(`fetch_webpage`)\r\n\r\n从特定网页URL获取和提取内容。\r\n\r\n**参数：**\r\n\r\n- `url` （string，必填）：要获取的网页的URL\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"name\": \"fetch_webpage\",\r\n  \"arguments\": {\r\n    \"url\": \"https://example.com/article\"\r\n  }\r\n}\r\n```\r\n\r\n## 📋 先决条件\r\n\r\n- **Node.js** 18+\r\n- **SerpAPI密钥** （用于谷歌搜索功能）\r\n\r\n## 🔧 安装\r\n\r\n1. **克隆存储库：**\r\n\r\n   ```bash\r\n   git clone <repository-url>\r\n   cd web-content-mcp\r\n   ```\r\n\r\n1. **安装依赖项：**\r\n\r\n   ```bash\r\n   npm install\r\n   ```\r\n\r\n1. **设置环境变量：**\r\n   创建一个 `.env` 根目录中的文件：\r\n\r\n   ```env\r\n   SERPAPI_KEY=your_serpapi_key_here\r\n   ```\r\n\r\n   从以下位置获取SerpAPI密钥 [https://serpapi.com/](https://serpapi.com/)\r\n\r\n## 🚀 用法\r\n\r\n### 运行服务器\r\n\r\n只需使用以下命令运行服务器 `npx tsx` 直接：\r\n\r\n```bash\r\nnpx tsx --env-file=.env src/index.ts\r\n```\r\n\r\n此命令：\r\n\r\n- 用途 `tsx` 直接运行TypeScript而无需编译\r\n- 从加载环境变量 `.env` 文件\r\n- 立即启动MCP服务器\r\n\r\n### 作为MCP服务器\r\n\r\n此服务器旨在与MCP兼容的客户端一起使用。配置您的MCP客户端以通过stdio传输连接到此服务器。\r\n\r\n**MCP客户端配置示例：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"web-content\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"tsx\",\r\n        \"--env-file=/path/to/web-content-mcp/.env\",\r\n        \"/path/to/web-content-mcp/src/index.ts\"\r\n      ],\r\n      \"env\": {\r\n        \"SERPAPI_KEY\": \"your_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🏗️ 建筑\r\n\r\n服务器遵循干净的模块化架构：\r\n\r\n```\r\nsrc/\r\n├── index.ts      # Main server setup and request handling\r\n├── tools.ts      # Tool implementations (WebSearch, FetchWebpage)\r\n├── types.ts      # TypeScript types and Zod schemas\r\n└── env.ts        # Environment variable configuration\r\n```\r\n\r\n### 关键组件\r\n\r\n- **服务器**：具有stdio传输的主MCP服务器实例\r\n- **工具**：具有抽象基类的模块化工具类\r\n- **内容提取**：智能HTML到markdown转换\r\n- **类型安全**：全面的Zod验证模式\r\n- **错误处理**：优雅的错误处理，信息丰富\r\n\r\n## 🔍 内容提取策略\r\n\r\n服务器使用智能内容提取方法：\r\n\r\n1. **内容选择器**：尝试多个选择器来查找主要内容：\r\n\r\n   - `main`, `article`, `.content`, `.main-content`\r\n   - `.post-content`, `.entry-content`, `#content`\r\n   - `.container` （作为后备方案）\r\n\r\n1. **内容物清理**：删除不需要的元素：\r\n\r\n   - 脚本、样式、导航\r\n   - 页眉、页脚、侧边栏\r\n   - 广告和促销内容\r\n\r\n1. **Markdown转换**:\r\n\r\n   - 将HTML转换为干净的markdown\r\n   - 使用alt文本保留图像\r\n   - 保持正确的标题结构\r\n   - 限制内容长度以防止溢出\r\n\r\n## ⚙️ 配置\r\n\r\n服务器包括几个可配置的选项 `tools.ts`:\r\n\r\n```typescript\r\nconst config = {\r\n  serpApiKey: env.SERPAPI_KEY,\r\n  timeout: 10000, // Request timeout (ms)\r\n  maxContentLength: 5000, // Max content length per page\r\n  userAgent: \"Mozilla/5.0 (compatible; WebContentMCP/1.0)\",\r\n};\r\n```\r\n\r\n## 🔒 环境变量\r\n\r\n|变量|描述|必填|\r\n| ------------- | ---------------------------------- | -------- |\r\n| `SERPAPI_KEY` |您用于谷歌搜索的SerpAPI密钥|是|\r\n\r\n## 📄 输出格式\r\n\r\n这两个工具都以markdown格式返回内容：\r\n\r\n### 网络搜索结果\r\n\r\n```markdown\r\n# Web Search Results for: \"query\"\r\n\r\nFound X results:\r\n\r\n## 1. Page Title\r\n\r\n**URL:** https://example.com\r\n**Snippet:** Brief description...\r\n**Content:**\r\nMain page content in markdown...\r\n\r\n---\r\n```\r\n\r\n### 网页内容\r\n\r\n```markdown\r\n# Webpage Content\r\n\r\n**URL:** https://example.com\r\n**Content:**\r\nExtracted page content in markdown...\r\n```\r\n\r\n## 🛡️ 错误处理\r\n\r\n服务器包括全面的错误处理：\r\n\r\n- **网络错误**：超时和连接失败\r\n- **API错误**：SerpAPI速率限制和身份验证\r\n- **内容错误**：URL无效和解析失败\r\n- **验证错误**：输入参数无效\r\n\r\n## 📞 支持\r\n\r\n如果您遇到任何问题或有疑问：\r\n\r\n1. 检查 [问题](https://github.com//web-content-mcp/issues) 页\r\n1. 创建包含详细信息的新问题\r\n1. 包括错误消息和环境详细信息\r\n\r\n______________________________________________________________________\r\n\r\n**内置于❤️ 使用TypeScript和模型上下文协议**\r\n",
+ "config": {
+  "web-content": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "tsx",
+    "--env-file=/path/to/web-content-mcp/.env",
+    "/path/to/web-content-mcp/src/index.ts"
+   ],
+   "env": {
+    "SERPAPI_KEY": "your_api_key"
+   }
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "2811",
+ "kind": "mcp",
+ "name": "energy-grid",
+ "fingerprint_md5": "10864a564a6a1e00fc5f0a89b8d1b30d",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# 电网MCP服务器\r\n\r\n用于电网数据的 MCP 服务器 — 二氧化碳强度、电力组合、价格和能源密集型 AI 任务的最佳时间窗口。\r\n\r\n\r\n## 特性\r\n\r\n- **二氧化碳强度** — 每千瓦时实时克二氧化碳（英国免费无钥匙，全球电力地图密钥）\r\n- **绿色时间窗口** — 查找未来 48 小时内 GPU 工作的最低 CO2 强度\r\n- **Strommix** — 风， 太阳能， 原子， 天然气， 实时煤\r\n- **电价** — 德国批发价格（SMARD，无关键） + 欧盟日前价格（ENTSO-E，可选关键）\r\n- **48小时Prognose** — 用于智能任务规划的二氧化碳强度预测\r\n\r\n## 安装\r\n\r\n```bash\r\npip install energy-grid-mcp-server\r\n```\r\n\r\n或与 `uvx` （无需安装）：\r\n\r\n```bash\r\nuvx energy-grid-server\r\n```\r\n\r\n## Claude 桌面配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"energy-grid\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"energy-grid-server\"],\r\n      \"env\": {\r\n        \"ELECTRICITY_MAPS_TOKEN\": \"optional\",\r\n        \"ENTSOE_TOKEN\": \"optional\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n| 工具 | 描述 | 需要密钥吗？ |\r\n|------|-------------|-----------|\r\n| `get_uk_carbon_intensity` | 二氧化碳强度 英国 （国家 + 区域） | 否 |\r\n| `get_carbon_intensity_forecast` |48小时CO2预测英国|不|\r\n| `find_greenest_time_window` 人工智能任务的最佳时间窗口\r\n| `get_uk_power_mix` |Strommix UK（风能、太阳能等）|不|\r\n| `get_renewable_percentage_uk` | 可再生能源 UK | 没有 |\r\n| `get_germany_wholesale_price` | 批发价格 DE （SMARD） | 否 |\r\n| `get_global_carbon_intensity` | 全球二氧化碳强度 | Electricity Maps |\r\n| `get_global_power_mix` | Strommix 全球 | Electricity Maps |\r\n| `get_eu_day_ahead_prices` | 欧盟日前价格 | ENTSO-E |\r\n\r\n## API密钥\r\n\r\n- **电力地图** （全球二氧化碳）： [api-portal.electricitymaps.com](https://api-portal.electricitymaps.com) — 100k 通话/月 免费\r\n- **ENTSO-E** （欧盟价格）： [透明度.entsoe.eu](https://transparency.entsoe.eu) — 注册后免费\r\n\r\n英国数据和德国批发价格正在运行 **没有API密钥**.\r\n\r\n## 应用案例\r\n\r\n```\r\n\"Wann ist der beste Zeitpunkt heute für mein GPU-Training? CO2 soll minimal sein.\"\r\n\"Wie hoch ist der aktuelle Anteil erneuerbarer Energien im UK-Stromnetz?\"\r\n\"Gib mir den aktuellen Großhandelsstrompreis in Deutschland.\"\r\n\"Erstelle einen Plan für meinen Batch-Job in den nächsten 48h mit niedrigstem CO2-Ausstoß.\"\r\n```\r\n\r\n## 数据来源\r\n\r\n- [碳强度英国API](https://carbonintensity.org.uk/) National Grid ESO（免费）\r\n- [电力地图](https://electricitymaps.com/) 全球实时二氧化碳数据\r\n- [SMARD](https://www.smard.de/) 联邦电力市场数据局\r\n- [ENTSO-E](https://transparency.entsoe.eu/) 欧洲传输网络运营商\r\n\r\n______________________________________________________________________\r\n\r\n## AiAgentKarl提供的更多MCP服务器\r\n\r\n|类别|服务器|\r\n|----------|---------|\r\n|🔗 区块链| [索拉纳](https://github.com/AiAgentKarl/solana-mcp-server) |\r\n| 🌍 数据| [天气](https://github.com/AiAgentKarl/weather-mcp-server) · [德国](https://github.com/AiAgentKarl/germany-mcp-server) · [农业](https://github.com/AiAgentKarl/agriculture-mcp-server) · [太空](https://github.com/AiAgentKarl/space-mcp-server) · [航空](https://github.com/AiAgentKarl/aviation-mcp-server) · [欧盟公司](https://github.com/AiAgentKarl/eu-company-mcp-server) |\r\n| 🔒 安全| [网络安全](https://github.com/AiAgentKarl/cybersecurity-mcp-server) · [策略网关](https://github.com/AiAgentKarl/agent-policy-gateway-mcp) · [审计跟踪](https://github.com/AiAgentKarl/agent-audit-trail-mcp) |\r\n| 🤖 代理基础设施| [记忆](https://github.com/AiAgentKarl/agent-memory-mcp-server) · [目录](https://github.com/AiAgentKarl/agent-directory-mcp-server) · [中心](https://github.com/AiAgentKarl/mcp-appstore-server) · [声誉](https://github.com/AiAgentKarl/agent-reputation-mcp-server) |\r\n| 🔬 研究| [学术的](https://github.com/AiAgentKarl/crossref-academic-mcp-server) · [LLM基准](https://github.com/AiAgentKarl/llm-benchmark-mcp-server) · [法律](https://github.com/AiAgentKarl/legal-court-mcp-server) |\r\n\r\n[→ 完整目录（40+台服务器）](https://github.com/AiAgentKarl)\r\n\r\n## 许可证\r\n\r\nMIT - AiAgentKarl\r\n",
+ "config": {
+  "energy-grid": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "energy-grid-server"
+   ],
+   "env": {
+    "ELECTRICITY_MAPS_TOKEN": "optional",
+    "ENTSOE_TOKEN": "optional"
+   }
+  }
+ }
+}

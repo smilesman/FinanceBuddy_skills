@@ -1,0 +1,18 @@
+{
+ "id": "3278",
+ "kind": "mcp",
+ "name": "weather-29",
+ "fingerprint_md5": "a85bb22babd0edc1a3acce4ba7496109",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp天气\r\n\r\nWeather MCP-包装Open-Meteo API（免费，无授权）\r\n\r\n部分 [Pipeworx](https://pipeworx.io) --MCP网关，将AI代理连接到673+个实时数据源。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n\r\n## 快速开始\r\n\r\n添加到您的MCP客户端（Claude Desktop、Cursor、Windsurf等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"url\": \"https://gateway.pipeworx.io/weather/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者连接到完整的Pipeworx网关，以访问所有673+数据源：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pipeworx\": {\r\n      \"url\": \"https://gateway.pipeworx.io/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用ask_pipeworx\r\n\r\n您可以用简单的英语提问，而不是直接调用工具：\r\n\r\n```\r\nask_pipeworx({ question: \"your question about Weather data\" })\r\n```\r\n\r\n网关选择正确的工具并自动填充参数。\r\n\r\n## 更多\r\n\r\n- [所有工具和指南](https://github.com/pipeworx-io/examples)\r\n- [pipeworx.io](https://pipeworx.io)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://gateway.pipeworx.io/weather/mcp"
+  }
+ }
+}

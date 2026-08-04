@@ -1,0 +1,24 @@
+{
+ "id": "458",
+ "kind": "mcp",
+ "name": "spotify-16",
+ "fingerprint_md5": "c771d4ad923754777459fce12b905a49",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Spotify MCP服务器\r\n\r\n> Spotify Web API v1（2026年2月后）作为Claude Code的MCP工具\r\n\r\n从Claude控制Spotify——搜索、管理播放列表、控制播放，并生成具有流派交替模式的舞蹈混合播放列表。\r\n\r\n## 特性\r\n\r\n- **舞蹈混音生成器** --创建播放列表，按块交替播放流派（例如，3个bachata→ 3 kizomba），将旧曲目与新曲目混合在一起\r\n- **播放列表管理** --读取、创建和修改播放列表\r\n- **搜索** --搜索曲目、专辑、艺术家\r\n- **播放控制** --播放、暂停、跳过、音量、排队\r\n- **图书馆** --保存/删除库中的项目\r\n- **浏览** --类别、建议\r\n\r\n## 设置\r\n\r\n### 1.创建Spotify应用程序\r\n\r\n1. 去 [Spotify开发者仪表板](https://developer.spotify.com/dashboard)\r\n1. 点击 **创建应用程序**\r\n1. 填写应用程序详细信息：\r\n   - **应用程序名称**：选择任何名称（例如。， `spotify-mcp`)\r\n   - **应用程序描述**：Spotify的MCP服务器\r\n   - **重定向URI**: `http://127.0.0.1:8888/callback` （见下文）\r\n   - **您计划使用哪些API/SDK？**：选择 **Web API**\r\n1. 点击 **保存**\r\n1. 首选 **设置** 并注意你的 **客户端ID** 和 **客户端密钥**\r\n\r\n#### 重定向URI配置\r\n\r\nSpotify对重定向URI实施严格规则([文档](https://developer.spotify.com/documentation/web-api/concepts/redirect_uri)):\r\n\r\n- **需要HTTPS** 对于所有重定向URI， **除了** 环回IP地址\r\n- **`localhost` 不允许** --您必须使用IP地址 `127.0.0.1` 相反\r\n- 环回地址(`http://127.0.0.1`)是唯一允许HTTP的例外\r\n\r\n将重定向URI设置为：\r\n\r\n```\r\nhttp://127.0.0.1:8888/callback\r\n```\r\n\r\n> **重要提示：** 不要使用 `localhost`, `https://localhost`，或任何变化 `localhost`Spotify将以“无效重定向URI”或“不安全重定向URI”错误拒绝这些请求。\r\n\r\n### 2.安装\r\n\r\n```bash\r\ngit clone https://github.com/Patrik1331/spotify_mcp.git\r\ncd spotify_mcp\r\nuv sync\r\n```\r\n\r\n### 3.配置\r\n\r\n```bash\r\ncp .env.example .env\r\n```\r\n\r\n编辑 `.env` 使用您的Spotify凭据：\r\n\r\n```env\r\nSPOTIFY_CLIENT_ID=your_client_id_here\r\nSPOTIFY_CLIENT_SECRET=your_client_secret_here\r\nSPOTIFY_REDIRECT_URI=http://127.0.0.1:8888/callback\r\n```\r\n\r\n### 4.身份验证\r\n\r\n```bash\r\nuv run spotify-mcp-auth\r\n```\r\n\r\n这将打开您的浏览器进行Spotify授权。批准后，令牌将保存到 `~/.spotify_mcp/tokens.json` 并自动刷新。\r\n\r\n### 5.添加到克劳德代码\r\n\r\n添加到您的Claude Code MCP设置中(`~/.claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"spotify\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"/path/to/spotify_mcp\", \"run\", \"spotify-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法示例\r\n\r\n**舞蹈混音：**\r\n\r\n> “使用我的bachata和kizomba播放列表创建一个名为‘Dance Night 2026-03-11’的bachata-kizomba混音，每个块3首歌”\r\n\r\n**搜索：**\r\n\r\n> “寻找罗密欧·桑托斯的巴赫塔曲目”\r\n\r\n**播放：**\r\n\r\n> “播放我的新舞蹈混音播放列表”\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "spotify": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/spotify_mcp",
+    "run",
+    "spotify-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

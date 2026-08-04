@@ -1,0 +1,21 @@
+{
+ "id": "2807",
+ "kind": "mcp",
+ "name": "defi-yields-mcp",
+ "fingerprint_md5": "6e51354672ef1dc10459434aa6d42b0c",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# DeFi产生MCP\r\n\r\n由DefiLama提供支持的MCP服务器，用于AI代理探索DeFi收益机会。\r\n\r\n\r\n## 特性\r\n\r\n- **数据获取工具**：The `get_yield_pools` 该工具从DefiLama中检索DeFi收益池数据，允许按链（如以太坊、Solana）或项目（如Lido、Aave）进行过滤。\r\n- **分析提示**：The `analyze_yields` prompt为AI代理生成量身定制的指令，以分析收益池数据，重点关注APY、30天平均APY和预测等关键指标。\r\n- **包装方便**：直接使用以下命令运行服务器 `uvx defi-yields-mcp`.\r\n\r\n## 安装\r\n\r\n要将服务器与Claude Desktop一起使用，您可以自动安装或手动配置Claude Desktop配置文件。\r\n\r\n### 选项1：自动安装\r\n\r\n安装Claude Desktop的服务器：\r\n\r\n```bash\r\nuvx mcp install -m defi_yields_mcp --name \"DeFi Yields Server\"\r\n```\r\n\r\n### 选项2：手动配置\r\n\r\n找到配置文件：\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n添加服务器配置：\r\n\r\n```json\r\n{\r\n \"mcpServers\": {\r\n   \"defi-yields-mcp\": {\r\n     \"command\": \"uvx\",\r\n     \"args\": [ \"defi-yields-mcp\" ]\r\n   }\r\n }\r\n}\r\n```\r\n\r\n重新启动克劳德桌面。\r\n\r\n## 例子\r\n\r\n您可以使用以下命令：\r\n\r\n- “为丽都项目提取收益池。”\r\n- “分析以太坊上的收益池。”\r\n- “Solana游泳池的30天平均APY是多少？”\r\n\r\n这 `get_yield_pools` 工具获取并过滤数据，而 `analyze_yields` prompt指导LLM提供详细的分析。\r\n\r\n### 输出示例\r\n\r\n运行 `get_yield_pools` 带有以太坊过滤器的工具：\r\n\r\n```json\r\n[\r\n  {\r\n    \"chain\": \"Ethereum\",\r\n    \"pool\": \"STETH\",\r\n    \"project\": \"lido\",\r\n    \"tvlUsd\": 14804019222,\r\n    \"apy\": 2.722,\r\n    \"apyMean30d\": 3.00669,\r\n    \"predictions\": {\r\n        \"predictedClass\": \"Stable/Up\",\r\n        \"predictedProbability\": 75,\r\n        \"binnedConfidence\": 3\r\n    }\r\n  },\r\n  ...\r\n]\r\n```\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "defi-yields-mcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "defi-yields-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

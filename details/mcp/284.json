@@ -1,0 +1,31 @@
+{
+ "id": "284",
+ "kind": "mcp",
+ "name": "mcp-playwright-test",
+ "fingerprint_md5": "a94973fe0eb807db7d989e539c8c5aa0",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP Playwright Test\r\n\r\n基于 Model Context Protocol (MCP)的 Playwright 测试自动化服务器。\r\n\r\n## 功能特点\r\n\r\n- 自动获取项目代码(支持 Git 仓库或本地项目)\r\n- 使用 Playwright 设置测试环境\r\n- 基于需求生成测试用例\r\n- 执行 UI 和 API 测试并生成详细报告\r\n- 捕获并分析网络请求和控制台日志\r\n\r\n[mcphub](https://mcphub.com/mcp-servers/w1561778301/mcp-playwright-test)\r\n\r\n## 快速开始\r\n\r\n### 安装\r\n\r\n```bash\r\n# 使用npm\r\nnpm install mcp-playwright-test\r\n\r\n# 或使用yarn\r\nyarn add mcp-playwright-test\r\n\r\n# 或使用pnpm\r\npnpm add mcp-playwright-test\r\n```\r\n\r\n### 配置环境变量\r\n\r\n```bash\r\n# 用于生成测试用例的Anthropic API密钥\r\nexport ANTHROPIC_API_KEY=your_api_key_here\r\n\r\n# 可选：服务器端口(默认8931)\r\nexport MCP_PORT=8931\r\n```\r\n\r\n### 启动服务器\r\n\r\n```bash\r\n# 使用npm脚本启动\r\nnpm run start\r\n\r\n# 或者直接运行\r\nnpx ts-node src/test-mcp.ts\r\n```\r\n\r\n## 配置文件说明\r\n\r\nMCP Playwright Test 支持通过`.playwright-mcp.json`文件进行配置，特别适合在 Claude Desktop 和 Cursor 等 AI 工具环境中使用。\r\n\r\n### 配置文件示例\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-playwright-test\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-playwright-test\"],\r\n      \"env\": {\r\n        \"CODE_PATH\": \".\",\r\n        \"SIMPLE_GIT_PATH\": \"git\",\r\n        \"SIMPLE_GIT_BRANCH\": \"main\",\r\n        \"SIMPLE_GIT_DEPTH\": 1,\r\n        \"SIMPLE_GIT_USERNAME\": \"username\",\r\n        \"SIMPLE_GIT_PASSWORD\": \"password\",\r\n        \"API_URL\": \"http://localhost:3000\",\r\n        \"API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Claude Desktop 和 Cursor 配置\r\n\r\n1. **在 Claude Desktop 中使用**:\r\n\r\n   - 在项目根目录创建`.playwright-mcp.json`文件\r\n   - 在 Claude Desktop 设置中添加服务器配置指向该文件\r\n   - 使用\"自定义 MCP 服务器\"选项，选择\"mcp-server-alipay\"\r\n\r\n2. **在 Cursor 中使用**:\r\n   - 确保项目中存在`.playwright-mcp.json`文件\r\n   - 在 Cursor 的 MCP 配置中选择\"使用本地 MCP 服务器\"\r\n   - 指定服务器名称为\"mcp-server-alipay\"\r\n\r\n### 环境变量说明\r\n\r\n> **注意**：Git 相关参数和 CODE_PATH 参数为二选一关系，要么使用 Git 相关参数从远程仓库克隆代码，要么使用 CODE_PATH 指定本地已有的代码路径。\r\n\r\n> **提示**：API 相关配置（API_URL 和 API_KEY）是可选的，仅在需要进行 API 测试时才需要配置。如果您只使用 UI 测试功能，可以省略这些参数。\r\n\r\n> **灵活使用**：MCP Playwright Test 支持三种使用模式：1) 仅进行 UI 测试；2) 仅进行 API 测试；3) 同时进行 UI 和 API 测试。您可以根据项目需求选择适合的测试模式，并只配置相应的环境变量。\r\n\r\n| 变量名              | 说明               | 默认值                | 使用场景     |\r\n| ------------------- | ------------------ | --------------------- | ------------ |\r\n| CODE_PATH           | 本地代码路径       | .                     | 使用本地项目 |\r\n| SIMPLE_GIT_PATH     | Git 可执行文件路径 | git                   | 克隆远程仓库 |\r\n| SIMPLE_GIT_BRANCH   | 克隆时使用的分支   | -                     | 克隆远程仓库 |\r\n| SIMPLE_GIT_DEPTH    | 克隆深度           | -                     | 克隆远程仓库 |\r\n| SIMPLE_GIT_USERNAME | Git 用户名         | -                     | 克隆远程仓库 |\r\n| SIMPLE_GIT_PASSWORD | Git 密码或令牌     | -                     | 克隆远程仓库 |\r\n| API_URL             | API 基础 URL       | http://localhost:3000 | API 测试     |\r\n| API_KEY             | API 密钥           | -                     | API 测试     |\r\n| BROWSER_TYPE        | 浏览器类型         | chromium              | UI 测试      |\r\n| BROWSER_HEADLESS    | 是否使用无头模式   | true                  | UI 测试      |\r\n| TEST_STORAGE_DIR    | 测试结果存储目录   | ./test-results        | 通用         |\r\n\r\n## 可用工具\r\n\r\nMCP 服务器提供以下工具：\r\n\r\n- `clone-repository`: 克隆 Git 仓库进行测试\r\n- `use-local-project`: 使用本地项目进行测试\r\n- `launch-browser`: 启动浏览器进行测试\r\n- `generate-test-cases`: 从文本需求生成测试用例\r\n- `generate-tests-from-spec`: 从 API 规范文档自动生成 API 测试用例，支持多种格式\r\n- `execute-ui-tests`: 执行 UI 测试套件\r\n- `execute-api-tests`: 执行 API 测试套件\r\n\r\n## 支持的 API 规范格式\r\n\r\nMCP Playwright Test 支持多种 API 规范文档格式，可自动检测并解析：\r\n\r\n- **OpenAPI 3.0**: 最新的 OpenAPI 规范格式，广泛应用于 API 文档\r\n- **Swagger 2.0**: 传统的 API 文档格式，兼容大量现有系统\r\n- **Apifox**: 支持 Apifox 导出的 API 文档格式\r\n- **自动检测**: 可以自动分析文档格式并使用最合适的解析器\r\n\r\n生成测试用例时，可通过`format`参数指定格式，或使用`auto`让系统自动检测。\r\n\r\n## 可用资源\r\n\r\nMCP 服务器提供以下资源：\r\n\r\n- `reports`: 获取测试执行报告\r\n- `test-cases`: 检索测试用例\r\n\r\n## 开发\r\n\r\n### 安装依赖\r\n\r\n```bash\r\npnpm install\r\n```\r\n\r\n### 构建项目\r\n\r\n```bash\r\npnpm build\r\n```\r\n\r\n### 运行测试\r\n\r\n```bash\r\npnpm test\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "mcp-playwright-test": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-playwright-test"
+   ],
+   "env": {
+    "CODE_PATH": ".",
+    "SIMPLE_GIT_PATH": "git",
+    "SIMPLE_GIT_BRANCH": "main",
+    "SIMPLE_GIT_DEPTH": "1",
+    "SIMPLE_GIT_USERNAME": "username",
+    "SIMPLE_GIT_PASSWORD": "password",
+    "API_URL": "http://localhost:3000",
+    "API_KEY": "your-api-key"
+   }
+  }
+ }
+}

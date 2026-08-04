@@ -1,0 +1,23 @@
+{
+ "id": "1302",
+ "kind": "mcp",
+ "name": "urdb",
+ "fingerprint_md5": "e60dadb8727f10247f6c0ea58b538420",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# urdb mcp\r\n\r\nMCP服务器 [URDB](https://urdb.io) --产品完整性数据库。将Claude Desktop（或任何兼容MCP的人工智能）连接到有关产品降级、缩水式通胀、保修削减和取消认证的真实来源数据。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `urdb_search` |按名称或关键字搜索产品，并提供完整性评分|\r\n| `urdb_get_product` |7个维度的完整性分解|\r\n| `urdb_get_changes` |记录产品的认证事件|\r\n| `urdb_list_products` |按类别、品牌、分数列出/过滤产品|\r\n\r\n## 设置\r\n\r\n**1.获取API密钥** 在 [urdb.io/settings/api-keys](https://urdb.io/settings/api-keys) （免费版可用）\r\n\r\n**2.添加到Claude桌面配置**\r\n\r\n在macOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n在Windows上： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"urdb\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"urdb-mcp\"],\r\n      \"env\": {\r\n        \"URDB_API_KEY\": \"urdb_live_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**3.重新启动克劳德桌面**\r\n\r\n## 示例提示\r\n\r\n- “哪些笔记本电脑的完整性得分最高？”\r\n- “这些年来，KitchenAid立式搅拌机是否变得更糟了？”\r\n- “给我找一台没有被封起来的洗衣机”\r\n- “Sonos Era 100最近发生了什么变化？”\r\n\r\n## API文件\r\n\r\n完整REST API： [urdb.io/api](https://urdb.io/api)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "urdb": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "urdb-mcp"
+   ],
+   "env": {
+    "URDB_API_KEY": "urdb_live_your_key_here"
+   }
+  }
+ }
+}

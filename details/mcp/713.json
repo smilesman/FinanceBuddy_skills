@@ -1,0 +1,18 @@
+{
+ "id": "713",
+ "kind": "mcp",
+ "name": "levels-of-self",
+ "fingerprint_md5": "f17bf219631314a10183b9e5a9fd4368",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 自我MCP服务器的级别\r\n\r\n一个MCP（模型上下文协议）服务器，让人工智能助理访问自我意识游戏的级别——6854个交互场景，涵盖7个人类发展级别、19个原型和9个突破性练习，用于真实的指导课程。\r\n\r\n## 它做什么\r\n\r\n该服务器允许任何兼容MCP的AI助手（Claude等）按需提取自我意识内容：\r\n\r\n- **场景** -揭示思维和行为模式的互动情境\r\n- **练习** -与某人所经历的相匹配的指导性突破性练习\r\n- **原型** -模式识别的19种行为原型\r\n- **游戏信息** -统计数据、级别、链接、指导选项\r\n\r\n所有工具都是只读的。不收集或存储用户数据。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_scenario` |按级别、类型或原型获得交互式自我意识场景|\r\n| `get_exercise` |按类别或当前感受进行指导性突破练习|\r\n| `get_archetype` |查找原型或将行为模式与原型相匹配|\r\n| `get_game_info` |获取游戏概述、统计数据、关卡、链接、教练信息|\r\n\r\n## 设置为自定义MCP连接器\r\n\r\n### 托管（推荐）\r\n\r\n服务器已启动并准备就绪：\r\n\r\n```\r\nURL: https://api.100levelup.com/mcp/\r\nProtocol: MCP 2024-11-05 (Streamable HTTP + SSE)\r\nAuthentication: None required\r\n```\r\n\r\n添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"levels-of-self\": {\r\n      \"url\": \"https://api.100levelup.com/mcp/\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 自托管\r\n\r\n1. 克隆此仓库\r\n1. 提供a `game-scenario-framework.json` 数据文件（或联系我们）\r\n1. 跑 `node server.js`\r\n1. 服务器在端口3471上启动\r\n\r\n## 示例提示\r\n\r\n使用任何与MCP连接的AI助手尝试以下操作：\r\n\r\n1. **“给我一个关于身份的自我意识场景”** -返回一个3级（身份）场景，其中包含反映您如何看待自己的响应选项。\r\n\r\n1. **“我感到不知所措——我应该做什么运动？”** -返回气功的中心轻击练习，特别推荐用于压倒性的。\r\n\r\n1. **“什么样的原型能与一个对每一个轻微的事情都保持记录但从不说话的人相匹配？”** -识别无声记分员原型及其核心模式。\r\n\r\n1. **“告诉我关于自我游戏的级别——它有多少种场景？”** -返回游戏概述和统计数据：6854个场景，25000多名玩家，175个国家。\r\n\r\n1. **“所有的自我意识原型是什么？”** -返回所有19个原型及其行为模式。\r\n\r\n## 关于\r\n\r\n**自我层次** 是由Arthur Palyan（2025年加州最佳生活教练）创立的基于场景的个人发展平台。该游戏帮助人们通过7个自我意识层次的互动场景看到他们生活中的模式。\r\n\r\n- 游戏：https://100levelup.com\r\n- 网间网操作系统：https://apps.apple.com/app/id6757724858\r\n- 电报：https://t.me/LevelsOfSelfBot/game\r\n- 网站：https://www.levelsofself.com\r\n- 隐私：https://api.100levelup.com/family/privacy.html\r\n- MCP隐私：https://api.100levelup.com/family/mcp-privacy.html\r\n\r\n## 支持\r\n\r\n- 电子邮件：artpalyan@levelsofself.com\r\n- 预订电话：https://calendly.com/levelsofself/zoom\r\n\r\n## 许可证\r\n\r\nMIT-见 [许可证](LICENSE)\r\n",
+ "config": {
+  "levels-of-self": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://api.100levelup.com/mcp/"
+  }
+ }
+}

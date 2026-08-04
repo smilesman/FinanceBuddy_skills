@@ -1,0 +1,24 @@
+{
+ "id": "2654",
+ "kind": "mcp",
+ "name": "patents",
+ "fingerprint_md5": "596cacb3822d2b5e32e717b32271781d",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 专利MCP服务器🔍\r\n\r\n\r\n结束 [模型上下文协议](https://modelcontextprotocol.io/) 服务器为 **专利搜索** – 为苏黎世市学校办公室开发，作为MCP投资组合的一部分。\r\n\r\n允许 AI 代理人结构化访问 **全球1.3亿多项专利文件** 关于 [EPO开放专利服务](https://developers.epo.org/) API 和 **瑞士专利数据** 直接从 [IGE/瑞士](https://www.swissreg.ch).\r\n\r\n**模型agnostic** – 与克劳德桌面工作， 光标， 风帆冲浪， VS代码+继续， LibreChat， Cline和自托管模型通过mcp代理.\r\n\r\n## 服务器能做什么？\r\n\r\n### EPO Tools（全球，1.3亿多份文件）\r\n\r\n| 工具 | 功能 |\r\n|------|----------|\r\n| `patent_search` 全文搜索（标题，摘要，类，申请人，发明者）\r\n| `patent_bibliography` 书目数据： 标题， 申请人， 发明者， 摘要， 分类 |\r\n| `patent_abstract` 发明摘要（150-250字）\r\n| `patent_claims` 专利权——具有法律约束力的核心\r\n| `patent_description` | 技术描述/规格 |\r\n| `patent_family` INPADOC专利系列 - 全球所有相关申请\r\n| `patent_legal_status` 专利是否仍然有效？\r\n| `patent_register` |欧洲议会注册信息（程序状态，指定国家） |\r\n\r\n### 施韦泽工具（IGE/Swissreg）\r\n\r\n| 工具 | 功能 |\r\n|------|----------|\r\n| `swiss_patent_search` CH专利和具有CH/LI效力的EP专利的全文搜索\r\n| `swiss_patent_detail` | 直接从瑞士专利注册处查询详情 |\r\n\r\n### 资源（通过@提及）\r\n\r\n- `patents://search-syntax` – EPO 搜索语法参考\r\n- `patents://sources` 专利数据来源概述\r\n- `patents://classification-guide` CPC分类系统解释\r\n\r\n### 提示（工作流Vorlagen）\r\n\r\n- `prior_art_search` – 系统的最先进的技术研究\r\n- `technology_landscape` 技术景观分析\r\n- `patent_explained` 用简单的语言解释专利\r\n\r\n## 条件\r\n\r\n- **Python 3.10+** （推荐3.12）\r\n- **紫外线** 依赖关系管理\r\n- **EPO OPS API-Key公司** （免费，4GB/月）\r\n\r\n## 安装\r\n\r\n### 1.知识库klonen\r\n\r\n```bash\r\ngit clone https://github.com/schulamt-zh/patent-mcp-server.git\r\ncd patent-mcp-server\r\n```\r\n\r\n### 2、安装依赖关系\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n### 设置 EPO API 密钥\r\n\r\n1. 免费注册 [EPO-OPS](https://developers.epo.org/)\r\n1. 在“我的应用”下创建一个新应用程序\r\n1. 复制消费者密钥和消费者秘密\r\n\r\n```bash\r\ncp .env.example .env\r\n# Trage deine Keys in .env ein\r\n```\r\n\r\n### 4.测试\r\n\r\n```bash\r\nuv run patent-mcp-server\r\n# Sollte ausgeben: \"Starting Patent MCP Server (EPO OPS + IGE)\"\r\n```\r\n\r\n## Claude 桌面配置\r\n\r\n添加到 `claude_desktop_config.json` 添加 ：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"patents\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/pfad/zu/patent-mcp-server\",\r\n        \"run\",\r\n        \"patent-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 示例查询\r\n\r\n**简单搜索：**\r\n\r\n> “在教育中寻求机器学习专利”\r\n> → 使用 `patent_search` MIT `ta=machine learning AND ta=education`\r\n\r\n**了解专利：**\r\n\r\n> “用简单的语言向我解释专利EP3456789”\r\n> → 使用 `patent_bibliography` + `patent_abstract` + `patent_claims`\r\n\r\n**技术标准：**\r\n\r\n> “人工智能辅助的工作时间表优化器是否已经有专利？”\r\n> → 使用 `prior_art_search` 提示工作流\r\n\r\n**检查法律地位：**\r\n\r\n> “CH712345专利还有效吗？”\r\n> → 使用 `patent_legal_status`\r\n\r\n## 数据来源\r\n\r\n| 来源 | 覆盖面 | Auth | 成本 |\r\n|--------|-----------|------|--------|\r\n| **EPO-OPS** | 全球超过 1.3 亿份文件 | OAuth2 （Key+Secret） | 免费 （4 GB/月） |\r\n| **IGE/瑞士** | CH 专利 + 具有 CH/LI 效力的 EP | OpenID Connect | 免费 （使用条款） |\r\n| **欧洲专利局专利检索系统** | 与EPO相同的数据，Web接口 | – | 免费 |\r\n\r\n## 安全\r\n\r\n- **只读**服务器只读取数据，不写入或更改任何内容\r\n- **没有个人资料**专利数据是公开可用的信息\r\n- **速率限制**内置代币管理和EPO配额重试逻辑\r\n- **没有法律顾问**服务器明确指出结果不构成法律建议\r\n\r\n## 建筑\r\n\r\n```\r\nClaude / LLM Host\r\n       │\r\n       ▼\r\n  MCP Client (stdio / SSE)\r\n       │\r\n       ▼\r\n  Patent MCP Server\r\n       │\r\n       ├── EPO OPS API (OAuth2)\r\n       │   ├── Published Data Search\r\n       │   ├── Bibliography / Abstract / Claims / Description\r\n       │   ├── INPADOC Family\r\n       │   ├── INPADOC Legal Status\r\n       │   └── EP Register\r\n       │\r\n       └── IGE/Swissreg API (OpenID Connect)\r\n           ├── PatentSearch\r\n           └── PatentDetail\r\n```\r\n\r\n## 发展\r\n\r\n### 执行测试\r\n\r\n```bash\r\npip install -e \".[dev]\"\r\npython -m pytest tests/ -v\r\n```\r\n\r\n### 代码检查\r\n\r\n```bash\r\nruff check .\r\nruff format --check .\r\n```\r\n\r\n### EPO活烟测试\r\n\r\n```bash\r\n# Voraussetzung: EPO Keys in .env\r\nPYTHONPATH=. python tests/smoke_epo.py --verbose\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n______________________________________________________________________\r\n\r\n*没有法律咨询。具有约束力的信息： [免疫球蛋白E](https://www.ige.ch) 或者专利律师。*\r\n",
+ "config": {
+  "patents": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/pfad/zu/patent-mcp-server",
+    "run",
+    "patent-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

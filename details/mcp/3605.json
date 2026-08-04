@@ -1,0 +1,26 @@
+{
+ "id": "3605",
+ "kind": "mcp",
+ "name": "searchconsole-mcp",
+ "fingerprint_md5": "c66fc47096d8b06c3a13279a714bd5cf",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 搜索控制台mcp\r\n\r\n\r\n一 [主控程序](https://modelcontextprotocol.io/) 服务器，为AI助手提供对Google Search Console数据的只读访问权限。用自然语言询问有关网站搜索性能的问题——关键字、点击、展示、点击率、排名、网站地图等。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_sites` |列出所有已验证的Search Console属性及其权限级别|\r\n| `query_search_analytics` |查询关键字/页面数据——点击次数、展示次数、点击率、平均位置。支持按维度、日期范围、搜索类型和分页进行筛选|\r\n| `list_sitemaps` |列出已提交的物业站点地图|\r\n\r\n## 快速开始\r\n\r\n### 1.安装\r\n\r\n```bash\r\ngit clone https://github.com/chrishart0/searchconsole-mcp.git\r\ncd searchconsole-mcp\r\nuv sync\r\n```\r\n\r\n### 2.身份验证\r\n\r\n此服务器使用 [Google应用程序默认凭据](https://cloud.google.com/docs/authentication/application-default-credentials)。选择一个：\r\n\r\n**选项A——服务帐户密钥** （建议用于自动化）：\r\n\r\n```bash\r\nexport GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account-key.json\r\n```\r\n\r\n**选项B——用户凭据** （建议当地发展）：\r\n\r\n```bash\r\ngcloud auth application-default login \\\r\n  --scopes=\"https://www.googleapis.com/auth/webmasters.readonly\"\r\n```\r\n\r\n服务帐户或用户必须有权访问要查询的Search Console属性。\r\n\r\n### 3.连接到您的MCP客户端\r\n\r\n<details>\r\n<summary><strong>Claude Code</strong></summary>\r\n\r\n增添 `~/.claude.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"searchconsole-mcp\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/searchconsole-mcp\", \"searchconsole-mcp\"],\r\n      \"env\": {\r\n        \"GOOGLE_APPLICATION_CREDENTIALS\": \"/path/to/key.json\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>Claude Desktop</strong></summary>\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"searchconsole-mcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/searchconsole-mcp\", \"searchconsole-mcp\"],\r\n      \"env\": {\r\n        \"GOOGLE_APPLICATION_CREDENTIALS\": \"/path/to/key.json\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>Other MCP clients</strong></summary>\r\n\r\n任何兼容MCP的客户端都可以通过stdio连接。使用以下命令运行服务器：\r\n\r\n```bash\r\nuv run --directory /path/to/searchconsole-mcp searchconsole-mcp\r\n```\r\n\r\n</details>\r\n\r\n## 示例提示\r\n\r\n连接后，尝试询问您的AI助手：\r\n\r\n- “本月点击量最高的10个关键词是什么？”\r\n- “显示展示率高但点击率低的页面”\r\n- “列出我的所有搜索控制台属性”\r\n- “我的网站在谷歌第2页的排名是什么？”\r\n- “显示我的网站地图及其状态”\r\n\r\n## 发展\r\n\r\n```bash\r\nuv sync --dev\r\nuv run pytest\r\n```\r\n\r\n## 许可证\r\n\r\n[MIT](LICENSE)\r\n",
+ "config": {
+  "searchconsole-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "/path/to/searchconsole-mcp",
+    "searchconsole-mcp"
+   ],
+   "env": {
+    "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/key.json"
+   }
+  }
+ }
+}

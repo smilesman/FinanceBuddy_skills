@@ -1,0 +1,18 @@
+{
+ "id": "3144",
+ "kind": "mcp",
+ "name": "lapalma24",
+ "fingerprint_md5": "7958504334736cd5d141ac5af1702ad9",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP度假租赁服务器\r\n\r\n**La Palma 24的官方模型上下文协议（MCP）服务器** -搜索并发现加那利群岛拉帕尔马的度假租赁物业。\r\n\r\n## 关于\r\n\r\nLa Palma 24建于2002年，享誉于其独特的客房。这个MCP服务器使Claude、ChatGPT等人工智能助手能够通过自然对话帮助用户发现和预订完美的住宿。\r\n\r\n**实时服务器：** `https://mcp.la-palma24.net`\r\n\r\n## 特性\r\n\r\n- **实时可用性** 在70000多个月度房源中搜索\r\n- **动态定价** 有季节性价格和折扣\r\n- **基于位置的过滤** 按城市和社区\r\n- **多语言支持** （西班牙语、英语、德语）\r\n- **详细的房产信息** 配有照片和设施\r\n- **快速响应** 具有优化的查询\r\n\r\n## 可用工具\r\n\r\n### `buscar_disponibilidad`\r\n\r\n搜索特定日期的可用房产。\r\n\r\n```json\r\n{\r\n  \"fecha_llegada\": \"2024-06-15\",\r\n  \"fecha_salida\": \"2024-06-22\",\r\n  \"num_personas\": 4,\r\n  \"municipio\": \"Santa Cruz de La Palma\"\r\n}\r\n```\r\n\r\n### `calcular_precio_estancia`\r\n\r\n计算包括所有费用和折扣在内的总住宿价格。\r\n\r\n```json\r\n{\r\n  \"id_casa\": \"property-123\",\r\n  \"fecha_llegada\": \"2024-06-15\",\r\n  \"fecha_salida\": \"2024-06-22\",\r\n  \"num_personas\": 4\r\n}\r\n```\r\n\r\n### `obtener_detalles_propiedad`\r\n\r\n以您喜欢的语言获取完整的房产详细信息。\r\n\r\n```json\r\n{\r\n  \"id_casa\": \"property-123\",\r\n  \"idioma\": \"en\"\r\n}\r\n```\r\n\r\n### `listar_propiedades`\r\n\r\n使用灵活的筛选浏览所有属性。\r\n\r\n```json\r\n{\r\n  \"municipio\": \"Los Llanos de Aridane\",\r\n  \"dormitorios\": 2,\r\n  \"personas_max\": 4,\r\n  \"limit\": 10\r\n}\r\n```\r\n\r\n### `listar_municipios`\r\n\r\n获取所有拥有可用房产的城市列表。\r\n\r\n### `listar_barrios`\r\n\r\n获取社区列表，可选择按市政当局过滤。\r\n\r\n```json\r\n{\r\n  \"municipio\": \"Santa Cruz de La Palma\"\r\n}\r\n```\r\n\r\n## 快速开始\r\n\r\n### 与Claude Desktop一起使用\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"lapalma24\": {\r\n      \"url\": \"https://mcp.la-palma24.net\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用VS代码（GitHub Copilot）\r\n\r\n添加到 `.vscode/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"lapalma24\": {\r\n      \"url\": \"https://mcp.la-palma24.net\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 与ChatGPT一起使用\r\n\r\n1. 前往设置→ Apps\r\n1. 点击“创建自定义应用”\r\n1. 输入MCP服务器URL: `https://mcp.la-palma24.net`\r\n1. 保存并启用\r\n\r\n## 查询示例\r\n\r\n连接后，您可以询问您的AI助手：\r\n\r\n- *“下周给我在圣克鲁斯-德拉帕尔马找一套两居室公寓”*\r\n- *“7月份，Los Llanos de Aridane为一个4口之家提供了什么？”*\r\n- *“向我展示海滩附近的海景房产”*\r\n- *“计算6月15日至6月22日期间X房产的价格”*\r\n- *“在拉帕尔马观星的最佳地区是什么？”*\r\n\r\n## 覆盖的地点\r\n\r\nLa Palma 24涵盖了La Palma的所有14个城市：\r\n\r\n- 圣克鲁斯-德拉帕尔马（首都）\r\n- 阿里丹平原\r\n- 布雷纳 阿尔塔\r\n- 布雷纳 Baja\r\n- 埃尔帕索\r\n- 塔萨科尔特\r\n- 蒂拉法岛\r\n- Puntagorda\r\n- 保证\r\n- 巴洛文托\r\n- 圣安德烈斯酱\r\n- 蓬塔亚纳\r\n- 比利亚德马索\r\n- 富恩卡连特·德拉帕尔马\r\n\r\n## 费率限制和安全\r\n\r\n- **免费等级：** 每个IP每小时100个请求\r\n- **身份验证：** 无需（公共只读访问）\r\n- **仅限HTTPS：** TLS 1.3已实施\r\n- **无个人数据：** 服务器不存储用户查询\r\n\r\n如需更高的限额或商业集成，请联系：info@la-palma24.net\r\n\r\n## 技术细节\r\n\r\n- **协议：** MCP（模型上下文协议）\r\n- **运输：** HTTP/HTTPS\r\n- **格式：** JSON-RPC 2.0\r\n- **主办单位：** 加那利群岛，西班牙\r\n- **正常运行时间：** 99.9%SLA\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 支持\r\n\r\n- **网站：** https://www.la-palma24.net\r\n- **电子邮件：** info@la-palma24.net\r\n- **问题：** https://github.com/La-Palma-24/lapalma24-mcp/issues\r\n\r\n## 关于拉帕尔马\r\n\r\n拉帕尔马，即“美丽之岛”，是加那利群岛保存最完好的秘密之一。以其：\r\n\r\n- **世界级观星** （联合国教科文组织星光保护区）\r\n- **火山景观** 以及壮观的海岸线\r\n- **月桂林** （联合国教科文组织世界遗产）\r\n- **黑沙滩** 和天然游泳池\r\n- **远足小径** 通过多样化的小气候\r\n\r\n______________________________________________________________________\r\n\r\n**由...制作❤️ 在加那利群岛的拉帕尔马**\r\n\r\n*自2002年以来，将旅行者与真实的岛屿体验联系起来*\r\n",
+ "config": {
+  "lapalma24": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.la-palma24.net"
+  }
+ }
+}

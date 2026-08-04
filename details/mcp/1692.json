@@ -1,0 +1,22 @@
+{
+ "id": "1692",
+ "kind": "mcp",
+ "name": "readability",
+ "fingerprint_md5": "8ea3f1a1a90f12f5e48a4ce678387b3d",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Mozilla可读性解析器MCP服务器\r\n\r\n一 [模型上下文协议](https://github.com/modelcontextprotocol) 该服务器提取网页内容并将其转换为干净、LLM优化的Markdown。返回文章标题、主要内容、摘录、署名和网站名称。用途 [Mozilla的可读性算法](https://github.com/mozilla/readability) 删除广告、导航、页脚和非必要元素，同时保留核心内容结构。 [更多关于MCP](https://modelcontextprotocol.io/introduction).\r\n\r\n<a href=\"https://glama.ai/mcp/servers/jdcx8fmajm\"></a>\r\n\r\n## 特性\r\n\r\n- 删除广告、导航、页脚和其他非必要内容\r\n- 将干净的HTML转换为格式良好的Markdown（也使用Turndown）\r\n- 返回文章元数据（标题、摘录、署名、网站名称）\r\n- 优雅地处理错误\r\n\r\n## 为什么不直接取？\r\n\r\n与简单的获取请求不同，此服务器：\r\n\r\n- 使用Mozilla的可读性算法仅提取相关内容\r\n- 消除广告、弹出窗口和导航菜单等噪音\r\n- 通过删除不必要的HTML/CSS减少令牌使用\r\n- 提供一致的Markdown格式，以实现更好的LLM处理\r\n- 包括有关内容的有用元数据\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Mozilla Readability Parser for Claude Desktop [史密瑟里](https://smithery.ai/server/server-moz-readability):\r\n\r\n```bash\r\nnpx -y @smithery/cli install server-moz-readability --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\nnpm install server-moz-readability\r\n```\r\n\r\n## 工具参考\r\n\r\n### `parse`\r\n\r\n提取网页内容并将其转换为干净的Markdown。\r\n\r\n**论据：**\r\n\r\n```json\r\n{\r\n  \"url\": {\r\n    \"type\": \"string\",\r\n    \"description\": \"The website URL to parse\",\r\n    \"required\": true\r\n  }\r\n}\r\n```\r\n\r\n**退货：**\r\n\r\n```json\r\n{\r\n  \"title\": \"Article title\",\r\n  \"content\": \"Markdown content...\",\r\n  \"metadata\": {\r\n    \"excerpt\": \"Brief summary\",\r\n    \"byline\": \"Author information\",\r\n    \"siteName\": \"Source website name\"\r\n  }\r\n}\r\n```\r\n\r\n## 使用Claude Desktop\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"readability\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"server-moz-readability\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 依赖项\r\n\r\n- @mozilla/可读性-内容提取\r\n- turndown-HTML到Markdown的转换\r\n- jsdom-DOM解析\r\n- axios-HTTP请求\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "readability": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "server-moz-readability"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "id": "789",
+ "kind": "mcp",
+ "name": "orion-vision-mcp",
+ "fingerprint_md5": "2fced29298661f709fd2107b0fb8236b",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# Orion Vision MCP服务器🚀\r\n\r\n> 🔌 **兼容Cline、Cursor、Claude Desktop和任何其他MCP客户端！**\r\n>\r\n> Orion Vision MCP也与任何MCP客户端兼容\r\n\r\n模型上下文协议（MCP）是一个开放标准，使人工智能系统能够与各种数据源和工具无缝交互，促进安全的双向连接。\r\n\r\nOrion Vision MCP服务器提供：\r\n\r\n- 与Azure表单识别器/文档智能无缝集成\r\n- 文档分析和表单数据提取功能\r\n- 支持各种文档类型（收据、发票、身份证件等）\r\n- 使用TypeScript进行类型安全操作\r\n\r\n## 先决条件🔧\r\n\r\n在开始之前，请确保您已经：\r\n\r\n- Azure表单识别器/文档智能端点和密钥\r\n- 克劳德桌面或光标\r\n- Node.js（v20或更高版本）\r\n- Git已安装（仅在使用Git安装方法时需要）\r\n\r\n## Orion Vision MCP服务器安装⚡\r\n\r\n### 使用NPX运行\r\n\r\n```bash\r\nnpx -y orion-vision-mcp@latest\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n要通过Smithery为Claude Desktop自动安装Orion Vision MCP服务器，请执行以下操作：\r\n\r\n```bash\r\nnpx -y @smithery/cli install @orion-vision/mcp --client claude\r\n```\r\n\r\n## 配置MCP客户端⚙️\r\n\r\n### 配置Cline🤖\r\n\r\n在Cline中设置Orion Vision MCP服务器的最简单方法是单击一下市场：\r\n\r\n1. 在VS代码中打开Cline\r\n1. 点击侧边栏中的Cline图标\r\n1. 导航到“MCP服务器”选项卡（4个方块）\r\n1. 搜索“Orion Vision”并点击“安装”\r\n1. 出现提示时，输入您的Azure表单识别器凭据\r\n\r\n或者，您可以在Cline中手动设置Orion Vision MCP服务器：\r\n\r\n1. 打开Cline MCP设置文件：\r\n\r\n```bash\r\n# For macOS:\r\ncode ~/Library/Application\\ Support/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json\r\n\r\n# For Windows:\r\ncode %APPDATA%\\Code\\User\\globalStorage\\saoudrizwan.claude-dev\\settings\\cline_mcp_settings.json\r\n```\r\n\r\n2. 将Orion Vision服务器配置添加到文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"orion-vision-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"orion-vision-mcp@latest\"],\r\n      \"env\": {\r\n        \"AZURE_FORM_RECOGNIZER_ENDPOINT\": \"your-endpoint-here\",\r\n        \"AZURE_FORM_RECOGNIZER_KEY\": \"your-key-here\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. 保存文件并重新启动Cline（如果它已经在运行）。\r\n\r\n### 配置光标🖥️\r\n\r\n> **备注**：需要Cursor 0.45.6或更高版本\r\n\r\n在Cursor中设置Orion Vision MCP服务器：\r\n\r\n1. 打开光标设置\r\n1. 导航到功能>MCP服务器\r\n1. 点击“+添加新MCP服务器”按钮\r\n1. 填写以下信息：\r\n   - **名字**：输入服务器的昵称（例如“orion vision mcp”）\r\n   - **类型**：选择“command”作为类型\r\n   - **命令**：输入运行服务器的命令：\r\n   ```bash\r\n   env AZURE_FORM_RECOGNIZER_ENDPOINT=your-endpoint AZURE_FORM_RECOGNIZER_KEY=your-key npx -y orion-vision-mcp@latest\r\n   ```\r\n   > **重要**：替换 `your-endpoint` 和 `your-key` 使用您的Azure表单识别器凭据\r\n\r\n### 配置Claude Desktop应用程序🖥️\r\n\r\n#### 对于macOS：\r\n\r\n```bash\r\n# Create the config file if it doesn't exist\r\ntouch \"$HOME/Library/Application Support/Claude/claude_desktop_config.json\"\r\n\r\n# Opens the config file in TextEdit\r\nopen -e \"$HOME/Library/Application Support/Claude/claude_desktop_config.json\"\r\n```\r\n\r\n#### 对于Windows：\r\n\r\n```bash\r\ncode %APPDATA%\\Claude\\claude_desktop_config.json\r\n```\r\n\r\n#### 添加Orion Vision服务器配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"orion-vision-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"orion-vision-mcp@latest\"],\r\n      \"env\": {\r\n        \"AZURE_FORM_RECOGNIZER_ENDPOINT\": \"your-endpoint-here\",\r\n        \"AZURE_FORM_RECOGNIZER_KEY\": \"your-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 在Claude桌面应用程序中的使用🎯\r\n\r\n一旦安装完成，并且配置了Claude桌面应用程序，您必须完全关闭并重新打开Claude桌面程序，才能看到orion vision mcp服务器。您应该在应用程序的左下角看到一个锤子图标，指示可用的MCP工具。\r\n\r\n### Orion视觉示例\r\n\r\n1. **分析文档**:\r\n\r\n```\r\nAnalyze the document at \"https://example.com/document.pdf\" using Azure Form Recognizer.\r\n```\r\n\r\n2. **提取表单数据**:\r\n\r\n```\r\nExtract data from the invoice at \"https://example.com/invoice.pdf\".\r\n```\r\n\r\n3. **进程ID文档**:\r\n\r\n```\r\nProcess the ID document at \"https://example.com/id.pdf\" and extract relevant information.\r\n```\r\n\r\n## 故障排除🛠️\r\n\r\n### 常见问题\r\n\r\n1. **找不到服务器**\r\n\r\n   - 通过运行验证npm安装 `npm --version`\r\n   - 检查Claude Desktop配置语法\r\n   - 通过运行以下命令确保Node.js已正确安装 `node --version`\r\n\r\n1. **Azure表单识别器凭据问题**\r\n\r\n   - 确认您的Azure表单识别器端点和密钥有效\r\n   - 检查配置中是否正确设置了凭据\r\n   - 验证凭据周围没有空格或引号\r\n\r\n1. **文档处理问题**\r\n\r\n   - 验证文档URL是否可访问\r\n   - 检查文档格式是否受支持\r\n   - 确保文档未损坏或受密码保护\r\n\r\n## 致谢✨\r\n\r\n- MCP规范的模型上下文协议\r\n- 克劳德桌面的拟人化\r\n- 用于表单识别器/文档智能的Microsoft Azure\r\n",
+ "config": {
+  "orion-vision-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "orion-vision-mcp@latest"
+   ],
+   "env": {
+    "AZURE_FORM_RECOGNIZER_ENDPOINT": "your-endpoint-here",
+    "AZURE_FORM_RECOGNIZER_KEY": "your-key-here"
+   }
+  }
+ }
+}

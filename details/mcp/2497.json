@@ -1,0 +1,22 @@
+{
+ "id": "2497",
+ "kind": "mcp",
+ "name": "devonthink",
+ "fingerprint_md5": "6ef2170327d0a610690e17b03d9119a4",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Devonsthink MCP服务器\r\n\r\n此MCP服务器通过模型上下文协议（MCP）提供对DEVONthink功能的访问。它允许在macOS上的DEVONthink Pro中列出、搜索、创建、修改和管理记录和数据库。\r\n\r\n\r\n## 特性\r\n\r\n- 将一套全面的DEVONthink操作作为MCP工具公开\r\n- 按各种属性列出、搜索和查找记录\r\n- 创建、删除、移动和重命名记录和组\r\n- 检索和修改记录内容、属性和标记\r\n- 从多种格式的URL创建记录\r\n- 列出打开的数据库和组内容\r\n- 所有工具都是类型安全的，并使用Zod模式进行验证\r\n\r\n## 工具\r\n\r\n### 核心工具\r\n\r\n1. `is_running`\r\n\r\n   - 检查DEVONthink当前是否正在运行\r\n   - 无需输入\r\n   - 退货： `{ \"success\": true | false }`\r\n\r\n1. `create_record`\r\n\r\n   - 创建具有指定属性的新记录（笔记、书签、组）\r\n   - 输入：记录类型、名称、父组和可选元数据\r\n\r\n1. `delete_record`\r\n\r\n   - 按ID、名称或路径删除记录\r\n   - 输入：记录标识符\r\n\r\n1. `move_record`\r\n\r\n   - 在组之间移动记录\r\n   - 输入：记录ID和目标组\r\n\r\n1. `get_record_properties`\r\n\r\n   - 检索记录的详细元数据和属性\r\n   - 输入：记录标识符\r\n\r\n1. `search`\r\n\r\n   - 使用各种比较选项执行基于文本的搜索\r\n   - 输入：查询字符串和搜索选项\r\n\r\n1. `lookup_record`\r\n\r\n   - 按文件名、路径、URL、标签、注释或内容哈希查找记录（仅精确匹配）\r\n   - 输入：查找类型和值\r\n\r\n1. `create_from_url`\r\n\r\n   - 从多种格式的web URL创建记录\r\n   - 输入：URL和格式选项\r\n\r\n1. `get_open_databases`\r\n\r\n   - 列出当前打开的所有数据库\r\n   - 无需输入\r\n\r\n1. `list_group_content`\r\n\r\n   - 列出特定组的内容\r\n   - 输入：组标识符\r\n\r\n1. `get_record_content`\r\n\r\n   - 检索特定记录的内容\r\n   - 输入：记录标识符\r\n\r\n1. `rename_record`\r\n\r\n   - 重命名特定记录\r\n   - 输入：记录ID和新名称\r\n\r\n1. `add_tags`\r\n\r\n   - 为特定记录添加标签\r\n   - 输入：记录ID和标签\r\n\r\n1. `remove_tags`\r\n\r\n   - 从特定记录中删除标记\r\n   - 输入：记录ID和标签\r\n\r\n1. `classify`\r\n\r\n   - 使用DEVONthink的AI获取记录的分类建议\r\n   - 输入：记录UUID、可选数据库名称、比较类型和标签选项\r\n   - 返回：带有分数的分类建议（组或标签）数组\r\n\r\n1. `compare`\r\n\r\n   - 比较记录以查找相似之处（混合方法）\r\n   - 输入：主记录UUID、可选的第二记录UUID、数据库名称和比较类型\r\n   - 返回：相似记录（单模式）或详细比较分析（双记录模式）\r\n\r\n### 示例：搜索工具\r\n\r\n```json\r\n{\r\n  \"query\": \"project plan\",\r\n  \"comparison\": \"contains\",\r\n  \"database\": \"Inbox\"\r\n}\r\n```\r\n\r\n退货：\r\n\r\n```json\r\n{\r\n  \"results\": [\r\n    { \"id\": \"123\", \"name\": \"Project Plan\", \"path\": \"/Inbox/Project Plan.md\" }\r\n  ]\r\n}\r\n```\r\n\r\n## 与Claude一起使用\r\n\r\n添加到您的Claude配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"devonthink\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-server-devonthink\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 实现细节\r\n\r\n- 使用JXA（JavaScript for Automation）通过AppleScript API控制DEVONthink\r\n- 所有工具输入都使用Zod模式进行验证，以确保安全性和清晰度\r\n- 返回所有工具输出的结构化JSON\r\n- 对所有操作实施稳健的错误处理\r\n- 包括使用Vitest的全面测试\r\n\r\n看 [CLAUDE.md](./CLAUDE.md) 获取完整的文档、工具开发指南和API参考资料。\r\n",
+ "config": {
+  "devonthink": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-server-devonthink"
+   ],
+   "env": {}
+  }
+ }
+}

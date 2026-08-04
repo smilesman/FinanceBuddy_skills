@@ -1,0 +1,22 @@
+{
+ "id": "1412",
+ "kind": "mcp",
+ "name": "diff",
+ "fingerprint_md5": "383c3ed917688571dc916d6b5bb231c8",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "<p align=\"center\">\r\n  \r\n  <h1 align=\"center\">diff-mcp</h1>\r\n  <p align=\"center\">\r\n    <a href=\"https://jsondiffpatch.com\">jsondiffpatch.com</a>\r\n    <br/>\r\n    MCP Server to compare text or data and get a diff\r\n  </p>\r\n</p>\r\n\r\n\r\n<p align=\"center\">\r\n  <a href=\"https://github.com/benjamine/jsondiffpatch/actions?query=branch%3Amaster\"></a>\r\n  <a href=\"https://twitter.com/beneidel\" rel=\"nofollow\"></a>\r\n  <a href=\"https://opensource.org/licenses/MIT\" rel=\"nofollow\"></a>\r\n  <a href=\"https://www.npmjs.com/package/jsondiffpatch\" rel=\"nofollow\"></a>\r\n  <a href=\"https://github.com/benjamine/jsondiffpatch\" rel=\"nofollow\"></a>\r\n</p>\r\n\r\n______________________________________________________________________\r\n\r\n由...驱动 [jsondiffpatch](https://github.com/benjamine/jsondiffpatch)\r\n\r\n## 特性\r\n\r\n- 比较文本（使用由 [谷歌差异匹配补丁](http://code.google.com/p/google-diff-match-patch/) )\r\n- 比较数据（json、json5、yaml、toml、xml、html），并获得多种输出格式（文本、json、jsonmatch）的可读差异\r\n\r\n## 工具\r\n\r\n### 差异\r\n\r\n比较文本或数据，得到可读的差异。\r\n\r\n**输入：**\r\n\r\n- `left` （string |未知\\[\\]|记录\\<字符串，未知>）：左侧文本或数据\r\n- `leftFormat` （字符串，可选）：文本、json、json5（默认）、yaml、toml、xml、html\r\n- `right` （string |未知\\[\\]|记录\\<字符串，未知>）：右侧文本或数据（与左侧进行比较）\r\n- `rightFormat` （字符串，可选）：文本、json、json5（默认）、yaml、toml、xml、html\r\n- `outputFormat` （字符串，可选）：文本（默认），json，jsonpatch\r\n\r\n## 设置\r\n\r\n### 使用Claude Desktop\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"diff\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"diff-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 所有贡献者✨\r\n\r\n<a href=\"https://github.com/benjamine/jsondiffpatch/graphs/contributors\">\r\n  <p align=\"center\">\r\n    \r\n  </p>\r\n</a>\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。\r\n这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "diff": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "diff-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "id": "173",
+ "kind": "mcp",
+ "name": "dadjokes",
+ "fingerprint_md5": "681172c4144417ff4b35f7a196e4f02d",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp爸爸笑话\r\n\r\n爸爸笑话MCP--包装icanhazdadjoke.com（免费，无授权）\r\n\r\n部分 [Pipeworx](https://pipeworx.io) --MCP网关，将AI代理连接到673+个实时数据源。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `random_joke` |随便拿爸爸开个玩笑。返回笑话文本和ID|\r\n| `search_jokes` |按关键字或主题搜索爸爸笑话。返回带有ID和文本的匹配笑话。 |\r\n| `get_joke` |按ID检索特定的爸爸笑话。返回完整的笑话文本。 |\r\n\r\n## 快速开始\r\n\r\n添加到您的MCP客户端（Claude Desktop、Cursor、Windsurf等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dadjokes\": {\r\n      \"url\": \"https://gateway.pipeworx.io/dadjokes/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者连接到完整的Pipeworx网关，以访问所有673+数据源：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pipeworx\": {\r\n      \"url\": \"https://gateway.pipeworx.io/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用ask_pipeworx\r\n\r\n您可以用简单的英语提问，而不是直接调用工具：\r\n\r\n```\r\nask_pipeworx({ question: \"your question about Dadjokes data\" })\r\n```\r\n\r\n网关选择正确的工具并自动填充参数。\r\n\r\n## 更多\r\n\r\n- [所有工具和指南](https://github.com/pipeworx-io/examples)\r\n- [pipeworx.io](https://pipeworx.io)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "dadjokes": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://gateway.pipeworx.io/dadjokes/mcp"
+  }
+ }
+}

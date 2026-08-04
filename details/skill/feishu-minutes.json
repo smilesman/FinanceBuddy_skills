@@ -1,0 +1,12 @@
+{
+ "id": "feishu-minutes",
+ "kind": "skill",
+ "name": "feishu-minutes",
+ "fingerprint_md5": "67ba8337381df42050a6e069a1a584d2",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# Feishu Minutes (妙记) Skill\r\n\r\nFetch info, stats, transcript, and media from Feishu Minutes.\r\n\r\n## Usage\r\n\r\n```bash\r\nnode skills/feishu-minutes/index.js process <minutes_token> --out <output_dir>\r\n```\r\n\r\n- `<minutes_token>`: The token from the Minutes URL (e.g., `mmcn...`).\r\n- `--out`: Optional output directory (defaults to `memory/feishu_minutes/<token>`).\r\n\r\n## Output\r\n- `info.json`: Basic metadata.\r\n- `stats.json`: View/Comment stats.\r\n- `subtitle.json`: Raw transcript data.\r\n- `transcript.md`: Readable transcript.\r\n- `media.mp4`: Video/Audio recording.",
+ "config": {}
+}

@@ -1,0 +1,12 @@
+{
+ "id": "loki-helm-deployment-pitfalls",
+ "kind": "skill",
+ "name": "loki-helm-deployment-pitfalls",
+ "fingerprint_md5": "400a61f4b34b108afbfe683f174b83b3",
+ "download_count": 0,
+ "category": "Helm",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\n汇总 Loki 通过 Helm 部署到 Kubernetes 时的常见问题和解决方案，包括存储配置、资源限制、网络策略等。",
+ "config": {}
+}

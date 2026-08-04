@@ -1,0 +1,22 @@
+{
+ "id": "3506",
+ "kind": "mcp",
+ "name": "linkedin",
+ "fingerprint_md5": "fc75e83c379f77b9b13b5c868f4e23af",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# LinkedIn求职MCP\r\n\r\n用于LinkedIn求职的模型上下文协议（MCP）服务器。搜索职位，按地点、经验水平、远程工作等进行筛选。适用于Claude Desktop、Cursor和其他MCP客户端。\r\n\r\n\r\n## 快速开始\r\n\r\n### 使用npx（推荐）\r\n\r\n添加到MCP客户端配置中：\r\n\r\n**克劳德桌面版** (`~/Library/Application Support/Claude/claude_desktop_config.json` 在Mac上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"linkedin\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"linkedin-mcp-search\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**光标** (`.cursor/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"linkedin\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"linkedin-mcp-search\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后重新启动您的客户端。\r\n\r\n### 全球安装\r\n\r\n```bash\r\nnpm install -g linkedin-mcp-search\r\n```\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"linkedin\": {\r\n      \"command\": \"linkedin-mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 特性\r\n\r\n- **关键字搜索** -“软件工程师”、“Python数据科学家”等。\r\n- **位置过滤** -城市、州、国家或“偏远”\r\n- **工作类型** -全职、兼职、合同制、实习\r\n- **经验水平** -初级、中高级、总监、执行官\r\n- **工作场所类型** -远程、混合动力、现场\r\n- **发布日期** -过去24小时、一周或一个月\r\n- **轻松应用过滤器** -只有LinkedIn轻松申请工作\r\n- **实时结果** -查找几分钟前发布的工作\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_jobs` |使用所有筛选器进行完整的职位搜索|\r\n| `search_remote_jobs` |快速远程求职|\r\n| `search_entry_level_jobs` |入门级和实习搜索|\r\n| `get_job_details` |获取完整的职位描述|\r\n| `get_company` |获取公司信息|\r\n| `search_companies` |搜索公司|\r\n| `get_company_jobs` |特定公司的工作|\r\n| `get_popular_locations` |带有LinkedIn地理ID的地点|\r\n| `get_industries` |行业分类|\r\n| `get_job_functions` |工作职能类别|\r\n| `build_job_search_url` |生成LinkedIn搜索URL|\r\n\r\n## 示例提示\r\n\r\n```\r\n\"Search for remote Golang jobs posted today\"\r\n\r\n\"Find entry-level data science positions in New York\"\r\n\r\n\"Show me Python developer jobs posted in the last 24 hours\"\r\n\r\n\"Get details for LinkedIn job 4328991043\"\r\n\r\n\"Search for product manager jobs at Google\"\r\n\r\n\"Find senior DevOps positions with Easy Apply\"\r\n```\r\n\r\n## 搜索参数\r\n\r\n|参数|类型|说明|\r\n|-----------|------|-------------|\r\n| `keywords` |string |搜索词|\r\n| `location` |string |城市、州或国家|\r\n| `geoId` |string |领英地理ID|\r\n| `distance` |number |半径（英里）（5、10、25、50、100）|\r\n| `jobType` |阵列| `full-time`, `part-time`, `contract`, `temporary`, `internship`, `volunteer` |\r\n| `experienceLevel` |阵列| `internship`, `entry-level`, `associate`, `mid-senior`, `director`, `executive` |\r\n| `workplaceType` |阵列| `remote`, `hybrid`, `on-site` |\r\n| `datePosted` |字符串| `past-24-hours`, `past-week`, `past-month`, `any-time` |\r\n| `easyApply` |boolean |仅适用于轻松申请的作业|\r\n| `sortBy` |字符串| `most-relevant`, `most-recent` |\r\n| `limit` |number |最大结果数（默认值：25，最大值：50）|\r\n\r\n## 配置文件位置\r\n\r\n|平台|位置|\r\n|----------|----------|\r\n|克劳德台式机（Mac）| `~/Library/Application Support/Claude/claude_desktop_config.json` |\r\n|克劳德桌面（Windows）| `%APPDATA%\\Claude\\claude_desktop_config.json` |\r\n|光标| `.cursor/mcp.json` |\r\n\r\n## 故障排除\r\n\r\n**“找不到MCP服务器”**\r\n\r\n- 确保已安装Node.js 18+\r\n- 配置更改后重新启动客户端\r\n\r\n**“未找到工作”**\r\n\r\n- 尝试更广泛的搜索词\r\n- 删除一些过滤器\r\n\r\n**“价格有限”**\r\n\r\n- 在两次搜索之间等待几分钟\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 免责声明\r\n\r\n不属于LinkedIn。使用LinkedIn的公开求职。负责任地使用。\r\n",
+ "config": {
+  "linkedin": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "linkedin-mcp-search"
+   ],
+   "env": {}
+  }
+ }
+}

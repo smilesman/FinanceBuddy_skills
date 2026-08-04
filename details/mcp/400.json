@@ -1,0 +1,36 @@
+{
+ "id": "400",
+ "kind": "mcp",
+ "name": "remote-macos-use",
+ "fingerprint_md5": "ffe562646160d3500caa0e8ca95a7d46",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP服务器-远程MacOs使用\r\n\r\n**第一个开源MCP服务器，使AI能够完全控制远程macOS系统。**\r\n\r\n**OpenAI Operator的直接替代品，专门针对具有完整桌面功能的自主AI代理进行了优化，不需要额外的软件安装。**\r\n\r\n[](https://hub.docker.com/r/buryhuang/mcp-remote-macos-use)\r\n[](https://opensource.org/licenses/MIT)\r\n\r\n**陈列柜**\r\n\r\n- 研究推特和发布推特(https://www.youtube.com/watch?v=--QHz2jcvcs）\r\n  \r\n\r\n- 使用CapCut创建简短的精彩视频(https://www.youtube.com/watch?v=RKAqiNoU8ec)\r\n  \r\n\r\n- AI Recruiter：使用Mail App自动收集候选人信息、资格申请和发送筛选会话\r\n\r\n- AI营销实习生：LinkedIn参与度——自动关注、点赞和评论相关用户\r\n\r\n- 人工智能营销实习生：推特参与度——自动关注、点赞和评论相关用户\r\n\r\n## 待办事项列表（按优先级排列）\r\n\r\n1. **性能优化** -匹配Ubuntu桌面替代品的速度\r\n1. **苹果脚本生成** -减少执行时间，同时保持灵活性\r\n1. **VNC光标可见性** -改善调试和演示体验\r\n\r\n*我们欢迎捐款！*\r\n\r\n## 特性\r\n\r\n- **无额外API成本**：使用您现有的Claude Pro计划免费进行屏幕处理\r\n- **最小设置**：只需在目标Mac上启用屏幕共享，无需额外软件\r\n- **通用兼容性**：适用于当前和未来的所有macOS版本\r\n\r\n## 我们为什么建造这个\r\n\r\n### 毫不妥协的原生macOS体验\r\n\r\nmacOS原生生态系统在当今的用户体验方面仍然无与伦比，并将在未来几年继续成为黄金标准。这是人类能力真正蓬勃发展的地方，现在你的人工智能可以在这种环境中流畅地运行。\r\n\r\n### 开放式架构设计\r\n\r\n- **通用LLM兼容性**：与您选择的任何MCP客户合作\r\n- **模型灵活性**：与OpenAI、Anthropic或任何其他LLM提供商无缝集成\r\n- **面向未来的集成**：旨在与MCP生态系统一起发展\r\n\r\n### 轻松部署\r\n\r\n- **目标机器上的零设置**：macOS上不需要后台应用程序或代理\r\n- **屏幕共享是您所需要的一切**：控制任何启用了屏幕共享的Mac\r\n- **消除后端复杂性**：与其他需要运行Python应用程序或后台服务的解决方案不同\r\n\r\n### 简化Bootstrap流程\r\n\r\n- **利用Claude Desktop的抛光用户界面**：不需要开发人员风格的Python接口\r\n- **直观的用户体验**：通过熟悉、用户友好的界面与您的AI控制的Mac进行交互\r\n- **即时生产力**：立即开始工作，无需配置麻烦\r\n\r\n## 建筑\r\n\r\n\r\n## 安装\r\n\r\n- [在Mac上启用屏幕共享](https://support.apple.com/guide/remote-desktop/set-up-a-computer-running-vnc-software-apdbed09830/mac) **如果你从macstadium.com租了一台mac，你可以跳过这一步**\r\n- [连接到您的远程Mac](https://support.apple.com/guide/mac-help/share-the-screen-of-another-mac-mh14066/mac)\r\n- [为本地Mac安装Docker桌面](https://docs.docker.com/desktop/setup/install/mac-install/)\r\n- [将此MCP服务器添加到Claude Desktop](https://modelcontextprotocol.io/quickstart/user)\r\n  您可以通过在Claude配置中添加以下内容来配置Claude Desktop以使用Docker镜像：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"remote-macos-use\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"-e\",\r\n        \"MACOS_USERNAME=your_macos_username\",\r\n        \"-e\",\r\n        \"MACOS_PASSWORD=your_macos_password\",\r\n        \"-e\",\r\n        \"MACOS_HOST=your_macos_hostname_or_ip\",\r\n        \"-e\",\r\n        \"LIVEKIT_API_KEY=your_livekit_api_key\",\r\n        \"-e\",\r\n        \"LIVEKIT_API_SECRET=your_livekit_api_secret\",\r\n        \"-e\",\r\n        \"LIVEKIT_HOST=your_livekit_host\",\r\n        \"--rm\",\r\n        \"buryhuang/mcp-remote-macos-use:latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 通过LiveKit支持WebRTC\r\n\r\n此服务器现在通过LiveKit集成提供WebRTC支持，支持：\r\n\r\n- 低延迟实时屏幕共享\r\n- 性能和响应能力得到提高\r\n- 与传统VNC相比，网络效率更高\r\n- 基于网络条件的自动质量自适应\r\n\r\n要使用WebRTC功能，您需要：\r\n\r\n1. 设置LiveKit服务器或使用LiveKit Cloud\r\n1. 如上述配置示例所示，配置LiveKit环境变量\r\n\r\n## 开发人员说明\r\n\r\n### 克隆仓库\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/yourusername/mcp-remote-macos-use.git\r\ncd mcp-remote-macos-use\r\n```\r\n\r\n### 构建Docker镜像\r\n\r\n```bash\r\n# Build the Docker image\r\ndocker build -t mcp-remote-macos-use .\r\n```\r\n\r\n## 跨平台发布\r\n\r\n要为多个平台发布Docker镜像，您可以使用 `docker buildx` 命令。请按照以下步骤操作：\r\n\r\n1. **创建新的构建器实例** （如果你还没有）：\r\n\r\n   ```bash\r\n   docker buildx create --use\r\n   ```\r\n\r\n1. **为多个平台构建和推广形象**:\r\n\r\n   ```bash\r\n   docker buildx build --platform linux/amd64,linux/arm64 -t buryhuang/mcp-remote-macos-use:latest --push .\r\n   ```\r\n\r\n1. **验证映像是否可用于指定的平台**:\r\n\r\n   ```bash\r\n   docker buildx imagetools inspect buryhuang/mcp-remote-macos-use:latest\r\n   ```\r\n\r\n## 用法\r\n\r\n服务器通过MCP工具提供远程MacOs功能。\r\n\r\n### 工具规格\r\n\r\n服务器提供以下用于远程macOS控制的工具：\r\n\r\n#### remote_macos_get_screen\r\n\r\n连接到远程macOS机器并获取远程桌面的屏幕截图。\r\n\r\n#### remote_macos_send_keys\r\n\r\n将键盘输入发送到远程macOS机器。\r\n\r\n#### 远程_家庭_移动\r\n\r\n将鼠标光标移动到远程macOS计算机上的指定坐标，并自动缩放坐标。\r\n\r\n#### remote_macos_mouse_click\r\n\r\n在远程macOS机器上的指定坐标处执行鼠标单击，并自动缩放坐标。\r\n\r\n#### 远程_家庭_双点击\r\n\r\n在远程macOS计算机上的指定坐标处执行鼠标双击，并自动缩放坐标。\r\n\r\n#### 远程_操作_家庭_滚动\r\n\r\n在远程macOS机器上的指定坐标处执行鼠标滚动，并自动缩放坐标。\r\n\r\n#### 远程操作打开应用程序\r\n\r\n打开/激活应用程序并返回其PID以进行进一步交互。\r\n\r\n#### 远程_操作_家庭_拖动_拖放\r\n\r\n在远程macOS机器上执行从起点到终点的鼠标拖动操作，并自动缩放坐标。\r\n\r\n所有工具都使用在设置过程中配置的环境变量，而不需要连接参数。\r\n\r\n## 局限性\r\n\r\n- **身份验证支持**:\r\n  - 仅支持Apple身份验证（协议30）\r\n\r\n## 安全说明\r\n\r\nhttps://support.apple.com/guide/remote-desktop/encrypt-network-data-apdfe8e386b/mac\r\nhttps://cafbit.com/post/apple_remote_desktop_quirks/\r\n\r\n我们只支持协议30，它使用具有512位素数的Diffie-Hellman密钥协商协议。macOS 11至macOS 12在与OS X 10.11或更早版本的客户端通信时使用此协议。\r\n\r\n以下是转换为markdown表的信息：\r\n\r\n|运行远程桌面的macOS版本| macOS客户端版本|身份验证|控制和观察|复制项目或安装包|所有其他任务|协议版本|\r\n|--------------------------------------|----------------------|----------------|---------------------|-------------------------------|----------------|----------------|\r\n|macOS 13|macOS 13|2048位RSA主机密钥|2048位RSA-主机密钥|用于身份验证的2048位RSA主密钥，然后是128位AES |2048位RSA主机密钥|36|\r\n|macOS 13 | macOS 10.12 |仅适用于本地的安全远程密码（SRP）协议。如果绑定到LDAP或macOS服务器的Diffie-Hellman（DH）版本为10.11或更早|SRP或DH，则使用128位AES|SRP或者DH进行身份验证，然后使用128位AES |2048位RSA主机密钥|35|\r\n|macOS 11到macOS 12 | macOS 10.12到macOS 13 |仅适用于本地的安全远程密码（SRP）协议，如果绑定到LDAP，则使用Diffie-Hellman | SRP或DH 1024位、128位AES | 2048位RSA主机密钥macOS 13到macOS 10.13 | 2048位RSA主机密钥macOS 10.13或更高版本|33|\r\n|macOS 11到macOS 12 | OS X 10.11或更早版本|DH 1024位| DH 1024位，128位AES |带512位素数的Diffie-Hellman密钥协商协议|带512比特素数的Diffie Hellman密钥协商协议|30|\r\n\r\n访问远程MacO机器时，始终使用安全、经过身份验证的连接。此工具只能用于您信任并有权访问的服务器。\r\n\r\n# MacOs代理客户端\r\n\r\n一个轻量级的代理，连接到LiveKit房间进行远程macOS控制。采用我们专有的“keep_eyes_open”系统，通过保持持续的环境感知而无需轮询开销，显著提高了响应能力和性能。这允许通过高效的双向数据通道进行近乎实时的命令执行和反馈。\r\n\r\n## 许可证\r\n\r\n[MIT](LICENSE)\r\n",
+ "config": {
+  "remote-macos-use": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "-e",
+    "MACOS_USERNAME=your_macos_username",
+    "-e",
+    "MACOS_PASSWORD=your_macos_password",
+    "-e",
+    "MACOS_HOST=your_macos_hostname_or_ip",
+    "-e",
+    "LIVEKIT_API_KEY=your_livekit_api_key",
+    "-e",
+    "LIVEKIT_API_SECRET=your_livekit_api_secret",
+    "-e",
+    "LIVEKIT_HOST=your_livekit_host",
+    "--rm",
+    "buryhuang/mcp-remote-macos-use:latest"
+   ],
+   "env": {}
+  }
+ }
+}

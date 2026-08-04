@@ -1,0 +1,26 @@
+{
+ "id": "1419",
+ "kind": "mcp",
+ "name": "docsfetcher",
+ "fingerprint_md5": "ae8bdddb10fa42d6e235a3aa9b6b3ac6",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 📚 DocsFetcher MCP服务器\r\n\r\n[](https://smithery.ai/server/@cdugo/mcp-get-docs)\r\n[](https://www.npmjs.com/package/@cdugo/docs-fetcher-mcp)\r\n[](https://www.npmjs.com/package/@cdugo/docs-fetcher-mcp)\r\n\r\n一个MCP服务器，它从多种语言生态系统中为Claude这样的LLM获取包文档，而不需要API密钥。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/8yfwtryuc5\">\r\n  \r\n</a>\r\n\r\n## ✨ 特性\r\n\r\n- 🌐 支持多种编程语言（JavaScript、Python、Java、.NET、Ruby、PHP、Rust、Go、Swift）\r\n- 📦 按名称或URL获取包的文档\r\n- 🔍 抓取文档网站以提取全面信息\r\n- 📄 提取自述文件、API文档、代码示例和存储库信息\r\n- 🧠 为LLM摘要提供结构化数据\r\n- 💬 包括用于文档分析的专门提示\r\n- 🔑 **不需要API密钥** -与Claude Desktop和Cursor IDE兼容\r\n\r\n## 🚀 安装\r\n\r\n### 克劳德桌面\r\n\r\n1. 打开克劳德桌面→ 设置→ 开发者\r\n1. 点击“编辑配置”并添加：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"docsFetcher\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@smithery/cli@latest\",\r\n        \"run\",\r\n        \"@cdugo/mcp-get-docs\",\r\n        \"--config\",\r\n        \"'{}'\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标IDE配置\r\n\r\n1. 打开光标IDE→ 设置→ MCP->添加新的MCP施维雅\r\n1. 添加：\r\n\r\n```json\r\n    Name: docsFetcher\r\n    Command: npx -y @smithery/cli@latest run @cdugo/mcp-get-docs --config \"{}\"\r\n```\r\n\r\n#### 先决条件\r\n\r\n- 📋 Node.js 18或更高版本\r\n\r\n## 🏃‍♂️ 本地运行\r\n\r\n```bash\r\ngit clone https://github.com/cdugo/package-documentation-mcp\r\ncd package-documentation-mcp\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n安装后，您可以使用以下命令在本地运行服务器：\r\n\r\n```bash\r\n# From the project root directory\r\nnpm start\r\n```\r\n\r\n对于在文件更改时自动重启的开发：\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n服务器将在默认端口（通常为3000）上启动。您应该看到如下输出：\r\n\r\n```\r\n🚀 DocsFetcher MCP Server running!\r\n📋 Ready to fetch documentation\r\n```\r\n\r\n要指定自定义端口，请执行以下操作：\r\n\r\n```bash\r\nPORT=8080 npm start\r\n```\r\n\r\n## 🛠️ 可用工具\r\n\r\n1. **获取url文档**: 🔗 从特定URL获取文档\r\n1. **获取包文档**: 📦 获取具有可选语言规范的包的文档\r\n1. **获取库文档**: 🧠 使用包名或URL的智能工具\r\n1. **获取多语言文档**: 🌍 跨多语言生态系统获取包的文档\r\n\r\n## 📝 可用提示\r\n\r\n1. **汇总库文档**: 📚 创建全面的库摘要\r\n1. **解释依赖性错误**: 🐛 生成依赖关系错误解释\r\n\r\n## 💡 查询示例\r\n\r\n### 图书馆基本信息\r\n\r\n- “什么是Express.js，我该如何使用它？”\r\n- “告诉我React库的情况”\r\n- “我如何在Python中使用请求？”\r\n\r\n### 多语言支持\r\n\r\n- “显示JavaScript中的lodash文档”\r\n- “比较Python中的pandas和R中的data.table”\r\n\r\n### 使用工具\r\n\r\n- “@fetch包文档，packageName='express'，language='javascript'”\r\n- “@fetch包文档，packageName='requests'，language='python'”\r\n- “@fetch多语言文档，packageName='http'，languages=\\['javascript'，'python'，'rust'\\]”\r\n\r\n### 使用提示\r\n\r\n- “@summary库文档，libraryName='express'”\r\n- “@explain依赖关系错误，packageName='dotenv'”\r\n\r\n## ❓ 故障排除\r\n\r\n### 本地安装\r\n\r\n- **服务器未显示**: ✅ 验证配置中的绝对路径\r\n- **连接错误**: 🔄 重新启动Claude桌面或Cursor IDE\r\n- **获取失败**: ⚠️ 某些软件包可能包含非标准文档\r\n- **语言支持**: 🌐 如果一种语言不起作用，请尝试使用包的直接URL\r\n\r\n## 📄 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "docsfetcher": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@smithery/cli@latest",
+    "run",
+    "@cdugo/mcp-get-docs",
+    "--config",
+    "'{}'"
+   ],
+   "env": {}
+  }
+ }
+}

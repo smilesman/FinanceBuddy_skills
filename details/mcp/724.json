@@ -1,0 +1,24 @@
+{
+ "id": "724",
+ "kind": "mcp",
+ "name": "mcp-server",
+ "fingerprint_md5": "a8c4a3cf6722dcb3185755293db5de47",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "width=\"200px\"\r\n     height=\"auto\"/>\r\n</p>\r\n\r\n## <h1 align=\"center\" id=\"heading\">带有增强工具的自定义MCP服务器</h1>\r\n\r\n该项目演示了一个功能强大的MCP（模型上下文协议）服务器 **5个定制工具** 直接在Cursor中扩展AI助手功能。该服务器基于AI Makerspace MCP框架构建，包括网络搜索、实用工具和内容生成功能。\r\n\r\n## 🚀 特性\r\n\r\n### **可用工具：**\r\n\r\n🔍 **网页搜索** -使用Tavily API集成搜索web\\\r\n🎲 **摇骰子** -使用自定义符号掷骰子（例如。， `2d20k1`)\\\r\n📱 **二维码生成器** -为任何文本或URL生成二维码\\\r\n🔄 **单元转换器** -在不同单位（长度、重量、温度、体积）之间转换\\\r\n🔗 **缩短网址** -使用TinyURL或is.gd服务缩短网址\r\n\r\n## 项目概述\r\n\r\nMCP服务器通过模型上下文协议与Cursor无缝集成，直接在您的AI助手中提供对强大工具的即时访问。该服务器设计为在标准输入/输出（stdio）传输模式下运行，包括：\r\n\r\n- **TavilyClient**：使用Tavily API的Web搜索功能\r\n- **二维码生成**：使用Base64编码的二维码 `qrcode` 图书馆\r\n- **单位转换**：带手动温度处理的全面单位转换\r\n- **URL缩短**：多服务支持（TinyURL，is.gd）\r\n- **掷骰子**：高级骰子符号，保持最高功能\r\n\r\n## 先决条件\r\n\r\n- Python 3.13或更高版本\r\n- 有效的Tavily API密钥\r\n- UV包管理器（用于依赖关系管理）\r\n\r\n## ⚠️WINDOWS注意事项：⚠️\r\n\r\n您需要在 *视窗* 操作系统的侧面。\r\n\r\n这将需要为Powershell获取两个CLI工具，具体操作如下：\r\n\r\n- `winget install astral-sh.uv`\r\n- `winget install --id Git.Git -e --source winget`\r\n\r\n拥有这些CLI工具后，请打开Cursor *进入Windows*.\r\n\r\n## 安装\r\n\r\n1. **克隆存储库**:\r\n\r\n   ```bash\r\n   git clone https://github.com/suh4s/my-mcp-server.git\r\n   cd my-mcp-server\r\n   ```\r\n\r\n1. **安装依赖项**:\r\n\r\n   ```bash\r\n   uv sync\r\n   ```\r\n\r\n1. **配置环境变量**:\r\n   创建一个 `.env` 文件并添加您的Tavily API密钥：\r\n\r\n   ```\r\n   TAVILY_API_KEY=your_api_key_here\r\n   ```\r\n\r\n## 运行MCP服务器\r\n\r\n要启动MCP服务器，您需要在Cursor中的MCP配置文件中添加以下内容：\r\n\r\n> 注意：要访问MCP配置，请使用命令面板（CMD/CTRL+SHIFT+P）并选择“查看：打开MCP设置”，然后用下面的JSON配置替换内容。\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"mcp-server\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\"--directory\", \"/FULL/PATH/TO/YOUR/REPOSITORY\", \"run\", \"server.py\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n服务器将启动并通过标准输入/输出监听命令。\r\n\r\n## 🛠️ 工具使用示例\r\n\r\n### **二维码生成器**\r\n\r\n```\r\n\"Generate a QR code for 'Hello World'\"\r\n\"Create a QR code for https://github.com/suh4s/my-mcp-server\"\r\n```\r\n\r\n### **单元转换器**\r\n\r\n```\r\n\"Convert 100 fahrenheit to celsius\"\r\n\"Convert 5 miles to kilometers\"\r\n\"Convert 2 pounds to grams\"\r\n```\r\n\r\n### **缩短网址**\r\n\r\n```\r\n\"Shorten this URL: https://github.com/suh4s/my-mcp-server\"\r\n\"Shorten https://example.com using is.gd\"\r\n```\r\n\r\n### **摇骰子**\r\n\r\n```\r\n\"Roll 2d20k1\" (roll 2 20-sided dice, keep highest)\r\n\"Roll 3d6\" (roll 3 6-sided dice)\r\n```\r\n\r\n### **网页搜索**\r\n\r\n```\r\n\"Search for 'MCP protocol documentation'\"\r\n\"Find recent AI news\"\r\n```\r\n\r\n## 🔧 技术实现\r\n\r\n### **依赖关系：**\r\n\r\n- `mcp[cli]` -模型上下文协议框架\r\n- `tavily-python` -Web搜索API集成\r\n- `qrcode` + `pillow` -二维码生成\r\n- `pint` -单位转换库\r\n- `requests` -缩短URL的HTTP请求\r\n- `python-dotenv` -环境变量管理\r\n\r\n### **架构：**\r\n\r\n- **FastMCP服务器**：处理工具注册和协议通信\r\n- **工具功能**：装饰有 `@mcp.tool()` 用于自动发现\r\n- **错误处理**：全面的错误处理和有用的消息\r\n- **类型安全**：所有工具参数的完整类型提示\r\n\r\n## 🎯 高级功能\r\n\r\n- **温度转换**：处理华氏/摄氏转换的自定义公式\r\n- **二维码定制**：尺寸和边框参数可调\r\n- **多URL服务**：TinyURL和is.gd支持回退处理\r\n- **骰子符号**：支持具有保持最高逻辑的复杂骰子表达式\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。有关更多详细信息，请参阅LICENSE文件。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请打开问题或提交任何更改的拉取请求。\r\n\r\n## 致谢\r\n\r\n作为AI创客空间MCP会议的一部分而构建。原始框架 [AI创客空间](https://github.com/AI-Maker-Space/MCP-Session-Code).\r\n",
+ "config": {
+  "mcp-server": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/FULL/PATH/TO/YOUR/REPOSITORY",
+    "run",
+    "server.py"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "641",
+ "kind": "mcp",
+ "name": "email-design",
+ "fingerprint_md5": "4689c24c2ab60c30a97c97b99d4eae05",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# 电子邮件设计mcp\r\n\r\n一个开源的MCP服务器，使AI助手能够设计和生成专业、响应迅速的电子邮件模板。\r\n\r\n适用于Claude Desktop、Cursor、VS Code Copilot和任何兼容MCP的客户端。\r\n\r\n## 特性\r\n\r\n- **用自然语言生成电子邮件** -描述你想要什么，准备生产MJML+HTML\r\n- **品牌记忆** -一次性保存品牌颜色、字体和色调，在所有电子邮件中使用\r\n- **内置专家设计** -自动执行专业间距、排版、颜色使用和CTA图案\r\n- **迭代优化** -用简单的英语说“把标题放大”或“删除推荐部分”\r\n- **布局多样** -4种电子邮件类型的12种布局变体可防止重复设计\r\n- **实时预览** -本地预览服务器，可在以下位置进行热重新加载 `http://localhost:3947`\r\n- **验证** -检查大小限制、暗模式、可访问性、链接等\r\n- **出口** -为任何生成的电子邮件获取HTML、MJML或两者兼具\r\n- **引导式工作流程** -MCP提示引导您创建欢迎、时事通讯、促销和交易电子邮件\r\n- **不需要API密钥** -使用主机AI模型（Claude、GPT等）进行生成\r\n\r\n## 快速开始\r\n\r\n### 安装\r\n\r\n```bash\r\nnpm install -g email-design-mcp\r\n```\r\n\r\n### 连接到克劳德桌面\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上， `%APPDATA%\\Claude\\claude_desktop_config.json` 在Windows上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"email-design\": {\r\n      \"command\": \"email-design-mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 连接到游标/VS代码\r\n\r\n添加 `.cursor/mcp.json` 或VS代码MCP设置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"email-design\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"email-design-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n### 1.建立你的品牌（可选但推荐）\r\n\r\n**选项A——从网站自动提取：**\r\n\r\n> “从https://acme.com\"\r\n\r\n服务器获取网站并自动提取颜色、字体、徽标和名称。\r\n\r\n**选项B——手动设置：**\r\n\r\n> “建立一个名为Acme的品牌，主色调#FF6B35，次色调#1A1A2E，休闲色调，针对年轻专业人士”\r\n\r\n您还可以将两者结合起来——提供一个用于自动提取的URL，并手动覆盖特定值。\r\n\r\n### 2.生成电子邮件\r\n\r\n> “为新订阅者创建欢迎电子邮件”\r\n\r\n服务器将设计规则、品牌背景和布局说明组成一个专家提示堆栈。AI生成MJML，并将其编译为响应式HTML。\r\n\r\n### 3.精炼\r\n\r\n> “把标题放大，把按钮改成‘开始免费试用’”\r\n\r\n优化针对特定部分，而不重新生成整个电子邮件。版本历史记录允许您撤消更改。\r\n\r\n### 4.出口\r\n\r\n> “将电子邮件导出为HTML”\r\n\r\n准备好最终的HTML或MJML，以便粘贴到您的ESP中。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `setup_brand` |保存品牌简介（颜色、字体、色调）|\r\n| `generate_email` |从自然语言提示生成电子邮件|\r\n| `refine_email` |迭代生成的带有反馈的电子邮件|\r\n| `compile_mjml` |将原始MJML编译为HTML|\r\n| `validate_email` |查看电子邮件以了解最佳实践|\r\n| `export_email` |导出为HTML、MJML或两者|\r\n| `screenshot_to_email` |将设计描述转换为品牌电子邮件|\r\n\r\n## 指导工作流程（MCP提示）\r\n\r\n这些提示将引导您使用智能默认值创建特定的电子邮件类型：\r\n\r\n|提示|描述|\r\n|--------|-------------|\r\n| `welcome-email` |新订户的欢迎电子邮件|\r\n| `newsletter` |包含特色内容的时事通讯|\r\n| `promotional` |紧急销售/启动电子邮件|\r\n| `transactional` |收货、确认或发货通知|\r\n\r\n## 模板\r\n\r\n4个捆绑的MJML模板，带有占位符变量：\r\n\r\n- **欢迎** -英雄形象+介绍文字+CTA\r\n- **通讯** -特色文章+内容网格+页脚\r\n- **促销的** -英雄优惠+产品展示+紧迫感\r\n- **事务性的** -订单确认，详细列出\r\n\r\n## 验证检查\r\n\r\n|检查|它验证了什么|\r\n|-------|-----------------|\r\n|电子邮件大小|低于Gmail的102KB剪切阈值|\r\n|黑暗模式| `color-scheme: light dark` 声明|\r\n|Alt文本|所有图像都具有有意义的Alt属性|\r\n|链接|全部 `<a>` 标签具有href属性|\r\n|取消订阅|页脚包含取消订阅链接|\r\n|文本比率|相对于图像的足够文本|\r\n|视口|移动视口元标记|\r\n|页眉|收件箱隐藏预览文本|\r\n|标题|存在HTML标题标签|\r\n|内联样式|内联样式用于电子邮件客户端兼容性|\r\n\r\n## 存储\r\n\r\n数据存储在 `~/.email-design-mcp/`:\r\n\r\n```\r\n~/.email-design-mcp/\r\n  brands/           # Brand profiles (JSON)\r\n  history/          # Generated email history (JSON)\r\n  config.json       # Optional config (history retention, preview port)\r\n```\r\n\r\n30天后自动清理历史记录（可在中配置 `config.json`).\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/harikrishna8121999/email-design-mcp.git\r\ncd email-design-mcp\r\nnpm install\r\nnpm run dev        # Watch mode\r\nnpm test           # Run tests\r\nnpm run typecheck  # Type check\r\nnpm run build      # Compile TypeScript\r\n```\r\n\r\n## 建筑\r\n\r\n看 [建筑.md](ARCHITECTURE.md) 查看完整的设计文档。\r\n\r\n**堆栈**：TypeScript、Node.js、MJML、Zod、MCP SDK\r\n\r\n**关键设计决策**:\r\n\r\n- 没有外部AI API调用-主机模型生成\r\n- 提示工程层（专家系统提示+设计规则+布局变体）是核心差异化因素\r\n- MJML用于电子邮件渲染，确保Outlook、Gmail和移动设备的兼容性\r\n- 本地JSON存储使其简单，不依赖于数据库\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "email-design": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "email-design-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

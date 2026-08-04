@@ -1,0 +1,22 @@
+{
+ "id": "492",
+ "kind": "mcp",
+ "name": "ti4",
+ "fingerprint_md5": "627df5e1c4b8bb8b710d2d29e85e02f6",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# ti4 mcp\r\n\r\nMCP服务器 **黄昏帝国4** --通过提供游戏数据、规则查找、派系策略指南和设置帮助 [模型上下文协议](https://modelcontextprotocol.io).\r\n\r\n## 支持的内容\r\n\r\n- **基础游戏** （17个派别）\r\n- **国王的预言** （7个派系）\r\n- **食品法典I–IV** （勘误表，更新的组成部分，Keleres理事会）\r\n- **雷霆之刃** （5个派系、突破、银河系事件）\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n需要Node.js 18+。\r\n\r\n## 用法\r\n\r\n### 克劳德代码\r\n\r\n来自GitHub：\r\n\r\n```bash\r\nclaude mcp add ti4 -- npx --yes github:surewht/ti4-mcp\r\n```\r\n\r\n从本地克隆：\r\n\r\n```bash\r\nclaude mcp add ti4 node /path/to/ti4-mcp/dist/index.js\r\n```\r\n\r\n### 克劳德桌面\r\n\r\n增添 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ti4\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"--yes\", \"github:surewht/ti4-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 检查员\r\n\r\n```bash\r\nnpm run inspect\r\n```\r\n\r\n## 工具（27）\r\n\r\n### 游戏背景\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `set_game_context` |设置游戏会话上下文（扩展、玩家数量、派系、切片）——后续工具会自动应用它|\r\n| `get_game_context` |查看当前游戏上下文|\r\n| `clear_game_context` |清晰的游戏背景|\r\n\r\n### 派系\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_factions` |列出活跃扩展的派系|\r\n| `get_faction` |详细的派系信息（能力、起始技术、单位、领导人、本票）|\r\n| `get_faction_guide` |战略指南——优势、劣势、技巧、技术路径|\r\n| `list_faction_guides` |列出所有可用的派系指南|\r\n\r\n### 技术\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_tech` |按ID查找技术|\r\n| `get_tech_path` |获取派系的推荐技术路径|\r\n\r\n### 目标\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_objectives` |列出目标，按类型（公共/秘密）和阶段（1/2）筛选|\r\n| `get_objective` |查找特定目标|\r\n\r\n### 议程\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_agendas` |列出议程卡，按类型（法律/指令）或选举类型筛选|\r\n| `get_agenda` |查找具体议程|\r\n\r\n### 行动卡\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_action_cards` |列出动作卡，按播放时间关键字过滤|\r\n| `get_action_card` |查找特定的行动卡|\r\n\r\n### 遗迹与探索\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_relics` |列出所有文物|\r\n| `get_relic` |查找特定的文物|\r\n| `list_explore_cards` |列出探索卡，按特征筛选|\r\n\r\n### 行星与系统\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_planets` |列出行星，按特征或技术专长筛选|\r\n| `get_planet` |查找特定的行星|\r\n| `get_system` |按数字查找系统图块（行星、虫洞、异常）|\r\n\r\n### 策略与设置\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_strategy_notes` |给定游戏状态的派系战略分析|\r\n| `setup_game` |生成完整的游戏设置（选秀池、策略卡订单等）|\r\n| `suggest_map` |为玩家数量建议平衡的地图布局|\r\n| `analyze_slices` |分析地图切片以获得平衡（资源、影响力、技术专长）|\r\n\r\n### 规则和搜索\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_rules` |按关键字查找规则|\r\n| `search` |在所有游戏数据类别中进行全文搜索|\r\n\r\n## 游戏背景\r\n\r\n设置游戏设置一次，所有工具都会自动应用它：\r\n\r\n```\r\n\"Set game context: 6 players, base + PoK + Codex 3\"\r\n```\r\n\r\nAI呼叫 `set_game_context` 随着你的扩展和玩家数量。之后，工具如 `list_factions`, `list_objectives`, `suggest_map`等自动使用这些扩展，而无需每次指定。\r\n\r\n如果需要，您仍然可以覆盖每次调用的扩展。\r\n\r\n## 数据\r\n\r\n所有游戏数据都存在 `data/` 作为JSON文件：\r\n\r\n|文件|内容|\r\n|------|---------|\r\n| `factions.json` |30个具有能力、初始技术、单位和领导者的派系|\r\n| `technologies.json` |扩展中的所有技术|\r\n| `objectives.json` |公开阶段I/II和秘密目标|\r\n| `agendas.json` |法律和指令议程卡|\r\n| `action-cards.json` |带有游戏计时的动作卡|\r\n| `strategy-cards.json` |具有主要/次要能力的策略卡|\r\n| `systems.json` |带有行星、虫洞和异常的系统图块|\r\n| `planets.json` |单个行星数据|\r\n| `units.json` |单位统计数据（成本、战斗、移动、容量、能力）|\r\n| `promissory-notes.json` |派系和通用本票|\r\n| `relics.json` |文物（PoK）|\r\n| `explores.json` |探索卡（PoK）|\r\n| `leaders.json` |特工、指挥官、英雄|\r\n| `breakthroughs.json` |突破（雷霆边缘）|\r\n| `galactic-events.json` |银河系事件（雷霆边缘）|\r\n| `rules.json` |规则参考小节|\r\n| `tile-tiers.json` |用于地图平衡的瓷砖质量等级|\r\n| `factions/*.guide.json` |来自竞争性社区的30个派系战略指南|\r\n\r\n## 扩展\r\n\r\n工具接受 `expansions` 用于控制包含哪些内容的参数：\r\n\r\n- `base` --基础游戏\r\n- `pok` --国王的预言\r\n- `codex-1` 通过 `codex-4` --食品法典卷（包括欧米茄替代品）\r\n- `thunders-edge` --Thunder的Edge扩展\r\n\r\n当扩展包括codex卷时，更新的组件会自动替换其旧的base/PoK版本。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "ti4": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "--yes",
+    "github:surewht/ti4-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "1607",
+ "kind": "mcp",
+ "name": "mdslides-mcp-local",
+ "fingerprint_md5": "a5c70dbacf4a7e5d053ba204d2defa31",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "# mdslides mcp服务器\r\n\r\nMCP（模型上下文协议）服务器，用于使用 [mkslides](https://github.com/saoudrizwan/mkslides) 图书馆。\r\n\r\n## 它做什么\r\n\r\n此服务器为 `mkslides` 命令行工具，允许您通过模型上下文协议直接从Markdown输入生成演示幻灯片。这使得在VSCode中与Claude等工具集成，可以轻松创建和管理演示文稿。\r\n\r\n## 演示\r\n\r\n[mcp-demo.webm](https://github.com/user-attachments/assets/7a541e5e-2509-4a16-a007-f423dc65df05)\r\n\r\n## 特性\r\n\r\n- 从Markdown生成HTML幻灯片。\r\n- 支持各种mkslides配置选项（主题、突出显示主题、Reveal.js选项）。\r\n- 清理临时文件。\r\n- 使用Docker的容器化部署选项。\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Python 3.12或更高版本\r\n- [mkslides](https://github.com/saoudrizwan/mkslides) 已安装并在PATH中可用。\r\n- [模型上下文协议（MCP）](https://github.com/modelcontextprotocol/mcp) 客户端（例如VSCode中的Claude）。\r\n- Docker（如果使用Docker安装方法）。\r\n\r\n### 安装方法\r\n\r\n#### 使用pip\r\n\r\n1. 克隆存储库：\r\n   ```bash\r\n   git clone https://github.com/your-repo/mdslides-mcp-server.git\r\n   cd mdslides-mcp-server\r\n   ```\r\n1. 使用pip和uv进行安装（推荐）：\r\n   ```bash\r\n   uv sync\r\n   ```\r\n   或者使用pip：\r\n   ```bash\r\n   pip install .\r\n   ```\r\n\r\n#### 使用Docker\r\n\r\n1. 确保Docker已安装并正在运行。\r\n1. 从存储库根目录运行部署脚本：\r\n   ```bash\r\n   ```\r\n\r\n./deploy_mdslides.docker.sh\r\n\r\n````\r\nThis script will build the Docker image (if not already built) and start a container instance named `mdslides-mcp-instance`. The server inside the container will be running and ready to accept connections via MCP. The script also handles creating the necessary output directory (`./mkslides_output`) on the host.\r\n\r\n### Configuration in MCP Settings\r\n\r\nTo use the server with your MCP client (like Claude in VSCode), you need to add it to your MCP settings.\r\n\r\nIf you installed using pip, you can run the server directly:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mdslides-mcp-local\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"src/mdslides_mcp_server/server.py\"],\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n````\r\n\r\n如果你通过脚本使用Docker部署：\r\n\r\n配置您的MCP客户端以连接到正在运行的容器实例：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mdslides-mcp-local\": {\r\n      \"autoApprove\": [],\r\n      \"disabled\": false,\r\n      \"timeout\": 60,\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"attach\",\r\n        \"mdslides-mcp-instance\"\r\n      ],\r\n      \"transportType\": \"stdio\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用Claude/VSCode\r\n\r\n在MCP设置中配置后，您可以使用 `generate_slides` 直接在VSCode的Claude聊天界面中使用该工具。\r\n\r\n### 可用工具： `generate_slides`\r\n\r\n使用mkslides从Markdown输入生成HTML演示幻灯片，并通过本地HTTP服务器提供。\r\n\r\n**参数：**\r\n\r\n- `markdown_content` （字符串， **必需的**)：幻灯片的原始Markdown文本。\r\n- `slides_theme` （字符串，可选）：幻灯片的主题名称（例如。， `black`, `white`, `league`, `beige`, `night`, `serif`, `simple`, `solarized`, `moon`, `dracula`, `sky`, `blood`).覆盖默认值。\r\n- `slides_highlight_theme` （string，可选）：代码块的语法突出显示主题（来自的任何内置主题 `highlight.js`).\r\n- `revealjs_options` （object，可选）：一个包含Reveal.js配置选项的字典，用于合并/覆盖默认值。\r\n\r\n**退货：**\r\n\r\n- （string）：URL（例如。， `http://localhost:8080/latest/index.html`)指向由MCP服务器的内部HTTP服务器提供的生成的HTML幻灯片。您可以在浏览器中打开此URL。\r\n\r\n**示例用法：**\r\n\r\n```xml\r\n<use_mcp_tool>\r\n<server_name>mdslides-mcp-local</server_name>\r\n<tool_name>generate_slides</tool_name>\r\n<arguments>\r\n{\r\n  \"markdown_content\": \"# My Presentation\\n\\n---\\n\\n## Slide 2\\n\\n- Bullet 1\\n- Bullet 2\",\r\n  \"slides_theme\": \"black\",\r\n  \"revealjs_options\": {\r\n    \"transition\": \"slide\"\r\n  }\r\n}\r\n</arguments>\r\n</use_mcp_tool>\r\n```\r\n\r\n这将在默认输出目录中生成幻灯片(`./mkslides_output`)使用“黑色”主题和“幻灯片”过渡。\r\n\r\n## 发展\r\n\r\n### 贡献\r\n\r\n欢迎投稿！请遵循GitHub的标准做法：分叉存储库，创建功能分支，并提交pull请求。\r\n\r\n### 运行测试\r\n\r\n目前，有一个占位符测试文件(`tests/test_server.py`).要运行测试，您通常会使用以下测试运行器 `pytest`:\r\n\r\n```bash\r\npytest\r\n```\r\n\r\n记得添加实际测试 `tests/test_server.py`.\r\n\r\n### 从源头构建\r\n\r\n按照上面的pip安装步骤设置您的开发环境。\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。（注意：存储库中当前不存在LICENSE文件。您可能需要创建一个。）\r\n\r\n## 致谢\r\n\r\n- [mkslides](https://github.com/saoudrizwan/mkslides) 用于核心幻灯片生成功能。\r\n- [模型上下文协议](https://github.com/modelcontextprotocol/mcp) 用于实现服务器集成。\r\n",
+ "config": {
+  "mdslides-mcp-local": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "attach",
+    "mdslides-mcp-instance"
+   ],
+   "env": {}
+  }
+ }
+}

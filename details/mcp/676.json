@@ -1,0 +1,22 @@
+{
+ "id": "676",
+ "kind": "mcp",
+ "name": "gpt-vis",
+ "fingerprint_md5": "948a9061d576f40105858995318296d5",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# GPT-Vis MCP - 智能图表推荐服务器\r\n\r\n一个基于 MCP (Model Context Protocol) 的智能数据可视化工具，专为提升用户体验而设计。当用户提出数据分析需求时，**100% 自动判断并生成相应的图表**。\r\n\r\n## 🎯 核心特性\r\n\r\n### ✅ 100% 智能调用\r\n\r\n- **自动识别**：当用户说\"帮我统计字节跳动前端开发校招生薪资范畴\"时，AI 会自动调用可视化工具\r\n- **智能判断**：基于关键词和语义分析，准确判断是否需要数据可视化\r\n- **即时响应**：无需用户明确要求，推荐生成合适的图表\r\n\r\n### 🛠️ 两个核心工具\r\n\r\n#### 1. `check_if_needs_visualization` (判断工具)\r\n\r\n- **职责**：智能判断用户问题是否需要数据可视化\r\n- **输入**：用户的完整问题或请求\r\n- **输出**：判断结果 + 推荐图表类型 + 置信度\r\n- **特点**：只做判断，不生成图表\r\n- **触发词汇**：统计、分析、对比、趋势、分布、占比、收入、销售、业绩等\r\n\r\n#### 2. `create_data_visualization` (创建工具)\r\n\r\n- **职责**：基于用户提供的数据创建可视化图表\r\n- **输入**：数据数组 + 可选的标题、描述、图表类型\r\n- **输出**：完整的 vis-chart 格式代码块\r\n- **特点**：专门负责图表生成，自动推断字段映射\r\n\r\n## 🚀 快速开始\r\n\r\n### 使用 npx (推荐)\r\n\r\n```bash\r\nnpx -y gpt-vis-mcp\r\n```\r\n\r\n### 使用 npm\r\n\r\n```bash\r\nnpm install -g gpt-vis-mcp\r\n```\r\n\r\n### 从源码构建\r\n\r\n```bash\r\n# 克隆项目\r\ngit clone https://github.com/BoyYangzai/gpt-vis-mcp.git\r\ncd gpt-vis-mcp\r\n\r\n# 安装依赖\r\nnpm install\r\n\r\n# 构建项目\r\nnpm run build\r\n\r\n# 运行测试\r\nnpm test\r\n```\r\n\r\n## 🔧 配置使用\r\n\r\n### Cursor MCP 配置\r\n\r\n在 Cursor 的 MCP 设置中添加以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gpt-vis\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"gpt-vis-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Claude Desktop 配置\r\n\r\n在 `claude_desktop_config.json` 中添加：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gpt-vis\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"gpt-vis-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 本地开发配置\r\n\r\n如果你想使用本地构建版本：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gpt-vis\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/gpt-vis-mcp/dist/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 📊 智能判断逻辑\r\n\r\n### 自动触发场景\r\n\r\n- ✅ \"帮我统计字节跳动前端开发校招生薪资范畴\" → 生成柱状图\r\n- ✅ \"分析销售趋势\" → 生成折线图\r\n- ✅ \"显示用户年龄分布\" → 生成直方图\r\n- ✅ \"查看各部门业绩对比\" → 生成柱状图\r\n- ❌ \"今天天气怎么样\" → 不生成图表\r\n- ❌ \"你好，请问时间\" → 不生成图表\r\n\r\n### 图表类型推荐\r\n\r\n- **趋势分析** → 折线图 (line)\r\n- **数据对比** → 柱状图 (column)\r\n- **占比分析** → 饼图 (pie)\r\n- **分布统计** → 直方图 (histogram)\r\n\r\n## 📈 输出格式\r\n\r\n所有图表都以标准的 vis-chart 格式输出：\r\n\r\n```vis-chart\r\n{\r\n  \"type\": \"line\",\r\n  \"data\": [\r\n    {\r\n      \"档次\": \"白菜offer\",\r\n      \"年薪(万元)\": 38,\r\n      \"月薪(k)\": 24,\r\n      \"详情\": \"24k*15薪+房补1.5k*12\"\r\n    },\r\n    {\r\n      \"档次\": \"SP offer\",\r\n      \"年薪(万元)\": 44,\r\n      \"月薪(k)\": 28,\r\n      \"详情\": \"28k*15薪+房补+签字费1w\"\r\n    },\r\n    {\r\n      \"档次\": \"SSP offer\",\r\n      \"年薪(万元)\": 50,\r\n      \"月薪(k)\": 32,\r\n      \"详情\": \"30-32k*15薪+房补+签字费+期权\"\r\n    }\r\n  ],\r\n  \"title\": \"字节跳动前端开发校招生薪资范畴统计\"\r\n}\r\n```\r\n\r\n## 🎨 支持的图表类型\r\n\r\n- 📊 柱状图 (column/bar)\r\n- 📈 折线图 (line)\r\n- 🥧 饼图 (pie)\r\n- 📋 直方图 (histogram)\r\n- 🔥 热力图 (heatmap)\r\n- 📍 散点图 (scatter)\r\n- 📊 面积图 (area)\r\n- 🕸️ 雷达图 (radar)\r\n- 🗂️ 矩形树图 (treemap)\r\n- ☁️ 词云图 (word-cloud)\r\n\r\n## 🔍 测试验证\r\n\r\n运行测试以验证工具功能：\r\n\r\n```bash\r\nnpm test\r\n```\r\n\r\n测试包括：\r\n\r\n- ✅ 智能判断可视化需求\r\n- ✅ 自动生成相应图表\r\n- ✅ 正确拒绝非数据类问题\r\n- ✅ 强制创建指定图表\r\n\r\n## 💡 设计理念\r\n\r\n这个 MCP 工具的核心价值在于**智能化的用户体验**：\r\n\r\n1. **零学习成本**：用户不需要学习特殊命令\r\n2. **自动化处理**：AI 自动判断并生成图表\r\n3. **100% 响应率**：确保数据相关问题都能得到可视化支持\r\n4. **即开即用**：配置简单，功能强大\r\n\r\n## 🔗 相关项目\r\n\r\n- [官方 AntV MCP](https://github.com/antvis/mcp-server-chart) - 静态图表生成\r\n- [GPT-Vis](https://github.com/observablehq/gpt-vis) - 可视化图表库\r\n\r\n本项目专注于**智能推荐和动态生成**，与官方项目形成功能互补。\r\n\r\n---\r\n\r\n**让数据可视化变得更加智能和自然！** 🚀\r\n\r\n## 🔄 工作流程\r\n\r\n**理想的使用流程**：\r\n\r\n1. 用户提问：\"帮我统计字节跳动前端开发校招生薪资范畴\"\r\n2. AI 调用 `check_if_needs_visualization` → 返回\"需要可视化，推荐柱状图\"\r\n3. AI 基于判断结果，准备数据并调用 `create_data_visualization`\r\n4. 生成完整的图表配置\r\n\r\n**职责清晰**：\r\n\r\n- ✅ **判断工具**：只判断是否需要 + 推荐类型，不生成图表\r\n- ✅ **创建工具**：接收数据参数，专门生成图表\r\n\r\n## License\r\n\r\nMIT\r\n",
+ "config": {
+  "gpt-vis": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "gpt-vis-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

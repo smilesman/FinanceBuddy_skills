@@ -1,0 +1,26 @@
+{
+ "id": "1621",
+ "kind": "mcp",
+ "name": "metabase-mcp-server",
+ "fingerprint_md5": "5dc84aa4ba82dd4a5c44dcd7bfd1a2ed",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 元数据库MCP服务器\r\n\r\n**作者**：余亨俊([@恒俊开发](https://github.com/hyeongjun-dev))\r\n\r\n[](https://smithery.ai/server/@hyeongjun-dev/metabase-mcp-server)\r\n\r\n一个模型上下文协议服务器，将人工智能助手与元数据库分析平台集成在一起。\r\n\r\n## 概述\r\n\r\n这种基于TypeScript的MCP服务器提供与Metabase API的无缝集成，使人工智能助手能够直接与您的分析数据交互。该服务器专为Claude和其他兼容MCP的AI助手而设计，充当您的分析平台和会话AI之间的桥梁。\r\n\r\n### 主要特点\r\n\r\n- **资源访问**：通过直观的方式浏览元数据库资源 `metabase://` URI\r\n- **两种身份验证方法**：支持基于会话和API密钥身份验证\r\n- **结构化数据访问**：JSON格式的响应，便于人工智能助手使用\r\n- **综合录井**：详细的日志记录，便于调试和监控\r\n- **错误处理**：强大的错误处理功能，错误信息清晰\r\n\r\n## 可用工具\r\n\r\n服务器为AI助手提供以下工具：\r\n\r\n- `list_dashboards`：检索Metabase实例中的所有可用仪表板\r\n- `list_cards`：在Metabase中获取所有已保存的问题/卡片\r\n- `list_databases`：查看所有连接的数据库源\r\n- `execute_card`：运行已保存的问题并使用可选参数检索结果\r\n- `get_dashboard_cards`：从特定仪表板中提取所有卡片\r\n- `execute_query`：对任何连接的数据库执行自定义SQL查询\r\n\r\n## 配置\r\n\r\n服务器支持两种身份验证方法：\r\n\r\n### 选项1：用户名和密码验证\r\n\r\n```bash\r\n# Required\r\nMETABASE_URL=https://your-metabase-instance.com\r\nMETABASE_USER_EMAIL=your_email@example.com\r\nMETABASE_PASSWORD=your_password\r\n\r\n# Optional\r\nLOG_LEVEL=info # Options: debug, info, warn, error, fatal\r\n```\r\n\r\n### 选项2：API密钥验证（推荐用于生产）\r\n\r\n```bash\r\n# Required\r\nMETABASE_URL=https://your-metabase-instance.com\r\nMETABASE_API_KEY=your_api_key\r\n\r\n# Optional\r\nLOG_LEVEL=info # Options: debug, info, warn, error, fatal\r\n```\r\n\r\n您可以直接设置这些环境变量或使用 `.env` 提交 [dotenv](https://www.npmjs.com/package/dotenv).\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Node.js 18.0.0或更高版本\r\n- 具有适当凭据的活动元数据库实例\r\n\r\n### 开发设置\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build the project\r\nnpm run build\r\n\r\n# Start the server\r\nnpm start\r\n\r\n# For development with auto-rebuild\r\nnpm run watch\r\n```\r\n\r\n### Claude桌面集成\r\n\r\n要与Claude Desktop一起使用，请添加以下服务器配置：\r\n\r\n**MacOS**：编辑 `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n**视窗**：编辑 `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"metabase-mcp-server\": {\r\n      \"command\": \"/absolute/path/to/metabase-mcp-server/build/index.js\",\r\n      \"env\": {\r\n        \"METABASE_URL\": \"https://your-metabase-instance.com\",\r\n        \"METABASE_USER_EMAIL\": \"your_email@example.com\",\r\n        \"METABASE_PASSWORD\": \"your_password\"\r\n        // Or alternatively, use API key authentication\r\n        // \"METABASE_API_KEY\": \"your_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者，您可以通过npx使用JSON配置的Smithery托管版本：\r\n\r\n#### API密钥验证：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"metabase-mcp-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@smithery/cli@latest\",\r\n        \"run\",\r\n        \"@hyeongjun-dev/metabase-mcp-server\",\r\n        \"--config\",\r\n        \"{\\\"metabaseUrl\\\":\\\"https://your-metabase-instance.com\\\",\\\"metabaseApiKey\\\":\\\"your_api_key\\\",\\\"metabasePassword\\\":\\\"\\\",\\\"metabaseUserEmail\\\":\\\"\\\"}\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 用户名和密码验证：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"metabase-mcp-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@smithery/cli@latest\",\r\n        \"run\",\r\n        \"@hyeongjun-dev/metabase-mcp-server\",\r\n        \"--config\",\r\n        \"{\\\"metabaseUrl\\\":\\\"https://your-metabase-instance.com\\\",\\\"metabaseApiKey\\\":\\\"\\\",\\\"metabasePassword\\\":\\\"your_password\\\",\\\"metabaseUserEmail\\\":\\\"your_email@example.com\\\"}\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 调试\r\n\r\n由于MCP服务器通过stdio进行通信，请使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector) 用于调试：\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n检查员将提供一个基于浏览器的界面，用于监控请求和响应。\r\n\r\n## Docker支持\r\n\r\nDocker镜像可用于容器化部署：\r\n\r\n```bash\r\n# Build the Docker image\r\ndocker build -t metabase-mcp-server .\r\n\r\n# Run the container with environment variables\r\ndocker run -e METABASE_URL=https://your-metabase.com \\\r\n           -e METABASE_API_KEY=your_api_key \\\r\n           metabase-mcp-server\r\n```\r\n\r\n## 安全考虑\r\n\r\n- 我们建议在生产环境中使用API密钥身份验证\r\n- 确保API密钥和凭据的安全\r\n- 考虑使用Docker secrets或环境变量，而不是硬编码凭据\r\n- 应用适当的网络安全措施来限制对Metabase实例的访问\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n",
+ "config": {
+  "metabase-mcp-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@smithery/cli@latest",
+    "run",
+    "@hyeongjun-dev/metabase-mcp-server",
+    "--config",
+    "{\"metabaseUrl\":\"https://your-metabase-instance.com\",\"metabaseApiKey\":\"your_api_key\",\"metabasePassword\":\"\",\"metabaseUserEmail\":\"\"}"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "id": "2498",
+ "kind": "mcp",
+ "name": "dnsdumpster",
+ "fingerprint_md5": "9204067771275c57b179fa30a49c04c1",
+ "download_count": 0,
+ "category": "搜索与研究",
+ "tags": "",
+ "version": "",
+ "readme": "# DNSDumpster-MCP服务器\r\n\r\n模型上下文协议（MCP）服务器，用于与DNSDemster API交互，使人工智能助手能够通过自然语言请求执行详细的DNS侦察。\r\n\r\n## 特性\r\n\r\n- 通过AI助手查询域名DNS记录\r\n- 检索以下详细信息：\r\n  - A记录（带有相关的IP和ASN信息）\r\n  - CNAME记录\r\n  - MX记录\r\n  - TXT记录\r\n  - NS记录\r\n  - 横幅信息（如有）\r\n- 支持分页（Plus帐户）\r\n- 支持域映射生成（Plus帐户）\r\n- 速率限制和缓存\r\n\r\n\r\n## 安装\r\n\r\n```bash\r\n# Install from PyPI\r\nuv pip install mcp-dnsdumpster\r\n\r\n# Or from source\r\ngit clone https://github.com/yourusername/mcp-dnsdumpster.git\r\ncd mcp-dnsdumpster\r\nuv pip install -e .\r\n```\r\n\r\n## Claude桌面配置\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS或 `%AppData%\\Claude\\claude_desktop_config.json` 在Windows上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dnsdumpster\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-dnsdumpster\"],\r\n      \"env\": {\r\n        \"DNSDUMPSTER_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n1. 设置API密钥：\r\n\r\n```bash\r\nexport DNSDUMPSTER_API_KEY=your_api_key_here\r\n```\r\n\r\n2. 运行服务器：\r\n\r\n```bash\r\n# Using uvx (recommended)\r\nuvx mcp-dnsdumpster\r\n\r\n# Or if installed from source\r\nuv run server.py\r\n```\r\n\r\n### 示例提示\r\n\r\n- “显示所有子域，例如.com”\r\n- “microsoft.com的邮件服务器是什么？”\r\n- “告诉我twitter.com的DNS基础设施”\r\n- “生成Facebook域名结构的可视化地图”\r\n\r\n## 发展\r\n\r\n- Python 3.10+\r\n- 用途 `uv` 用于依赖关系管理\r\n- 使用MCP SDK 1.4构建+\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "dnsdumpster": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-dnsdumpster"
+   ],
+   "env": {
+    "DNSDUMPSTER_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

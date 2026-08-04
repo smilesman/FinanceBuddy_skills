@@ -1,0 +1,21 @@
+{
+ "id": "2700",
+ "kind": "mcp",
+ "name": "searxng-2",
+ "fingerprint_md5": "236d4fbf3721b467a0a7033c100690b3",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP搜索\r\n\r\nMCP服务器，用于通过以下方式将代理系统连接到搜索系统 [searXNG](https://docs.searxng.org/).\r\n\r\n\r\n## 工具\r\n\r\n使用SearXNG搜索网页\r\n\r\n## 鼓励\r\n\r\n```python\r\nsearch(query: str) -> f\"Searching for {query} using searXNG\"\r\n```\r\n\r\n## 用法\r\n\r\n### 通过uvx\r\n\r\n1. 像这样配置客户端JSON\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"searxng\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"mcp-searxng\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 通过git克隆\r\n\r\n1. 将服务器添加到claude桌面（入口点是main.py）\r\n\r\n克隆仓库并将此JSON添加到claude桌面\r\n\r\n您可以使用以下命令运行此服务器 `uvx mcp-searxng`，或使用回购的本地副本\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"searxng\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--project\",\r\n        \"/absoloute/path/to/MCP-searxng/\",\r\n        \"run\",\r\n        \"/absoloute/path/to/MCP-searxng/mcp-searxng/main.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您需要更改路径以匹配您的环境\r\n\r\n### 自定义SearXNG URL\r\n\r\n2. 设置环境变量 `SEARXNG_URL` 指向searxng服务器的URL（默认为 `http://localhost:8080`)\r\n\r\n1. 运行MCP客户端，您应该能够使用searxng搜索网络\r\n\r\n注意：如果您使用的是claudedesktop，请确保在再次运行服务器之前终止进程（任务管理器或等效程序）\r\n",
+ "config": {
+  "searxng": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-searxng"
+   ],
+   "env": {}
+  }
+ }
+}

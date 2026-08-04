@@ -1,0 +1,26 @@
+{
+ "id": "1481",
+ "kind": "mcp",
+ "name": "graphql",
+ "fingerprint_md5": "41a5778909e52f7fe9ec9eef01b8aade",
+ "download_count": 0,
+ "category": "API 调试",
+ "tags": "",
+ "version": "",
+ "readme": "# GraphQL MCP工具\r\n\r\n提供GraphQL API交互功能的模型上下文协议（MCP）服务器实现。该服务器使AI助手能够通过一组标准化的工具与GraphQL API进行交互。\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n- **graphql_query**\r\n\r\n  - 对任何端点执行GraphQL查询\r\n  - 输入：\r\n    - `query` （string）：要执行的GraphQL查询\r\n    - `variables` （object，可选）：查询的变量\r\n    - `endpoint` （字符串，可选）：GraphQL端点URL\r\n    - `headers` （object，可选）：请求的HTTP标头\r\n    - `timeout` （数字，可选）：请求超时（毫秒）\r\n    - `allowMutations` （boolean，可选）：是否允许变异操作\r\n\r\n- **graphql_introspect**\r\n\r\n  - 检索和探索GraphQL模式信息\r\n  - 输入：\r\n    - `endpoint` （字符串，可选）：GraphQL端点URL\r\n    - `headers` （object，可选）：请求的HTTP标头\r\n    - `includeDeprecated` （boolean，可选）：是否包含弃用的类型/字段\r\n\r\n## 使用Claude Desktop\r\n\r\n### NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"graphql\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"mcp-graphql-tools\",\r\n        \"--endpoint=https://api.github.com/graphql\",\r\n        \"--headers={\\\"Authorization\\\":\\\"Bearer YOUR_GITHUB_TOKEN\\\"}\",\r\n        \"--timeout=30000\",\r\n        \"--maxComplexity=100\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 配置选项\r\n\r\n服务器接受以下命令行参数：\r\n\r\n- --endpoint（-e）：默认GraphQL端点URL（默认值：http://localhost:4000/graphql)\r\n- --headers（-H）：所有请求的默认标头均为JSON字符串\r\n- --timeout（-t）：默认请求超时（毫秒）（默认值：30000）\r\n- --maxComplexity（-m）：允许的最大查询复杂度（默认值：100）\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "graphql": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-graphql-tools",
+    "--endpoint=https://api.github.com/graphql",
+    "--headers={\"Authorization\":\"Bearer YOUR_GITHUB_TOKEN\"}",
+    "--timeout=30000",
+    "--maxComplexity=100"
+   ],
+   "env": {}
+  }
+ }
+}

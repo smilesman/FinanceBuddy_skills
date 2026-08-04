@@ -1,0 +1,24 @@
+{
+ "id": "3453",
+ "kind": "mcp",
+ "name": "gemini-web",
+ "fingerprint_md5": "2120c7854fb51007d3d36cd207143be3",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP Gemini 网络搜索\r\n\r\n一个模型上下文协议（MCP）服务器，提供由Google的Gemini 2.5 Flash和Google搜索基础能力支持的可靠网络搜索功能。\r\n\r\n## 特点/功能\r\n\r\n- **单身 `web_search` 工具** 具有双模式：\r\n  - `normal`快速、单步接地搜索\r\n  - `research`多步骤研究，包括查询规划→执行→综合\r\n- **谷歌搜索定位** 为了准确的、已引用的结果\r\n- **带有主观意见的系统指令** 对于API/库查询，应优先参考官方文档\r\n- **可配置的模型和终端节点**\r\n\r\n## 安装\r\n\r\n### 通过 npx（推荐）\r\n\r\n```bash\r\nnpx -y mcp-gemini-web\r\n```\r\n\r\n### 通过 npm 安装\r\n\r\n```bash\r\nnpm install -g mcp-gemini-web\r\nmcp-gemini-web\r\n```\r\n\r\n## 环境变量\r\n\r\n- `GEMINI_API_KEY` 或者 `GOOGLE_API_KEY`必填项 - 您的Google AI API密钥\r\n- `GENAI_BASE_URL` 或者 `GEMINI_BASE_URL`可选 - 自定义API端点\r\n- `MODEL`可选 - 要使用的模型（默认： `gemini-2.5-flash`)\r\n\r\n## MCP客户端配置\r\n\r\n### Claude Desktop（可译为“Claude桌面版”或根据上下文简化为“Claude桌面”）\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gemini-web\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-gemini-web\"],\r\n      \"env\": {\r\n        \"GEMINI_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 其他MCP客户端\r\n\r\n服务器通过stdio使用MCP协议进行通信。请配置您的客户端以运行：\r\n\r\n```bash\r\nnpx -y mcp-gemini-web\r\n```\r\n\r\n## 使用示例\r\n\r\n### 常规搜索（快速）\r\n\r\n```json\r\n{\r\n  \"tool\": \"web_search\",\r\n  \"arguments\": {\r\n    \"q\": \"what is Node.js 22 LTS\",\r\n    \"mode\": \"normal\"\r\n  }\r\n}\r\n```\r\n\r\n### 研究模式（深入）\r\n\r\n```json\r\n{\r\n  \"tool\": \"web_search\",\r\n  \"arguments\": {\r\n    \"q\": \"compare axios vs fetch for production Node.js usage\",\r\n    \"mode\": \"research\",\r\n    \"max_steps\": 4\r\n  }\r\n}\r\n```\r\n\r\n## 工具参数\r\n\r\n- `q` （字符串，必填）：搜索查询\r\n- `mode` (枚举，可选)：搜索模式 - `\"normal\"` （默认）或 `\"research\"`\r\n- `model` （字符串，可选）：要使用的Gemini模型\r\n- `max_tokens` （数字，可选）：最大输出标记数（64-8192）\r\n- `max_steps` （数字，可选）：研究模式下的最大研究步骤（1-6，默认：3）\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone and install\r\ngit clone <repository-url>\r\ncd mcp-gemini-web\r\nnpm install\r\n\r\n# Development mode\r\nnpm run dev\r\n\r\n# Build\r\nnpm run build\r\n\r\n# Test\r\nnpm test\r\n\r\n# Start built version\r\nnpm start\r\n```\r\n\r\n## 许可证\r\n\r\nMIT（MIT）\r\n\r\n## 贡献；做出贡献\r\n\r\n欢迎提交拉取请求！请确保测试通过，并遵循现有的代码风格。\r\n",
+ "config": {
+  "gemini-web": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-gemini-web"
+   ],
+   "env": {
+    "GEMINI_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

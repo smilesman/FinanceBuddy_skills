@@ -1,0 +1,24 @@
+{
+ "id": "2953",
+ "kind": "mcp",
+ "name": "sevdesk",
+ "fingerprint_md5": "2660a495d311047fb08a5cfac2acfd91",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# npm服务器mcp\r\n\r\n模型上下文协议（MCP）服务器 [SevDesk](https://sevdesk.de) API此软件包允许AI代理（如Claude）与您的SevDesk帐户交互，以管理联系人、发票、优惠等。\r\n\r\n## 安装\r\n\r\n您可以直接通过以下方式使用此MCP服务器 `npx` 无需全局安装：\r\n\r\n```bash\r\nnpx npm-sevdesk-mcp\r\n```\r\n\r\n或者全局安装：\r\n\r\n```bash\r\nnpm install -g npm-sevdesk-mcp\r\n```\r\n\r\n## 配置\r\n\r\n服务器需要 `SEVDESK_API_TOKEN` 要设置的环境变量。\r\n\r\n您可以在下的SevDesk帐户设置中找到您的API令牌 **设置>用户>\\[您的用户\\]>API代币**.\r\n\r\n## 使用Claude Desktop\r\n\r\n将以下内容添加到您的Claude Desktop配置文件中(`claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sevdesk\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"npm-sevdesk-mcp\"],\r\n      \"env\": {\r\n        \"SEVDESK_API_TOKEN\": \"YOUR_API_TOKEN_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 配置文件位置\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- **Linux**: `~/.config/Claude/claude_desktop_config.json`\r\n\r\n## 使用游标\r\n\r\n1. 打开 **光标设置**.\r\n1. 引导到 **功能>MCP**.\r\n1. 点击 **添加新的MCP服务器**.\r\n1. 输入以下详细信息：\r\n   - **名字**: `sevdesk`\r\n   - **类型**: `command`\r\n   - **命令**: `npx -y npm-sevdesk-mcp`\r\n   - **环境变量**：使用Key添加新变量 `SEVDESK_API_TOKEN` 以及您的代币作为价值。\r\n\r\n## 使用ChatGPT桌面\r\n\r\n1. 打开 **ChatGPT桌面** 应用程序（macOS/Windows）。\r\n1. 首选 **设置**.\r\n1. 启用 **开发者模式** （如果需要）或寻找 **连接器** / **MCP服务器**.\r\n1. 添加具有以下配置的新服务器：\r\n   - **名字**: `sevdesk`\r\n   - **命令**: `npx -y npm-sevdesk-mcp`\r\n   - **环境变量**: `SEVDESK_API_TOKEN=YOUR_API_TOKEN`\r\n\r\n## 可用工具\r\n\r\n### 通用的\r\n\r\n- **`request`**：向任何SevDesk API终结点发出原始HTTP请求。\r\n  - *输入*: `method` （获取/发布/放置/删除）， `url`, `data` （身体）， `params` （查询）。\r\n\r\n### 联系人\r\n\r\n- **`list_contacts`**：列出具有可选筛选功能的联系人。\r\n  - *输入*: `limit`, `offset`, `customerNumber`, `depth`.\r\n- **`create_contact`**：创建新联系人（组织或个人）。\r\n  - *输入*: `name` （组织名称）， `categoryId` （3=客户，2=供应商）， `surename`/`familyname` （适用于个人）， `customerNumber`.\r\n- **`update_contact`**：更新现有联系人。\r\n  - *输入*: `contactId` （必填）和任何要更新的字段（例如。， `name`, `status`).\r\n\r\n### 发票\r\n\r\n- **`list_invoices`**：列出发票。\r\n  - *输入*: `limit`, `offset`, `status`, `contactId`.\r\n- **`create_invoice`**：创建新发票，可选地包括行项目（位置）。\r\n  - *输入*: `contactId` （必填）， `header`, `invoiceDate`, `deliveryDate`, `status`, `positions` （项目数组）。\r\n- **`update_invoice`**：更新现有发票。\r\n  - *输入*: `invoiceId` （必填）， `header`, `status`, `deliveryDate`.\r\n- **`get_invoice_positions`**：获取特定发票的行项目。\r\n  - *输入*: `invoiceId` （必填）。\r\n\r\n### 报价（订单）\r\n\r\n- **`create_offer`**：创建新报价（订单类型“AN”），可选择包括行项目。\r\n  - *输入*: `contactId` （必填）， `header`, `orderDate`, `status`, `positions` （项目数组）。\r\n- **`update_offer`**：更新现有报价。\r\n  - *输入*: `orderId` （必填）， `header`, `status`.\r\n\r\n## 示例用法\r\n\r\n配置后，您可以要求Claude：\r\n\r\n- “在SevDesk中列出我的所有联系人”\r\n- “创建一个名为‘Acme Corp’的新客户联系人”\r\n- “显示所有未付发票”\r\n- “为联系人ID 12345创建包含两行项目的发票”\r\n\r\n## 需求\r\n\r\n- Node.js>=16.0.0\r\n- 具有API访问权限的SevDesk帐户\r\n\r\n## 故障排除\r\n\r\n- **身份验证错误**：确保您的 `SEVDESK_API_TOKEN` 是正确的，并且具有访问API的权限。\r\n- **模型/字段错误**：SevDesk API结构可能很复杂。如果特定字段无法使用便利工具，请尝试使用原始字段 `request` 手动调试或执行操作的工具。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "sevdesk": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "npm-sevdesk-mcp"
+   ],
+   "env": {
+    "SEVDESK_API_TOKEN": "YOUR_API_TOKEN_HERE"
+   }
+  }
+ }
+}

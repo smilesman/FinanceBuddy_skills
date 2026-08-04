@@ -1,0 +1,22 @@
+{
+ "id": "1705",
+ "kind": "mcp",
+ "name": "searxng",
+ "fingerprint_md5": "39bd4b35bc3b56ef2adfac2dcfd42988",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://mseep.ai/app/cablate-mcp-doc-forge)\r\n\r\n# 简单文档处理MCP服务器\r\n\r\n[](https://smithery.ai/server/@cablate/mcp-doc-forge)\r\n\r\n一个强大的模型上下文协议（MCP）服务器，提供全面的文档处理功能。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/pb9df6lnel\"></a>\r\n\r\n## 特性\r\n\r\n### 文档读取器\r\n\r\n- 阅读DOCX、PDF、TXT、HTML、CSV\r\n\r\n### 文档转换\r\n\r\n- DOCX到HTML/PDF转换\r\n- HTML到TXT/Markdown的转换\r\n- PDF操作（合并、拆分）\r\n\r\n### 文本处理\r\n\r\n- 多编码传输支持（UTF-8、Big5、GBK）\r\n- 文本格式化和清理\r\n- 文本比较和差异生成\r\n- 按行或分隔符拆分文本\r\n\r\n### HTML处理\r\n\r\n- HTML清理和格式化\r\n- 资源提取（图像、链接、视频）\r\n- 结构保护转换\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面文档处理服务器 [史密瑟里](https://smithery.ai/server/@cablate/mcp-doc-forge):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @cablate/mcp-doc-forge --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\nnpm install -g @cablate/mcp-doc-forge\r\n```\r\n\r\n## 用法\r\n\r\n### 命令行界面\r\n\r\n```bash\r\nmcp-doc-forge\r\n```\r\n\r\n### 随着 [潜水桌面](https://github.com/OpenAgentPlatform/Dive)\r\n\r\n1. 点击Dive桌面中的“+添加MCP服务器”\r\n1. 复制并粘贴此配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"searxng\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@cablate/mcp-doc-forge\"\r\n      ],\r\n      \"enabled\": true\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. 点击“保存”安装MCP服务器\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 贡献\r\n\r\n欢迎社区参与和贡献！以下是做出贡献的方法：\r\n\r\n- ⭐️ 如果你觉得这个项目有帮助，就给它标上星号\r\n- 🐛 提交问题：报告问题或提供建议\r\n- 🔧 创建拉取请求：提交代码改进\r\n\r\n## 联系\r\n\r\n如果您有任何问题或建议，请随时联系：\r\n\r\n- 📧 电子邮件： [reahtuoo310109@gmail.com](mailto:reahtuoo310109@gmail.com)\r\n- 📧 github： [出租车](https://github.com/cablate/)\r\n- 🤝 合作：欢迎洽谈项目合作\r\n- 📚 技术指导：真诚欢迎您的建议和指导\r\n",
+ "config": {
+  "searxng": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@cablate/mcp-doc-forge"
+   ],
+   "env": {}
+  }
+ }
+}

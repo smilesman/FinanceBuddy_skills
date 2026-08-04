@@ -1,0 +1,28 @@
+{
+ "id": "1553",
+ "kind": "mcp",
+ "name": "mcp-atlassian",
+ "fingerprint_md5": "f4cb5c4ddeebe1e215d4a23d2ff456f5",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP Atlassian\r\n\r\n\r\n[](https://github.com/sooperset/mcp-atlassian/actions/workflows/tests.yml)\r\n\r\n[](https://mcp-atlassian.soomiles.com)\r\n\r\nAtlassian产品（Confluence和Jira）的模型上下文协议（MCP）服务器。支持云和服务器/数据中心部署。\r\n\r\nhttps://github.com/user-attachments/assets/35303504-14c6-4ae4-913b-7c25ea511c3e\r\n\r\n<details>\r\n<summary>Confluence Demo</summary>\r\n\r\nhttps://github.com/user-attachments/assets/7fe9c488-ad0c-4876-9b54-120b666bb785\r\n\r\n</details>\r\n\r\n## 快速开始\r\n\r\n### 1.获取您的API代币\r\n\r\n首选https://id.atlassian.com/manage-profile/security/api-tokens并创建令牌。\r\n\r\n> 对于服务器/数据中心，请改用个人访问令牌。看 [认证](https://mcp-atlassian.soomiles.com/docs/authentication).\r\n\r\n### 2.配置IDE\r\n\r\n添加到您的Claude Desktop或Cursor MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-atlassian\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-atlassian\"],\r\n      \"env\": {\r\n        \"JIRA_URL\": \"https://your-company.atlassian.net\",\r\n        \"JIRA_USERNAME\": \"your.email@company.com\",\r\n        \"JIRA_API_TOKEN\": \"your_api_token\",\r\n        \"CONFLUENCE_URL\": \"https://your-company.atlassian.net/wiki\",\r\n        \"CONFLUENCE_USERNAME\": \"your.email@company.com\",\r\n        \"CONFLUENCE_API_TOKEN\": \"your_api_token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **服务器/数据中心用户**：使用 `JIRA_PERSONAL_TOKEN` 而不是 `JIRA_USERNAME` + `JIRA_API_TOKEN`。参见 [认证](https://mcp-atlassian.soomiles.com/docs/authentication) 了解详情。\r\n\r\n### 3.开始使用\r\n\r\n让你的AI助手：\r\n\r\n- **“查找PROJ项目中分配给我的问题”**\r\n- **“在Confluence中搜索入职文档”**\r\n- **“为登录问题创建错误单”**\r\n- **“将PROJ-123的状态更新为完成”**\r\n\r\n## 文档\r\n\r\n完整文档可在 **[mcp-atlasian.soomiles.com](https://mcp-atlassian.soomiles.com)**.\r\n\r\n文档也可在 [llms.txt格式](https://llmstxt.org/)，LLM可以轻松使用：\r\n\r\n- [`llms.txt`](https://mcp-atlassian.soomiles.com/llms.txt) --文档站点地图\r\n- [`llms-full.txt`](https://mcp-atlassian.soomiles.com/llms-full.txt) --完整的文件\r\n\r\n|主题|描述|\r\n|-------|-------------|\r\n| [安装](https://mcp-atlassian.soomiles.com/docs/installation) |uvx、Docker、pip，源代码|\r\n| [认证](https://mcp-atlassian.soomiles.com/docs/authentication) |API令牌、PAT、OAuth 2.0|\r\n| [配置](https://mcp-atlassian.soomiles.com/docs/configuration) |IDE设置、环境变量|\r\n| [HTTP传输](https://mcp-atlassian.soomiles.com/docs/http-transport) |SSE，流式http，多用户|\r\n| [工具参考](https://mcp-atlassian.soomiles.com/docs/tools-reference) |所有Jira和Confluence工具|\r\n| [故障排除](https://mcp-atlassian.soomiles.com/docs/troubleshooting) |常见问题与调试|\r\n\r\n## 兼容性\r\n\r\n|产品|部署|支持|\r\n|---------|------------|---------|\r\n|Confluence |云|完全支持|\r\n|汇流|服务器/数据中心|支持（v6.0+）|\r\n|Jira |云|完全支持|\r\n|Jira |服务器/数据中心|支持（v8.14+）|\r\n\r\n## 关键工具\r\n\r\n|Jira |汇流|\r\n|------|------------|\r\n| `jira_search` -使用JQL搜索| `confluence_search` -使用CQL搜索|\r\n| `jira_get_issue` -获取问题详细信息| `confluence_get_page` -获取页面内容|\r\n| `jira_create_issue` -创建问题| `confluence_create_page` -创建页面|\r\n| `jira_update_issue` -更新问题| `confluence_update_page` -更新页面|\r\n| `jira_transition_issue` -更改状态| `confluence_add_comment` -添加评论|\r\n\r\n**总共72个工具** --请参阅 [工具参考](https://mcp-atlassian.soomiles.com/docs/tools-reference) 查看完整列表。\r\n\r\n## 安全\r\n\r\n切勿共享API令牌。保持 `.env` 文件安全。看 [安全.md](SECURITY.md).\r\n\r\n## 贡献\r\n\r\n看 [贡献.md](CONTRIBUTING.md) 用于开发设置。\r\n\r\n## 许可证\r\n\r\nMIT-参见 [许可证](LICENSE)不是Atlassian的官方产品。\r\n",
+ "config": {
+  "mcp-atlassian": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-atlassian"
+   ],
+   "env": {
+    "JIRA_URL": "https://your-company.atlassian.net",
+    "JIRA_USERNAME": "your.email@company.com",
+    "JIRA_API_TOKEN": "your_api_token",
+    "CONFLUENCE_URL": "https://your-company.atlassian.net/wiki",
+    "CONFLUENCE_USERNAME": "your.email@company.com",
+    "CONFLUENCE_API_TOKEN": "your_api_token"
+   }
+  }
+ }
+}

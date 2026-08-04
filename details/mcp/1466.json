@@ -1,0 +1,21 @@
+{
+ "id": "1466",
+ "kind": "mcp",
+ "name": "github-chat",
+ "fingerprint_md5": "a640b3a03e4f264eadf9f54c25d494b2",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# GitHub聊天MCP\r\n\r\n一种模型上下文协议（MCP），用于使用GitHub Chat API分析和查询GitHub存储库。官方网站：https://github-chat.com\r\n\r\n## 安装\r\n\r\n```bash\r\n# Install with pip\r\npip install github-chat-mcp\r\n\r\n# Or install with the newer uv package manager\r\nuv install github-chat-mcp\r\n```\r\n\r\n3. 开始使用它与克劳德！\r\n\r\n示例提示：\r\n\r\n- “使用github chat mcp分析React仓库”\r\n- “使用github chat mcp对TypeScript存储库进行索引，并询问其架构”\r\n\r\n# GitHub聊天MCP服务器\r\n\r\n[](https://smithery.ai/server/github-chat-mcp)\r\n\r\n## 安装说明\r\n\r\n> 在做任何事情之前，请确保您有一个GitHub Chat API密钥。这是使用服务所必需的。\r\n\r\n先安装uv。\r\n\r\nMacOS/Linux：\r\n\r\n```bash\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n窗户：\r\n\r\n```\r\npowershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\r\n```\r\n\r\n### 使用光标设置（推荐）\r\n\r\n在mcp.json中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"github-chat\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"github-chat-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n有了上述功能，不需要envs，因为这是一个免费增值版本。\r\n\r\n### 使用Claude Desktop进行设置\r\n\r\n```json\r\n# claude_desktop_config.json\r\n# Can find location through:\r\n# Hamburger Menu -> File -> Settings -> Developer -> Edit Config\r\n# Must perform: brew install uv\r\n{\r\n  \"mcpServers\": {\r\n    \"github-chat\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"github-chat-mcp\"],\r\n      \"env\": {\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n您可以通过Smithery自动安装Claude Desktop的GitHub Chat：\r\n\r\n```bash\r\nnpx -y @smithery/cli install github-chat-mcp --client claude\r\n```\r\n\r\n### 使用GitHub与Claude聊天\r\n\r\n1. 首先索引GitHub存储库：\r\n   “将GitHub存储库索引到https://github.com/username/repo\"\r\n\r\n1. 然后询问有关存储库的问题：\r\n   “这个存储库中使用的核心技术栈是什么？”\r\n\r\n### 调试\r\n\r\n运行：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uvx github-chat-mcp\r\n```\r\n\r\n## 本地/开发设置说明\r\n\r\n### 克隆仓库\r\n\r\n`git clone https://github.com/yourusername/github-chat-mcp.git`\r\n\r\n### 安装依赖项\r\n\r\n先安装uv。\r\n\r\nMacOS/Linux：\r\n\r\n```bash\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n窗户：\r\n\r\n```\r\npowershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\r\n```\r\n\r\n然后安装MCP服务器依赖项：\r\n\r\n```bash\r\ncd github-chat-mcp\r\n\r\n# Create virtual environment and activate it\r\nuv venv\r\n\r\nsource .venv/bin/activate # MacOS/Linux\r\n# OR\r\n.venv/Scripts/activate # Windows\r\n\r\n# Install dependencies\r\nuv sync\r\n```\r\n\r\n### 使用Claude Desktop进行设置\r\n\r\n#### 使用MCP CLI SDK\r\n\r\n```bash\r\n# `pip install mcp[cli]` if you haven't\r\nmcp install /ABSOLUTE/PATH/TO/PARENT/FOLDER/github-chat-mcp/src/github_chat_mcp/server.py -v \"GITHUB_API_KEY=API_KEY_HERE\"\r\n```\r\n\r\n#### 手动地\r\n\r\n```json\r\n# claude_desktop_config.json\r\n# Can find location through:\r\n# Hamburger Menu -> File -> Settings -> Developer -> Edit Config\r\n{\r\n  \"mcpServers\": {\r\n    \"github-chat\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/ABSOLUTE/PATH/TO/PARENT/FOLDER/github-chat-mcp\",\r\n        \"run\",\r\n        \"github-chat-mcp\"\r\n      ],\r\n      \"env\": {\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用GitHub与Claude聊天\r\n\r\n1. 首先索引GitHub存储库：\r\n   “将GitHub存储库索引到https://github.com/username/repo\"\r\n\r\n1. 然后询问有关存储库的问题：\r\n   “这个存储库中使用的核心技术栈是什么？”\r\n\r\n### 调试\r\n\r\n运行：\r\n\r\n```bash\r\n# If mcp cli installed (`pip install mcp[cli]`)\r\nmcp dev /ABSOLUTE/PATH/TO/PARENT/FOLDER/github-chat-mcp/src/github_chat_mcp/server.py\r\n\r\n# If not\r\nnpx @modelcontextprotocol/inspector \\\r\n      uv \\\r\n      --directory /ABSOLUTE/PATH/TO/PARENT/FOLDER/github-chat-mcp \\\r\n      run \\\r\n      github-chat-mcp\r\n```\r\n\r\n然后访问MCP检查器 `http://localhost:5173`.您可能需要在下的检查器中的环境变量中添加您的GitHub API密钥 `GITHUB_API_KEY`.\r\n\r\n# 备注\r\n\r\n- 测井水平可通过以下方式调节 `FASTMCP_LOG_LEVEL` 环境变量（例如。 `FASTMCP_LOG_LEVEL=\"ERROR\"`)\r\n- 此MCP服务器提供两个主要工具：\r\n  1. 仓库索引-对GitHub仓库进行索引和分析\r\n  1. 存储库查询-询问有关索引存储库的问题\r\n",
+ "config": {
+  "github-chat": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "github-chat-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

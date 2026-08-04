@@ -1,0 +1,24 @@
+{
+ "id": "426",
+ "kind": "mcp",
+ "name": "screenroll",
+ "fingerprint_md5": "9bdb8f4b899c66255ea9ef6fab0d82bb",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# @screenroll/mcp\r\n\r\nMCP服务器 [屏幕滚动](https://screenroll.app) --让AI代理通过 [模型上下文协议](https://modelcontextprotocol.io).\r\n\r\n## 安全：配对令牌（必填）\r\n\r\nWebSocket网桥正在监听 `127.0.0.1:9877`. **共享秘密是强制性的** 因此其他本地进程无法控制记录。\r\n\r\n1. 打开 **屏幕滚动** Chrome浏览器中的扩展程序弹出窗口→ **MCP配对**.\r\n1. 点击 **生成配对令牌并启用网桥** 一次（一次性）。之后，当Cursor启动此MCP服务器时，扩展会自动重新连接。\r\n1. 将令牌从配对屏幕复制到MCP配置中（该页面显示了一个可粘贴的页面 `mcp.json` 示例），或通过以下方式传递相同的值 **`--token`**, **`SCREENROLL_MCP_TOKEN`**，或 **`--token-file`**.\r\n\r\n## 先决条件\r\n\r\n- **Node.js≥18**\r\n- **ScreenRoll Chrome扩展程序** （使用MCP桥）已安装--更新后重新加载扩展。\r\n- MCP服务器处于活动状态时Chrome正在运行\r\n\r\n## 快速启动（光标）\r\n\r\n最小安装量仍然是1 `npx` 命令，但你 **必须** 从扩展中添加令牌：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"screenroll\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@screenroll/mcp\", \"--token\", \"PASTE_TOKEN_FROM_EXTENSION\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n使用环境变量（如果您的客户端支持 `env`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"screenroll\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@screenroll/mcp\"],\r\n      \"env\": {\r\n        \"SCREENROLL_MCP_TOKEN\": \"PASTE_TOKEN_FROM_EXTENSION\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n尽可能避免将秘密放入共享配置中——使用 `--token-file`:\r\n\r\n```bash\r\nnpx -y @screenroll/mcp --token-file ~/.screenroll-mcp.token\r\n```\r\n\r\n如果您启动服务器 **没有** 象征，它 **立即退出** 并打印设置说明。\r\n\r\n### 内置医生/自愈\r\n\r\n如果重新启动MCP客户端后连接不稳定，请运行：\r\n\r\n```bash\r\nnpx -y @screenroll/mcp doctor --fix\r\n```\r\n\r\n此检查端口 `9877`，清除过时的ScreenRoll MCP进程，并打印JSON运行状况报告。\r\n\r\n### 启动握手探测（v1.0.3+）\r\n\r\n启动时，MCP服务器执行扩展握手探测（超时5秒）。\r\n如果没有及时到达扩展握手，它会打印一个可操作的提示，而不是一个通用错误：\r\n\r\n- 打开Chrome扩展程序→ MCP配对\r\n- 如果您尚未设置MCP，请单击 **生成配对令牌并启用网桥** 一次\r\n- 验证MCP配置中的令牌是否与扩展令牌匹配\r\n- 跑 `npx -y @screenroll/mcp doctor --fix` 如有需要\r\n\r\n### 克劳德桌面版\r\n\r\n相同的模式 `claude_desktop_config.json` 在...之下 `mcpServers.screenroll`.\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add screenroll -- npx -y @screenroll/mcp --token YOUR_TOKEN\r\n```\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `start_recording` |开始录制（选项卡或桌面）。参数： `mode`, `quality`, `includeAudio`, `includeMic` |\r\n| `pause_recording` |暂停当前录制|\r\n| `resume_recording` |恢复暂停的录制|\r\n| `stop_recording` |停止录制并保存文件|\r\n| `get_status` |当前状态：空闲、录制或暂停|\r\n| `list_recordings` |最近的记录（元数据）|\r\n\r\n### 质量预设\r\n\r\n|价值|分辨率|最适合|\r\n|-------|-----------|----------|\r\n| `LOW` |720p |最小文件|\r\n| `MEDIUM` |1080p |常规使用（默认）|\r\n| `HIGH` |1080p |细节更清晰|\r\n| `PRESENTATION` |1080p |最佳（最高1080p比特率）|\r\n| `ULTRA4K` |4K |最大细节|\r\n\r\n## 运作原理\r\n\r\n```\r\nAI Agent ←— MCP (stdio) —→ @screenroll/mcp ←— WebSocket + token —→ ScreenRoll extension\r\n```\r\n\r\n- MCP进程继续监听 **127.0.0.1:9877** 对于单个经过身份验证的扩展连接。\r\n- 当您启用配对时，扩展程序会创建令牌；将其复制到MCP客户端配置中。\r\n- **重新生成令牌** 在扩展中，旧值无效——重新生成后更新MCP配置。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "screenroll": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@screenroll/mcp",
+    "--token",
+    "PASTE_TOKEN_FROM_EXTENSION"
+   ],
+   "env": {}
+  }
+ }
+}

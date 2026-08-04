@@ -1,0 +1,23 @@
+{
+ "id": "887",
+ "kind": "mcp",
+ "name": "tmdb",
+ "fingerprint_md5": "e66a9bd7a04b9031a00452b33636a2e9",
+ "download_count": 0,
+ "category": "翻译与语言",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP-TMDB\r\n\r\n> “今天看什么？”\r\n\r\nMCP服务器，将Claude的聊天智能与TMDB的电影和电视剧数据相结合。\r\n您可以用自然语言编写 — 服务器理解您要查找的内容并查找正确的数据。\r\n\r\n______________________________________________________________________\r\n\r\n## 这能做什么\r\n\r\n### 自然语言（`smart_search`)\r\n\r\n输入任何内容，服务器将解释：\r\n\r\n```\r\n\"Tom Hanksin näyttelemät sotaelokuvat\"\r\n\"samanlaisia sarjoja kuin Downton Abbey, saatavilla Yle Areenassa tai Amazon Primessä\"\r\n\"parhaat vakavat Gundam-sarjat\"\r\n\"tummia psykologisia trillereitä 2010-luvulta\"\r\n\"mitä anime-sarjoja trendaa nyt\"\r\n\"Nolan-elokuvat parhaimmasta huonoimpaan\"\r\n```\r\n\r\n智能搜索可自动识别：\r\n\r\n- 寻找电影或系列\r\n- 无论是推荐，搜索，个人还是特许经营\r\n- 什么流媒体服务有趣\r\n- 哪种语言的作品（动漫→日语，k-drama→韩语等）\r\n\r\n### 过滤器搜索（`discover`)\r\n\r\n按类型、年份、评分、语言、流媒体服务或演员过滤。\r\n支持多种服务：“来自Netflix或Disney Plus”。\r\n\r\n### 寻求平等（`similar_to`)\r\n\r\n输入参考作品，您将获得主题类似的结果。\r\n同时搜索 TMDB 建议和基于关键字的发现搜索。\r\n双子座排名结果 — 不仅仅是受欢迎程度。\r\n\r\n### 特许经营哈库\r\n\r\n搜索特定特许经营的所有系列或电影：\r\n\r\n```\r\n\"kaikki Turtles-sarjat\"\r\n\"parhaat Star Wars -elokuvat\"\r\n```\r\n\r\n### 电影资讯 + 续集 （`get_details`)\r\n\r\n使用 TMDB ID 查找电影信息。如果电影是收藏品\r\n（例如：Blade Runner、Star Wars），将自动显示所有部分。\r\n\r\n### 其他工具\r\n\r\n| 工具 | 描述 |\r\n|---------|--------|\r\n| `search_by_title` 寻找电影或系列的名称\r\n| `search_person` 寻找演员或导演\r\n| `get_person` 个人信息和主要角色\r\n| `get_recommendations` TMDB 建议使用作品 ID |\r\n| `trending` 目前最热门的电影/系列\r\n| `list_genres` 所有可用的类型。\r\n| `list_watch_providers` 芬兰的直接服务\r\n\r\n______________________________________________________________________\r\n\r\n## 安装\r\n\r\n### 1. 克隆并安装依赖关系\r\n\r\n```bash\r\ngit clone https://github.com/Mokkatrukki/mcp-tmdb.git\r\ncd MCP-tmdb\r\nuv sync\r\n```\r\n\r\n### 2.罗 `.env`文件\r\n\r\n```bash\r\ncp .env.example .env   # tai luo käsin\r\n```\r\n\r\n更多密钥 ：\r\n\r\n```\r\nTMDB_API_KEY_V3=sinun_tmdb_api_avain\r\nGEMINI_API_KEY=sinun_gemini_api_avain\r\n```\r\n\r\n- **TMDB API提供：** [themoviedb.org/settings/api](https://www.themoviedb.org/settings/api) 注册并申请 v3 密钥\r\n- **Gemini API-可用：** [aistudio.google.com](https://aistudio.google.com) - 需要 `smart_search`功能\r\n\r\n### 3.罗 `.mcp.json` Claude Codea 的\r\n\r\n```bash\r\ncp .mcp.json.example .mcp.json\r\n```\r\n\r\n编辑 `.mcp.json`正确的路径：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tmdb\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"python\", \"server.py\"],\r\n      \"cwd\": \"/absoluuttinen/polku/MCP-tmdb\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 4. 测试\r\n\r\n```bash\r\nuv run python server.py\r\n```\r\n\r\n服务器应该启动并加载流派，流媒体服务和关键字缓存。\r\n\r\n______________________________________________________________________\r\n\r\n## 使用 Claude Code\r\n\r\n坤 `.mcp.json` 就位，在项目文件夹中启动Claude Code。\r\n服务器将自动连接。您可以测试：\r\n\r\n```\r\n/mcp\r\n```\r\n\r\n之后，您可以直接使用：\r\n\r\n```\r\nHae minulle Tom Hanksin parhaat elokuvat\r\nMitä sarjoja on trendannut tällä viikolla?\r\nSamanlaisia kuin Breaking Bad\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 技术文件\r\n\r\n- **`FLOWS.md`** — 解释了架构、调用链和smart_search路径。如果你想了解系统内部是如何工作的话，这是一个很好的阅读。\r\n- **`CLAUDE.md`** — Claude Codelle 项目开发指南。\r\n- **`VISION.md`** 原始愿景和设计原则。\r\n\r\n______________________________________________________________________\r\n\r\n## 堆栈\r\n\r\n- **Python 3.11+** + `uv` 包 管理\r\n- **FastMCP** （Anthropic 官方 MCP SDK）\r\n- **httpx** — async HTTP 调用 TMDB\r\n- **DSPY** — 调查排名和结果排序 （Gemini 2.5 Flash Lite）\r\n- **TMDB API v3** 电影 和 系列\r\n\r\n______________________________________________________________________\r\n\r\n## 限制\r\n\r\n- 芬兰的直达服务和年龄限制（region=FI）\r\n- 中文回复（TMDB 会在可用时返回中文描述）\r\n- 智能搜索需要Gemini API密钥\r\n- TMDB个人资料有时不完整（角色可能丢失）\r\n",
+ "config": {
+  "tmdb": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "python",
+    "server.py"
+   ],
+   "env": {}
+  }
+ }
+}

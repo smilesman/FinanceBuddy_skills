@@ -1,0 +1,12 @@
+{
+ "id": "mcporter-skill",
+ "kind": "skill",
+ "name": "mcporter-skill",
+ "fingerprint_md5": "ceb20fbfe7b91d95f4f5714b989b8632",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "---\r\nname: mcporter\r\ndescription: 使用mcporter CLI直接列出、配置、认证和调用MCP服务器/工具（HTTP或stdio），包括临时服务器、配置编辑和CLI/类型生成。\r\nhomepage: https://github.com/pdxfinder/mcporter\r\nmetadata: {\"clawdbot\":{\"emoji\":\"🔌\",\"os\":[\"darwin\",\"linux\",\"windows\"],\"requires\":{\"bins\":[\"mcporter\"]},\"install\":[{\"id\":\"brew\",\"kind\":\"brew\",\"formula\":\"pdxfinder/tap/mcporter\",\"bins\":[\"mcporter\"],\"label\":\"Install mcporter (brew)\"}]}}\r\n\r\n# mcporter\r\n\r\nUse `mcporter` to manage MCP (Model Context Protocol) servers and tools.\r\n\r\n## Requirements\r\n- `mcporter` CLI installed (via Homebrew: `brew install pdxfinder/tap/mcporter`)\r\n- MCP server configuration in `~/.config/mcporter/`\r\n\r\n## Common Commands\r\n\r\n### List Configured Servers\r\n```bash\r\nmcporter list\r\n```\r\n\r\n### Authentication\r\n```bash\r\nmcporter auth --help\r\n```\r\n\r\n### Call MCP Tools\r\n```bash\r\nmcporter call <server-name> <tool-name> [arguments...]\r\n```\r\n\r\n### Generate CLI/Types\r\n```bash\r\nmcporter generate cli <server-name>\r\nmcporter generate types <server-name>\r\n```\r\n\r\n### Config Management\r\n```bash\r\nmcporter config --help\r\n```\r\n\r\n## Notes\r\n- mcporter supports both HTTP and stdio MCP servers\r\n- Ad-hoc server creation is supported\r\n- CLI generation creates typed wrappers for MCP tools\r\n- Use `exec` tool to run mcporter commands",
+ "config": {}
+}

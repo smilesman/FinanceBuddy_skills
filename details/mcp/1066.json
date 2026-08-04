@@ -1,0 +1,26 @@
+{
+ "id": "1066",
+ "kind": "mcp",
+ "name": "huggingface-mcp",
+ "fingerprint_md5": "b504c34fd0b6e933d1541cf34134713e",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 拥抱脸部MCP服务器\r\n\r\nMCP服务器提供对 [拥抱面部数据集查看器API](https://huggingface.co/docs/dataset-viewer)查询数据集，探索数据，搜索内容，并分析Hugging Face Hub广泛收集的机器学习数据集中的统计数据。\r\n\r\n## 特性\r\n\r\n- **12个MCP工具** 涵盖所有API端点：\r\n  - `get_dataset_splits` -数据集拆分信息\r\n  - `get_dataset_info` -数据集元数据和特征\r\n  - `get_dataset_first_rows` -预览前100行\r\n  - `get_dataset_rows` -分页数据访问\r\n  - `search_dataset` -数据集中的全文搜索\r\n  - `get_dataset_size` -数据集大小信息\r\n  - `get_dataset_statistics` -统计分析\r\n  - `filter_dataset` -类似SQL的数据过滤\r\n  - `check_dataset_validity` -数据集验证\r\n  - `get_dataset_parquet` -拼花文件信息\r\n  - `get_dataset_opt_in_out_urls` -选择加入/退出URL\r\n  - `get_dataset_presidio_entities` -PII实体检测\r\n\r\n## 快速开始\r\n\r\n### Claude桌面集成\r\n\r\n添加到您的Claude桌面 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"huggingface-mcp\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"--name\", \"huggingface-mcp-claude\",\r\n        \"huggingface-mcp:latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 构建Docker镜像\r\n\r\n```bash\r\nmake docker-build\r\n```\r\n\r\n## 发展\r\n\r\n### 先决条件\r\n\r\n- Python 3.12+\r\n- [紫外线](https://github.com/astral-sh/uv)\r\n\r\n### 设置\r\n\r\n```bash\r\nmake install    # Install dependencies\r\nmake test       # Run tests (38 tests)\r\nmake example    # Test all tools\r\nmake run        # Start server directly\r\n```\r\n\r\n### Docker命令\r\n\r\n```bash\r\nmake docker-build    # Build image\r\nmake docker-run      # Run container\r\nmake docker-stop     # Stop container\r\n```\r\n\r\n## API覆盖范围\r\n\r\n实现来自的所有GET端点 [拥抱面部数据集查看器API](https://huggingface.co/docs/dataset-viewer):\r\n\r\n|端点|工具|描述|\r\n|----------|------|-------------|\r\n| `/splits` | `get_dataset_splits` |数据集拆分信息|\r\n| `/info` | `get_dataset_info` |数据集元数据和特征|\r\n| `/first-rows` | `get_dataset_first_rows` |预览前100行|\r\n| `/rows` | `get_dataset_rows` |分页数据访问|\r\n| `/search` | `search_dataset` |数据集中的全文搜索|\r\n| `/size` | `get_dataset_size` |数据集大小信息|\r\n| `/statistics` | `get_dataset_statistics` |统计分析|\r\n| `/filter` | `filter_dataset` |类似SQL的数据过滤|\r\n| `/is-valid` | `check_dataset_validity` |数据集验证|\r\n| `/parquet` | `get_dataset_parquet` |拼花文件信息|\r\n| `/opt-in-out-urls` | `get_dataset_opt_in_out_urls` |选择加入/退出URL|\r\n| `/presidio-entities` | `get_dataset_presidio_entities` |PII实体检测|\r\n\r\n内置于 [FastMCP](https://github.com/mcp-server/fastmcp) 遵循所有开发最佳实践。\r\n\r\n## 配置\r\n\r\n复制示例环境文件并根据需要进行配置：\r\n\r\n```bash\r\ncp .env.example .env\r\n# Edit .env with your configuration\r\n```\r\n\r\n## 用法\r\n\r\n### 运行服务器\r\n\r\n```bash\r\nmake run\r\n```\r\n\r\n### 运行测试\r\n\r\n```bash\r\nmake test\r\n```\r\n\r\n### 运行示例\r\n\r\n```bash\r\nmake example\r\n```\r\n\r\n## 码头工人\r\n\r\n### 构建并运行\r\n\r\n```bash\r\nmake docker-build\r\nmake docker-run\r\n```\r\n\r\n### 使用Docker Compose\r\n\r\n```bash\r\ndocker-compose up --build\r\n```\r\n\r\n## 发展\r\n\r\nTODO：添加开发指南\r\n\r\n## API文档\r\n\r\n所有：添加API文档\r\n\r\n## 贡献\r\n\r\nTODO：添加贡献指南\r\n\r\n## 许可证\r\n\r\nTODO:添加许可证信息\r\n",
+ "config": {
+  "huggingface-mcp": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "--name",
+    "huggingface-mcp-claude",
+    "huggingface-mcp:latest"
+   ],
+   "env": {}
+  }
+ }
+}

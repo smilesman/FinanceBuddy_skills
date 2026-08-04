@@ -1,0 +1,24 @@
+{
+ "id": "962",
+ "kind": "mcp",
+ "name": "africa-api",
+ "fingerprint_md5": "e4612126c30766e030adc4687fc749f7",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 非洲API MCP服务器\r\n\r\n一 [主控程序](https://modelcontextprotocol.io) 允许Claude直接访问的服务器 [非洲API](https://africa-api.com) --关于所有54个非洲国家的全面数据，包括经济指标、市场、贸易、政府、选举和政策。\r\n\r\n## 快速开始\r\n\r\n### 1.获取API密钥\r\n\r\n注册地址： [africa-api.com](https://africa-api.com) 并从您的仪表板创建一个API密钥。\r\n\r\n### 2.联系克劳德\r\n\r\n**克劳德桌面** --添加到 `~/Library/Application Support/Claude/claude_desktop_config.json` （macOS）或 `%APPDATA%\\Claude\\claude_desktop_config.json` （Windows）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"africa-api\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"africa-api-mcp\"],\r\n      \"env\": {\r\n        \"AFRICA_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**克劳德代码** --添加到 `~/.claude/settings.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"africa-api\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"africa-api-mcp\"],\r\n      \"env\": {\r\n        \"AFRICA_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重启克劳德，你就可以走了。无需安装步骤-- `npx` 自动处理它。\r\n\r\n## 你可以问克劳德什么\r\n\r\n连接后，Claude可以回答以下问题：\r\n\r\n- “过去10年，尼日利亚与南非的国内生产总值是多少？”\r\n- “显示东非货币的当前汇率”\r\n- “谁是肯尼亚国家元首，他们什么时候上任的？”\r\n- “今年非洲将举行什么选举？”\r\n- “尼日利亚前五大出口产品是什么？”\r\n- “给我看看卢旺达的政策时间表”\r\n- “按预期寿命对非洲国家进行排名”\r\n- “尼日利亚交易所有哪些股票上市？”\r\n- “比较肯尼亚和坦桑尼亚之间的贸易流量”\r\n\r\n## 可用工具\r\n\r\n**40工具** 跨越9个领域：\r\n\r\n|领域|工具|它涵盖了什么|\r\n|--------|-------|----------------|\r\n| **国家** |4|所有54个国家的国家详细信息、概况、实时信号|\r\n| **指标和数据** |4|127+个指标（GDP、人口、卫生、教育等）、时间序列查询、国家排名|\r\n| **政府** |6 |国家元首、内阁、领导任期——当前和历史|\r\n| **选举** |5 |选举结果、即将举行的选举、国家概况|\r\n| **市场** |7 |证券交易所、上市证券、价格历史、外汇汇率|\r\n| **贸易** |4|双边贸易流量、主要合作伙伴、产品细分|\r\n| **政策** |6 |法律、法规、政策时间表、生命周期事件|\r\n| **来源** |2|数据来源——世界银行、联合国、中央银行等。 |\r\n| **地理** |1|大陆/地区/次区域层次结构|\r\n\r\n所有工具都是 **只读** 带有适当的MCP安全注释。\r\n\r\n## 配置\r\n\r\n|环境变量|必填|默认|描述|\r\n|---------------------|----------|---------|-------------|\r\n| `AFRICA_API_KEY` |是|-|您的非洲API持有者代币|\r\n| `AFRICA_API_BASE_URL` |没有| `https://api.africa-api.com` |覆盖当地发展|\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/africa-api/africa-api-mcp.git\r\ncd africa-api-mcp\r\nnpm install\r\nnpm run build\r\n\r\n# Run directly\r\nAFRICA_API_KEY=your-key node dist/index.js\r\n\r\n# Test with MCP inspector\r\nAFRICA_API_KEY=your-key npx @modelcontextprotocol/inspector node dist/index.js\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "africa-api": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "africa-api-mcp"
+   ],
+   "env": {
+    "AFRICA_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

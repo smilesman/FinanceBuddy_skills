@@ -1,0 +1,22 @@
+{
+ "id": "1504",
+ "kind": "mcp",
+ "name": "iterm-mcp",
+ "fingerprint_md5": "0546510bbc99c5f61367236afa63d7c8",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# iterm-mcp\r\n\r\n一个提供访问您iTerm会话的模型上下文协议服务器。\r\n\r\n\r\n### 功能\r\n\r\n**高效使用标记：** iterm-mcp 使模型能够仅检查其感兴趣的输出。即使对于长时间运行的命令，模型通常也只希望看到最后几行输出。\r\n\r\n**自然融合：** 你与模型共享iTerm。你可以就屏幕上的内容提问，或者将任务委托给模型并观看其执行每一步。\r\n\r\n**完整终端控制和REPL支持：** 该模型可以启动并与REPL进行交互，同时还能发送如ctrl-c、ctrl-z等控制字符。\r\n\r\n**简化依赖项：** iterm-mcp 以最小的依赖构建，并可通过 npx 运行。它旨在轻松添加到 Claude Desktop 和其他 MCP 客户端中。它应该能直接工作。\r\n\r\n## 安全注意事项\r\n\r\n- 用户有责任安全地使用该工具。\r\n- 无内置限制：iterm-mcp 不会对执行的命令进行安全性评估。\r\n- 模型的行为可能会出乎意料。用户应监控活动并在适当时候中止。\r\n- 对于多步骤任务，如果模型偏离主题，你可能需要中断它。从较小、更集中的任务开始，直到你熟悉模型的行为方式。\r\n\r\n### 工具\r\n\r\n- `write_to_terminal` 向当前活动的 iTerm 终端写入内容，通常用于运行命令。返回命令产生的输出行数。\r\n- `read_terminal_output` 从当前活动的iTerm终端中读取请求的行数。\r\n- `send_control_character` 向当前活动的iTerm终端发送一个控制字符。\r\n\r\n### 要求\r\n\r\n- iTerm2 必须正在运行\r\n- Node版本18或更高版本\r\n\r\n## 安装\r\n\r\n要与Claude Desktop一起使用，请添加服务器配置：\r\n\r\n在 macOS 上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"iterm-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"iterm-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n要通过以下方式自动为Claude Desktop安装iTerm [Smithery](https://smithery.ai/server/iterm-mcp)根据上面的信息，执行如下指令：\r\n\r\n```bash\r\nnpx -y @smithery/cli install iterm-mcp --client claude\r\n```\r\n\r\n[](https://smithery.ai/server/iterm-mcp)\r\n\r\n## 开发\r\n\r\n安装依赖项：\r\n\r\n```bash\r\nyarn install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\nyarn run build\r\n```\r\n\r\n对于带自动重建的开发：\r\n\r\n```bash\r\nyarn run watch\r\n```\r\n\r\n### 调试\r\n\r\n由于MCP服务器通过stdio进行通信，调试可能会具有挑战性。我们建议使用 [MCP 侦测器](https://github.com/modelcontextprotocol/inspector)，这可以作为包脚本使用：\r\n\r\n```bash\r\nyarn run inspector\r\nyarn debug <command>\r\n```\r\n\r\n检查器将提供一个URL，以便在您的浏览器中访问调试工具。\r\n",
+ "config": {
+  "iterm-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "iterm-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

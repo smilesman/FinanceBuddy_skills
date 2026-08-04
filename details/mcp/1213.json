@@ -1,0 +1,32 @@
+{
+ "id": "1213",
+ "kind": "mcp",
+ "name": "postgres-15",
+ "fingerprint_md5": "49942b903c0ed9aa4a48a3215c26e5ef",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# 使用Spring AI的Postgresql MCP服务器的Spring引导启动器\r\n\r\nSpring Boot应用程序实现了MCP（模型上下文协议）服务器，该服务器提供对\r\nPostgreSQL数据库通过STDIO传输。\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n- 怎么翻译\r\n  - 执行带有分页功能的只读SQL查询\r\n  - 输入：\r\n    - sql（string）：sql查询。必须包含WHERE子句，不得使用通配符（SELECT\\*）。\r\n    - pageNumber（整数，可选，默认值=0）：从零开始的页面索引\r\n    - pageSize（整数，可选，默认值=10，最大值=50）：每页的行数\r\n  - 行为：\r\n    - 验证查询是否包含WHERE子句\r\n    - 禁止SELECT\\*或别名通配符\r\n    - 在带有LIMIT/OFFSET的只读事务中执行查询\r\n    - 返回JSON记录数组\r\n\r\n### 资源\r\n\r\n- 表架构(`postgres:////schema`)\r\n  - 从information_schema.columns中自动发现\r\n  - 每个资源URI都列出了表的列元数据：\r\n    - column_name（字符串）\r\n    - data_type（字符串）\r\n  - 通过MCP资源端点以JSON形式公开\r\n  - 对每个请求进行动态发现；启动时不进行预加载\r\n\r\n## 创建jar文件\r\n\r\n```shell\r\nmvn clean package\r\n```\r\n\r\n\r\n  Note: To use docker, the podman command should be replaced by docker,\r\n\r\n\r\n## 波德曼图片\r\n\r\n本项目的Spring MCP服务器有两种类型的Docker镜像\r\n\r\n### SSE Docker镜像\r\n\r\n- 要创建SSE docker镜像，请使用 [Docker 文件](dockers/sse/Dockerfile)\r\n\r\n```shell\r\n podman build -f dockers/sse/Dockerfile   -t postgresql-mcp-server:latest  .\r\n```\r\n\r\n### STDIO Docker镜像\r\n\r\n- 要创建STDIO docker镜像，请使用 [Docker 文件](dockers/stdio/Dockerfile)\r\n\r\n```shell\r\n  podman build   -f dockers/stdio/Dockerfile   -t postgresql-mcp-server:latest  .\r\n```\r\n\r\n\r\n    \r\n\r\n        \r\n- In some cases, below command may not work. In that case, you can use following command to build the image.\r\n        \r\n- Dockerfile and jar file should be in the same directory.\r\n        \r\n- change this  \"COPY target/postgresql-mcp-server.jar app.jar\" to \"COPY postgresql-mcp-server.jar app.jar\" in the Dockerfile.\r\n    \r\n\r\n\r\n```sh\r\n podman build -t postgresql-mcp-server  .\r\n```\r\n\r\n## 为SSE创建Postgresql MCP容器\r\n\r\n\r\n  \r\n\r\n    \r\n- to run container in sse mode, you need to set the environment variable SPRING_AI_MCP_SERVER_STDIO to false.\r\n    \r\n- SSE works only in async mode. So change SPRING_AI_MCP_SERVER_TYPE to ASYNC.\r\n    \r\n- To verify that SSE is working, run this command: curl -v -H \"Accept: text/event-stream\" http://localhost:8080/sse\r\n  \r\n\r\n\r\n```sh\r\n-- change host to database host, change 5432 to database port\r\n\r\npodman run -i --rm -e DATABASE_URL=jdbc:postgresql://host:5432/db -e DATABASE_USERNAME=user -e DATABASE_PASSWORD=pass -e APP_CURRENT_SCHEMA=public mcp-postgres-spring\r\n```\r\n\r\n## 主机/客户端设置\r\n\r\n\r\n  **Note:** To use podman, the podman command should be replaced by podman in the command property.\r\n\r\n\r\n### 克劳德桌面\r\n\r\n此配置应添加到claude_desktop_config json中\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-e\",\r\n        \"DATABASE_URL=${input:pg_url}\",\r\n        \"-e\",\r\n        \"DATABASE_USERNAME=${input:pg_user}\",\r\n        \"-e\",\r\n        \"DATABASE_PASSWORD=${input:pg_password}\",\r\n        \"-e\",\r\n        \"APP_CURRENT_SCHEMA=${input:pg_schema:public}\",\r\n        \"mcp-postgres-spring\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### VS代码：编码助手设置\r\n\r\n对于手动安装，请将以下JSON块添加到VS Code中的Preferences（JSON）文件中。你可以这样做\r\n按Ctrl+Shift+P并键入首选项：打开用户设置（JSON）。\r\n\r\n您可以选择将其添加到工作区中名为.vcode/mcp.json的文件中。这允许您共享\r\n与他人配置。\r\n\r\n请注意，.vcode/mcp.json文件中不需要mcp密钥。\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"inputs\": [\r\n      {\r\n        \"type\": \"promptString\",\r\n        \"id\": \"pg_url\",\r\n        \"description\": \"PostgreSQL URL (e.g. jdbc:postgresql://host:5432/db)\"\r\n      },\r\n      {\r\n        \"type\": \"promptString\",\r\n        \"id\": \"pg_user\",\r\n        \"description\": \"Database username\"\r\n      },\r\n      {\r\n        \"type\": \"promptString\",\r\n        \"id\": \"pg_password\",\r\n        \"description\": \"Database password\"\r\n      },\r\n      {\r\n        \"type\": \"promptString\",\r\n        \"id\": \"pg_schema\",\r\n        \"description\": \"Database schema (default: public)\",\r\n        \"default\": \"public\"\r\n      }\r\n    ],\r\n    \"servers\": {\r\n      \"postgres\": {\r\n        \"command\": \"docker\",\r\n        \"args\": [\r\n          \"run\",\r\n          \"-i\",\r\n          \"--rm\",\r\n          \"-e\",\r\n          \"DATABASE_URL=${input:pg_url}\",\r\n          \"-e\",\r\n          \"DATABASE_USERNAME=${input:pg_user}\",\r\n          \"-e\",\r\n          \"DATABASE_PASSWORD=${input:pg_password}\",\r\n          \"mcp-postgres-spring\"\r\n        ]\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## TECH堆栈\r\n\r\n- **Spring Boot**: 3.4.4\r\n- **春季AI**：1.0米7\r\n- **Spring MCP服务器（Stdio/Webflux）**\r\n- **龙目**: 1.18.38\r\n- **SpotBugs**: 4.8.6\r\n- **杰克逊数据绑定**\r\n- **代码检查**\r\n",
+ "config": {
+  "postgres": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "DATABASE_URL=${input:pg_url}",
+    "-e",
+    "DATABASE_USERNAME=${input:pg_user}",
+    "-e",
+    "DATABASE_PASSWORD=${input:pg_password}",
+    "-e",
+    "APP_CURRENT_SCHEMA=${input:pg_schema:public}",
+    "mcp-postgres-spring"
+   ],
+   "env": {}
+  }
+ }
+}

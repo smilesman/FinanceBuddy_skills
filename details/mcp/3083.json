@@ -1,0 +1,26 @@
+{
+ "id": "3083",
+ "kind": "mcp",
+ "name": "falling-fruit",
+ "fingerprint_md5": "67397cfdbb09dc03892db4b2d3f61295",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 落果MCP服务器🍎\r\n\r\n连接到的模型上下文协议（MCP）服务器 [落果API](https://github.com/falling-fruit/falling-fruit-api) 帮助您找到附近的可食用植物和树木！问一些关于你所在地区觅食机会的自然语言问题。\r\n\r\n## 特性\r\n\r\n- 🔍 **搜索水果地点** 按地区和水果类型\r\n- 🍂 **寻找时令水果** 当前在您所在的位置可用\r\n- 🌱 **发现水果类型** 并获取详细信息\r\n- 📍 **获取位置详细信息** 特定觅食点\r\n- 🗺️ **生成地图链接** 并获取前往果树的路线\r\n- 🧭 **导航支持** 按转弯方向\r\n- 🌍 **地理编码支持** -按城市、社区或坐标搜索\r\n\r\n## 查询示例\r\n\r\n- “不列颠哥伦比亚省温哥华附近的时令水果是什么？”\r\n- “我在耶鲁镇哪里可以找到黑莓？”\r\n- “给我看看西雅图市中心5公里范围内的苹果树”\r\n- “纽约中央公园有什么可供觅食的？”\r\n- “从波特兰市中心获取最近的苹果园的路线”\r\n- “在数据库中查找所有类型的樱桃”\r\n- “给我金门公园果树的详细信息”\r\n- “为这些浆果坐标生成地图链接”\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Python 3.10或更高版本\r\n- [紫外线](https://docs.astral.sh/uv/) 包管理器\r\n- 落果API键（可选，使用模拟数据作为回退）\r\n\r\n### 设置\r\n\r\n1. **克隆存储库：**\r\n\r\n   ```bash\r\n   git clone https://github.com/chrismaltais/falling-fruit-mcp-server.git\r\n   cd falling-fruit-mcp-server\r\n   ```\r\n\r\n1. **获取落果API密钥（可选）：**\r\n\r\n   - 访问 [落果API文件](https://github.com/falling-fruit/falling-fruit-api)\r\n   - 向维护人员请求API密钥\r\n\r\n1. **配置环境：**\r\n\r\n   ```bash\r\n   # Create .env file with your API key\r\n   echo \"FALLING_FRUIT_API_KEY=your_api_key_here\" > .env\r\n   ```\r\n\r\n1. **安装依赖项：**\r\n\r\n   ```bash\r\n   uv sync\r\n   ```\r\n\r\n1. **测试服务器：**\r\n\r\n   ```bash\r\n   uv run server.py\r\n   ```\r\n\r\n## 以MCP客户端身份添加到游标\r\n\r\n要将此服务器与Cursor IDE一起使用，您需要在MCP设置中对其进行配置：\r\n\r\n### 添加Falling Fruit服务器配置\r\n\r\n将此配置添加到您的 `mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"falling-fruit\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--directory\",\r\n        \"/path/to/your/falling-fruit-mcp-server\",\r\n        \"server.py\"\r\n      ],\r\n      \"env\": {\r\n        \"FALLING_FRUIT_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**重要提示：** 替换 `/path/to/your/falling-fruit-mcp-server` 使用项目目录的实际绝对路径。\r\n\r\n### 验证连接\r\n\r\n你应该看看可用的落果工具。然后，您可以提出以下问题：\r\n\r\n- “在我附近找苹果树”\r\n- “俄勒冈州波特兰的时令水果是什么？”\r\n- “给我看看金门公园的觅食地点”\r\n- “从温哥华市中心获取前往黑莓丛的路线”\r\n- “为中央公园的果树生成地图链接”\r\n- “数据库中有哪些类型的樱桃？”\r\n\r\n## 可用工具\r\n\r\n该服务器提供七种全面的水果觅食工具：\r\n\r\n1. **`search_fruit_locations`** -搜索特定地区的果树位置\r\n\r\n   - 按位置和可选水果类型查找树木\r\n   - 指定搜索半径（默认值：10km）\r\n   - 示例：在不列颠哥伦比亚省温哥华市5公里范围内寻找黑莓\r\n\r\n1. **`get_seasonal_fruits`** -在某个地点附近找到当季水果\r\n\r\n   - 在任何地方购买季节性水果\r\n   - 基于当前日期的自动季节检测\r\n   - 示例：俄勒冈州波特兰市现在的季节是什么？\r\n\r\n1. **`find_fruit_types`** -按名称或学名搜索水果类型\r\n\r\n   - 在数据库中发现可用的水果品种\r\n   - 按常用名或学名搜索\r\n   - 示例：查找所有类型的苹果或海棠\r\n\r\n1. **`get_id_for_fruit`** -获取特定水果类型的ID和详细信息\r\n\r\n   - 按名称查找特定水果信息\r\n   - 返回科学名称和常用名称\r\n   - 适用于精确搜索\r\n\r\n1. **`get_location_details`** -获取水果位置的详细信息\r\n\r\n   - 通过水果类型和描述增强位置数据\r\n   - 包括访问信息和季节性数据\r\n   - 非常适合规划觅食之旅\r\n\r\n1. **`generate_maps_link`** -为坐标生成谷歌地图链接\r\n\r\n   - 为水果位置创建可共享的地图链接\r\n   - 添加自定义标签以便于识别\r\n   - 与地图服务直接集成\r\n\r\n1. **`get_directions_to_fruit`** -生成果树位置的指示\r\n\r\n   - 从您的位置到果树的转弯方向\r\n   - 用于目的地识别的自定义标签\r\n   - 非常适合导航到觅食地点\r\n\r\n## 技术细节\r\n\r\n- **框架：** [FastMCP](https://github.com/jlowin/fastmcp) 用于稳健的MCP协议处理\r\n- **HTTP客户端：** `httpx` 用于异步API请求\r\n- **地理编码：** `geopy` 与位置解析提名\r\n- **包管理器：** `uv` 用于快速依赖关系管理\r\n- **运输：** 用于MCP通信的STDIO\r\n\r\n## 故障排除\r\n\r\n### 服务器无法启动\r\n\r\n- 确保已安装Python 3.10+\r\n- 检查一下 `uv` 已安装并工作\r\n- 验证 `.env` 文件位于项目根目录中\r\n\r\n### 游标无法连接\r\n\r\n- 仔细检查中的绝对路径 `mcp.json`\r\n- 确保Cursor完全重新启动\r\n- 使用手动测试服务器 `uv run server.py`\r\n\r\n### API错误\r\n\r\n- 如果您看到401个错误，请验证您的API密钥是否正确\r\n- 如果没有提供API密钥，服务器将回退到模拟数据\r\n- 检查一下 `.env` 文件包含 `FALLING_FRUIT_API_KEY=your_key`\r\n\r\n## 贡献\r\n\r\n欢迎投稿！此服务器连接到开源 [落果项目](https://github.com/falling-fruit/falling-fruit-api) 该地图绘制了世界各地的可食用植物。\r\n\r\n## 许可证\r\n\r\n该项目遵循与Falling Fruit相同的开源精神。请尊重API的服务条款，并为社区做出贡献！ 🌱\r\n",
+ "config": {
+  "falling-fruit": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "/path/to/your/falling-fruit-mcp-server",
+    "server.py"
+   ],
+   "env": {
+    "FALLING_FRUIT_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

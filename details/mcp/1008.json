@@ -1,0 +1,24 @@
+{
+ "id": "1008",
+ "kind": "mcp",
+ "name": "cockroachdb-mcp",
+ "fingerprint_md5": "3a58d7f57a93e588e1fd51f6e2226bc6",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# CockroachDB MCP服务器\r\n\r\n\r\n[英语](README.md) | [简体中文](README_zh.md)\r\n\r\n这是一个用于Cursor的CockroachDB MCP服务器，基于模型上下文协议（MCP）规范实现，允许您直接与Cursor中的Cockroach DB数据库交互。\r\n\r\n## 特性\r\n\r\n- 连接到CockroachDB数据库\r\n- 从数据库中获取所有表\r\n- 获取表结构信息\r\n- 执行SQL查询\r\n- 提供数据库状态资源\r\n- 提供SQL查询模板\r\n- 自动重新连接机制，确保连接稳定性\r\n- 连接保持活动机制，防止连接超时\r\n- 优雅的流程出口处理\r\n- 用于故障排除的详细日志记录\r\n- 支持手动断开连接\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动为Claude Desktop安装CockroachDB MCP服务器 [史密瑟里](https://smithery.ai/server/@Swayingleaves/cockroachdb-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @Swayingleaves/cockroachdb-mcp-server --client claude\r\n```\r\n\r\n1. 克隆存储库并进入项目目录\r\n1. 安装依赖项：\r\n\r\n```bash\r\npip install -r requirements.txt\r\n```\r\n\r\n3. 安装uv\r\n\r\n```bash\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n## 在游标中使用\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"cockroachdb-mcp\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"/Users/local/cockroachdb-mcp\",\r\n                \"run\",\r\n                \"server.py\"\r\n            ],\r\n            \"jdbc_url\": \"jdbc:postgresql://localhost:26257/defaultdb\",\r\n            \"username\": \"root\",\r\n            \"password\": \"root\"\r\n        }\r\n    }\r\n  }\r\n```\r\n\r\n## MCP功能说明\r\n\r\n### 工具\r\n\r\n#### connect_database\r\n\r\n连接到CockroachDB数据库。\r\n\r\n参数：\r\n\r\n- `jdbc_url`：JDBC连接URL（例如JDBC:postgresql://localhost:26257/defaultdb)\r\n- `username`：数据库用户名\r\n- `password`：数据库密码\r\n\r\n#### 初始化连接\r\n\r\n初始化数据库连接，可以在连接到MCP服务器后立即调用以建立数据库连接。\r\n\r\n参数：\r\n\r\n- `jdbc_url`：JDBC连接URL（例如JDBC:postgresql://localhost:26257/defaultdb)\r\n- `username`：数据库用户名\r\n- `password`：数据库密码\r\n\r\n#### 断开连接_数据库\r\n\r\n手动断开与数据库的连接。\r\n\r\n没有参数。\r\n\r\n#### get_tables\r\n\r\n从数据库中获取所有表。\r\n\r\n没有参数。\r\n\r\n#### get_table_schema\r\n\r\n获取指定表的结构信息。\r\n\r\n参数：\r\n\r\n- `table_name`：表名称\r\n\r\n#### execute_query\r\n\r\n执行SQL查询。\r\n\r\n参数：\r\n\r\n- `query`：SQL查询语句\r\n\r\n### 资源\r\n\r\n#### db://状态\r\n\r\n获取数据库连接状态。\r\n\r\n退货：\r\n\r\n- 未连接时： `\"Not connected\"`\r\n- 连接时： `\"Connected - [Database version]\"`\r\n- 连接错误时： `\"Connection error - [Error message]\"`\r\n\r\n### 鼓励\r\n\r\n#### sql_query_template\r\n\r\nSQL查询模板，帮助用户编写SQL查询。\r\n\r\n## 日志\r\n\r\n服务器日志保存在 `logs/cockroachdb_mcp.log` 文件。您可以检查此文件以了解服务器的运行状态和详细日志。\r\n\r\n日志文件使用旋转日志机制，每个日志文件的最大大小为10MB，最多保留5个备份文件，以防止磁盘空间过度使用。\r\n\r\n## 特殊字符处理\r\n\r\n此服务器使用psycopg2直接连接到CockroachDB数据库，该数据库自动处理用户名和密码中的特殊字符，而无需额外的URL编码。这确保了即使密码包含特殊字符（如 `@`, `%`, `&`等等）。\r\n\r\n## TCP保持活动设置\r\n\r\n默认情况下，服务器配置了TCP保持活动机制，以防止连接因长时间不活动而关闭：\r\n\r\n- `keepalives=1`：启用TCP保活\r\n- `keepalives_idle=30`：空闲30秒后发送keepalive\r\n- `keepalives_interval=10`：每10秒发送一次keepalive\r\n- `keepalives_count=5`：尝试5次后放弃\r\n\r\n## 故障排除\r\n\r\n如果您遇到问题，请检查日志文件 `logs/cockroachdb_mcp.log`，这将帮助您了解服务器的运行状态和潜在问题。\r\n\r\n### 常见问题\r\n\r\n1. **连接被拒绝**：确保CockroachDB服务器正在运行，并且可以从您的计算机访问。\r\n1. **认证失败**：检查用户名和密码是否正确。\r\n1. **连接超时**：检查网络连接是否稳定，特别是在连接到远程数据库时。\r\n1. **数据库服务器问题**：检查CockroachDB服务器是否正常运行。\r\n",
+ "config": {
+  "cockroachdb-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/Users/local/cockroachdb-mcp",
+    "run",
+    "server.py"
+   ],
+   "env": {}
+  }
+ }
+}

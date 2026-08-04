@@ -1,0 +1,24 @@
+{
+ "id": "1559",
+ "kind": "mcp",
+ "name": "mcp-create",
+ "fingerprint_md5": "941605ade0d5490b2a3b245a166cde17",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP创建服务器\r\n\r\n一种动态MCP服务器管理服务，可动态创建、运行和管理模型上下文协议（MCP）服务器。此服务本身充当MCP服务器，并作为子进程启动/管理其他MCP服务器，从而实现灵活的MCP生态系统。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/lnl6xjkkeq\">\r\n  \r\n</a>\r\n\r\n## 主要特点\r\n\r\n- MCP服务器代码的动态创建和执行\r\n- 仅支持TypeScript（计划在未来版本中支持JavaScript和Python）\r\n- 在子MCP服务器上执行工具\r\n- 服务器代码更新和重新启动\r\n- 删除不必要的服务器\r\n\r\n## 安装\r\n\r\n**注意：Docker是运行此服务的推荐方式**\r\n\r\n### Docker安装（推荐）\r\n\r\n```bash\r\n# Build Docker image\r\ndocker build -t mcp-create .\r\n\r\n# Run Docker container\r\ndocker run -it --rm mcp-create\r\n```\r\n\r\n### 手动安装（仅限TypeScript）\r\n\r\n```bash\r\n# Clone repository\r\ngit clone https://github.com/tesla0225/mcp-create.git\r\ncd mcp-create\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build\r\nnpm run build\r\n\r\n# Run\r\nnpm start\r\n```\r\n\r\n## 与Claude Desktop集成\r\n\r\n将以下内容添加到您的Claude Desktop配置文件中(`claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-create\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"mcp-create\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n|工具名称|描述|输入参数|输出|\r\n|-----------|-------------|-----------------|--------|\r\n|从模板创建服务器|从模板创建MCP服务器|语言：string |｛serverId:string，message:string｝|\r\n|执行工具|在服务器上执行工具|serverId:string<br>工具名称：字符串<br>args：对象|工具执行结果|\r\n|获取服务器工具|获取服务器工具列表|serverId:string |{工具：工具定义\\[\\]}|\r\n|delete server |删除服务器|服务器ID:string |{成功：boolean，消息：string}|\r\n|列出服务器|获取正在运行的服务器列表|无|{服务器：string\\[\\]}|\r\n\r\n## 使用示例\r\n\r\n### 创建新服务器\r\n\r\n```json\r\n{\r\n  \"name\": \"create-server-from-template\",\r\n  \"arguments\": {\r\n    \"language\": \"typescript\"\r\n  }\r\n}\r\n```\r\n\r\n### 执行工具\r\n\r\n```json\r\n{\r\n  \"name\": \"execute-tool\",\r\n  \"arguments\": {\r\n    \"serverId\": \"ba7c9a4f-6ba8-4cad-8ec8-a41a08c19fac\",\r\n    \"toolName\": \"echo\",\r\n    \"args\": {\r\n      \"message\": \"Hello, dynamic MCP server!\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 技术规格\r\n\r\n- Node.js 18或更高版本\r\n- TypeScript（必填）\r\n- 依赖关系：\r\n  - @modelcontextprotocol/sdk:MCP客户端/服务器实现\r\n  - child_process（内置Node.js）：子进程管理\r\n  - fs/colves（内置Node.js）：文件操作\r\n  - uuid:唯一服务器ID生成\r\n\r\n## 安全考虑\r\n\r\n- **代码执行限制：** 在服务执行任意代码时考虑沙盒\r\n- **资源限制：** 设置内存、CPU使用率、文件数量等限制。\r\n- **过程监控：** 监控并强制终止僵尸或失控进程\r\n- **路径验证：** 正确验证文件路径以防止目录遍历攻击\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "mcp-create": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "mcp-create"
+   ],
+   "env": {}
+  }
+ }
+}

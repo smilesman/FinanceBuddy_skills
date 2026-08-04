@@ -1,0 +1,24 @@
+{
+ "id": "1671",
+ "kind": "mcp",
+ "name": "pinner-mcp-stdio-server",
+ "fingerprint_md5": "fa1dbf19d163f0c2343909ef9397b0a7",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Pinner MCP📍\r\n\r\n一种模型上下文协议（MCP）服务器，可以帮助将第三方依赖关系固定到不可变摘要中。\r\n支持的依赖类型包括：\r\n\r\n- Docker基础镜像\r\n- GitHub操作\r\n\r\n\r\n## 📦 用法\r\n\r\n以容器形式运行 `stdio` 运输。\r\n\r\n```bash\r\ndocker run -it --rm ghcr.io/safedep/pinner-mcp:latest\r\n```\r\n\r\n### 💻 VS代码\r\n\r\n将以下内容添加到您的 `.vscode/mcp.json` 您工作区中的文件。您必须安装并启用GitHub Copilot扩展。\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"pinner-mcp\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"--rm\", \"-i\", \"ghcr.io/safedep/pinner-mcp:latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n使用GitHub Copilot Chat，提示如下：\r\n\r\n```\r\nPin GitHub Actions to their commit hash\r\n```\r\n\r\n```\r\nPin container base images to digests\r\n```\r\n\r\n要更新固定版本，可以使用如下提示：\r\n\r\n```\r\nUpdate pinned versions of container base images\r\n```\r\n\r\n### 💻 光标\r\n\r\n将以下内容添加到您的 `.cursor/mcp.json` 文件。你必须 _启用_\r\n设置中的MCP服务器。了解更多 [这里](https://docs.cursor.com/context/model-context-protocol#what-is-mcp).\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pinner-mcp-stdio-server\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"--rm\", \"-i\", \"ghcr.io/safedep/pinner-mcp:latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n使用如下的Composer提示符来固定特定的提交哈希。\r\n\r\n```\r\nPin GitHub Actions to their commit hash\r\n```\r\n\r\n```\r\nPin container base images to digests\r\n```\r\n\r\n要更新固定版本，可以使用如下提示。\r\n\r\n```\r\nUpdate pinned versions of container base images\r\n```\r\n\r\n### 🔄 工具更新\r\n\r\nMCP服务器的更新会自动推送到 `latest` 附加\r\n[GitHub容器注册表](https://github.com/safedep/pinner-mcp/pkgs/container/pinner-mcp).你\r\n必须手动将本地容器映像更新到最新版本。\r\n\r\n```bash\r\ndocker pull ghcr.io/safedep/pinner-mcp:latest\r\n```\r\n\r\n## 🔧 发展\r\n\r\n### 在当地建设\r\n\r\n对于此项目的本地开发，请在本地构建容器映像：\r\n\r\n```bash\r\ndocker build -t pinner-mcp:local .\r\n```\r\n\r\n这 `.vscode/mcp.json` 和 `.cursor/mcp.json` 此存储库中的文件配置为使用本地映像(`pinner-mcp:local`)用于开发和测试未发布的更改。\r\n\r\n在本地构建后，您可以按照上面的用法部分所述，将VS Code或Cursor与GitHub Copilot一起使用。\r\n\r\n## 📚 参考文献\r\n\r\n- 最初是为了保护 [兽医](https://github.com/safedep/vet) 来自恶意GitHub操作\r\n- [mcp走](https://github.com/mark3labs/mcp-go) 是构建MCP服务器的优秀库\r\n- 由以下人员建造和维护 [SafeDep工程](https://safedep.io)\r\n",
+ "config": {
+  "pinner-mcp-stdio-server": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "ghcr.io/safedep/pinner-mcp:latest"
+   ],
+   "env": {}
+  }
+ }
+}

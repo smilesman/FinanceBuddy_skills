@@ -1,0 +1,12 @@
+{
+ "id": "feishu-api-docs",
+ "kind": "skill",
+ "name": "feishu-api-docs",
+ "fingerprint_md5": "0ad8cebcd9dab1c28a376e501b9c5d75",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# 飞书 API 文档 Skill\r\n\r\n帮助 AI 智能体查找飞书开放平台的正确 API 结构。\r\n\r\n## 用法\r\n```bash\r\nnode skills/feishu-api-docs/index.js search \"create document\"\r\nnode skills/feishu-api-docs/index.js get \"im/v1/messages\"\r\n```",
+ "config": {}
+}

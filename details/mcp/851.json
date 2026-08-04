@@ -1,0 +1,22 @@
+{
+ "id": "851",
+ "kind": "mcp",
+ "name": "sefaria",
+ "fingerprint_md5": "51afc5a5a6eadedd0d6d4fb2e3e747fe",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Sefaria MCP服务器\r\n\r\n\r\nMCP（模型上下文协议）服务器，提供对以下内容的访问 [塞法里亚](https://www.sefaria.org)的犹太文献库-《托拉》、《塔木德》、《密西拿》、《米德拉什》和数千篇评论。\r\n\r\n使用此服务器，Claude、Cursor、Windsurf或任何兼容MCP的AI助手都可以搜索、阅读和探索犹太文本。\r\n\r\n## 特性\r\n\r\n- 📖 **阅读任何文本** -《托拉》、《塔木德》、《米示拿》、《米德拉士》、《哈拉差》、《卡巴拉》\r\n- 🔍 **全文搜索** -搜索所有英语或希伯来语文本\r\n- 📚 **获取评论** -拉希、兰班、伊本·以斯拉和数百人\r\n- 📅 **日常学习** -Daf Yomi、Parsha、每日Rambam等\r\n- 🔗 **交叉引用** -查找文本之间的联系\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g sefaria-mcp-server\r\n```\r\n\r\n或者直接使用npx运行：\r\n\r\n```bash\r\nnpx sefaria-mcp-server\r\n```\r\n\r\n## 配置\r\n\r\n### 克劳德桌面版\r\n\r\n添加 `~/Library/Application Support/Claude/claude_desktop_config.json` （macOS）或 `%AppData%\\Claude\\claude_desktop_config.json` （Windows）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sefaria\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"sefaria-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n添加 `.cursor/mcp.json` 在您的项目中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sefaria\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"sefaria-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### get_text\r\n\r\n通过引用希伯来语和英语获取文本。\r\n\r\n```\r\nReference formats:\r\n- Torah: \"Genesis 1:1\", \"Exodus 20:1-10\"\r\n- Talmud: \"Berakhot 2a\", \"Shabbat 31a\"\r\n- Mishnah: \"Mishnah Avot 1:1\"\r\n- Midrash: \"Genesis Rabbah 1:1\"\r\n- Commentary: \"Rashi on Genesis 1:1\"\r\n```\r\n\r\n### 搜索\r\n\r\n在所有文本中进行全文搜索。\r\n\r\n```\r\nExamples:\r\n- \"love your neighbor\"\r\n- \"tikkun olam\"\r\n- \"ואהבת לרעך כמוך\"\r\n```\r\n\r\n### get_links\r\n\r\n获取一首诗的评论和交叉引用。\r\n\r\n### get_parsha\r\n\r\n获取本周的托拉部分。\r\n\r\n### get_calendars\r\n\r\n获取今天的学习时间表（Daf Yomi、Parsha、每日Rambam等）。\r\n\r\n### get_book_info\r\n\r\n获取一本书的元数据（结构、类别）。\r\n\r\n### 获取相关信息\r\n\r\n获取相关主题和社区源代码表。\r\n\r\n## 示例\r\n\r\n问克劳德：\r\n\r\n> “创世记1:1说了什么？给我看看希伯来语和注释。”\r\n\r\n> “搜索关于爱邻居的文字”\r\n\r\n> “本周的牧师是什么？”\r\n\r\n> “今天的Daf Yomi是什么？”\r\n\r\n> “查找利未记19:18的所有注释”\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/abeperl/sefaria-mcp-server\r\ncd sefaria-mcp-server\r\nnpm install\r\nnpm run build\r\nnpm start\r\n```\r\n\r\n## 学分\r\n\r\n- 由...驱动 [塞法里亚](https://www.sefaria.org) -免费、开源的犹太文献库\r\n- 与 [模型上下文协议](https://modelcontextprotocol.io) 软件开发工具包\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "sefaria": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "sefaria-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

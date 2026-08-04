@@ -1,0 +1,28 @@
+{
+ "id": "1166",
+ "kind": "mcp",
+ "name": "mysql-7",
+ "fingerprint_md5": "3b578266520d943eb298ae507e2ae209",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# MySQL MCP服务器\r\n\r\n与MySQL数据库集成的MCP服务器实现，为LLM提供安全的数据库访问功能。\r\n\r\n## 特性\r\n\r\n- **读取操作**\r\n  - 执行只读SELECT查询\r\n  - 列出所有数据库表\r\n  - 显示表格结构\r\n  - 查看架构信息\r\n- **写入操作**\r\n  - 使用事务支持执行INSERT/UPDATE/DELETE\r\n  - 数据安全的参数化查询\r\n  - 返回受影响的行并插入ID\r\n- **安全**\r\n  - SELECT查询的只读事务模式\r\n  - 查询长度和结果大小限制\r\n  - 性能监控和记录\r\n  - 自动交易处理\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g @kevinwatt/mysql-mcp\r\n```\r\n\r\n## 使用方法 [潜水桌面](https://github.com/OpenAgentPlatform/Dive)\r\n\r\n1. 点击Dive桌面中的“+添加MCP服务器”\r\n1. 复制并粘贴此配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mysql\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@kevinwatt/mysql-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"MYSQL_HOST\": \"127.0.0.1\",\r\n        \"MYSQL_PORT\": \"3306\",\r\n        \"MYSQL_USER\": \"root\",\r\n        \"MYSQL_PASS\": \"\",\r\n        \"MYSQL_DB\": \"your_database\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. 点击“保存”安装MCP服务器\r\n\r\n## 工具文档\r\n\r\n- **mysql_query**\r\n\r\n  - 执行只读SELECT查询\r\n  - 输入：\r\n    - `sql` （string）：要执行的SQL SELECT查询\r\n  - 限制：\r\n    - 最大查询长度：4096个字符\r\n    - 最大结果行数：1000\r\n    - 查询超时：30秒\r\n\r\n- **mysqlexecute**\r\n\r\n  - 执行数据修改操作\r\n  - 输入：\r\n    - `sql` （字符串）：SQL语句（插入/更新/删除）\r\n    - `params` （数组，可选）：SQL语句的参数\r\n  - 特征：\r\n    - 返回受影响的行数\r\n    - 返回上次插入的ID\r\n    - 自动交易处理\r\n\r\n- **list_tables**\r\n\r\n  - 列出当前数据库中的所有表\r\n  - 无需输入\r\n\r\n- **describe_table**\r\n\r\n  - 显示表格结构\r\n  - 输入：\r\n    - `table` （string）：要描述的表名\r\n\r\n## 使用示例\r\n\r\n要求你的法学硕士：\r\n\r\n```\r\n\"Show me all tables in the database\"\r\n\"Describe the structure of users table\"\r\n\"Select all active users from the database\"\r\n\"Insert a new record into orders table\"\r\n```\r\n\r\n## 手动启动\r\n\r\n如果需要，请手动启动服务器：\r\n\r\n```bash\r\nnpx @kevinwatt/mysql-mcp\r\n```\r\n\r\n## 需求\r\n\r\n- Node.js 18+\r\n- MySQL服务器\r\n- MCP兼容LLM服务\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 作者\r\n\r\n严德伟\r\n\r\n## 关键词\r\n\r\n- 主控程序\r\n- MySQL\r\n- 数据库\r\n- 潜水\r\n- 大语言模型\r\n- 人工智能\r\n",
+ "config": {
+  "mysql": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@kevinwatt/mysql-mcp"
+   ],
+   "env": {
+    "MYSQL_HOST": "127.0.0.1",
+    "MYSQL_PORT": "3306",
+    "MYSQL_USER": "root",
+    "MYSQL_PASS": "",
+    "MYSQL_DB": "your_database"
+   }
+  }
+ }
+}

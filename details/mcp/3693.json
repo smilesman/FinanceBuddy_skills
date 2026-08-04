@@ -1,0 +1,22 @@
+{
+ "id": "3693",
+ "kind": "mcp",
+ "name": "whois",
+ "fingerprint_md5": "7fc3cfcf77ac97b2a9054fec2ec85c2b",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 谁是MCP\r\n\r\n[模型上下文协议](https://modelcontextprotocol.io) 用于whois查找的服务器。\r\n\r\n## 概述\r\n\r\n此MCP服务器允许Claude Desktop、Cursor、Windsurf等AI代理，。等来执行WHOIS查找和检索域详细信息。\r\n\r\n**目的**\r\n您可以直接要求AI检查域名是否可用、谁拥有、何时注册以及其他重要细节。无需进入浏览器进行搜索。\r\n\r\n**什么是WHOIS查询？**\r\nWHOIS查找是查询WHOIS数据库以检索有关域名、IP地址或自治系统的注册详细信息的过程。它可以帮助用户找出谁拥有一个域名、何时注册、何时到期以及其他重要细节。\r\n\r\n**WHOIS查询可以提供哪些信息？**\r\n\r\n执行WHOIS查找时，您可以检索以下详细信息：\r\n\r\n- 域名–查询的特定域名\r\n- 注册商名称——管理域名注册的公司（例如GoDaddy、Namecheap）\r\n- 注册人详细信息-域名所有者的姓名、组织和联系方式（除非受WHOIS隐私保护）\r\n- 注册和到期日期-域名注册的时间和到期时间\r\n- 名称服务器–域正在使用的DNS服务器\r\n- 域状态-活动、过期、锁定或待删除\r\n- 联系信息-行政、技术和账单联系人（如果没有隐藏）\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n| --------------------- | ------------------------------------------ |\r\n| `whois_domain` |查找有关域的whois信息|\r\n| `whois_tld` | Looksup whois 关于顶级域名 (TLD) 的信息 |\r\n| `whois_ip` |查找有关IP的whois信息|\r\n| `whois_as` |查找有关自治系统编号（ASN）的信息|\r\n\r\n## 与光标一起使用\r\n\r\n**安装-全球**\r\n\r\n使用npx运行MCP服务器：\r\n\r\n```bash\r\nnpx -y @mcp-server/whois-mcp@latest\r\n```\r\n\r\n在Cursor IDE中\r\n\r\n1. 首选 `Cursor Settings` > `MCP`\r\n1. 点击 `+ Add New MCP Server`\r\n1. 填写表格：\r\n   - 姓名： `Whois Lookup` （或您喜欢的任何名称）\r\n   - 类型： `command`\r\n   - 命令： `npx -y @mcp-server/whois-mcp@latest`\r\n\r\n**安装-项目特定**\r\n\r\n添加一个 `.cursor/mcp.json` 文件到您的项目：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"whois\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@mcp-server/whois-mcp@latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**用法**\r\n\r\n配置后，whois工具将自动可用于Cursor AI Agent。你可以：\r\n\r\n1. 该工具将列在 `Available Tools` 在MCP设置中\r\n1. 代理将在相关时自动使用它\r\n1. 您可以明确要求代理发送通知\r\n\r\n## 使用Roo代码\r\n\r\n通过单击Roo Code设置中的“编辑MCP设置”或使用VS Code命令面板中的“Roo Code：打开MCP配置”命令来访问MCP设置。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"whois\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@mcp-server/whois-mcp@latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. Roo Code的人工智能代理将可以使用whois功能\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\npnpm install\r\n\r\n# Build\r\npnpm build\r\n\r\n```\r\n\r\n## 调试服务器\r\n\r\n要调试服务器，可以使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector).\r\n\r\n首先构建服务器\r\n\r\n```\r\npnpm build\r\n```\r\n\r\n在终端中运行以下命令：\r\n\r\n```\r\n# Start MCP Inspector and server with all tools\r\nnpx @modelcontextprotocol/inspector node dist/index.js\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "whois": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@mcp-server/whois-mcp@latest"
+   ],
+   "env": {}
+  }
+ }
+}

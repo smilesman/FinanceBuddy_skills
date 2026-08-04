@@ -1,0 +1,18 @@
+{
+ "id": "977",
+ "kind": "mcp",
+ "name": "arca_memory",
+ "fingerprint_md5": "5a9ded9e166ac2f9fe8d1512eefc8254",
+ "download_count": 0,
+ "category": "缓存",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP 方舟\r\n\r\n一种模型上下文协议（MCP）服务器，通过向量嵌入提供语义记忆存储和检索。使用FastAPI+FastMCP构建，使用LanceDB进行矢量存储，使用Google Gemini进行嵌入生成。\r\n\r\n## 特性\r\n\r\n- **语义搜索** --使用由向量相似性搜索支持的自然语言查询来存储和检索记忆\r\n- **双重访问** -用于AI代理的MCP工具+用于编程集成的REST API\r\n- **知识图谱** --用定向、标记的边连接记忆并遍历它们\r\n- **多租户隔离** --命名空间范围的操作通过 `X-Namespace` HTTP标头\r\n- **Bucket组织** --将内存分组到逻辑桶中进行结构化存储\r\n- **JSON画布导出** --将水桶的记忆和联系渲染为 [JSON画布](https://jsoncanvas.org/) 文件\r\n- **文件摄入** *（可选附加组件）* --通过 `arca-ingest` 包装(`uv sync --extra ingest`)，暴露为 `POST /v1/ingest` 和那个 `memory/ingest` 工具\r\n- **嵌入缓存** -用于生成嵌入的Redis-supported缓存，以最大限度地减少API调用\r\n- **承载令牌认证** --用于安全访问的恒定时间令牌验证\r\n\r\n## 先决条件\r\n\r\n- Python 3.14+\r\n- [紫外线](https://docs.astral.sh/uv/) 包管理器\r\n- 瑞迪斯\r\n- Google API密钥（用于Gemini嵌入）\r\n\r\n## 快速开始\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/m0nochr0me/arca-mcp.git\r\ncd arca-mcp\r\n\r\n# Install dependencies\r\nuv sync --locked\r\n\r\n# Configure environment — create a .env with at least the required secrets\r\ncat > .env <<'EOF'\r\nARCA_APP_AUTH_KEY=your-secret-bearer-token\r\nARCA_GOOGLE_API_KEY=your-google-api-key\r\nEOF\r\n\r\n# Run the server\r\npython -m app\r\n```\r\n\r\n服务器启动于 `http://0.0.0.0:4201` 默认情况下，MCP接口位于 `/app/mcp` 和上的REST API `/v1`。参见 [配置](doc/configuration.md) 对于所有可用设置。\r\n\r\n## 码头工人\r\n\r\n```bash\r\n# Build (core, no add-ons)\r\ndocker build -t arca-mcp .\r\n\r\n# Build with the document-ingestion add-on (txt/md only)\r\ndocker build --build-arg ARCA_INSTALL_EXTRAS=ingest -t arca-mcp .\r\n\r\n# Build with ingestion + every format loader (PDF/DOCX/HTML/EPUB/FB2)\r\ndocker build --build-arg ARCA_INSTALL_EXTRAS=ingest-all -t arca-mcp .\r\n\r\n# Run\r\ndocker run -p 4201:4201 \\\r\n  -e ARCA_APP_AUTH_KEY=your-secret-key \\\r\n  -e ARCA_GOOGLE_API_KEY=your-google-api-key \\\r\n  -e ARCA_REDIS_HOST=host.docker.internal \\\r\n  arca-mcp\r\n```\r\n\r\nDocker镜像使用Python 3.14 slim和UV进行依赖管理。在以下位置安装卷 `ARCA_VECTOR_STORE_PATH` （默认值 `./lancedb`)在容器重启期间持久化数据。\r\n\r\n`ARCA_INSTALL_EXTRAS` 选择一个可选项 [额外的](pyproject.toml) 在构建时安装： `ingest` 对于基本附加组件（txt/md），或 `ingest-all` 对于插件和所有格式解析器。构建arg需要一个额外的参数 **名字** --不是a `pkg[extra]` 类似说明符 `ingest[all]`.\r\n\r\n## MCP客户端配置\r\n\r\n示例 `.mcp.json` 用于连接MCP客户端（例如Claude Code）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"arca_memory\": {\r\n      \"type\": \"http\",\r\n      \"url\": \"http://localhost:4201/app/mcp\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer <your-auth-key>\",\r\n        \"X-namespace\": \"my_namespace\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n`` 必须匹配 `ARCA_APP_AUTH_KEY`The `X-namespace` header将所有操作范围限定在一个租户（默认为 `\"default\"` 如果省略）。\r\n\r\n## 文档\r\n\r\n深度参考材料存在于 [`doc/`](doc/):\r\n\r\n- **[配置](doc/configuration.md)** --全部 `ARCA_` 环境变量及其默认值\r\n- **[MCP工具](doc/mcp-tools.md)** --the `memory/*` 工具参考（添加、获取、图遍历等）\r\n- **[REST API](doc/rest-api.md)** — `/v1/*` 端点引用 `curl` 例子\r\n- **[建筑](doc/architecture.md)** --请求流、模块布局、关键模式、技术栈\r\n\r\n## 许可证\r\n\r\n看 [许可证](LICENSE).\r\n",
+ "config": {
+  "arca_memory": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:4201/app/mcp"
+  }
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "id": "1889",
+ "kind": "mcp",
+ "name": "crypto_mcp",
+ "fingerprint_md5": "14c16566ea91dcf1c9a72e86ef0942ff",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# Crypto MCP\r\n\r\n\r\n这是一个基于Model Context Protocol (MCP)的加密货币价格查询服务器。它提供了各种工具来获取虚拟币价格、市场趋势、详细信息和K线数据。\r\n\r\n## 目录\r\n\r\n* [安装](#安装)\r\n* [使用方法](#使用方法)\r\n* [工具](#工具)\r\n* [资源](#资源)\r\n* [许可证](#许可证)\r\n\r\n## 安装\r\n\r\n### 通过pip安装\r\n\r\n```bash\r\npip install crypto_mcp\r\n```\r\n\r\n### 安装 via Smithery [推荐]\r\n\r\n要安装 Crypto MCP for Claude Desktop 自动通过 [Smithery](https://clis.smithery.ai/server/@telegramtool/crypto_mcp), 执行以下命令:\r\n\r\n```bash\r\nnpx -y @smithery/cli install @telegramtool/crypto_mcp --client claude\r\n```\r\n[内含多种安装方式](https://clis.smithery.ai/server/@telegramtool/crypto_mcp)\r\n\r\n\r\n### 手动安装\r\n\r\n克隆仓库并安装依赖：\r\n\r\n```bash\r\ngit clone https://github.com/telegramtool/crypto_mcp.git\r\ncd crypto_mcp\r\npip install -r requirements.txt\r\n```\r\n\r\n## 使用方法\r\n\r\n\r\n### 在Cursor中配置\r\n\r\n将以下配置添加到`~/.cursor/mcp.json`文件中：\r\n\r\nPIP安装:\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"crypto_mcp\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"run\",\r\n                \"-m\",\r\n                \"crypto_mcp\"]\r\n        }\r\n    }\r\n}\r\n```\r\nSmithery安装:\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"crypto_mcp\": {\r\n      \"command\": \"cmd\",\r\n      \"args\": [\r\n        \"/c\",\r\n        \"npx\",\r\n        \"-y\",\r\n        \"@smithery/cli@latest\",\r\n        \"run\",\r\n        \"@telegramtool/crypto_mcp\",\r\n        \"--config\",\r\n        \"{}\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### CoinGecko和Bitget API工具\r\n\r\n* `get_coin_price` - 获取指定虚拟币的当前价格\r\n* `get_trending_coins` - 获取当前热门虚拟币列表\r\n* `get_coin_detail` - 获取虚拟币的详细信息\r\n* `get_global_market_data` - 获取全球加密货币市场数据\r\n* `search_coins` - 搜索虚拟币\r\n* `get_common_coins_prices` - 获取常见虚拟币的价格信息\r\n* `get_k_line_data` - 获取虚拟币的K线数据\r\n\r\n### Coinglass API工具\r\n\r\n* `coinglass_get_coin_info` - 获取虚拟币的合约市场信息\r\n* `coinglass_get_kline_data` - 获取虚拟币合约的K线数据\r\n* `coinglass_get_position_info` - 获取虚拟币合约的持仓信息\r\n* `coinglass_get_trade_volume` - 获取虚拟币合约的成交量信息\r\n* `coinglass_get_trade_amount` - 获取虚拟币的成交额信息\r\n* `coinglass_get_exchange_position` - 获取虚拟币在各交易所的持仓分布\r\n\r\n## 资源\r\n\r\n* [CoinGecko API](https://www.coingecko.com/en/api)\r\n* [Bitget API](https://bitgetlimited.github.io/apidoc/en/spot)\r\n* [Coinglass](https://www.coinglass.com/)\r\n\r\n## 许可证\r\n\r\n此项目采用MIT许可证。\r\n",
+ "config": {
+  "crypto_mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "-m",
+    "crypto_mcp"
+   ],
+   "env": {}
+  }
+ }
+}

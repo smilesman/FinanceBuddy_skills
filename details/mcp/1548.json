@@ -1,0 +1,24 @@
+{
+ "id": "1548",
+ "kind": "mcp",
+ "name": "markitdown",
+ "fingerprint_md5": "0286d91fab5c6ceca21f9a523aa3fc8e",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MarkItDown MCP\r\n\r\n[](https://pypi.org/project/markitdown-mcp/)\r\n\r\n[](https://github.com/microsoft/autogen)\r\n\r\n这 `markitdown-mcp` 该包提供了一个轻量级的STDIO、流式HTTP和SSE MCP服务器，用于调用MarkItDown。\r\n\r\n它公开了一个工具： `convert_to_markdown(uri)`，其中uri可以是任何 `http:`, `https:`, `file:`，或 `data:` URI。\r\n\r\n## 安装\r\n\r\n要安装该软件包，请使用pip：\r\n\r\n```bash\r\npip install markitdown-mcp\r\n```\r\n\r\n## 用法\r\n\r\n要运行MCP服务器，请使用STDIO（默认）使用以下命令：\r\n\r\n```bash\r\nmarkitdown-mcp\r\n```\r\n\r\n要运行MCP服务器，请使用Streamable HTTP和SSE使用以下命令：\r\n\r\n```bash\r\nmarkitdown-mcp --http --host 127.0.0.1 --port 3001\r\n```\r\n\r\n## 在Docker中运行\r\n\r\n运行 `markitdown-mcp` 在Docker中，使用提供的Dockerfile构建Docker镜像：\r\n\r\n```bash\r\ndocker build -t markitdown-mcp:latest .\r\n```\r\n\r\n并使用以下命令运行它：\r\n\r\n```bash\r\ndocker run -it --rm markitdown-mcp:latest\r\n```\r\n\r\n这对于远程URI就足够了。要访问本地文件，您需要将本地目录挂载到容器中。例如，如果您想访问中的文件 `/home/user/data`，您可以运行：\r\n\r\n```bash\r\ndocker run -it --rm -v /home/user/data:/workdir markitdown-mcp:latest\r\n```\r\n\r\n装载后，数据下的所有文件都可以在以下位置访问 `/workdir` 在容器中。例如，如果您有一个文件 `example.txt` 在……里面 `/home/user/data`，它将在集装箱内 `/workdir/example.txt`.\r\n\r\n## 从克劳德桌面访问\r\n\r\n建议在运行Claude Desktop的MCP服务器时使用Docker镜像。\r\n\r\n跟随 [这些说明](https://modelcontextprotocol.io/quickstart/user#for-claude-desktop-users) 访问克劳德的 `claude_desktop_config.json` 文件。\r\n\r\n编辑它以包含以下JSON条目：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"markitdown\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"markitdown-mcp:latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果你想挂载一个目录，请相应地调整它：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"markitdown\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n\t\"run\",\r\n\t\"--rm\",\r\n\t\"-i\",\r\n\t\"-v\",\r\n\t\"/home/user/data:/workdir\",\r\n\t\"markitdown-mcp:latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 调试\r\n\r\n要调试MCP服务器，您可以使用 `mcpinspector` 工具。\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector\r\n```\r\n\r\n然后，您可以通过指定的主机和端口连接到检查器（例如。， `http://localhost:5173/`).\r\n\r\n如果使用STDIO：\r\n\r\n- 选择 `STDIO` 作为运输类型，\r\n- 输入 `markitdown-mcp` 作为命令，以及\r\n- 点击 `Connect`\r\n\r\n如果使用 Streamable HTTP:\r\n\r\n- 选择 `Streamable HTTP` 作为运输类型，\r\n- 输入 `http://127.0.0.1:3001/mcp` 作为URL，以及\r\n- 点击 `Connect`\r\n\r\n如果使用SSE：\r\n\r\n- 选择 `SSE` 作为运输类型，\r\n- 输入 `http://127.0.0.1:3001/sse` 作为URL，以及\r\n- 点击 `Connect`\r\n\r\n最后：\r\n\r\n- 单击 `Tools` 选项卡，\r\n- 点击 `List Tools`,\r\n- 点击 `convert_to_markdown`，以及\r\n- 在任何有效的URI上运行该工具。\r\n\r\n## 安全考虑\r\n\r\n服务器不支持身份验证，并以运行它的用户的权限运行。因此，在SSE或Streamable HTTP模式下运行时，建议运行绑定到的服务器 `localhost` （默认）。\r\n\r\n## 商标\r\n\r\n此项目可能包含项目、产品或服务的商标或徽标。授权使用Microsoft\r\n商标或徽标必须遵守\r\n[微软商标和品牌指南](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).\r\n在本项目的修改版本中使用Microsoft商标或徽标不得造成混淆或暗示Microsoft赞助。\r\n任何使用第三方商标或徽标的行为均受这些第三方政策的约束。\r\n",
+ "config": {
+  "markitdown": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "markitdown-mcp:latest"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "182",
+ "kind": "mcp",
+ "name": "dice-3",
+ "fingerprint_md5": "a52d21493c8d014890e41c59bda4ba98",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 服务器掷骰子\r\n\r\n一个用于模拟掷骰子的模型上下文协议（MCP）服务器，支持标准骰子记法和Fate/Fudge骰子。\r\n\r\n## 功能\r\n\r\n- **骰子记号解析**解析标准骰子记法字符串，如 `2d6`--- `1d20+5`，或者 `4dF`\r\n- **多种骰子类型**支持标准骰子和命运/福吉骰子\r\n- **随机滚动**生成真正随机的骰子掷出结果，且概率分布准确\r\n- **验证**使用Zod模式进行完整的输入和输出验证\r\n- **MCP 集成**无缝集成任何与MCP兼容的客户端，如Claude Desktop\r\n\r\n## 用法\r\n\r\n这个MCP服务器提供了两个主要工具：\r\n\r\n### 解析骰子表示法\r\n\r\n解析骰子表示法字符串并返回结构化表示。\r\n\r\n```\r\nparse_dice_roll_notation\r\n  input: { notation: \"3d6+4\" }\r\n  output: { type: \"standard\", count: 3, sides: 6, modifier: 4 }\r\n```\r\n\r\n### 2. 掷骰子\r\n\r\n根据骰子掷出配置掷骰子并返回结果。\r\n\r\n```\r\ndice_roll\r\n  input: { type: \"standard\", count: 3, sides: 6, modifier: 4 }\r\n  output: { rolls: [5, 2, 6], total: 17, original: \"3d6+4\" }\r\n```\r\n\r\n## 安装与设置\r\n\r\n### 与Claude Desktop一起使用\r\n\r\n将此服务器添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dice\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"server-dice-roll\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用npm/npx\r\n\r\n```bash\r\n# Install globally\r\nnpm install -g server-dice-roll\r\n\r\n# Run the server\r\nmcp-server-dice-roll\r\n\r\n# Or run directly with npx\r\nnpx server-dice-roll\r\n```\r\n\r\n## 理解骰子标记\r\n\r\n骰子记号是桌面角色扮演游戏中用于表示不同骰子掷法的一种系统。\r\n\r\n### 标准符号\r\n\r\n标准格式是 `NdS+M` 其中：\r\n\r\n- `N` 是要掷的骰子数量（可选，默认为1）\r\n- `d` 表示掷骰子\r\n- `S` 是每颗骰子的边数\r\n- `+M` 是用于添加到总数中的修饰符（可选）\r\n\r\n示例：\r\n\r\n- `d6` 掷一个六面骰子\r\n- `2d10` 投掷两个10面骰子并求和\r\n- `3d8+5` 掷三颗8面骰子，将结果相加，再加上5\r\n\r\n### 命运/骰子判定\r\n\r\n命运骰子（也称为Fudge骰子）是一种特殊的六面骰子，其面值为-1、0和+1（每种值各有两个面）。\r\n\r\n根据上面的信息，执行如下指令： `NdF` 其中：\r\n\r\n- `N` 是要掷的骰子数量\r\n- `dF` 表示命运骰子\r\n\r\n示例：\r\n\r\n- `4dF` 掷四颗命运骰子（结果值在-4到+4之间）\r\n\r\n## 许可证\r\n\r\n这个项目采用MIT许可协议授权 - 详见 [根据上面的信息，执行如下指令：](LICENSE.md) 详情请见文件。\r\n\r\n## 作者\r\n\r\n由卢克·贝利斯创作 \r\n\r\n## 发布流程\r\n\r\n该项目采用单一的集成工作流来管理版本、发布和发布版本：\r\n\r\n1. **版本升级标签**每个对主分支的拉取请求（PR）都应包含恰好一个版本提升标签：\r\n\r\n   - `patch` - 用于向后兼容的错误修复\r\n   - `minor` 为了向后兼容的新功能\r\n   - `major` 对于破坏性变更\r\n   - 如果未指定标签， `patch` 默认应用\r\n\r\n1. **顺序工作流**集成的发布和发布工作流由三个顺序作业组成：\r\n\r\n   - **任务1：版本升级** - 更新 package.json 中的版本号并创建 git 标签\r\n   - **任务2：发布创建** 创建一个包含更新日志的GitHub发布版本\r\n   - **任务3：发布** 将包发布到npm\r\n\r\n1. **自动化触发器**在以下情况下，工作流会自动运行：\r\n\r\n   - 当一个PR被合并到main分支时（使用PR的版本标签）\r\n   - 当更改直接推送到主分支（使用补丁版本）时\r\n   - 当通过GitHub Actions手动触发时\r\n   - 当手动推送标签时（跳过版本升级，仅创建发布并发布）\r\n\r\n所有这些步骤都在一个协调的工作流程中运行，具有适当的依赖关系，以确保可靠性。\r\n\r\n### 公关要求\r\n\r\n所有PR应包含且仅包含一个版本升级标签（`patch`根据上面的信息，执行如下指令： `minor`，或 `major`---。 如果未指定标签，系统将自动添加 `patch` 将“label”设为默认。包含多个版本标签的PR仍将被阻止合并。\r\n\r\n### 手动版本控制\r\n\r\n若要手动触发版本升级而不创建拉取请求：\r\n\r\n1. 前往“操作”>“版本升级”工作流\r\n1. 点击“运行工作流”\r\n1. 选择分支和版本类型（补丁、次要、主要）\r\n1. 点击“运行工作流”\r\n\r\n其余的流程（创建发布版本和发布）将自动进行。\r\n",
+ "config": {
+  "dice": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "server-dice-roll"
+   ],
+   "env": {}
+  }
+ }
+}

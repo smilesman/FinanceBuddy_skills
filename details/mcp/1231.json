@@ -1,0 +1,18 @@
+{
+ "id": "1231",
+ "kind": "mcp",
+ "name": "postgres-31",
+ "fingerprint_md5": "edbc93bb375ad99d6caf1d575e471b5a",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# Postgres MCP\r\n\r\nPostgres MCP是PostgreSQL数据库的模型上下文协议（MCP）实现。它为AI代理提供了一个标准化的接口，通过一组定义良好的命令与PostgreSQL数据库进行交互。\r\n\r\n## 特性\r\n\r\n- **连接管理**\r\n\r\n  - 注册和注销数据库连接\r\n  - 支持多个并发数据库连接\r\n  - 连接池实现高效的资源管理\r\n\r\n- **数据库操作**\r\n\r\n  - 执行SELECT查询\r\n  - 插入新记录\r\n  - 更新现有记录\r\n  - 删除记录\r\n  - 创建和删除表格\r\n  - 创建和删除索引\r\n  - 描述表格结构\r\n  - 列出架构中的表\r\n\r\n- **SQL验证**\r\n\r\n  - 用于验证语句的内置SQL解析器\r\n  - 支持PostgreSQL特定语法\r\n  - 安全检查，以确保只执行允许的操作\r\n\r\n## 安装\r\n\r\n```bash\r\ncargo install postgres-mcp\r\n```\r\n\r\n## 用法\r\n\r\n### 配置\r\n\r\n将以下内容添加到MCP配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"postgres-mcp\",\r\n      \"args\": [\"stdio\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或在SSE模式下运行：\r\n\r\n首先，启动 `postgres-mcp` SSE模式下的服务器：\r\n\r\n```bash\r\npostgres-mcp sse\r\n```\r\n\r\n然后，配置MCP配置文件以使用SSE模式：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"url\": \"http://localhost:3000/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n一旦你开始 `postgres-mcp` 服务器，您应该看到MCP配置的状态为绿色，如下（光标）：\r\n\r\n\r\n然后你可以通过代理与它交互，就像这样（光标）：\r\n\r\n\r\n### 命令\r\n\r\n#### 注册数据库连接\r\n\r\n```bash\r\npg_mcp register \"postgres://postgres:postgres@localhost:5432/postgres\"\r\n# Returns a connection ID (UUID)\r\n```\r\n\r\n#### 注销连接\r\n\r\n```bash\r\npg_mcp unregister <connection_id>\r\n```\r\n\r\n#### 执行SELECT查询\r\n\r\n```bash\r\npg_mcp query <connection_id> \"SELECT * FROM users\"\r\n```\r\n\r\n#### 插入数据\r\n\r\n```bash\r\npg_mcp insert <connection_id> \"INSERT INTO users (name, email) VALUES ('John Doe', 'john.doe@example.com')\"\r\n```\r\n\r\n#### 更新数据\r\n\r\n```bash\r\npg_mcp update <connection_id> \"UPDATE users SET name = 'Jane Doe' WHERE id = 1\"\r\n```\r\n\r\n#### 删除数据\r\n\r\n```bash\r\npg_mcp delete <connection_id> \"users\" \"1\"\r\n```\r\n\r\n#### 创建表\r\n\r\n```bash\r\npg_mcp create <connection_id> \"CREATE TABLE users (id SERIAL PRIMARY KEY, name VARCHAR(255), email VARCHAR(255))\"\r\n```\r\n\r\n#### 删除表\r\n\r\n```bash\r\npg_mcp drop <connection_id> \"users\"\r\n```\r\n\r\n#### 创建索引\r\n\r\n```bash\r\npg_mcp create_index <connection_id> \"CREATE INDEX idx_users_name ON users (name)\"\r\n```\r\n\r\n#### 删除索引\r\n\r\n```bash\r\npg_mcp drop_index <connection_id> \"idx_users_name\"\r\n```\r\n\r\n#### 描述一张桌子\r\n\r\n```bash\r\npg_mcp describe <connection_id> \"users\"\r\n```\r\n\r\n## 依赖项\r\n\r\n- 锈1.70或更高版本\r\n- PostgreSQL 12或更高版本\r\n- 所需防锈板条箱：\r\n  - 总之：1.0\r\n  - 电弧交换：1.7\r\n  - sqlx:0.8（具有“运行时tokio”、“tls-rustls-aws-lc-rs”、“postgres”功能）\r\n  - rmcp:0.1（具有“服务器”、“传输sse服务器”和“传输io”功能）\r\n  - 架构：0.8\r\n  - sql解析器：0.55\r\n  - 东京：1.44\r\n\r\n## 发展\r\n\r\n要从源代码构建，请执行以下操作：\r\n\r\n```bash\r\ngit clone https://github.com/yourusername/postgres-mcp.git\r\ncd postgres-mcp\r\ncargo build --release\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证。看 [许可证.md](LICENSE.md) 了解详情。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请打开问题或提交拉取请求。\r\n",
+ "config": {
+  "postgres": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:3000/sse"
+  }
+ }
+}

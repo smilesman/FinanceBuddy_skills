@@ -1,0 +1,21 @@
+{
+ "id": "2529",
+ "kind": "mcp",
+ "name": "fastdomaincheck-2",
+ "fingerprint_md5": "685ec898cf7cfeb8778a8f2474b2a3b8",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# FastDomainCheck MCP服务器（Python）\r\n\r\n这是一个使用Python和模型上下文协议（MCP）实现的域可用性检查服务器。\r\n它提供MCP工具来检查单个或多个域名是否已注册。\r\n\r\n## 特性\r\n\r\n- 批量域注册状态检查\r\n- 使用WHOIS和DNS进行双重验证\r\n- 支持IDN（国际化域名）\r\n- 简洁的输出格式\r\n- 内置输入验证和错误处理\r\n\r\n## 工具文档\r\n\r\n### check_域\r\n\r\n检查多个域名的注册状态。\r\n\r\n#### 输入格式\r\n\r\n```json\r\n{\r\n  \"domains\": [\"example.com\", \"test.com\"]\r\n}\r\n```\r\n\r\n参数：\r\n\r\n- `domains`：包含要检查的域名的字符串数组\r\n  - 每个域的最大长度为255个字符\r\n  - 每个请求最多50个域\r\n  - 不允许使用空域名\r\n\r\n#### 输出格式\r\n\r\n```json\r\n{\r\n  \"results\": {\r\n    \"example.com\": {\r\n      \"registered\": true\r\n    },\r\n    \"test.com\": {\r\n      \"registered\": false\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n响应字段：\r\n\r\n- `results`：将域名作为键并将检查结果作为值的对象\r\n  - `registered`：布尔值\r\n    - `true`：域名已注册\r\n    - `false`：域可用\r\n\r\n#### 错误处理\r\n\r\n在以下情况下，该工具将返回错误：\r\n\r\n1. 空域列表\r\n1. 请求中有50多个域名\r\n1. 空域名\r\n1. 域名超过255个字符\r\n1. 结果序列化失败\r\n\r\n错误响应格式：\r\n\r\n```json\r\n{\r\n  \"error\": \"Error: domains list cannot be empty\"\r\n}\r\n```\r\n\r\n#### 使用示例\r\n\r\n检查多个域：\r\n\r\n> 请求\r\n\r\n```json\r\n{\r\n  \"domains\": [\"example.com\", \"test123456.com\"]\r\n}\r\n```\r\n\r\n> 响应\r\n\r\n```json\r\n{\r\n  \"results\": {\r\n    \"example.com\": {\r\n      \"registered\": true\r\n    },\r\n    \"test123456.com\": {\r\n      \"registered\": false\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## MCP服务器设置\r\n\r\n#### 在Claude Deskto中配置FastDomainCheck MCP\r\n\r\n修改claude-desktop-config.json文件，如下所示\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fastdomaincheck\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"fastdomaincheck-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## Go版本参考\r\n\r\n[go版本](https://github.com/bingal/FastDomainCheck-MCP-Server)\r\n\r\n## 贡献\r\n\r\n请随时打开问题或提交pull请求。\r\n\r\n## 许可证\r\n\r\n[MIT许可证](LICENSE) *（您应该添加一个LICENSE文件，通常包含MIT许可证文本）*\r\n",
+ "config": {
+  "fastdomaincheck": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "fastdomaincheck-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

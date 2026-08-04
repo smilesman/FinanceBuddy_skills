@@ -1,0 +1,12 @@
+{
+ "id": "requesting-code-review",
+ "kind": "skill",
+ "name": "requesting-code-review",
+ "fingerprint_md5": "3a37b67a7807735762447b5713a1f1af",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 请求代码审查\r\n\r\n分派 superpowers:code-reviewer 子代理，在问题级联之前捕获它们。\r\n\r\n**核心原则：** 尽早审查，经常审查。\r\n\r\n## 何时请求审查\r\n\r\n**强制：**\r\n- 子代理驱动开发的每个任务之后\r\n- 完成主要功能后\r\n- 合并到 main 之前\r\n\r\n**可选但有价值：**\r\n- 卡住时（新视角）\r\n- 重构前（基线检查）\r\n- 修复复杂 bug 后\r\n\r\n## 如何请求\r\n\r\n**1. 获取 git SHAs：**\r\n```bash\r\nBASE_SHA=$(git rev-parse HEAD~1)  # 或 origin/main\r\nHEAD_SHA=$(git rev-parse HEAD)\r\n```\r\n\r\n**2. 分派 code-reviewer 子代理：**\r\n\r\n使用 Task 工具，类型为 superpowers:code-reviewer，填写 `code-reviewer.md` 中的模板\r\n\r\n**占位符：**\r\n- `{WHAT_WAS_IMPLEMENTED}` - 你刚刚构建的内容\r\n- `{PLAN_OR_REQUIREMENTS}` - 它应该做什么\r\n- `{BASE_SHA}` - 起始提交\r\n- `{HEAD_SHA}` - 结束提交\r\n- `{DESCRIPTION}` - 简要总结\r\n\r\n**3. 根据反馈行动：**\r\n- 立即修复 Critical 问题\r\n- 在继续前修复 Important 问题\r\n- 将 Minor 问题记录到以后处理\r\n- 如果审查者错了，反驳（附带理由）\r\n\r\n## 示例\r\n\r\n```\r\n[刚刚完成任务 2：添加验证函数]\r\n\r\nYou: 让我在继续前请求代码审查。\r\n\r\nBASE_SHA=$(git log --oneline | grep \"Task 1\" | head -1 | awk '{print $1}')\r\nHEAD_SHA=$(git rev-parse HEAD)\r\n\r\n[分派 superpowers:code-reviewer 子代理]\r\n  WHAT_WAS_IMPLEMENTED: 对话索引的验证和修复函数\r\n  PLAN_OR_REQUIREMENTS: docs/plans/deployment-plan.md 中的任务 2\r\n  BASE_SHA: a7981ec\r\n  HEAD_SHA: 3df7661\r\n  DESCRIPTION: 添加了 verifyIndex() 和 repairIndex()，支持 4 种问题类型\r\n\r\n[子代理返回]:\r\n  优势：架构清晰，真实测试\r\n  问题：\r\n    Important: 缺少进度指示器\r\n    Minor: 报告间隔的魔法数字 (100)\r\n  评估：可以继续\r\n\r\nYou: [修复进度指示器]\r\n[继续任务 3]\r\n```\r\n\r\n## 与工作流集成\r\n\r\n**子代理驱动开发：**\r\n- 每个任务后审查\r\n- 在问题复合前捕获它们\r\n- 在进入下一个任务前修复\r\n\r\n**执行计划：**\r\n- 每批（3 个任务）后审查\r\n- 获取反馈，应用，继续\r\n\r\n**临时开发：**\r\n- 合并前审查\r\n- 卡住时审查\r\n\r\n## 危险信号\r\n\r\n**永远不要：**\r\n- 因为\"很简单\"就跳过审查\r\n- 忽略 Critical 问题\r\n- 在 Important 问题未修复时继续\r\n- 与有效的技术反馈争论\r\n\r\n**如果审查者错了：**\r\n- 用技术理由反驳\r\n- 展示证明它有效的代码/测试\r\n- 请求澄清\r\n\r\n模板请参阅：requesting-code-review/code-reviewer.md",
+ "config": {}
+}

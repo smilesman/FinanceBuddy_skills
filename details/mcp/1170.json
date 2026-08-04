@@ -1,0 +1,18 @@
+{
+ "id": "1170",
+ "kind": "mcp",
+ "name": "mysql_http",
+ "fingerprint_md5": "1d9237f80235b669f76a3098c969360f",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# MySQL MCP服务器（HTTP/SSE版）\r\n\r\nMySQL数据库的模型上下文协议（MCP）服务器实现，具有无状态HTTP/SSE架构。\r\n\r\n本项目是基于原创作品的修改版本 [设计计算机/mysql_mcp_server](https://github.com/designcomputer/mysql_mcp_server).\r\n\r\n## 关键改进\r\n\r\n- **无状态HTTP/SSE支持**：使用从基于stdio的通信切换到HTTP/SSE模型 `FastMCP`，使其适用于云部署和远程访问。\r\n- **增强配置**：添加了对以下内容的支持 `.env` 文件使用 `python-dotenv`.\r\n- **改进的诊断**：数据库环境变量缺失或不正确时的详细错误消息。\r\n- **灵活部署**：可以作为独立服务器运行，也可以由Trae或Claude Desktop等AI IDE管理。\r\n\r\n## 特性\r\n\r\n- **工具**：执行自定义SQL查询，列出表。\r\n- **资源**：直接通过访问表数据 `mysql://{table}/data` URI。\r\n- **安全**：通过环境变量管理的数据库凭据。\r\n\r\n## 安装\r\n\r\n1. 克隆此存储库：\r\n\r\n   ```bash\r\n   git clone <your-repository-url>\r\n   cd mysql_mcp_server_http\r\n   ```\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   pip install mcp mysql-connector-python python-dotenv uvicorn\r\n   ```\r\n\r\n1. 创建一个 `.env` 项目根目录中的文件：\r\n\r\n   ```env\r\n   MYSQL_HOST=localhost\r\n   MYSQL_PORT=3306\r\n   MYSQL_USER=root\r\n   MYSQL_PASSWORD=your_password\r\n   MYSQL_DATABASE=your_database\r\n   ```\r\n\r\n## 用法\r\n\r\n### 手动启动（独立）\r\n\r\n使用模块命令运行服务器：\r\n\r\n```bash\r\npython -m mysql_mcp_server_http.server\r\n```\r\n\r\n服务器将于启动 `http://0.0.0.0:8000/mcp`.\r\n\r\n### 与AI IDE集成（例如Trae）\r\n\r\n将以下JSON配置添加到您的 `mcpServers` 设置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mysql_http\": {\r\n      \"url\": \"http://127.0.0.1:8000/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 致谢\r\n\r\n本项目的灵感来源于 [mysql_mcp_server](https://github.com/designcomputer/mysql_mcp_server) 通过@designcomputer。\r\n\r\n## 许可证\r\n\r\nMIT许可证。看 [许可证](LICENSE) 了解详情。\r\n",
+ "config": {
+  "mysql_http": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://127.0.0.1:8000/mcp"
+  }
+ }
+}

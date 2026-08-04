@@ -1,0 +1,25 @@
+{
+ "id": "3267",
+ "kind": "mcp",
+ "name": "weather-19",
+ "fingerprint_md5": "6fb785d0c9a42f5a4a0f5cbc1e6a02a2",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP气象服务器\r\n\r\n一个简单的MCP服务器，使用AccuWeather API提供每小时天气预报。\r\n\r\n## 设置\r\n\r\n1. 使用安装依赖项 `uv`:\r\n\r\n```bash\r\nuv venv\r\nuv sync\r\n```\r\n\r\n2. 创建一个 `.env` 使用AccuWeather API密钥提交文件：\r\n\r\n```\r\nACCUWEATHER_API_KEY=your_api_key_here\r\n```\r\n\r\n您可以通过在注册获得API密钥 [AccuWeather API](https://developer.accuweather.com/).\r\n\r\n## 运行服务器\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"weather\": {\r\n            \"command\": \"uvx\",\r\n            \"args\": [\"--from\", \"git+https://github.com/adhikasp/mcp-weather.git\", \"mcp-weather\"],\r\n            \"env\": {\r\n                \"ACCUWEATHER_API_KEY\": \"your_api_key_here\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## API使用\r\n\r\n### 获取每小时天气预报\r\n\r\n答复：\r\n\r\n```json\r\n{\r\n    \"location\": \"Jakarta\",\r\n    \"location_key\": \"208971\",\r\n    \"country\": \"Indonesia\",\r\n    \"current_conditions\": {\r\n        \"temperature\": {\r\n            \"value\": 32.2,\r\n            \"unit\": \"C\"\r\n        },\r\n        \"weather_text\": \"Partly sunny\",\r\n        \"relative_humidity\": 75,\r\n        \"precipitation\": false,\r\n        \"observation_time\": \"2024-01-01T12:00:00+07:00\"\r\n    },\r\n    \"hourly_forecast\": [\r\n        {\r\n            \"relative_time\": \"+1 hour\",\r\n            \"temperature\": {\r\n                \"value\": 32.2,\r\n                \"unit\": \"C\"\r\n            },\r\n            \"weather_text\": \"Partly sunny\",\r\n            \"precipitation_probability\": 40,\r\n            \"precipitation_type\": \"Rain\",\r\n            \"precipitation_intensity\": \"Light\"\r\n        }\r\n    ]\r\n}\r\n```\r\n\r\nAPI提供：\r\n\r\n- 当前天气状况，包括温度、天气描述、湿度和降水状态\r\n- 12小时预测，每小时数据包括：\r\n  - 与当前时间的相对时间\r\n  - 温度（摄氏度）\r\n  - 天气描述\r\n  - 降水概率、类型和强度\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/adhikasp/mcp-weather.git",
+    "mcp-weather"
+   ],
+   "env": {
+    "ACCUWEATHER_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

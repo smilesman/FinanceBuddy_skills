@@ -1,0 +1,21 @@
+{
+ "id": "1561",
+ "kind": "mcp",
+ "name": "mcp-datetime",
+ "fingerprint_md5": "8384422f2b3af0699b61f0f9ed3e2dee",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp日期时间\r\n\r\n[](https://www.python.org/downloads/)\r\n[](https://github.com/anaisbetts/mcp)\r\n[](LICENSE)\r\n\r\n英语| [日本语](README_ja.md)\r\n\r\n作为Claude桌面应用程序的MCP服务器实现的日期时间格式化服务。支持生成各种格式的日期时间字符串。\r\n\r\n> **备注**：此软件包仅在macOS上进行了测试。Windows兼容性尚未验证。\r\n\r\n## 先决条件\r\n\r\n在使用mcp datetime之前，请确保安装了以下工具：\r\n\r\n- Python 3.12或更高版本\r\n- uv（Python包安装程序）\r\n- uvx（Python包运行器）\r\n\r\n## 特性\r\n\r\n- ✨ 支持多种日期时间格式\r\n- 🇯🇵 日语支持\r\n- 📁 优化了文件名生成格式\r\n- 🌏 精确的时区处理\r\n- 🔧 与Claude桌面应用程序无缝集成\r\n\r\n## MCP服务器组件\r\n\r\n### 工具\r\n\r\n服务器实现了一个工具：\r\n\r\n- `get_datetime`：以各种格式获取当前日期和时间\r\n  - 将“format”作为必需的字符串参数\r\n  - 根据指定格式返回格式化的日期时间字符串\r\n  - 支持多种格式类型，包括标准、日语和ISO格式\r\n\r\n## 使用Claude桌面应用程序\r\n\r\n将以下内容添加到配置文件中：\r\n\r\n配置文件位置（macOS）：\r\n`~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-datetime\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-datetime\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 关于安装\r\n\r\n如果你需要直接安装软件包（例如，用于开发或源代码检查），你可以使用以下方法之一：\r\n\r\n- 从PyPI安装\r\n\r\n  ```bash\r\n  pip install mcp-datetime\r\n  ```\r\n\r\n- 从GitHub源代码安装\r\n\r\n  ```bash\r\n  git clone https://github.com/ZeparHyfar/mcp-datetime.git\r\n  cd mcp-datetime\r\n  pip install -e .\r\n  ```\r\n\r\n- 示例 `claude_desktop_config.json` 用于手动安装\r\n\r\n  ```json\r\n  {\r\n    \"mcpServers\": {\r\n      \"mcp-datetime\": {\r\n        \"command\": \"python\",\r\n        \"args\": [\"-m\", \"mcp_datetime\"],\r\n        \"env\": {\r\n          \"PYTHON\": \"/path/to/your/python\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n  ```\r\n\r\n  将“/path/to/your/python”替换为实际的python解释器路径\r\n\r\n  > 例如，“/usr/local/bin/python3”或“/Users/username/.pyenv/versions/3.12.0/bin/pytthon3”\r\n\r\n## 基本示例\r\n\r\n- 命令格式\r\n\r\n  ```\r\n  # Standard datetime format\r\n  call datetime-service.get_datetime {\"format\": \"datetime\"}\r\n  # Result: 2024-12-10 00:54:01\r\n\r\n  # Japanese format\r\n  call datetime-service.get_datetime {\"format\": \"datetime_jp\"}\r\n  # Result: 2024年12月10日 00時54分01秒\r\n\r\n  # Filename format\r\n  call datetime-service.get_datetime {\"format\": \"filename_md\"}\r\n  # Result: 20241210005401.md\r\n  ```\r\n\r\n- Claude桌面应用程序提示示例\r\n\r\n  - 用户\r\n\r\n    ```\r\n    Please tell me the current time in date_slash format\r\n    ```\r\n\r\n  - 克劳德\r\n\r\n    ```\r\n    I'll get the current date in date_slash format.\r\n\r\n    The current date is 2024/12/12\r\n    ```\r\n\r\n## 支持格式\r\n\r\n|格式名称|示例|描述|\r\n| ------------ | --------------------------- | ---------------------------- |\r\n|日期|2024-12-10|标准日期格式|\r\n|date_slash | 2024/12/10 |带斜线的日期|\r\n|日期：2024年年12月10日              | 日语日期格式|\r\n|日期时间|2024-12-10 00:54:01|标准日期时间|\r\n| datetime_jp  | 2024年12月10日00时54分01秒|Japanese datetime            |\r\n|datetime_t|2024-12-10T00:54:01|带t分隔符的日期时间|\r\n|紧凑|20241210005401| ID的紧凑格式|\r\n|compact_date | 20241210 |仅限压缩日期|\r\n|compact_time|005401|仅压缩时间|\r\n|filename_md|20241210005401.md| Markdown文件名|\r\n|filename_txt|20241210005401.txt |文本文件名|\r\n|filename_log|20241210005401.log|日志文件名|\r\n|iso |2024-12-10T00:54:01+0900|iso 8601格式|\r\n|iso基本格式|20241210T005401+0900|\r\n|日志|2024-12-10 00:54:01.123456|微秒日志格式|\r\n|log_compact|20241210_005401|紧凑日志格式|\r\n|时间|00:54:01|仅限时间|\r\n|时间\\_ jp | 00時54分01秒                | 日本时间格式|\r\n\r\n## 调试\r\n\r\n由于MCP服务器在stdio上运行，调试可能具有挑战性。我们建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector):\r\n\r\n- 使用PyPI包\r\n\r\n  ```\r\n  npx @modelcontextprotocol/inspector uvx mcp-datetime\r\n  ```\r\n\r\n- 使用从GitHub下载的源代码\r\n\r\n  ```\r\n  git clone https://github.com/ZeparHyfar/mcp-datetime.git\r\n  npx @modelcontextprotocol/inspector uvx --directory ./mcp-datetime run mcp-datetime\r\n  ```\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "mcp-datetime": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-datetime"
+   ],
+   "env": {}
+  }
+ }
+}

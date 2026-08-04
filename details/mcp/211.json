@@ -1,0 +1,21 @@
+{
+ "id": "211",
+ "kind": "mcp",
+ "name": "fpl",
+ "fingerprint_md5": "0fd36ffccf47ceb2238aaa49d4a8f672",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 梦幻英超MCP服务器\r\n\r\n全面 **模型上下文协议（MCP）** 用于梦幻英超联赛分析和策略的服务器。该服务器为人工智能助手提供强大的工具、资源和提示，帮助您通过数据驱动的洞察力主导FPL迷你联赛。\r\n\r\n[](https://pypi.org/project/fpl-mcp-server/)\r\n[](https://www.python.org/downloads/)\r\n[](https://opensource.org/licenses/MIT)\r\n[](https://modelcontextprotocol.io)\r\n[](https://nad-aae8058d.mintlify.app/)\r\n\r\n## 特性\r\n\r\n此MCP服务器通过以下方式提供全面的FPL分析功能：\r\n\r\n- **19互动工具** -搜索球员、分析赛程、比较经理、跟踪转会等\r\n- **4数据资源** -访问玩家、团队、游戏周和当前游戏周引导数据\r\n- **10个战略提示** -游戏周分析、球队分析、转会计划、筹码策略、阵容选择和队长选择的结构化模板\r\n- **智能缓存** -4小时的引导数据缓存，最大限度地减少API调用，同时保持数据新鲜\r\n- **模糊匹配** -即使有拼写变化或昵称，也能找到玩家\r\n- **实时转账趋势** -追踪当前游戏周转入/转出最多的玩家\r\n- **经理见解** -分析球队、转会和筹码使用情况\r\n- **夹具分析** -评估球队赛程，并围绕有利的跑动计划转会\r\n\r\n## 快速开始\r\n\r\n### 选项1:uvx（推荐）\r\n\r\n最快的入门方法-无需安装：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fpl\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"fpl-mcp-server\"],\r\n      \"type\": \"stdio\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 选项2:Docker\r\n\r\n使用GitHub容器注册表中的官方Docker镜像：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fpl\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"ghcr.io/nguyenanhducs/fpl-mcp-server:latest\"\r\n      ],\r\n      \"type\": \"stdio\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n有关详细的安装说明和更多选项，请参阅 **[安装指南](./docs/installation.md)**.\r\n\r\n## 使用与文档\r\n\r\n配置后，您可以使用自然语言通过Claude Desktop与FPL MCP服务器进行交互。\r\n\r\n有关详细指导，请参阅：\r\n\r\n- **[工具选择指南](./docs/tool-selection-guide.md)** -为您的分析任务选择合适的工具\r\n\r\n## 数据源\r\n\r\n此服务器使用官方 **梦幻英超API**，请参阅 [这里](./docs/fpl-api.md) 了解更多详情。\r\n\r\n## 贡献\r\n\r\n我们欢迎捐款！请看 [贡献.md](CONTRIBUTING.md) 作为指导方针。\r\n",
+ "config": {
+  "fpl": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "fpl-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

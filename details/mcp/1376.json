@@ -1,0 +1,22 @@
+{
+ "id": "1376",
+ "kind": "mcp",
+ "name": "cloudflare",
+ "fingerprint_md5": "51081f32ecb8b68e3254c376fdc07361",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 工人可观察性MCP服务器🔭\r\n\r\n这是一个 [模型上下文协议（MCP）](https://modelcontextprotocol.io/introduction) 支持远程MCP的服务器\r\n连接，内置Cloudflare OAuth。\r\n\r\n它集成了由以下驱动的工具 [工人可观察性](https://developers.cloudflare.com/workers/observability/) 调试\r\n并深入了解您的员工日志和分析。\r\n\r\n## 🔨 可用工具\r\n\r\n目前可用的工具：\r\n\r\n| **类别** | **工具** | **描述** |\r\n| --------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\r\n| **工人分析** | `query_worker_observability` |查询Workers Observability API以分析来自Cloudflare Workers的日志和度量。支持列出事件、计算指标和查找特定调用|\r\n| **架构发现** | `observability_keys` |在Workers日志中发现可用的数据字段，包括元数据字段、特定于Workers的字段和自定义日志字段|\r\n| **价值探索** | `observability_values` |在Workers日志中查找特定字段的可用值，以帮助为分析查询构建精确的过滤器|\r\n\r\n此MCP服务器仍在开发中，我们计划在未来添加更多工具。\r\n\r\n### 提示示例\r\n\r\n- `Can you tell me about any potential issues on this particular worker 'my-worker-name'?`\r\n- `Show me the CPU time usage for my worker 'api-gateway' over the last 24 hours`\r\n- `What were the top 5 countries by request count for my worker yesterday?`\r\n- `How many requests were made to my worker 'my-app' broken down by HTTP status code?`\r\n- `Compare the error rates between my production and staging workers`\r\n\r\n## 从任何MCP客户端访问远程MCP服务器\r\n\r\n如果您的MCP客户端对远程MCP服务器具有一流的支持，则客户端将提供一种接受服务器URL的方法(`https://observability.mcp.cloudflare.com`)直接在其界面内（例如 [Cloudflare AI游乐场](https://playground.ai.cloudflare.com/)).\r\n\r\n如果您的客户端尚不支持远程MCP服务器，则需要使用设置其相应的配置文件 [mcp遥控器](https://www.npmjs.com/package/mcp-remote) 指定您的客户端可以访问哪些服务器。\r\n\r\n用以下配置替换内容：\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"cloudflare\": {\r\n\t\t\t\"command\": \"npx\",\r\n\t\t\t\"args\": [\"mcp-remote\", \"https://observability.mcp.cloudflare.com/mcp\"]\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\n设置好配置文件后，重新启动MCP客户端，将打开一个浏览器窗口，显示您的OAuth登录页面。继续执行身份验证流程，以授予客户端访问MCP服务器的权限。授予访问权限后，这些工具将可供您使用。\r\n\r\n有兴趣贡献并在本地运行此服务器吗？看 [贡献.md](CONTRIBUTING.md) 开始吧。\r\n",
+ "config": {
+  "cloudflare": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://observability.mcp.cloudflare.com/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

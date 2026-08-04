@@ -1,0 +1,22 @@
+{
+ "id": "1483",
+ "kind": "mcp",
+ "name": "grounddocs-grounddocs",
+ "fingerprint_md5": "1ad87b3f20b6e17747179cb9c6fe43b0",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# GroundDocs\r\n\r\nGroundDocs是一个版本感知文档助手。它将LLM与可信的实时文档连接起来，减少幻觉，确保准确的、特定版本的响应。\r\n\r\n## 🚀 安装\r\n\r\n```bash\r\nnpx @grounddocs/cli@latest install <client>\r\n```\r\n\r\n**支持的客户端：** 光标、风帆、cline、claude、witsy、enconvo、vscode\r\n\r\n## 🔧 手动设置\r\n\r\n要手动配置GroundDocs，请将其添加到IDE的MCP（模型上下文协议）配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"@grounddocs/grounddocs\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@grounddocs/grounddocs@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n配置后，重新启动IDE以使更改生效。\r\n\r\n📚 支持的域名\r\n\r\n- **Kubernetes** （所有版本，包括版本软件kubectl行为、API模式和功能门）\r\n\r\n## 🏗️ 建筑\r\n\r\nGroundDocs由以下部分组成：\r\n\r\n- **本地MCP服务器** （此回购）→ 轻量级、公共、运行推理时查询\r\n- **远程后端数据存储库** （私人）→ 搬运刮擦、分度和重物\r\n\r\n## 🌟 查询示例\r\n\r\n```\r\nWhat changes were made to the kubectl command behavior in Kubernetes 1.26 regarding pruning during apply operations?\r\n```\r\n\r\n[查看示例响应](https://claude.ai/share/b864ee23-4899-4092-bbd8-a020d55296a7)\r\n\r\n## 🤝 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n",
+ "config": {
+  "grounddocs-grounddocs": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@grounddocs/grounddocs@latest"
+   ],
+   "env": {}
+  }
+ }
+}

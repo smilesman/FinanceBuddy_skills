@@ -1,0 +1,25 @@
+{
+ "id": "940",
+ "kind": "mcp",
+ "name": "youtube-5",
+ "fingerprint_md5": "5e20ddb3cc8a97749dcef3d04e8bb797",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# yt工作室mcp\r\n\r\n用于YouTube视频管理的MCP服务器——通过YouTube数据API上传、缩略图、字幕、播放列表和直播调度。\r\n\r\n## 安装\r\n\r\n直接使用npx运行：\r\n\r\n```bash\r\nnpx yt-studio-mcp\r\n```\r\n\r\n或全局安装：\r\n\r\n```bash\r\nnpm install -g yt-studio-mcp\r\nyt-studio-mcp\r\n```\r\n\r\n## 配置\r\n\r\n### 谷歌云OAuth设置\r\n\r\n此服务器使用OAuth 2.0代表您访问YouTube数据API。\r\n\r\n1. 首选 [谷歌云控制台](https://console.cloud.google.com)\r\n1. 创建新项目（或选择现有项目）\r\n1. 启用 **YouTube数据API v3**:\r\n   - 导航到API和服务>库\r\n   - 搜索“YouTube数据API v3”\r\n   - 单击启用\r\n1. 创建OAuth 2.0凭据：\r\n   - 导航到API和服务>凭据\r\n   - 点击“创建凭据”>“OAuth客户端ID”\r\n   - 应用程序类型： **桌面应用程序**\r\n   - 下载或复制客户端ID和客户端密码\r\n1. 设置环境变量：\r\n\r\n```bash\r\nexport GOOGLE_CLIENT_ID=\"your-client-id\"\r\nexport GOOGLE_CLIENT_SECRET=\"your-client-secret\"\r\n```\r\n\r\n6. 运行身份验证流：\r\n\r\n```bash\r\nnpx yt-studio-mcp auth\r\n```\r\n\r\n这将打开一个用于Google登录的浏览器窗口。授予访问权限后，令牌将保存在本地。\r\n\r\n7. 随时检查身份验证状态：\r\n\r\n```bash\r\nnpx yt-studio-mcp auth --status\r\n```\r\n\r\n### 可选配置\r\n\r\n|变量|描述|默认值|\r\n|----------|-------------|---------|\r\n| `YT_STUDIO_MCP_TOKEN_PATH` |OAuth令牌存储的自定义路径| `~/.config/yt-studio-mcp/tokens.json` |\r\n\r\n## MCP客户端设置\r\n\r\n添加到您的Claude Desktop配置(`claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"yt-studio-mcp\"],\r\n      \"env\": {\r\n        \"GOOGLE_CLIENT_ID\": \"your-client-id\",\r\n        \"GOOGLE_CLIENT_SECRET\": \"your-client-secret\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n注意：在MCP服务器可以进行API调用之前，您必须完成OAuth身份验证流（上面的步骤6）。一旦通过身份验证，令牌将在会话之间持久存在。\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `youtube_upload` |将带有元数据的视频上传到YouTube。返回视频ID和URL。将隐私设置为“private”（默认），以便在发布前进行查看。 |\r\n| `youtube_set_thumbnail` |在YouTube视频上设置自定义缩略图。图像必须是PNG或JPG，至少1280x720，并且小于2MB。 |\r\n| `youtube_upload_captions` |将SRT字幕曲目上传到YouTube视频。一次通话支持多种语言。至少需要一个英语轨道。 |\r\n| `youtube_list_playlists` |列出经过身份验证的YouTube频道上的所有播放列表。返回播放列表ID、标题、描述和视频计数。 |\r\n| `youtube_add_to_playlist` |将YouTube视频添加到一个或多个播放列表中。处理部分失败：返回每个播放列表的成功/错误状态。 |\r\n| `youtube_create_playlist` |在经过身份验证的YouTube频道上创建新的播放列表。返回播放列表ID和URL|\r\n| `youtube_schedule_livestream` |安排一个包含所有元数据和默认值的YouTube直播。绑定到可重用流（OBS流密钥保持不变）。设置体育类别、可选缩略图/播放列表，并尝试通过中间滚动获利。 |\r\n\r\n## 资源\r\n\r\n服务器暴露了一个 **发布工作流** 资源(`resource:///publish-workflow`)它提供了通过MCP工具发布完整YouTube视频的分步指南，包括上传、缩略图、字幕和播放列表附件。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "youtube": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "yt-studio-mcp"
+   ],
+   "env": {
+    "GOOGLE_CLIENT_ID": "your-client-id",
+    "GOOGLE_CLIENT_SECRET": "your-client-secret"
+   }
+  }
+ }
+}

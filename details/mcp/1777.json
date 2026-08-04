@@ -1,0 +1,22 @@
+{
+ "id": "1777",
+ "kind": "mcp",
+ "name": "time-mcp",
+ "fingerprint_md5": "feedee80bd2d7cbb8832d8a2f75f509f",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 🚀 时间MCP服务器：赋予LLM时间感知能力\r\n\r\n[](https://smithery.ai/server/@yokingma/time-mcp) <a href=\"https://github.com/yokingma/time-mcp/stargazers\">\r\n</div>\r\n\r\n## 工具\r\n\r\n- `current_time`：获取当前时间（UTC和当地时间）\r\n- `relative_time`：获取相对时间\r\n- `get_timestamp`：获取时间的时间戳\r\n- `days_in_month`：获取月份中的天数\r\n- `convert_time`：在时区之间转换时间\r\n- `get_week_year`：获取周和ISO一年中的周\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的time mcp [铁匠铺](https://smithery.ai/server/@yokingma/time-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @yokingma/time-mcp --client claude\r\n```\r\n\r\n### 手动安装（可选）\r\n\r\n```shell\r\nnpm install -g time-mcp\r\n```\r\n\r\n### 使用npx\r\n\r\n```shell\r\nnpx -y time-mcp\r\n```\r\n\r\n## 在Claude代码上运行\r\n\r\n要将时间mcp添加到Claude代码中，请使用以下命令：\r\n\r\n```bash\r\nclaude mcp add time-mcp -- npx -y time-mcp\r\n```\r\n\r\n要验证安装：\r\n\r\n```bash\r\nclaude mcp list\r\n```\r\n\r\n您应该看到时间mcp与✓ 连接状态。\r\n\r\n### Claude代码中的用法\r\n\r\n安装后，您可以在与Claude Code的对话中使用time mcp工具。例如：\r\n\r\n- “现在几点了？”\r\n- “将纽约时间下午2:00转换为东京时间”\r\n- “这个月有几天？”\r\n- “现在是一年中的哪一周？”\r\n\r\n时间mcp服务器将自动向Claude提供准确的时间信息。\r\n\r\n## 在游标上运行\r\n\r\n你的 `mcp.json` 文件看起来像这样：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"time-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"time-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 在风帆上跑步\r\n\r\n将此添加到您的 `./codeium/windsurf/model_config.json` 文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"time-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"time-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](./LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "time-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "time-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "id": "25",
+ "kind": "mcp",
+ "name": "aiqaramba",
+ "fingerprint_md5": "93a4da126a676ec73d158f28784b4130",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# Aiqaramba MCP服务器\r\n\r\nAI驱动的浏览器测试作为MCP工具。给它一个URL和说明——它打开一个真正的浏览器，导航页面，填写表单，点击按钮，并报告它发现的内容。\r\n\r\n## 它做什么\r\n\r\nAiqaramba在真实浏览器（Chrome、Firefox）中运行AI代理，从最终用户的角度测试web应用程序。没有选择器，没有脚本——用简单的语言描述要测试什么。\r\n\r\n### 工具\r\n\r\n|工具|它做什么|典型时间|\r\n|------|-------------|-------------|\r\n| `create_agent` |运行一个有针对性的测试——导航到一个URL，执行操作，验证结果|30-90s|\r\n| `run_discovery` |浏览整个网站——地图页面、查找问题、生成测试行程|3-15分钟|\r\n| `get_agent` |检查代理状态并读取结果（自动汇总已完成的代理）|即时|\r\n| `list_agents` |列出项目中的所有代理|即时|\r\n| `list_projects` |列出可用项目|即时|\r\n\r\n### 示例用法\r\n\r\n```\r\n\"Navigate to https://mysite.com/checkout, fill the payment form with\r\ntest card 4242424242424242, click submit, and verify the confirmation\r\npage shows an order number.\"\r\n```\r\n\r\n代理打开一个真实的浏览器，执行流程，在每个步骤中截取屏幕截图，并返回一个包含通过/失败状态的结构化报告。\r\n\r\n## 设置\r\n\r\n直接连接到托管的MCP端点。没有什么可下载的。\r\n\r\n**克劳德代码/光标/VS代码：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"aiqaramba\": {\r\n      \"type\": \"streamable-http\",\r\n      \"url\": \"https://mcp.aiqaramba.com/mcp\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer YOUR_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 配置\r\n\r\n|环境变量|默认值|描述|\r\n|---------------------|---------|-------------|\r\n| `AIQARAMBA_API_KEY` |（必需）|您的API密钥来自 [App.aiqaramba.com](https://app.aiqaramba.com) |\r\n\r\n## 获取API密钥\r\n\r\n1. 注册地址： [App.aiqaramba.com](https://app.aiqaramba.com)\r\n1. 前往“设置”>“API密钥”\r\n1. 创建新密钥\r\n\r\n或 [预订演示](https://outlook.office.com/bookwithme/user/ecce23b18694424a8898f7842a474697@alex-ai.eu/meetingtype/88YUJXiafkOpjY494rH-6A2?anonymous&ismsaljsauthenabled&ep=mlink) 以引导式设置开始。\r\n\r\n## 需求\r\n\r\n- URL必须是可公开访问的（不是本地主机）。对于本地应用程序，使用类似ngrok的隧道。\r\n- 代理需要能够在没有VPN或IP限制的情况下导航到页面。\r\n\r\n## 条款\r\n\r\n通过使用Aiqaramba API，您同意我们的 [服务条款](https://aiqaramba.com/terms).API在 `GET /api/v1/terms` 通过 `X-Terms-URL` 响应标头。\r\n\r\n## 链接\r\n\r\n- [文档](https://app.aiqaramba.com/docs)\r\n- [隐私政策](https://aiqaramba.com/privacy)\r\n- [数据处理协议](https://aiqaramba.com/dpa)\r\n- [网站](https://aiqaramba.com)\r\n",
+ "config": {
+  "aiqaramba": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.aiqaramba.com/mcp"
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "1654",
+ "kind": "mcp",
+ "name": "ollama",
+ "fingerprint_md5": "ce5cead5ea8a0851afff997ba392e09f",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP Ollama\r\n\r\n用于将Ollama与Claude Desktop或其他MCP客户端集成的模型上下文协议（MCP）服务器。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/h0t3210s62\"></a>\r\n\r\n## 需求\r\n\r\n- Python 3.10或更高版本\r\n- Ollama已安装并正在运行(https://ollama.com/download)\r\n- 至少有一个模型是用Ollama拉的（例如。， `ollama pull llama2`)\r\n\r\n### 配置Claude桌面\r\n\r\n添加到您的Claude Desktop配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在 macOS 上， `%APPDATA%\\Claude\\claude_desktop_config.json` 在Windows上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ollama\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"mcp-ollama\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 发展\r\n\r\n在开发模式下安装：\r\n\r\n```bash\r\ngit clone https://github.com/yourusername/mcp-ollama.git\r\ncd mcp-ollama\r\nuv sync\r\n```\r\n\r\nMCP检验员测试：\r\n\r\n```bash\r\nmcp dev src/mcp_ollama/server.py\r\n```\r\n\r\n## 特性\r\n\r\n服务器提供四个主要工具：\r\n\r\n- `list_models` -列出所有下载的Ollama型号\r\n- `show_model` -获取特定型号的详细信息\r\n- `ask_model` -向指定模型提问\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "ollama": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-ollama"
+   ],
+   "env": {}
+  }
+ }
+}

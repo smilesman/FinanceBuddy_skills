@@ -1,0 +1,12 @@
+{
+ "id": "feishu-native-emoji",
+ "kind": "skill",
+ "name": "feishu-native-emoji",
+ "fingerprint_md5": "1517228a841fe503406b5d64fa249000",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# 🎭 Feishu Native Emoji\r\n\r\nThis skill manages the mapping and usage of Feishu's native emoji codes (e.g., `[微笑]`, `[捂脸]`) instead of standard unicode emojis.\r\n\r\n## Usage\r\n\r\nThis is primarily a passive resource for the Agent to \"inject\" personality into messages.\r\n\r\n### Resources\r\n- `emoji_list.txt`: Raw list of supported codes.\r\n\r\n## Integration\r\nWhen constructing messages for Feishu, prefer using codes from `emoji_list.txt`.",
+ "config": {}
+}

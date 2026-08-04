@@ -1,0 +1,18 @@
+{
+ "id": "3564",
+ "kind": "mcp",
+ "name": "path-scanner",
+ "fingerprint_md5": "5b64af4e27919a2ff8b5a22730022a5a",
+ "download_count": 0,
+ "category": "数据抓取",
+ "tags": "",
+ "version": "",
+ "readme": "## 使用方法\r\n1. 为dirsearch安装依赖:\r\n   进入dirsearch目录,\r\n   执行安装依赖的命令(这里我图省事, 选择把依赖安装在了全局环境中)\r\n   ```bash\r\n   pip install -r .\\requirements.txt\r\n   ```\r\n2. 在全局环境中再安装一个\r\n   ```bash\r\n   pip install setuptools\r\n   ```\r\n3. 安装[uv](https://docs.astral.sh/uv/)管理器: 这是一个极快的 Python 包和项目管理器，用 Rust 编写\r\n   ```bash\r\n   powershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\r\n   ```\r\n4. 为MCP服务安装依赖\r\n   ```\r\n   uv sync\r\n   ```\r\n5. 在本地部署[firecrawl](https://www.firecrawl.dev/): 这是一个AI爬虫工具, 包含有数据清晰的功能,支持本地docker部署.\r\n   **参考文章**:\r\n   - https://www.cnblogs.com/skystrive/p/18893148\r\n   - https://docs.firecrawl.dev/contributing/guide\r\n\r\n   **故障排除:**\r\n   在使用本地部署的firecrawl进行网页爬取的时候, 返回`Unauthorized`的解决方法:\r\n   修改.env配置文件中的字段-> `USE_DB_AUTHENTICATION`的值设为`false`\r\n\r\n   可以直接使用我给的`.env`文件\r\n\r\n   测试你的`firecrawl`正在运行:\r\n   打开网址: `http://{firecrawl server IP}:3002/test`\r\n\r\n   如果出现了`Hello, world!`, 则说明服务正常运行了\r\n\r\n6.编辑你的`config.py`文件\r\n   `FIRECRAWL_HOST`是你的firecrawl运行的HOST地址\r\n   `GLOBAL_PYTHON_PATH`是你的全局Python地址-> 获取全局Python地址: 在cmd中输入`where python`\r\n\r\n7. 启动你的MCP服务\r\n   ```bash\r\n   uv run main.py\r\n   ```\r\n\r\n   出现如下日志说明你的服务启动成功了\r\n8. 在`cline`中添加这个服务\r\n\r\n   直接编辑配置文件:\r\n   ```json\r\n   {\r\n      \"mcpServers\": {\r\n         \"path scanner\": {\r\n            \"url\": \"http://127.0.0.1:8000/sse\",\r\n            \"disabled\": false,\r\n            \"autoApprove\": [],\r\n            \"timeout\": 1800\r\n         }\r\n      }\r\n   }\r\n   ```\r\n\r\n\r\n   这样就说明你的MCP server可以被cline使用了\r\n\r\n\r\n## Prompt\r\n你是一个网站安全助手。请调用已有的MCP服务对指定网站进行扫描，并返回结构化结果（表格形式）。\r\n根据MCP扫描结果：\r\n提取并总结网站所使用的技术栈；\r\n根据扫描报告中的风险等级，分类整理网站的漏洞信息（高危/中危/低危）；\r\n对于报告中标记为高危漏洞的相关URL，请进一步读取该URL的页面内容，并生成内容摘要；\r\n最终请将数据汇总为以下结构输出：\r\n技术栈\r\n漏洞信息（按严重程度分类）\r\n高危漏洞相关的URL及内容摘要\r\n目标网站URL:\r\n\r\n## 效果展示\r\n\r\n\r\n## TODO:\r\n服务端尚未初始化完成就收到了客户端的请求, 解决办法: 在正式的使用服务之前init一下服务\r\n\r\n## 参考:\r\n此项目灵感来自于项目[ai_dirscan](https://github.com/Elitewa/ai_dirscan)\r\n",
+ "config": {
+  "path-scanner": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://127.0.0.1:8000/sse"
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "646",
+ "kind": "mcp",
+ "name": "fal-ai-image",
+ "fingerprint_md5": "c976f4c6057720cf18124ab3bc7eb1a5",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP fal.ai图像服务器\r\n\r\n使用以下命令从文本提示轻松生成图像 [对不起的。](https://fal.ai) 以及模型上下文协议（MCP）。直接与Cursor和Windsurf等AI IDE集成。\r\n\r\n## 何时以及为什么使用\r\n\r\n此工具设计用于：\r\n\r\n- 希望在不离开IDE的情况下从文本提示生成图像的开发人员和设计师。\r\n- UI概念、营销资产或创意的快速原型制作。\r\n- 内容创作者需要博客、演示文稿或社交媒体的独特视觉效果。\r\n- 人工智能研究人员和修补匠正在试验最新的fal.AI模型。\r\n- 通过MCP自动化需要程序化图像生成的工作流程。\r\n\r\n主要特点：\r\n\r\n- 支持任何有效的fal.ai模型和所有主要图像参数。\r\n- 使用Node.js和fal.ai API密钥即可开箱即用。\r\n- 使用可访问的文件路径在本地保存图像。\r\n- 配置简单，错误处理能力强。\r\n\r\n## 快速开始\r\n\r\n1. **要求：** Node.js 18+， [Sorry.ai API密钥](https://fal.ai)\r\n1. **配置MCP：**\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"fal-ai-image\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\"-y\", \"mcp-fal-ai-image\"],\r\n         \"env\": { \"FAL_KEY\": \"YOUR-FAL-AI-API-KEY\" }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n1. **运行：** 使用 `generate-image` IDE中的工具。\r\n\r\n> **💡 典型工作流程：**\r\n> 描述你想要的图像（例如，“使用fal-ai/kolors模型生成一个有飞行汽车的景观，2张图像，landscape_16_9”），并在你的IDE中获得即时结果。\r\n\r\n### 🗨️ 示例提示\r\n\r\n- `generate an image of a red apple`\r\n- `generate an image of a red apple using model fal-ai/kolors`\r\n- `generate 3 images of a glowing red apple in a futuristic city using model fal-ai/recraft-v3, square_hd, 40 inference steps, guidance scale 4.0, safety checker on`\r\n\r\n**支持的参数：** 提示、模型ID（任何fal.ai模型）、图像数量、图像大小、推理步骤、引导比例、安全检查器。\r\n\r\n图像保存在本地；文件路径显示在响应中。有关型号ID，请参见 [fal.ai/型号](https://fal.ai/models).\r\n\r\n## 故障排除\r\n\r\n- `FAL_KEY environment variable is not set`：如上所述设置您的fal.ai API密钥。\r\n- `npx` 找不到：安装Node.js 18+和npm。\r\n\r\n<details>\r\n<summary>Advanced: Example MCP Request/Response</summary>\r\n\r\n```json\r\n{\r\n  \"tool\": \"generate-image\",\r\n  \"args\": {\r\n    \"prompt\": \"A futuristic cityscape at sunset\",\r\n    \"model\": \"fal-ai/kolors\"\r\n  }\r\n}\r\n\r\n// Example response\r\n{\r\n  \"images\": [\r\n    { \"url\": \"file:///path/to/generated_image1.png\" },\r\n    { \"url\": \"file:///path/to/generated_image2.png\" }\r\n  ]\r\n}\r\n```\r\n\r\n</details>\r\n\r\n## 📁 图像输出目录\r\n\r\n生成的图像将保存到本地系统：\r\n\r\n- **默认情况下：** `~/Downloads/fal_ai` （在Linux/macOS上；如果可用，则使用XDG标准）\r\n- **自定义位置：** 设置环境变量 `FAL_IMAGES_OUTPUT_DIR` 到您想要的文件夹。图像将保存在 `<your-folder>/fal_ai`.\r\n\r\n每个图像的完整文件路径都包含在工具的响应中。\r\n\r\n## ⚠️ 错误处理和故障排除\r\n\r\n- 如果您指定了fal.ai不支持的模型ID，您将收到来自后端的错误。仔细检查拼写错误或访问 [fal.ai/型号](https://fal.ai/models) 以确认型号ID。\r\n- 有关型号及其功能的最新列表，请参阅 [fal.ai型号目录](https://fal.ai/models) 或 [API文件](https://fal.ai/docs/api).\r\n- 对于其他错误，请查阅您的MCP客户端日志或在GitHub上打开问题。\r\n\r\n## 🤝 贡献\r\n\r\n欢迎提出意见和建议！请打开问题或拉取请求 [GitHub](https://github.com/madhusudan-kulkarni/mcp-fal-ai-image).\r\n\r\n## 🔒 安全\r\n\r\n- 您的API密钥仅用于本地验证fal.ai。\r\n- 除fal.ai API要求外，不存储或传输用户数据。\r\n\r\n## 🔗 链接\r\n\r\n- [NPM](https://www.npmjs.com/package/mcp-fal-ai-image)\r\n- [GitHub](https://github.com/madhusudan-kulkarni/mcp-fal-ai-image)\r\n- [对不起的。](https://fal.ai)\r\n\r\n## 🛡 许可证\r\n\r\nMIT许可证©2025 Madhusudan Kulkarni\r\n",
+ "config": {
+  "fal-ai-image": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-fal-ai-image"
+   ],
+   "env": {
+    "FAL_KEY": "YOUR-FAL-AI-API-KEY"
+   }
+  }
+ }
+}

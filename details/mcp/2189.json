@@ -1,0 +1,24 @@
+{
+ "id": "2189",
+ "kind": "mcp",
+ "name": "foodnearby-mcp",
+ "fingerprint_md5": "5b48f971b689177fdaf18401cd77ce89",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# foodnearby-mcp\r\n\r\n基于 MCP 的美食搜索服务，使用高德地图API进行位置服务，帮助用户查找当前位置附近的美食餐厅。\r\n\r\n## 🍽️ 功能特性\r\n\r\n### 核心功能\r\n- **🗺️ 地图POI搜索** - 通过高德地图API获取真实商家信息\r\n- **📱 地图服务** - 集成高德地图API进行位置服务\r\n- **📍 智能定位** - 支持地址、坐标、当前位置等多种定位方式\r\n- **🌐 当前位置检测** - 自动通过IP定位获取用户当前位置，无需手动输入\r\n\r\n### 搜索功能\r\n- 按菜系类型筛选（川菜、粤菜、日料、西餐等）\r\n- 按价格筛选（显示具体价格如¥45、¥145等）\r\n- 按配送距离排序\r\n- 按评分排序\r\n\r\n### 数据功能\r\n- 真实商家信息获取\r\n- 评分和评论数据\r\n- 营业时间和联系方式\r\n- 商家分类和标签\r\n\r\n## 🚀 快速开始\r\n\r\n### 环境要求\r\n- Node.js >= 18\r\n\r\n### 方式1：作为MCP服务使用\r\n\r\n1. **全局安装**\r\n```bash\r\nnpm install -g foodnearby-mcp\r\n```\r\n\r\n2. **配置Cursor MCP服务**\r\n在 `~/.cursor/mcp.json` 文件中添加配置：\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"foodnearby-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"foodnearby-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"AMAP_API_KEY\": \"your_amap_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n### 方式2：本地开发使用\r\n\r\n1. **克隆项目**\r\n```bash\r\ngit clone https://github.com/FunEnn/FoodNearBy-MCP.git\r\ncd FoodNearBy-MCP\r\n```\r\n\r\n2. **安装依赖**\r\n```bash\r\nnpm install\r\n```\r\n\r\n3. **配置环境变量**\r\n```bash\r\ncp .env\r\n```\r\n\r\n编辑 `.env` 文件，填入你的API密钥：\r\n```env\r\n\r\n# 高德地图API（用于地理编码和位置服务）\r\nAMAP_API_KEY=your_amap_api_key\r\n\r\n```\r\n\r\n4. **构建**\r\n```bash\r\nnpm run build\r\n```\r\n\r\n5. **启动服务**\r\n```bash\r\nnpm start\r\n```\r\n\r\n## 🛠️ MCP工具使用\r\n\r\n### search_map_poi - 地图POI搜索\r\n\r\n**功能**: 通过高德地图API搜索附近的美食商家POI信息\r\n\r\n**参数**:\r\n- `location` (必需): 搜索位置，可以是地址、坐标或\"当前位置\"。使用\"当前位置\"将自动获取用户当前位置并搜索周边美食\r\n- `radius` (可选): 搜索半径（米），默认1000米，建议范围：500-5000米\r\n- `keyword` (可选): 餐饮搜索关键词，如：美食、餐厅、火锅、川菜、日料、西餐、烧烤、甜品等，默认\"美食\"\r\n- `cuisine_type` (可选): 菜系类型筛选（如：川菜、粤菜、湘菜、日料、韩料、西餐、火锅、烧烤、甜品等）\r\n- `price_range` (可选): 价格区间筛选：便宜、中等、昂贵（注意：实际返回的是具体价格如¥45、¥145等）\r\n- `map_platforms` (可选): 地图平台选择：amap（高德地图），默认\"amap\"\r\n- `poi_type` (可选): 高德地图餐饮POI类型（如：050000=餐饮服务，050100=中餐厅，050101=火锅，050102=烧烤）\r\n- `city_limit` (可选): 是否仅返回指定城市数据（仅高德地图有效），默认false\r\n\r\n**当前位置功能说明**：\r\n- 当 `location` 参数设置为 `\"当前位置\"` 或 `\"current location\"` 时，服务会自动通过高德地图IP定位API获取用户当前位置\r\n- 然后基于当前位置搜索指定半径内的美食商家\r\n- 无需用户手动输入坐标或地址，提供更便捷的搜索体验\r\n\r\n## 🔑 API密钥获取\r\n\r\n### 高德地图API\r\n1. 访问 [高德开放平台](https://lbs.amap.com/)\r\n\r\n## 🤝 贡献\r\n\r\n欢迎提交 Issue 和 Pull Request！\r\n",
+ "config": {
+  "foodnearby-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "foodnearby-mcp"
+   ],
+   "env": {
+    "AMAP_API_KEY": "your_amap_api_key"
+   }
+  }
+ }
+}

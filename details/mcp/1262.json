@@ -1,0 +1,27 @@
+{
+ "id": "1262",
+ "kind": "mcp",
+ "name": "redshift-mcp-docker",
+ "fingerprint_md5": "72e0fac470767b5c3a4f1dd9faa894f2",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "太长，读不下去了\r\n运行以下命令：\r\n\r\n```bash\r\nbash docker-build.sh\r\n```\r\n\r\n上面的命令构建了一个Docker镜像，现在您可以在Cursor中使用以下设置启动MCP服务器（请不要忘记用您自己的值更新数据库连接字符串，即用户名、密码、主机名、端口、数据库）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"redshift-mcp-docker\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-e\",\r\n        \"DEFAULT_SCHEMA=flatiron_cmdb_nsclc_sdm_latest\",\r\n        \"redshift-mcp-py-simple\",\r\n        \"postgresql://username:password@redshift-url:5439/database?sslmode=require\"\r\n      ],\r\n      \"description\": \"Redshift MCP Server in Docker\",\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n# Redshift MCP服务器（Python）\r\n\r\n用于查询Redshift数据库的模型上下文协议（MCP）服务器，使用FastMCP在Python中实现。\r\n\r\n## 特性\r\n\r\n- 通过MCP服务器查询Redshift数据库\r\n- 列出数据库中的表\r\n- 查看表架构\r\n- 执行只读SQL查询\r\n- 适用于Cursor和Claude Desktop\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Python 3.10+\r\n- Redshift数据库连接详细信息\r\n- pip 21.3+（用于pyproject.toml支持）\r\n\r\n### 设置\r\n\r\n1. 克隆此存储库：\r\n\r\n```bash\r\ngit clone https://github.com/yourusername/redshift-mcp-py.git\r\ncd redshift-mcp-py\r\n```\r\n\r\n2. 创建虚拟环境并安装软件包：\r\n\r\n```bash\r\npython -m venv venv\r\nsource venv/bin/activate  # On Windows: venv\\Scripts\\activate\r\n\r\n# Make sure pip is up to date\r\npip install --upgrade pip\r\n\r\n# Install the package\r\npip install -e .\r\n```\r\n\r\n如果遇到构建错误，可能需要先安装构建工具：\r\n\r\n```bash\r\npip install hatchling\r\npip install -e .\r\n```\r\n\r\n## 用法\r\n\r\n### 使用CLI运行服务器\r\n\r\n安装后，您可以使用提供的命令行界面：\r\n\r\n```bash\r\nredshift-mcp-server \"postgresql://username:password@hostname:port/database?sslmode=require\"\r\n```\r\n\r\n### 直接运行服务器\r\n\r\n```bash\r\npython redshift_mcp_server.py \"postgresql://username:password@hostname:port/database?sslmode=require\"\r\n```\r\n\r\n### 使用Docker\r\n\r\n1. 构建Docker镜像：\r\n\r\n```bash\r\ndocker build -t redshift-mcp-py .\r\n```\r\n\r\n2. 运行容器：\r\n\r\n```bash\r\ndocker run -i --rm redshift-mcp-py \"postgresql://username:password@hostname:port/database?sslmode=require\"\r\n```\r\n\r\n### 在Cursor中设置\r\n\r\n此项目在 `.cursor` 目录：\r\n\r\n1. 在Cursor中打开项目。\r\n1. 编辑 `.cursor/mcp.json` 更新数据库连接字符串。\r\n1. 按Alt+M或单击侧边栏中的MCP按钮。\r\n1. 从可用服务器列表中选择“redshift mcp-py”。\r\n\r\n或者，您可以将以下内容添加到全局 `~/.cursor/mcp.json` 文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"redshift-mcp-py\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\r\n        \"/path/to/redshift_mcp_server.py\",\r\n        \"postgresql://username:password@hostname:port/database?sslmode=require\"\r\n      ],\r\n      \"description\": \"Redshift MCP Server in Python\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 在Claude Desktop中设置\r\n\r\n将以下内容添加到Claude Desktop的配置文件中：\r\n\r\n```json\r\n{\r\n  \"servers\": [\r\n    {\r\n      \"name\": \"Redshift MCP Server\",\r\n      \"command\": \"python\",\r\n      \"args\": [\r\n        \"/path/to/redshift_mcp_server.py\",\r\n        \"postgresql://username:password@hostname:port/database?sslmode=require\"\r\n      ],\r\n      \"description\": \"Redshift MCP Server in Python\"\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n## 项目结构\r\n\r\n```\r\nredshift_py/\r\n├── .cursor/                    # Cursor-specific settings\r\n│   ├── mcp.json                # MCP server configuration for Cursor\r\n│   └── settings.json           # Editor settings for Python development\r\n├── src/\r\n│   └── redshift_mcp/\r\n│       ├── __init__.py\r\n│       ├── __main__.py\r\n│       └── server.py\r\n├── redshift_mcp_server.py\r\n├── test_client.py\r\n├── pyproject.toml\r\n├── README.md\r\n├── LICENSE\r\n└── Dockerfile\r\n```\r\n\r\n## 可用MCP功能\r\n\r\n### 资源\r\n\r\n- `redshift://tables` -列出数据库中的所有表\r\n- `redshift://{hostname}/{table_name}/schema` -返回特定表的架构信息\r\n\r\n### 工具\r\n\r\n- `query(sql: string)` -对Redshift数据库执行只读SQL查询\r\n\r\n## 测试\r\n\r\n使用附带的测试客户端验证功能：\r\n\r\n```bash\r\n# Test using subprocess\r\npython test_client.py \"postgresql://username:password@hostname:port/database?sslmode=require\"\r\n\r\n# Test with direct connection\r\nTEST_MODE=direct python test_client.py \"postgresql://username:password@hostname:port/database?sslmode=require\"\r\n```\r\n\r\n## 安全说明\r\n\r\n- 服务器只允许只读事务\r\n- 所有查询都在回滚的事务中执行\r\n- 数据库密码从不在资源URI中公开\r\n\r\n## 许可证\r\n\r\n[阿帕奇-2.0](LICENSE)\r\n\r\n# mcp客户端服务器\r\n",
+ "config": {
+  "redshift-mcp-docker": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "DEFAULT_SCHEMA=flatiron_cmdb_nsclc_sdm_latest",
+    "redshift-mcp-py-simple",
+    "postgresql://username:password@redshift-url:5439/database?sslmode=require"
+   ],
+   "env": {}
+  }
+ }
+}

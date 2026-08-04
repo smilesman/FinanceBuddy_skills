@@ -1,0 +1,24 @@
+{
+ "id": "3020",
+ "kind": "mcp",
+ "name": "apogeoapi",
+ "fingerprint_md5": "ef04367efd7f7ba4e06456af5199fca5",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# @apogeoapi/mcp\r\n\r\nMCP（模型上下文协议）服务器 [ApogeoAPI](https://app.apogeoapi.com) --Claude Desktop、Cursor和任何兼容MCP的AI助手的地理数据、实时汇率和IP地理位置。\r\n\r\n## 它做什么\r\n\r\n该服务器将ApogeoAPI的REST端点作为AI助手可以直接调用的工具公开。询问Claude“阿根廷当前的美元汇率是多少？”或“Geolocate IP 8.8.8.8”，它将自动调用正确的工具。\r\n\r\n## 可用工具\r\n\r\n|工具|说明|需要计划|\r\n|------|-------------|---------------|\r\n| `get_country` |按ISO2/ISO3代码列出的完整国家数据——姓名、首都、地区、人口、货币、实时美元汇率、时区、电话代码|免费|\r\n| `list_countries` |250多个国家的分页列表|免费|\r\n| `search_countries` |按部分名称搜索国家|免费|\r\n| `get_states` |一个国家的所有州/省|基本+|\r\n| `get_cities` |按数字州ID列出的一个州的所有城市|基本+|\r\n| `get_currency_rate` |一国货币的实时美元汇率（每4小时更新一次）|基本+|\r\n| `geolocate_ip` |任何IPv4/IPv6的国家、地区、城市、坐标、时区和欧盟成员资格|基本+|\r\n| `global_search` |在一个查询中跨国家、州和城市搜索|免费|\r\n\r\n## 安装\r\n\r\n### 克劳德桌面\r\n\r\n将以下内容添加到您的 `claude_desktop_config.json`:\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"apogeoapi\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@apogeoapi/mcp\"],\r\n      \"env\": {\r\n        \"APOGEOAPI_KEY\": \"apogeoapi_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n保存文件后重新启动Claude Desktop。ApogeoAPI工具将出现在Claude的工具列表中。\r\n\r\n### 光标\r\n\r\n在下面添加相同的块 `mcpServers` 在Cursor的MCP配置文件中(`~/.cursor/mcp.json`).\r\n\r\n### 手动构建\r\n\r\n```bash\r\ngit clone https://github.com/APOGEOAPI/apogeoapi-mcp.git\r\ncd apogeoapi-mcp\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n然后直接引用构建的文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"apogeoapi\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/absolute/path/to/mcp-server/dist/index.js\"],\r\n      \"env\": {\r\n        \"APOGEOAPI_KEY\": \"apogeoapi_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 获取API密钥\r\n\r\n1. 在以下网址创建免费帐户 [App.apogeoapi.com](https://app.apogeoapi.com)\r\n1. 首选 **API密钥** 并生成新密钥\r\n1. 将密钥粘贴到 `APOGEOAPI_KEY` 以上环境变量\r\n\r\n免费计划不需要信用卡（每月需要1000张）。\r\n\r\n## 计划要求\r\n\r\n|功能|免费|基础版（每月19美元）|入门版（每月29美元）|专业版（每月79美元）|\r\n|---------|------|----------------|-------------------|-----------------------|\r\n|国家（列表、搜索、获取）|是|是|有|有|\r\n|全局搜索|是|是|有|有|\r\n|州和城市|否|是|是|有|是|\r\n|实时汇率|否|是|是||\r\n|IP地理位置|否|是|是||\r\n|每月请求|1000|15000|10000|500000|\r\n\r\n升级至 [app.apogeoapi.com/dashboard/billing](https://app.apogeoapi.com/dashboard/billing).\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `APOGEOAPI_KEY` |是|仪表板中的API密钥|\r\n| `APOGEOAPI_BASE_URL` |否|覆盖API基础URL（默认值： `https://api.apogeoapi.com`) |\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "apogeoapi": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@apogeoapi/mcp"
+   ],
+   "env": {
+    "APOGEOAPI_KEY": "apogeoapi_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+   }
+  }
+ }
+}

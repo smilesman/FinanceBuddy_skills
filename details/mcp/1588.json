@@ -1,0 +1,22 @@
+{
+ "id": "1588",
+ "kind": "mcp",
+ "name": "mcp-server-antv",
+ "fingerprint_md5": "94a7c7523b633e5cc444a232d38fe542",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP服务器AntV  [](https://www.npmjs.com/package/@antv/mcp-server-antv) [](https://smithery.ai/server/@antvis/mcp-server-antv) [](https://www.npmjs.com/package/@antv/mcp-server-antv)\r\n\r\n> A. **模型上下文协议（MCP）** 为AI开发和QA设计的服务器，提供 **AntV** 使用最新API的文档上下文和代码示例。\r\n\r\n\r\n支持 **G2型**, **G6**，以及 **地上二层** 用于声明性可视化工作流的库，具有 **第2页**, **X6**, **第七层**，以及更多（包括 **艾娃**, **模数转换器**，以及 **G**)即将到来。\r\n\r\n## ✨ 特性\r\n\r\n- ✅ **AntV 5.x兼容性**：利用最新的API实现性能和模块化。\r\n- 🧩 **多库支持**：G2（2D图表）、G6（图形/网络）和F2（移动图表）。\r\n- 🔍 **智能意图提取**：通过以下方式检测库使用情况和任务复杂性 `extract_antv_topic`.\r\n- 📚 **上下文文档**：使用以下命令获取相关的AntV文档和代码片段 `query_antv_document`.\r\n\r\n## 🛠️ 快速开始\r\n\r\n### 需求\r\n\r\n- Node.js>=v18.0.0\r\n- 光标、VSCode、Cline、Claude Desktop或其他MCP客户端。\r\n\r\n### 连接到光标\r\n\r\n[](https://cursor.com/install-mcp?name=mcp-server-antv&config=eyJjb21tYW5kIjoibnB4IC15IEBhbnR2L21jcC1zZXJ2ZXItYW50diJ9)\r\n\r\n首选 `Settings` -> `Cursor Settings` -> `MCP` -> `Add new global MCP server`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-server-antv\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@antv/mcp-server-antv\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\nOn Window系统：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-server-antv\": {\r\n      \"command\": \"cmd\",\r\n      \"args\": [\"/c\", \"npx\", \"-y\", \"@antv/mcp-server-antv\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 连接到VSCode\r\n\r\n[](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%257B%2522name%22%3A%22mcp-server-antv%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40antv%2Fmcp-server-antv%22%5D%7D)\r\n\r\n将以下配置粘贴到VSCode中 `~/.vscode/mcp.json` 文件是推荐的方法。\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"mcp-server-antv\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@antv/mcp-server-antv\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或命令行配置\r\n\r\n```bash\r\ncode --add-mcp \"{\\\"name\\\":\\\"mcp-server-antv\\\",\\\"command\\\": \\\"npx\\\",\\\"args\\\": [\\\"-y\\\",\\\"@antv/mcp-server-antv\\\"]}\"\r\n```\r\n\r\n## 🧪 工作流示例\r\n\r\n示例工作流：\r\n\r\n<video src=\"https://github.com/user-attachments/assets/242471c6-33f5-4588-95f5-96a3f26aab21\" ></video>\r\n\r\n## 🧰 工具概述\r\n\r\n|工具|功能|\r\n| --------------------- | ---------------------------------------------------------------------------- |\r\n| `extract_antv_topic` |提取用户意图，检测库（G2/G6/F2），并推断任务复杂性。 |\r\n| `query_antv_document` |使用context7获取最新文档和代码示例|\r\n\r\n## 🔨 贡献\r\n\r\n克隆仓库\r\n\r\n```bash\r\ngit clone https://github.com/antvis/mcp-server-chart.git\r\ncd mcp-server-chart\r\n```\r\n\r\n安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n启动MCP服务器：\r\n\r\n```bash\r\nnpm run start\r\n```\r\n\r\n## 📄 许可证\r\n\r\nMIT@[AntV](https://github.com/antvis).\r\n",
+ "config": {
+  "mcp-server-antv": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@antv/mcp-server-antv"
+   ],
+   "env": {}
+  }
+ }
+}

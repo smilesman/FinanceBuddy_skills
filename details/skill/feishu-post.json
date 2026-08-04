@@ -1,0 +1,12 @@
+{
+ "id": "feishu-post",
+ "kind": "skill",
+ "name": "feishu-post",
+ "fingerprint_md5": "6f36a9eef5ac9c0c68e618ada20e255b",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# Feishu Post (RichText) Skill\r\n\r\n向飞书发送富文本（Post）消息。\r\n此格式与卡片不同。它支持原生富文本元素，但在布局上不如卡片灵活。\r\n它更适合混合图片/链接的长文本。\r\n\r\n## 先决条件\r\n\r\n- 先安装 `feishu-common`。\r\n- 此 skill 通过 `utils/feishu-client.js` 依赖 `../feishu-common/index.js`。\r\n\r\n## 功能\r\n- **原生表情支持**：自动将 `[微笑]`、`[得意]` 等转换为飞书原生表情标签。\r\n- **类 Markdown 解析**：支持简单的换行和段落。\r\n- **富文本**：使用飞书的 Post 内容结构。\r\n\r\n## 用法\r\n\r\n```bash\r\nnode skills/feishu-post/send.js --target \"ou_...\" --text-file \"temp/msg.md\" --title \"可选标题\"\r\n```\r\n\r\n## 选项\r\n- `-t, --target <id>`: 目标 ID（用户 `ou_...` 或聊天 `oc_...`）。\r\n- `-x, --text <text>`: 文本内容（支持 `\\n` 换行和 `[emoji]` 标签）。\r\n- `-f, --text-file <path>`: 从文件读取内容。\r\n- `--title <text>`: 帖子的标题。\r\n- `--reply-to <id>`: 要回复的消息 ID。\r\n\r\n## 表情列表\r\n支持的表情包括：`[微笑]`、`[色]`、`[亲亲]`、`[大哭]`、`[强]`、`[加油]` 等。\r\n完整映射请参见 `emoji-map.js`。",
+ "config": {}
+}

@@ -1,0 +1,21 @@
+{
+ "id": "1985",
+ "kind": "mcp",
+ "name": "mcp-cryptowallet-evm",
+ "fingerprint_md5": "6061864e326b328884ce7eacaba680d5",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP加密钱包EVM\r\n\r\n该存储库包含一个模型上下文协议（MCP）服务器，该服务器为Claude提供了通过ethers.js v5访问以太坊和EVM兼容区块链操作的权限。该服务器使Claude能够执行创建钱包、检查余额、发送交易以及与EVM兼容区块链上的智能合约交互等操作。\r\n\r\n\r\n## 概述\r\n\r\nMCP服务器向Claude公开了以下工具：\r\n\r\n### 钱包创建和管理\r\n\r\n- `wallet_create_random`：使用随机私钥创建新钱包\r\n- `wallet_from_private_key`：使用私钥创建钱包\r\n- `wallet_from_mnemonic`：根据助记短语创建钱包\r\n- `wallet_from_encrypted_json`：通过解密加密的JSON钱包创建钱包\r\n- `wallet_encrypt`：用密码加密钱包\r\n\r\n### 钱包属性\r\n\r\n- `wallet_get_address`：获取钱包地址\r\n- `wallet_get_public_key`：获取钱包公钥\r\n- `wallet_get_private_key`：获取钱包私钥（带有适当的安全警告）\r\n- `wallet_get_mnemonic`：获取钱包助记符短语（如果可用）\r\n\r\n### 区块链方法\r\n\r\n- `wallet_get_balance`：取钱包的余额\r\n- `wallet_get_chain_id`：获取钱包连接的链ID\r\n- `wallet_get_gas_price`：获取当前的天然气价格\r\n- `wallet_get_transaction_count`：获取此帐户发送的交易数（nonce）\r\n- `wallet_call`：调用合约方法而不发送交易\r\n\r\n### 交易方式\r\n\r\n- `wallet_send_transaction`：发送交易\r\n- `wallet_sign_transaction`：签署交易而不发送\r\n- `wallet_populate_transaction`：用缺失的字段填充交易\r\n\r\n### 签名方法\r\n\r\n- `wallet_sign_message`：签署消息\r\n- `wallet_sign_typed_data`：符号类型数据（EIP-712）\r\n- `wallet_verify_message`：验证已签名的消息\r\n- `wallet_verify_typed_data`：验证已签名的键入数据\r\n\r\n### 提供者方法\r\n\r\n- `provider_get_block`：按数字或哈希值获取块\r\n- `provider_get_transaction`：通过哈希值获取交易\r\n- `provider_get_transaction_receipt`：获取交易收据\r\n- `provider_get_code`：获取地址处的代码\r\n- `provider_get_storage_at`：将存储器放在一个地址的位置\r\n- `provider_estimate_gas`：估算交易所需的天然气\r\n- `provider_get_logs`：获取与筛选器匹配的日志\r\n- `provider_get_ens_resolver`：获取名称的ENS解析器\r\n- `provider_lookup_address`：查找ENS名称以获取地址\r\n- `provider_resolve_name`：将ENS名称解析为地址\r\n\r\n### 网络方法\r\n\r\n- `network_get_network`：获取当前网络信息\r\n- `network_get_block_number`：获取当前区块编号\r\n- `network_get_fee_data`：获取当前费用数据（基本费用、最高优先费用等）\r\n\r\n## 先决条件\r\n\r\n- Node.js（v16或更高版本）\r\n- Claude桌面应用程序\r\n\r\n## 安装\r\n\r\n### 选项1：使用npx（推荐）\r\n\r\n您可以使用npx直接运行MCP服务器，而无需安装：\r\n\r\n```bash\r\nnpx @mcp-dockmaster/mcp-cryptowallet-evm\r\n```\r\n\r\n这将直接从npm下载并执行服务器。\r\n\r\n### 选项2：手动安装\r\n\r\n1. 克隆此存储库：\r\n\r\n   ```bash\r\n   git clone https://github.com/dcSpark/mcp-cryptowallet-evm.git\r\n   cd mcp-cryptowallet-evm\r\n   ```\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   npm ci\r\n   ```\r\n\r\n1. 构建项目：\r\n\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n## 配置\r\n\r\n### 环境变量\r\n\r\nMCP服务器支持以下环境变量：\r\n\r\n- `PRIVATE_KEY`：当没有明确提供钱包时，用于钱包操作的可选私钥\r\n\r\n### 配置Claude桌面\r\n\r\n要配置Claude Desktop以使用此MCP服务器，请执行以下操作：\r\n\r\n1. 打开克劳德桌面\r\n\r\n1. 导航到Claude Desktop配置文件：\r\n\r\n   - macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n   - Linux： `~/.config/Claude/claude_desktop_config.json`\r\n\r\n1. 添加MCP服务器配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-cryptowallet-evm\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"@mcp-dockmaster/mcp-cryptowallet-evm\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者，如果您在本地安装了该软件包：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-cryptowallet-evm\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"/path/to/your/mcp-cryptowallet-evm/build/index.js\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 本地运行\r\n\r\n```bash\r\nnode build/index.js\r\n```\r\n\r\n## 用法\r\n\r\n配置后，重新启动Claude Desktop。Claude现在可以访问以太坊和EVM兼容的区块链工具。你可以要求克劳德：\r\n\r\n1. 创建新钱包：\r\n\r\n   ```\r\n   Can you create a new Ethereum wallet for me?\r\n   ```\r\n\r\n1. 检查钱包余额：\r\n\r\n   ```\r\n   What's the balance of the Ethereum wallet address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e?\r\n   ```\r\n\r\n1. 发送交易：\r\n\r\n   ```\r\n   Can you help me send 0.1 ETH to 0x742d35Cc6634C0532925a3b844Bc454e4438f44e?\r\n   ```\r\n\r\nClaude将使用MCP服务器直接与以太坊区块链交互。\r\n\r\n## 发展\r\n\r\n### 添加新工具\r\n\r\n要向MCP服务器添加新工具，请执行以下操作：\r\n\r\n1. 在中定义工具 `src/tools.ts`\r\n1. 在相应的处理程序文件中创建处理程序函数\r\n1. 将处理程序添加到 `handlers` 对象在 `src/tools.ts`\r\n\r\n### 建筑\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "mcp-cryptowallet-evm": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@mcp-dockmaster/mcp-cryptowallet-evm"
+   ],
+   "env": {}
+  }
+ }
+}

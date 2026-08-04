@@ -1,0 +1,24 @@
+{
+ "id": "1568",
+ "kind": "mcp",
+ "name": "mcp-github-trending",
+ "fingerprint_md5": "93ec015805d54f120e9e61eb453bdd7f",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://mseep.ai/app/hetaobackend-mcp-github-trending)\r\n\r\n# mcp-github趋势mcp服务器\r\n\r\nMCP服务器，通过简单的API接口提供对GitHub趋势库和开发人员数据的访问。\r\n\r\n[](https://smithery.ai/server/@hetaoBackend/github-trending-mcp-server)\r\n\r\n## 特性\r\n\r\n- 访问GitHub趋势存储库和开发人员数据\r\n- 按编程语言筛选\r\n- 按时间段筛选（每日、每周、每月）\r\n- 按口语筛选\r\n- 返回格式良好的JSON响应\r\n\r\n## 工具\r\n\r\n服务器实现了以下工具：\r\n\r\n### get_github_trepending_repositories\r\n\r\n使用以下参数从GitHub获取趋势存储库：\r\n\r\n- `language` （可选）：用于过滤存储库的编程语言（例如“python”、“javascript”）\r\n- `since` （可选）：按（“每日”、“每周”、“每月”）筛选存储库的时间段。默认为“每日”\r\n- `spoken_language` （可选）：按以下方式过滤存储库的口语\r\n\r\n示例响应：\r\n\r\n```json\r\n[\r\n  {\r\n    \"name\": \"repository-name\",\r\n    \"fullname\": \"owner/repository-name\",\r\n    \"url\": \"https://github.com/owner/repository-name\",\r\n    \"description\": \"Repository description\",\r\n    \"language\": \"Python\",\r\n    \"stars\": 1000,\r\n    \"forks\": 100,\r\n    \"current_period_stars\": 50\r\n  }\r\n]\r\n```\r\n\r\n### get_github_trepending_developers\r\n\r\n使用以下参数从GitHub获取趋势开发人员：\r\n\r\n- `language` （可选）：用于过滤的编程语言（例如“python”、“javascript”）\r\n- `since` （可选）：过滤的时间段（“每日”、“每周”、“每月”）。默认为“每日”\r\n\r\n示例响应：\r\n\r\n```json\r\n[\r\n  {\r\n    \"username\": \"developer\",\r\n    \"name\": \"Developer Name\",\r\n    \"url\": \"https://github.com/developer\",\r\n    \"avatar\": \"https://avatars.githubusercontent.com/u/123456\",\r\n    \"repo\": {\r\n      \"name\": \"repository-name\",\r\n      \"description\": \"Repository description\",\r\n      \"url\": \"https://github.com/developer/repository-name\"\r\n    }\r\n  }\r\n]\r\n```\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Python 3.12\r\n\r\n### 安装步骤\r\n\r\n安装软件包：\r\n\r\n```bash\r\npip install mcp-github-trending\r\n```\r\n\r\n### Claude桌面配置\r\n\r\n在MacOS上：\r\n\r\n```bash\r\n~/Library/Application\\ Support/Claude/claude_desktop_config.json\r\n```\r\n\r\n在Windows上：\r\n\r\n```bash\r\n%APPDATA%/Claude/claude_desktop_config.json\r\n```\r\n\r\n<details>\r\n <summary>Development/Unpublished Servers Configuration</summary>\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-github-trending\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/mcp-github-trending\",\r\n        \"run\",\r\n        \"mcp-github-trending\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n</details>\r\n\r\n<details>\r\n <summary>Published Servers Configuration</summary>\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-github-trending\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"mcp-github-trending\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n</details>\r\n\r\n## 发展\r\n\r\n### 建筑与出版\r\n\r\n1. 同步依赖关系并更新锁文件：\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n2. 构建包分发：\r\n\r\n```bash\r\nuv build\r\n```\r\n\r\n3. 发布到PyPI：\r\n\r\n```bash\r\nuv publish\r\n```\r\n\r\n注意：通过环境变量或命令标志设置PyPI凭据：\r\n\r\n- 令牌： `--token` 或 `UV_PUBLISH_TOKEN`\r\n- 用户名/密码： `--username`/`UV_PUBLISH_USERNAME` 和 `--password`/`UV_PUBLISH_PASSWORD`\r\n\r\n### 调试\r\n\r\n为了获得最佳的调试体验，请使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector).\r\n\r\n通过以下方式启动MCP检查器 [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm):\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv --directory /path/to/mcp-github-trending run mcp-github-trending\r\n```\r\n\r\n检查器将显示一个URL，您可以在浏览器中访问该URL以开始调试。\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "mcp-github-trending": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/mcp-github-trending",
+    "run",
+    "mcp-github-trending"
+   ],
+   "env": {}
+  }
+ }
+}

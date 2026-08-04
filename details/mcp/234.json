@@ -1,0 +1,25 @@
+{
+ "id": "234",
+ "kind": "mcp",
+ "name": "grain_uvx",
+ "fingerprint_md5": "ccc779347275cc4f4120f6756e8b9ae7",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://mseep.ai/app/eadm-grain-mcp-server)\r\n\r\n# Grain MCP服务器\r\n\r\nA. [模型上下文协议](https://github.com/modelcontextprotocol) 服务器 [谷物](https://grain.com/)，一种记录和转录会议的服务。\r\n\r\n该服务器通过MCP提供与Grain的集成，允许用户访问Grain功能，而无需企业API（仅适用于企业订阅）或Zapier等付费集成。该服务基于Playwright，用于浏览器自动化。\r\n\r\n## 安装\r\n\r\n### 手动安装\r\n\r\n将Grain MCP服务器配置添加到MCP客户端：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"grain_uvx\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--from\",\r\n        \"git+https://github.com/eadm/grain-mcp-server\",\r\n        \"grain-mcp-server\",\r\n        \"--user-data-dir\",\r\n        \"<absolute-path-to-browser-session-data>\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `` 使用要存储浏览器会话数据的绝对路径。首次使用MCP时，您需要通过浏览器登录Grain。\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n1. **`get_all_meetings`**：从Grain检索所有会议\r\n\r\n   - 返回包含会议信息的词典列表，包括：\r\n     - `id` （string）：会议ID\r\n     - `title` （string）：会议标题\r\n     - `url` （string）：访问会议的URL\r\n     - `date` （string）：ISO格式的会议日期\r\n\r\n1. **`download_meeting_transcript`**：下载会议记录\r\n\r\n   - 所需输入：\r\n     - `absolute_save_path` （string）：保存成绩单的文件路径\r\n     - `meeting_id` （string）：会议的唯一标识符\r\n     - `transcription_type` （string）：转录文件的格式（“vtt”或“srt”）\r\n   - 退货：\r\n     - `bool`：如果下载成功，则为True，否则为False\r\n\r\n## 用法示例\r\n\r\n您可以使用MCP客户端与Grain交互的一些示例提示：\r\n\r\n1. “显示我最近的所有会议”→ 执行 `get_all_meetings` 用于检索存储在Grain中的所有会议列表的工具\r\n\r\n1. “下载我上次团队会议的记录”→ use `get_all_meetings` 要查找会议，请使用 `download_meeting_transcript` 下载成绩单\r\n\r\n## 发展\r\n\r\n1. 安装依赖项：\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n2. 运行应用程序：\r\n\r\n```bash\r\nuv run grain-mcp-server\r\n```\r\n\r\n3. 以调试模式运行：\r\n\r\n```bash\r\nuv run grain-mcp-server --debug\r\n```\r\n\r\n4. 运行测试：\r\n\r\n```bash\r\nuv run pytest\r\n```\r\n",
+ "config": {
+  "grain_uvx": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/eadm/grain-mcp-server",
+    "grain-mcp-server",
+    "--user-data-dir",
+    "<absolute-path-to-browser-session-data>"
+   ],
+   "env": {}
+  }
+ }
+}

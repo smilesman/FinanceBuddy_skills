@@ -1,0 +1,22 @@
+{
+ "id": "3625",
+ "kind": "mcp",
+ "name": "seo-mcp-2",
+ "fingerprint_md5": "6db2b8142a2b529eb5bc6bc8fa64ee9c",
+ "download_count": 0,
+ "category": "数据抓取",
+ "tags": "",
+ "version": "",
+ "readme": "# seo mcp\r\n\r\n一个开源的MCP（模型上下文协议）服务器，将Claude变成一个完整的SEO顾问。提供29个工具，用于页面分析、可访问性审计、网站爬行、核心网络生命体征、结构化数据验证、关键字研究、反向链接分析等。\r\n\r\n**29个工具中有23个使用零个API密钥** -只需安装并开始分析。\r\n\r\n## 快速开始\r\n\r\n### 使用克劳德代码\r\n\r\n添加到您的 `.mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"seo-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@autom8minds/seo-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用克劳德桌面\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"seo-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@autom8minds/seo-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 码头工人\r\n\r\n```bash\r\ndocker run -i ghcr.io/Autom8Minds/seo-mcp\r\n```\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone https://github.com/Autom8Minds/seo-mcp.git\r\ncd seo-mcp\r\nnpm install\r\nnpm run build\r\nnpm start\r\n```\r\n\r\n## 工具\r\n\r\n### A类：页面分析（11个工具，不需要API密钥）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `analyze_page` |全页面SEO审计，0-100分（包括Flesch-Kincaid可读性、文本与HTML比率、瘦内容检测）|\r\n| `analyze_headings` |H1-H6结构和层次验证|\r\n| `analyze_images` |Alt文本、文件大小、格式、延迟加载审核|\r\n| `analyze_internal_links` |链接映射、锚文本分析、断链检测|\r\n| `extract_schema` |JSON-LD/微数据提取和谷歌验证|\r\n| `analyze_robots_txt` |解析和测试robots.txt规则|\r\n| `analyze_sitemap` |XML站点地图验证和URL分析|\r\n| `audit_security_headers` |HSTS、CSP、X-Frame-Options、混合内容检测|\r\n| `analyze_url_structure` |URL长度、深度、大写、下划线、参数|\r\n| `validate_hreflang` |Hreflang语言代码，x-default，返回链接验证|\r\n| `audit_accessibility` |WCAG检查：lang、表单标签、空按钮/链接、标题、ARIA、跳过导航|\r\n\r\n### B类：性能（2个工具，免费API）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `check_core_web_vitals` |LCP、INP、CLS+灯塔得分|\r\n| `check_mobile_friendly` |移动视口、字体、点击目标|\r\n\r\n### C类：研究（4个工具，付费API密钥）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `research_keywords` |搜索量、难度、CPC、趋势|\r\n| `analyze_serp` |SERP功能、特色片段、PAA|\r\n| `analyze_backlinks` |反向链接配置文件和锚文本分析|\r\n| `analyze_domain_authority` |域的DA指标|\r\n\r\n### D类：谷歌搜索控制台（3个工具，OAuth2）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `gsc_performance` |点击次数、展示次数、点击率（按查询/页面）|\r\n| `gsc_index_coverage` |索引状态和URL检查|\r\n| `gsc_sitemaps` |提交的站点地图状态|\r\n\r\n### E类：世代（3种工具，本地）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `generate_schema` |生成有效的Schema.org JSON-LD|\r\n| `generate_robots_txt` |从配置生成robots.txt|\r\n| `generate_meta_suggestions` |优化标题/元数据/OG建议|\r\n\r\n### 类别F：站点爬网程序（6个工具，不需要API密钥）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `crawl_site` |启动BFS站点爬网--立即返回爬网ID|\r\n| `crawl_status` |检查爬网进度（已爬网/排队/出错的页面）|\r\n| `crawl_results` |聚合问题、重复、近乎重复、重定向链、孤立页面|\r\n| `detect_orphan_pages` |使用站点地图进行交叉引用抓取，以查找孤立/未列出的页面|\r\n| `compare_crawls` |区分两种抓取：新的/删除的页面、更改的标题、新的/已解决的问题|\r\n| `list_crawls` |列出所有爬网会话（在内存中并保存到磁盘）|\r\n\r\n## API密钥\r\n\r\n大多数工具都是开箱即用的。可选API密钥解锁附加功能：\r\n\r\n|钥匙|工具已解锁|如何获取|\r\n|-----|---------------|------------|\r\n| `PAGESPEED_API_KEY` |性能工具的速率限制更高| [谷歌云控制台](https://console.cloud.google.com/) |\r\n| `DATAFORSEO_LOGIN` + `PASSWORD` |关键词研究、SERP、反向链接、DA| [DataForSEO](https://dataforseo.com/) |\r\n| `MOZ_ACCESS_ID` + `SECRET_KEY` |反向链接，DA（DataForSEO的替代品）| [Moz API](https://moz.com/products/api) |\r\n| `GSC_CLIENT_ID` + `SECRET` + `REFRESH_TOKEN` |谷歌搜索控制台工具| [GSC API设置](https://developers.google.com/webmaster-tools/) |\r\n\r\n创建一个 `.env` 模板中的文件：\r\n\r\n```bash\r\ncp .env.example .env\r\n```\r\n\r\n## 使用示例\r\n\r\n连接后，问克劳德：\r\n\r\n- “分析SEOhttps://example.com\"\r\n- “抓取我的网站并找到所有SEO问题”\r\n- “检查我网站上的安全标题”\r\n- “检查我主页的核心网络重要信息”\r\n- “提取并验证此产品页面上的结构化数据”\r\n- “为这些问题生成常见问题解答模式”\r\n- “分析我的标题结构并检查关键字是否存在”\r\n- “验证我的国际页面上的hreflang标签”\r\n- “我的robots.txt是否屏蔽了重要页面？”\r\n\r\n## 同伴：seo技能\r\n\r\n为了获得最大效果，请将此MCP服务器与 [seo技能](https://github.com/Autom8Minds/seo-skills) -7 Claude Code技能，教授SEO最佳实践、内容策略、模式标记等。\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm install          # Install dependencies\r\nnpm run build        # Compile TypeScript\r\nnpm test             # Run tests\r\nnpm run dev          # Development mode with tsx\r\nnpm run lint         # Type check\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "seo-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@autom8minds/seo-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

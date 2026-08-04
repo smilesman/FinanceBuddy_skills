@@ -1,0 +1,24 @@
+{
+ "id": "1552",
+ "kind": "mcp",
+ "name": "mcp-ankiconnect",
+ "fingerprint_md5": "2babb518264b9d2536bf5ba11c7ec250",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp连接mcp服务器\r\n\r\n通过MCP将Claude对话与AnkiConnect连接起来，使间隔重复变得像“让我们浏览一下今天的抽认卡”或“为此制作抽认卡“一样简单\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n服务器实现了以下工具：\r\n\r\n- `num_cards_due_today`：获取今天到期的卡片数量\r\n\r\n  - 可选的 `deck` 按特定甲板过滤的参数\r\n  - 返回所有牌组或指定牌组的到期卡计数\r\n\r\n- `get_due_cards`：获取到期待审核的卡片\r\n\r\n  - 可选的 `limit` 参数（默认值：5）用于控制卡片数量\r\n  - 可选的 `deck` 按特定甲板过滤的参数\r\n  - 可选的 `today_only` 参数（默认值：true）仅显示今天的卡片\r\n  - 返回XML格式的卡片，其中包含问题和答案\r\n\r\n- `submit_reviews`：提交已审核卡片的答案\r\n\r\n  - 获取列表 `reviews` 随着 `card_id` 和 `rating`\r\n  - 评分：“错误”、“困难”、“良好”、“容易”\r\n  - 返回已提交评论的确认\r\n\r\n- `inspect_cards`：查看给定卡ID或钞票ID的每张卡状态（暂停、缓解、间隔、日程安排、可选审核历史）。\r\n\r\n- `update_note_fields`：修改一个注释字段的文本内容。使用与相同的MathJax/代码转换 `add_note`.\r\n\r\n- `update_note_tags`：在一个或多个笔记上添加和/或删除标签。\r\n\r\n- `set_suspended`：暂停或取消暂停一张或多张卡。\r\n\r\n- `change_deck`：将卡片（按卡片ID）移动到另一副牌中。\r\n\r\n- `reschedule_cards`：设置到期日，忘记或重新学习一张或多张卡片。\r\n\r\n## 配置\r\n\r\n### 先决条件\r\n\r\n- Anki一定在跑步 [AnkiConnect插件](https://ankiweb.net/shared/info/2055492159) 已安装（插件id 2055492159）\r\n  由于AppSleep功能，AnkiConnect在Mac上可能会很慢，因此请为Anki禁用它。为此，请在终端中运行以下命令。\r\n  ```bash\r\n  defaults write net.ankiweb.dtop NSAppSleepDisabled -bool true\r\n  defaults write net.ichi2.anki NSAppSleepDisabled -bool true\r\n  defaults write org.qt-project.Qt.QtWebEngineCore NSAppSleepDisabled -bool true\r\n  ```\r\n\r\n### 安装\r\n\r\n## 快速入门\r\n\r\n1. 在Anki中安装AnkiConnect插件：\r\n\r\n   - 工具>附加组件>获取附加组件。..\r\n   - 输入代码： `2055492159`\r\n   - 重新启动Anki\r\n\r\n1. 配置Claude桌面：\r\n\r\n   在MacOS上： `~/Library/Application\\ Support/Claude/claude_desktop_config.json`\r\n   在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n   添加此配置：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"mcp-ankiconnect\": {\r\n         \"command\": \"uv\",\r\n         \"args\": [\"run\", \"--with\", \"mcp-ankiconnect\", \"mcp-ankiconnect\"]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. 重新启动Anki和Claude桌面\r\n\r\n### 调试\r\n\r\n由于MCP服务器在stdio上运行，调试可能具有挑战性。为了达到最佳调试效果\r\n经验，我们强烈建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector).\r\n首先，克隆存储库并安装依赖项：\r\n\r\n```bash\r\ngit clone https://github.com/samefarrar/mcp-ankiconnect.git\r\ncd mcp-ankiconnect\r\nuv sync\r\n```\r\n\r\n您可以通过MCP CLI启动MCP检查器：\r\n\r\n```bash\r\nuv run mcp dev mcp_ankiconnect/server.py\r\n```\r\n\r\n启动后，检查器将显示一个URL，您可以在浏览器中访问该URL以开始调试。\r\n",
+ "config": {
+  "mcp-ankiconnect": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--with",
+    "mcp-ankiconnect",
+    "mcp-ankiconnect"
+   ],
+   "env": {}
+  }
+ }
+}

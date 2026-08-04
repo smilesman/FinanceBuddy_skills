@@ -1,0 +1,12 @@
+{
+ "id": "implementing-pam-for-database-access",
+ "kind": "skill",
+ "name": "implementing-pam-for-database-access",
+ "fingerprint_md5": "78f5cb4c15582d025f08072d466c9eaa",
+ "download_count": 0,
+ "category": "MySQL",
+ "tags": "",
+ "version": "",
+ "readme": "# 为数据库访问实施 PAM\r\n\r\n## 概述\r\n为数据库系统部署特权访问管理，包括 Oracle、SQL Server、PostgreSQL 和 MySQL。涵盖会话代理配置、凭证保管、查询审计、动态凭证生成和最小权限数据库角色。\r\n\r\n\r\n## 何时使用\r\n\r\n- 在您的环境中部署或配置为数据库访问实施 PAM 功能时\r\n- 建立符合合规要求的安全控制时\r\n- 为此域构建或改进安全架构时\r\n- 进行需要此实施的安全评估时\r\n\r\n## 前置条件\r\n\r\n- 熟悉身份访问管理概念和工具\r\n- 访问测试或实验室环境以安全执行\r\n- Python 3.8+ 并安装了所需依赖\r\n- 任何测试活动的适当授权\r\n\r\n## 目标\r\n- 实施全面的为数据库访问实施 PAM 能力\r\n- 建立自动发现和监控流程\r\n- 与企业 IAM 和安全工具集成\r\n- 生成合规就绪的文档和报告\r\n- 符合 NIST 800-53 访问控制要求\r\n\r\n## 安全控制\r\n| 控制 | NIST 800-53 | 描述 |\r\n|---------|-------------|-------------|\r\n| 账户管理 | AC-2 | 生命周期管理 |\r\n| 访问执行 | AC-3 | 基于策略的访问控制 |\r\n| 最小权限 | AC-6 | 最小必要权限 |\r\n| 审计日志 | AU-3 | 认证和访问事件 |\r\n| 身份识别 | IA-2 | 用户和服务识别 |\r\n\r\n## 验证\r\n- [ ] 在非生产环境中测试实施\r\n- [ ] 配置并强制执行安全策略\r\n- [ ] 启用审计日志并转发到 SIEM\r\n- [ ] 完成文档和运行手册\r\n- [ ] 生成合规证据",
+ "config": {}
+}

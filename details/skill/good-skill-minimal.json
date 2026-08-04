@@ -1,0 +1,12 @@
+{
+ "id": "good-skill-minimal",
+ "kind": "skill",
+ "name": "good-skill-minimal",
+ "fingerprint_md5": "3242762161cc120fc84f98f9fb071258",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Minimal Skill\r\n\r\nThis has the bare minimum required fields.",
+ "config": {}
+}

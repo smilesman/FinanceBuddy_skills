@@ -1,0 +1,25 @@
+{
+ "id": "1255",
+ "kind": "mcp",
+ "name": "redis",
+ "fingerprint_md5": "727befde41019f92447f9042d07a6f9b",
+ "download_count": 0,
+ "category": "缓存",
+ "tags": "",
+ "version": "",
+ "readme": "# Redis MCP服务器\r\n\r\n\r\n一种模型上下文协议（MCP）服务器，提供对Redis数据库操作的访问。\r\n\r\n## 项目结构\r\n\r\n```\r\nsrc/\r\n├── interfaces/\r\n│   └── types.ts           # Shared TypeScript interfaces and types\r\n├── tools/\r\n│   ├── base_tool.ts       # Abstract base class for Redis tools\r\n│   ├── tool_registry.ts   # Registry managing all available Redis tools\r\n│   ├── hmset_tool.ts      # HMSET Redis operation\r\n│   ├── hget_tool.ts       # HGET Redis operation\r\n│   ├── hgetall_tool.ts    # HGETALL Redis operation\r\n│   ├── scan_tool.ts       # SCAN Redis operation\r\n│   ├── set_tool.ts        # SET Redis operation\r\n│   ├── get_tool.ts        # GET Redis operation\r\n│   ├── del_tool.ts        # DEL Redis operation\r\n│   ├── zadd_tool.ts       # ZADD Redis operation\r\n│   ├── zrange_tool.ts     # ZRANGE Redis operation\r\n│   ├── zrangebyscore_tool.ts # ZRANGEBYSCORE Redis operation\r\n│   └── zrem_tool.ts       # ZREM Redis operation\r\n└── redis_server.ts        # Main server implementation\r\n```\r\n\r\n## 可用工具\r\n\r\n|工具|类型|描述|输入架构|\r\n|------|------|-------------|--------------|\r\n|hmset |哈希命令|将多个哈希字段设置为多个值| `key`：string（哈希键）\r\n`fields`：object（要设置的字段值对）|\r\n|hget |哈希命令|获取哈希字段的值| `key`：string（哈希键）\r\n`field`：string（要获取的字段）|\r\n|hgetall |哈希命令|获取哈希中的所有字段和值| `key`：string（哈希键）|\r\n|scan |键命令|扫描与模式匹配的Redis键| `pattern`：string（要匹配的模式，例如“user:\\*”）\r\n`count`：number，可选（返回的键数）|\r\n|set | String Command |使用可选的NX和PX选项设置字符串值| `key`：string（设置键）\r\n`value`：string（要设置的值）\r\n`nx`：boolean，可选（仅在不存在时设置）\r\n`px`：number，可选（以毫秒为单位过期）|\r\n|get |字符串命令|获取字符串值| `key`：string（获取密钥）|\r\n|del |键命令|删除键| `key`：string（要删除的键）|\r\n|zadd |排序集命令|向排序集添加一个或多个成员| `key`：string（已排序的集合键）\r\n`members`：对象数组 `score`：编号和 `value`：string|\r\n|zrange|排序集命令|按索引从排序集返回一个成员范围| `key`：string（已排序的集合键）\r\n`start`：number（起始索引）\r\n`stop`：数字（停止索引）\r\n`withScores`：boolean，可选（在输出中包含分数）|\r\n|zrangebyscore |排序集命令|从得分在最小值和最大值之间的排序集中返回成员| `key`：string（已排序的集合键）\r\n`min`：数字（最低分数）\r\n`max`：数字（最高分数）\r\n`withScores`：boolean，可选（在输出中包含分数）|\r\n|zrem |排序集命令|从排序集中删除一个或多个成员| `key`：string（已排序的集合键）\r\n`members`：字符串数组（要删除的成员）|\r\n|sadd | Set Command |向集合中添加一个或多个成员| `key`：string（设置键）\r\n`members`：字符串数组（要添加到集合中的成员）|\r\n|smembers |设置命令|获取集合中的所有成员| `key`：string（设置键）|\r\n\r\n## 用法\r\n\r\n在您的MCP客户端（例如，Claude Desktop、Cline）中配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"redis\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"redis-mcp\", \"--redis-host\", \"localhost\", \"--redis-port\", \"6379\"],\r\n      \"disabled\": false\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 命令行参数\r\n\r\n- `--redis-host`：Redis服务器主机（默认：localhost）\r\n- `--redis-port`：Redis服务器端口（默认值：6379）\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Redis Server for Claude Desktop [史密瑟里](https://smithery.ai/server/redis-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install redis-mcp --client claude\r\n```\r\n\r\n## 发展\r\n\r\n要添加新的Redis工具：\r\n\r\n1. 在中创建新的工具类 `src/tools/` 延伸 `RedisTool`\r\n1. 在中定义工具的界面 `src/interfaces/types.ts`\r\n1. 在中注册该工具 `src/tools/tool_registry.ts`\r\n\r\n工具实现示例：\r\n\r\n```typescript\r\nexport class MyTool extends RedisTool {\r\n  name = 'mytool';\r\n  description = 'Description of what the tool does';\r\n  inputSchema = {\r\n    type: 'object',\r\n    properties: {\r\n      // Define input parameters\r\n    },\r\n    required: ['requiredParam']\r\n  };\r\n\r\n  validateArgs(args: unknown): args is MyToolArgs {\r\n    // Implement argument validation\r\n  }\r\n\r\n  async execute(args: unknown, client: RedisClientType): Promise<ToolResponse> {\r\n    // Implement tool logic\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\nMIT：https://opensource.org/license/mit\r\n",
+ "config": {
+  "redis": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "redis-mcp",
+    "--redis-host",
+    "localhost",
+    "--redis-port",
+    "6379"
+   ],
+   "env": {}
+  }
+ }
+}

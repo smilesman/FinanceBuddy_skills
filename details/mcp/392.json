@@ -1,0 +1,21 @@
+{
+ "id": "392",
+ "kind": "mcp",
+ "name": "qq-music",
+ "fingerprint_md5": "e203c27975b245cb27fa6bda11ebf0d6",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# QQ Music MCP Server\r\n\r\n一个基于 MCP (Model Context Protocol) 的 QQ 音乐 API 服务器，让大语言模型能够搜索音乐、获取歌曲信息、歌词和播放链接。\r\n\r\n## 安装\r\n\r\n```bash\r\n# 使用 pip\r\npip install qq-music-mcp\r\n\r\n# 或使用 uv\r\nuv pip install qq-music-mcp\r\n```\r\n\r\n## 在 Claude Desktop 中使用\r\n\r\n编辑 Claude Desktop 配置文件：\r\n\r\n- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- Windows: `%AppData%\\Claude\\claude_desktop_config.json`\r\n\r\n添加以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"qq-music\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"qq-music-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者如果使用 pip 安装：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"qq-music\": {\r\n      \"command\": \"qq-music-mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后重启 Claude Desktop。\r\n\r\n## 功能\r\n\r\n提供以下 MCP Tools：\r\n\r\n| Tool 名称 | 描述 |\r\n|-----------|------|\r\n| `search_music` | 搜索歌曲、专辑、歌单等 |\r\n| `get_song_detail` | 获取歌曲详情 |\r\n| `get_song_quality` | 获取歌曲可用音质 |\r\n| `get_lyric` | 获取歌词 |\r\n| `get_song_url` | 获取单首歌曲播放链接 |\r\n| `get_batch_song_urls` | 批量获取歌曲播放链接 |\r\n| `get_album_detail` | 获取专辑详情 |\r\n| `get_album_songs` | 获取专辑歌曲列表 |\r\n| `get_playlist_detail` | 获取歌单详情 |\r\n| `get_album_cover` | 获取专辑封面 URL |\r\n\r\n## VIP 内容访问\r\n\r\n如需获取 VIP 歌曲的高品质播放链接，请设置环境变量：\r\n\r\n```bash\r\nexport QQ_MUSIC_COOKIE=\"your_qq_music_cookie_here\"\r\n```\r\n\r\n或在 Claude Desktop 配置中添加：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"qq-music\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"qq-music-mcp\"],\r\n      \"env\": {\r\n        \"QQ_MUSIC_COOKIE\": \"your_cookie_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n获取 Cookie 的步骤：\r\n1. 打开浏览器访问 https://y.qq.com\r\n2. 登录你的 QQ 账号\r\n3. 打开开发者工具 (F12) -> Application -> Cookies\r\n4. 复制完整的 Cookie 字符串\r\n\r\n## 音质类型说明\r\n\r\n| 音质代码 | 说明 |\r\n|----------|------|\r\n| `m4a` | AAC 格式 |\r\n| `128` | 128kbps MP3 |\r\n| `320` | 320kbps MP3 |\r\n| `flac` | FLAC 无损 |\r\n| `ape` | APE 无损 |\r\n| `hires` | 臻品母带 (24bit/192kHz) |\r\n| `atmos` | 臻品全景声 (Dolby Atmos) |\r\n\r\n## 开发\r\n\r\n```bash\r\n# 克隆项目\r\ngit clone https://github.com/yourusername/qq-music-mcp.git\r\ncd qq-music-mcp\r\n\r\n# 安装依赖\r\nuv sync\r\n\r\n# 运行测试\r\nuv run mcp dev src/qq_music_api/server.py\r\n```\r\n\r\n## 作为 Python 库使用\r\n\r\n```python\r\nimport asyncio\r\nfrom qq_music_api import QQMusicClient\r\n\r\nasync def main():\r\n    async with QQMusicClient() as client:\r\n        # 搜索歌曲\r\n        result = await client.search(\"周杰伦\")\r\n        print(result)\r\n\r\n        # 获取歌词\r\n        lyric = await client.get_lyric(\"000paPeF1SZp2I\")\r\n        print(lyric)\r\n\r\nasyncio.run(main())\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "qq-music": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "qq-music-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

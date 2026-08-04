@@ -1,0 +1,24 @@
+{
+ "id": "1131",
+ "kind": "mcp",
+ "name": "mongodb-mcp",
+ "fingerprint_md5": "8c4b7317be6a1a2c855400159e3e9188",
+ "download_count": 0,
+ "category": "NoSQL 数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# MongoDB MCP服务器🚀\r\n\r\n一个生产就绪、即插即用的模型上下文协议（MCP）服务器，它安全地将MongoDB CRUD操作暴露给AI代理，如 **光标**, **克劳德桌面版**，以及 **反重力**.\r\n\r\n构建为轻量级微服务，您可以将其放入任何工作流中 **零本地配置**不 `.env` 需要文件，无需复杂的设置。只需将您的代理指向该文件并提供您的数据库字符串。\r\n\r\n______________________________________________________________________\r\n\r\n## ✨ 特性\r\n\r\n- **零本地配置：** 直接通过AI代理的安全MCP设置注入数据库凭据。\r\n- **动态收藏：** 对执行CRUD操作 *任何* 动态收集。\r\n- **严格的安全验证：** 内建 `Joi` 验证可防止NoSQL注入尝试和空过滤器意外擦除。\r\n- **即插即用STDIO：** 专门针对光标和反重力背景执行进行了优化。\r\n\r\n______________________________________________________________________\r\n\r\n## ⚡ 直接集成（光标/克劳德桌面/反重力）\r\n\r\n使用此服务器的最简单方法是直接在您的AI IDE或助手中使用标准 `stdio` 运输。\r\n\r\n### 1.配置您的代理（光标/反重力/克劳德）\r\n\r\n打开AI代理的MCP配置设置（例如。， `Cursor > Settings > MCP` 或 `Antigravity MCP settings`).\r\n\r\n在下面添加确切的JSON块。更新 `MONGODB_URI` 环境变量与您的实际连接字符串。您甚至不需要预先安装任何东西； `npx` 将自动获取并运行它！\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mongodb-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@surajswarnkar1001/mongodb-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"MONGODB_URI\": \"Your mongodb connection string\"\r\n      },\r\n      \"disabledTools\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n*注意：如果您使用的是MongoDB Atlas，请将URI替换为您的 `mongodb+srv://...` 云连接字符串。*\r\n\r\n### 3.使用与测试\r\n\r\n代理连接后，服务器会自动注册 **4个强大的工具** (`mongo_read`, `mongo_insert`, `mongo_update`, `mongo_delete`).\r\n\r\n要测试您的连接是否正常工作，只需将此提示复制并粘贴到您的AI助手中（例如Cursor Chat）：\r\n\r\n> **在名为的集合中创建一个虚拟用户文档 `test_users` 使用“Alice”这个名字，然后读给我听，以验证我的MongoDB MCP连接是否正常工作。\"**\r\n\r\n一旦你确认它正在工作，你可以要求更复杂的操作，比如：\r\n\r\n- *“从中获取最后5个注册 `users` 按日期排序的集合”*\r\n- *“在中更新文档 `users` 电子邮件在哪里test@domain.com'并将角色设置为“admin”*\r\n- *“我们正在构建一个新功能。删除 `analytics` 收藏，让我们重新开始。\"*\r\n\r\n______________________________________________________________________\r\n\r\n## 🛠️ 扩展工具\r\n\r\n想要添加自定义MongoDB聚合或特定逻辑吗？\r\n\r\n1. 创建 `mcp-tools/mongo_custom.js`.\r\n1. 出口 `schema` 和 `handler`.\r\n1. 导入并将其安装到中心 `TOOL_REGISTRY` 在 `mcp-tools/index.js`.\r\n1. 它会自动路由并立即出现在代理发现中！\r\n",
+ "config": {
+  "mongodb-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@surajswarnkar1001/mongodb-mcp-server"
+   ],
+   "env": {
+    "MONGODB_URI": "Your mongodb connection string"
+   }
+  }
+ }
+}

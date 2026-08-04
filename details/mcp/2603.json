@@ -1,0 +1,24 @@
+{
+ "id": "2603",
+ "kind": "mcp",
+ "name": "manus-mcp",
+ "fingerprint_md5": "bdebdaaffa3a3a5aa101aa3ad2721387",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Manus MCP\r\n\r\n\r\n一种模型上下文协议（MCP）服务器实现，可以浏览网页、执行搜索查询和执行代码。\r\n\r\n## 特点\r\n\r\n- 执行谷歌搜索并返回相关链接的“google_search”工具\r\n- “browse_web”工具，允许浏览网站、点击元素和提取内容\r\n- “code_interpreter”工具，允许在沙盒环境中读取、写入和执行代码\r\n- “bash_tool”工具，允许在沙盒目录中运行shell命令\r\n\r\n## 使用Claude for Desktop\r\n\r\n要将Manus MCP与Claude一起用于桌面：\r\n\r\n1. 创建或编辑Claude for Desktop配置文件：\r\n\r\n   - macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n1. 添加以下配置：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"manus-mcp\": {\r\n         \"command\": \"uv\",\r\n         \"args\": [\r\n           \"--directory\",\r\n           \"/ABSOLUTE/PATH/TO/manus-mcp\",\r\n           \"run\",\r\n           \"mcp_server.py\"\r\n         ]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. 重新启动桌面版的Claude\r\n\r\n1. 现在，您应该看到Claude for Desktop中提供的Manus MCP工具\r\n\r\n## 可用工具\r\n\r\n### 你好_世界\r\n\r\n一个简单的问候工具，返回欢迎信息。\r\n\r\n### 谷歌搜索\r\n\r\n执行谷歌搜索并返回相关链接列表。\r\n\r\n### browse_web\r\n\r\n与网络浏览器交互以浏览网站并提取信息。支持的操作：\r\n\r\n- `navigate`：转到特定URL\r\n- `click`：按索引单击元素\r\n- `input_text`：在元素中输入文本\r\n- `get_content`：获取页面内容\r\n- `execute_js`：执行JavaScript代码\r\n- `scroll`：滚动页面\r\n- `refresh`：刷新当前页面\r\n\r\n### code_解释器\r\n\r\n允许在沙盒环境中读取、写入和执行代码文件。支持的操作：\r\n\r\n- `read`：读取文件内容\r\n- `write`：将内容写入文件\r\n- `execute`：执行文件或代码片段\r\n- `list`：列出沙盒中的文件\r\n\r\n支持多种编程语言，包括Python、JavaScript（Node.js）、Bash、Ruby、Perl和R。\r\n\r\n### bash_tool\r\n\r\n执行沙盒目录中的bash命令。特征：\r\n\r\n- 在前台或后台模式下运行命令\r\n- 启动web服务器和其他长时间运行的进程\r\n- 安装软件包和依赖项\r\n- 管理文件和流程\r\n\r\n## 环境变量\r\n\r\n可以配置以下环境变量：\r\n\r\n- `SANDBOX_DIR`：沙盒目录的路径（默认值： `~/manus-sandbox`)\r\n- `GLOBAL_TIMEOUT`：所有操作的全局超时时间（秒）（默认值：60）\r\n- `BROWSER_HEADLESS`：是否在无头模式下运行浏览器（默认值：false）\r\n- `GOOGLE_SEARCH_MAX_RESULTS`：要返回的最大搜索结果数（默认值：10）\r\n- `LOG_LEVEL`：日志记录级别（默认值：INFO）\r\n\r\n## 开发指南\r\n\r\n### 先决条件\r\n\r\n- Python 3.11+\r\n- [紫外线](https://github.com/astral-sh/uv) -快速Python包安装程序和解析器\r\n\r\n### 安装\r\n\r\n#### 使用安装脚本（推荐）\r\n\r\n```bash\r\n./setup.sh\r\n```\r\n\r\n#### 手动安装\r\n\r\n1. 克隆存储库\r\n\r\n   ```bash\r\n   git clone https://github.com/yourusername/manus-mcp.git\r\n   cd manus-mcp\r\n   ```\r\n\r\n1. 创建虚拟环境并安装依赖项\r\n\r\n   ```bash\r\n   uv venv\r\n   source .venv/bin/activate\r\n   uv pip install -e .        # Install the project and its dependencies\r\n   ```\r\n\r\n1. 运行服务器\r\n\r\n   ```bash\r\n   # Make sure your virtual environment is activated\r\n   source .venv/bin/activate\r\n   ./run.py\r\n   # or\r\n   uvicorn app.main:app --reload\r\n   ```\r\n\r\n1. 访问 `http://localhost:8000/docs` 查看API文档\r\n\r\n### 发展依赖性\r\n\r\n要安装开发依赖项，请执行以下操作：\r\n\r\n```bash\r\nuv pip install -e \".[dev]\"\r\n```\r\n\r\n### API文档\r\n\r\nAPI遵循 [模型上下文协议（MCP）规范](https://modelcontextprotocol.io/).\r\n\r\n## 许可证\r\n\r\n[MIT](LICENSE)\r\n",
+ "config": {
+  "manus-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/ABSOLUTE/PATH/TO/manus-mcp",
+    "run",
+    "mcp_server.py"
+   ],
+   "env": {}
+  }
+ }
+}

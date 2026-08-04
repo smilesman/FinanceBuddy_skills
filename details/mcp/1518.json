@@ -1,0 +1,28 @@
+{
+ "id": "1518",
+ "kind": "mcp",
+ "name": "jvm-diagnostics",
+ "fingerprint_md5": "625bda6008d3b9021dae05cc5ad81433",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# JVM诊断MCP\r\n\r\n这是一个 [MCP服务器](https://modelcontextprotocol.io) 它封装了各种JVM诊断工具（CLI），例如 `jstat`, `jcmd`, `jps`，添加了一个很好的提示来改进它们的工作方式，并公开了它们。\r\n\r\n## 它能做什么？\r\n\r\n它可以访问各种JVM诊断工具，因此可以执行以下任务：\r\n\r\n- 使用监控JVM性能指标 `jstat`.\r\n- 使用以下工具检查和管理JVM进程 `jps`.\r\n- 使用执行诊断命令 `jcmd`.\r\n- 分析线程转储、堆转储和其他与JVM相关的诊断。\r\n\r\n## 使用安全吗？\r\n\r\n由于MCP服务器由LLM驱动，我们建议谨慎并验证它生成的命令。如果你使用的是像Claude 3.7或GPT-4o这样可靠的LLM，它在JVM工具上有很好的训练数据，我们的经验非常好。\r\n\r\n请阅读我们的 [许可证](LICENSE) 该声明指出“本软件按原样提供，不提供任何形式的保证”，因此您使用此MCP服务器的风险由您自行承担。\r\n\r\n## 它是否安全，我应该在远程服务器上运行它吗？\r\n\r\n简短回答： **不**.\r\n\r\n此MCP服务器为您运行JVM诊断命令，并可能被攻击者利用来运行其他命令。与目前大多数MCP服务器一样，当前的实现仅适用于 `stdio` 传输：它应该在您的机器上本地运行，使用JVM工具，就像您自己做的那样。\r\n\r\n将来，此MCP服务器有可能支持 `http` 传输和基于令牌的身份验证，以便不同的人可以远程使用。一旦MCP规范和SDK更加稳定，就会考虑这一点。\r\n\r\n## 我该如何安装它？\r\n\r\n此MCP服务器当前仅与 `stdio` 传输，因此它应该使用JVM诊断工具在您的计算机上本地运行。\r\n\r\n_此服务器可以作为Java应用程序运行，也可以在Docker容器中运行。_ 如果您的计算机上安装了Java，那么第一个选项可能是最简单的。如果你没有安装Java，或者你想安装更安全的东西，你可以使用第二个选项。\r\n\r\n### 使用Java安装和配置服务器\r\n\r\n- 请确保您安装了Java 17或更高版本。您可以通过运行以下命令来检查这一点 `java -version` 在你的终端。\r\n- 确保JVM诊断工具，如 `jstat`, `jcmd`，以及 `jps` 在您的环境中可用。\r\n\r\n二进制文件可在 [GitHub发布页面](https://github.com/brunoborges/jvm-diagnostics-mcp/releases)，以下是如何使用GitHub CLI下载最新版本：\r\n\r\n- 下载最新版本： `gh release download --repo brunoborges/jvm-diagnostics-mcp --pattern='jvm-diagnostics-mcp.jar'`\r\n\r\n要使用Claude Desktop的服务器，请将服务器添加到您的 `claude_desktop_config.json` 文件。请注意，您需要指向下载的位置 `jvm-diagnostics-mcp.jar` 文件。\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"jvm-diagnostics\": {\r\n            \"command\": \"java\",\r\n            \"args\": [\r\n                \"-jar\",\r\n              \"~/Downloads/jvm-diagnostics-mcp.jar\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n要使用VS Code Insiders的服务器，请按照以下步骤进行配置：\r\n\r\n- 安装GitHub副本\r\n- 使用命令面板安装此MCP服务器： `MCP: Add Server...`\r\n- 配置GitHub Copilot以在其中运行 `Agent` 模式，点击聊天窗口底部的箭头\r\n- 在聊天窗口的顶部，您应该看到 `jvm-diagnostics-mcp` 服务器配置为工具\r\n\r\n### 使用Docker安装和配置服务器\r\n\r\n要使用Claude Desktop的服务器，请将服务器添加到您的 `claude_desktop_config.json` 文件。这 `JAVA_HOME` 环境变量应设置为Java安装的位置。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"jvm-diagnostics\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-e\",\r\n        \"JAVA_HOME\",\r\n        \"ghcr.io/brunoborges/jvm-diagnostics-mcp:latest\"\r\n      ],\r\n      \"env\": {\r\n        \"JAVA_HOME\": \"/path/to/java/home\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n要使用VS Code Insiders的服务器，请按照以下步骤进行配置：\r\n\r\n- 安装GitHub副本\r\n- 使用命令面板安装此MCP服务器： `MCP: Add Server...`\r\n- 配置GitHub Copilot以在其中运行 `Agent` 模式，点击聊天窗口底部的箭头\r\n- 在聊天窗口的顶部，您应该看到 `jvm-diagnostics-mcp` 服务器配置为工具\r\n",
+ "config": {
+  "jvm-diagnostics": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "JAVA_HOME",
+    "ghcr.io/brunoborges/jvm-diagnostics-mcp:latest"
+   ],
+   "env": {
+    "JAVA_HOME": "/path/to/java/home"
+   }
+  }
+ }
+}

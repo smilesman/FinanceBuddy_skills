@@ -1,0 +1,23 @@
+{
+ "id": "2548",
+ "kind": "mcp",
+ "name": "google-flights",
+ "fingerprint_md5": "71899a0ec341a06834384e11efee95c2",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "______________________________________________________________________\r\n\r\n## 标题：谷歌航班MCP 表情符号✈️ 颜色来源：蓝色 颜色To：靛蓝色 sdk:docker 固定：false\r\n\r\n# 谷歌航班MCP服务器\r\n\r\n\r\n**用于智能航班搜索和旅行计划的模型上下文协议（MCP）服务器**\r\n\r\n\r\n______________________________________________________________________\r\n\r\n## 概述\r\n\r\n通过自然语言搜索、智能价格比较和自动旅行计划，将谷歌航班数据直接集成到您的人工智能工作流程中。\r\n\r\n**数据来源：**\r\n\r\n- **快速航班（主要）：** 免费，不需要API密钥\r\n- **SerpAPI（回退）：** 更丰富的数据，包括航班号、中转、碳排放和多卖家预订选项——在以下情况下使用 `SERPAPI_API_KEY` 已设置（每月250次免费搜索）\r\n\r\n______________________________________________________________________\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_one_way_flights` |特定日期的单程航班|\r\n| `search_round_trip_flights` |固定日期的往返航班（支持 `max_stops`) |\r\n| `search_round_trips_in_date_range` |搜索日期范围内的所有往返组合|\r\n| `search_flights_by_airline` |按航空公司代码或联盟过滤航班（STAR_ALIANCE、SKYTEAM、ONEWORLD）|\r\n| `get_travel_dates` |计算相对于今天的旅行日期|\r\n| `generate_google_flights_url` |生成可共享的谷歌航班搜索链接|\r\n\r\n### 资源\r\n\r\n- `airports://all` --浏览可用机场\r\n- `airports://{code}` --获取特定机场的信息（例如。 `airports://LAX`)\r\n\r\n### 提示\r\n\r\n10个内置旅行计划提示： `find_best_deal`, `weekend_getaway`, `last_minute_travel`, `business_trip`, `family_vacation`, `budget_backpacker`, `loyalty_program_optimizer`, `holiday_peak_travel`, `long_haul_international`, `stopover_explorer`.\r\n\r\n______________________________________________________________________\r\n\r\n## 快速开始\r\n\r\n### 选项1：从PyPI安装\r\n\r\n```bash\r\nuvx mcp-server-google-flights\r\n```\r\n\r\n### 选项2：从源代码运行\r\n\r\n```bash\r\ngit clone https://github.com/HaroldLeo/google-flights-mcp.git\r\ncd google-flights-mcp\r\npython -m venv .venv\r\nsource .venv/bin/activate\r\npip install -e .\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 配置\r\n\r\n### 克劳德桌面\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"google-flights\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-server-google-flights\"],\r\n      \"env\": {\r\n        \"SERPAPI_API_KEY\": \"your_serpapi_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 来源\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"google-flights\": {\r\n      \"command\": \"/absolute/path/to/.venv/bin/python\",\r\n      \"args\": [\"/absolute/path/to/google-flights-mcp/src/mcp_server_google_flights/server.py\"],\r\n      \"env\": {\r\n        \"SERPAPI_API_KEY\": \"your_serpapi_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**获取免费的SerpAPI密钥：** [serpapi.com/users/sign_up](https://serpapi.com/users/sign_up) （每月250次免费搜索）\r\n\r\n______________________________________________________________________\r\n\r\n## 远程部署（拥抱面部空间）\r\n\r\n此服务器支持作为SSE MCP服务器进行远程部署。\r\n\r\n### 部署到HF空间\r\n\r\n1. 在以下位置创建新空间 [huggingface.co/new-space](https://huggingface.co/new-space) 和 **码头工人** 软件开发工具包\r\n1. 将此存储库推送到空间\r\n1. （可选）添加 `SERPAPI_API_KEY` 作为太空秘密\r\n\r\n这 `Dockerfile` 传输切换已配置--set `MCP_TRANSPORT=sse` （在Dockerfile中自动完成）在SSE模式下运行。\r\n\r\n### 连接到已部署的空间\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"google-flights\": {\r\n      \"url\": \"https://YOUR-USERNAME-google-flights-mcp.hf.space/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 环境变量\r\n\r\n|变量|描述|\r\n|----------|-------------|\r\n| `SERPAPI_API_KEY` |SerpAPI键可提供更丰富的飞行数据（可选）|\r\n| `MCP_TRANSPORT` | `stdio` （默认）或 `sse` 用于远程部署|\r\n| `HOST` |SSE模式主机（默认： `0.0.0.0`) |\r\n| `PORT` |SSE模式端口（默认值： `7860`) |\r\n\r\n______________________________________________________________________\r\n\r\n## 故障排除\r\n\r\n**未找到航班：** 尝试其他日期或路线。谷歌航班的速率限制抓取——SerpAPI回退更可靠。\r\n\r\n**401错误：** 更新到最新版本。旧版本使用了远程Playwright服务，现在需要身份验证。\r\n\r\n**搜索速度慢：** `search_round_trips_in_date_range` 限制为30个日期组合，以避免速率限制。缩小日期范围或使用 `min_stay_days`/`max_stay_days`.\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\nMIT——见 [许可证](LICENSE)\r\n",
+ "config": {
+  "google-flights": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-server-google-flights"
+   ],
+   "env": {
+    "SERPAPI_API_KEY": "your_serpapi_key_here"
+   }
+  }
+ }
+}

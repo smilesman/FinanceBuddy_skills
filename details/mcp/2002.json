@@ -1,0 +1,23 @@
+{
+ "id": "2002",
+ "kind": "mcp",
+ "name": "monobank",
+ "fingerprint_md5": "30e87b3b8eb5a8a8b718020b94f5b7cd",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Monobank MCP服务器\r\n\r\nMCP（模型上下文协议）服务器，用于与Monobank API集成。\r\n\r\n## 快速安装\r\n\r\n下载最新 `.mcpb` 捆绑从 [发布](https://github.com/akutishevsky/monobank-mcp-server/releases) 页面并打开它-Claude Desktop或Claude Code将处理其余部分。安装期间，系统将提示您输入Monobank API令牌。\r\n\r\n## 先决条件\r\n\r\n- Node.js 18.0.0或更高版本\r\n- Monobank API代币。您可以在以下网址获得：https://api.monobank.ua/\r\n\r\n**注：** 您的API代币仅在本地使用，除Monobank的API外，不会在任何地方跟踪或传输。\r\n\r\n## 可用工具\r\n\r\n服务器提供三个工具：\r\n\r\n1. **get_currency_rates** -获取货币汇率（汇率限制为每5分钟一次）\r\n1. **get_client_info** -获取客户信息和账户详细信息（费率限制为每60秒一次）\r\n1. **get_statement** -获取指定日期范围内的账户对账单（费率限制为每60秒一次，最多31天+1小时）\r\n\r\n## MCP配置\r\n\r\n要将此服务器与MCP客户端一起使用，请将其添加到您的配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"monobank\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"monobank-mcp-server\"],\r\n      \"env\": {\r\n        \"MONOBANK_API_TOKEN\": \"your_token_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 示例提示\r\n\r\n### 英语\r\n\r\n- “显示当前美元对乌克兰格里夫纳的汇率”\r\n- “获取我的账户余额和最近的交易”\r\n- “显示上周的所有交易”\r\n- “我昨天花了多少钱？”\r\n- “显示我2024年10月的声明”\r\n- “获取我过去3天的所有信用卡交易”\r\n\r\n### 乌克兰\r\n\r\n- “显示当前美元汇率”\r\n- “我的账户里有多少钱？”\r\n- “给我看昨天的记录”\r\n- “我这周花了什么钱？”\r\n- “显示十月份的所有交易”\r\n- “我上个月吃了多少？”\r\n\r\n## MCPB（一键安装）\r\n\r\n此服务器可作为MCPB捆绑包在Claude Desktop和Claude Code中一键安装。\r\n\r\n为了构建 `.mcpb` 本地捆绑：\r\n\r\n```bash\r\nnpm run pack:mcpb\r\n```\r\n\r\n这产生 `monobank-mcp-server.mcpb` 其可以直接安装在任何MCPB兼容客户端中。在安装过程中，系统将提示您安全地输入Monobank API令牌。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "monobank": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "monobank-mcp-server"
+   ],
+   "env": {
+    "MONOBANK_API_TOKEN": "your_token_here"
+   }
+  }
+ }
+}

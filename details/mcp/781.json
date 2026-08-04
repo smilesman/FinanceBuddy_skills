@@ -1,0 +1,23 @@
+{
+ "id": "781",
+ "kind": "mcp",
+ "name": "novacv",
+ "fingerprint_md5": "f0ee925175c1502a71974f129589aad9",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP Server for NovaCV\r\n\r\n模型上下文协议(MCP)服务器，用于接入 NovaCV 简历服务 API。\r\n\r\n## 功能特点\r\n\r\n- 生成简历 PDF\r\n- 获取可用简历模板列表\r\n- 将简历文本转换为 JSON Resume 格式\r\n- 分析简历文本内容\r\n\r\n## 获取 API 密钥\r\n\r\n在使用此服务前，您需要获取 NovaCV API 密钥：\r\n\r\n1. 访问 [NovaCV API 官网](https://api.nova-cv.com)\r\n2. 注册或登录您的账户\r\n3. 在控制面板中找到 \"API Keys\" 或 \"开发者\" 部分\r\n4. 创建新的 API 密钥并复制它\r\n5. 在使用 MCP 服务时配置此密钥\r\n\r\n请妥善保管您的 API 密钥，不要在公共场合分享。\r\n\r\n## 安装\r\n\r\n```bash\r\n# 全局安装\r\nnpm install -g mcp-server-novacv\r\n\r\n# 或使用 npx 运行\r\nnpx mcp-server-novacv --api_key=your_api_key\r\n```\r\n\r\n## 快速开始\r\n\r\n### 方法一：直接运行（推荐）\r\n\r\n最简单的方式是使用我们提供的快速启动命令：\r\n\r\n```bash\r\n# 一键构建并启动服务\r\nnpm run run\r\n```\r\n\r\n### 方法二：使用 MCP Inspector 进行开发和测试\r\n\r\n我们提供了一个组合命令，可以一键构建和启动 Inspector：\r\n\r\n```bash\r\n# 一键构建并启动 Inspector\r\nnpm run debug\r\n```\r\n\r\n## 使用方法\r\n\r\n### 命令行选项\r\n\r\n```bash\r\nnpx mcp-server-novacv [选项]\r\n\r\n选项:\r\n  --api_key=KEY        设置 NovaCV API 密钥\r\n  --api_base_url=URL   设置 API 基础 URL\r\n  --timeout=MS         设置 API 超时时间 (毫秒)\r\n  --help, -h           显示帮助信息\r\n  --version, -v        显示版本信息\r\n```\r\n\r\n### 环境变量配置\r\n\r\n可以通过环境变量配置 API 密钥：\r\n\r\n```bash\r\nNOVACV_API_KEY=your_api_key mcp-server-novacv\r\n```\r\n\r\n或者创建 `.env` 文件：\r\n\r\n```\r\nNOVACV_API_KEY=your_api_key\r\nNOVACV_API_BASE_URL=https://api.nova-cv.com\r\n```\r\n\r\n> **提示**：API 密钥可以从 [NovaCV API 官网](https://api.nova-cv.com) 获取，请参考上方的 \"获取 API 密钥\" 部分。\r\n\r\n### 在 MCP 客户端配置\r\n\r\n#### Cursor 配置\r\n\r\n在 Cursor 配置文件中添加:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"novacv\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-server-novacv\"],\r\n      \"env\": {\r\n        \"NOVACV_API_KEY\": \"your_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### Cherry Studio 配置\r\n\r\n在 Cherry Studio 中设置 MCP 服务:\r\n\r\n1. 打开设置（点击左下角设置图标或使用 `Ctrl+,`/`Cmd+,`）\r\n2. 找到 MCP 或 Model Context Protocol 设置区域\r\n3. 添加新服务，配置如下:\r\n   - 名称: `novacv`\r\n   - 命令: `npx`\r\n   - 参数: `mcp-server-novacv`\r\n   - 环境变量: 添加 `NOVACV_API_KEY` 并设置您的 API 密钥\r\n\r\n如果支持 JSON 配置，添加以下内容:\r\n\r\n```json\r\n{\r\n  \"novacv\": {\r\n    \"command\": \"npx\",\r\n    \"args\": [\"mcp-server-novacv\"],\r\n    \"env\": {\r\n      \"NOVACV_API_KEY\": \"your_api_key\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\nMCP 服务器提供以下工具：\r\n\r\n- `generate_resume_from_text`: 一键将简历文本转换为精美PDF简历，支持多种模板。只需提供简历文本内容，系统会自动进行格式转换并生成专业PDF文件，无需手动处理JSON数据\r\n- `get_templates`: 获取所有可用的简历模板，返回模板列表及其详细信息，包括模板ID、名称、缩略图等\r\n- `convert_resume_text`: 将纯文本格式的简历内容转换为标准JSON Resume格式。系统会智能识别简历中的各个部分，并按照国际通用的JSON Resume标准进行结构化处理\r\n- `analyze_resume_text`: 对简历文本进行深度分析，提供专业评估和改进建议。系统会分析简历的完整性、关键词使用、技能匹配度等方面，并给出针对性的优化建议\r\n\r\n## 使用示例\r\n\r\n### 获取模板列表\r\n\r\n在支持 MCP 的客户端中使用 `mcp_novacv_get_templates` 命令获取所有可用的简历模板。\r\n\r\n### 生成简历\r\n\r\n使用 `mcp_novacv_generate_resume_from_text` 命令并提供简历文本内容和模板名称生成 PDF 简历。\r\n\r\n### 分析简历文本\r\n\r\n使用 `mcp_novacv_analyze_resume_text` 命令分析纯文本简历内容。\r\n\r\n### 转换简历文本为 JSON Resume\r\n\r\n使用 `mcp_novacv_convert_resume_text` 命令将简历文本转换为结构化的 JSON Resume 格式。\r\n\r\n## 开发\r\n\r\n```bash\r\n# 安装依赖\r\nnpm install\r\n\r\n# 开发模式（监视文件变化）\r\nnpm run dev\r\n\r\n# 构建项目\r\nnpm run build\r\n\r\n# 运行服务（构建并启动）\r\nnpm run run\r\n\r\n# 使用 MCP Inspector 调试（构建并启动Inspector）\r\nnpm run debug\r\n```\r\n\r\n## 故障排除\r\n\r\n如果您在设置过程中遇到问题:\r\n\r\n1. 确认包安装成功: `npx mcp-server-novacv --version`\r\n2. 检查 API 密钥是否正确设置\r\n3. 查看客户端日志中是否有相关错误信息\r\n\r\n### API 密钥问题\r\n\r\n如果遇到 API 密钥相关错误：\r\n\r\n- 确保您已从 [https://api.nova-cv.com](https://api.nova-cv.com) 获取了有效的 API 密钥\r\n- 检查密钥是否已过期或超出使用限制\r\n- 尝试重新生成新的 API 密钥\r\n- 确保环境变量或配置文件中的密钥没有多余的空格或引号\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "novacv": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-server-novacv"
+   ],
+   "env": {
+    "NOVACV_API_KEY": "your_api_key"
+   }
+  }
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "id": "413",
+ "kind": "mcp",
+ "name": "rpg",
+ "fingerprint_md5": "a2143ab4572196066999f9b39a1d1e6a",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# RPG MCP服务器\r\n\r\n用于D&D风格活动的MCP服务器。战斗、NPC、具有威胁级别的兽交。\r\n\r\n## 安装并运行\r\n\r\n```bash\r\nuv venv && source .venv/bin/activate\r\nuv pip install -e .\r\nuv run python src/server.py\r\n```\r\n\r\n## 连接到克劳德桌面\r\n\r\n增添 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"rpg\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"python\", \"/path/to/src/server.py\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具（共11个）\r\n\r\n**核心：** `begin_campaign`, `create_npc`, `create_bestiary_entry`, `attack`, `remove_from_combat`\r\n\r\n**读者：** `list_campaigns`, `get_campaign`, `list_npcs`, `get_npc`, `get_combat_status`, `get_bestiary`\r\n\r\n## 威胁级别\r\n\r\n可爱的生物得到一个 `threat_level` → 确定命中机会：\r\n\r\n`none` 10% | `negligible` 25% | `low` 35% | `moderate` 50% | `high` 65% | `deadly` 80% | `certain_death` 95%\r\n\r\nNPC可以用自定义覆盖 `hit_chance`.\r\n\r\n## 交换到数据库\r\n\r\n```python\r\n# tools/combat.py\r\nfrom repository_json import JsonCombatRepository  # ← files\r\nfrom repository_db import DbCombatRepository      # ← database\r\n```\r\n\r\n看 `repository_db_example.py`.\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "rpg": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "python",
+    "/path/to/src/server.py"
+   ],
+   "env": {}
+  }
+ }
+}

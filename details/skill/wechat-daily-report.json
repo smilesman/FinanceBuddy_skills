@@ -1,0 +1,12 @@
+{
+ "id": "wechat-daily-report",
+ "kind": "skill",
+ "name": "wechat-daily-report",
+ "fingerprint_md5": "7cc17567dfecb1f78434dfbe4370619a",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# 微信群聊日报生成 Skill\r\n\r\n## 工作流程\r\n\r\n```\r\n1. 运行 analyze_chat.py 分析聊天记录\r\n   ↓\r\n2. AI 根据聊天文本生成内容 (ai_content.json)\r\n   ↓\r\n3. 运行 generate_report.py 生成日报图片 (.png)\r\n```\r\n\r\n> ⚠️ **最终输出是 PNG 图片**，不是 HTML。确保 --output 参数使用 `.png` 后缀。\r\n\r\n## 使用步骤\r\n\r\n### 1. 分析聊天记录\r\n\r\n```bash\r\npython scripts/analyze_chat.py <聊天记录.json> --output-stats stats.json --output-text simplified_chat.txt\r\n```\r\n\r\n**输出**:\r\n- `stats.json` - 统计数据（话唠榜、熬夜冠军、词云等）\r\n- `simplified_chat.txt` - 全量聊天文本，供 AI 分析\r\n\r\n### 2. AI 生成内容\r\n\r\n根据 `simplified_chat.txt` 和 `stats.json`，按 `references/ai_prompt.md` 中的格式生成 AI 内容，保存为 `ai_content.json`。\r\n\r\nAI 需要生成的内容包括：\r\n- `topics`: 讨论热点（3-5 个）\r\n- `resources`: 教程/资源分享\r\n- `important_messages`: 重要消息\r\n- `dialogues`: 有趣对话\r\n- `qas`: 问答\r\n- `talker_profiles`: 话唠成员的特点标签（常用词已由脚本统计）\r\n\r\n### 3. 生成日报图片\r\n\r\n```bash\r\npython scripts/generate_report.py --stats stats.json --ai-content ai_content.json --output report.png\r\n```\r\n\r\n> ✅ 输出后缀必须是 `.png`，使用 iPhone 14 Pro Max 分辨率 (430x932 @3x)\r\n> \r\n> 图片生成需要安装 playwright：`pip install playwright && playwright install chromium`\r\n\r\n## 聊天记录 JSON 格式\r\n\r\n```json\r\n{\r\n  \"meta\": {\r\n    \"name\": \"群名称\",\r\n    \"platform\": \"wechat\",\r\n    \"type\": \"group\"\r\n  },\r\n  \"members\": [\r\n    {\"platformId\": \"xxx\", \"accountName\": \"昵称\"}\r\n  ],\r\n  \"messages\": [\r\n    {\r\n      \"sender\": \"platformId\",\r\n      \"accountName\": \"昵称\",\r\n      \"timestamp\": 1234567890,\r\n      \"type\": 0,\r\n      \"content\": \"消息内容\"\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n**消息类型 (type)**:\r\n- `0`: 纯文本（脚本和 AI 只分析此类型）\r\n- `1`: 图片\r\n- `5`: 动画表情\r\n- `99`: 系统消息\r\n\r\n## 脚本分析内容（保证准确性）\r\n\r\n| 数据 | 说明 |\r\n|------|------|\r\n| 总消息数 | 所有消息计数 |\r\n| 活跃用户数 | 去重用户数 |\r\n| 时间范围 | 首尾消息时间 |\r\n| 话唠榜 TOP3 | 按发言数排序 + 常用词 |\r\n| 熬夜冠军 | 23:00-06:00 最晚活跃者 |\r\n| 词云数据 | jieba 分词 + 词频统计 |\r\n\r\n## AI 生成内容（需要理解上下文）\r\n\r\n| 内容 | 输入数据 |\r\n|------|----------|\r\n| 讨论热点 | 精简文本 + 词云 TOP50 |\r\n| 成员画像 | 精简文本中的发言 |\r\n| 有趣对话 | 高互动片段 |\r\n| 问答识别 | 问号消息 ± 上下文 |\r\n| 教程/资源 | 精简全文识别 |\r\n\r\n## 依赖\r\n\r\n```bash\r\npip install jieba jinja2 playwright\r\nplaywright install chromium\r\n```",
+ "config": {}
+}

@@ -1,0 +1,24 @@
+{
+ "id": "2169",
+ "kind": "mcp",
+ "name": "eshipz_tracking",
+ "fingerprint_md5": "9f6499bf2d649625ad1a9adf8bdb3247",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# eShipz跟踪MCP服务器\r\n\r\n模型上下文协议（MCP）服务器，通过eShipz API提供装运跟踪功能。该服务器使Claude Desktop能够通过智能、状态感知的格式跟踪多个运营商的包裹。\r\n\r\n## 特性\r\n\r\n- 📦 跨多个承运商跟踪货物\r\n- 🎯 状态感知输出格式\r\n- ✅ 自动状态检测（已交付、在途、异常等）\r\n- 🌍 基于位置的更新\r\n- 📊 事件计数和时间线跟踪\r\n- 🔐 通过环境变量实现安全的API令牌管理\r\n\r\n## 先决条件\r\n\r\n- Python 3.12或更高版本\r\n- [紫外线](https://docs.astral.sh/uv/) 包管理器\r\n- eShipz API代币\r\n- Claude桌面应用程序\r\n\r\n## 安装\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/YOUR_USERNAME/mcp-eshipz.git\r\ncd mcp-eshipz\r\n```\r\n\r\n2. 创建一个 `.env` 项目根目录中的文件：\r\n\r\n```env\r\nAPI_BASE_URL=https://app.eshipz.com\r\nESHIPZ_TOKEN=your_eshipz_api_token_here\r\n```\r\n\r\n3. 安装依赖项：\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n## 配置\r\n\r\n将服务器添加到Claude Desktop配置文件中：\r\n\r\n**窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\\\r\n**macOS：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"eshipz_tracking\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"C:\\\\path\\\\to\\\\mcp-eshipz\",\r\n        \"run\",\r\n        \"main.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `C:\\\\path\\\\to\\\\mcp-eshipz` 根据您的实际项目路径。\r\n\r\n## 用法\r\n\r\n配置服务器并重新启动Claude Desktop后，您可以要求Claude跟踪软件包：\r\n\r\n- “轨道包 \"\r\n- “追踪号ABC123的状态如何？”\r\n- “检查跟踪XYZ789的交货状态”\r\n- “分析运营商绩效”\r\n- “使用所有必填字段的有效值创建新发货”\r\n- “案件前分配”\r\n\r\n注：所有功能的必填字段请参阅eShipz的API文档\r\n\r\n### 发货查询工作流（可重复使用的响应数据）\r\n\r\n服务器现在支持一次取数，多次查询流量进行发货分析。\r\n\r\n1. 跑 `query_shipments` 提取货物并创建可重复使用的 `query_id` 背景。\r\n1. 重复使用相同的 `query_id` 和 `query_shipments_followup` 用于：\r\n\r\n- 滞留装运检查(`intent=\"stuck\"`)\r\n- 分组摘要(`intent=\"aggregate\"`, `group_by=\"status\"|\"carrier\"|\"sub_status\"|\"age_bucket\"`)\r\n- 筛选列表(`intent=\"list\"` 带可选过滤器）\r\n\r\n3. 使用 `get_shipment_details_from_query` 通过以下方式从缓存上下文中获取特定装运 `awb` 或 `order_id`.\r\n\r\n这让Claude回答了同一API回复中的多个后续问题，而无需每次都重新提问。\r\n\r\n### 向后兼容\r\n\r\n- `get_shipments` 仍然适用于滞留装运报告。\r\n- 它现在在内部使用共享发货规范化/卡住逻辑，并包括 `Query ID` 输出用于后续分析。\r\n\r\n### 查询上下文行为\r\n\r\n- 查询上下文在内存缓存条目中是短暂的。\r\n- 如果查询id过期，请重新运行 `query_shipments` 为了获得新鲜感 `query_id`.\r\n- 缓存优化环境变量：\r\n- `SHIPMENT_QUERY_TTL_SECONDS` （默认值： `1200`)\r\n- `SHIPMENT_QUERY_MAX_CONTEXTS` （默认值： `25`)\r\n- `SHIPMENT_QUERY_MAX_RECORDS` （默认值： `2000`)\r\n\r\n## 发展\r\n\r\n在本地运行服务器进行测试：\r\n\r\n```bash\r\nuv run main.py\r\n```\r\n\r\n## 项目结构\r\n\r\n```\r\nmcp-eshipz/\r\n├── main.py           # Main MCP server implementation\r\n├── pyproject.toml    # Project dependencies\r\n├── .env              # Environment variables (not in git)\r\n├── .gitignore        # Git ignore rules\r\n└── README.md         # This file\r\n```\r\n\r\n## 依赖项\r\n\r\n- `httpx` -异步HTTP客户端\r\n- `mcp` -模型上下文协议SDK\r\n- `python-dotenv` -环境变量管理\r\n\r\n## 支持\r\n\r\n对于问题或疑问，请在GitHub上打开问题。\r\n",
+ "config": {
+  "eshipz_tracking": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "C:\\path\\to\\mcp-eshipz",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

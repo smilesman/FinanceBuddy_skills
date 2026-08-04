@@ -1,0 +1,23 @@
+{
+ "id": "2560",
+ "kind": "mcp",
+ "name": "grok",
+ "fingerprint_md5": "050f996f91848fcc863785203d959a62",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Grok MCP服务器\r\n\r\n> 使用xAI的Grok API实时搜索X.com-直接从Claude\r\n\r\n\r\n<!-- MCP Registry verification: mcp-name: io.github.guzus/grok-mcp -->\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io/) 服务器带来 **实时X/Twitter搜索** 克劳德。由xAI的Live Search API提供支持，它提供对帖子、用户、线程和趋势主题的即时访问。\r\n\r\n\r\n## 为什么选择Grok MCP？\r\n\r\n- **实时数据** -访问实时X.com内容，而不是缓存或过时的信息\r\n- **克劳德原住民融合** -与Claude Desktop和Claude Code无缝协作\r\n- **简单设置** -一个安装命令，一个添加配置\r\n- **开源** -MIT授权，社区驱动\r\n\r\n## 快速开始\r\n\r\n### 1.获取xAI API密钥\r\n\r\n从获取API密钥 [console.x.ai](https://console.x.ai)\r\n\r\n### 2.安装\r\n\r\n```bash\r\nuvx grok-mcp\r\n```\r\n\r\n### 3.配置Claude\r\n\r\n**克劳德代码** -添加到 `.mcp.json` 在您的项目中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"grok\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"grok-mcp\"],\r\n      \"env\": {\r\n        \"XAI_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**适用于克劳德桌面** -添加到您的配置文件中：\r\n\r\n- macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"grok\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"grok-mcp\"],\r\n      \"env\": {\r\n        \"XAI_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 4.使用它\r\n\r\n问克劳德这样的问题：\r\n\r\n- “在X上搜索有关AI的帖子”\r\n- “现在X的趋势是什么？”\r\n- “查找@elonmusk关于特斯拉的推文”\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_posts` |使用过滤器（句柄、日期范围、分析模式）搜索帖子|\r\n| `search_users` |查找用户资料|\r\n| `search_threads` |发现对话线索|\r\n| `get_trends` |按位置获取热门话题|\r\n| `health_check` |验证API连接|\r\n\r\n## 例子\r\n\r\n### 搜索文章\r\n\r\n```\r\nSearch X for posts about \"AI safety\" from the last week\r\n```\r\n\r\n### 按用户筛选\r\n\r\n```\r\nFind recent posts from @anthropic about Claude\r\n```\r\n\r\n### 获取趋势\r\n\r\n```\r\nWhat are the trending topics in tech right now?\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone\r\ngit clone https://github.com/guzus/grok-mcp.git\r\ncd grok-mcp\r\n\r\n# Install dependencies\r\nuv sync --dev\r\n\r\n# Run tests\r\nuv run pytest\r\n\r\n# Run locally\r\nXAI_API_KEY=your-key uv run python -m grok_mcp\r\n```\r\n\r\n## 建筑\r\n\r\n```\r\nsrc/grok_mcp/\r\n├── server.py           # MCP server implementation\r\n├── grok_client.py      # xAI Live Search API client\r\n├── search_tools.py     # Tool implementations\r\n├── response_formatter.py\r\n├── config.py\r\n└── exceptions.py\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n1. 克隆该仓库\r\n1. 创建功能分支(`git checkout -b feature/amazing-feature`)\r\n1. 提交您的更改(`git commit -m 'Add amazing feature'`)\r\n1. 推到分支(`git push origin feature/amazing-feature`)\r\n1. 打开拉取请求\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 了解详情。\r\n\r\n## 链接\r\n\r\n- [PyPI包](https://pypi.org/project/grok-mcp/)\r\n- [xAI API 文档](https://docs.x.ai/)\r\n- [MCP协议](https://modelcontextprotocol.io/)\r\n- [克劳德代码](https://docs.anthropic.com/en/docs/claude-code)\r\n\r\n______________________________________________________________________\r\n\r\n建于 [xAI Grok](https://x.ai/) 和 [模型上下文协议](https://modelcontextprotocol.io/)\r\n",
+ "config": {
+  "grok": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "grok-mcp"
+   ],
+   "env": {
+    "XAI_API_KEY": "your-api-key"
+   }
+  }
+ }
+}

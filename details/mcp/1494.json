@@ -1,0 +1,22 @@
+{
+ "id": "1494",
+ "kind": "mcp",
+ "name": "idb",
+ "fingerprint_md5": "e6f575f1e1d9529a14236926eddc8c11",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp idb\r\n\r\nFacebook iOS开发桥（idb）的MCP服务器集成。\r\n\r\n## 概述\r\n\r\n此软件包提供以下功能之间的集成 [MCP（模型上下文协议）](https://modelcontextprotocol.io/introduction) Facebook的 [iOS开发桥](https://fbidb.io/docs/installation/)，通过MCP实现自动化的iOS设备管理和测试执行。\r\n\r\n启动服务器：\r\n\r\n```sh\r\nnpx -y @noahlozevski/mcp-idb\r\n```\r\n\r\n## 先决条件\r\n\r\n- [iOS开发桥](https://fbidb.io/docs/installation/)\r\n\r\n### 正在安装idb\r\n\r\n要安装idb，请执行以下操作：\r\n\r\n```bash\r\nbrew tap facebook/fb\r\nbrew install idb-companion\r\n\r\n# verify installation\r\nidb\r\n```\r\n\r\n有关更多详细信息，请访问 [官方idb GitHub存储库](https://github.com/facebook/idb).\r\n\r\n## 配置\r\n\r\n### mcp-config.json设置\r\n\r\n要在MCP配置中使用idb，请将以下内容添加到您的配置中 `mcp-config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"idb\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@noahlozevski/idb\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n示例用例包括：\r\n\r\n- 自动化测试开发\r\n- 屏幕截图测试\r\n- 自动交互（“点击屏幕上的主页按钮”）\r\n- 安装/删除应用程序\r\n\r\n## 发展\r\n\r\n### 代码格式化\r\n\r\n此项目使用Prettier进行代码格式化。要格式化代码，请执行以下操作：\r\n\r\n```bash\r\nnpm run format        # Format all files\r\n```\r\n\r\n格式配置可以在中找到 `.prettierrc` 项目的根本。\r\n\r\n## 故障排除\r\n\r\n常见问题和解决方案：\r\n\r\n1. **找不到idb伴侣**：确保通过Homebrew安装idb伴侣\r\n1. **未检测到设备**：确保iOS设备：\r\n   - 通过USB连接\r\n   - 在计算机上受信任\r\n   - 已启用开发人员模式\r\n\r\n## 贡献\r\n\r\n更改此包时，请遵循标准的MCP贡献指南。\r\n\r\n## 许可证\r\n\r\n该项目是Mobile Control Plane（MCP）的一部分，遵循亚马逊的内部许可政策。\r\n",
+ "config": {
+  "idb": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@noahlozevski/idb"
+   ],
+   "env": {}
+  }
+ }
+}

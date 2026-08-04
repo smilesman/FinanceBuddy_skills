@@ -1,0 +1,21 @@
+{
+ "id": "75",
+ "kind": "mcp",
+ "name": "boxlite",
+ "fingerprint_md5": "e9a5d4dbd2d99e36dde82fceeba375fd",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# boxlite mcp\r\n\r\nMCP服务器为AI代理提供隔离的沙盒环境。\r\n\r\n## 问题\r\n\r\n今天的人工智能应用程序不仅仅生成文本，它们还会编写和运行代码、调用工具、读取文件并访问网络。直接在您的机器上运行所有这些应用程序会带来真正的风险：\r\n\r\n- **安全** -恶意或有缺陷的代码可能会损坏您的系统\r\n- **隐私** -敏感文件和凭据被暴露\r\n- **可靠性** -失控进程可能会消耗资源或使计算机崩溃\r\n\r\nBoxLite通过为AI代理提供自己的隔离VM来解决这个问题——内部完全自由，外部完全安全。\r\n\r\n## 由BoxLite提供技术支持\r\n\r\n[BoxLite](https://boxlite-labs.github.io/website/) 是一个可嵌入的虚拟机运行时，遵循SQLite哲学——简单、轻量级和零配置。\r\n\r\n### 为什么选择BoxLite？\r\n\r\n- **硬件级隔离** -真正的虚拟机安全，而不仅仅是容器。您的AI代理在完全隔离的环境中运行。\r\n- **不需要守护进程** -与Docker不同，BoxLite不需要后台服务。只需导入和使用。\r\n- **可嵌入** -设计用于直接嵌入到您的应用程序中，如用于计算的SQLite。\r\n- **快速启动** -虚拟机在几秒钟内启动，而不是几分钟。\r\n- **跨平台** -适用于macOS和Linux。\r\n\r\n### 用例\r\n\r\n- **AI代理沙盒** -让AI代理安全地执行代码、浏览网页和使用应用程序\r\n- **安全代码执行** -运行不受信任的代码，不会对主机系统造成风险\r\n- **浏览器自动化** -配备CDP的无头浏览器，用于网页抓取和测试\r\n- **开发环境** -一次性、可重复的开发环境\r\n\r\n## 演示\r\n\r\n[▶️ 在YouTube上观看演示](https://youtu.be/JjwLg6ww234)\r\n\r\nhttps://github.com/user-attachments/assets/0685d428-64e4-4a68-adfe-c24dc0dc5ae8\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `computer` |带有XFCE的完整Ubuntu桌面。人类计算机使用API兼容。 |\r\n| `browser` |带有CDP端点的Chromium浏览器，适用于木偶师/剧作家/硒|\r\n| `code_interpreter` |Python代码执行沙盒|\r\n| `sandbox` |用于运行shell命令的通用容器|\r\n\r\n## 快速开始\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add boxlite -- uvx boxlite-mcp\r\n```\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的Claude Desktop配置(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"boxlite\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"boxlite-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\npip install boxlite-mcp\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/boxlite-labs/boxlite-mcp.git\r\ncd boxlite-mcp\r\nuv sync --extra dev\r\nuv run pytest\r\n```\r\n\r\n### 将本地服务器连接到Claude Code\r\n\r\n```bash\r\nclaude mcp add boxlite -s local \\\r\n  -e BOXLITE_HOME=$HOME/.boxlite-mcp \\\r\n  -- uv run --directory /path/to/boxlite-mcp python -m server\r\n```\r\n\r\n> **注：** 环境变量必须通过传递 `-e`，不在args中内联。MCP stdio服务器绕过shell，因此 `VAR=value command` 语法不起作用。\r\n\r\n### 将本地服务器连接到Claude Desktop\r\n\r\n增添 `~/Library/Application Support/Claude/claude_desktop_config.json` （macOS）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"boxlite\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/boxlite-mcp\", \"python\", \"-m\", \"server\"],\r\n      \"env\": {\r\n        \"BOXLITE_HOME\": \"/path/to/.boxlite-mcp\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\n阿帕奇-2.0\r\n",
+ "config": {
+  "boxlite": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "boxlite-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

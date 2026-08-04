@@ -1,0 +1,27 @@
+{
+ "id": "347",
+ "kind": "mcp",
+ "name": "overseerr-mcp",
+ "fingerprint_md5": "bf0aed7e9b15a8635d4009782fb2fd67",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 用于Overseer的MCP服务器\r\n\r\nMCP服务器与Overserr API交互，用于电影和电视节目请求管理。\r\n\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n服务器实现了多种与Overseer交互的工具：\r\n\r\n- overseer_status：获取Overseer服务器的状态\r\n- overseer_movie_requests：获取满足过滤器参数的所有电影请求的列表\r\n- overseer_tv_requests：获取满足过滤器参数的所有电视节目请求的列表\r\n\r\n### 示例提示\r\n\r\n最好先指导克劳德使用Overseer。然后，它将在适当的时候调用该工具。\r\n\r\n尝试以下提示：\r\n\r\n- 获取我们的Overseer服务器的状态\r\n- 显示当前待处理的所有电影请求\r\n- 列出上个月现在可用的所有电视节目请求\r\n- 哪些电影已被要求但尚未上映？\r\n- 我们图书馆最近有哪些电视节目？\r\n\r\n## 配置\r\n\r\n### 监管人API密钥和URL\r\n\r\n有两种方法可以使用Overserr API凭据配置环境：\r\n\r\n1. 添加到服务器配置（首选）\r\n\r\n```json\r\n{\r\n  \"overseerr-mcp\": {\r\n    \"command\": \"uvx\",\r\n    \"args\": [\r\n      \"overseerr-mcp\"\r\n    ],\r\n    \"env\": {\r\n      \"OVERSEERR_API_KEY\": \"<your_api_key_here>\",\r\n      \"OVERSEERR_URL\": \"<your_overseerr_url>\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n2. 创建一个 `.env` 工作目录中的文件，其中包含以下必需变量：\r\n\r\n```\r\nOVERSEERR_API_KEY=your_api_key_here\r\nOVERSEERR_URL=your_overseerr_url_here\r\n```\r\n\r\n注意：您可以在“API密钥”下的Overserr设置中找到API密钥。\r\n\r\n## 快速启动\r\n\r\n### 安装\r\n\r\n#### 监管人API密钥\r\n\r\n您需要一个正在运行的Overserr实例和一个API密钥：\r\n\r\n1. 导航到您的Overseer安装\r\n1. 转到“设置”→ 将军\r\n1. 查找“API密钥”部分\r\n1. 如果您还没有新的API密钥，请生成一个新的\r\n\r\n#### 克劳德桌面\r\n\r\n在MacOS上： `~/Library/Application\\ Support/Claude/claude_desktop_config.json`\r\n\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n\r\n  Development/Unpublished Servers Configuration\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"overseerr-mcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"<dir_to>/overseerr-mcp\",\r\n        \"run\",\r\n        \"overseerr-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"OVERSEERR_API_KEY\": \"<your_api_key_here>\",\r\n        \"OVERSEERR_URL\": \"<your_overseerr_url>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\n**注意：此MCP服务器尚未发布。目前，只有开发配置可用。**\r\n\r\n## 发展\r\n\r\n### 建筑\r\n\r\n准备分发包裹：\r\n\r\n1. 同步依赖关系并更新锁文件：\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n### 调试\r\n\r\n由于MCP服务器在stdio上运行，调试可能具有挑战性。为了达到最佳调试效果\r\n经验，我们强烈建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector).\r\n\r\n您可以通过以下方式启动MCP检查器 [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) 使用此命令：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv --directory /path/to/overseerr-mcp run overseerr-mcp\r\n```\r\n\r\n启动后，检查器将显示一个URL，您可以在浏览器中访问该URL以开始调试。\r\n\r\n您还可以使用以下命令查看服务器日志：\r\n\r\n```bash\r\ntail -n 20 -f ~/Library/Logs/Claude/mcp-server-overseerr-mcp.log```\r\n",
+ "config": {
+  "overseerr-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "<dir_to>/overseerr-mcp",
+    "run",
+    "overseerr-mcp"
+   ],
+   "env": {
+    "OVERSEERR_API_KEY": "<your_api_key_here>",
+    "OVERSEERR_URL": "<your_overseerr_url>"
+   }
+  }
+ }
+}

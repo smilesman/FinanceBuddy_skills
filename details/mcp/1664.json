@@ -1,0 +1,26 @@
+{
+ "id": "1664",
+ "kind": "mcp",
+ "name": "pdf-reader",
+ "fingerprint_md5": "5e384e87b9c94b36a6dc628bcbafbb15",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# PDF阅读器MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，提供从PDF文件中读取和提取文本的工具，支持本地文件和URL。\r\n\r\n## 作者\r\n\r\n菲利普·范德沃克\\\r\n电子邮件：philip.vandewalker@gmail.com\\\r\ngithub：https://github.com/trafflux\r\n\r\n## 特性\r\n\r\n- 从本地PDF文件读取文本内容\r\n- 从PDF URL读取文本内容\r\n- 错误处理损坏或无效的PDF\r\n- 用于访问本地PDF的卷装\r\n- PDF编码的自动检测\r\n- 标准化JSON输出格式\r\n\r\n## 安装\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/trafflux/pdf-reader-mcp.git\r\ncd pdf-reader-mcp\r\n```\r\n\r\n2. 构建Docker镜像：\r\n\r\n```bash\r\ndocker build -t mcp/pdf-reader .\r\n```\r\n\r\n## 用法\r\n\r\n### 运行服务器\r\n\r\n要运行服务器并访问本地PDF文件，请执行以下操作：\r\n\r\n```bash\r\ndocker run -i --rm -v /path/to/pdfs:/pdfs mcp/pdf-reader\r\n```\r\n\r\n替换 `/path/to/pdfs` 使用PDF文件目录的实际路径。\r\n\r\n如果不使用本地PDF文件：\r\n\r\n```bash\r\ndocker run -i --rm mcp/pdf-reader\r\n```\r\n\r\n### MCP配置\r\n\r\n添加到MCP设置配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pdf-reader\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-v\",\r\n        \"/path/to/pdfs:/pdfs\",\r\n        \"mcp/pdf-reader\"\r\n      ],\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n没有本地文件PDF文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pdf-reader\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"mcp/pdf-reader\"],\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 可用工具\r\n\r\n1. `read_local_pdf`\r\n\r\n   - 目的：从本地PDF文件读取文本内容\r\n   - 输入：\r\n     ```json\r\n     {\r\n       \"path\": \"/pdfs/document.pdf\"\r\n     }\r\n     ```\r\n   - 输出：\r\n     ```json\r\n     {\r\n       \"success\": true,\r\n       \"data\": {\r\n         \"text\": \"Extracted content...\"\r\n       }\r\n     }\r\n     ```\r\n\r\n1. `read_pdf_url`\r\n\r\n   - 目的：从PDF URL读取文本内容\r\n   - 输入：\r\n     ```json\r\n     {\r\n       \"url\": \"https://example.com/document.pdf\"\r\n     }\r\n     ```\r\n   - 输出：\r\n     ```json\r\n     {\r\n       \"success\": true,\r\n       \"data\": {\r\n         \"text\": \"Extracted content...\"\r\n       }\r\n     }\r\n     ```\r\n\r\n## 错误处理\r\n\r\n服务器处理各种错误情况，并显示明确的错误消息：\r\n\r\n- 无效或损坏的PDF文件\r\n- 缺少文件\r\n- URL请求失败\r\n- 权限问题\r\n- 网络连接问题\r\n\r\n错误响应遵循以下格式：\r\n\r\n```json\r\n{\r\n  \"success\": false,\r\n  \"error\": \"Detailed error message\"\r\n}\r\n```\r\n\r\n## 依赖项\r\n\r\n- Python 3.11+\r\n- PyPDF2:PDF解析和文本提取\r\n- 请求：用于从URL获取PDF的HTTP客户端\r\n- MCP SDK：模型上下文协议实现\r\n\r\n## 项目结构\r\n\r\n```\r\n.\r\n├── Dockerfile          # Container configuration\r\n├── README.md          # This documentation\r\n├── requirements.txt   # Python dependencies\r\n└── src/\r\n    ├── __init__.py    # Package initialization\r\n    └── server.py      # Main server implementation\r\n```\r\n\r\n## 许可证\r\n\r\n版权所有2025菲利普·范德沃克\r\n\r\n根据Apache许可证2.0版（“许可证”）许可；\r\n除非遵守许可证，否则您不得使用此文件。\r\n您可以在以下网址获得许可证副本\r\n\r\n```\r\nhttp://www.apache.org/licenses/LICENSE-2.0\r\n```\r\n\r\n除非适用法律要求或书面同意，否则软件\r\n根据许可证分发的内容按“原样”分发，\r\n无任何明示或暗示的保证或条件。\r\n请参阅许可证，了解管理权限和\r\n许可证下的限制。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 联系\r\n\r\n如有疑问、问题或意见，请联系Philip Van de Walker：\r\n\r\n- 电子邮件：philip.vandewalker@gmail.com\r\n- github：https://github.com/trafflux\r\n",
+ "config": {
+  "pdf-reader": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-v",
+    "/path/to/pdfs:/pdfs",
+    "mcp/pdf-reader"
+   ],
+   "env": {}
+  }
+ }
+}

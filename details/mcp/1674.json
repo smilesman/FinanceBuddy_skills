@@ -1,0 +1,24 @@
+{
+ "id": "1674",
+ "kind": "mcp",
+ "name": "pref-editor",
+ "fingerprint_md5": "60964e5c5abcfa7e8030957c71ef4f1b",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 安卓首选项编辑器MCP服务器\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@charlesmuchene/pref-editor-mcp-server\">\r\n  \r\n</a>\r\n\r\n## 概述\r\n\r\n使用 _安卓首选项编辑器MCP服务器_。使用简单的对话式命令轻松实时编辑用户偏好，无需手动编辑文件！建立在坚固的基础上 [Android偏好编辑器](https://github.com/charlesmuchene/pref-editor-js) 库，此服务器与 **MCP（模型上下文协议）客户端** 增强您的人工智能驱动的工作流程。\r\n\r\n只需告诉MCP服务器您想做什么，例如：\r\n\r\n- “切换 _已访问_ 用户偏好”\r\n- “关闭入职指南”\r\n- “列出所有用户首选项值”\r\n- “使用当前历元时间创建时间戳首选项”\r\n\r\n体验一种更智能、更快的方式来管理Android偏好——只需提问！\r\n\r\n## 可用工具\r\n\r\n|名称|描述|\r\n| ----------------- | ----------------------------------------------------- |\r\n|change_preference|更改现有首选项的值|\r\n|delete_preference|删除现有首选项|\r\n|add_preference|根据名称、值和类型添加新的首选项|\r\n|read_preferences |读取文件中的所有用户首选项|\r\n|devices |列出已连接的Android设备|\r\n|list_apps |列出设备上安装的应用程序|\r\n|list_files |列出应用程序的首选项文件|\r\n\r\n## 演示\r\n\r\n|切换用户首选项|可用工具|添加首选项|\r\n| ---------------------------------------------- | -------------------------------------------- | ------------------------------------------------ |\r\n|  |  |  |\r\n\r\n> 在中查看更多演示 [演示截图目录](./demo/)\r\n\r\n## 需求\r\n\r\n- 安卓 [安卓调试桥](https://developer.android.com/tools/adb) (`v1.0.41+`)\r\n- Node.js 14+ _或_ 码头工人\r\n\r\n## 集成\r\n\r\n> 此服务器在 [Docker MCP目录](https://hub.docker.com/mcp/server/pref-editor/overview).在Docker桌面的MCP中启用Pref Editor服务器 [工具包](https://docs.docker.com/ai/mcp-catalog-and-toolkit/toolkit/) 你可以使用所有可用的工具。\r\n\r\n### 安卓工作室\r\n\r\n> 假设已安装MCP兼容客户端。\r\n\r\n将以下配置添加到MCP服务器配置文件中。例如，对于GitHub Copilot IntelliJ插件，配置文件是 `~/.config/github-copilot/intellij/mcp.json`.\r\n\r\n#### 码头工人\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"pref-editor\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"charlesmuchene/pref-editor-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 新巴拿马型船舶\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"pref-editor\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@charlesmuchene/pref-editor-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德桌面\r\n\r\n将此服务器添加到 `/Users/<username>/Library/Application Support/Claude/claude_desktop_config.json` 配置文件。\r\n\r\n#### 码头工人\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pref-editor\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"charlesmuchene/pref-editor-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 新巴拿马型船舶\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pref-editor\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@charlesmuchene/pref-editor-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您可以通过跟踪日志文件来解决问题：\r\n\r\n```sh\r\ntail -f ~/Library/Logs/Claude/mcp-server-pref-editor.log\r\n```\r\n\r\n### VS代码\r\n\r\n要使用带有VS Code的服务器，您需要：\r\n\r\n1. 将MCP服务器配置添加到您的 `mcp.json` 或 `settings.json`:\r\n\r\n.vcode/mcp.json\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"pref-editor\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@charlesmuchene/pref-editor-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n~/库/应用程序支持/代码/用户/settings.json\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"pref-editor\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@charlesmuchene/pref-editor-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n有关更多信息，请参阅 [VS代码文档](https://code.visualstudio.com/docs/copilot/chat/mcp-servers).\r\n\r\n## 在当地建设\r\n\r\n参见 [DEV.md](./DEV.md) 有关如何构建此项目的说明。\r\n\r\n## 测试\r\n\r\n您可以使用 [MCP检查员](https://modelcontextprotocol.io/docs/tools/inspector) 用于此MCP服务器的可视化调试。\r\n\r\n```sh\r\nnpx @modelcontextprotocol/inspector npm run start\r\n```\r\n\r\n## 许可证\r\n\r\n看 [许可证](./LICENSE)\r\n\r\n## 联系\r\n\r\n如有疑问或需要支持，请通过以下方式联系 [GitHub问题](https://github.com/charlesmuchene/pref-editor-mcp-server/issues).\r\n\r\n## 贡献\r\n\r\n我们欢迎社区的贡献！ 🎉\r\n\r\n**首次贡献者：** 请先阅读我们的 [贡献.md](./CONTRIBUTING.md) 指南，其中包括：\r\n\r\n- PR要求和标题格式\r\n- 开发设置和工作流程\r\n- 代码质量标准\r\n- 许可信息\r\n\r\n有关详细的开发说明，请参阅 [DEV.md](./DEV.md).\r\n\r\n[](./CONTRIBUTING.md)\r\n",
+ "config": {
+  "pref-editor": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "charlesmuchene/pref-editor-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

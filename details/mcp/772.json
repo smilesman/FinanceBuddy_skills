@@ -1,0 +1,21 @@
+{
+ "id": "772",
+ "kind": "mcp",
+ "name": "news-aggregator",
+ "fingerprint_md5": "295039f2a8616adc182257a28fffa075",
+ "download_count": 0,
+ "category": "社交媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# 新闻聚合器mcp服务器\r\n\r\n**AI代理的多源新闻聚合** --RSS/Atom提要、HackerNews和GDELT全球新闻情报。\r\n\r\n\r\n> **不需要API密钥。** 16个内置新闻源、HackerNews API和GDELT，覆盖65多种语言和100多个国家。\r\n\r\n## 快速开始\r\n\r\n```bash\r\npip install news-aggregator-mcp-server\r\n```\r\n\r\n添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"news-aggregator\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"news-aggregator-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**就这样** 问你的AI： *“今天最热门的科技新闻是什么？”*\r\n\r\n## 你能做什么？\r\n\r\n**问你的AI代理一些事情，比如：**\r\n\r\n- *“给我看看HackerNews上关于人工智能的热门故事”*\r\n- *“全球气候变化新闻的趋势是什么？”*\r\n- *“为我获取CoinDesk和CryptoSlate的最新加密货币新闻”*\r\n- *“比特币本周得到了多少媒体报道？”*\r\n- *“今天德国的头条新闻是什么？”*\r\n\r\n## 11工具\r\n\r\n### RSS/Atom订阅源（16个内置源）\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `fetch_feed` |通过URL获取任何RSS/Atom提要|\r\n| `get_news_by_category` |按类别分类的新闻：科技、人工智能、综合、商业、加密、科学|\r\n| `search_rss_feeds` |按关键字搜索提要|\r\n| `list_feed_catalog` |显示所有内置源|\r\n\r\n### 黑客新闻\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `get_hackernews_top` |热门/新/最佳/询问/展示/工作故事|\r\n| `get_hackernews_story` |故事详情及热门评论|\r\n| `get_hackernews_trending` |按关键字筛选故事|\r\n\r\n### GDELT全球新闻情报\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `search_global_news` |搜索全球新闻（65+种语言）|\r\n| `get_news_timeline` |新闻量随时间的变化趋势|\r\n| `get_news_by_country` |按国家代码筛选的新闻（德国、美国、英国…）|\r\n| `get_trending_topics` |当前全球热门话题|\r\n\r\n## 内置新闻源\r\n\r\n|类别|来源|\r\n|----------|---------|\r\n|科技| TechCrunch、Wired、Ars Technica、The Verge|\r\n|AI |MIT技术评论、VentureBeat AI、IEEE Spectrum AI|\r\n|概述|路透社、英国广播公司新闻、美联社新闻|\r\n|商业|彭博科技、金融时报、CNBC|\r\n|加密货币| CoinDesk，CryptoSlate，解密|\r\n|《自然新闻》、《科学日报》、《美国国家航空航天局新闻》|\r\n\r\n## 相关服务器\r\n\r\n- [社会趋势mcp服务器](https://pypi.org/project/social-trends-mcp-server/) --Reddit和HackerNews趋势分析\r\n- [网络安全mcp服务器](https://pypi.org/project/cybersecurity-mcp-server/) --CVE数据库和漏洞情报\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "news-aggregator": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "news-aggregator-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

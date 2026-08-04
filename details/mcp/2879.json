@@ -1,0 +1,18 @@
+{
+ "id": "2879",
+ "kind": "mcp",
+ "name": "kyonis",
+ "fingerprint_md5": "1823b3931dd9ffd5422417ca6c776544",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# Kyonis MCP服务器\r\n\r\n> KYC/AML的代理本地合规性API-可通过模型上下文协议发现\r\n\r\nKyonis提供KYC验证、AML制裁筛查、尽职调查和UBO解决方案\r\nAI代理可以通过MCP直接消费。\r\n\r\n## 快速开始\r\n\r\n### 与Claude Desktop一起使用\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kyonis\": {\r\n      \"url\": \"https://mcp.kyonis.com/sse\",\r\n      \"headers\": {\r\n        \"X-API-Key\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n获取您的免费API密钥（每月500次验证）：https://app.kyonis.com/register\r\n\r\n### 可用工具\r\n\r\n|工具|描述|响应时间|\r\n|------|-------------|---------------|\r\n| `aml_screen` |针对OFAC、欧盟、联合国、HMT制裁的屏幕|\\<500ms|\r\n| `kyc_verify` |带有风险评分的完整KYC验证|\\<3s|\r\n| `due_diligence` |针对负面媒体加强尽职调查|\\<10s|\r\n| `ubo_resolve` |解决最终受益所有人|\\<5s|\r\n| `entity_risk` |被监控实体的实时风险评分|\\<200ms|\r\n\r\n### 示例：筛查一个人\r\n\r\n问克劳德：\r\n\r\n> “使用Kyonis筛选弗拉基米尔·普京反对全球制裁名单”\r\n\r\n答复包括：\r\n\r\n- 将结果与置信度得分相匹配\r\n- 全推理链（可解释性）\r\n- 咨询来源（OFAC、欧盟、联合国等）\r\n- 处理时间\r\n\r\n### 示例：KYC验证\r\n\r\n> “对Jean Dupont进行KYC检查，法国国民，1985年3月15日出生”\r\n\r\n### 特性\r\n\r\n- **可解释性**：每个回复都包含一个 `reasoning` 领域\r\n- **12+数据源**：外国资产控制办公室、欧盟、联合国、英国税务局、英国外交与贸易部、塞伦、公司注册处、EDGAR、GDELT、ICIJ\r\n- **符合欧盟人工智能法案**：可审计的决策链\r\n- **免费层**：每月500次验证，无需信用卡\r\n\r\n### 链接\r\n\r\n- 网站：https://kyonis.com\r\n- 文档：https://docs.kyonis.com\r\n- 仪表板：https://app.kyonis.com\r\n- API参考：https://api.kyonis.com/docs\r\n",
+ "config": {
+  "kyonis": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.kyonis.com/sse"
+  }
+ }
+}

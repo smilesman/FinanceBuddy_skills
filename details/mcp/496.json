@@ -1,0 +1,24 @@
+{
+ "id": "496",
+ "kind": "mcp",
+ "name": "tmdb-2",
+ "fingerprint_md5": "598b16a1960218e9507fc0020b16ef9c",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# TMDB MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，允许LLM使用电影数据库（TMDB）API搜索电影和电视节目。\r\n\r\n## 特性\r\n\r\n- **搜索电影**：按标题查找电影，并支持地区和语言。\r\n- **搜索电视节目**：按标题查找支持语言的电视节目。\r\n- **获取详细信息**：检索电影和电视节目的详细元数据（运行时间、预算、季节等）。\r\n- **趋势**：发现今天或本周的热门电影和电视节目。\r\n- **搜索人员**：寻找演员、导演和其他工作人员。\r\n- **直接链接**：提供TMDb URL，便于访问更多详细信息。\r\n\r\n## 先决条件\r\n\r\n- [Node.js](https://nodejs.org/) （v18或更高版本）\r\n- TMDB API密钥。您可以通过在上创建帐户来获得一个 [themoviedb.org](https://www.themoviedb.org/) 以及在您的帐户设置中申请API密钥。\r\n\r\n## 配置\r\n\r\n### MCP客户端配置（例如，克劳德桌面）\r\n\r\n要将此服务器与Claude Desktop一起使用，请将其添加到您的 `claude_desktop_config.json`:\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\\\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tmdb\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@lonzzi/tmdb-mcp-server\"],\r\n      \"env\": {\r\n        \"TMDB_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n所有工具都支持可选 `language` 论点（例如。， `en-US`, `zh-CN`, `fr-FR`)以获得本地化结果。默认值为 `en-US`.\r\n\r\n### `search_movies`\r\n\r\n在TMDB上按标题搜索电影。\r\n\r\n- **参数**:\r\n  - `query` （string，必填）：要搜索的电影标题。\r\n  - `language` （字符串，可选）：语言代码（默认值： `en-US`).\r\n  - `region` （字符串，可选）：用于过滤发布日期的ISO 3166-1代码（例如。， `US`, `KR`).\r\n\r\n### `search_tv_shows`\r\n\r\n按标题搜索TMDB上的电视节目。\r\n\r\n- **参数**:\r\n  - `query` （string，必填）：要搜索的电视节目标题。\r\n  - `language` （字符串，可选）：语言代码（默认值： `en-US`).\r\n\r\n### `get_movie_details`\r\n\r\n获取特定电影的详细信息。\r\n\r\n- **参数**:\r\n  - `movieId` （数字，必填）：电影的TMDB ID。\r\n  - `language` （字符串，可选）：语言代码（默认值： `en-US`).\r\n\r\n### `get_tv_show_details`\r\n\r\n获取特定电视节目的详细信息。\r\n\r\n- **参数**:\r\n  - `tvShowId` （数字，必填）：电视节目的TMDB ID。\r\n  - `language` （字符串，可选）：语言代码（默认值： `en-US`).\r\n\r\n### `get_trending_movies`\r\n\r\n获取每日或每周的热门电影。\r\n\r\n- **参数**:\r\n  - `timeWindow` （字符串，可选）： `day` 或 `week` （默认值： `week`).\r\n  - `language` （字符串，可选）：语言代码（默认值： `en-US`).\r\n\r\n### `get_trending_tv`\r\n\r\n获取每日或每周的热门电视节目。\r\n\r\n- **参数**:\r\n  - `timeWindow` （字符串，可选）： `day` 或 `week` （默认值： `week`).\r\n  - `language` （字符串，可选）：语言代码（默认值： `en-US`).\r\n\r\n### `search_person`\r\n\r\n搜索人物（演员、导演等）。\r\n\r\n- **参数**:\r\n  - `query` （string，必填）：要搜索的名称。\r\n  - `language` （字符串，可选）：语言代码（默认值： `en-US`).\r\n\r\n## 发展\r\n\r\n1. 克隆存储库：\r\n\r\n   ```bash\r\n   git clone https://github.com/lonzzi/tmdb-mcp-server.git\r\n   cd tmdb-mcp-server\r\n   ```\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   npm install\r\n   ```\r\n\r\n1. 创建一个 `.env` 与您的文件 `TMDB_API_KEY`.\r\n\r\n1. 构建项目：\r\n\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n### 运行测试\r\n\r\n```bash\r\nnpm test\r\n```\r\n",
+ "config": {
+  "tmdb": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@lonzzi/tmdb-mcp-server"
+   ],
+   "env": {
+    "TMDB_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "python-review",
+ "kind": "skill",
+ "name": "python-review",
+ "fingerprint_md5": "f36d6a49faf78aa15fdd22b8147b5827",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "## Python review guidelines\r\n\r\nThis project uses Python for the SDK (`python/cog/`) which defines the predictor\r\ninterface, type system, and HTTP/queue server.\r\n\r\n### What linters already catch (skip these)\r\n\r\nruff handles pycodestyle (E), Pyflakes (F), isort (I), warnings (W), bandit (S),\r\nbugbear (B), and annotations (ANN). Don't flag issues these 将会 catch.\r\n\r\n### What 迁移到 look for\r\n\r\n**Type annotations**\r\n\r\n- Required on all function signatures\r\n- Use `typing_extensions` for backward compatibility\r\n- Avoid `Any` where a concrete type is possible\r\n- 检查 that type annotations actually match runtime behavior\r\n\r\n**Compatibility**\r\n\r\n- 必须 支持 Python 3.10 through 3.13\r\n- 监视 for syntax/stdlib 功能特性 only available in newer versions\r\n- `from __future__ import annotations` if using newer annotation syntax\r\n\r\n**错误 handling**\r\n\r\n- No bare `except:` o`except Exception:``` that swallows everything\r\n- Exceptions 应该 have descriptive messages\r\n- 资源 cleanup with context managers, not try/finally when avoidable\r\n\r\n**Async patterns**\r\n\r\n- Tests use pytest-asyncio -- async tests 需要 proper fixtures\r\n- 监视 for blocking calls inside async functions\r\n- Proper cleanup of async 资源 (aclose, async context managers)\r\n\r\n**Predictor interface**\r\n\r\n- `base_predictor.py` is the core interface -- changes here affect all users\r\n- `types.py` defines 输入/输出 types -- 检查 backward compatibility\r\n- Server code in `python/cog/server/` handles HTTP -- 监视 for request handling bugs\r\n\r\n**Testing**\r\n\r\n- Uses pytest with fixtures\r\n- tox runs tests across Python 3.10-3.13\r\n- 测试 isolation: don't rely on global state or 测试 ordering",
+ "config": {}
+}

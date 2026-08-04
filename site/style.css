@@ -1,4 +1,4 @@
-/* FinanceBuddy Skills Warehouse —— 复刻 OpenOcta 技能库形态 */
+/* FinanceBuddy Skills Warehouse —— 资源市场站点样式 */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -90,40 +90,44 @@ main { flex: 1; padding-bottom: 48px; }
 .site-footer p { font-size: 13px; color: #9ca3af; margin: 3px 0; }
 .site-footer a { color: #3b5a8f; text-decoration: none; }
 
-/* ── 详情弹窗 ── */
+/* ── 详情视图（复刻官网详情页形态） ── */
 .modal-mask {
-  position: fixed; inset: 0; background: rgba(15, 23, 42, .45);
+  position: fixed; inset: 0; background: rgba(15, 23, 42, .55);
   display: flex; align-items: center; justify-content: center; z-index: 100; padding: 24px;
 }
 .modal-mask.hidden { display: none; }
-.modal {
-  background: #fff; border-radius: 14px; width: min(760px, 100%);
-  max-height: 84vh; display: flex; flex-direction: column; overflow: hidden;
+.detail-view {
+  background: #fff; border-radius: 14px; width: min(880px, 100%);
+  max-height: 88vh; display: flex; flex-direction: column; overflow: hidden;
 }
-.modal-head {
+.detail-topbar {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 22px; border-bottom: 1px solid #eef1f6;
+  padding: 14px 22px; border-bottom: 1px solid #eef1f6;
 }
-.modal-title { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 600; }
-.status-tag { font-size: 12px; padding: 2px 10px; border-radius: 999px; background: #e9f9f0; color: #14824a; font-weight: 400; }
-.modal-close { border: none; background: none; font-size: 16px; cursor: pointer; color: #9ca3af; }
-.modal-close:hover { color: #374151; }
-.modal-body { padding: 18px 22px; overflow-y: auto; }
-.modal-meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: #6b7280; margin-bottom: 14px; }
-.modal-meta b { color: #374151; font-weight: 600; }
+.back-btn {
+  border: none; background: none; cursor: pointer;
+  font-size: 15px; color: #1a3a6b; font-weight: 600; padding: 4px 0;
+}
+.back-btn:hover { color: #24508f; text-decoration: underline; }
+.detail-actions { display: flex; align-items: center; gap: 10px; }
+.btn { text-decoration: none; font-size: 14px; border-radius: 8px; padding: 8px 18px; border: none; cursor: pointer; }
+.btn.download { background: #22c55e; color: #fff; }
+.btn.download:hover { background: #16a34a; }
+.btn.copy { background: #fff; color: #374151; border: 1px solid #d6dce8; }
+.btn.copy:hover { border-color: #1a3a6b; color: #1a3a6b; }
+.btn.hidden { display: none; }
+.detail-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 18px 22px 6px; flex-wrap: wrap;
+}
+.detail-title { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 700; color: #111827; flex-wrap: wrap; }
+.detail-tags { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.detail-tags .tag { font-size: 13px; padding: 3px 12px; }
+.detail-md5 { font-size: 13px; color: #9ca3af; font-family: Consolas, monospace; }
+.detail-body { padding: 12px 22px 22px; overflow-y: auto; }
 .readme {
   font-size: 14px; line-height: 1.8; color: #374151;
-  background: #f8fafc; border: 1px solid #eef1f6; border-radius: 10px; padding: 16px 18px;
   white-space: pre-wrap; word-break: break-word;
 }
-.modal-foot {
-  display: flex; align-items: center; gap: 14px;
-  padding: 14px 22px; border-top: 1px solid #eef1f6;
-}
-.btn { text-decoration: none; font-size: 14px; border-radius: 8px; padding: 8px 18px; }
-.btn.primary { background: #1a3a6b; color: #fff; }
-.btn.primary:hover { background: #24508f; }
-.btn.hidden { display: none; }
-.md5 { font-size: 12px; color: #9ca3af; font-family: Consolas, monospace; }
 
 .hidden { display: none !important; }

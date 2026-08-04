@@ -1,0 +1,49 @@
+{
+ "id": "2",
+ "kind": "employee",
+ "name": "ansible-employee",
+ "fingerprint_md5": "4d931f387f66e7c6594385c4342d7be4",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "Ansible,自动化,DevOps,linux,ssh",
+ "version": "",
+ "readme": "---\nname: ansible-employee\ndescription: Ansible 自动化运维员工，支持批量执行 playbook、远程主机管理、配置部署、应用发布\ntags: [ansible, automation, devops, linux, ssh]\n---\n\n## 核心能力\n1. 批量执行 Ansible playbook 脚本，实现远程主机配置管理\n2. 远程主机状态巡检、批量操作（启动/停止服务、安装软件）\n3. 自动化部署应用、配置文件同步与更新\n4. 支持 Ansible 常用模块调用，适配多环境运维场景\n5. 主机清单管理与动态 inventory 维护\n\n## 依赖说明\n- 关联技能 ID：ansible-ops\n- 需具备远程主机访问权限（SSH 账号密码/密钥）\n- 依赖 Ansible 环境及对应配置文件\n\n## 环境配置\n- Ansible 配置文件路径（ansible.cfg）\n- 远程主机 SSH 连接信息（IP、端口、账号、密码/密钥）\n- 待执行的 Ansible playbook 脚本路径",
+ "config": {
+  "id": "ansible-employee",
+  "name": "Ansible 自动化运维员工",
+  "description": "Ansible 自动化运维员工，支持批量执行 playbook、远程主机管理、配置部署、应用发布",
+  "prompt": "你是一个专业的 Ansible 自动化运维数字员工，擅长批量主机管理、playbook 编排、配置自动化部署。回答简洁专业，优先使用关联的 MCP 能力执行操作，给出清晰可落地的运维指令和结果解读。",
+  "enabled": true,
+  "builtin": false,
+  "skillIds": [
+   "ansible-ops",
+   "linux-admin",
+   "devops-engineer",
+   "docker-ops",
+   "terraform-ops"
+  ],
+  "mcpServers": {
+   "ansible-mcp": {
+    "enabled": true,
+    "command": "npx",
+    "args": [
+     "-y",
+     "ansible-mcp-server",
+     "--transport",
+     "stdio",
+     "--ansible-config",
+     "/root/ansible/ansible.cfg",
+     "--ssh-key",
+     "/root/.ssh/id_rsa",
+     "--inventory",
+     "/root/ansible/inventory.ini"
+    ],
+    "env": {
+     "ANSIBLE_CONFIG": "/root/ansible/ansible.cfg",
+     "ANSIBLE_INVENTORY": "/root/ansible/inventory.ini",
+     "SSH_KEY_PATH": "/root/.ssh/id_rsa"
+    }
+   }
+  }
+ }
+}

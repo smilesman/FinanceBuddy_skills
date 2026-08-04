@@ -1,0 +1,22 @@
+{
+ "id": "795",
+ "kind": "mcp",
+ "name": "page-design-guide",
+ "fingerprint_md5": "f7687f19de8e3b28939a88df5fee6062",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP服务器页面设计指南\r\n\r\nMCP（模型上下文协议）服务器，提供设计指导，帮助LLM生成更好、更现代的网页。此服务器侧重于教授设计原则和最佳实践，而不是提供代码模板。\r\n\r\n## 特性\r\n\r\n- \\[布局\\] **布局指导** -何时以及如何使用F模式、Z模式、Bento Grid等。\r\n- \\[调色板\\] **色彩心理学** -颜色含义、方案类型和调色板建议\r\n- \\[类型\\] **排版** -层次结构、字体配对和可读性最佳实践\r\n- \\[网格\\] **响应式设计** -移动优先策略和断点指导\r\n- \\[图层\\] **视觉层次感** -对比度、空白、对齐原则\r\n- \\[组件\\] **组件指南** -按钮、卡片、表格、导航的设计原则\r\n- \\[动议\\] **动画原理** -时间、目的和性能考虑\r\n- \\[可访问性\\] **无障碍** -WCAG合规性、对比度、语义HTML\r\n- \\[闪闪发光\\] **现代潮流** -当前的设计趋势以及何时使用它们\r\n- \\[检查\\] **设计评审** -分析设计说明并获得建议\r\n\r\n## 使用Claude Desktop进行设置\r\n\r\n将此添加到您的Claude Desktop配置文件中：\r\n\r\n**MacOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\\\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n### 选项1：全局安装（推荐）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"page-design-guide\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"page-design-guide-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 选项2：本地安装\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"page-design-guide\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/absolute/path/to/node_modules/page-design-guide-mcp/build/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/absolute/path/to` 与项目的实际路径 `node_modules` 目录。\r\n\r\n## 使用OpenCode进行设置\r\n\r\n你的 `opencode.json` 配置文件应包括：\r\n\r\n```json\r\n{\r\n  \"$schema\": \"https://opencode.ai/config.json\",\r\n  \"mcp\": {\r\n    \"page-design-guide\": {\r\n      \"type\": \"local\",\r\n      \"command\": [\"npx\", \"-y\", \"page-design-guide-mcp\"],\r\n      \"enabled\": true\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n连接后，您可以向Claude提出以下问题：\r\n\r\n- “这个登录页面应该遵循哪些设计原则？”\r\n- “哪种布局最适合投资组合网站？”\r\n- “什么颜色传达信任和专业精神？”\r\n- “我应该如何构建英雄部分？”\r\n- “排版时要避免哪些常见错误？”\r\n- “我该如何让它变得触手可及？”\r\n- “查看我对此电子商务页面的设计方法”\r\n\r\n## 可用工具\r\n\r\n### `get_design_principles`\r\n\r\n获得基本的设计原则（层次结构、空白、对比度、对齐等），并附上要避免的指导方针和常见错误。\r\n\r\n### `get_layout_guidance`\r\n\r\n根据页面类型获取布局建议。解释何时以及为什么使用F模式、Z模式、本托网格、分屏等。\r\n\r\n### `get_color_guidance`\r\n\r\n获取色彩心理学、方案类型（单色、互补等）以及基于情绪和行业的调色板建议。\r\n\r\n### `get_typography_guidance`\r\n\r\n获取排版层次结构、不同风格的字体配对建议以及可读文本的最佳实践。\r\n\r\n### `get_section_guidance`\r\n\r\n获取特定页面部分的指导：页眉、英雄、功能、推荐、定价、cta、页脚、常见问题解答，包括目的、结构和最佳实践。\r\n\r\n### `get_responsive_guidance`\r\n\r\n获取响应式设计原则、断点策略和移动优先的最佳实践。\r\n\r\n### `get_component_guidance`\r\n\r\n获取UI组件的设计指南：按钮、卡片、表单、导航、模态、图标，包括尺寸、状态和可访问性。\r\n\r\n### `get_animation_guidance`\r\n\r\n获取不同类型运动的动画原理、时间指南和性能考虑因素。\r\n\r\n### `get_accessibility_guidance`\r\n\r\n获取可访问性要求，包括对比度、焦点状态、语义HTML和运动偏好。\r\n\r\n### `get_modern_trends`\r\n\r\n获取当前的网页设计趋势（2024-2026），并指导何时以及如何正确使用它们。\r\n\r\n### `review_design_approach`\r\n\r\n描述你的设计，并获得分数、确定的优势、关注点和建议的反馈。\r\n\r\n## 项目结构\r\n\r\n```\r\npage-design-guide-mcp/\r\n├── src/\r\n│   └── index.ts          # Main MCP server code\r\n├── build/                # Compiled JavaScript (generated)\r\n├── package.json\r\n├── tsconfig.json\r\n└── README.md\r\n```\r\n\r\n## 发展\r\n\r\n对于根据更改自动重建的开发：\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n## 需求\r\n\r\n- Node.js>=18.0.0\r\n- Claude桌面应用程序\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "page-design-guide": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "page-design-guide-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

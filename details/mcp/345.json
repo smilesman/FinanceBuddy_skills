@@ -1,0 +1,24 @@
+{
+ "id": "345",
+ "kind": "mcp",
+ "name": "osrs",
+ "fingerprint_md5": "252220548b9b900e5ebd5779ceda73ac",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# osrs mcp\r\n\r\nMCP服务器，为Claude提供实时OSRS游戏数据。玩家统计数据、装备查找、老板设置、DPS计算、维基页面和GE价格来自实际的游戏API，而不是过时的训练数据。\r\n\r\n## 快速开始\r\n\r\n需要Python 3.11+和 [紫外线](https://docs.astral.sh/uv/).\r\n\r\n```bash\r\nuv sync\r\ncp config.example.json config.json  # add your RSN(s)\r\n```\r\n\r\n添加到克劳德代码MCP配置(`~/.claude/settings.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"osrs\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/osrs-wiki-mcp\", \"osrs-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n19个工具，涵盖玩家帐户、物品、怪物、老板、DPS数学和维基搜索。亮点：\r\n\r\n|工具|目的|\r\n|---|---|\r\n| `player_stats` |级别、老板KC、铁人检测|\r\n| `player_gear` |RuneLite银行数据中的最佳设备|\r\n| `calc_dps` |带有真实玩家统计数据的DPS计算器|\r\n| `boss_setup` |自动对银行里的每一件武器与老板进行排名|\r\n| `compare_weapons` |并排武器DPS比较|\r\n| `monster_drops` |适合任何怪物的全桌|\r\n| `item_price` |GE实时价格|\r\n| `read_wiki_page` |按分区获取wiki内容|\r\n\r\n## 测试\r\n\r\n```bash\r\nuv run pytest\r\n```\r\n\r\n## 堆栈\r\n\r\n- Python 3.11+，uv\r\n- MCP协议(`mcp[cli]`)\r\n- httpx用于异步HTTP\r\n- Pydantic用于数据验证\r\n- OSRS Wiki API、智者老人API、RuneLite本地数据\r\n",
+ "config": {
+  "osrs": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "/path/to/osrs-wiki-mcp",
+    "osrs-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "1253",
+ "kind": "mcp",
+ "name": "rcsb-pdb",
+ "fingerprint_md5": "6390d6ca7ec2b112715bea902b78a567",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# RCSB PDB MCP 服务器\r\n\r\n一个MCP（模型上下文协议）服务器，提供与RCSB蛋白质数据库API交互的工具。\r\n\r\n## 概述\r\n\r\n这台服务器提供了以下工具：\r\n\r\n- 查询PDB条目信息\r\n- 检索聚合物实体的详细信息\r\n- 下载各种格式的结构文件\r\n- 向RCSB数据API发出自定义API查询\r\n\r\n## 安装\r\n\r\n1. 使用 uv 安装依赖项：\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n或者使用 pip：\r\n\r\n```bash\r\npip install -e .\r\n```\r\n\r\n## 运行服务器\r\n\r\n### 作为独立服务器\r\n\r\n```bash\r\npython server.py\r\n```\r\n\r\n### 使用Claude Desktop\r\n\r\n在您的Claude Desktop配置文件中添加：\r\n\r\n**macOS（苹果电脑操作系统）**： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**Windows**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"rcsb-pdb\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/Users/cnyambura/Documents/rcsb_api/api/rcsb-mcp\",\r\n        \"run\",\r\n        \"server.py\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n添加配置后，重启Claude桌面版。\r\n\r\n## 可用工具\r\n\r\n### 1. `get_pdb_entry`\r\n\r\n获取关于PDB条目的全面信息。\r\n\r\n**参数：**\r\n\r\n- `pdb_id` (字符串)：4位PDB标识符（例如，'1ABC'，'7BQY'）\r\n\r\n**返回值：** 包含结构信息的JSON，包括标题、实验方法、分辨率、日期、作者和来源生物体。\r\n\r\n**示例：**\r\n\r\n```\r\nget_pdb_entry(\"1ABC\")\r\n```\r\n\r\n### 2. `get_polymer_entity`\r\n\r\n获取PDB条目中关于聚合物实体（蛋白质、DNA、RNA）的信息。\r\n\r\n**参数：**\r\n\r\n- `pdb_id` (字符串)：4位PDB标识符\r\n- `entity_id` (字符串，可选)：实体编号（默认：“1”）\r\n\r\n**返回值：** 包含分子名称、序列、分子量、实体类型和来源生物体的JSON数据。\r\n\r\n**示例：**\r\n\r\n```\r\nget_polymer_entity(\"1ABC\", \"1\")\r\n```\r\n\r\n### 3. `download_structure_file`\r\n\r\n从RCSB PDB下载结构文件。\r\n\r\n**参数：**\r\n\r\n- `pdb_id` (字符串)：4位PDB标识符\r\n- `file_format` （字符串，可选）：下载格式（默认：“pdb”）\r\n  - `pdb`PDB格式\r\n  - `cif`mmCIF 格式\r\n  - `xml`PDBML/XML 格式\r\n  - `pdb.gz`压缩PDB（Program Database，程序数据库）\r\n  - `cif.gz`压缩的mmCIF（macromolecular Crystallographic Information File，大分子晶体学信息文件）\r\n  - `xml.gz`压缩的XML\r\n- `output_dir` (字符串，可选)：保存文件的目录\r\n- `filename` （字符串，可选）：自定义文件名\r\n\r\n**返回值：** 包含下载状态和文件路径的JSON。\r\n\r\n**示例：**\r\n\r\n```\r\ndownload_structure_file(\"1ABC\", \"pdb\", \"/path/to/output\")\r\n```\r\n\r\n### 4. `query_rcsb_api`\r\n\r\n向RCSB数据API发出自定义查询。\r\n\r\n**参数：**\r\n\r\n- `endpoint` API终端路径（例如，'assembly/1ABC-1'，'uniprot/P12345'）\r\n- `params` (字符串，可选)：查询参数的 JSON 字符串\r\n\r\n**常见的终点（或：常见结果指标）：**\r\n\r\n- `entry/{pdb_id}`入门级信息\r\n- `polymer_entity/{pdb_id}_{entity_id}`聚合物实体信息\r\n- `assembly/{pdb_id}-{assembly_id}`生物组装信息\r\n- `nonpolymer_entity/{pdb_id}_{entity_id}`小分子/配体信息\r\n- `uniprot/{uniprot_id}`UniProt交叉引用\r\n\r\n**返回值：** 包含API响应的JSON。\r\n\r\n**示例：**\r\n\r\n```\r\nquery_rcsb_api(\"assembly/1ABC-1\")\r\n```\r\n\r\n### 5. `search_pdb_by_organism`\r\n\r\n获取如何按生物体搜索PDB条目的信息。\r\n\r\n**参数：**\r\n\r\n- `organism` (字符串)：生物体名称（例如，“Homo sapiens（智人）”，“E. coli（大肠杆菌）”）\r\n\r\n**返回值：** 按生物体搜索的说明和示例查询。\r\n\r\n## 与Claude一起使用的示例\r\n\r\n一旦连接到Claude Desktop，您就可以提问：\r\n\r\n- “获取PDB条目1ABC的信息”\r\n- “下载7BQY结构文件，格式为mmCIF”\r\n- “显示PDB 4HHB实体1的聚合物实体详细信息”\r\n- “查询1ABC装配体1的装配信息”\r\n\r\n## 项目结构\r\n\r\n```\r\nrcsb-mcp/\r\n├── rcsb_api.py        # Core RCSB API functions\r\n├── server.py          # FastMCP server implementation\r\n├── pyproject.toml     # Project dependencies\r\n└── README.md          # This file\r\n```\r\n\r\n## API 文档\r\n\r\n如需有关RCSB数据API的更多信息，请访问：\r\n\r\n- https://data.rcsb.org/ 的中文翻译是：“蛋白质数据银行（RCSB）数据网站”\r\n- https://www.rcsb.org/docs/programmatic-access/web-services-overview 翻译为中文是：https://www.rcsb.org/文档/程序化访问/网络服务概述\r\n\r\n## 许可证\r\n\r\nMIT（MIT）\r\n",
+ "config": {
+  "rcsb-pdb": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/Users/cnyambura/Documents/rcsb_api/api/rcsb-mcp",
+    "run",
+    "server.py"
+   ],
+   "env": {}
+  }
+ }
+}

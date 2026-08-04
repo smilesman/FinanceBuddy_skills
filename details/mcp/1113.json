@@ -1,0 +1,24 @@
+{
+ "id": "1113",
+ "kind": "mcp",
+ "name": "mem0-mcp",
+ "fingerprint_md5": "895cbfdbc7970567c1693b09eb9b117c",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Mem0内存MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，通过以下方式提供内存存储和检索功能 [Mem0](https://github.com/mem0ai/mem0)。此工具允许您存储和搜索记忆，使其有助于维护上下文并根据过去的交互做出明智的决策。\r\n\r\n## 特性\r\n\r\n- 使用用户特定的上下文存储记忆\r\n- 使用相关性评分搜索存储的记忆\r\n- 简单直观的API\r\n- 基于模型上下文协议构建\r\n- 自动错误处理\r\n- 支持多个用户上下文\r\n\r\n## 用法\r\n\r\n此服务器现在通过Smithery CLI支持StreamableHTTP，同时保留可选的STDIO兼容性。\r\n\r\n### 流式HTTP（推荐）\r\n\r\n- 开发（打开Smithery Playground并公开HTTP传输）：\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n- 构建HTTP/StreamableHTTP（Smithery）：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n- 在本地启动HTTP服务器（Smithery构建的入口点）：\r\n\r\n```bash\r\nnpm run start:http\r\n```\r\n\r\n您可以在操场上使用Smithery生成的表单或通过设置环境变量（例如。， `MEM0_API_KEY`).\r\n\r\n### STDIO（向后兼容）\r\n\r\n通过STDIO运行服务器（仅适用于支持STDIO的本地客户端）：\r\n\r\n```bash\r\nenv MEM0_API_KEY=your-api-key-here npm run build:stdio && npm run start:stdio\r\n```\r\n\r\n## AI工具的配置\r\n\r\n### 在游标上运行（STDIO）\r\n\r\n#### 配置光标🖥️\r\n\r\n要在游标中配置Mem0 MCP：\r\n\r\n1. 打开光标设置\r\n1. 转到功能>MCP服务器\r\n1. 点击“+添加新MCP服务器”\r\n1. 输入以下内容：\r\n   - 名称：“mem0 mcp”（或您的首选名称）\r\n   - 类型：“命令”\r\n   - 命令： `env MEM0_API_KEY=your-api-key-here npx -y @mem0/mcp` （或使用 `start:stdio` 来自此回购）\r\n\r\n要使用JSON配置Mem0 MCP，请执行以下操作：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mem0-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@mem0/mcp\"],\r\n      \"env\": {\r\n        \"MEM0_API_KEY\": \"YOUR-API-KEY-HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 在VS代码（STDIO）上运行\r\n\r\n将以下JSON块添加到VS Code中的用户设置（JSON）文件中：\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"inputs\": [\r\n      {\r\n        \"type\": \"promptString\",\r\n        \"id\": \"apiKey\",\r\n        \"description\": \"Mem0 API Key\",\r\n        \"password\": true\r\n      }\r\n    ],\r\n    \"servers\": {\r\n      \"mem0-memory\": {\r\n        \"command\": \"npx\",\r\n        \"args\": [\"-y\", \"@mem0/mcp\"],\r\n        \"env\": {\r\n          \"MEM0_API_KEY\": \"${input:apiKey}\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 1.添加内存工具（添加内存）\r\n\r\n使用用户特定的上下文存储新的记忆。\r\n\r\n```json\r\n{\r\n  \"name\": \"add-memory\",\r\n  \"arguments\": {\r\n    \"content\": \"User prefers dark mode interface\",\r\n    \"userId\": \"user123\"\r\n  }\r\n}\r\n```\r\n\r\n### 2.搜索记忆工具（搜索记忆）\r\n\r\n搜索存储的内存以检索相关信息。\r\n\r\n```json\r\n{\r\n  \"name\": \"search-memories\",\r\n  \"arguments\": {\r\n    \"query\": \"What are the user's interface preferences?\",\r\n    \"userId\": \"user123\"\r\n  }\r\n}\r\n```\r\n\r\n## 响应格式\r\n\r\n### 添加内存响应\r\n\r\n```json\r\n{\r\n  \"content\": [\r\n    {\r\n      \"type\": \"text\",\r\n      \"text\": \"Memory added successfully\"\r\n    }\r\n  ],\r\n  \"isError\": false\r\n}\r\n```\r\n\r\n### 搜索内存响应\r\n\r\n```json\r\n{\r\n  \"content\": [\r\n    {\r\n      \"type\": \"text\",\r\n      \"text\": \"Memory: User prefers dark mode interface\\nRelevance: 0.95\\n---\\nMemory: User mentioned liking minimal UI\\nRelevance: 0.82\\n---\"\r\n    }\r\n  ],\r\n  \"isError\": false\r\n}\r\n```\r\n\r\n## 配置\r\n\r\n### 环境变量\r\n\r\n- `MEM0_API_KEY`：您的Mem0 API密钥（必需）\r\n  - 操作所需\r\n  - 可从以下网址获得 [Mem0仪表板](https://app.mem0.ai/dashboard/api-keys)\r\n\r\n## 发展\r\n\r\n### 先决条件\r\n\r\n- Node.js>=18\r\n- 一个Mem0 API密钥\r\n\r\n### 设置\r\n\r\n1. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n2. 可选择创建 `.env` 文件，并添加您的Mem0 API密钥：\r\n\r\n```bash\r\nMEM0_API_KEY=your-api-key-here\r\nDEFAULT_USER_ID=mem0-mcp-user\r\n```\r\n\r\n### HTTP/流式HTTP开发\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n### STDIO开发\r\n\r\n```bash\r\nnpm run build:stdio\r\nnpm run start:stdio\r\n```\r\n\r\n## 错误处理\r\n\r\n服务器包括以下错误处理：\r\n\r\n- API连接问题\r\n- 无效的内存操作\r\n- 搜索错误\r\n- 身份验证失败\r\n\r\n错误响应示例：\r\n\r\n```json\r\n{\r\n  \"content\": [\r\n    {\r\n      \"type\": \"text\",\r\n      \"text\": \"Error: Failed to search memories: Invalid API key\"\r\n    }\r\n  ],\r\n  \"isError\": true\r\n}\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "mem0-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@mem0/mcp"
+   ],
+   "env": {
+    "MEM0_API_KEY": "YOUR-API-KEY-HERE"
+   }
+  }
+ }
+}

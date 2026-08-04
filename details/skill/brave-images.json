@@ -1,0 +1,12 @@
+{
+ "id": "brave-images",
+ "kind": "skill",
+ "name": "brave-images",
+ "fingerprint_md5": "19a829eabe6c02db2d75449a51b7041a",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# Brave 图片搜索\r\n\r\n通过 Brave Search API 搜索图片。\r\n\r\n## 用法\r\n\r\n```bash\r\ncurl -s \"https://api.search.brave.com/res/v1/images/search?q=QUERY&count=COUNT\" \\\r\n  -H \"X-Subscription-Token: $BRAVE_API_KEY\"\r\n```\r\n\r\n## 参数\r\n\r\n| 参数 | 必填 | 说明 |\r\n|-------|----------|-------------|\r\n| `q` | 是 | 搜索查询 (URL-encoded) |\r\n| `count` | 否 | 结果数量 (1-100, 默认 20) |\r\n| `country` | 否 | 2 字母代码 (US, DE, IL) 用于区域偏好 |\r\n| `search_lang` | 否 | 语言代码 (en, de, he) |\r\n| `safesearch` | 否 | off, moderate, strict (默认: moderate) |\r\n\r\n## 响应解析\r\n\r\n每个结果中的关键字段：\r\n- `results[].title` —— 图片标题\r\n- `results[].properties.url` —— 完整图片 URL\r\n- `results[].thumbnail.src` —— 缩略图 URL  \r\n- `results[].source` —— 来源网站\r\n- `results[].properties.width/height` —— 尺寸\r\n\r\n## 示例\r\n\r\n搜索以色列的 \"sunset beach\" 图片：\r\n```bash\r\ncurl -s \"https://api.search.brave.com/res/v1/images/search?q=sunset%20beach&count=5&country=IL\" \\\r\n  -H \"X-Subscription-Token: $BRAVE_API_KEY\"\r\n```\r\n\r\n然后从 JSON 响应中提取：\r\n- 缩略图: `.results[0].thumbnail.src`\r\n- 完整图片: `.results[0].properties.url`\r\n\r\n## 交付结果\r\n\r\n当展示图片搜索结果时：\r\n1. 直接将图片发送给用户（不要只列出 URL）\r\n2. 使用 `results[].properties.url` 获取完整图片或 `results[].thumbnail.src` 获取缩略图\r\n3. 包含图片标题作为说明\r\n4. 如果存在比展示更多的结果，告诉用户（例如，\"找到 20 张图片，展示 3 张 —— 想要更多？\"）\r\n\r\n示例流程：\r\n```\r\n用户: \"find me pictures of sunsets\"\r\n→ 使用 count=10 搜索\r\n→ 发送 3-5 张图片并附带说明\r\n→ \"找到 10 张日落图片，展示 5 张。想要看更多？\"\r\n```\r\n\r\n## 注意\r\n\r\n- URL-encode 查询字符串（空格 → `%20`）\r\n- API key 来自环境变量: `$BRAVE_API_KEY`\r\n- 尊重每个订阅层级的速率限制",
+ "config": {}
+}

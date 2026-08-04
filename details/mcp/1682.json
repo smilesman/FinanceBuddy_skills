@@ -1,0 +1,21 @@
+{
+ "id": "1682",
+ "kind": "mcp",
+ "name": "quick-chart-mcp",
+ "fingerprint_md5": "c45e9b9f49962312fa8011550dabaf87",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://mseep.ai/app/datafe-quick-chart-mcp)\r\n\r\n# 快速图表MCP服务器\r\n\r\n[](https://smithery.ai/server/@datafe/quick-chart-mcp)\r\n\r\n提供图表工具的模型上下文协议（MCP）服务器，允许其与 [快速图表](https://github.com/typpo/quickchart) 通过标准化的界面。此实现基于图表定义，使用户能够无缝打开快速图表页面。\r\n\r\n## 概述\r\n\r\n此MCP服务器工具：\r\n\r\n- 与快速图表交互\r\n\r\n服务器实现了模型上下文协议规范，以标准化AI代理的图表交互。\r\n\r\n## 先决条件\r\n\r\n- Node.js（v16或更高版本）\r\n- pnpm（推荐）、npm或yarn\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的快速图表mcp [史密瑟里](https://smithery.ai/server/@datafe/quick-chart-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @datafe/quick-chart-mcp --client claude\r\n```\r\n\r\n### 选项1：从npm安装（推荐给Cursor/Cline等客户端）\r\n\r\n```bash\r\n# Install globally\r\nnpm install -g quick-chart-mcp\r\n\r\n# Or install locally in your project\r\nnpm install quick-chart-mcp\r\n```\r\n\r\n### 选项2：从源代码构建（适用于开发人员）\r\n\r\n1. 克隆此存储库：\r\n\r\n```bash\r\ngit clone https://github.com/datafe/quick-chart-mcp\r\ncd quick-chart-mcp\r\n```\r\n\r\n2. 安装依赖项（建议使用pnpm，支持npm）：\r\n\r\n```bash\r\npnpm install\r\n```\r\n\r\n3. 构建项目：\r\n\r\n```bash\r\npnpm run build\r\n```\r\n\r\n4. 开发项目（通过@modelcontextprotocol/inspector）：\r\n\r\n```bash\r\npnpm run dev\r\n```\r\n\r\n打开http://localhost:5173\r\n\r\n## 配置\r\n\r\n### MCP配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"quick-chart-mcp\": {\r\n      \"autoApprove\": [],\r\n      \"disabled\": false,\r\n      \"timeout\": 300,\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"quick-chart-mcp@1.0.13\"\r\n      ],\r\n      \"transportType\": \"stdio\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 环境设置\r\n\r\n创建一个 `.env` 使用您的凭据文件：\r\n\r\n```env\r\n# Quick Chart Configuration\r\nNODE_ENV=optional_development_or_product\r\nQUICK_CHART_DRAW_URL=optional_quick_chart_draw_url\r\nNEED_INSTALL_QUICK_CHART=optional_true_or_false\r\n```\r\n\r\n## 项目结构\r\n\r\n```\r\nquick-chart-mcp/\r\n├── src/\r\n│   ├── index.ts          # Main entry point\r\n├── package.json\r\n└── tsconfig.json\r\n```\r\n\r\n## 可用工具\r\n\r\nMCP服务器提供以下快速图表工具：\r\n\r\n- `GetChartImgLink` -按参数检索图表图像链接。\r\n- `InstallQuickChart` -在本地安装快速图表服务。\r\n\r\n## 安全考虑\r\n\r\n- 对敏感信息使用环境变量\r\n- 定期监控和审计AI代理活动\r\n\r\n## 故障排除\r\n\r\n如果您遇到问题：\r\n\r\n1. 验证构建是否成功\r\n\r\n## 依赖项\r\n\r\n图像API。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n1. 分叉存储库\r\n1. 创建功能分支(`git checkout -b feature/amazing-feature`)\r\n1. 提交您的更改(`git commit -m 'Add some amazing feature'`)\r\n1. 推到分支(`git push origin feature/amazing-feature`)\r\n1. 打开拉取请求\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。\r\n",
+ "config": {
+  "quick-chart-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "quick-chart-mcp@1.0.13"
+   ],
+   "env": {}
+  }
+ }
+}

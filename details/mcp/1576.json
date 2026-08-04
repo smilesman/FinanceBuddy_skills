@@ -1,0 +1,23 @@
+{
+ "id": "1576",
+ "kind": "mcp",
+ "name": "mcp-llms-txt",
+ "fingerprint_md5": "78ebe7d1fe9378ca7ed8ba41e71ce429",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp llms txt\r\n\r\n[](https://smithery.ai/server/@SecretiveShell/MCP-llms-txt)\r\n\r\nMCP服务器 [真棒llms txt](https://github.com/SecretiveShell/Awesome-llms-txt).通过mcp资源将文档直接添加到对话中。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/kqwhhpe8l7\"></a>\r\n\r\n## 安装\r\n\r\n查看安装指南+示例用法 [pulsemcp.com](https://www.pulsemcp.com/use-cases/utilize-llm-txt-files/secretiveshell-claude-llmstxt)\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装MCP Server for Awesome llms txt for Claude Desktop [史密瑟里](https://smithery.ai/server/@SecretiveShell/MCP-llms-txt):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @SecretiveShell/MCP-llms-txt --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n按如下方式设置您的claude配置：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"mcp-llms-txt\": {\r\n            \"command\": \"uvx\",\r\n            \"args\": [\"mcp-llms-txt\"],\r\n            \"env\": {\r\n                \"PYTHONUTF8\": \"1\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 测试\r\n\r\n使用 [mcp-cli](https://github.com/wong2/mcp-cli) 要测试服务器，请执行以下操作：\r\n\r\n```bash\r\nnpx -y \"@wong2/mcp-cli\" -c config.json\r\n```\r\n\r\n配置文件已经设置好，不需要更改，因为没有api密钥或机密。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请打开问题或提交拉取请求。\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。\r\n",
+ "config": {
+  "mcp-llms-txt": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-llms-txt"
+   ],
+   "env": {
+    "PYTHONUTF8": "1"
+   }
+  }
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "id": "1809",
+ "kind": "mcp",
+ "name": "your_server_name",
+ "fingerprint_md5": "5df364a11d29e3888f606910990492c8",
+ "download_count": 0,
+ "category": "API 调试",
+ "tags": "",
+ "version": "",
+ "readme": "# 邮递员MCP生成器\r\n\r\n欢迎使用您生成的MCP服务器！ 🚀 此项目是使用创建的 [邮递员MCP生成器](https://postman.com/explore/mcp-generator)，配置为 [模型上下文提供程序（MCP）](https://modelcontextprotocol.io/introduction) 服务器输出模式。它为您提供：\r\n\r\n- ✅ MCP兼容服务器(`mcpServer.js`)\r\n- ✅ 为每个选定的Postman API请求自动生成JavaScript工具\r\n\r\n让我们把事情安排好！\r\n\r\n## 🚦 入门指南\r\n\r\n### ⚙️ 先决条件\r\n\r\n在开始之前，请确保您已经：\r\n\r\n- [Node.js（需要v18+，建议v20+）](https://nodejs.org/)\r\n- [npm](https://www.npmjs.com/) （包含在Node中）\r\n\r\n警告：如果您使用较低版本的Node运行， `fetch` 不会出席。工具使用 `fetch` 进行HTTP调用。为了解决这个问题，您可以修改要使用的工具 `node-fetch` 相反。一定要 `node-fetch` 作为依赖项安装，然后将其导入为 `fetch` 在每个工具文件中。\r\n\r\n### 📥 安装和设置\r\n\r\n**1.安装依赖项**\r\n\r\n从项目的根目录运行：\r\n\r\n```sh\r\nnpm install\r\n```\r\n\r\n### 🔐 设置工具环境变量\r\n\r\n在 `.env` 在文件中，您将看到环境变量占位符，每个占位符对应所选工具所在的工作区。例如，如果您从2个工作区（例如Acme和Widgets）中选择请求，您将看到两个占位符：\r\n\r\n```\r\nACME_API_KEY=\r\nWIDGETS_API_KEY=\r\n```\r\n\r\n使用每个API的实际API键更新值。这些环境变量在生成的工具内部用于为每个请求设置API键。您可以在 `tools` 查看目录以了解其工作原理。\r\n\r\n```javascript\r\n// environment variables are used inside of each tool file\r\nconst apiKey = process.env.ACME_API_KEY;\r\n```\r\n\r\n**警告：** 这可能不是每个API都正确。生成逻辑相对简单——对于每个工作区，我们创建一个与工作区slug同名的环境变量，然后在属于该工作区的每个工具文件中使用该环境变量。如果这不是您选择的API的正确行为，没问题！您可以手动更新 `.env` 文件或工具文件，以准确反映API的身份验证方法。\r\n\r\n## 🌐 使用Postman测试MCP服务器\r\n\r\nMCP服务器(`mcpServer.js`)向兼容MCP的客户端（如Claude Desktop或Postman Desktop应用程序）公开您的自动化API工具。我们建议您先使用Postman测试服务器，然后再使用LLM。\r\n\r\nPostman桌面应用程序是运行和测试MCP服务器的最简单方法。首先测试下载的服务器是可选的，但建议这样做。\r\n\r\n**步骤1**：从下载最新的Postman桌面应用程序 [https://www.postman.com/downloads/](https://www.postman.com/downloads/).\r\n\r\n**步骤2**：阅读文档文章 [这里](https://learning.postman.com/docs/postman-ai-agent-builder/mcp-requests/create/) 并了解如何在Postman应用程序中创建MCP请求。\r\n\r\n**步骤3**：将MCP请求的类型设置为 `STDIO` 并将命令设置为 `node </absolute/path/to/mcpServer.js>`。如果您对仅使用有问题 `node` （例如使用旧版本）提供到节点版本18+的绝对路径。您可以通过运行以下命令来获取节点的完整路径：\r\n\r\n```sh\r\nwhich node\r\n```\r\n\r\n要检查节点版本，请运行：\r\n\r\n```sh\r\nnode --version\r\n```\r\n\r\n获取到的绝对路径 `mcpServer.js`，运行：\r\n\r\n```sh\r\nrealpath mcpServer.js\r\n```\r\n\r\n使用node命令后跟完整路径 `mcpServer.js` 作为新Postman MCP请求的命令。然后单击 **连接** 按钮。您应该看到在生成服务器之前选择的工具列表。在将MCP服务器连接到LLM之前，您可以在这里测试每个工具是否正常工作。\r\n\r\n## 👩‍💻 将MCP服务器连接到Claude\r\n\r\n您可以将MCP服务器连接到任何MCP客户端。在这里，我们提供了将其连接到Claude Desktop的说明。\r\n\r\n**步骤1**：注意节点的完整路径和 `mcpServer.js` 从上一步开始。\r\n\r\n**步骤2**.打开克劳德桌面→ **设置** → **开发者** → **编辑配置** 并添加新的MCP服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"<server_name>\": {\r\n      \"command\": \"<absolute/path/to/node>\",\r\n      \"args\": [\"<absolute/path/to/mcpServer.js>\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动Claude Desktop以激活此更改。确保新的MCP已打开，并且旁边有一个绿色圆圈。如果是这样，您就可以开始使用您连接的工具的聊天会话了。\r\n\r\n**警告**：如果你没有提供一个绝对的路径 `node` 如果版本是v18+，Claude（和其他MCP客户端）可能会回退到另一个版本 `node` 系统上以前版本的版本。在这种情况下 `fetch` API将不存在，工具调用将不起作用。如果发生这种情况，您可以a）安装新版本的节点并在命令中指向它，或者b）导入 `node-fetch` 进入每个工具 `fetch`，确保还添加 `node-fetch` 依赖于你的package.json。\r\n\r\n### 附加选项\r\n\r\n#### 🐳 Docker部署（生产）\r\n\r\n对于生产部署，您可以使用Docker：\r\n\r\n**1.构建Docker镜像**\r\n\r\n```sh\r\ndocker build -t <your_server_name> .\r\n```\r\n\r\n**2.克劳德桌面集成**\r\n\r\n将Docker服务器配置添加到Claude Desktop（设置→ 开发者→ 编辑配置）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"<your_server_name>\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"--env-file=.env\", \"<your_server_name>\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> 将环境变量（API键等）添加到 `.env` 文件。\r\n\r\n该项目附带了以下最低限度的Docker设置：\r\n\r\n```dockerfile\r\nFROM node:22.12-alpine AS builder\r\n\r\nWORKDIR /app\r\nCOPY package.json package-lock.json ./\r\nRUN npm install\r\n\r\nCOPY . .\r\n\r\nENTRYPOINT [\"node\", \"mcpServer.js\"]\r\n```\r\n\r\n#### 🌐 服务器发送事件（SSE）\r\n\r\n要运行支持服务器发送事件（SSE）的服务器，请使用 `--sse` 标志：\r\n\r\n```sh\r\nnode mcpServer.js --sse\r\n```\r\n\r\n## 🛠️ 其他CLI命令\r\n\r\n#### 列出工具\r\n\r\n列出所有生成工具的描述和参数，包括：\r\n\r\n```sh\r\nnode index.js tools\r\n```\r\n\r\n例子：\r\n\r\n```\r\nAvailable Tools:\r\n\r\nWorkspace: acme-workspace\r\n  Collection: useful-api\r\n    list_all_customers\r\n      Description: Retrieve a list of useful things.\r\n      Parameters:\r\n        - magic: The required magic power\r\n        - limit: Number of results returned\r\n        [...additional parameters...]\r\n```\r\n\r\n## ➕ 添加新工具\r\n\r\n使用更多工具轻松扩展MCP服务器：\r\n\r\n1. 访问 [邮递员MCP生成器](https://postman.com/explore/mcp-generator).\r\n1. 选择新的API请求，生成新的MCP服务器并下载。\r\n1. 将新生成的工具复制到现有项目的 `tools/` 文件夹。\r\n1. 更新您的 `tools/paths.js` 文件中包含新的工具参考。\r\n\r\n## 💬 问题与支持\r\n\r\n访问 [邮递员MCP生成器](https://postman.com/explore/mcp-generator) 更新和新功能页面。\r\n\r\n加入 `#mcp-lab` 频道在 [邮递员不和谐](https://discord.gg/HQJWM8YF) 分享你所建立的东西并获得帮助。\r\n",
+ "config": {
+  "your_server_name": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "--env-file=.env",
+    "<your_server_name>"
+   ],
+   "env": {}
+  }
+ }
+}

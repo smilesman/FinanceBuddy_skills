@@ -1,0 +1,21 @@
+{
+ "id": "507",
+ "kind": "mcp",
+ "name": "ui-explorer",
+ "fingerprint_md5": "9ab3952bd76f92adba084adfa914b622",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# UI资源管理器MCP服务器\r\n\r\nMCP服务器，提供用于探索和与屏幕上的UI元素交互的工具。\r\n\r\n## 特性\r\n\r\n- 探索UI层次结构：扫描并分析屏幕上的所有UI元素\r\n- 带有高亮显示的屏幕截图UI：可视化具有边界和层次结构的UI元素\r\n- 控制鼠标点击：基于坐标点击UI元素\r\n- 探索特定区域：关注屏幕的左上角、中心等部分。\r\n- **🎬 宏记录**：独立或通过MCP录制和播放UI工作流\r\n\r\n## 🚀 快速入门：独立宏录制\r\n\r\n**新** 现在，您可以在不运行MCP服务器的情况下录制UI工作流：\r\n\r\n```bash\r\n# Record a workflow\r\npython record_macro.py --name \"Login Workflow\"\r\n\r\n# Play it back\r\npython play_macro.py --file \"macros/Login Workflow.json\"\r\n```\r\n\r\n**Windows用户可以使用批处理文件：**\r\n\r\n```cmd\r\nrecord_macro.bat \"My Workflow\"\r\nplay_macro.bat \"macros/My Workflow.json\"\r\n```\r\n\r\n👉 **看 [快速启动.md](QUICK_START.md) 2分钟教程**\r\n👉 **看 [MACRO_TOOLS.md](MACRO_TOOLS.md) 获取完整的文档**\r\n\r\n### 什么会被记录下来？\r\n\r\n- ✅ 鼠标点击精确坐标\r\n- ✅ 带智能文本缓冲的键盘输入\r\n- ✅ 用于可靠播放的UI上下文\r\n- ✅ 用于验证的屏幕截图\r\n- ✅ 自然回放的定时信息\r\n\r\n### 录音控制\r\n\r\n- **F9**：开始/停止录制\r\n- **F10**：暂停/恢复\r\n- **退出**：紧急停止\r\n\r\n## 安装选项\r\n\r\n### 选项1：使用pip（推荐）\r\n\r\n在全局或虚拟环境中安装软件包：\r\n\r\n```bash\r\npip install mcp-ui-explorer\r\n```\r\n\r\n### 选项2：使用git clone\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/modularflow/mcp-ui-explorer\r\ncd mcp-ui-explorer\r\n```\r\n\r\n2. 安装软件包：\r\n\r\n   - 在开发模式下使用pip：\r\n\r\n   ```bash\r\n   pip install -e .\r\n   ```\r\n\r\n   - 或使用紫外线（建议用于开发）：\r\n\r\n   ```bash\r\n   uv venv\r\n   source .venv/bin/activate  # On Windows: .venv\\Scripts\\activate\r\n   uv pip install -e .\r\n   ```\r\n\r\n## MCP服务器配置\r\n\r\n安装包后，您需要配置MCP客户端以使用UI资源管理器服务器。\r\n\r\n### 对于光标中的Roo\r\n\r\n将此JSON添加到您的MCP服务器配置中：\r\n`C:\\Users\\\\AppData\\Roaming\\Cursor\\User\\globalStorage\\rooveterinaryinc.roo-cline\\settings\\mcp_settings.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ui-explorer\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"mcp-ui-explorer\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 适用于Claude桌面应用程序\r\n\r\n将服务器配置添加到：\r\n`C:\\Users\\\\AppData\\Roaming\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ui-explorer\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"mcp-ui-explorer\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 直接与uvx一起使用\r\n\r\n如果您已经安装了该软件包（全局安装或在虚拟环境中安装），则可以直接使用 `uvx` 无需额外配置即可运行服务器：\r\n\r\n```bash\r\nuvx mcp-ui-explorer\r\n```\r\n\r\n## MCP工具\r\n\r\nUI资源管理器为UI自动化和探索提供了几个MCP工具。使用MCP服务器界面时，这些工具可用。\r\n\r\n## 使用指南\r\n\r\n### 1.探索UI结构\r\n\r\n使用 `explore_ui` 工具来获取UI元素的完整层次结构：\r\n\r\n参数：\r\n\r\n- `region`：要分析的屏幕区域（“屏幕”、“顶部”、“底部”、“左侧”、“右侧”、“中心”等）\r\n- `depth`：要分析的最大层次深度（默认值：5）\r\n- `min_size`：要包含的最小元素大小（默认值：5px）\r\n- `focus_window`：仅分析前景窗口（默认值：False）\r\n- `visible_only`：仅包含屏幕上可见的元素（默认值：True）\r\n- `control_type`：要搜索的控件类型（默认值：“按钮”）\r\n- `text`：按文本内容过滤元素（可选）\r\n\r\n### 2.拍摄突出显示UI元素的截图\r\n\r\n使用 `screenshot_ui` 可视化UI元素的工具：\r\n\r\n参数：\r\n\r\n- `region`：要分析的屏幕区域\r\n- `highlight_levels`：为层次级别使用不同的颜色（默认值：True）\r\n- `output_prefix`：输出文件的前缀（默认值：“ui_hierrchi”）\r\n\r\n### 3.点击屏幕坐标\r\n\r\n使用 `click_ui_element` 在特定坐标处单击的工具：\r\n\r\n参数：\r\n\r\n- `x`：要单击的X坐标（必填）\r\n- `y`：要单击的Y坐标（必填）\r\n- `wait_time`：单击前等待的秒数（默认值：2.0）\r\n\r\n### 4.键盘输入和快捷键\r\n\r\n该工具还提供键盘输入和快捷键选项。有关详细信息，请参阅MCP界面中的UI资源管理器指南。\r\n\r\n## 工作流示例\r\n\r\n1. 首先，探索UI以了解屏幕上的内容：\r\n\r\n   ```\r\n   explore_ui(region=\"screen\", control_type=\"Button\")\r\n   ```\r\n\r\n1. 截取屏幕截图以可视化元素：\r\n\r\n   ```\r\n   screenshot_ui(region=\"screen\")\r\n   ```\r\n\r\n1. 记下要单击的元素的坐标，然后单击这些坐标：\r\n\r\n   ```\r\n   click_ui_element(x=500, y=300)\r\n   ```\r\n\r\n1. 根据需要键入文本或使用键盘快捷键：\r\n\r\n   ```\r\n   keyboard_input(text=\"Hello world\", press_enter=true)\r\n   ```\r\n\r\n## 需求\r\n\r\n- Windows操作系统\r\n- Python 3.10+\r\n- MCP 1.6.0+\r\n- PyAutoGUI\r\n- PyWinAuto\r\n- 枕头\r\n- Pydantic 2.0+\r\n",
+ "config": {
+  "ui-explorer": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-ui-explorer"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "id": "888",
+ "kind": "mcp",
+ "name": "together-image-gen",
+ "fingerprint_md5": "2d60a0c9b69e823e8fb08e484ddb3c57",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# 图像生成MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，通过Together AI使用Flux.1 Schnell模型无缝生成高质量图像。该服务器提供了一个标准化的接口来指定图像生成参数。\r\n\r\n<div align=\"center\">\r\n\r\n\r\n</div>\r\n\r\n<div align=\"center\">\r\n\r\n<a href=\"https://glama.ai/mcp/servers/y6qfizhsja\">\r\n</a>\r\n</div>\r\n\r\n## 特性\r\n\r\n- Flux.1 Schnell模型支持的高质量图像生成\r\n- 支持自定义尺寸（宽度和高度）\r\n- 为即时验证和API问题清除错误处理\r\n- 与MCP兼容客户端轻松集成\r\n- 可选的PNG格式图像保存到磁盘\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install together-mcp\r\n```\r\n\r\n或者直接运行：\r\n\r\n```bash\r\nnpx together-mcp@latest\r\n```\r\n\r\n### 配置\r\n\r\n添加到MCP服务器配置中：\r\n\r\n<summary>Configuration Example</summary>\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"together-image-gen\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"together-mcp@latest -y\"],\r\n      \"env\": {\r\n        \"TOGETHER_API_KEY\": \"<API KEY>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n服务器提供了一个工具： `generate_image`\r\n\r\n### 使用generate_image\r\n\r\n此工具只有一个必需参数-提示。所有其他参数都是可选的，如果没有提供，则使用合理的默认值。\r\n\r\n#### 参数\r\n\r\n```typescript\r\n{\r\n  // Required\r\n  prompt: string;          // Text description of the image to generate\r\n\r\n  // Optional with defaults\r\n  model?: string;          // Default: \"black-forest-labs/FLUX.1-schnell-Free\"\r\n  width?: number;          // Default: 1024 (min: 128, max: 2048)\r\n  height?: number;         // Default: 768 (min: 128, max: 2048)\r\n  steps?: number;          // Default: 1 (min: 1, max: 100)\r\n  n?: number;             // Default: 1 (max: 4)\r\n  response_format?: string; // Default: \"b64_json\" (options: [\"b64_json\", \"url\"])\r\n  image_path?: string;     // Optional: Path to save the generated image as PNG\r\n}\r\n```\r\n\r\n#### 最小请求示例\r\n\r\n只需要提示：\r\n\r\n```json\r\n{\r\n  \"name\": \"generate_image\",\r\n  \"arguments\": {\r\n    \"prompt\": \"A serene mountain landscape at sunset\"\r\n  }\r\n}\r\n```\r\n\r\n#### 带图像保存的完整请求示例\r\n\r\n覆盖任何默认值并指定保存图像的路径：\r\n\r\n```json\r\n{\r\n  \"name\": \"generate_image\",\r\n  \"arguments\": {\r\n    \"prompt\": \"A serene mountain landscape at sunset\",\r\n    \"width\": 1024,\r\n    \"height\": 768,\r\n    \"steps\": 20,\r\n    \"n\": 1,\r\n    \"response_format\": \"b64_json\",\r\n    \"model\": \"black-forest-labs/FLUX.1-schnell-Free\",\r\n    \"image_path\": \"/path/to/save/image.png\"\r\n  }\r\n}\r\n```\r\n\r\n#### 响应格式\r\n\r\n响应将是一个JSON对象，其中包含：\r\n\r\n```json\r\n{\r\n  \"id\": string,        // Generation ID\r\n  \"model\": string,     // Model used\r\n  \"object\": \"list\",\r\n  \"data\": [\r\n    {\r\n      \"timings\": {\r\n        \"inference\": number  // Time taken for inference\r\n      },\r\n      \"index\": number,      // Image index\r\n      \"b64_json\": string    // Base64 encoded image data (if response_format is \"b64_json\")\r\n      // OR\r\n      \"url\": string        // URL to generated image (if response_format is \"url\")\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n如果提供了image_path并且保存成功，则响应将包括对保存位置的确认。\r\n\r\n### 默认值\r\n\r\n如果请求中没有指定，则使用这些默认值：\r\n\r\n- 型号：“黑森林实验室/FLUX.1-schnell-Free”\r\n- 宽度：1024\r\n- 高度：768\r\n- 步骤：1\r\n- n： 1\r\n- 响应格式：“b64_json”\r\n\r\n### 重要提示\r\n\r\n1. 只有 `prompt` 参数是必需的\r\n1. 如果没有提供，所有可选参数都使用默认值\r\n1. 提供参数时，参数必须满足其约束条件（例如，宽度/高度范围）\r\n1. Base64响应可能很大-对于较大的图像，请使用URL格式\r\n1. 保存图像时，请确保指定的目录存在并且可写\r\n\r\n## 先决条件\r\n\r\n- Node.js>=16\r\n- 一起AI API密钥\r\n  1. 登录地址： [api.together.xyz](https://api.together.xyz/)\r\n  1. 引导到 [API密钥设置](https://api.together.xyz/settings/api-keys)\r\n  1. 单击“创建”生成新的API密钥\r\n  1. 复制生成的密钥以用于MCP配置\r\n\r\n## 依赖项\r\n\r\n```json\r\n{\r\n  \"@modelcontextprotocol/sdk\": \"0.6.0\",\r\n  \"axios\": \"^1.6.7\"\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n克隆并构建项目：\r\n\r\n```bash\r\ngit clone https://github.com/manascb1344/together-mcp-server\r\ncd together-mcp-server\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n### 可用脚本\r\n\r\n- `npm run build` -构建TypeScript项目\r\n- `npm run watch` -观察变化并重建\r\n- `npm run inspector` -运行MCP检查器\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请按照以下步骤操作：\r\n\r\n1. 分叉存储库\r\n1. 创建新分支(`feature/my-new-feature`)\r\n1. 提交您的更改\r\n1. 把树枝推到叉子上\r\n1. 打开拉取请求\r\n\r\n功能请求和错误报告可以通过GitHub Issues提交。请在创建新问题之前检查现有问题。\r\n\r\n对于重大更改，请先打开一个问题来讨论您提出的更改。\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。有关详细信息，请参阅LICENSE文件。\r\n",
+ "config": {
+  "together-image-gen": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "together-mcp@latest -y"
+   ],
+   "env": {
+    "TOGETHER_API_KEY": "<API KEY>"
+   }
+  }
+ }
+}

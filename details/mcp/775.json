@@ -1,0 +1,24 @@
+{
+ "id": "775",
+ "kind": "mcp",
+ "name": "newsnow",
+ "fingerprint_md5": "347ba2c851199e9c716e081d793948de",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# newsnow mcp服务器\r\n\r\n\r\n官方MCP服务器 [NewsNow](https://github.com/ourongxing/newsnow)，40多个可用资源。\r\n\r\n## 用法\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"newsnow\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"newsnow-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"BASE_URL\": \"https://newsnow.busiyi.world\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\n[MIT](./LICENSE) ©欧龙兴\r\n",
+ "config": {
+  "newsnow": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "newsnow-mcp-server"
+   ],
+   "env": {
+    "BASE_URL": "https://newsnow.busiyi.world"
+   }
+  }
+ }
+}

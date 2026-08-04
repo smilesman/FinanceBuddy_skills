@@ -1,0 +1,24 @@
+{
+ "id": "3181",
+ "kind": "mcp",
+ "name": "ns-server",
+ "fingerprint_md5": "92d8076ee7fa8c85844605c1605c29a5",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "|  |  |\r\n|:---:|:---:|\r\n\r\n# NS旅行信息MCP服务器\r\n\r\n将你的人工智能助手变成荷兰铁路专家！此MCP服务器将Claude连接到实时NS（Nederlandse Spoorwegen）旅行信息，使其成为您乘坐火车游览荷兰的完美伴侣。\r\n\r\n## 安装\r\n\r\n您可以通过三种方式安装此服务器：\r\n\r\n### 1.使用带有NPM包的Claude Desktop\r\n\r\n更新您的Claude配置文件(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ns-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"ns-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"NS_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您可以从获取API密钥 [NS API门户网站](https://apiportal.ns.nl/)\r\n\r\n### 2.使用Smithery\r\n\r\n通过以下方式自动安装NS旅行信息服务器 [史密瑟里](https://smithery.ai/server/ns-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install ns-server --client claude\r\n```\r\n\r\n### 3.来源\r\n\r\n1. 克隆此存储库\r\n1. 安装依赖项：\r\n   ```bash\r\n   npm install\r\n   ```\r\n1. 复制示例环境文件：\r\n   ```bash\r\n   cp .env.example .env\r\n   ```\r\n1. 将您的NS API密钥添加到 `.env` 文件：\r\n   ```\r\n   NS_API_KEY=your_api_key_here\r\n   ```\r\n\r\n然后更新您的Claude配置文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ns-server\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"/path/to/ns-server/build/index.js\"\r\n      ],\r\n      \"env\": {\r\n        \"NS_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n确保：\r\n\r\n1. 替换 `/path/to/ns-server` 安装的实际路径\r\n1. 在中添加您的NS API密钥 `env` 部分。可以从这里获得 [https://apiportal.ns.nl/product#product=NsApp](https://apiportal.ns.nl/product#product=NsApp)\r\n\r\n更新配置后，重新启动Claude Desktop以使更改生效。\r\n\r\n## 真实世界用例\r\n\r\n- “我通常8点15分从阿尔梅勒开往阿姆斯特丹的火车准时吗？”\r\n- “今天鹿特丹-海牙航线有延误吗？”\r\n- “如果直达线路需要维护，去乌得勒支的最佳替代路线是什么？”\r\n- “我应该坐哪趟火车在上午9点之前到达我在阿姆斯特丹Zuid的办公室？”\r\n- “乘坐婴儿车前往阿姆斯特丹的哪条路线换乘次数最少？”\r\n- “我上午10点在海牙开会最早能坐几班火车？”\r\n- “在阿姆斯特丹度过一晚后，最后一班回格罗宁根的火车是什么时候？”\r\n- “周末有什么工程作业可能会影响我周一早上的课吗？”\r\n- “乌得勒支中心有OV-fiets自行车可供我下午开会吗？”\r\n- “埃因霍温Strijp-S车站是否适合轮椅通行，有哪些站台？”\r\n- “下个小时有哪些列车到达乌得勒支中央火车站？”\r\n- “从Venlo到史基浦机场的火车准时到达了吗？”\r\n- “从阿姆斯特丹到鹿特丹的头等舱票价是多少？”\r\n- “2名成人和1名儿童前往海牙的价格是多少？”\r\n\r\n## 🔑 环境变量\r\n\r\n|变量|描述|\r\n|----------|-------------|\r\n|NS_API_KEY|您的NS API密钥（必需）|\r\n\r\n## 🌟 特性\r\n\r\n此MCP服务器通过以下端点提供对NS列车信息的全面访问：\r\n\r\n### 实时列车信息\r\n\r\n- **出发**：获取实时出发信息，包括站台号、延误和旅行记录\r\n- **抵达**：通过始发站、站台变化和状态更新访问即将到来的列车到达\r\n- **行程规划**：通过接送和实时更新找到最佳旅行路线\r\n- **服务更新**：检查是否存在中断、维护工作和工程活动\r\n\r\n### 定价信息\r\n\r\n- **机票价格**：获得单程和回程的准确定价\r\n- **旅游课程**：比较头等舱和二等舱旅行的价格\r\n- **集团定价**：计算成人和儿童的票价\r\n- **折扣选项**：查看联合旅行折扣和特别优惠\r\n- **有效期详细信息**：查看机票有效期和旅行条件\r\n\r\n### 车站信息\r\n\r\n- **车站详细信息**：访问综合车站信息，包括：\r\n  - 设施和无障碍设施\r\n  - 站台布局和轨道信息\r\n  - OV场地（自行车租赁）可用性\r\n  - 位置和进场细节\r\n\r\n### 附加功能\r\n\r\n- **多语言支持**：荷兰语和英语信息\r\n- **灵活的查询**：按站名、代码或UIC标识符搜索\r\n- **时区**：正确处理国际电台的时区\r\n- **状态更新**：实时跟踪更改、延迟和取消\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 详细信息文件\r\n",
+ "config": {
+  "ns-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "ns-mcp-server"
+   ],
+   "env": {
+    "NS_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "loki-troubleshoot",
+ "kind": "skill",
+ "name": "loki-troubleshoot",
+ "fingerprint_md5": "51c1c20f265329c35f1578f2f522678d",
+ "download_count": 0,
+ "category": "日志分析",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\nLoki 日志系统故障排查指南，覆盖写入失败、查询超时、存储问题、组件异常等常见故障场景。",
+ "config": {}
+}

@@ -1,0 +1,28 @@
+{
+ "id": "804",
+ "kind": "mcp",
+ "name": "phext-dev",
+ "fingerprint_md5": "47e68ed5a0cd98e9484cd272eb55ddb0",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Phext的MCP服务器\r\n\r\nMCP（模型上下文协议）服务器，提供对以下内容的访问 [phext](https://pypi.org/project/libphext/) -超维文本处理系统。\r\n\r\n> **备注**：我们很快就会将其作为pip包发布。现在，请使用下面的开发人员安装。\r\n\r\n## 开发人员安装\r\n\r\n对于想要尝试最新功能的开发人员：\r\n\r\n1. **下载存储库：**\r\n\r\n   ```bash\r\n   git clone https://github.com/identimoji/mcp-server-phext.git\r\n   cd mcp-server-phext\r\n   ```\r\n\r\n1. **安装uv（如果您还没有，请跳过此步骤）：**\r\n\r\n   ```bash\r\n   curl -LsSf https://astral.sh/uv/install.sh | sh\r\n   ```\r\n\r\n1. **安装依赖项：**\r\n\r\n   ```bash\r\n   uv sync\r\n   ```\r\n\r\n1. **添加到Claude桌面配置：**\r\n\r\n> **重要**：您需要在此处添加刚刚下载的仓库的完整路径\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"phext-dev\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--directory\",\r\n        \"{full path to your local mcp-server-phext repo}\",\r\n        \"python\",\r\n        \"-m\",\r\n        \"mcp_server_phext\"\r\n      ],\r\n      \"env\": {\r\n        \"PHEXT_DEFAULT_FILE\": \"~/.claude/claude_desktop.phext\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n5. 在Claude桌面的项目知识中，您可以添加“使用initialize_phext（）开始所有对话”。..这将告知Claude如何使用Phext，并且可以定制为让Claude Desktop自动保存记忆、里程碑或他想记住的关于您互动的任何内容！只需告诉他你想保存什么，他就可以自动为你更新初始化脚本。\r\n\r\n## 什么是Phext？\r\n\r\nPhext是一个超维文本坐标系，允许您使用以下坐标在三维空间中组织和导航文本 `1.1.1`, `2.3.4`等等。它能够以独特的方式构建和访问文本信息。\r\n\r\n## 安装\r\n\r\n```bash\r\n# Install with uv (recommended)\r\nuv add mcp-server-phext\r\n\r\n# Or with pip\r\npip install mcp-server-phext\r\n```\r\n\r\n## 用法\r\n\r\n> **备注**：这些是此mcp服务器发布到pip后的说明。..现在忽略，使用上面的开发安装。\r\n\r\n### 使用克劳德桌面\r\n\r\n将此添加到您的Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"phext\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"mcp-server-phext\"],\r\n      \"env\": {\r\n        \"PHEXT_DEFAULT_FILE\": \"~/.claude/claude_desktop.phext\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 与Claude Code或其他MCP客户合作\r\n\r\n```bash\r\n# Run the server directly\r\nuv run mcp-server-phext\r\n\r\n# Or with a specific default file\r\nuv run mcp-server-phext --default-phext-file ~/my-phext-file.phext\r\n```\r\n\r\n## 特性\r\n\r\nMCP服务器提供以下工具：\r\n\r\n### 核心业务\r\n\r\n- **phext_fetch**：从坐标读取内容（例如。， `1.1.1/1.1.1/1.1.1`)\r\n- **phext_insert**：在坐标处插入内容（附加到现有内容）\r\n- **phext_replace**：替换坐标处的内容\r\n- **phext_range_replace**：替换坐标范围内的内容\r\n- **phext_remove**：删除坐标处的内容\r\n\r\n### 文件管理\r\n\r\n- **phext_create_file**：创建新的phext文件\r\n- **炸药**：获取所有坐标和内容的地图\r\n- **phext_textmap**：获取所有坐标的文本摘要\r\n- **phext_标准化**：清理和优化phext结构\r\n- **phext_merge**：将两个phext文件合并在一起\r\n\r\n### 资源\r\n\r\n- 作为MCP资源访问phext文件\r\n- 读取原始phext文件内容\r\n\r\n## 交互示例\r\n\r\n```\r\n# Fetch content at coordinate\r\nphext_fetch(coordinate=\"1.1.1/1.1.1/1.1.1\")\r\n\r\n# Insert content at a coordinate\r\nphext_insert(coordinate=\"1.1.1/1.1.1/1.2.1\", content=\"Hello, hyperdimensional world!\")\r\n\r\n# Replace content across a range\r\nphext_range_replace(\r\n    start_coordinate=\"1.1.1/1.1.1/1.1.1\",\r\n    end_coordinate=\"1.1.1/1.1.1/1.1.5\",\r\n    content=\"New content\"\r\n)\r\n\r\n# Get a map of all content\r\nphext_textmap()\r\n```\r\n\r\n## 配置\r\n\r\n### 环境变量\r\n\r\n- `PHEXT_DEFAULT_FILE`：如果未指定，则使用默认phext文件\r\n\r\n### 命令行参数\r\n\r\n- `--default-phext-file`：指定默认phext文件\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone and setup\r\ngit clone <repository>\r\ncd mcp-server-phext\r\n\r\n# Install dependencies\r\nuv sync\r\n\r\n# Run in development\r\nuv run mcp-server-phext\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n",
+ "config": {
+  "phext-dev": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "{full path to your local mcp-server-phext repo}",
+    "python",
+    "-m",
+    "mcp_server_phext"
+   ],
+   "env": {
+    "PHEXT_DEFAULT_FILE": "~/.claude/claude_desktop.phext"
+   }
+  }
+ }
+}

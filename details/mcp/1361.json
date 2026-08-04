@@ -1,0 +1,25 @@
+{
+ "id": "1361",
+ "kind": "mcp",
+ "name": "bring-mcp",
+ "fingerprint_md5": "7c63bb916894ce02071bc962a1c71104",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP服务器自带！购物\r\n\r\n\r\n该项目在TypeScript中实现了一个本地模型上下文协议（MCP）服务器，该服务器公开了Bring！API购物清单。它使Claude Desktop等应用程序能够与您的Bring！进行交互！使用标准化MCP工具的购物清单。\r\n\r\n服务器集成了 `bring-shopping` Bring！的npm包！API访问和利用 `@modelcontextprotocol/sdk` 以提供符合MCP的服务器接口。\r\n\r\n> **免责声明：**\\\r\n> 这是一个个人项目。我不属于Bring！无论如何，Labs AG。\\\r\n> 此项目使用 **非官方带来！API**，其可能随时更改或被阻止。\\\r\n> 这可能会导致MCP服务器在没有事先通知的情况下停止运行。\r\n\r\n______________________________________________________________________\r\n\r\n## 🧩 建议的Claude桌面配置\r\n\r\n通过以下方式在Claude Desktop中使用此服务器 `npx`，将以下内容插入您的 `claude_desktop_config.json` 文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bring-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"bring-mcp@latest\"],\r\n      \"env\": {\r\n        \"MAIL\": \"your_bring_email@example.com\",\r\n        \"PW\": \"YOUR_BRING_PASSWORD_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n这是推荐的最便携的配置。它确保您始终使用发布到npm的最新版本，而无需本地安装。\r\n\r\n______________________________________________________________________\r\n\r\n## 🚀 特性\r\n\r\n- **自动身份验证**：无需手动登录-首次API调用时自动进行身份验证\r\n- 曝光带！API作为MCP工具发挥作用：\r\n  - 🧾 加载购物清单\r\n  - 🛒 获取和修改项目（添加、删除、移动）\r\n  - 📦 批量操作（保存多个项目、删除多个项目）\r\n  - 🖼 保存/删除项目图像\r\n  - 👥 管理列表用户\r\n  - 🎯 获取默认购物清单UUID\r\n  - 🌐 加载翻译和目录\r\n  - 📨 检索待处理的邀请\r\n- 通过STDIO进行通信（用于Claude Desktop或MCP Inspector）\r\n- 支持带来！凭证通过 `.env` 文件或注入的环境变量\r\n\r\n### 可用工具\r\n\r\n- **`loadLists`**：从Bring！加载所有购物清单！\r\n- **`getItems`**：从特定购物清单中获取所有商品\r\n- **`getItemsDetails`**：获取列表中项目的详细信息\r\n- **`saveItem`**：使用可选规格将商品保存到购物清单中\r\n- **`saveItemBatch`**：在一次操作中将多个项目保存到购物清单中\r\n- **`removeItem`**：从特定购物清单中删除商品\r\n- **`moveToRecentList`**：将项目移动到最近使用的项目列表中\r\n- **`deleteMultipleItemsFromList`**：按名称从列表中删除多个项目\r\n- **`saveItemImage`**：为购物清单上的商品保存图像\r\n- **`removeItemImage`**：从项目中删除图像\r\n- **`getAllUsersFromList`**：获取与购物清单关联的所有用户\r\n- **`getUserSettings`**：获取已验证用户的设置\r\n- **`getDefaultList`**：获取默认购物清单的UUID（当用户未指定清单时使用）\r\n- **`loadTranslations`**：为Bring！加载翻译！接口\r\n- **`loadCatalog`**：装载行李！商品目录\r\n- **`getPendingInvitations`**：获取加入购物清单的待定邀请\r\n\r\n______________________________________________________________________\r\n\r\n## ⚙️ 设置和安装\r\n\r\n1. **克隆仓库（或获取文件）**\r\n\r\n1. **导航到项目目录：**\r\n\r\n   ```bash\r\n   cd path/to/bring-mcp\r\n   ```\r\n\r\n1. **安装依赖项：**\r\n\r\n   ```bash\r\n   npm install\r\n   ```\r\n\r\n1. **创建 `.env` 文件（如果不直接注入ENV）：**\r\n\r\n   ```env\r\n   MAIL=your_email@example.com\r\n   PW=your_password\r\n   ```\r\n\r\n1. **构建项目：**\r\n\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n1. **使脚本可执行（Unix上可选）：**\r\n\r\n   ```bash\r\n   chmod +x build/src/index.js\r\n   ```\r\n\r\n______________________________________________________________________\r\n\r\n## 🏃 运行服务器\r\n\r\n使用以下命令启动MCP服务器：\r\n\r\n```bash\r\nnode build/src/index.js\r\n```\r\n\r\n如果成功，您将看到： `MCP server for Bring! API is running on STDIO` （on `stderr`).\r\n\r\n______________________________________________________________________\r\n\r\n## 🧪 MCP检验员测试\r\n\r\n1. 确保 `npm run build` 已被执行。\r\n\r\n1. 确保 `.env` 存在有效凭据。\r\n\r\n1. 运行检查器：\r\n\r\n   ```bash\r\n   npx @modelcontextprotocol/inspector node /ABS/PATH/bring-mcp/build/src/index.js\r\n   ```\r\n\r\n______________________________________________________________________\r\n\r\n## 🧩 Claude桌面集成（手动本地设置）\r\n\r\n或者，如果您更喜欢本地构建和安装的版本：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-bring\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/ABSOLUTE/PATH/TO/bring-mcp/build/src/index.js\"],\r\n      \"env\": {\r\n        \"MAIL\": \"your_bring_email@example.com\",\r\n        \"PW\": \"YOUR_BRING_PASSWORD_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 🔧 发展\r\n\r\n### 测试\r\n\r\n使用以下工具运行测试：\r\n\r\n```bash\r\nnpm run test\r\n```\r\n\r\n此命令使用覆盖率报告运行格式化、linting和Jest测试。\r\n\r\n对于CI测试：\r\n\r\n```bash\r\nnpm run test:ci\r\n```\r\n\r\n### 建筑\r\n\r\n构建项目：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n### 关键依赖关系\r\n\r\n- `@modelcontextprotocol/sdk`：用于MCP服务器实施\r\n- `@modelcontextprotocol/inspector`：用于测试和调试MCP服务器\r\n- `bring-shopping`：Bring！的Node.js包装器！API\r\n- `zod`：用于模式定义和验证\r\n- `dotenv`：用于管理环境变量\r\n\r\n______________________________________________________________________\r\n\r\n## ✅ 最后说明\r\n\r\n- 🔒 避免承诺 `.env` 文件。\r\n- 🧼 将凭据置于版本控制之外。\r\n- 🛠 MCP检查器对于调试来说是无价的。\r\n- 🔄 身份验证是自动处理的，不需要手动登录。\r\n- 📦 在处理多个项目时，使用批处理操作以提高效率。\r\n\r\n使用MCP和Bring编码快乐！ 🎉\r\n",
+ "config": {
+  "bring-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "bring-mcp@latest"
+   ],
+   "env": {
+    "MAIL": "your_bring_email@example.com",
+    "PW": "YOUR_BRING_PASSWORD_HERE"
+   }
+  }
+ }
+}

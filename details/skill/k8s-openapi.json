@@ -1,0 +1,12 @@
+{
+ "id": "k8s-openapi",
+ "kind": "skill",
+ "name": "k8s-openapi",
+ "fingerprint_md5": "48c41da172c3f2a0cd2e615cb3db9d21",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "1. 使用以下命令启动测试集群：`make test-cluster-create`。仅在此测试集群上使用此技能。\r\n2. 仅通过每个 `kubectl` 命令的 `--context` 和 `--kubeconfig` 使用新上下文。不要通过 `kubectl config` 修改配置。\r\n3. 使用 `kubectl proxy` 启动代理服务器\r\n4. 通过查询 `/openapi/v3` 发现可用 endpoints\r\n5. 使用发现的 endpoints 查找你需要的信息\r\n6. 当你找到答案后：\r\n    - 停止代理进程；并\r\n    - 使用 `make test-cluster-stop` 关闭测试集群",
+ "config": {}
+}

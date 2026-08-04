@@ -1,0 +1,24 @@
+{
+ "id": "432",
+ "kind": "mcp",
+ "name": "scryfall",
+ "fingerprint_md5": "177a718897e86cdaa41dba1a7832fa4a",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Scryfall MCP服务器\r\n\r\nA. [模型上下文协议（MCP）](https://modelcontextprotocol.io/) 用于与交互的服务器 [Scryfall](https://scryfall.com/docs/api) API它提供了查找魔法：收集卡详细信息、卡规则和价格信息的工具。\r\n\r\n\r\n## 特性\r\n\r\n- **搜索卡**\\\r\n  在Scryfall上执行基于文本的搜索。返回匹配的卡片列表。\r\n- **get_card_by_id**\\\r\n  直接通过其Scryfall UUID检索卡。\r\n- **get_card_by_name**\\\r\n  按准确的英文名字取回卡片。\r\n- **随机卡**\\\r\n  从整个Scryfall数据库中随机获取一张卡片。\r\n- **获取链接**\\\r\n  检索卡的官方裁决，这可能会澄清卡的互动或规则。\r\n- **get_prices _ by_id**\\\r\n  通过Scryfall ID检索给定卡的当前定价信息（美元、美元箔、欧元、TIX）。\r\n- **get_prices_by_name**\\\r\n  按确切名称检索给定卡的当前定价信息（美元、美元箔、欧元、TIX）。\r\n\r\n## 用法\r\n\r\n服务器可以在两种模式下运行：\r\n\r\n1. 标准标准输入输出模式（默认）\r\n1. 具有HTTP端点的服务器发送事件（SSE）模式\r\n\r\n### 使用NPX\r\n\r\n如果你在本地安装了Node.js：\r\n\r\n```bash\r\n# Stdio mode\r\nnpx scryfall-mcp-server\r\n\r\n# SSE mode\r\nnpx scryfall-mcp-server --sse\r\n```\r\n\r\n### 连接到服务器\r\n\r\n#### 标准模式\r\n\r\n您的应用程序或环境（如Claude Desktop）可以直接通过stdio与服务器通信。\r\n\r\n#### SSE模式\r\n\r\n在SSE模式下运行时（带 `--sse`)，您可以使用MCP CLI进行连接：\r\n\r\n```bash\r\nnpx @wong2/mcp-cli --sse http://localhost:3000/sse\r\n```\r\n\r\n服务器将在以下位置可用：\r\n\r\n- SSE 端点 ： `http://localhost:3000/sse`\r\n- 消息端点： `http://localhost:3000/messages`\r\n\r\n### 在claude_desktop_config json中集成\r\n\r\nstdio模式的示例代码段：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"scryfall\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"mcp/scryfall\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用npx：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"scryfall\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"scryfall-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 从Docker构建\r\n\r\n```bash\r\ndocker build -t mcp/scryfall .\r\n```\r\n\r\n然后，您可以在stdio模式下运行：\r\n\r\n```bash\r\ndocker run -i --rm mcp/scryfall\r\n```\r\n\r\n或者在SSE模式下：\r\n\r\n```bash\r\ndocker run -i --rm -p 3000:3000 mcp/scryfall --sse\r\n```\r\n\r\n## 许可证\r\n\r\n根据MIT许可证获得许可。\r\n",
+ "config": {
+  "scryfall": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "mcp/scryfall"
+   ],
+   "env": {}
+  }
+ }
+}

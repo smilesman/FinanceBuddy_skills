@@ -1,0 +1,23 @@
+{
+ "id": "3027",
+ "kind": "mcp",
+ "name": "aviation",
+ "fingerprint_md5": "30c308b4ad66387535f0845d2e411b79",
+ "download_count": 0,
+ "category": "出行交通",
+ "tags": "",
+ "version": "",
+ "readme": "# 航空MCP服务器\r\n\r\nMCP服务器使AI代理能够访问实时航空数据——实时航班跟踪、机场天气、航空公司和机场信息。\r\n\r\n## 特性\r\n\r\n|工具|描述|来源|\r\n|------|-------------|--------|\r\n| `track_live_flights` |当前全球或特定地区的航班|OpenSky Network|\r\n| `track_flight` |通过呼号或ICAO24追踪特定航班| OpenSky Network|\r\n| `get_flight_path` |历史飞行路径/轨迹|OpenSky Network|\r\n| `get_airport_arrivals` |最近抵达机场| OpenSky Network|\r\n| `get_airport_departures` |最近从机场出发|OpenSky Network|\r\n| `get_airport_weather` |机场当前METAR天气|AviationWeather.gov|\r\n| `get_weather_forecast` |TAF机场天气预报|AviationWeather.gov|\r\n| `get_aviation_warnings` |主动SIGMETs和航空警报|AviationWeather.gov|\r\n| `get_airport_info` |机场详细信息（位置、时区等）|AirLabs|\r\n| `get_airline_info` |航空公司详细信息（机队、枢纽、状态）|AirLabs|\r\n\r\n## 数据源\r\n\r\n- **OpenSky网络** -实时航班跟踪、到达/离开、航线（无需API键，每天100个电话）\r\n- **AviationWeather.gov** -METAR、TAF、SIGMET（不需要API密钥，100 req/min）\r\n- **空气实验室** -机场和航空公司数据库（免费等级：每月1000个电话，需要API密钥）\r\n\r\n## 安装\r\n\r\n### 使用pip\r\n\r\n```bash\r\npip install aviation-mcp-server\r\n```\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone https://github.com/AiAgentKarl/aviation-mcp-server.git\r\ncd aviation-mcp-server\r\npip install -e .\r\n```\r\n\r\n## 配置\r\n\r\n### API密钥\r\n\r\n复制 `.env.example` 到 `.env` 并添加您的密钥：\r\n\r\n```bash\r\ncp .env.example .env\r\n```\r\n\r\n```env\r\n# AirLabs — Optional (https://airlabs.co)\r\nAIRLABS_API_KEY=your-key-here\r\n```\r\n\r\n> **注：** OpenSky Network和AviationWeather.gov不需要API密钥。AirLabs密钥仅用于 `get_airport_info` 和 `get_airline_info`.\r\n\r\n### 克劳德桌面/克劳德代码\r\n\r\n添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"aviation\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"python\",\r\n      \"args\": [\"-m\", \"src.server\"],\r\n      \"env\": {\r\n        \"AIRLABS_API_KEY\": \"your-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用uvx（无需安装）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"aviation\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"aviation-mcp-server\"],\r\n      \"env\": {\r\n        \"AIRLABS_API_KEY\": \"your-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用示例\r\n\r\n**追踪德国上空的航班：**\r\n\r\n> “显示目前飞越德国的所有航班”\r\n\r\n**查看机场天气：**\r\n\r\n> “法兰克福机场现在的天气怎么样？”\r\n\r\n**追踪特定航班：**\r\n\r\n> “追踪汉莎航空DLH400航班”\r\n\r\n**获取机场到达信息：**\r\n\r\n> “显示最近抵达肯尼迪机场的旅客”\r\n\r\n**航空警告：**\r\n\r\n> “有任何活动的SIGMET吗？”\r\n\r\n## 机场代码\r\n\r\n此服务器使用 **国际民航组织机场代码** （4个字母）表示天气和飞行数据：\r\n\r\n|机场|国际航空运输协会|国际民航组织|\r\n|---------|------|------|\r\n|法兰克福| FRA | EDDF|\r\n|慕尼黑|慕尼黑| EDDM|\r\n|柏林| BER | EDDB|\r\n|纽约肯尼迪国际机场|肯尼迪国际机场|KJFK|\r\n|伦敦希思罗机场| LHR | EGLL|\r\n|巴黎CDG | CDG | LFPG|\r\n|东京成田|NRT|RJAA|\r\n\r\n## 速率限制\r\n\r\n|API |限制|授权|\r\n|-----|-------|------|\r\n|OpenSky Network |每天100个电话（匿名）|无|\r\n|AviationWeather.gov |每分钟100个请求|无|\r\n|AirLabs |每月1000次呼叫（免费层）| API密钥|\r\n\r\n## 技术栈\r\n\r\n- Python 3.11+\r\n- [MCP-SDK](https://github.com/modelcontextprotocol/python-sdk) （快速MCP）\r\n- httpx（异步HTTP）\r\n- OpenSky Network、AviationWeather.gov、AirLabs API\r\n\r\n______________________________________________________________________\r\n\r\n## AiAgentKarl提供的更多MCP服务器\r\n\r\n|类别|服务器|\r\n|----------|---------|\r\n|🔗 区块链| [索拉纳](https://github.com/AiAgentKarl/solana-mcp-server) |\r\n| 🌍 数据| [天气](https://github.com/AiAgentKarl/weather-mcp-server) · [德国](https://github.com/AiAgentKarl/germany-mcp-server) · [农业](https://github.com/AiAgentKarl/agriculture-mcp-server) · [太空](https://github.com/AiAgentKarl/space-mcp-server) · [航空](https://github.com/AiAgentKarl/aviation-mcp-server) · [欧盟公司](https://github.com/AiAgentKarl/eu-company-mcp-server) |\r\n| 🔒 安全| [网络安全](https://github.com/AiAgentKarl/cybersecurity-mcp-server) · [策略网关](https://github.com/AiAgentKarl/agent-policy-gateway-mcp) · [审计跟踪](https://github.com/AiAgentKarl/agent-audit-trail-mcp) |\r\n| 🤖 代理基础设施| [记忆](https://github.com/AiAgentKarl/agent-memory-mcp-server) · [目录](https://github.com/AiAgentKarl/agent-directory-mcp-server) · [中心](https://github.com/AiAgentKarl/mcp-appstore-server) · [声誉](https://github.com/AiAgentKarl/agent-reputation-mcp-server) |\r\n| 🔬 研究| [学术的](https://github.com/AiAgentKarl/crossref-academic-mcp-server) · [LLM基准](https://github.com/AiAgentKarl/llm-benchmark-mcp-server) · [法律](https://github.com/AiAgentKarl/legal-court-mcp-server) |\r\n\r\n[→ 完整目录（40+台服务器）](https://github.com/AiAgentKarl)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "aviation": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "aviation-mcp-server"
+   ],
+   "env": {
+    "AIRLABS_API_KEY": "your-key-here"
+   }
+  }
+ }
+}

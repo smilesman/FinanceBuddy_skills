@@ -1,0 +1,28 @@
+{
+ "id": "784",
+ "kind": "mcp",
+ "name": "ocr-space",
+ "fingerprint_md5": "dab0f611d07f4eb786796ac9fcc7e0a3",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# OCR.space MCP服务器\r\n\r\n\r\nPython MCP服务器 [OCR空间](https://ocr.space/) -使用OCR从图像和PDF中提取文本。\r\n\r\n## 特性\r\n\r\n- **六个综合工具：**\r\n\r\n  - `ocr_file` -从本地图像/PDF中提取文本\r\n  - `ocr_url` -从URL处的图像/PDF中提取文本\r\n  - `ocr_auto` - **智能OCR** 自动处理超大文件\r\n  - `split_pdf` -将大型PDF拆分为与API兼容的区块\r\n  - `list_languages` -显示支持的OCR语言\r\n  - `check_tier_status` -验证API配置\r\n\r\n- **自动超大文件处理：**\r\n\r\n  - PDF太大？自动按页面分割，OCR每个块，连接结果\r\n  - 图像太大？自动压缩，同时保持质量\r\n\r\n- **双层支持：**\r\n\r\n  - **免费层**：1 MB限制，美国服务器\r\n  - **专业版**：5 MB限制，欧盟GDPR合规端点\r\n\r\n- **全面支持API参数：**\r\n\r\n  - 26+种语言，包括自动检测\r\n  - 两个OCR引擎（针对不同用例进行了优化）\r\n  - 表优化模式\r\n  - 自动旋转检测\r\n  - 可搜索的PDF生成\r\n  - 将结果保存为TXT或JSON格式\r\n\r\n## 安装\r\n\r\n```bash\r\n# With uv (recommended)\r\nuv sync\r\n\r\n# With pip\r\npip install -e .\r\n```\r\n\r\n## 配置\r\n\r\n### API密钥\r\n\r\n在获取免费API密钥 [ocr.space/ocrapi/freekey](https://ocr.space/ocrapi/freekey).\r\n\r\n对于PRO功能（较大的文件、欧盟端点），请在以下网址注册 [ocr.space/ocrapi](https://ocr.space/ocrapi).\r\n\r\n### 环境变量\r\n\r\n复制 `.envrc.example` 到 `.envrc` 并配置：\r\n\r\n```bash\r\n# Required: Free tier API key\r\nexport OCR_SPACE_API_KEY=\"your-free-api-key\"\r\n\r\n# Optional: PRO tier for GDPR-compliant EU processing\r\nexport OCR_SPACE_PRO_API_KEY=\"your-pro-api-key\"\r\nexport OCR_SPACE_PRO_ENDPOINT=\"https://eu.api.ocr.space/parse/image\"\r\n```\r\n\r\n然后启用 `direnv allow`.\r\n\r\n### 克劳德代码/MCP配置\r\n\r\n添加到 `.mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ocr-space\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--project\", \"/path/to/ocr-space-mcp\", \"ocr-space-mcp\"],\r\n      \"env\": {\r\n        \"OCR_SPACE_API_KEY\": \"${OCR_SPACE_API_KEY}\",\r\n        \"OCR_SPACE_PRO_API_KEY\": \"${OCR_SPACE_PRO_API_KEY}\",\r\n        \"OCR_SPACE_PRO_ENDPOINT\": \"${OCR_SPACE_PRO_ENDPOINT}\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### OpenCode配置\r\n\r\n添加到 `opencode.json`:\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"ocr-space\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--project\", \"/path/to/ocr-space-mcp\", \"ocr-space-mcp\"],\r\n      \"env\": {\r\n        \"OCR_SPACE_API_KEY\": \"${OCR_SPACE_API_KEY}\",\r\n        \"OCR_SPACE_PRO_API_KEY\": \"${OCR_SPACE_PRO_API_KEY}\",\r\n        \"OCR_SPACE_PRO_ENDPOINT\": \"${OCR_SPACE_PRO_ENDPOINT}\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n### 检查配置\r\n\r\n```\r\nCheck my OCR.space tier status\r\n```\r\n\r\n### OCR本地文件\r\n\r\n```\r\nExtract text from /path/to/document.pdf\r\n```\r\n\r\n```\r\nOCR this image using the PRO tier: /path/to/scan.png\r\n```\r\n\r\n**参数：**\r\n\r\n|参数|说明|默认值|\r\n|-----------|-------------|---------|\r\n| `file_path` |图像/PDF路径（必填）|-|\r\n| `tier` | `free` 或 `pro` | `free` |\r\n| `language` |OCR语言代码| `eng` |\r\n| `ocr_engine` |1（快速）或2（准确）|1|\r\n| `output_path` |将结果保存到文件|-|\r\n| `output_format` | `txt` 或 `json` | `txt` |\r\n| `detect_orientation` |自动旋转图像| `false` |\r\n| `scale` |高档低分辨率图像| `false` |\r\n| `is_table` |针对表格进行优化| `false` |\r\n| `is_create_searchable_pdf` |生成可搜索的PDF| `false` |\r\n\r\n### 从URL进行OCR\r\n\r\n```\r\nExtract text from https://example.com/document.png\r\n```\r\n\r\n### 大文件的智能OCR（OCR_auto）\r\n\r\n这 `ocr_auto` 工具自动处理超过API大小限制的文件：\r\n\r\n```\r\nOCR this large document: /path/to/big-scan.pdf\r\n```\r\n\r\n**它是如何工作的：**\r\n\r\n- **PDF文件**：按页面分割成块，对每个块进行OCR，连接结果\r\n- **图像**：压缩（质量+大小调整）直到低于限制，然后进行OCR\r\n\r\n**参数：** 同 `ocr_file`，但没有大小限制错误！\r\n\r\n### 仅拆分PDF\r\n\r\n如果你只想在没有OCR的情况下分割一个大的PDF：\r\n\r\n```\r\nSplit /path/to/large.pdf for free tier processing\r\n```\r\n\r\n在临时目录中创建多个较小的PDF文件（或指定 `output_dir`).\r\n\r\n### 列出语言\r\n\r\n```\r\nWhat OCR languages are supported?\r\n```\r\n\r\n**支持的语言：** 阿拉伯语、保加利亚语、中文（简体/繁体）、克罗地亚语、捷克语、丹麦语、荷兰语、英语、芬兰语、法语、德语、希腊语、匈牙利语、意大利语、日语、韩语、波兰语、葡萄牙语、俄语、斯洛文尼亚语、西班牙语、瑞典语、泰语、土耳其语、乌克兰语、越南语。\r\n\r\n使用 `language=auto` 引擎2用于自动语言检测。\r\n\r\n## 层级比较\r\n\r\n|功能|免费| PRO|\r\n|---------|------|-----|\r\n|文件大小限制|1 MB |5 MB|\r\n|服务器位置|仅限美国|欧盟可用|\r\n|费率限制|500/天|无限制|\r\n|GDPR合规性|否|是（欧盟端点）|\r\n|价格|免费|每月30美元|\r\n\r\n## OCR引擎\r\n\r\n|发动机|最适合|\r\n|--------|----------|\r\n| **发动机1** |更快的处理速度、亚洲语言、大图像|\r\n| **发动机2** |自动语言检测、特殊字符、旋转文本|\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install with dev dependencies\r\nuv sync --extra dev\r\n\r\n# Run linter\r\nuv run ruff check .\r\n\r\n# Format code\r\nuv run ruff format .\r\n\r\n# Run tests\r\nuv run pytest -v\r\n\r\n# Run tests with coverage\r\nuv run pytest --cov=ocr_space_mcp --cov-report=term-missing\r\n```\r\n\r\n## 许可证\r\n\r\nMIT-见 [许可证](LICENSE)\r\n\r\n## 链接\r\n\r\n- [OCR.space API文件](https://ocr.space/ocrapi)\r\n- [获取免费的API密钥](https://ocr.space/ocrapi/freekey)\r\n- [GitLab仓库](https://gitlab.com/agentic.ai.forge/ocr-space-mcp)\r\n- [GitHub镜像](https://github.com/agentic-ai-forge/ocr-space-mcp)\r\n",
+ "config": {
+  "ocr-space": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--project",
+    "/path/to/ocr-space-mcp",
+    "ocr-space-mcp"
+   ],
+   "env": {
+    "OCR_SPACE_API_KEY": "${OCR_SPACE_API_KEY}",
+    "OCR_SPACE_PRO_API_KEY": "${OCR_SPACE_PRO_API_KEY}",
+    "OCR_SPACE_PRO_ENDPOINT": "${OCR_SPACE_PRO_ENDPOINT}"
+   }
+  }
+ }
+}

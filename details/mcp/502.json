@@ -1,0 +1,22 @@
+{
+ "id": "502",
+ "kind": "mcp",
+ "name": "turtle-noir",
+ "fingerprint_md5": "b79586380a6e7ca28338fea9c1beb6f9",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp黑色海龟\r\n\r\n海龟汤（横向思维谜题）的MCP服务器。\r\n\r\n此包是Turtle Noir后端API上的一个薄MCP层，专为 `stdio` 运输。\r\n\r\n[首页](https://turtlenoir.com/) | [中文文档](./README.zh-CN.md) | [日本语](./README.ja-JP.md)\r\n\r\n## 特性\r\n\r\n- `start_session`：开始一个新的谜题会话\r\n- `ask_question`：问一个问题，得到一个结构化的结果\r\n- `give_up_and_reveal`：显示解决方案（根据后端显示策略）\r\n- 多语言MCP输出(`zh-CN`, `en-US`, `ja-JP`)via `language`\r\n- 在正常游戏过程中，将谜题解决方案保留在后端\r\n\r\n## 运输\r\n\r\n- 支持： `stdio`\r\n- 此包中不包括：SSE/HTTP MCP传输\r\n\r\n## 需求\r\n\r\n- Node.js 18+\r\n\r\n## 安装并运行\r\n\r\n```bash\r\nnpx -y mcp-turtle-noir\r\n```\r\n\r\n## MCP客户端配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"turtle-noir\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"mcp-turtle-noir\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n对于环境变量：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"turtle-noir\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"mcp-turtle-noir\"\r\n      ],\r\n      \"env\": {\r\n        \"TURTLE_NOIR_API_BASE_URL\": \"https://turtlenoir.com/api/mcp\",\r\n        \"TURTLE_NOIR_API_TIMEOUT_MS\": \"10000\",\r\n        \"TURTLE_NOIR_API_KEY\": \"YOUR_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### 1) `start_session`\r\n\r\n输入（全部可选）：\r\n\r\n```json\r\n{\r\n  \"region\": \"US\",\r\n  \"keyword\": \"island\",\r\n  \"language\": \"en-US\"\r\n}\r\n```\r\n\r\n输出：\r\n\r\n```json\r\n{\r\n  \"session_id\": \"...\",\r\n  \"puzzle_id\": \"...\",\r\n  \"title\": \"...\",\r\n  \"content\": \"...\",\r\n  \"language\": \"en-US\",\r\n  \"instruction\": \"...\",\r\n  \"translation_instruction\": \"...\"\r\n}\r\n```\r\n\r\n### 2) `ask_question`\r\n\r\n输入：\r\n\r\n```json\r\n{\r\n  \"session_id\": \"...\",\r\n  \"question\": \"...\",\r\n  \"language\": \"en-US\"\r\n}\r\n```\r\n\r\n输出：\r\n\r\n```json\r\n{\r\n  \"session_id\": \"...\",\r\n  \"language\": \"en-US\",\r\n  \"answer_key\": \"irrelevant\",\r\n  \"answer\": \"Irrelevant\",\r\n  \"answer_original\": \"...\",\r\n  \"short_reason\": \"...\",\r\n  \"solved\": false,\r\n  \"progress\": 35,\r\n  \"translation_instruction\": \"...\"\r\n}\r\n```\r\n\r\n### 3) `give_up_and_reveal`\r\n\r\n输入：\r\n\r\n```json\r\n{\r\n  \"session_id\": \"...\",\r\n  \"language\": \"en-US\"\r\n}\r\n```\r\n\r\n输出：\r\n\r\n```json\r\n{\r\n  \"session_id\": \"...\",\r\n  \"language\": \"en-US\",\r\n  \"title\": \"...\",\r\n  \"solution\": \"...\",\r\n  \"cta_url\": \"https://turtlenoir.com\",\r\n  \"cta_text\": \"...\",\r\n  \"translation_instruction\": \"...\"\r\n}\r\n```\r\n\r\n注意：如果进度低于阈值，后端可能会拒绝显示（例如 `progress < 60`).\r\n\r\n## 环境变量\r\n\r\n- `TURTLE_NOIR_API_BASE_URL` （默认值： `https://turtlenoir.com/api/mcp`)\r\n- `TURTLE_NOIR_API_TIMEOUT_MS` （默认值： `10000`)\r\n- `TURTLE_NOIR_API_KEY` （可选不记名代币）\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\nnode dist/index.js\r\n```\r\n\r\n## 快速开始\r\n\r\n看 `QUICKSTART.md`.\r\n\r\n## 中文文档\r\n\r\n看 `README.zh-CN.md`.\r\n\r\n## 许可证\r\n\r\nMIT。看 `LICENSE`.\r\n\r\n## 致谢\r\n\r\n- 官方网站： [黑海龟](https://turtlenoir.com/)\r\n- 中国镜： [出前一汤](https://haiguitang.net/)\r\n",
+ "config": {
+  "turtle-noir": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-turtle-noir"
+   ],
+   "env": {}
+  }
+ }
+}

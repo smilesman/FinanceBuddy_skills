@@ -1,0 +1,22 @@
+{
+ "id": "2989",
+ "kind": "mcp",
+ "name": "web3-research-mcp",
+ "fingerprint_md5": "4a5334f6a596311b1f64abe7d4bd0468",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# Web3研究MCP\r\n\r\n\r\n加密货币深度研究-免费且完全本地化🧠\r\n\r\n\r\n## 🚀 预览\r\n\r\n\r\n## 🧠 特性\r\n\r\n- **综合研究**：收集有关任何加密货币令牌的详细信息\r\n- **多源分析**：对多个来源的研究，包括CoinGecko、CoinMarketCap、DeLiLama等\r\n- **结构化报告**：生成涵盖技术基本面、市场数据、社会情绪等的详细报告\r\n- **资源管理**：自动存储搜索结果和内容以供参考\r\n- **状态跟踪**：通过不同阶段和部分跟踪研究进展\r\n\r\n## 📋 需求\r\n\r\n- Node.js（v16或更高版本）\r\n\r\n## 🔧 安装和设置\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的web3 research mcp [铁匠铺](https://smithery.ai/server/web3-research-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install web3-research-mcp --client claude\r\n```\r\n\r\n## 🔌 与Claude Desktop一起使用\r\n\r\n编辑您的Claude Desktop配置文件\r\n\r\n- Windows：%APPDATA%\\\\Claude\\\\Claude_desktop_config.json\r\n- macOS：~/库/应用程序支持/Claude/Claude_desktop_config json\r\n\r\n将此添加到您的Claude Desktop配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"web3-research-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"web3-research-mcp@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后重新启动克劳德桌面\r\n\r\n## 🔌 与光标一起使用\r\n\r\n转到：设置->光标设置->MCP->添加新的全局MCP服务器\r\n将此内容粘贴到您的Cursor~/.coursor/mcp.json文件中。有关更多信息，请参阅Cursor MCP文档。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"web3-research-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"web3-research-mcp@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后重新启动Cursor\r\n\r\n## 🛠️ 工具\r\n\r\n### 制定研究计划\r\n\r\n为代币创建结构化的研究计划。\r\n\r\n参数：\r\n\r\n- tokenName：令牌的全名\r\n- tokenTicker：代币的Ticker符号\r\n\r\n### 搜索\r\n\r\n执行网络搜索并返回结果。\r\n\r\n参数：\r\n\r\n- 查询：搜索查询\r\n- searchType：搜索类型（网络、新闻、图片、视频）\r\n\r\n### 关键词研究\r\n\r\n使用特定关键字搜索令牌并保存结果。\r\n\r\n参数：\r\n\r\n- tokenName：令牌的名称\r\n- tokenTicker：Ticker符号\r\n- keywords：要搜索的关键字数组\r\n\r\n### 更新状态\r\n\r\n更新研究部分的状态。\r\n\r\n参数：\r\n\r\n- section：要更新的章节名称（例如，“项目信息”、“技术基础”）\r\n- status：该部分的新状态（已计划、正在进行、已完成）\r\n\r\n### 获取内容\r\n\r\n从URL获取内容并将其另存为资源。\r\n\r\n参数：\r\n\r\n- url：从中获取内容的url\r\n- format：输出格式（文本、html、markdown、json）\r\n\r\n### 列出资源\r\n\r\n列出已保存的所有可用资源。\r\n\r\n### 搜索源\r\n\r\n从特定来源搜索有关令牌的信息。\r\n\r\n参数：\r\n\r\n- tokenName：令牌的名称\r\n- tokenTicker：Ticker符号\r\n- 来源：要搜索的来源（例如，“CoinGecko”、“DeFiLlama”、“新闻”）\r\n\r\n### coingecko数据\r\n\r\n直接从CoinGecko公共API获取实时市场数据-价格、市值、24h/7d/30d变化、ATH/ATL、流通供应、跨链合同地址和社交/dev链接。绕过403个HTML抓取问题。\r\n\r\n参数：\r\n\r\n- tokenName：代币的全名（例如“比特币”）\r\n- tokenTicker：Ticker符号（例如“BTC”）\r\n\r\n不需要API密钥。使用免费公共层（~30请求/分钟）。\r\n\r\n可选：设置 `COINGECKO_API_KEY` 在环境中使用CoinGecko Pro API密钥。设置后，请求将发送到 `https://pro-api.coingecko.com/api/v3` 随着 `x-cg-pro-api-key` 头球请求在15秒后超时。\r\n\r\n### 硬币搜索\r\n\r\n搜索CoinGecko的硬币索引，并返回与其CoinGeckoID匹配的候选项。当股票代码不明确时（例如，具有相同符号的多个代币）很有用。\r\n\r\n参数：\r\n\r\n- query：搜索查询--名称、股票代码或合约地址\r\n\r\n### 硬币行情\r\n\r\n从CoinGecko获取代币的活跃交易所列表，CEXs/DEX根据24小时美元交易量、最新价格、买卖价差、信任评分和交易URL对该货币对进行交易。按24小时美元成交量降序排序；异常和陈旧的打印被过滤掉。绕过“此代币实际在哪里交易”问题的HTML抓取。\r\n\r\n参数：\r\n\r\n- tokenName：代币的全名（例如“比特币”）\r\n- tokenTicker：Ticker符号（例如“BTC”）\r\n- 限制：返回多少个顶级场地（默认15个，最多50个）\r\n\r\n不需要API密钥。使用免费的公共层。请求在15秒后超时。\r\n\r\n### defillama数据\r\n\r\n直接从DeFiLlama公共API获取协议数据-总TVL、带日期的ATH TVL、30/90/365天TVL与当前TVL的变化、市值（如果可用-DeFiLloma在许多协议中省略了它）、每次主TVL细分、费用（24/7d/30d/历史）、代币地址、筹款轮次和链接。绕过最常见的DeFi协议查找的HTML抓取。\r\n\r\n参数：\r\n\r\n- tokenName：完整协议/令牌名称（例如，“Uniswap”）\r\n- tokenTicker：Ticker符号（例如“UNI”）\r\n\r\n不需要API密钥。使用免费的公共API。请求在15秒后超时。每个进程缓存协议索引5分钟，以避免锤击 `/protocols` 每次通话。\r\n\r\n### defillama搜索\r\n\r\n搜索DeFi Llama的协议索引，并返回候选匹配项及其slug、TVL和类别。当自动收报机不明确时（例如，具有相似名称的多个协议）很有用。\r\n\r\n参数：\r\n\r\n- query：搜索查询--协议名称、股票代码或slug\r\n\r\n## 📝 提示\r\n\r\n### 代币研究\r\n\r\n启动对加密货币代币的全面研究。\r\n\r\n参数：\r\n\r\n- tokenName：加密货币代币的全名\r\n- tokenTicker：代币的Ticker符号（例如BTC、ETH）\r\n\r\n## 🧠 运作原理\r\n\r\n1. 当研究开始时，会创建一个结构化的计划，涵盖代币的各个方面\r\n1. 服务器跨多个来源搜索信息\r\n1. 搜索结果存储为可引用的资源\r\n1. 研究通过不同部分进行，并进行状态跟踪\r\n1. 生成一份全面的报告，涵盖令牌的各个方面\r\n\r\n## ⚠️ 局限性\r\n\r\n- 一些网站阻止网络抓取，因此直接获取内容可能会失败，出现403个错误\r\n- 依赖于可能并不总是全面的搜索结果\r\n- 速率限制可能适用于搜索操作\r\n\r\n## 📄 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。\r\n",
+ "config": {
+  "web3-research-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "web3-research-mcp@latest"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "3447",
+ "kind": "mcp",
+ "name": "fluentui-icons",
+ "fingerprint_md5": "3cd42aff4766b9ac5df731ee8b24613e",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# FluentUI图标MCP服务器\r\n\r\nMCP（模型上下文协议）服务器，为Claude等AI助手提供FluentUI图标搜索功能。\r\n\r\n> **注：** 此MCP服务器使用 [FluentUI图标搜索](https://fluentui-icons.keenmate.dev) Keenmate的API。这是一项免费服务，请不要滥用。\r\n\r\n## 特性\r\n\r\n- **搜索图标** -使用可选的样式和大小过滤器按名称搜索图标\r\n- **get_icon_svg** -获取特定图标的原始SVG内容\r\n- **api文档** -提供资源的API文档\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fluentui-icons\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@keenmate/fluentui-icons-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n添加到您的MCP设置（通过 `/mcp` 命令或设置文件）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"fluentui-icons\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@keenmate/fluentui-icons-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后重启克劳德，你就可以开始了！\r\n\r\n## 环境变量\r\n\r\n- `FLUENTUI_ICONS_API` -API基本URL（默认值： `https://fluentui-icons.keenmate.dev`)\r\n\r\n## 查询示例\r\n\r\n连接后，您可以问Claude：\r\n\r\n- “给我找一个日历图标”\r\n- “搜索填充样式的箭头图标”\r\n- “获取24像素笔图标的SVG”\r\n- “查找与用户或人员相关的图标”\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm run dev    # Watch mode\r\nnpm run build  # Build for production\r\nnpm start      # Run the server\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "fluentui-icons": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@keenmate/fluentui-icons-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

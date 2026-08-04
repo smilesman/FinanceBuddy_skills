@@ -1,0 +1,26 @@
+{
+ "id": "1683",
+ "kind": "mcp",
+ "name": "quickbase",
+ "fingerprint_md5": "4771999db7cf36f1f0f0e735aa6e9878",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Quickbase MCP服务器\r\n\r\n用于Quickbase的基于TypeScript的模型上下文协议（MCP）服务器，旨在与Claude Desktop和其他AI助手无缝集成。\r\n\r\n> **📋 社区项目通知**\\\r\n> 这是一个社区开发的集成，不是官方的Quickbase产品。虽然它使用Quickbase的公共API，但它并没有得到Quickbase，股份有限公司的官方支持。该项目是按原样提供的，并由社区维护。有关Quickbase的官方产品和支持，请访问 [quickbase.com](https://www.quickbase.com).\r\n\r\n## 🚀 Claude Desktop快速入门\r\n\r\n### 单线设置检查\r\n\r\n```bash\r\ncurl -fsSL https://raw.githubusercontent.com/danielbushman/MCP-Quickbase/main/check_dependencies.sh | bash\r\n```\r\n\r\n### 配置Claude桌面版\r\n\r\n将此添加到您的Claude Desktop配置文件中：\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\\\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"quickbase\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-quickbase\"],\r\n      \"env\": {\r\n        \"QUICKBASE_REALM_HOST\": \"your-realm.quickbase.com\",\r\n        \"QUICKBASE_USER_TOKEN\": \"your-user-token\",\r\n        \"QUICKBASE_APP_ID\": \"your-app-id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**就是这样！** 重新启动Claude Desktop，您就可以开始使用Quickbase工具了。\r\n\r\n______________________________________________________________________\r\n\r\n## 📦 安装选项\r\n\r\n### 选项1:NPM（推荐）\r\n\r\n```bash\r\n# Use directly with npx (no installation needed)\r\nnpx -y mcp-quickbase\r\n\r\n# Or install globally\r\nnpm install -g mcp-quickbase\r\n```\r\n\r\n### 选项2：来源\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/danielbushman/MCP-Quickbase.git\r\ncd MCP-Quickbase\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build the project\r\nnpm run build\r\n```\r\n\r\n对于源代码安装，请使用以下Claude Desktop配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"quickbase\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/MCP-Quickbase/dist/mcp-stdio-server.js\"],\r\n      \"env\": {\r\n        \"QUICKBASE_REALM_HOST\": \"your-realm.quickbase.com\",\r\n        \"QUICKBASE_USER_TOKEN\": \"your-user-token\",\r\n        \"QUICKBASE_APP_ID\": \"your-app-id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🔧 配置\r\n\r\n服务器可以在不配置环境变量的情况下启动，但在提供正确的配置之前，工具将无法运行。使用 `check_configuration` 工具来验证您的设置。\r\n\r\n### 所需的环境变量\r\n\r\n- **`QUICKBASE_REALM_HOST`** -您的Quickbase领域（例如。， `company.quickbase.com`)\r\n- **`QUICKBASE_USER_TOKEN`** -您的Quickbase API令牌([在这里买一个](https://help.quickbase.com/en/articles/8672050))\r\n\r\n### 可选环境变量\r\n\r\n- **`QUICKBASE_APP_ID`** -默认应用程序ID\r\n\r\n### 可选设置\r\n\r\n- **`QUICKBASE_CACHE_ENABLED`** -启用缓存(`true`/`false`，默认值： `true`)\r\n- **`QUICKBASE_CACHE_TTL`** -缓存持续时间（秒）（默认值： `3600`)\r\n- **`DEBUG`** -启用调试日志记录(`true`/`false`，默认值： `false`)\r\n- **`LOG_LEVEL`** -日志记录级别(`DEBUG`/`INFO`/`WARN`/`ERROR`，默认值： `INFO`)\r\n\r\n## 🛠️ 可用工具（25）\r\n\r\n### 连接和配置\r\n\r\n- **`check_configuration`** -检查Quickbase配置是否设置正确\r\n- **`test_connection`** -测试与Quickbase的连接\r\n- **`configure_cache`** -配置缓存行为\r\n\r\n### 应用管理\r\n\r\n- **`create_app`** -创建新的Quickbase应用程序\r\n- **`update_app`** -更新现有应用程序\r\n- **`list_tables`** -列出应用程序中的所有表\r\n\r\n### 表操作\r\n\r\n- **`create_table`** -创建新表\r\n- **`update_table`** -更新表属性\r\n- **`get_table_fields`** -获取表的字段信息\r\n\r\n### 现场管理\r\n\r\n- **`create_field`** -在表中创建新字段\r\n- **`get_field`** -获取特定字段的属性\r\n- **`update_field`** -更新字段属性\r\n- **`delete_field`** -从表中删除字段\r\n\r\n### 记录操作\r\n\r\n- **`query_records`** -使用过滤、排序和groupBy查询记录\r\n- **`create_record`** -创建单个记录\r\n- **`update_record`** -更新现有记录\r\n- **`bulk_create_records`** -创建多条记录\r\n- **`bulk_update_records`** -更新多条记录\r\n\r\n### 文件操作\r\n\r\n- **`upload_file`** -将文件上传到文件附件字段\r\n- **`download_file`** -从记录中下载文件\r\n\r\n### 关系管理\r\n\r\n- **`get_relationships`** -获取表关系\r\n- **`create_relationship`** -创建新的表关系\r\n- **`update_relationship`** -更新现有关系\r\n- **`delete_relationship`** -删除表关系\r\n\r\n### 报告\r\n\r\n- **`run_report`** -执行Quickbase报告\r\n\r\n## 📚 使用示例\r\n\r\n### 基本记录查询\r\n\r\n```\r\nQuery all customers from the Customers table\r\n```\r\n\r\n### 创建新记录\r\n\r\n```\r\nCreate a new customer record with name \"Acme Corp\" and status \"Active\"\r\n```\r\n\r\n### 上传文件\r\n\r\n```\r\nUpload invoice.pdf to the Documents field in record 123\r\n```\r\n\r\n## 🔒 安全\r\n\r\n- API令牌处理安全，从不记录\r\n- 所有文件操作都被沙盒化到工作目录中\r\n- 支持字段级权限和访问控制\r\n\r\n## 📋 需求\r\n\r\n- Node.js 18+\r\n- 具有API访问权限的有效Quickbase帐户\r\n- Claude Desktop（用于MCP集成）\r\n\r\n## 🤝 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 📄 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 🔗 链接\r\n\r\n- [Quickbase API文档](https://developer.quickbase.com/)\r\n- [模型上下文协议](https://modelcontextprotocol.io/)\r\n- [克劳德桌面版](https://claude.ai/download)\r\n",
+ "config": {
+  "quickbase": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-quickbase"
+   ],
+   "env": {
+    "QUICKBASE_REALM_HOST": "your-realm.quickbase.com",
+    "QUICKBASE_USER_TOKEN": "your-user-token",
+    "QUICKBASE_APP_ID": "your-app-id"
+   }
+  }
+ }
+}

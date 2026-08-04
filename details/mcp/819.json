@@ -1,0 +1,21 @@
+{
+ "id": "819",
+ "kind": "mcp",
+ "name": "prompts",
+ "fingerprint_md5": "41d82052f8734a357f16d4e023d4c280",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# 提示库📚\r\n\r\n社区驱动的测试提示和配置库-- **用于AI代理提示的npm**.\r\n\r\n## 安装\r\n\r\n```bash\r\npip install prompt-library-mcp-server\r\n```\r\n\r\n```json\r\n{\"mcpServers\": {\"prompts\": {\"command\": \"uvx\", \"args\": [\"prompt-library-mcp-server\"]}}}\r\n```\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_prompts` |按关键字或类别查找提示|\r\n| `get_prompt` |准备好特定的提示以供使用|\r\n| `share_prompt` |将您自己的提示添加到库中|\r\n| `rate_prompt` |赞成票或反对票提示|\r\n| `list_popular_prompts` |查看最受欢迎的提示|\r\n\r\n## 预加载提示\r\n\r\n附带经过测试的代码审查、API文档、数据分析、漏洞调查、市场研究和安全审计提示。\r\n\r\n______________________________________________________________________\r\n\r\n## AiAgentKarl提供的更多MCP服务器\r\n\r\n|类别|服务器|\r\n|----------|---------|\r\n|🔗 区块链| [索拉纳](https://github.com/AiAgentKarl/solana-mcp-server) |\r\n| 🌍 数据| [天气](https://github.com/AiAgentKarl/weather-mcp-server) · [德国](https://github.com/AiAgentKarl/germany-mcp-server) · [农业](https://github.com/AiAgentKarl/agriculture-mcp-server) · [太空](https://github.com/AiAgentKarl/space-mcp-server) · [航空](https://github.com/AiAgentKarl/aviation-mcp-server) · [欧盟公司](https://github.com/AiAgentKarl/eu-company-mcp-server) |\r\n| 🔒 安全| [网络安全](https://github.com/AiAgentKarl/cybersecurity-mcp-server) · [策略网关](https://github.com/AiAgentKarl/agent-policy-gateway-mcp) · [审计跟踪](https://github.com/AiAgentKarl/agent-audit-trail-mcp) |\r\n| 🤖 代理基础设施| [记忆](https://github.com/AiAgentKarl/agent-memory-mcp-server) · [目录](https://github.com/AiAgentKarl/agent-directory-mcp-server) · [中心](https://github.com/AiAgentKarl/mcp-appstore-server) · [声誉](https://github.com/AiAgentKarl/agent-reputation-mcp-server) |\r\n| 🔬 研究| [学术的](https://github.com/AiAgentKarl/crossref-academic-mcp-server) · [LLM基准](https://github.com/AiAgentKarl/llm-benchmark-mcp-server) · [法律](https://github.com/AiAgentKarl/legal-court-mcp-server) |\r\n\r\n[→ 完整目录（40+台服务器）](https://github.com/AiAgentKarl)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "prompts": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "prompt-library-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

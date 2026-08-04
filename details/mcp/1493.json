@@ -1,0 +1,21 @@
+{
+ "id": "1493",
+ "kind": "mcp",
+ "name": "id-generator",
+ "fingerprint_md5": "6fd23478218c4154a4e031e28f70f9c0",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# ID生成器MCP\r\n\r\n[](https://smithery.ai/server/@devstacks-software-engineering/id-generator-mcp)\r\n\r\n这是一个模型上下文协议（MCP）服务器，为AI助手提供ID生成功能。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@devstacks-software-engineering/id-generator-mcp\">\r\n  \r\n</a>\r\n\r\n## 安装\r\n\r\nID生成器MCP可以与各种AI辅助平台集成。以下是针对不同环境的说明：\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面的ID生成器MCP [史密瑟里](https://smithery.ai/server/@devstacks-software-engineering/id-generator-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @devstacks-software-engineering/id-generator-mcp --client claude\r\n```\r\n\r\n### 克劳德代码\r\n\r\n要将ID生成器MCP添加到Claude代码中，请运行以下命令：\r\n\r\n```bash\r\nclaude mcp add id-generator npx @devstacks/id-generator-mcp\r\n```\r\n\r\n### 光标、Winsurf或克劳德桌面\r\n\r\n要将ID生成器MCP添加到Cursor、Winsurf或Claude Desktop，请将以下配置添加到MCP配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"id-generator\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@devstacks/id-generator-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n安装后，AI助手可以使用ID生成器MCP生成各种类型的ID。\r\n\r\n### 支持的ID算法\r\n\r\n|算法|示例|描述|\r\n|-----------|---------|-------------|\r\n| `uuid` | `123e4567-e89b-12d3-a456-426614174000` |UUID v4-通用唯一标识符，使用随机数生成128位值，冲突概率极低。标准化格式在许多系统中广泛使用。 |\r\n| `cuid2` | `clh3ppfqz0000jz0ggdlg7etk` |针对水平缩放和性能进行了优化的防撞ID。比UUID短，同时保持唯一性。设计为安全、URL安全和顺序数据库性能。 |\r\n| `nanoid` | `V1StGXR8_Z5jdHi6B-myT` |小型、安全、URL友好的唯一字符串ID生成器。创建紧凑、非连续、URL安全的标识符，这些标识符具有高度的抗冲突性。默认长度为21个字符。 |\r\n| `ulid` | `01ARZ3NDEKTSV4RRFFQ69G5FAV` |通用唯一词典排序标识符。将时间顺序唯一性与随机唯一性相结合。26个字符，crockford base32编码（无特殊字符），URL安全，可按词典排序。 |\r\n\r\n## 特性\r\n\r\n- 生成UUID（v4）\r\n- 创建CUID2 ID以进行防撞识别\r\n- 为紧凑、URL友好的标识符生成Nanoid\r\n- 为时间顺序、可排序的标识符创建ULID\r\n- 跨会话生成一致的ID\r\n- 简单的API集成\r\n- 支持一次生成多个ID\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "id-generator": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@devstacks/id-generator-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "1404",
+ "kind": "mcp",
+ "name": "deep-directory-tree-2",
+ "fingerprint_md5": "29fbc2b86b86e2abce43a02cba187c6e",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 深度目录树MCP🌳\r\n\r\n[](https://smithery.ai/server/deep-directory-tree-mcp)\r\n[](https://npmjs.org/package/@andredezzy/deep-directory-tree-mcp)\r\n[](https://npmjs.org/package/@andredezzy/deep-directory-tree-mcp)\r\n\r\n一个强大的模型上下文协议（MCP）实现，用于可视化和分析目录结构。为什么？现在，您可以让AI助手高效地理解和导航您的项目结构，从而实现更智能的代码导航和项目组织洞察力。\r\n\r\n内置：\r\n\r\n- [人类MCP](https://docs.anthropic.com/claude/docs/mcp-getting-started)\r\n- [光标](https://cursor.sh)\r\n\r\n## 特性\r\n\r\n- 深度目录树可视化\r\n- 可配置的基于深度的树生成\r\n- 基于智能模式的文件/目录排除\r\n- 清晰易读的树形输出格式\r\n- 实时目录结构更新\r\n- 目标目录分析\r\n\r\n**演示：**\r\n\r\n\r\n## 快速开始\r\n\r\n### 先决条件\r\n\r\n- [Node.js](https://nodejs.org) （v18或更高版本）\r\n\r\n### Smithery安装\r\n\r\n最简单的入门方法是使用 [史密瑟里](https://smithery.ai/server/deep-directory-tree-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @andredezzy/deep-directory-tree-mcp --client cursor\r\n```\r\n\r\n### 手动安装\r\n\r\n#### 光标IDE设置\r\n\r\n1. 打开光标设置→ MCP → 添加新的MCP服务器\r\n\r\n1. 使用以下设置进行配置：\r\n\r\n   ```json\r\n   {\r\n     \"deep-directory-tree\": {\r\n       \"command\": \"npx\",\r\n       \"args\": [\"-y\", \"@andredezzy/deep-directory-tree-mcp\"]\r\n     }\r\n   }\r\n   ```\r\n\r\n#### Claude桌面设置\r\n\r\n将以下内容添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"deep-directory-tree\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@andredezzy/deep-directory-tree-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\nAI助手的常用命令：\r\n\r\n- “显示目录结构”\r\n- “将项目树可视化到深度4”\r\n- “显示不包括测试目录的文件”\r\n\r\n## 发展\r\n\r\n### 先决条件\r\n\r\n- [Bun运行时](https://bun.sh) （必填）\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/andredezzy/deep-directory-tree-mcp.git\r\ncd deep-directory-tree-mcp\r\n\r\n# Install dependencies\r\nbun install\r\n\r\n# Build the project\r\nbun run build\r\n```\r\n\r\n### 开发手册安装\r\n\r\n#### 光标IDE设置\r\n\r\n1. 打开光标设置→ MCP → 添加新的MCP服务器\r\n\r\n1. 使用以下设置进行配置：\r\n\r\n   ```json\r\n   {\r\n     \"deep-directory-tree\": {\r\n       \"command\": \"node\",\r\n       \"args\": [\"ABSOLUTE_PATH_TO_MCP_SERVER/bin/deep-directory-tree.js\"]\r\n     }\r\n   }\r\n   ```\r\n\r\n#### Claude桌面设置\r\n\r\n将以下内容添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"deep-directory-tree\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"ABSOLUTE_PATH_TO_MCP_SERVER/bin/deep-directory-tree.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建特征分支(`git checkout -b feature/amazing-feature`)\r\n1. 提交更改(`git commit -m 'Add feature'`)\r\n1. 推送到分支(`git push origin feature/amazing-feature`)\r\n1. 打开拉取请求\r\n\r\n## 支持\r\n\r\n需要帮助？试试这些资源：\r\n\r\n- [打开一个问题](https://github.com/andredezzy/deep-directory-tree-mcp/issues)\r\n- [常见问题Wiki](https://github.com/andredezzy/deep-directory-tree-mcp/wiki/FAQ)\r\n- [文档](https://github.com/andredezzy/deep-directory-tree-mcp/wiki)\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "deep-directory-tree": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@andredezzy/deep-directory-tree-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

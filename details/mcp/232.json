@@ -1,0 +1,22 @@
+{
+ "id": "232",
+ "kind": "mcp",
+ "name": "gradio",
+ "fingerprint_md5": "d976673eeba65d9263ddca31b8d07640",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "______________________________________________________________________\r\n\r\n## 标题：Spotify MCP服务器 表情符号🎵 颜色来源：蓝色 颜色To：紫色 sdk：毕业 sdk版本：5.33.1 app_file:server.py 固定：false\r\n\r\n# Spotify MCP服务器\r\n\r\n基于Gradio的MCP服务器，提供用户友好的界面与Spotify的API进行交互。此服务器提供各种工具来管理您的Spotify体验，从身份验证到播放列表管理和音乐播放控制。\r\n\r\n## 演示视频\r\n\r\n[观看演示视频](https://player.cloudinary.com/embed/?cloud_name=dedgdfu0l&public_id=2025-06-08_15-25-48_fr74jj&profile=cld-default)\r\n\r\n## 特性\r\n\r\n- **认证**：使用OAuth2进行安全的Spotify身份验证\r\n- **音乐搜索**：搜索曲目并获取艺术家信息\r\n- **队列管理**：将歌曲添加到您的Spotify队列中（需要Spotify Premium）\r\n- **最近播放**：查看您最近播放的曲目\r\n- **播放列表管理**:\r\n  - 创建新播放列表\r\n  - 查看现有播放列表\r\n  - 将歌曲添加到播放列表\r\n- **用户洞察**:\r\n  - 查看顶级艺术家\r\n  - 查看热门曲目\r\n  - 获取流派信息\r\n\r\n## 需求\r\n\r\n- Python 3.x\r\n- Spotify Premium帐户（某些队列管理功能需要）\r\n- Spotify开发者帐户API证书\r\n\r\n## 设置\r\n\r\n1. 克隆此存储库\r\n1. 安装所需的依赖项：\r\n   ```bash\r\n   pip install gradio spotipy\r\n   ```\r\n\r\n## 配置\r\n\r\n### 获取Spotify API密钥\r\n\r\n1. 在上创建帐户 [developer.spotify.com](https://developer.spotify.com)\r\n1. 导航到仪表板\r\n1. 使用以下设置创建新应用程序：\r\n   - 重定向URI: `http://127.0.0.1:5000/callback` （您可以选择任何端口，但必须使用http和显式的环回地址）\r\n   - 注意：您可能需要重新启动MCP环境（例如Claude Desktop）一两次才能正常工作\r\n\r\n### 环境变量\r\n\r\n服务器使用以下环境变量：\r\n请使用凭据创建.env文件\r\n\r\n- `CLIENT_ID`：您的Spotify API客户端ID\r\n- `CLIENT_SECRET`：您的Spotify API客户秘密\r\n- `REDIRECT_URI`您的 Spotify API 重定向 URI (默认:http://127.0.0.1:5000/callback ）\r\n\r\n### 本地运行\r\n\r\n此项目旨在本地运行，尚未针对临时环境（例如uvx使用）进行设置。要运行：\r\n\r\n1. 克隆此存储库\r\n1. 设置环境变量\r\n1. 运行服务器\r\n\r\n## Claude Desktop查询示例\r\n\r\n在Claude Desktop中尝试以下示例查询以探索不同的功能：\r\n\r\n### 音乐发现与分析\r\n\r\n“向我展示过去6个月我的前10位艺术家及其流派”\r\n\r\n### 智能播放列表创建\r\n\r\n“创建我本月前20首曲目的播放列表”\r\n\r\n### 队列管理\r\n\r\n“搜索“我更喜欢我”并将其添加到我的队列中”\r\n\r\n### 播放列表组织\r\n\r\n“显示我的所有播放列表”\r\n\r\n### 音乐策划\r\n\r\n“将我本月的前10首曲目与我最喜欢的曲目进行比较”\r\n\r\n### 快捷操作\r\n\r\n“显示我最近播放的5首歌曲”\r\n\r\n## API终点\r\n\r\n服务器通过Gradio接口公开了几个端点：\r\n\r\n- `add_to_queue_song`：将歌曲添加到队列中（需要付费）\r\n- `get_artist_and_track`：搜索曲目\r\n- `auth_with_spotify`：通过Spotify进行身份验证\r\n- `get_recently_played_songs`：获取最近播放的曲目\r\n- `create_playlist`：创建新的播放列表\r\n- `get_playlist_name_and_id`：获取播放列表信息\r\n- `add_songs_to_playlist`：将歌曲添加到播放列表\r\n- `get_users_top_artists`：获取用户的顶级艺术家\r\n- `get_user_top_tracks`：获取用户的热门曲目\r\n\r\n## 高级功能\r\n\r\n以下功能需要Spotify Premium帐户：\r\n\r\n- 将歌曲添加到队列\r\n\r\n## Claude桌面配置\r\n\r\n要将此MCP服务器与Claude Desktop一起使用，请将以下配置添加到您的设置中（端口号可能会有所不同，请检查）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gradio\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-remote\", \"http://127.0.0.1:7860/gradio_api/mcp/sse\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n此配置允许Claude Desktop连接到在端口7860上运行的Gradio MCP服务器。\r\n\r\n## 标签\r\n\r\nmcp服务器轨道\r\n",
+ "config": {
+  "gradio": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "http://127.0.0.1:7860/gradio_api/mcp/sse"
+   ],
+   "env": {}
+  }
+ }
+}

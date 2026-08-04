@@ -1,0 +1,26 @@
+{
+ "id": "1081",
+ "kind": "mcp",
+ "name": "kcris",
+ "fingerprint_md5": "926bfc9fc889c6467f324e00a5b719db",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# K-CRIS MCP服务器\r\n\r\n公共数据门户 [疾病管理局临床研究DB](https://www.data.go.kr/data/3033869/openapi.do) 集成OpenAPI **模型上下文协议（MCP）服务器**是。\\\r\n有关临床研究信息服务（Clinical Research information Service，CRIS）的更多信息， [临床研究信息服务（CRIS）简介](https://cris.nih.go.kr/cris/info/introduce.do)请参考。\r\n\r\n## 功能\r\n\r\n|工具|说明|\r\n|------|------|\r\n| `kcris_list_studies` |符合搜索词、页面的临床研究 **列表** 查询（CRIS注册号、研究题目、研究种类等）|\r\n| `kcris_get_study` 使用CRIS注册号（例如KCT0002243）进行临床研究 **详细** 查询（临床研究信息、参与机构信息、研究非支持机构信息、研究责任机构信息、仲裁群信息、主要结果变量信息等）|\r\n\r\n## 要求\r\n\r\n- Python 3.10+\r\n- [紫外线](https://docs.astral.sh/uv/) （建议）或pip\r\n\r\n## 安装\r\n\r\n### 1.Git clone&转到项目\r\n\r\n```bash\r\ngit clone https://github.com/your-username/kcris-mcp-server.git\r\ncd kcris-mcp-server\r\n```\r\n\r\n### 2.安装Python依赖性\r\n\r\n```bash\r\npip install -r requirements.txt\r\n```\r\n\r\n或 `uv`如果使用：\r\n\r\n```bash\r\nuv pip install -r requirements.txt\r\n```\r\n\r\n运行本地软件包需要安装：\r\n\r\n```bash\r\npip install -e .\r\n# 또는 uv 사용 시\r\nuv pip install -e .\r\n```\r\n\r\n### 3.设置环境变量\r\n\r\n```bash\r\ncp .env.example .env\r\n```\r\n\r\n`.env` 编辑文件以设置以下变量：\r\n\r\n- “DATA_GO_KR_SERVICE_KEY”：公共数据门户颁发的验证密钥（[公共数据门户](https://www.data.go.kr/) → [疾病管理局_临床研究DB](https://www.data.go.kr/data/3033869/openapi.do) 申请使用后，在我的页面上 **个人API身份验证密钥（常规身份验证密钥）** 复制）\r\n\r\n## 使用方法\r\n\r\n### 运行服务器（本地）\r\n\r\n安装依赖性后：\r\n\r\n```bash\r\nuv run kcris-mcp-server\r\n```\r\n\r\n或者，如果安装了软件包：\r\n\r\n```bash\r\npython -m kcris_mcp_server\r\n```\r\n\r\n### Claude Desktop的使用方法\r\n\r\n在Claude Desktop配置文件中添加以下内容：\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\nClaude桌面 **设置→Developer→Edit Config** 可以用打开。\r\n\r\n#### 方法1:直接使用python\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kcris\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"-m\", \"kcris_mcp_server\"],\r\n      \"cwd\": \"/path/to/kcris-mcp-server\",\r\n      \"env\": {\r\n        \"DATA_GO_KR_SERVICE_KEY\": \"your-service-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> 安装依赖性（`pip install -r requirements.txt`）和安装软件包（`pip install -e .`）先完成后再使用。\r\n\r\n#### 方法2：使用uv（建议）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kcris\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/path/to/kcris-mcp-server\",\r\n        \"run\",\r\n        \"kcris-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"DATA_GO_KR_SERVICE_KEY\": \"your-service-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **参考**：Claude Desktop（GUI）中 `uv`可能不在PATH中。这时 `command`呃 `uv`的 **完整路径**请插入（例如： `/Users/username/.local/bin/uv`).在终端 `which uv`可以通过确认。\r\n\r\n#### 方法3:使用uvx（本地项目）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"kcris\": {\r\n      \"command\": \"/path/to/uvx\",\r\n      \"args\": [\"--from\", \"/path/to/kcris-mcp-server\", \"kcris-mcp-server\"],\r\n      \"env\": {\r\n        \"KCRIS_SERVICE_KEY\": \"your-service-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n- 设置后，请完全退出Claude Desktop，然后重新运行。\r\n\r\n### 问题和回答示例\r\n\r\n|想做什么|示例问题|\r\n|--------------|-----------|\r\n|按条件/关键词搜索列表|“请搜索糖尿病临床研究列表”，“请给我看10个与心脏相关的正在招募的临床试验”\r\n【查看特定研究详细信息】“KCT0002243告知研究详细信息”，“CRIS注册号KCT0001234告知参与机构和研究责任机构”\r\n调整页面“搜索糖尿病，给我看第二页的结果”\r\n\r\n示例对话：\r\n\r\n- **用户**：帮我搜索10个糖尿病临床研究目录。\r\n\r\n- **回应**：（使用K-CRIS工具 `kcris_list_studies(srch_word=\"당뇨\", num_of_rows=10, page_no=1)` 调用后整理并显示结果）\r\n\r\n- **用户**：KCT0002243告诉我研究详细信息。\r\n\r\n- **回应**：（使用K-CRIS工具 `kcris_get_study(cris_number=\"KCT0002243\")` 呼叫后总结研究题目、招募情况、参与机构、仲裁群等。）\r\n\r\n______________________________________________________________________\r\n\r\n## API注释\r\n\r\n- **服务URL**: `http://apis.data.go.kr/1352159/crisinfodataview`\r\n- **查询列表**: `GET .../list` — `serviceKey`, `resultType=json`, `srchWord`, `numOfRows`(1~50), `pageNo`\r\n- **详细查询**: `GET .../detail` — `serviceKey`, `resultType=json`, `crisNumber`（CRIS注册号）\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。\r\n",
+ "config": {
+  "kcris": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/kcris-mcp-server",
+    "run",
+    "kcris-mcp-server"
+   ],
+   "env": {
+    "DATA_GO_KR_SERVICE_KEY": "your-service-key-here"
+   }
+  }
+ }
+}

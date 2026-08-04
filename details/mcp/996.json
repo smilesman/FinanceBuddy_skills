@@ -1,0 +1,23 @@
+{
+ "id": "996",
+ "kind": "mcp",
+ "name": "cellosaurus",
+ "fingerprint_md5": "a4d6ddb5a12c573079140e7deb54a8e2",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Cellosaurus MCP服务器\r\n\r\n\r\nSIB Cellosaurus细胞系知识资源的非官方模型上下文协议（MCP）服务器。\r\n\r\n## 关于Cellosaurus\r\n\r\n[Cellosaurus](https://www.cellosaurus.org) 是SIB瑞士生物信息学研究所CALIPHO小组开发的细胞系综合知识资源。它提供了以下详细信息：\r\n\r\n- 用于生物医学研究的永生细胞系\r\n- 细胞系特征、遗传学和元数据\r\n- 数据库和出版物的交叉引用\r\n- 用于身份验证的STR配置文件\r\n- 疾病关联和组织起源\r\n\r\n**许可证通知**Cellosaurus数据库已在 [知识共享署名4.0国际（CC BY 4.0）](https://creativecommons.org/licenses/by/4.0/) 许可证。在使用Cellosaurus的数据时，请为Cellosaurs团队提供适当的归属，并引用他们的工作。\r\n\r\n## 特性\r\n\r\n此MCP服务器提供以下访问Cellosaurus数据的工具：\r\n\r\n### 核心工具\r\n\r\n- **`search_cell_lines`**：使用灵活的Solr语法搜索细胞系\r\n- **`get_cell_line_info`**：通过登录获取特定细胞系的详细信息\r\n- **`get_release_info`**：获取当前数据库版本和统计信息\r\n\r\n### 专业搜索工具\r\n\r\n- **`find_cell_lines_by_disease`**：寻找与特定疾病相关的细胞系\r\n- **`find_cell_lines_by_tissue`**：寻找来自特定组织/器官的细胞系\r\n- **`list_available_fields`**：获取所有可用的数据字段及其描述\r\n\r\n### 查询示例\r\n\r\n```python\r\n# Search for HeLa cell lines\r\nsearch_cell_lines(query=\"id:HeLa\", fields=[\"id\", \"ac\", \"ox\", \"di\"])\r\n\r\n# Find liver cancer cell lines\r\nfind_cell_lines_by_disease(disease=\"hepatocellular carcinoma\", species=\"human\")\r\n\r\n# Find all liver-derived cell lines\r\nfind_cell_lines_by_tissue(tissue=\"liver\", species=\"human\")\r\n\r\n# Get detailed info for a specific cell line\r\nget_cell_line_info(accession=\"CVCL_0030\", fields=[\"id\", \"str\", \"karyotype\"])\r\n```\r\n\r\n## 安装\r\n\r\n您的系统上需要安装Python 3.11或更高版本。\r\n\r\n### 选项1：使用uvx（推荐）\r\n\r\n```bash\r\nuvx cellosaurus_mcp\r\n```\r\n\r\n### 选项2:MCP客户端配置\r\n\r\n添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cellosaurus\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"cellosaurus_mcp\"],\r\n      \"env\": {\r\n        \"UV_PYTHON\": \"3.11\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 选项3：直接安装\r\n\r\n```bash\r\npip install cellosaurus_mcp\r\n```\r\n\r\n## 联系\r\n\r\n如果您发现错误，请使用 [问题跟踪系统](https://github.com/biocontext-ai/unofficial-cellosaurus-mcp/issues).\r\n\r\n## 引用\r\n\r\n如果此MCP服务器对您的研究有用，请按如下方式引用。\r\n\r\n```bibtex\r\n@article{BioContext_AI_Kuehl_Schaub_2025,\r\n  title={BioContextAI is a community hub for agentic biomedical systems},\r\n  url={http://dx.doi.org/10.1038/s41587-025-02900-9},\r\n  urldate = {2025-11-06},\r\n  doi={10.1038/s41587-025-02900-9},\r\n  year = {2025},\r\n  month = nov,\r\n  journal={Nature Biotechnology},\r\n  publisher={Springer Science and Business Media LLC},\r\n  author={Kuehl, Malte and Schaub, Darius P. and Carli, Francesco and Heumos, Lukas and Hellmig, Malte and Fernández-Zapata, Camila and Kaiser, Nico and Schaul, Jonathan and Kulaga, Anton and Usanov, Nikolay and Koutrouli, Mikaela and Ergen, Can and Palla, Giovanni and Krebs, Christian F. and Panzer, Ulf and Bonn, Stefan and Lobentanzer, Sebastian and Saez-Rodriguez, Julio and Puelles, Victor G.},\r\n  year={2025},\r\n  month=nov,\r\n  language={en},\r\n}\r\n```\r\n",
+ "config": {
+  "cellosaurus": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "cellosaurus_mcp"
+   ],
+   "env": {
+    "UV_PYTHON": "3.11"
+   }
+  }
+ }
+}

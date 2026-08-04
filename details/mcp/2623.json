@@ -1,0 +1,27 @@
+{
+ "id": "2623",
+ "kind": "mcp",
+ "name": "mongo_mcp_server",
+ "fingerprint_md5": "20264c1a3939a60f7e350ca29cf5bfca",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "## ST-MCP-Server\r\n\r\n[[https://gips2.baidu.com/it/u=3605577986,836718719&fm=3081&app=3081&f=PNG?w=320&h=320]()]\r\n\r\n## 版本信息\r\n\r\nv1.0.0\r\n\r\n## 产品描述\r\n\r\n### 短描述\r\n\r\n摄图网多媒体内容搜索服务，提供图片、视频、音乐等多媒体资源的智能搜索能力。\r\n\r\n### 长描述\r\n\r\nST-MCP-Server 是摄图网提供的多媒体内容搜索服务，集成了图片、视频、音乐等多种媒体资源的搜索功能。通过丰富的筛选条件和智能排序，帮助用户快速找到所需的媒体资源，支持多种格式和类型的资源检索。\r\n\r\n## 分类\r\n\r\n多媒体搜索、内容检索\r\n\r\n## 标签\r\n\r\n图片搜索，视频搜索，音乐搜索\r\n\r\n## Tools\r\n\r\n本 MCP Server 产品提供以下 Tools(工具/能力):\r\n\r\n### Tool1: 图片搜索\r\n\r\n#### 详细描述\r\n\r\n提供图片资源的智能搜索服务，支持多种筛选条件，包括图片类型、比例、人物特征等，帮助用户精准找到所需图片资源。\r\n\r\n#### 调试所需的输入参数:\r\n\r\n输入：\r\n\r\n    - kw（string）：搜索关键词\r\n\r\n    - order（int）：排序方式（1：推荐, 2：最新）\r\n\r\n    - has_avatar（int）：肖像权（0：全部 1：有 2：无）\r\n\r\n    - is_prime（int）：精品（0：全部 1：是 2：否）\r\n\r\n    - extension_name（string）：图片格式\r\n\r\n    - direction（int）：比例（0：竖版 1：横版 2：全部）\r\n\r\n    - pic_type（int）：图片类型（0:all 1：照片 2：创意背景 3：插画 4：设计模板 5：办公文档 7：免抠元素 9：gif）\r\n\r\n    - num（int）：人数（4：全部）\r\n\r\n    - sex（int）：性别（0：全部 1：男 2：女）\r\n\r\n    - race（int）：人种（0：全部 1：黄色 2：白色 3：黑色 4：棕色）\r\n\r\n    - page（int）：页码\r\n\r\n    - size（int）：每页显示数量\r\n\r\n输出：\r\n\r\n    - code (int): 状态码\r\n\r\n    - msg (string): 错误信息\r\n\r\n    - data (array): 搜索结果\r\n\r\n        - title (string): 图片标题\r\n\r\n        - pic_type (int): 图片类型\r\n\r\n        - extension_name (string): 图片格式\r\n\r\n        - detail_preview_src (string): 图片地址\r\n\r\n        - href (string): 图片链接\r\n\r\n    - count (int): 总条数，用于分页\r\n\r\n#### 最容易被唤起的 Prompt 示例\r\n\r\n\"搜索自然风景图片\"、\"查找商务人物照片\"、\"搜索创意插画\"\r\n\r\n### Tool2: 视频搜索\r\n\r\n#### 详细描述\r\n\r\n提供视频资源的智能搜索服务，支持按类别、分辨率、比例等条件筛选，帮助用户快速找到合适的视频素材。\r\n\r\n#### 调试所需的输入参数:\r\n\r\n输入：\r\n\r\n    - kw（string）：搜索关键词\r\n\r\n    - order（int）：排序方式（1：推荐, 2：最新）\r\n\r\n    - cate（int）：视频类别（0：全部 18：实拍 98：AE模板 227：背景视频 338：pr模板 351：会声会影 363：视频元素 449：edius 460：视频海报）\r\n\r\n    - video_rate（int）：视频分辨率（0：全部 1：720p 2：1080p 3：4k 4：8k）\r\n\r\n    - video_scale（int）：视频比例（0-所有 1-2:1 2-16:9 3-3:2 4-4:3 5-1:1 6-3:4 7-2:3 8-9:16 9-1:2 10-2.39:1 255-其它）\r\n\r\n    - page（int）：页码\r\n\r\n    - size（int）：每页显示数量\r\n\r\n输出：\r\n\r\n    - code (int): 状态码\r\n\r\n    - msg (string): 错误信息\r\n\r\n    - data (array): 搜索结果\r\n\r\n        - title (string): 视频标题\r\n\r\n        - cate (int): 视频类型\r\n\r\n        - extension_name (string): 视频格式\r\n\r\n        - detail_preview_src (string): 视频地址\r\n\r\n        - href (string): 视频链接\r\n\r\n    - count (int): 总条数，用于分页\r\n\r\n#### 最容易被唤起的 Prompt 示例\r\n\r\n\"搜索4K风景视频\"、\"查找16:9比例的视频素材\"、\"搜索AE模板\"\r\n\r\n### Tool3: 音乐搜索\r\n\r\n#### 详细描述\r\n\r\n提供音乐资源的智能搜索服务，支持按时长等条件筛选，帮助用户找到合适的音乐素材。\r\n\r\n#### 调试所需的输入参数:\r\n\r\n输入：\r\n\r\n    - kw（string）：搜索关键词\r\n\r\n    - order（int）：排序方式（1：推荐, 2：最新）\r\n\r\n    - duration（int）：时长（0：全部 1：30秒以下 2：30-60s 3：60s-2m 4：2-3m 5：3m及以上）\r\n\r\n    - page（int）：页码\r\n\r\n    - size（int）：每页显示数量\r\n\r\n输出：\r\n\r\n    - code (int): 状态码\r\n\r\n    - msg (string): 错误信息\r\n\r\n    - data (array): 搜索结果\r\n\r\n        - title (string): 音乐标题\r\n\r\n        - cover (int): 音乐封面\r\n\r\n        - detail_preview_src (string): 音乐地址\r\n\r\n        - href (string): 音乐链接\r\n\r\n    - count (int): 总条数，用于分页\r\n\r\n#### 最容易被唤起的 Prompt 示例\r\n\r\n\"搜索背景音乐\"、\"查找30秒以内的音效\"、\"搜索2分钟以上的配乐\"\r\n\r\n## 可适配平台\r\n\r\n可以使用 cline, cursor, claude desktop 或支持MCP server调用的的其他终端\r\n\r\n## 服务开通链接\r\n\r\n[待补充]\r\n\r\n## 鉴权方式\r\n\r\nAPI Key 认证\r\n\r\n- 获取方式：通过[摄图网](https://699pic.com/about/contact.html)申请\r\n\r\n- 使用方式：在请求头中添加 `X-API-KEY` 和 `X-API-TOKEN`\r\n\r\n## 安装部署\r\n\r\n### 系统依赖\r\n\r\n- 安装 Python 3.12 或者更高版本\r\n- 安装 uv\r\n  - 如果是linux系统\r\n\r\n    ```bash\r\n    curl -LsSf https://astral.sh/uv/install.sh | sh\r\n    ```\r\n  - 如果是window系统\r\n\r\n    ```powershell\r\n    powershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\r\n    ```\r\n- 同步依赖项并更uv.lock:\r\n\r\n  ```bash\r\n  uv sync\r\n  ```\r\n- 构建cmp server:\r\n\r\n  ```bash\r\n  uv build\r\n  ```\r\n\r\n### 使用 Claude Desktop\r\n\r\nOn MacOS: `~/Library/Application\\ Support/Claude/claude_desktop_config.json`\r\n\r\nOn Windows: `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n\r\nserver configuration\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mongo_mcp_server\": {\r\n      \"disabled\": false,\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/<path to mcp-servers>/mcp-server/\",\r\n        \"run\",\r\n        \"main.py\"\r\n      ],\r\n      \"env\": {\r\n        \"API_KEY\": \"your-access-key-id\",\r\n        \"API_SECRET\": \"your-access-key-secret\"\r\n      },\r\n      \"transportType\": \"stdio\"\r\n    }\r\n  }\r\n}\r\n\r\n```\r\n\r\n## License\r\n\r\n   MIT License\r\n",
+ "config": {
+  "mongo_mcp_server": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/<path to mcp-servers>/mcp-server/",
+    "run",
+    "main.py"
+   ],
+   "env": {
+    "API_KEY": "your-access-key-id",
+    "API_SECRET": "your-access-key-secret"
+   }
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "knowledge-graph",
+ "kind": "skill",
+ "name": "knowledge-graph",
+ "fingerprint_md5": "3e2117b76fd2b6b089e27c083deb0ec7",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Knowledge Graph (file-based)\r\n\r\nUse the bundled Python script 迁移到 safely 更新 `life/areas/**`.\r\n\r\n## 命令\r\n\r\n添加 a new fact:\r\n```bash\r\npython3 skills/knowledge-graph/scripts/kg.py add \\\r\n  --entity people/safa \\\r\n  --category status \\\r\n  --fact \"Runs Clawdbot on a Raspberry Pi\" \\\r\n  --source conversation\r\n```\r\n\r\nSupersede an old fact (mark old as superseded + 创建 new fact):\r\n```bash\r\npython3 skills/knowledge-graph/scripts/kg.py supersede \\\r\n  --entity people/safa \\\r\n  --old safa-002 \\\r\n  --category status \\\r\n  --fact \"Moved Clawdbot from Pi to a Mac mini\"\r\n```\r\n\r\nRegenerate an entity 摘要 from active facts:\r\n```bash\r\npython3 skills/knowledge-graph/scripts/kg.py summarize --entity people/safa\r\n```\r\n\r\n## 注意\r\n- Entities live under: `life/areas/<kind>/<slug>/`\r\n- Facts live in `items.json` (array). Summaries live in `s`s`mmary.md`\r\n- IDs auto-increment per entity: `<slug>-001`, `<`<`lug>-002`...\r\n- Never 删除 facts; supersede them.",
+ "config": {}
+}

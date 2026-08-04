@@ -1,0 +1,26 @@
+{
+ "id": "1266",
+ "kind": "mcp",
+ "name": "sales-analytics",
+ "fingerprint_md5": "a2d8dfcaca911c0977a1167ab9d2eabd",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "销售分析MCP服务器\r\n\r\n用于通过具有可插拔数据库连接器的模型上下文协议查询销售数据的工具（Rancher、PostgreSQL、Azure SQL或Mock）。\r\n\r\n设置\r\n\r\n1. 创建并激活virtualenv（可选）\r\n1. 安装deps：\r\n\r\n```bash\r\npip install -r requirements.txt\r\n```\r\n\r\n3. 复制env模板并配置：\r\n\r\n```bash\r\ncopy .env.example .env\r\n```\r\n\r\n环境\r\n\r\n- DB_TYPE：数据块、postgres、azure、mock之一（默认值：mock）\r\n- DB_CONN_STR:所选数据库的SQLAlchemy连接字符串（模拟不需要）\r\n\r\n连接字符串示例\r\n\r\n- Connection:数据块+connector://token:@/.\r\n- PostgreSQL：PostgreSQL+psycopg2://用户：password@host：5432/dbname\r\n- Azure SQL：mssql+pyodbc://USER:PASSWORD@服务器、数据库、windows网络：1433/DB？驱动程序=ODBC+驱动程序+18+for+SQL+服务器和加密=是&信任服务器证书=否\r\n\r\n跑\r\n\r\n```bash\r\npython main.py\r\n```\r\n\r\n码头工人\r\n\r\n```bash\r\ndocker build -t sales-mcp .\r\ndocker run --rm -e DB_TYPE=mock sales-mcp\r\n```\r\n\r\n工具\r\n\r\n- best_sellers_by_region（地区：str）\r\n- top_products（限制：int=5）\r\n- sales_by-date（日期：str）\r\n\r\n克劳德桌面（本地连接）\r\n\r\n1. 构建Docker镜像（一次）：\r\n\r\n```bash\r\ndocker build -t sales-mcp .\r\n```\r\n\r\n2. 在Windows上，在以下位置创建/编辑Claude Desktop配置文件：\r\n   `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n1. 添加此配置以在Docker中运行MCP：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"sales-analytics\": {\r\n            \"command\": \"docker\",\r\n            \"args\": [\r\n                \"run\", \"--rm\", \"-i\",\r\n                \"-e\", \"DB_TYPE=mock\",\r\n                \"sales-mcp\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n4. 保存文件并重新启动Claude Desktop。\r\n\r\n注意：如果您想使用除以下连接器之外的连接器 `mock`，set `DB_TYPE` 相应地，如果需要，添加 `-e DB_CONN_STR=...` 遵循本README的“环境”部分。\r\n",
+ "config": {
+  "sales-analytics": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "-e",
+    "DB_TYPE=mock",
+    "sales-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

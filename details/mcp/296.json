@@ -1,0 +1,24 @@
+{
+ "id": "296",
+ "kind": "mcp",
+ "name": "mcpemulatorcontroller",
+ "fingerprint_md5": "a03199e94208c67a7b0b199e986d18a8",
+ "download_count": 0,
+ "category": "移动端自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 🤖 MCP仿真器控制器\r\n\r\n这是一个研究MCP服务器使用的项目。此MCP Server项目可用于控制Emulator，例如打开应用程序、关闭应用程序、捕获屏幕截图、按屏幕、拖动屏幕。\r\n\r\n## ✅ 特性\r\n\r\n- 从MumuEmulator或ADB获取连接的设备列表\r\n- 重新加载ADB服务器\r\n- 打开TCP端口\r\n- 从设备获取所有包名称\r\n- 从包名称打开应用程序\r\n- 从包名称停止应用程序\r\n- 点击带有坐标的设备\r\n- 使用坐标在设备上滑动\r\n- 设备屏幕截图\r\n\r\n## 📷 演示视频\r\n\r\nhttps://github.com/user-attachments/assets/a9d62f72-ae06-4887-ac71-acda6c31e1de\r\n\r\n## 📋 需求\r\n\r\n- 紫外线(https://github.com/astral-sh/uv)\r\n\r\n## 📦 安装\r\n\r\n```bash\r\nuv pip install -r pyproject.toml\r\n```\r\n\r\n## ⚙️ MCP客户端config.json（Claude）\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"MCPEmulatorController\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"path/to/your/project/src\",\r\n                \"run\",\r\n                \"main.py\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 与…和解🤍 作者：泽蒙努\r\n",
+ "config": {
+  "mcpemulatorcontroller": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "path/to/your/project/src",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

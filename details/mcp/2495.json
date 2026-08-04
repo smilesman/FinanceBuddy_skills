@@ -1,0 +1,18 @@
+{
+ "id": "2495",
+ "kind": "mcp",
+ "name": "deep-search",
+ "fingerprint_md5": "24a4d3c9ae5e46e252e27bac78807374",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 深度搜索MCP服务器\r\n\r\n生产准备就绪 **模型上下文协议（MCP）** 服务器提供全面的深度搜索功能，包括网络搜索、内容提取和人工智能驱动的研究。\r\n\r\n\r\n## 特性\r\n\r\n- **网页搜索** -在网上搜索任何主题，并获得全面的结果\r\n- **内容提取** -从任何URL提取干净、可读的内容\r\n- **深入研究** -多源研究，包括总结和关键发现\r\n- **新闻搜索** -查找任何主题的最新新闻文章\r\n- **学术搜索** -发现学术论文和研究内容\r\n\r\n## 快速开始\r\n\r\n### 连接到您的AI助手\r\n\r\n将此配置添加到您的MCP客户端（例如Cursor、Claude Desktop）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"deep-search\": {\r\n      \"url\": \"https://deep-search-mcp.vercel.app/api/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 对于光标\r\n\r\n添加到 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"deep-search\": {\r\n      \"url\": \"https://deep-search-mcp.vercel.app/api/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n|工具|说明|参数|\r\n|------|-------------|------------|\r\n| `web_search` |在网上搜索信息| `query` （必填）， `maxResults` （可选，1-20）|\r\n| `extract_content` |从URL提取内容| `url` （必填）|\r\n| `deep_research` |综合多源研究| `query` （必填）， `depth` （可选，1-5）|\r\n| `news_search` |搜索新闻文章| `query` （必填）， `maxResults` （可选，1-20）|\r\n| `academic_search` |搜索学术/研究内容| `query` （必填）， `maxResults` （可选，1-20）|\r\n\r\n## 自我寄宿\r\n\r\n### 先决条件\r\n\r\n- Node.js 20+\r\n- npm、yarn或pnpm\r\n\r\n### 安装\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/LikhonSheikh404/deep-search-mcp.git\r\ncd deep-search-mcp\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Copy environment file\r\ncp .env.example .env\r\n\r\n# Start development server\r\nnpm run dev\r\n```\r\n\r\n### 部署到Vercel\r\n\r\n1. 分叉此存储库\r\n1. 导入到Vercel\r\n1. 部署！\r\n\r\n或者使用CLI：\r\n\r\n```bash\r\n# Install Vercel CLI\r\nnpm i -g vercel\r\n\r\n# Deploy\r\nvercel\r\n```\r\n\r\n## MCP检验员测试\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector@latest http://localhost:3000\r\n```\r\n\r\n然后打开http://127.0.0.1:6274测试你的工具。\r\n\r\n## API终点\r\n\r\n|端点|描述|\r\n|----------|-------------|\r\n| `GET/POST /api/mcp` |MCP服务器端点|\r\n| `GET /.well-known/oauth-protected-resource` |OAuth元数据（用于经过身份验证的设置）|\r\n\r\n## 技术栈\r\n\r\n- **框架**：Next.js 15（应用路由器）\r\n- **语言**：TypeScript\r\n- **MCP-SDK**：mcp处理程序\r\n- **部署**：Vercel（无服务器+流体计算）\r\n- **运输**：流式HTTP（高效，无持久连接）\r\n\r\n## 建筑\r\n\r\n```\r\nsrc/\r\n├── app/\r\n│   ├── api/\r\n│   │   └── [transport]/\r\n│   │       └── route.ts      # MCP server endpoint\r\n│   ├── .well-known/\r\n│   │   └── oauth-protected-resource/\r\n│   │       └── route.ts      # OAuth metadata\r\n│   ├── page.tsx              # Landing page\r\n│   └── layout.tsx            # Root layout\r\n├── lib/\r\n│   └── search-engine.ts      # Search functionality\r\n└── types/\r\n    └── mcp.ts                # Type definitions\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|描述|必填|\r\n|----------|-------------|----------|\r\n| `NEXT_PUBLIC_APP_URL` |部署的公共URL |否|\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 许可证\r\n\r\nMIT许可证-您可以在自己的项目中自由使用。\r\n\r\n## 作者\r\n\r\n由Matrix Agent构建\r\n\r\n______________________________________________________________________\r\n\r\n**资源：**\r\n\r\n- [MCP文件](https://modelcontextprotocol.io)\r\n- [Vercel MCP指南](https://vercel.com/docs/mcp)\r\n- [Next.js文档](https://nextjs.org/docs)\r\n",
+ "config": {
+  "deep-search": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://deep-search-mcp.vercel.app/api/mcp"
+  }
+ }
+}

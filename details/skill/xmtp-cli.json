@@ -1,0 +1,12 @@
+{
+ "id": "xmtp-cli",
+ "kind": "skill",
+ "name": "xmtp-cli",
+ "fingerprint_md5": "ac23be562ef2bfb55c19d84ac330a1f6",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "# XMTP CLI\r\n\r\n使用 `xmtp` 命令从命令行测试、调试和与 XMTP 对话、群组和消息交互。此技能是入口点；使用下面的子技能获取特定 CLI 任务。\r\n\r\n## 何时应用\r\n\r\n- 从命令行测试或调试 XMTP\r\n- 发送消息或创建和管理群组\r\n- 列出或查找对话、成员和消息\r\n- 同步对话和消息\r\n- 管理群组权限\r\n- 演示内容类型（文本、markdown、附件、交易、深度链接、迷你应用）\r\n\r\n## 子技能\r\n\r\n| 子技能 | 使用场景 |\r\n|-----------|----------|\r\n| **setup** | 初始化 CLI 和配置环境（init、环境变量） |\r\n| **groups** | 创建 DM 或群组、更新群组元数据 |\r\n| **send** | 向地址或群组发送消息 |\r\n| **list** | 列出对话、成员、消息；按地址或收件箱查找 |\r\n| **debug** | 获取信息、解析地址、检查收件箱 |\r\n| **sync** | 同步对话或同步所有 |\r\n| **permissions** | 列出/信息群组权限、更新权限 |\r\n| **content** | 演示文本、markdown、附件、交易、深度链接、迷你应用 |\r\n| **debugging** | 启用 CLI 调试日志记录（XMTP_FORCE_DEBUG 环境变量） |\r\n\r\n## 如何使用\r\n\r\n1. 选择与任务匹配的子技能（例如发送消息 → **send**）。\r\n2. 阅读该子技能的 `SKILL.md` 及其 `rules/` 以获取分步指南。\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g @xmtp/cli\r\n# 或\r\npnpm add -g @xmtp/cli\r\n# 或\r\nyarn global add @xmtp/cli\r\n```\r\n\r\n## 无需安装运行\r\n\r\n```bash\r\nnpx @xmtp/cli <command> <arguments>\r\n# 或 pnpx / yarn dlx\r\n```\r\n\r\n## 帮助\r\n\r\n```bash\r\nxmtp --help\r\nxmtp <command> --help\r\n```\r\n\r\n完整文档：[docs.xmtp.org](https://docs.xmtp.org)",
+ "config": {}
+}

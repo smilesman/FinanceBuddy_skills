@@ -1,0 +1,22 @@
+{
+ "id": "1312",
+ "kind": "mcp",
+ "name": "wormbase",
+ "fingerprint_md5": "9ee813ae27173c04e4be2b6f93c0bfee",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# WormBase MCP服务器\r\n\r\nMCP查询服务器 [WormBase](https://wormbase.org) -the *秀丽隐杆线虫* 线虫基因组数据库。\r\n\r\n## 安装\r\n\r\n### 克劳德桌面\r\n\r\n增添 `~/Library/Application Support/Claude/claude_desktop_config.json` （macOS）或 `%APPDATA%\\Claude\\claude_desktop_config.json` （Windows）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"wormbase\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@nuin/wormbase-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码（CLI）\r\n\r\n增添 `~/.claude/settings.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"wormbase\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@nuin/wormbase-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n添加到光标设置（设置>MCP服务器）：\r\n\r\n```json\r\n{\r\n  \"wormbase\": {\r\n    \"command\": \"npx\",\r\n    \"args\": [\"-y\", \"@nuin/wormbase-mcp\"]\r\n  }\r\n}\r\n```\r\n\r\n### 帆板运动\r\n\r\n增添 `~/.codeium/windsurf/mcp_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"wormbase\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@nuin/wormbase-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone https://github.com/WormBase/wormbase-mcp.git\r\ncd wormbase-mcp\r\nnpm install && npm run build\r\n```\r\n\r\n然后在配置中使用本地路径：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"wormbase\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/wormbase-mcp/dist/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n自然地提问：\r\n\r\n- “daf-2是干什么的？”\r\n- “寻找与长寿有关的基因”\r\n- “获取unc-13的表型”\r\n- “查找lin-14的交互”\r\n- “aap-1的同源物是什么？”\r\n- “给我CE29083蛋白的序列”\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search` |搜索基因、蛋白质、表型、菌株|\r\n| `get_gene` |基因详细信息（接受以下名称 `daf-2` 或ID，如 `WBGene00000898`) |\r\n| `get_protein` |蛋白质序列和结构域|\r\n| `get_phenotype` |表型信息和相关基因|\r\n| `get_disease` |人类疾病模型|\r\n| `get_strain` |实验室菌株|\r\n| `get_variation` |等位基因和突变|\r\n| `get_interactions` |遗传和物理相互作用|\r\n| `get_expression` |表达模式|\r\n| `get_ontology` |GO注释|\r\n| `get_paper` |出版物详细信息|\r\n\r\n## 数据源\r\n\r\n- **搜索和名称解析**: [WormMine](https://wormmine.alliancegenome.org/wormmine)\r\n- **详细数据**: [WormBase REST API](http://rest.wormbase.org)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "wormbase": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@nuin/wormbase-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

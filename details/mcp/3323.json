@@ -1,0 +1,18 @@
+{
+ "id": "3323",
+ "kind": "mcp",
+ "name": "apple-rag-mcp",
+ "fingerprint_md5": "2339421ff29c06eaa6e11bd5595a611f",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "### 苹果公司记录了你的人工智能真正应得的MCP。\r\n\r\n*苹果文档。WWDC26转录本。语义+关键字+混合搜索。一个干净的工具。*\r\n\r\n[https://apple-rag.com](https://apple-rag.com)\r\n\r\n\r\n[🌐 网站](https://apple-rag.com) • [📊 仪表盘](https://apple-rag.com/overview)\r\n\r\n\r\n**英语** | [中文](./README.zh-CN.md)\r\n\r\n\r\n______________________________________________________________________\r\n\r\n## 不仅仅是另一个文档工具\r\n\r\n其他人会给你关键字搜索。我们为您提供这一点，再加上语义理解，以及智能结合两者的人工智能混合搜索。您需要的每种搜索模式，一起工作。\r\n\r\n**最小占地面积。最大信号。** 我们的MCP工具旨在精简——没有臃肿的响应，没有浪费的令牌，没有干扰代理上下文的噪音。只有重要的信息。\r\n\r\n______________________________________________________________________\r\n\r\n## 几秒钟后开始\r\n\r\n**单击一下：**\r\n\r\n\r\n单击上面的按钮，您的编辑器将在几秒钟内自动为您配置所有内容。\r\n\r\n### 选项2：手动设置其他MCP客户端\r\n\r\n**JSON配置（复制和粘贴）：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"apple-rag-mcp\": {\r\n      \"url\": \"https://mcp.apple-rag.com\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**手动配置参数：**\r\n\r\n- **MCP类型：** `Streamable HTTP`\r\n- **网址：** `https://mcp.apple-rag.com`\r\n- **身份验证：** `Optional` （MCP令牌用于更高的限额）\r\n- **MCP令牌：** 获取你的 [apple-rag.com](https://apple-rag.com) 增加配额\r\n\r\n**支持的客户端：** Cursor、Claude Desktop、Cline和所有MCP兼容工具。\r\n\r\n> **注：** 无需MCP令牌即可启动！您无需任何身份验证即可获得免费查询。稍后添加MCP令牌以获得更高的使用限制。\r\n\r\n## 🌟 为什么开发者喜欢苹果RAG MCP\r\n\r\n<table>\r\n<tr>\r\n<td width=\"50%\">\r\n\r\n### ⚡ **快速可靠**\r\n\r\n通过我们优化的搜索基础设施获得快速响应。不再通过文档进行搜索。\r\n\r\n### 🎯 **人工智能驱动的混合搜索**\r\n\r\n先进的搜索技术将RAG语义搜索、关键字搜索和混合搜索与向量相似性和技术术语匹配相结合，从苹果的文档中提供准确、上下文相关的答案。\r\n\r\n### 🔒 **始终安全**\r\n\r\nMCP身份验证确保您的AI代理以企业级安全性进行可信访问。\r\n\r\n</td>\r\n<td width=\"50%\">\r\n\r\n### 📝 **代码示例**\r\n\r\n获取Swift、Objective-C和SwiftUI中的实际代码示例以及文档参考。\r\n\r\n### 🔄 **实时更新**\r\n\r\n我们的文档索引会不断更新WWDC26、Xcode 27测试版和最新的Apple开发人员资源。\r\n\r\n### 🆓 **完全免费**\r\n\r\n立即开始，不需要MCP令牌。获取MCP令牌以获得更高的使用限制-所有这些都在 [apple-rag.com](https://apple-rag.com).\r\n\r\n</td>\r\n</tr>\r\n</table>\r\n\r\n## 🎯 特性\r\n\r\n- **🔍 RAG的语义搜索** -基于语义理解的向量相似度智能检索\r\n- **🔎 关键词搜索** -API名称和特定术语的精确技术术语匹配\r\n- **🎯 混合搜索** -将语义和关键字搜索与AI重新排序相结合，以获得最佳结果\r\n- **📚 全覆盖** -iOS 27、iPadOS 27、macOS 27、watchOS 27、tvOS 27和visionOS 27文档\r\n- **🎬 WWDC26视频** -苹果开发者视频和WWDC26会议的完整记录\r\n- **⚡ 快速响应** -针对所有内容类型的速度进行了优化\r\n- **🚀 高性能** -多实例集群部署，实现最大吞吐量\r\n- **🔄 始终为最新** -与Apple的最新文档、WWDC26会话和Xcode 27测试版参考同步\r\n- **🛡️ 安全与私密** -您的查询保密\r\n- **🌐 通用MCP** -适用于任何MCP兼容客户端\r\n\r\n## 🧠 代理技能\r\n\r\n我们提供 [代理技能](skills/apple-dev-docs/SKILL.md) 它教AI代理如何有效地使用这个MCP服务器，包括查询最佳实践、搜索然后获取工作流、结果完整性处理和速率限制指导。\r\n\r\n**安装：** 复制 `skills/apple-dev-docs/` 代理技能位置的目录：\r\n\r\n|平台|目的地|\r\n|----------|-------------|\r\n|光标| `~/.cursor/skills/apple-dev-docs/` |\r\n|食品法典委员会| `~/.codex/skills/apple-dev-docs/` |\r\n\r\n安装后，您的AI代理将自动知道何时以及如何使用Apple RAG MCP解决Apple开发问题。\r\n\r\n## 📄 许可证\r\n\r\n该项目根据 [MIT许可证](LICENSE).\r\n\r\n\r\n______________________________________________________________________\r\n\r\n**更好的文档。更好的背景。更好的代码。**\r\n\r\n[开始使用→](https://apple-rag.com)\r\n",
+ "config": {
+  "apple-rag-mcp": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.apple-rag.com"
+  }
+ }
+}

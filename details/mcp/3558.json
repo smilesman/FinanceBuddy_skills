@@ -1,0 +1,23 @@
+{
+ "id": "3558",
+ "kind": "mcp",
+ "name": "paper-searcher",
+ "fingerprint_md5": "11a9cf80ee37f288a100568c38ae65cc",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# 纸张搜索器MCP\r\n\r\n用于从DBLP搜索和下载学术论文的模型上下文协议（MCP）服务器。此MCP服务器可供任何支持MCP协议的LLM（Claude、GPT等）使用，以帮助研究人员查找和下载学术论文。\r\n\r\n## 特性\r\n\r\n- **scrape_dblp会议**：从DBLP会议页面中抓取论文并导出到markdown（带有可选作者信息）\r\n- **download_paper**：使用DOI下载纸质PDF（支持IEEE和ACM）\r\n\r\n## 安装\r\n\r\n### 快速安装（推荐）\r\n\r\n使用uvx直接从GitHub安装：\r\n\r\n```bash\r\nuvx --from git+https://github.com/Xyfuture/paper-searcher-mcp paper-searcher-mcp\r\n```\r\n\r\n### 开发安装\r\n\r\n克隆并在本地安装：\r\n\r\n```bash\r\ngit clone https://github.com/Xyfuture/paper-searcher-mcp.git\r\ncd paper-searcher-mcp\r\nuv sync\r\n```\r\n\r\n### 浏览器安装（用于ACM下载）\r\n\r\nACM论文下载需要无头浏览器来绕过Cloudflare保护。安装Chromium：\r\n\r\n```bash\r\nuv run playwright install chromium\r\n```\r\n\r\n**注：** 这在使用uvx时会自动处理，但对于本地开发是必需的。\r\n\r\n### 更新中\r\n\r\n要更新到最新版本，只需使用uvx重新安装：\r\n\r\n```bash\r\nuvx --from git+https://github.com/Xyfuture/paper-searcher-mcp paper-searcher-mcp\r\n```\r\n\r\nuvx将自动从GitHub获取并使用最新版本。\r\n\r\n## 用法\r\n\r\n### 作为MCP服务器\r\n\r\n此MCP服务器可以与支持模型上下文协议的任何LLM客户端集成。\r\n\r\n#### 适用于克劳德桌面\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n**选项1：使用uvx（推荐-自动更新）**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"paper-searcher\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--from\", \"git+https://github.com/Xyfuture/paper-searcher-mcp\", \"paper-searcher-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**选项2：使用本地安装**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"paper-searcher\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"fastmcp\", \"run\", \"main.py\"],\r\n      \"cwd\": \"/path/to/paper-searcher-mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 对于其他MCP客户端\r\n\r\n**使用uvx：**\r\n\r\n```bash\r\nuvx --from git+https://github.com/Xyfuture/paper-searcher-mcp paper-searcher-mcp\r\n```\r\n\r\n**使用本地安装：**\r\n\r\n```bash\r\nuv run fastmcp run main.py\r\n```\r\n\r\n### 发展模式\r\n\r\n在开发模式下运行MCP服务器：\r\n\r\n```bash\r\nuv run fastmcp dev main.py\r\n```\r\n\r\n## MCP工具\r\n\r\n### scrape_dblp会议\r\n\r\n从DBLP会议页面中删除所有论文并保存到markdown。\r\n\r\n**参数：**\r\n\r\n- `url` （str）：DBLP会议URL\r\n- `output_file` （str，可选）：输出markdown文件路径（默认：“papers.md”）\r\n- `include_authors` （bool，可选）：是否包含作者信息（默认值：False）\r\n\r\n**退货：** 带有纸张计数的状态消息\r\n\r\n**例子：**\r\n\r\n```python\r\n# Without authors (default)\r\nscrape_dblp_conference(\"https://dblp.org/db/conf/dac/dac2025.html\", \"dac2025.md\")\r\n\r\n# With authors\r\nscrape_dblp_conference(\"https://dblp.org/db/conf/dac/dac2025.html\", \"dac2025.md\", include_authors=True)\r\n```\r\n\r\n### download_paper\r\n\r\n从DOI下载纸质PDF。支持IEEE和ACM论文直接下载。\r\n\r\n**参数：**\r\n\r\n- `doi` （str）：纸质DOI（有或没有https://doi.org/前缀）\r\n- `output_dir` （str，可选）：保存PDF的目录（默认：“下载”）\r\n\r\n**支持的发布者：**\r\n\r\n- **电气与电子工程师学会**：使用IEEE Xplore stampPDF API（无需验证即可工作）\r\n- **国际计算机学会**：使用无头浏览器绕过Cloudflare保护（大多数论文需要机构访问或订阅）\r\n- **其他**：尝试从出版商页面查找PDF链接\r\n\r\n**退货：** 带有文件路径或错误的状态消息\r\n\r\n**例子：**\r\n\r\n```python\r\n# Download IEEE paper\r\ndownload_paper(\"10.1109/DAC18074.2021.9586141\", \"downloads\")\r\n\r\n# Download ACM paper\r\ndownload_paper(\"10.1145/3489517.3530525\", \"downloads\")\r\n```\r\n\r\n## 备注\r\n\r\n- 所有下载都是在没有代理的情况下进行的，以确保与学术出版商网站的兼容性\r\n- 服务器自动处理不同的特定于发布者的下载方法\r\n- 在会议抓取中，作者信息是可选的，以便在不需要时减少输出大小\r\n\r\n### ACM下载限制\r\n\r\nACM论文通常需要机构访问或个人订阅。该工具使用无头浏览器绕过Cloudflare保护，但无法绕过访问限制。如果遇到403错误：\r\n\r\n1. **利用机构网络**：从您的大学/研究机构网络访问\r\n1. **检查替代来源**：许多论文都可以在arXiv或作者的个人网站上找到\r\n1. **手动下载**：直接通过您所在机构的代理访问纸质页面\r\n\r\n如果您通过网络拥有正确的访问凭据，无头浏览器方法将成功工作。\r\n\r\n## 更新如何工作\r\n\r\n### 适用于uvx用户（推荐）\r\n\r\n当使用带有GitHub URL的uvx时，更新会自动处理：\r\n\r\n- **首次运行**：uvx从GitHub下载并缓存最新版本\r\n- **后续运行**：uvx检查更新，如果是最新版本，则使用缓存的版本\r\n- **手动更新**：只需重新启动MCP客户端（例如Claude Desktop）-uvx将在下次启动时获取最新版本\r\n- **强制更新**：再次手动运行uvx命令以强制重新下载\r\n\r\n**无需手动更新步骤！** 只需重新启动LLM客户端即可获取最新功能。\r\n\r\n### 对于本地安装用户\r\n\r\n如果您在本地克隆了存储库，请使用以下内容进行更新：\r\n\r\n```bash\r\ncd /path/to/paper-searcher-mcp\r\ngit pull\r\nuv sync\r\n```\r\n\r\n然后重新启动MCP客户端以使用更新的版本。\r\n",
+ "config": {
+  "paper-searcher": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/Xyfuture/paper-searcher-mcp",
+    "paper-searcher-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

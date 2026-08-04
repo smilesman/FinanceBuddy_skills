@@ -1,0 +1,22 @@
+{
+ "id": "1657",
+ "kind": "mcp",
+ "name": "openrpc",
+ "fingerprint_md5": "d631b383fcc56e3f1d4f9213ad4af45f",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# OpenRPC MCP服务器\r\n\r\n通过以下方式提供JSON-RPC功能的模型上下文协议（MCP）服务器 [OpenRPC](https://open-rpc.org).\r\n\r\nhttps://github.com/user-attachments/assets/3447175a-f921-4ded-8250-b611edb2fb67\r\n\r\n## 特性\r\n\r\n### 工具\r\n\r\n- `rpc_call` -调用任意JSON-RPC方法\r\n  - 指定服务器URL、方法名称和参数\r\n  - 返回JSON格式的结果\r\n- `rpc_discover` -发现可用的JSON-RPC方法\r\n  - 使用OpenRPC `rpc.discover` 规格\r\n  - 列出给定服务器上的所有方法\r\n\r\n## 发展\r\n\r\n安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n对于自动重建的开发：\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n## 安装\r\n\r\n要与Claude Desktop一起使用，请添加服务器配置：\r\n\r\n在MacOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"openrpc\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"openrpc-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 调试\r\n\r\n由于MCP服务器通过stdio进行通信，调试可能具有挑战性。我们建议使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector):\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n检查器将提供一个URL，用于访问浏览器中的调试工具。\r\n",
+ "config": {
+  "openrpc": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "openrpc-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

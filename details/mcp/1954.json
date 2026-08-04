@@ -1,0 +1,24 @@
+{
+ "id": "1954",
+ "kind": "mcp",
+ "name": "hubble-tool",
+ "fingerprint_md5": "1ba4a168198415451d9c141ef252923d",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# 哈勃人工智能为索拉纳\r\n\r\n哈勃是一个基于人工智能的分析工具，通过自然语言查询为Solana区块链交易提供数据分析和可视化。\r\n\r\n## 概述\r\n\r\n哈勃使您能够通过一个简单的界面查询区块链数据并生成可视化结果。它与人工智能助手集成，提供实时区块链见解，并创建该数据的视觉表示。\r\n\r\n## 安装\r\n\r\n将哈勃望远镜添加到您的配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"hubble-tool\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"hubble-mcp-tool\"],\r\n      \"env\": {\r\n        \"HUBBLE_API_KEY\": \"your_api_key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 特性\r\n\r\n### 数据查询\r\n\r\n通过自然语言查询访问区块链数据：\r\n\r\n- 查看最近的交易\r\n- 查看当前价格\r\n- 识别顶级代币持有者\r\n- 分析交易模式\r\n\r\n### 数据可视化\r\n\r\n生成图表以可视化区块链数据：\r\n\r\n- 交易量趋势\r\n- 价格随时间变化\r\n- 分布分析\r\n- 基于您的查询的自定义可视化\r\n\r\n## 使用示例\r\n\r\n### 基本查询\r\n\r\n```\r\n\"Show me the latest blockchain transactions\"\r\n\"What is the current token price?\"\r\n\"Who are the top token holders?\"\r\n```\r\n\r\n### 可视化查询\r\n\r\n```\r\n\"Generate a chart of transaction volume for the last week\"\r\n\"Create a line chart of price trends for the past month\"\r\n\"Show a pie chart of top transactions by value\"\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "hubble-tool": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "hubble-mcp-tool"
+   ],
+   "env": {
+    "HUBBLE_API_KEY": "your_api_key"
+   }
+  }
+ }
+}

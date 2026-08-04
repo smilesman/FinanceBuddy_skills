@@ -1,0 +1,24 @@
+{
+ "id": "1599",
+ "kind": "mcp",
+ "name": "mcp-wait",
+ "fingerprint_md5": "64688d6d2357aaa969fa1555bdfd59a0",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP-等待\r\n\r\n[](https://smithery.ai/server/@automation-ai-labs/mcp-wait)\r\n\r\n一个简单的MCP服务器，提供等待功能以暂停执行，直到其他任务完成。\r\n\r\n## 特点/特性\r\n\r\n- 等待指定的秒数\r\n- 等待期间的进度报告\r\n- 通过命令行界面（CLI）或作为支持服务器发送事件（SSE）的HTTP服务器轻松使用\r\n\r\n## 与Claude Desktop/Cursor/Chatwise的集成\r\n\r\n要使用Claude Desktop，请在您的配置中添加以下内容：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-wait\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@automation-ai-labs/mcp-wait\"\r\n      ],\r\n      \"env\": {\r\n        \"TRANSPORT_TYPE\": \"stdio\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 安装\r\n\r\n### 通过Smithery进行安装\r\n\r\n通过以下方式自动安装Wait for Claude Desktop： [Smithery（这个单词在英语中并不常见，可能是Smith的某种变体或特定语境下的用词，但直接翻译可能不太贴切，因为“Smithery”并非一个标准英文单词。如果尝试根据“Smith”来翻译，可以理解为与“Smith”相关的某种事物或概念，但具体含义需结合上下文。在这里，若仅作为单词翻译，可勉强译为“史密斯工艺”或“史密斯制造”，但需注意这并非一个标准或通用的翻译。）](https://smithery.ai/server/@automation-ai-labs/mcp-wait)：\r\n\r\n```bash\r\nnpx -y @smithery/cli install @automation-ai-labs/mcp-wait --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n## 使用方法/用法\r\n\r\n### CLI 测试\r\n\r\n直接使用 FastMCP CLI 测试服务器：\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n这将启动服务器，并允许您通过命令行界面（CLI）与其进行交互。\r\n\r\n### 使用MCP Inspector进行检查\r\n\r\n使用MCP Inspector网页界面检查服务器：\r\n\r\n```bash\r\nnpm run inspect\r\n```\r\n\r\n### 作为SSE服务器启动\r\n\r\n启动支持SSE（Server-Sent Events）的服务器，以便与其他应用程序集成：\r\n\r\n```bash\r\nTRANSPORT_TYPE=sse PORT=8080 npm start\r\n```\r\n\r\n## 等待工具\r\n\r\n服务器提供了一个简单的 `wait` 一个接受（某种输入或参数）的工具 `seconds` 参数：\r\n\r\n- `seconds`等待的秒数（0-30000）\r\n\r\n示例：\r\n\r\n```json\r\n{\r\n  \"seconds\": 5\r\n}\r\n```\r\n\r\n这将等待5秒钟，并在等待期间报告进度。\r\n",
+ "config": {
+  "mcp-wait": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@automation-ai-labs/mcp-wait"
+   ],
+   "env": {
+    "TRANSPORT_TYPE": "stdio"
+   }
+  }
+ }
+}

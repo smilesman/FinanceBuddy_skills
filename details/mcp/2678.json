@@ -1,0 +1,21 @@
+{
+ "id": "2678",
+ "kind": "mcp",
+ "name": "reddit",
+ "fingerprint_md5": "9d862ca1c528aaf134bc460563fe6f45",
+ "download_count": 0,
+ "category": "数据抓取",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp reddit\r\n\r\n用于抓取Reddit的MCP服务器- **不需要API密钥**.\r\n\r\n使用Reddit的公共RSS/Atom提要从子版块和用户资料中抓取帖子和评论。\r\n\r\n> \\[！重要\\]\r\n> **v0.4.0中发生了什么变化：** Reddit未经身份验证关闭 `.json` 2026年5月访问，\r\n> 这破坏了这个项目（以及其他所有无密钥的Reddit爬虫）。v0.4.0旋转到\r\n> Reddit仍然公开 `.rss` 喂养。API密钥仍然为零，但RSS公开的数据较少：\r\n> **没有分数、投票率、评论数、NSFW标志或评论线程。**\r\n> 这些字段已从数据模型中删除。评论数量持平，每篇帖子最多100条。\r\n\r\n## 特性\r\n\r\n- **没有API密钥** -使用公共RSS源，不需要Reddit API凭据\r\n- **帖子和评论** -标题、作者、时间戳、正文、平面评论体\r\n- **图像预览** -下载预览图像（无法通过RSS下载视频）\r\n- **本地持久性** -离线查询抓取的数据\r\n- **过滤** -按帖子类型和关键字\r\n\r\n## 安装\r\n\r\n```bash\r\npip install mcp-reddit\r\n```\r\n\r\n或者使用uvx：\r\n\r\n```bash\r\nuvx mcp-reddit\r\n```\r\n\r\n## 使用模式\r\n\r\n### 本地（stdio）-默认值\r\n\r\n对于本地MCP客户端，如Claude Desktop和Claude Code：\r\n\r\n```bash\r\nuvx mcp-reddit\r\n```\r\n\r\n### 远程（HTTP/SSE）\r\n\r\n对于通过URL连接的远程MCP客户端：\r\n\r\n```bash\r\nuvx mcp-reddit --http --port 8000\r\n```\r\n\r\n选项：\r\n\r\n- `--http` -以HTTP/SSE模式而不是stdio运行\r\n- `--host` -要绑定的主机（默认值：0.0.0.0）\r\n- `--port` -要监听的端口（默认值：8000，或 `PORT` 任何人）\r\n\r\n服务器公开：\r\n\r\n- `GET /sse` -MCP连接的SSE端点\r\n- `POST /messages/` -消息端点\r\n- `GET /health` -健康检查\r\n\r\n## 配置\r\n\r\n添加到您的克劳德桌面或克劳德代码设置：\r\n\r\n### 克劳德桌面(`~/Library/Application Support/Claude/claude_desktop_config.json`)\r\n\r\nClaude Desktop没有继承你的shell PATH，所以你需要完整的路径 `uvx`:\r\n\r\n```bash\r\n# Find your uvx path\r\nwhich uvx\r\n```\r\n\r\n然后在配置中使用完整路径：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"reddit\": {\r\n      \"command\": \"/Users/YOUR_USERNAME/.local/bin/uvx\",\r\n      \"args\": [\"mcp-reddit\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/Users/YOUR_USERNAME/.local/bin/uvx` 输出来自 `which uvx`.\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add reddit -- uvx mcp-reddit\r\n```\r\n\r\n或手动输入 `~/.claude.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"reddit\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-reddit\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n| ---------------------- | ------------------------------------------------------------ |\r\n| `scrape_subreddit` |从subreddit上抓取最新帖子|\r\n| `scrape_user` |从用户的个人资料中删除帖子|\r\n| `scrape_post` |通过URL获取特定帖子（支持图片下载）|\r\n| `get_posts` |使用筛选器查询已存储的帖子|\r\n| `get_comments` |查询已存储的评论|\r\n| `search_reddit` |搜索所有抓取的数据|\r\n| `list_scraped_sources` |列出所有被抓取的子版块/用户|\r\n\r\n> `get_top_posts` 在v0.4.0中被删除了-RSS提要没有得分可供排名。\r\n> 调用它会返回一个JSON错误，指向 `get_posts` （最新优先）或 `search_reddit`.\r\n\r\n## 示例用法\r\n\r\n```\r\n\"Scrape the latest 50 posts from r/LocalLLaMA\"\r\n\r\n\"Fetch this post and download the image: https://reddit.com/r/ClaudeAI/comments/abc123/title\"\r\n\r\n\"Search my scraped data for posts about 'fine-tuning'\"\r\n```\r\n\r\n## 数据存储\r\n\r\n数据存储在 `~/.mcp-reddit/data/` 默认情况下。\r\n\r\n用v0.4.0之前版本抓取的数据被迁移到新的（更窄的）模式\r\n在下一次抓取该subreddit/user的现有帖子和\r\n注释保持可查询性，原始文件保留为 `*.pre-rss.bak`.\r\n\r\n集 `MCP_REDDIT_DATA_DIR` 要自定义的环境变量：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"reddit\": {\r\n      \"command\": \"/Users/YOUR_USERNAME/.local/bin/uvx\",\r\n      \"args\": [\"mcp-reddit\"],\r\n      \"env\": {\r\n        \"MCP_REDDIT_DATA_DIR\": \"/path/to/your/data\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 积分\r\n\r\n建在上面 [reddit通用刮刀](https://github.com/ksanjeev284/reddit-universal-scraper)\r\n通过 [@ksanjeev284](https://github.com/ksanjeev284) -一个功能齐全的Reddit爬虫\r\n分析仪表板、REST API和插件系统。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "reddit": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-reddit"
+   ],
+   "env": {}
+  }
+ }
+}

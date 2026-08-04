@@ -1,0 +1,18 @@
+{
+ "id": "3140",
+ "kind": "mcp",
+ "name": "korea-weather",
+ "fingerprint_md5": "c316fb76edb53706c70a6940b42fe65e",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 韩国气象MCP服务器\r\n\r\n**“首尔天气怎么样？”** 如果问的话，就是告知实时天气的MCP服务器。\r\n\r\n## 我可以做这些。\r\n\r\n```\r\n👤 \"강남역 지금 날씨 어때?\"\r\n🤖 서울 강남역 현재 날씨\r\n   🌡️ 기온: 5°C (체감 2°C)\r\n   💧 습도: 45%\r\n   🌤️ 맑음\r\n\r\n👤 \"내일 부산 비 와?\"\r\n🤖 내일 부산은 오후부터 비 소식이 있어요. 우산 챙기세요!\r\n\r\n👤 \"이번 주말 제주도 날씨 좋을까?\"\r\n🤖 토요일은 맑고 포근하지만, 일요일은 흐리고 바람이 강할 예정이에요.\r\n```\r\n\r\n## 5分钟内安装\r\n\r\n### 1.发放API密钥\r\n\r\n| API |发件人|所需时间|\r\n|-----|--------|----------|\r\n气象厅 [公共数据门户](https://www.data.go.kr/data/15084084/openapi.do) |立即（自动批准）|\r\n|Kakao| [Kakao开发商](https://developers.kakao.com) |立即|\r\n\r\n### 2.安装和运行\r\n\r\n```bash\r\n# 1) 저장소 클론\r\ngit clone https://github.com/YOUR_USERNAME/mcp-server.git\r\ncd mcp-server\r\n\r\n# 2) 환경변수 설정\r\ncp .env.example .env\r\n# .env 파일 열어서 API 키 입력\r\n\r\n# 3) 설치 & 실행\r\nuv sync\r\nuv run python main.py\r\n```\r\n\r\n> 💡 `uv`如果没有： `curl -LsSf https://astral.sh/uv/install.sh | sh`\r\n\r\n### 3.连接Claude Desktop\r\n\r\n`~/Library/Application Support/Claude/claude_desktop_config.json` 编辑：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"korea-weather\": {\r\n      \"url\": \"http://127.0.0.1:8000/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\nClaude Desktop重启就结束了！\r\n\r\n## 交付工具\r\n\r\n|工具|说明|示例问题|\r\n|------|------|-----------|\r\n| `get_current_weather` 当前天气“现在首尔天气”\r\n| `get_hourly_forecast` 【时间预报】“今天下午下雨吗？”\r\n| `get_daily_forecast` 每日预报“本周天气”\r\n| `check_umbrella_needed` 是否需要雨伞？“明天要带雨伞吗？”\r\n| `get_weather_advice` 推荐活动“周末可以去爬山吗？”\r\n\r\n## 故障排除\r\n\r\n### 验证设置\r\n\r\n```bash\r\nuv run python -m src.weather.verify\r\n```\r\n\r\n所有项目都是的话就正常了。\r\n\r\n### 常见问题\r\n\r\n|症状|解决方案|\r\n|------|------|\r\n|“API密钥无效”| `.env` 检查文件的API密钥|\r\n|“Connection required”|验证服务器运行（`uv run python main.py`) |\r\n气象局403错误 [公共数据门户](https://www.data.go.kr)检查API批准状态|\r\n|找不到位置|输入更具体的地址（例如“首尔江南区”）|\r\n\r\n## 开发\r\n\r\n```bash\r\n# 테스트\r\nuv run pytest\r\n\r\n# 린트 & 포맷\r\nuv run ruff check src tests\r\nuv run ruff format src tests\r\n\r\n# 타입 체크\r\nuv run mypy src\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n",
+ "config": {
+  "korea-weather": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://127.0.0.1:8000/mcp"
+  }
+ }
+}

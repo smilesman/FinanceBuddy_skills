@@ -1,0 +1,12 @@
+{
+ "id": "analyzing-kubernetes-audit-logs",
+ "kind": "skill",
+ "name": "analyzing-kubernetes-audit-logs",
+ "fingerprint_md5": "c3427597d7e38890f35e276cf6b85c79",
+ "download_count": 0,
+ "category": "Kubernetes",
+ "tags": "",
+ "version": "",
+ "readme": "# 分析 Kubernetes 审计日志\r\n\r\n\r\n## 何时使用\r\n\r\n- 当调查需要分析 kubernetes 审计日志的安全事件时\r\n- 当为此领域构建检测规则或威胁狩猎查询时\r\n- 当 SOC 分析师需要此类分析的结构化程序时\r\n- 当验证相关攻击技术的安全监控覆盖范围时\r\n\r\n## 先决条件\r\n\r\n- 熟悉容器安全概念和工具\r\n- 访问测试或实验室环境以安全执行\r\n- 安装了所需依赖项的 Python 3.8+\r\n- 任何测试活动的适当授权\r\n\r\n## 使用说明\r\n\r\n解析 Kubernetes 审计日志文件（JSON 行格式）以检测安全相关的\r\n事件，包括未经授权的访问、权限提升和数据泄露。\r\n\r\n```python\r\nimport json\r\n\r\nwith open(\"/var/log/kubernetes/audit.log\") as f:\r\n    for line in f:\r\n        event = json.loads(line)\r\n        verb = event.get(\"verb\")\r\n        resource = event.get(\"objectRef\", {}).get(\"resource\")\r\n        user = event.get(\"user\", {}).get(\"username\")\r\n        if verb == \"create\" and resource == \"pods/exec\":\r\n            print(f\"Pod exec by {user}\")\r\n```\r\n\r\n要检测的关键事件：\r\n1. pods/exec 和 pods/attach（进入容器 shell）\r\n2. secrets 访问（get/list/watch）\r\n3. clusterrolebindings 创建（RBAC 提升）\r\n4. 特权 pod 创建\r\n5. 匿名或 system:unauthenticated 访问\r\n\r\n## 示例\r\n\r\n```python\r\n# 检测 secret 枚举\r\nif verb in (\"get\", \"list\") and resource == \"secrets\":\r\n    print(f\"Secret access: {user} -> {event['objectRef'].get('name')}\")\r\n```",
+ "config": {}
+}

@@ -1,0 +1,12 @@
+{
+ "id": "config-guardian",
+ "kind": "skill",
+ "name": "config-guardian",
+ "fingerprint_md5": "d92a7f8ae14792154dbc4b2751a74db0",
+ "download_count": 0,
+ "category": "基础设施",
+ "tags": "",
+ "version": "",
+ "readme": "# Config Guardian\r\n\r\n## 概述\r\n每当编辑 `~/.openclaw/openclaw.json` 或运行 `openclaw config set/apply` 时使用此工作流。它可以防止无效配置、创建备份、针对模式进行验证并启用回滚。\r\n\r\n## 工作流（每次使用）\r\n\r\n1. **飞行前检查**\r\n   - 确认请求的更改和范围。\r\n   - 检查敏感密钥（令牌、凭证）。\r\n\r\n2. **备份**\r\n   - 运行 `scripts/backup_config.sh` 以创建带时间戳的快照。\r\n\r\n3. **验证（更改前）**\r\n   - 运行 `scripts/validate_config.sh`。\r\n   - 如果验证失败，停止并报告。\r\n\r\n4. **应用更改**\r\n   - 对于小更改，优先使用 `openclaw config set <path> <value>`。\r\n   - 对于复杂编辑，直接编辑文件并保持差异最小。\r\n\r\n5. **验证（更改后）**\r\n   - 再次运行 `scripts/validate_config.sh`。\r\n   - 如果失败，使用 `scripts/restore_config.sh` 从备份恢复。\r\n\r\n6. **重新启动（仅在获得明确批准时）**\r\n   - 如果更改需要重新启动，请先征求批准。\r\n   - 使用 `openclaw gateway restart`。\r\n\r\n## 护栏\r\n- **绝不**在没有明确用户批准的情况下重新启动或应用配置。\r\n- **绝不**除非有要求，否则移除密钥或重新排序块。\r\n- **始终**在编辑前保留备份。\r\n- 如果不确定模式：运行 `openclaw doctor --non-interactive` 并在出错时停止。\r\n\r\n## 脚本\r\n- `scripts/backup_config.sh` — 创建带时间戳的备份\r\n- `scripts/validate_config.sh` — 通过 OpenClaw doctor 验证配置\r\n- `scripts/diff_config.sh` — 比较当前配置与备份\r\n- `scripts/restore_config.sh` — 恢复备份\r\n\r\n## 验证\r\n- 使用 `openclaw doctor --non-interactive` 进行模式验证\r\n- 这会针对网关使用的实际模式进行检查\r\n- 警告未知密钥、无效类型和安全问题",
+ "config": {}
+}

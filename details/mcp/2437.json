@@ -1,0 +1,25 @@
+{
+ "id": "2437",
+ "kind": "mcp",
+ "name": "axys-mcp-lite",
+ "fingerprint_md5": "c75c50300206ec4d5f54cccb4ceb7208",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# AXYS MCP Lite\r\n\r\n一个模型上下文协议（MCP）服务器，提供人工智能驱动的搜索功能，使克劳德等人工智能助手能够使用自然语言命令搜索结构化和非结构化数据。\r\n\r\n\r\n## 特性\r\n\r\n- **人工智能驱动的结构化搜索**：结构化数据库上的自然语言查询\r\n- **人工智能驱动的非结构化搜索**：使用自然语言搜索文档、视频和文件\r\n- **语义搜索**：AI理解上下文和含义以获得更好的结果\r\n- **多种内容类型**：搜索PDF、Word文档、视频、图像等\r\n- **安全认证**：用于安全访问的基于API密钥的身份验证\r\n\r\n## 先决条件\r\n\r\n- Node.js 18或更高版本\r\n- MCP API密钥\r\n- Claude Desktop应用程序或任何兼容MCP的客户端\r\n\r\n## 安装\r\n\r\n### 通过npm（推荐）\r\n\r\n```bash\r\nnpm install -g axys-mcp-lite\r\n```\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone https://github.com/rajesh-siliconvalleycloudit/axys-mcp-lite.git\r\ncd axys-mcp-lite\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n## 快速开始\r\n\r\n### 1.获取MCP API密钥\r\n\r\n请与管理员联系以获取MCP API密钥。\r\n\r\n### 2.配置克劳德桌面\r\n\r\n将此配置添加到您的Claude Desktop配置文件中：\r\n\r\n**在macOS上**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**在Windows上**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"axys-mcp-lite\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"axys-mcp-lite\"],\r\n      \"env\": {\r\n        \"AXYS_API_HOST\": \"https://your-axys-host.com\",\r\n        \"MCP_KEY\": \"your-mcp-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.重新启动克劳德桌面\r\n\r\n重新启动Claude Desktop以加载MCP服务器。你现在应该可以使用AI搜索命令了！\r\n\r\n## 可用工具\r\n\r\n### 1. `ai_search_structured`\r\n\r\n使用自然语言搜索结构化数据源。\r\n\r\n**参数：**\r\n\r\n- `query` （必填）：自然语言查询\r\n\r\n**例子：**\r\n\r\n```\r\nFind all users in engineering department\r\n```\r\n\r\n### 2. `ai_search_unstructured`\r\n\r\n使用自然语言搜索文档、视频和文件。\r\n\r\n**参数：**\r\n\r\n- `query` （必填）：自然语言查询\r\n- `searchIndices` （可选）：要搜索的特定索引（例如，“视频”、“文档”）\r\n- `fileOnly` （可选）：仅返回没有内容的文件引用\r\n\r\n**例子：**\r\n\r\n```\r\nFind deployment documentation videos\r\n```\r\n\r\n### 3. `validate_connection`\r\n\r\n验证与MCP API的连接。\r\n\r\n## 使用示例\r\n\r\n### 结构检索\r\n\r\n```\r\n\"Find all employees named John\"\r\n\"Show customers with revenue over $1M\"\r\n\"List users in the Sales department\"\r\n```\r\n\r\n### 非结构化搜索\r\n\r\n```\r\n\"How to install AXYS?\"\r\n\"Find videos about API integration\"\r\n\"Search for architecture diagrams\"\r\n```\r\n\r\n## 配置选项\r\n\r\n### 环境变量\r\n\r\n创建一个 `.env` 项目目录中的文件：\r\n\r\n```env\r\n# Required\r\nAXYS_API_HOST=https://your-axys-host.com\r\nMCP_KEY=your-mcp-key-here\r\n\r\n# Optional: Logging configuration\r\nLOG_LEVEL=info\r\n```\r\n\r\n## 发展\r\n\r\n### 本地运行\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Run in development mode\r\nnpm run dev\r\n\r\n# Build for production\r\nnpm run build\r\n\r\n# Start production server\r\nnpm start\r\n```\r\n\r\n### 项目结构\r\n\r\n```\r\naxys-mcp-lite/\r\n├── src/\r\n│   ├── index.ts        # Main MCP server implementation\r\n│   ├── axys-client.ts  # API client wrapper\r\n│   └── types.ts        # TypeScript type definitions\r\n├── dist/               # Compiled JavaScript output\r\n├── package.json\r\n├── tsconfig.json\r\n├── .env.example\r\n└── README.md\r\n```\r\n\r\n## 故障排除\r\n\r\n### 连接问题\r\n\r\n- 验证 `AXYS_API_HOST` URL正确\r\n- 检查MCP_KEY是否有效且处于活动状态\r\n- 确保与API服务器的网络连接\r\n\r\n### 没有结果\r\n\r\n- 尝试重新表述您的查询\r\n- 检查系统中是否存在数据\r\n- 验证您的API密钥是否具有适当的权限\r\n\r\n## API响应代码\r\n\r\n|代码|描述|\r\n|------|-------------|\r\n|200 |成功|\r\n|201 |未配置AI工具|\r\n|401 | API密钥无效|\r\n|402 |错误请求|\r\n|500|内部服务器错误|\r\n\r\n## 安全最佳实践\r\n\r\n1. **永远不要提交API密钥** 到版本控制\r\n1. **使用环境变量** 用于敏感配置\r\n1. **定期旋转API键** 出于安全考虑\r\n1. **监控API使用情况** 不寻常的活动\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n1. 复刻仓库\r\n1. 创建功能分支(`git checkout -b feature/AmazingFeature`)\r\n1. 提交您的更改(`git commit -m 'Add some AmazingFeature'`)\r\n1. 推到分支(`git push origin feature/AmazingFeature`)\r\n1. 打开拉取请求\r\n\r\n## 支持\r\n\r\n对于问题：\r\n\r\n- **MCP服务器**: [打开一个问题](https://github.com/rajesh-siliconvalleycloudit/axys-mcp-lite/issues)\r\n- **MCP协议**: [MCP文件](https://github.com/modelcontextprotocol/docs)\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 致谢\r\n\r\n- 内置于 [模型上下文协议SDK](https://github.com/modelcontextprotocol/sdk)\r\n- 专为与Claude Desktop和其他MCP客户端一起使用而设计\r\n\r\n## 更新日志\r\n\r\n### 版本1.0.0\r\n\r\n- 初始版本\r\n- 人工智能驱动的结构化搜索\r\n- 人工智能驱动的非结构化搜索（文档、视频、文件）\r\n- 连接验证工具\r\n\r\n______________________________________________________________________\r\n\r\n精心为MCP社区打造\r\n",
+ "config": {
+  "axys-mcp-lite": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "axys-mcp-lite"
+   ],
+   "env": {
+    "AXYS_API_HOST": "https://your-axys-host.com",
+    "MCP_KEY": "your-mcp-key-here"
+   }
+  }
+ }
+}

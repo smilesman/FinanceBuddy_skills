@@ -1,0 +1,12 @@
+{
+ "id": "alicloud-observability-sls-log-query",
+ "kind": "skill",
+ "name": "alicloud-observability-sls-log-query",
+ "fingerprint_md5": "2396f9c70a7075be1593eb134b9d0f42",
+ "download_count": 0,
+ "category": "基础设施",
+ "tags": "",
+ "version": "",
+ "readme": "Category: service\r\n\r\n# SLS 日志查询与排障\r\n\r\n使用 SLS 的 query|analysis 语法与 Python SDK 做日志检索、过滤与统计分析。\r\n\r\n## 前置条件\r\n\r\n- 安装 SDK（建议在虚拟环境中，避免 PEP 668 限制）：\r\n\r\n```bash\r\npython3 -m venv .venv\r\n. .venv/bin/activate\r\npython -m pip install -U aliyun-log-python-sdk\r\n```\r\n- 配置环境变量：\r\n  - `ALIBABA_CLOUD_ACCESS_KEY_ID`\r\n  - `ALIBABA_CLOUD_ACCESS_KEY_SECRET`\r\n  - `SLS_ENDPOINT` (如 `cn-hangzhou.log.aliyuncs.com`)\r\n  - `SLS_PROJECT`\r\n  - `SLS_LOGSTORE`\r\n\r\n## Query 组成\r\n\r\n- 查询语句：用于过滤日志（如 `status:500`）。\r\n- 分析语句：用于统计聚合，格式为 `查询语句|分析语句`。\r\n- 示例：`* | SELECT status, count(*) AS pv GROUP BY status`\r\n\r\n详细语法见 `references/query-syntax.md`。\r\n\r\n## 快速开始 (Python SDK)\r\n\r\n```python\r\nimport os\r\nimport time\r\nfrom aliyun.log import LogClient, GetLogsRequest\r\n\r\nclient = LogClient(\r\n    os.environ[\"SLS_ENDPOINT\"],\r\n    os.environ[\"ALIBABA_CLOUD_ACCESS_KEY_ID\"],\r\n    os.environ[\"ALIBABA_CLOUD_ACCESS_KEY_SECRET\"],\r\n)\r\n\r\nproject = os.environ[\"SLS_PROJECT\"]\r\nlogstore = os.environ[\"SLS_LOGSTORE\"]\r\n\r\nquery = \"status:500\"\r\nstart_time = int(time.time()) - 15 * 60\r\nend_time = int(time.time())\r\n\r\nrequest = GetLogsRequest(project, logstore, start_time, end_time, query=query)\r\nresponse = client.get_logs(request)\r\nfor log in response.get_logs():\r\n    print(log.contents)\r\n```\r\n\r\n## 脚本快速开始\r\n\r\n```bash\r\npython skills/observability/sls/alicloud-observability-sls-log-query/scripts/query_logs.py \\\r\n  --query \"status:500\" \\\r\n  --last-minutes 15\r\n```\r\n\r\n可选参数：`--project`, `--logstore`, `--endpoint`, `--start`, `--end`, `--last-minutes`, `--limit`。\r\n\r\n## 排障脚本\r\n\r\n```bash\r\npython skills/observability/sls/alicloud-observability-sls-log-query/scripts/troubleshoot.py \\\r\n  --group-field status \\\r\n  --last-minutes 30 \\\r\n  --limit 20\r\n```\r\n\r\n可选参数：`--error-query`, `--group-field`, `--limit`，以及上述时间范围参数。\r\n\r\n## 工作流\r\n\r\n1) 确认 Logstore 已开启索引（未开启会导致查询/分析失败）。\r\n2) 编写查询语句，必要时追加分析语句。\r\n3) 通过 SDK 或脚本执行查询并查看结果。\r\n4) 用 `limit` 控制返回行数，必要时缩小时间范围。\r\n\r\n## 参考资料\r\n\r\n- 语法与示例：`references/query-syntax.md`\r\n- Python SDK 初始化与查询：`references/python-sdk.md`\r\n- 排障模板：`references/templates.md`\r\n\r\n- 来源列表：`references/sources.md`",
+ "config": {}
+}

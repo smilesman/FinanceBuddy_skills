@@ -1,0 +1,26 @@
+{
+ "id": "1812",
+ "kind": "mcp",
+ "name": "zotero",
+ "fingerprint_md5": "43d07a0c4897ab4f0dbf6428d0849fdb",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Zotero的模型上下文协议服务器\r\n\r\n[](https://github.com/kujenga/zotero-mcp/actions)\r\n[](https://pypi.org/project/zotero-mcp/)\r\n\r\n这个项目是一个python服务器，它实现了 [模型上下文协议（MCP）](https://modelcontextprotocol.io/introduction) 为了 [先生](https://www.zotero.org/)，让您在AI助手中访问您的Zotero库。它旨在实现一组与Zotero的小型但最有用的交互，以便与 [MCP客户端](https://modelcontextprotocol.io/clients).\r\n\r\n<a href=\"https://glama.ai/mcp/servers/jknz38ntu4\">\r\n  \r\n</a>\r\n\r\n## 特性\r\n\r\n此MCP服务器提供以下工具：\r\n\r\n- `zotero_search_items`：使用文本查询在Zotero库中搜索项目\r\n- `zotero_item_metadata`：获取特定Zotero项目的详细元数据信息\r\n- `zotero_item_fulltext`：获取特定Zotero项目的全文（即PDF内容）\r\n\r\n这些可以通过任何MCP客户端或通过 [MCP检查员](https://modelcontextprotocol.io/docs/tools/inspector).\r\n\r\n每个工具都会返回包含Zotero项目相关信息的格式化文本，Claude等AI助手可以按顺序使用它们，搜索项目，然后检索其元数据或文本内容。\r\n\r\n## 安装\r\n\r\n此服务器可以运行在 [Zotero桌面应用程序提供的本地API](https://groups.google.com/g/zotero-dev/c/ElvHhIFAXrY/m/fA7SKKwsAgAJ))或通过 [Zotero Web API](https://www.zotero.org/support/dev/web_api/v3/start).本地API的响应可能会稍快一些，但要求Zotero应用程序在启用API的同一台计算机上运行。要启用本地API，请执行以下步骤：\r\n\r\n1. 打开Zotero并打开“Zotero设置”\r\n1. 在“高级”选项卡下，选中“允许此计算机上的其他应用程序与Zotero通信”的框。\r\n\r\n> \\[！重要\\]\r\n> 访问 `/fulltext` 本地API上的端点，该端点允许检索库中项目的全部内容，您需要安装 [Beta Build先生](https://www.zotero.org/support/beta_builds) （截至2025年3月30日）。一旦7.1发布，情况将不再如此。看https://github.com/zotero/zotero/pull/5004了解更多信息。如果您不想这样做，请改用Web API。\r\n\r\n要使用Zotero Web API，您需要创建一个API密钥，并在Zotero帐户设置中找到您的库ID（通常是您的用户ID）： <https://www.zotero.org/settings/keys>\r\n\r\n以下是可用的配置选项：\r\n\r\n- `ZOTERO_LOCAL=true`：使用本地Zotero API（默认值：false，请参阅下面的注释）\r\n- `ZOTERO_API_KEY`：您的Zotero API密钥（本地API不需要）\r\n- `ZOTERO_LIBRARY_ID`：您的Zotero库ID（用户库的用户ID，本地API不需要）\r\n- `ZOTERO_LIBRARY_TYPE`：库的类型（用户或组，默认值：用户）\r\n\r\n### [`uvx`](https://docs.astral.sh/uv/getting-started/installation/) 使用本地Zotero API\r\n\r\n将其与Claude Desktop一起使用，并直接安装python [`uvx`](https://docs.astral.sh/uv/getting-started/installation/)，将以下内容添加到 `mcpServers` 配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"zotero\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"--upgrade\", \"zotero-mcp\"],\r\n      \"env\": {\r\n        \"ZOTERO_LOCAL\": \"true\",\r\n        \"ZOTERO_API_KEY\": \"\",\r\n        \"ZOTERO_LIBRARY_ID\": \"\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n这 `--upgrade` flag是可选的，当有新版本可用时，它将拉取最新版本。如果你没有 `uvx` 已安装，您可以使用 `pipx run` 相反，或者在本地克隆此存储库并使用中的说明 [发展](#development) 在......下面\r\n\r\n### 带有Zotero Web API的Docker\r\n\r\n如果您想在Docker容器中运行此MCP服务器，您可以使用以下配置，插入您的API密钥和库ID：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"zotero\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"-e\", \"ZOTERO_API_KEY=PLACEHOLDER\",\r\n        \"-e\", \"ZOTERO_LIBRARY_ID=PLACEHOLDER\",\r\n        \"ghcr.io/kujenga/zotero-mcp:main\"\r\n      ],\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n要更新到较新版本，请运行 `docker pull ghcr.io/kujenga/zotero-mcp:main`.也可以使用基于docker的安装与本地Zotero API对话，但您需要修改上述命令，以确保Zotero应用程序的本地API接口具有网络连接。\r\n\r\n## 发展\r\n\r\n有关更改和为项目做出贡献的信息。\r\n\r\n1. 克隆此存储库\r\n1. 安装依赖项 [紫外线](https://docs.astral.sh/uv/) 通过运行： `uv sync`\r\n1. 创建一个 `.env` 项目根目录中包含上述环境变量的文件\r\n\r\n启动 [MCP检查员](https://modelcontextprotocol.io/docs/tools/inspector) 地方发展：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv run zotero-mcp\r\n```\r\n\r\n要在Claude Desktop上测试本地存储库，请运行 `echo $PWD/.venv/bin/zotero-mcp` 在此目录下的shell中，然后在Claude Desktop配置中设置以下内容\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"zotero\": {\r\n      \"command\": \"/path/to/zotero-mcp/.venv/bin/zotero-mcp\"\r\n      \"env\": {\r\n        // Whatever configuration is desired.\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 运行测试\r\n\r\n要运行测试套件，请执行以下操作：\r\n\r\n```bash\r\nuv run pytest\r\n```\r\n\r\n### Docker开发\r\n\r\n使用以下命令构建容器映像：\r\n\r\n```sh\r\ndocker build . -t zotero-mcp:local\r\n```\r\n\r\n要使用MCP检查器测试容器，请运行以下命令：\r\n\r\n```sh\r\nnpx @modelcontextprotocol/inspector \\\r\n    -e ZOTERO_API_KEY=$ZOTERO_API_KEY \\\r\n    -e ZOTERO_LIBRARY_ID=$ZOTERO_LIBRARY_ID \\\r\n    docker run --rm -i \\\r\n        --env ZOTERO_API_KEY \\\r\n        --env ZOTERO_LIBRARY_ID \\\r\n        zotero-mcp:local\r\n```\r\n\r\n## 相关文件\r\n\r\n- https://modelcontextprotocol.io/tutorials/building-mcp-with-llms\r\n- https://github.com/modelcontextprotocol/python-sdk\r\n- https://pyzotero.readthedocs.io/en/latest/\r\n- https://www.zotero.org/support/dev/web_api/v3/start\r\n- https://modelcontextprotocol.io/llms-full.txtLLM可以使用\r\n",
+ "config": {
+  "zotero": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--upgrade",
+    "zotero-mcp"
+   ],
+   "env": {
+    "ZOTERO_LOCAL": "true",
+    "ZOTERO_API_KEY": "",
+    "ZOTERO_LIBRARY_ID": ""
+   }
+  }
+ }
+}

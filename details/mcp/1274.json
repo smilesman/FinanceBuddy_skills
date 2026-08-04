@@ -1,0 +1,24 @@
+{
+ "id": "1274",
+ "kind": "mcp",
+ "name": "splunk",
+ "fingerprint_md5": "8d12689dc1350d02e85afa49ed9ad5db",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Splunk MCP服务器\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io/) Splunk的服务器。使Claude等AI助手能够搜索、管理和分析Splunk实例中的数据。\r\n\r\n## 安装\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"splunk\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-server-splunk\"],\r\n      \"env\": {\r\n        \"SPLUNK_HOST\": \"your-splunk-host\",\r\n        \"SPLUNK_TOKEN\": \"your-token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码（CLI）\r\n\r\n```bash\r\nclaude mcp add splunk -- uvx mcp-server-splunk \\\r\n  -e SPLUNK_HOST=your-splunk-host \\\r\n  -e SPLUNK_TOKEN=your-token\r\n```\r\n\r\n### OpenAI Codex\r\n\r\n添加到 `~/.codex/config.toml`:\r\n\r\n```toml\r\n[mcp_servers.splunk]\r\ncommand = \"uvx\"\r\nargs = [\"mcp-server-splunk\"]\r\n\r\n[mcp_servers.splunk.env]\r\nSPLUNK_HOST = \"your-splunk-host\"\r\nSPLUNK_TOKEN = \"your-token\"\r\n```\r\n\r\n### OpenCode\r\n\r\n添加到您的OpenCode配置中：\r\n\r\n```yaml\r\nmcp:\r\n  splunk:\r\n    type: local\r\n    command: uvx mcp-server-splunk\r\n    env:\r\n      SPLUNK_HOST: your-splunk-host\r\n      SPLUNK_TOKEN: your-token\r\n```\r\n\r\n## 配置\r\n\r\n|变量|必填|默认|描述|\r\n|----------|----------|---------|-------------|\r\n| `SPLUNK_HOST` |是|localhost|Splunk服务器主机名|\r\n| `SPLUNK_PORT` |否|8089| Splunk管理端口|\r\n| `SPLUNK_SCHEME` |否|https|连接方案（http/https）|\r\n| `SPLUNK_TOKEN` |\\*|-|身份验证令牌（推荐）|\r\n| `SPLUNK_USERNAME` |\\*|-|用户名（如果不使用令牌）|\r\n| `SPLUNK_PASSWORD` |\\*|-|密码（如果不使用令牌）|\r\n\r\n\\*提供其中之一 `SPLUNK_TOKEN` 或两者 `SPLUNK_USERNAME` 和 `SPLUNK_PASSWORD`.\r\n\r\n### 获取Splunk代币\r\n\r\n1. 登录Splunk网站\r\n1. 首选 **设置>令牌**\r\n1. 点击 **新令牌**\r\n1. 复制令牌值\r\n\r\n## 工具\r\n\r\n### 搜索与查询\r\n\r\n- `search_splunk` -执行SPL查询\r\n- `search_async` -非阻塞搜索\r\n- `search_realtime` -实时流媒体\r\n- `export_search_results` -导出到文件\r\n- `run_saved_search` -执行已保存的搜索\r\n\r\n### 索引管理\r\n\r\n- `list_indexes` / `get_index_info`\r\n- `create_index` / `update_index` / `delete_index`\r\n- `send_event` -摄入事件\r\n\r\n### 警报\r\n\r\n- `list_alerts` / `create_alert` / `update_alert` / `delete_alert`\r\n- `get_alert_history`\r\n\r\n### 保存的搜索\r\n\r\n- `list_saved_searches` / `get_saved_search` / `run_saved_search`\r\n- `create_saved_search` / `update_saved_search` / `delete_saved_search`\r\n\r\n### 仪表盘\r\n\r\n- `list_dashboards` / `get_dashboard` / `create_dashboard` / `delete_dashboard`\r\n\r\n### 知识对象\r\n\r\n- `list_lookups` / `get_lookup_data` / `update_lookup_data`\r\n- `list_macros` / `get_macro` / `create_macro` / `update_macro` / `delete_macro`\r\n- `list_field_extractions` / `get_field_summary`\r\n\r\n### KV商店\r\n\r\n- `list_kvstore_collections` / `create_kvstore_collection` / `delete_kvstore_collection`\r\n- `query_kvstore_collection` / `insert_kvstore_data` / `update_kvstore_data` / `delete_kvstore_data`\r\n\r\n### 数据输入\r\n\r\n- `list_inputs` / `get_input_info`\r\n- `create_monitor_input` / `delete_input`\r\n\r\n### 用户和角色\r\n\r\n- `list_users` / `get_user_info` / `create_user` / `update_user` / `delete_user`\r\n- `list_roles` / `get_role_info` / `create_role` / `update_role` / `delete_role`\r\n\r\n### 应用\r\n\r\n- `list_apps` / `create_app` / `update_app` / `delete_app`\r\n\r\n### 服务器\r\n\r\n- `get_server_info` / `get_server_settings`\r\n- `check_restart_required` / `restart_splunk` / `refresh_splunk`\r\n- `list_jobs` / `get_job_status` / `get_job_results` / `cancel_job`\r\n\r\n## 示例提示\r\n\r\n- “搜索过去一小时的错误”\r\n- “列出所有索引及其大小”\r\n- “创建登录失败警报”\r\n- “在安全应用程序中显示仪表板”\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone and install\r\ngit clone https://github.com/pahar0/mcp-server-splunk.git\r\ncd mcp-server-splunk\r\nuv sync\r\n\r\n# Run locally\r\nexport SPLUNK_HOST=localhost SPLUNK_TOKEN=your-token\r\nuv run mcp-server-splunk\r\n\r\n# Debug with MCP Inspector\r\nnpx @modelcontextprotocol/inspector uv run mcp-server-splunk\r\n```\r\n\r\n## 许可证\r\n\r\nApache 2.0\r\n",
+ "config": {
+  "splunk": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-server-splunk"
+   ],
+   "env": {
+    "SPLUNK_HOST": "your-splunk-host",
+    "SPLUNK_TOKEN": "your-token"
+   }
+  }
+ }
+}

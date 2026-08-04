@@ -1,0 +1,12 @@
+{
+ "id": "kusa-image",
+ "kind": "skill",
+ "name": "kusa-image",
+ "fingerprint_md5": "8f6c2301a716172c7e71ff57413ccbb1",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Kusa.pics 图像生成器\r\n\r\n使用 Kusa.pics API 生成图像。\r\n\r\n## 配置\r\n- API Key: 设置 `KUSA_API_KEY` 环境变量。\r\n\r\n## 用法\r\n```bash\r\nexport KUSA_API_KEY=\"your_api_key_here\"\r\nnode skills/kusa-image/index.js \"Your prompt here\" [--style <id>] [--width <w>] [--height <h>]\r\n```\r\n\r\n## 选项\r\n- `--style`: Style ID (默认: 6)\r\n- `--width`: 宽度 (默认: 960)\r\n- `--height`: 高度 (默认: 1680)",
+ "config": {}
+}

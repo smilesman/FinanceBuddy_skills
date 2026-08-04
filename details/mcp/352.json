@@ -1,0 +1,22 @@
+{
+ "id": "352",
+ "kind": "mcp",
+ "name": "phantom-touch",
+ "fingerprint_md5": "5b38082cfe79fc1b9344feffc521f265",
+ "download_count": 0,
+ "category": "移动端自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 👻 幻影触摸\r\n\r\n> 用于iOS模拟器自动化的MCP服务器，具有与React Native兼容的基于剪贴板的文本输入。\r\n\r\n**幻影触摸** 让AI代理完全控制iOS模拟器：屏幕截图、元素检查、手势、应用程序管理，最重要的是-- **React Native表单中的可靠文本输入**.\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面/光标\r\n\r\n添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"phantom-touch\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"phantom-touch\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n就是这样。没有克隆，没有建筑——只是 `npx`.\r\n\r\n## 问题\r\n\r\n每个现有的iOS MCP工具都无法填充React Native `TextInput` 组件是因为：\r\n\r\n- HID键盘事件不会触发 `onChangeText`\r\n- WebDriver代理 `setValue` 被React状态覆盖\r\n\r\n## 解决方案\r\n\r\n`phantom-touch` 使用a **剪贴板+粘贴** 战略：\r\n\r\n1. `simctl pbcopy` → 设置模拟器剪贴板\r\n1. `idb tap` → 集中精力\r\n1. `Cmd+V` → 粘贴触发器 `onChangeText` ✅\r\n\r\n## 16个MCP工具\r\n\r\n|模块|工具|\r\n|--------|-------|\r\n| **模拟器** | `pt_list_simulators`, `pt_boot_simulator`, `pt_shutdown_simulator` |\r\n| **应用** | `pt_launch_app`, `pt_terminate_app`, `pt_list_apps`, `pt_open_url` |\r\n| **屏幕** | `pt_screenshot`, `pt_list_elements`, `pt_get_screen_size` |\r\n| **手势** | `pt_tap`, `pt_swipe` |\r\n| **输入** ⭐ | `pt_type_text`, `pt_press_button`, `pt_set_clipboard`, `pt_get_clipboard` |\r\n\r\n## 先决条件\r\n\r\n- 安装了Xcode的macOS\r\n- iOS模拟器\r\n- [国际开发银行](https://fbidb.io/) （iOS开发桥）： `brew install idb-companion`\r\n- Node.js 18+\r\n\r\n## 用法示例\r\n\r\n配置后，询问您的AI代理：\r\n\r\n- *“截取模拟器的屏幕截图”*\r\n- *“列出屏幕上的所有UI元素”*\r\n- *点击（200，500）处的“创建帐户”按钮*\r\n- *“类型”hello@example.com'进入电子邮件字段（200，450）”*\r\n- *“打开深层链接myapp://login\"*\r\n\r\n## 文本输入策略\r\n\r\n### `paste` （默认，推荐）\r\n\r\n使用剪贴板+Cmd+V。与React Native控制的TextInput配合使用。\r\n\r\n```\r\npt_type_text(text: \"Hello\", x: 200, y: 400, strategy: \"paste\")\r\n```\r\n\r\n### `keyboard`\r\n\r\n使用HID键盘事件。更快，但可能会在React Native中失败。\r\n\r\n```\r\npt_type_text(text: \"Hello\", x: 200, y: 400, strategy: \"keyboard\")\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/hieudtr8/phantom-touch.git\r\ncd phantom-touch\r\nnpm install\r\nnpm run build\r\nnpm run dev   # Run in dev mode with tsx\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "phantom-touch": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "phantom-touch"
+   ],
+   "env": {}
+  }
+ }
+}

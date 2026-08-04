@@ -1,0 +1,21 @@
+{
+ "id": "3420",
+ "kind": "mcp",
+ "name": "e-gov-law",
+ "fingerprint_md5": "0d3a2b689ae55b503b23d71abacfdbbd",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 电子政务\r\n\r\n搜索、获取、解析日本法令的MCP服务器。[e-Gov 法令API](https://laws.e-gov.go.jp/apidoc/) 利用。\r\n\r\n## 能做的事\r\n\r\n- **条文検索・取得** —按照《民法709条》的规定取得条文。也支持枝条编号（第6条之2）和范围指定\r\n- **参照链追踪** —自动解决条文内的“施行令第○条”、“准用”等参照对象，并遵循芋头式\r\n- **关键字全文搜索** —不仅从法律名称，还从条文内容中检索\r\n- **构造把握** —编・章・节・款・目の目次构造、条文见出し一覧、别表の取得\r\n- **附则・定义语** —取得实施日期、经过措施，反扣“以下简称○○”\r\n- **批处理** —最多一次性获取200条条文\r\n\r\n## 安装\r\n\r\n```bash\r\n# uvx で直接実行（インストール不要）\r\nuvx e-gov-mcp\r\n\r\n# またはローカルで\r\ngit clone https://github.com/yoshihiro1909/e-gov-mcp.git\r\ncd e-gov-mcp\r\nuv sync\r\nuv run python run_server.py\r\n```\r\n\r\n## MCP设定\r\n\r\n克劳德桌面/克莱恩：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"e-gov-law\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"e-gov-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具列表（23个）\r\n\r\n### 检索、获取条文\r\n\r\n- **`find_law_article`** —以法律名称＋条编号取得条文（项・号过滤器、本则/附则切换）\r\n- **`batch_find_articles`** — 最大200件の一括条文取得\r\n- **`find_article_range`** —按范围获取条文（分枝编号也正确排序）\r\n- **`get_law_content`** —法律全文取得（对应800KB以上的大规模法）\r\n- **`get_chapter_articles`** —通过指定章节标题获取全部条文\r\n\r\n### 查找法令\r\n\r\n- **`search_laws`** — 法律名・種別・番号で検索\r\n- **`search_laws_by_keyword`** —关键字全文搜索\r\n- **`find_related_laws`** —施行令・施行规则を自动検索\r\n- **`search_article_captions`** —条文标题（说明）的检索、一览\r\n- **`search_articles_by_keyword`** —查找法律条文关键词\r\n\r\n### 构造・参照解析\r\n\r\n- **`get_law_structure`** —法令の目次构造（编→章→节→款→目）\r\n- **`get_law_tables`** -结构化获取附表\r\n- **`get_cross_references`** — 条文の参照先を抽出（内部参照・施行令・準用）\r\n- **`follow_law_chain`** —施行令→施行规则→跟踪准用参照链\r\n- **`explain_law_article`** —并行解决条文的全交叉引用（支持深层模式）\r\n- **`bulk_explain_articles`** —复数条文を一括解说（共有参照の重复排除）\r\n- **`reverse_lookup_requirement`** —对参照某条条文的条文进行反引用\r\n\r\n### 附则・定义\r\n\r\n- **`get_supplementary_provisions`** —附则（施行日・経过措置・改正附则）\r\n- **`search_definitions`** —定义词的反引用（“以下简称○○”模式）\r\n\r\n### 缓存\r\n\r\n- **`prefetch_common_laws`** —经常出现的法律预缓存\r\n- **`get_cache_stats`** —高速缓存统计信息\r\n- **`clear_cache`** —缓存清除\r\n- **`get_api_info`** —API接続情报\r\n\r\n## 条编号的标注\r\n\r\n以下均匹配同一条文：\r\n\r\n`6_2` / `6の2` / `6ー2` / `6-2` / `第6条の2` / `６の２`\r\n\r\n## 法令别名\r\n\r\n`config/laws.yaml` 定义40个或更多缩写：\r\n\r\n- 废扫法→废弃物处理及清扫相关法律\r\n- 道交法 → 道路交通法\r\n- 劳基法→劳働基准法\r\n- 独禁法 → 独占禁止法 等\r\n\r\n六法（宪法、民法、刑法、商法、民诉法、刑诉法）和主要法可以通过直接映射立即访问。\r\n\r\n## 命令行界面\r\n\r\n```bash\r\n# 条文取得\r\nuv run python cli.py find_law_article --law 民法 --article 709\r\nuv run python cli.py find_law_article --law 廃棄物処理法 --article 12 --paragraph 5\r\n\r\n# 法令検索\r\nuv run python cli.py search_laws --title 著作権法\r\n\r\n# キーワード検索\r\nuv run python cli.py search_keyword --keyword 損害賠償 --limit 5\r\n\r\n# 関連法令\r\nuv run python cli.py find_related_laws --law 廃棄物処理法\r\n\r\n# バッチ\r\nuv run python cli.py batch --pairs '[{\"law\":\"民法\",\"article\":\"709\"},{\"law\":\"憲法\",\"article\":\"9\"}]'\r\n```\r\n\r\n## 测试\r\n\r\n```bash\r\nuv run pytest\r\nuv run pytest --cov=src --cov-report=term-missing\r\n```\r\n\r\n## 项目配置\r\n\r\n```\r\ne-gov-mcp/\r\n├── src/\r\n│   ├── mcp_server.py       # MCPサーバー本体\r\n│   └── prompt_loader.py    # プロンプトテンプレート\r\n├── config/\r\n│   └── laws.yaml           # エイリアス・ダイレクトマッピング\r\n├── prompts/\r\n│   └── legal_analysis.md   # 法的分析プロンプト\r\n├── cli.py                  # CLI\r\n├── run_server.py           # サーバー起動\r\n└── tests/                  # テスト\r\n```\r\n\r\n## 谢辞\r\n\r\n- [ryooo/e-gov-law-mcp](https://github.com/ryoooo/e-gov-law-mcp) --基于\r\n- [e-Gov 法令API](https://laws.e-gov.go.jp/apidoc/)\r\n- [FastMCP](https://github.com/jlowin/fastmcp)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "e-gov-law": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "e-gov-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "3463",
+ "kind": "mcp",
+ "name": "google-search-console",
+ "fingerprint_md5": "77e5fae017b4e3156563e64f4fafc9c5",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 谷歌搜索控制台MCP服务器\r\n\r\n\r\n将克劳德连接到您的谷歌搜索控制台数据。通过自然对话查询搜索分析、检查索引状态和管理站点地图。\r\n\r\n## 先决条件\r\n\r\n- **Node.js 18+** 安装\r\n- **Google搜索控制台** 至少有一个经过验证的属性的帐户\r\n- **克劳德桌面版** 已安装应用程序\r\n\r\n## 安装\r\n\r\n### 1.运行安装程序\r\n\r\n```bash\r\nnpx gsc-mcp-server --setup\r\n```\r\n\r\n这将打开一个浏览器，让您使用您的Google帐户登录。就是这样！\r\n\r\n### 2.添加到克劳德桌面\r\n\r\n打开您的Claude Desktop配置文件：\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n添加服务器配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"google-search-console\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"gsc-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果您已经有其他MCP服务器，请用逗号添加：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"other-server\": { ... },\r\n    \"google-search-console\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"gsc-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.重新启动克劳德桌面\r\n\r\n退出并重新打开Claude Desktop以加载新服务器。\r\n\r\n## 用法\r\n\r\n配置后，问Claude以下问题：\r\n\r\n|您想要什么|示例提示|\r\n|---------------|----------------|\r\n|热门搜索查询|“本月我的前10个搜索查询是什么？”|\r\n|页面性能|“我的/博客页面在搜索中的表现如何？”|\r\n|检查索引|“Ishttps://mysite.com/new-post索引？\" |\r\n|比较时段|“比较本周与上周的搜索流量”|\r\n|寻找机会|“显示印象高但点击率低的查询”|\r\n|管理站点地图|“列出我的站点地图”或“提交我的新站点地图”|\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `gsc_list_sites` |列出您的所有Search Console属性|\r\n| `gsc_search_analytics` |查询点击次数、展示次数、点击率和位置|\r\n| `gsc_inspect_url` |检查URL是否已编入索引|\r\n| `gsc_list_sitemaps` |列出提交的网站地图|\r\n| `gsc_get_sitemap` |获取站点地图详细信息|\r\n| `gsc_submit_sitemap` |提交新的站点地图|\r\n| `gsc_delete_sitemap` |删除站点地图|\r\n\r\n## 故障排除\r\n\r\n**网站的“权限被拒绝”？**\r\n→ 确保您的Google帐户可以访问Search Console中的该属性\r\n\r\n**需要重新验证吗？**\r\n→ Run `npx gsc-mcp-server --setup` 再次\r\n\r\n**会话已过期？**\r\n→ Run `npx gsc-mcp-server --setup` 重新登录\r\n\r\n## 使用您自己的OAuth凭据（可选）\r\n\r\n服务器使用共享OAuth凭据即可开箱即用。对于生产用途或更高的速率限制，您可以使用自己的：\r\n\r\n1. 首选 [谷歌云控制台](https://console.cloud.google.com/)\r\n1. 创建项目并启用 **搜索控制台API**\r\n1. 创建OAuth 2.0凭据（桌面应用程序）\r\n1. 将凭据保存到 `~/.gsc-mcp-server/credentials.json`\r\n1. 跑 `npx gsc-mcp-server --setup` 鉴定\r\n\r\n## 隐私\r\n\r\n所有数据都保留在您的机器上。查看我们的 [隐私政策](PRIVACY.md).\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 关于我\r\n\r\n我是 **索菲安·贝塔耶布**.\r\n\r\n白天，我是一名营销技术顾问，与价值数十亿美元的品牌合作。到了晚上，我构建了这样的工具 **AI SEO复制品** （15k+安装）， **AEO副驾驶**以及类似的蓝图 **Webflow SEO检查表** （下载量超过1k）帮助我的Webflow朋友通过SEO和AEO赚钱。\r\n\r\n在这两者之间，我在瑞士伯尔尼骑自行车和孩子们玩耍。\r\n\r\n[GitHub](https://github.com/sofianbettayeb)\r\n",
+ "config": {
+  "google-search-console": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "gsc-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

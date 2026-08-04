@@ -1,0 +1,22 @@
+{
+ "id": "2119",
+ "kind": "mcp",
+ "name": "aviation-weather",
+ "fingerprint_md5": "bc622e4d14dc0fc6ea3ae717b33cd430",
+ "download_count": 0,
+ "category": "路线规划",
+ "tags": "",
+ "version": "",
+ "readme": "# 航空气象MCP服务器\r\n\r\n航空天气简报直接在克劳德。METAR、TAF、PIREP、SIGMET和ICON-D2 NWP预测-不需要API密钥。\r\n\r\n问克劳德一些事情，比如：\r\n\r\n- “元EDDM”\r\n- “飞行前简报会EDLI”\r\n- “路线天气EDDM至LOWI”\r\n- “对德国有什么不满吗？”\r\n\r\n## 先决条件\r\n\r\n您需要安装两件事：\r\n\r\n1. **克劳德桌面版** --下载自https://claude.ai/download\r\n1. **Node.js** （版本18或更高版本）--从下载https://nodejs.org（选择LTS版本）\r\n\r\n要检查是否已安装Node.js，请打开终端（Mac）或命令提示符（Windows），然后键入：\r\n\r\n```\r\nnode --version\r\n```\r\n\r\n如果你看到一个版本号，比如 `v22.x.x`你可以走了。\r\n\r\n## 设置（3分钟）\r\n\r\n### 步骤1：打开Claude桌面配置\r\n\r\n1. 打开 **克劳德桌面版**\r\n1. 点击 **齿轮图标** （右上角）打开设置\r\n1. 首选 **开发者**\r\n1. 点击 **编辑配置**\r\n\r\n这将在文本编辑器中打开一个JSON文件。\r\n\r\n### 步骤2：添加天气服务器\r\n\r\n如果文件为空或只有 `{}`，将其替换为：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"aviation-weather\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"aviation-weather-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果文件已经有内容（例如其他MCP服务器），请添加 `\"aviation-weather\"` 现有内部的块 `\"mcpServers\"` 部分。\r\n\r\n### 步骤3：重新启动克劳德桌面\r\n\r\n完全退出Claude Desktop并重新打开。在下载天气服务器时，第一次启动可能需要10-15秒。\r\n\r\n### 第四步：测试\r\n\r\n开始新的聊天并询问： **“METAR EDDF”**\r\n\r\n克劳德应该用法兰克福机场的当前天气来回应。如果它有效，你就准备好了！\r\n\r\n## 它能做什么？\r\n\r\n|问克劳德。..|它做什么|\r\n|---------------|-------------|\r\n|“METAR EDDM”|慕尼黑机场当前天气|\r\n|“TAF EDDF”|法兰克福预测|\r\n|“飞行前简报EDLI”|完整的VFR简报：METAR+TAF+NWP预测|\r\n|“从EDDM到LOWI的路线天气”|直接路线沿线的天气（METAR+NWP+SIGMETs）|\r\n|“下周EDFE展望”|未来3-15天每天VFR通过/不通过概率|\r\n|“EDDK附近有PIREP吗？”|科隆附近最近的试点报告|\r\n|“德国上空的SIGMETs”|活跃的重大天气预警|\r\n|“48.14、11.57的每小时预测”|任何坐标的ICON-D2 NWP模型数据|\r\n\r\n## 数据源\r\n\r\n- **[aviationweather.gov](https://aviationweather.gov)** --METAR、TAF、PIREP、SIGMET（美国联邦航空局/NOAA，全球）\r\n- **[开放天气](https://open-meteo.com)** --ICON-D2/ICON-EU NWP预测（DWD模型）\r\n- **[开放 天气 合奏](https://open-meteo.com/en/docs/ensemble-api)** --长期展望的集合预测（ECMWF-ENS、GEFS）\r\n- **[我们的机场](https://ourairports.com)** --捆绑离线ICAO→ 坐标数据库（约22k个机场，包括GA字段），公共领域\r\n\r\n## 备注\r\n\r\n- 在全球范围内为METAR、TAF、PIREP和SIGMET工作\r\n- ICON-D2高分辨率预报（2公里）覆盖中欧（北纬43-58°/4-21°E，48小时视界）\r\n- 在中欧以外，它回落到ICON-EU（7公里分辨率，120小时视界）\r\n- ICAO代码是自动解析的——只需使用4个字母的代码。解决方案奏效 **离线** 因此即使是没有METAR的纯GA字段（例如EDVY）也可以工作；你也可以通过 `lat`/`lon` 直接\r\n- 能见度以公里为单位报告\r\n- Open Meteo没有可用的云基础，因此每小时的NWP预测(`wx_icon_d2`, `wx_preflight`, `wx_route`) **推导出云天花板** 来自压力水平云层覆盖（最低破碎/阴天甲板≥50%，以英尺AGL为单位）。输出总是明确地声明它-- `ceil ~1700ft`, `ceil none<8600ft` （下方无甲板），或 `ceil n/a` （无数据）-因此，缺失的天花板看起来永远不会像晴朗的天空\r\n- 3-15天的展望是 **粗略置信度** （VFR条件较差的合奏成员的比例），而不是精确的预测。它使用低云量作为VFR代理（Open Meteo不提供可用的云基础），并显示ECMWF-IFS趋势以及前5天的ICON-EU交叉检查\r\n\r\n## 使用Claude代码\r\n\r\n```bash\r\nclaude mcp add aviation-weather -- npx -y aviation-weather-mcp\r\n```\r\n\r\n## 故障排除\r\n\r\n**克劳德没有显示天气工具：** 请确保在编辑配置后重新启动了Claude Desktop。检查JSON语法是否有效（没有尾随逗号，匹配括号）。\r\n\r\n**“npx:找不到命令”：** Node.js未安装或不在您的PATH中。从这里下载https://nodejs.org.\r\n\r\n**首次启动缓慢：** 第一次， `npx` 下载包（~30KB）。之后，它会被缓存并立即启动。\r\n\r\n## 免责声明\r\n\r\n此工具仅供参考 **不能代替官方的飞行前天气简报**。始终使用经批准的气象服务，并遵守国家航空当局对飞行准备的要求。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "aviation-weather": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "aviation-weather-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

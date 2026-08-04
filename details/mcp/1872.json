@@ -1,0 +1,24 @@
+{
+ "id": "1872",
+ "kind": "mcp",
+ "name": "byul",
+ "fingerprint_md5": "aca45c148da6ca807e3ee68f05334cda",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# @byul/mcp\r\n\r\n符合最新的模型上下文协议（MCP）规范。\r\n\r\n## 链接\r\n\r\n- [API文档](https://www.byul.ai/api)\r\n- [API定价](https://www.byul.ai/api/pricing)\r\n- [开发者文档](https://docs.byul.ai/)\r\n- [API状态](https://www.byul.ai/api/status)\r\n\r\n## 概述\r\n\r\n`@byul/mcp` 是一个基于stdio的MCP服务器，代理Byul REST API。它公开了一小部分MCP工具和一个资源，该资源将请求转发到Byul端点并返回原始JSON响应，以及一个简短的文章计数摘要字符串。\r\n\r\n## 需求\r\n\r\n- Node.js 18+\r\n- `BYUL_API_KEY` 环境变量\r\n\r\n## 快速启动\r\n\r\n```bash\r\nBYUL_API_KEY=byul_xxxxxxxxxxxxx npx -y @byul/mcp\r\n```\r\n\r\n## 配置\r\n\r\n在LLM客户端中将此服务器注册为MCP提供程序。客户端将通过stdio启动服务器，并通过stdin/stdout使用JSON-RPC进行通信。\r\n\r\n## 参数\r\n\r\n- 工具（摘要；请参见 `@docs` 完整规格）\r\n  - `news_fetch` → 代理 `GET /news` 使用过滤器： `limit`, `cursor`, `sinceId`, `minImportance`, `q`, `symbol`, `startDate`, `endDate`\r\n- 资源（摘要；见 `@docs` 完整规格）\r\n  - `byul://news{?limit,cursor,sinceId,minImportance,q,symbol,startDate,endDate}`\r\n\r\n每个响应包含：\r\n\r\n- 类似“返回的N篇文章”的摘要字符串\r\n- Byul API的原始JSON有效负载\r\n\r\n## 可用工具\r\n\r\n### `news_fetch`\r\n\r\n- 描述：获取最新财经新闻\r\n- 参数：\r\n  - `limit` （数量，可选）-文章数量（1-100）\r\n  - `cursor` （字符串，可选）–上一页的分页光标\r\n  - `sinceId` （字符串，可选）-返回在此ID之后创建的文章\r\n  - `minImportance` （数字，可选）-最低重要性（1-10）\r\n  - `q` （字符串，可选）-搜索查询\r\n  - `symbol` （字符串，可选）-股票代码（例如AAPL）\r\n  - `startDate` （字符串，可选）-ISO 8601开始时间戳（UTC）\r\n  - `endDate` （字符串，可选）-ISO 8601结束时间戳（UTC）\r\n- 请求示例：\r\n\r\n```txt\r\nFetch top 5 news articles about AAPL from the past week\r\n```\r\n\r\n## 安全\r\n\r\n- 通过提供API密钥 `BYUL_API_KEY` 仅环境变量。不要在代码或配置中硬编码凭据。\r\n\r\n## 平台设置\r\n\r\n### 1） 光标（最新）\r\n\r\n`~/.cursor/mcp.json` 或项目 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"byul\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@byul/mcp\"],\r\n      \"env\": { \"BYUL_API_KEY\": \"byul_xxxxxxxxxxxxx\" }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 2） 克劳德代码（VS代码扩展）\r\n\r\n#### 命令行界面\r\n\r\n```bash\r\nclaude mcp add -e BYUL_API_KEY=byul_xxxxxxxxxxxxx --scope user byul npx -- -y @byul/mcp\r\n```\r\n\r\n#### 设置JSON\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"byul\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@byul/mcp\"],\r\n      \"env\": { \"BYUL_API_KEY\": \"byul_xxxxxxxxxxxxx\" }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3） 克劳德桌面\r\n\r\n#### `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"byul\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@byul/mcp\"],\r\n      \"env\": { \"BYUL_API_KEY\": \"byul_xxxxxxxxxxxxx\" }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 4） VS代码\r\n\r\n#### 工作区 `.vscode/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"byul\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@byul/mcp\"],\r\n      \"env\": { \"BYUL_API_KEY\": \"byul_xxxxxxxxxxxxx\" }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 5） 风帆冲浪\r\n\r\n#### `windsurf_mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-server-byul\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@byul/mcp\"],\r\n      \"env\": {\r\n        \"BYUL_API_KEY\": \"byul_xxxxxxxxxxxxx\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 6） Gemini CLI\r\n\r\n`~/.gemini/settings.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"byul\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@byul/mcp\"],\r\n      \"env\": { \"BYUL_API_KEY\": \"byul_xxxxxxxxxxxxx\" }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果 `mcpServers` 对象不存在，请创建它。此包仅支持stdio（本地）传输。\r\n\r\n## 故障排除\r\n\r\n- 缺少API密钥\r\n\r\n  - 错误示例： `Missing BYUL_API_KEY environment variable`\r\n  - 修复：设置 `BYUL_API_KEY` 在启动服务器之前，在您的环境中\r\n\r\n- 企业代理/防火墙\r\n\r\n  - `npx` 必须到达注册表才能下载 `@byul/mcp` 第一轮；相应地配置代理设置\r\n\r\n- Windows/WSL路径和环境\r\n\r\n  - PowerShell示例：\r\n    ```powershell\r\n    $env:BYUL_API_KEY = \"byul_xxxxxxxxxxxxx\"\r\n    npx -y @byul/mcp\r\n    ```\r\n\r\n- 运输范围\r\n\r\n  - 此套餐仅涵盖stdio传输。本指南有意不涉及HTTP/SSE传输。\r\n\r\n符合最新的模型上下文协议（MCP）规范。\r\n",
+ "config": {
+  "byul": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@byul/mcp"
+   ],
+   "env": {
+    "BYUL_API_KEY": "byul_xxxxxxxxxxxxx"
+   }
+  }
+ }
+}

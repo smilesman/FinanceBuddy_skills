@@ -1,0 +1,22 @@
+{
+ "id": "1465",
+ "kind": "mcp",
+ "name": "github-2",
+ "fingerprint_md5": "b733aafb3332e6d4de32fb1b6efc7326",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Pera1的GitHub MCP服务器\r\n\r\n一个将GitHub代码连接到Claude.ai的模型上下文协议服务器。该服务器利用Pera1服务从GitHub存储库中提取代码，并为Claude提供更好的上下文。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/m2sd6ew3wf\"></a>\r\n\r\n### 设置\r\n\r\n将以下内容添加到MCP配置文件中(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"github\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@kazuph/mcp-github-pera1\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n现在你可以问Claude关于GitHub代码库的问题。\r\n\r\n### 参数\r\n\r\n- `url`：GitHub存储库URL（必填）\r\n- `dir`：按目录路径筛选文件（逗号分隔）\r\n- `ext`：按扩展名筛选文件（逗号分隔）\r\n- `mode`：显示模式（例如。， `tree` 仅显示目录结构和README文件）\r\n- `branch`：指定要从中提取的分支\r\n- `file`：指定要检索的单个文件\r\n\r\n### 使用示例\r\n\r\n你可以问克劳德这样的问题：\r\n\r\n```\r\nTell me about the implementation of GitHub repository https://github.com/username/repository\r\n```\r\n\r\n对于特定目录：\r\n\r\n```\r\nExplain the components in https://github.com/username/repository?dir=src/components\r\n```\r\n\r\n对于特定文件：\r\n\r\n```\r\nShow me the Button component from https://github.com/username/repository?file=src/components/Button.tsx\r\n```\r\n\r\n对于仅包含README文件的目录结构：\r\n\r\n```\r\nShow me the structure of https://github.com/username/repository?mode=tree\r\n```\r\n\r\n对于特定分支：\r\n\r\n```\r\nAnalyze the develop branch of https://github.com/username/repository?branch=develop\r\n```\r\n\r\n### 许可证\r\n\r\nMIT\r\n\r\n### 作者\r\n\r\n卡祖夫(https://x.com/kazuph)\r\n",
+ "config": {
+  "github": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@kazuph/mcp-github-pera1"
+   ],
+   "env": {}
+  }
+ }
+}

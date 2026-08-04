@@ -1,0 +1,24 @@
+{
+ "id": "1212",
+ "kind": "mcp",
+ "name": "postgres-14",
+ "fingerprint_md5": "a0cbfcb89187cf4158ae780dbad912f7",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp postgres查询\r\n\r\nMCP服务器，将Claude连接到任何PostgreSQL数据库。通过自然对话探索模式、运行查询、分析性能。\r\n\r\n由...建造 [色变](https://github.com/lordbasilaiassistant-sudo).\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g mcp-postgres-query\r\n```\r\n\r\n或者直接运行：\r\n\r\n```bash\r\nnpx mcp-postgres-query\r\n```\r\n\r\n## 配置\r\n\r\n设置 `DATABASE_URL` 带有PostgreSQL连接字符串的环境变量：\r\n\r\n```\r\nDATABASE_URL=postgresql://user:password@localhost:5432/mydb\r\n```\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-postgres-query\"],\r\n      \"env\": {\r\n        \"DATABASE_URL\": \"postgresql://user:password@localhost:5432/mydb\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n添加到您的 `.mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-postgres-query\"],\r\n      \"env\": {\r\n        \"DATABASE_URL\": \"postgresql://user:password@localhost:5432/mydb\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具（7）\r\n\r\n|工具|描述|参数|\r\n|------|-------------|--------|\r\n| `query` |执行SQL查询| `sql` （字符串）， `params` （可选数组）|\r\n| `list_tables` |列出公共架构中的所有表|无|\r\n| `describe_table` |获取列详细信息（类型、可空、默认）| `table_name` |\r\n| `list_indexes` |列出表上的索引| `table_name` |\r\n| `explain_query` |获取解释分析计划（安全，回滚）| `sql` |\r\n| `get_table_stats` |行数和表大小| `table_name` |\r\n| `get_db_info` |数据库概述（版本、大小、表数）|无|\r\n\r\n## 示例用法\r\n\r\n一旦连接，问克劳德这样的问题：\r\n\r\n- “此数据库中有哪些表？”\r\n- “描述用户表”\r\n- “从创建的订单中选择\\*at>'2024-01-01'限制10”\r\n- “解释这个慢速查询：SELECT…”\r\n- “活动桌有多大？”\r\n\r\n## 安全说明\r\n\r\n- 这 `query` 该工具执行任意SQL。与a连接 **只读数据库用户** 为了安全。\r\n- 这 `explain_query` 该工具将EXPLAIN ANALYZE封装在一个总是回滚的事务中，因此它永远不会修改数据。\r\n- 通过以下方式支持参数化查询 `params` 防止SQL注入的参数。\r\n- 永远不要暴露 `DATABASE_URL` 在公共存储库或日志中。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "postgres": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-postgres-query"
+   ],
+   "env": {
+    "DATABASE_URL": "postgresql://user:password@localhost:5432/mydb"
+   }
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "2314",
+ "kind": "mcp",
+ "name": "sthan",
+ "fingerprint_md5": "9cc2d20ba4c876d027866e5f0e11d206",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# Sthan MCP服务器\r\n\r\n**MCP服务器 [斯坦尼奥](https://sthan.io)** --让你的人工智能助手能够验证、解析、自动完成和地理编码美国地址，并查找IP地理位置。适用于Claude Desktop、Claude Code、Cursor、VS Code、Windsurf和任何兼容MCP的客户端。\r\n\r\n8个工具·TypeScript·stdio传输·免费层，无需信用卡。\r\n\r\n______________________________________________________________________\r\n\r\n## 为什么要用它\r\n\r\n- **真实美国邮政数据** --地址是根据权威的邮政记录进行验证的，而不是启发式方法。退货交付点验证（DPV），邮政编码+4，住宅/商业标志。\r\n- **Sub-100ms自动补全** --提前输入地址、城市和邮政编码建议的等级响应时间。\r\n- **强大的地理编码** --正向地理编码返回精度分类（屋顶/插值/质心/近似）加上置信度得分，因此您的AI知道何时信任结果。\r\n- **IPv4+IPv6地理定位** --国家、地区、城市、坐标、时区、邮政编码。\r\n- **无信用卡免费套餐** --在一分钟内拿到钥匙 [sthan.io/仪表板](https://sthan.io/dashboard).\r\n\r\n## 工具\r\n\r\n|工具|它做什么|\r\n|---|---|\r\n| `sthan_verify_address` |验证美国地址是否真实且可交付。返回标准格式，ZIP+4，DPV，住宅/商业。 |\r\n| `sthan_parse_address` |将自由格式的美国地址文本解析为结构化组件（街道号、名称、类型、方向、单位、城市、州、邮政编码）。 |\r\n| `sthan_autocomplete_address` |从部分输入中建议完整的美国地址。低于1000毫秒。 |\r\n| `sthan_autocomplete_city` |根据部分输入建议美国城市，并注明州代码。 |\r\n| `sthan_autocomplete_zipcode` |根据部分输入建议美国邮政编码。 |\r\n| `sthan_geocode` |美国地址→ 准确度+置信度的纬度/经度。 |\r\n| `sthan_reverse_geocode` |纬度/经度→ 最近的美国街道地址，距离单位为米。 |\r\n| `sthan_ip_geolocation` |IPv4或IPv6→ 国家、地区、城市、坐标、时区、邮政编码。 |\r\n\r\n## 快速启动\r\n\r\n### 1.获得免费的API密钥\r\n\r\n注册地址： [斯坦尼奥](https://sthan.io) 并从中创建密钥 [仪表盘](https://sthan.io/dashboard).没有信用卡。\r\n\r\n### 2.添加到您的MCP客户端\r\n\r\n**克劳德桌面/克劳德代码** (`~/.claude/mcp.json` 或项目 `.claude/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sthan\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@sthan/mcp-server\"],\r\n      \"env\": { \"STHAN_API_KEY\": \"sthan_test_your_key_here\" }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**光标** (`.cursor/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sthan\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@sthan/mcp-server\"],\r\n      \"env\": { \"STHAN_API_KEY\": \"sthan_test_your_key_here\" }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**VS Code** (`settings.json`):\r\n\r\n```json\r\n{\r\n  \"mcp.servers\": {\r\n    \"sthan\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@sthan/mcp-server\"],\r\n      \"env\": { \"STHAN_API_KEY\": \"sthan_test_your_key_here\" }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 示例提示\r\n\r\n配置后，只需自然地询问您的AI助手：\r\n\r\n- *“纽约市主街123号，邮编10001，是一个真实的可交付地址吗？”*\r\n- *解析此地址：纽约百老汇500号公寓2b室*\r\n- *“华盛顿特区宾夕法尼亚大道1600号的坐标是多少？”*\r\n- *“离40.7128，-74.0060最近的地址是什么？”*\r\n- *“IP 8.8.8.8位于何处？”*\r\n- *“建议以‘San Fr’开头的美国城市。”*\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|---|---|---|\r\n| `STHAN_API_KEY` |是|您的sthan.io API密钥(`sthan_test_*` 为了发展， `sthan_live_*` 用于生产）|\r\n| `STHAN_API_URL` |否|覆盖基本URL（默认值： `https://api.sthan.io`) |\r\n\r\n## 包裹\r\n\r\n这个monorepo发布了两个包：\r\n\r\n|包|npm|目的|\r\n|---|---|---|\r\n| [`@sthan/mcp-server`](packages/mcp-server) |  |MCP服务器本身——客户端启动的二进制文件|\r\n| [`@sthan/core`](packages/core) |  |TypeScript SDK，用于直接编程使用sthan.io API|\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/sthan-io/mcp-server.git\r\ncd mcp-server\r\nnpm install\r\nnpm run build --workspaces\r\n```\r\n\r\n然后使用以下命令运行服务器 `STHAN_API_KEY=sthan_test_... node packages/mcp-server/dist/index.js`.\r\n\r\n## 链接\r\n\r\n- **主页：** https://sthan.io\r\n- **API文件：** https://sthan.io/docs\r\n- **OpenAPI规范：** https://api.sthan.io/openapi.json\r\n- **AI参考(`llms-full.txt`):** https://api.sthan.io/llms-full.txt\r\n- **定价：** https://sthan.io/pricing/united-states\r\n- **技术支持：** https://sthan.io/support\r\n- **格拉玛：** https://glama.ai/mcp/servers/sthan-io/mcp-server\r\n\r\n## 许可证\r\n\r\nMIT——见 [许可证](LICENSE).\r\n",
+ "config": {
+  "sthan": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@sthan/mcp-server"
+   ],
+   "env": {
+    "STHAN_API_KEY": "sthan_test_your_key_here"
+   }
+  }
+ }
+}

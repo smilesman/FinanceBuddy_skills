@@ -1,0 +1,18 @@
+{
+ "id": "1635",
+ "kind": "mcp",
+ "name": "my-graphql-api",
+ "fingerprint_md5": "a2e62823f1832045c0bc57efdc43eeb7",
+ "download_count": 0,
+ "category": "API 调试",
+ "tags": "",
+ "version": "",
+ "readme": "# Grafbase MCP服务器\r\n\r\n此机箱包含Grafbase网关中模型上下文协议的实现。您可以在 [文档页面](https://grafbase.com/docs/features/mcp).\r\n\r\n## 入门\r\n\r\n通过运行以下命令，可以使用Grafbase CLI启动Grafbase MCP服务器：\r\n\r\n```bash\r\nnpx grafbase mcp <url>\r\n```\r\n\r\n哪里 `<url>` 是GraphQL API的URL。\r\n\r\nMCP服务器在以下位置监听请求 `http://127.0.0.1:5000/mcp` 默认情况下。要将其添加到Cursor中，请在项目中创建一个.Cursor/mcp.json文件，其中包含以下内容：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"my-graphql-api\": {\r\n      \"url\": \"http://127.0.0.1:5000/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 在Grafbase网关中设置MCP\r\n\r\nGrafbase网关可以配置为使用以下Grafbase.toml配置公开MCP端点：\r\n\r\n```toml\r\n[mcp]\r\nenabled = true # defaults to false\r\n# Path at which to expose the MCP service\r\npath = \"/mcp\"\r\n# Whether mutations can be executed\r\nexecute_mutations = false\r\n```\r\n\r\n另请参阅 [集成测试](https://github.com/grafbase/grafbase/tree/main/crates/integration-tests/tests/gateway/mcp).\r\n",
+ "config": {
+  "my-graphql-api": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://127.0.0.1:5000/mcp"
+  }
+ }
+}

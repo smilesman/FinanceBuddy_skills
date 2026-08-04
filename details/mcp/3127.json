@@ -1,0 +1,30 @@
+{
+ "id": "3127",
+ "kind": "mcp",
+ "name": "icrop-mcp-server",
+ "fingerprint_md5": "2d7d24fbe632a22f543e591ec5093372",
+ "download_count": 0,
+ "category": "出行交通",
+ "tags": "",
+ "version": "",
+ "readme": "# iCrop MCP服务器\r\n\r\n将您的iCrop帐户连接到Claude Desktop。询问有关农场、作物和田地的问题——克劳德会自动获取数据。\r\n\r\n## 设置\r\n\r\n### 第一步：获取Docker\r\n\r\n下载并安装 [Docker桌面](https://www.docker.com/products/docker-desktop)确保它正在运行。\r\n\r\n### 第二步：构建Docker镜像\r\n\r\n```bash\r\n# In the project folder, build the image\r\ndocker build -t icrop-mcp-server:latest .\r\n```\r\n\r\n### 步骤3：配置Claude桌面\r\n\r\n查找您的Claude Desktop配置文件：\r\n\r\n- **苹果电脑**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n将此添加到文件中（替换为您的iCrop凭据）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"icrop-mcp-server\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\", \"-i\", \"--rm\",\r\n        \"--env\", \"ICROP_USERNAME=your_email@example.com\",\r\n        \"--env\", \"ICROP_PASSWORD=your_password\",\r\n        \"--env\", \"TRANSPORT=stdio\",\r\n        \"icrop-mcp-server:latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 步骤4:重新启动克劳德桌面\r\n\r\n退出并重新启动Claude Desktop。您应该在聊天中看到MCP图标。\r\n\r\n## 可用工具\r\n\r\n服务器提供9个工具：\r\n\r\n**农场管理：**\r\n\r\n- `icrop_list_farms` -列出带有过滤选项（年份、隐藏字段等）的农场\r\n- `icrop_list_all_farms` -获取所有没有过滤器的农场\r\n\r\n**作物管理：**\r\n\r\n- `icrop_list_crops` -获取所有可用作物类型\r\n- `icrop_get_crop_details` -获取包括品种在内的详细作物信息\r\n- `icrop_get_crop_varieties` -获取特定作物的品种\r\n\r\n**现场管理：**\r\n\r\n- `icrop_list_crop_fields` -列出所有农田\r\n\r\n**数据列表：**\r\n\r\n- `icrop_get_soil_types` -获取可用土壤类型\r\n- `icrop_get_cultivation_types` -获取种植方法（土壤、水培等）\r\n- `icrop_get_coverage` -获得覆盖选项（开放式、覆盖式）\r\n\r\n## 使用示例\r\n\r\n问克劳德：\r\n\r\n- “给我看看2025年的所有农场”\r\n- “有哪些作物可供选择？”\r\n- “列出马铃薯品种”\r\n- “显示我的农田”\r\n- “我可以使用哪些土壤类型？”\r\n\r\n## 项目结构\r\n\r\n```\r\nsrc/\r\n├── icrop_mcp_server.py     # Main MCP server\r\n└── schemas.py              # Data validation\r\n```\r\n",
+ "config": {
+  "icrop-mcp-server": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "--env",
+    "ICROP_USERNAME=your_email@example.com",
+    "--env",
+    "ICROP_PASSWORD=your_password",
+    "--env",
+    "TRANSPORT=stdio",
+    "icrop-mcp-server:latest"
+   ],
+   "env": {}
+  }
+ }
+}

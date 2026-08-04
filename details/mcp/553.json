@@ -1,0 +1,23 @@
+{
+ "id": "553",
+ "kind": "mcp",
+ "name": "yt-mcp-server",
+ "fingerprint_md5": "18a30da1cb9a97322070796f1820a5b1",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# yt-mcp服务器\r\n\r\nMCP服务器，具有处理YouTube数据的各种实用功能。此服务器提供用于处理YouTube URL、视频ID和缩略图的工具。\r\n\r\n\r\n## 📖 资源\r\n\r\n- [模型上下文协议](https://modelcontextprotocol.io/introduction)\r\n\r\n## 先决条件\r\n\r\n- Python 3.12或更高版本\r\n- [紫外线的](https://github.com/astral-sh/uv) 包管理器\r\n\r\n## 设置\r\n\r\n### 1.安装UV\r\n\r\n如果您还没有安装UV，可以使用以下命令安装：\r\n\r\n```bash\r\nbrew install uv\r\n# alternatively curl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n### 2.安装方法\r\n\r\n#### 方法1：从GitHub安装（推荐）\r\n\r\n这是安装和运行服务器的最简单方法：\r\n\r\n```bash\r\nuvx --from git+https://github.com/kdr/yt-mcp-server.git server\r\n```\r\n\r\n#### 方法2：地方发展设置\r\n\r\n如果你想在本地修改代码：\r\n\r\n```bash\r\ngit clone https://github.com/kdr/yt-mcp-server.git\r\ncd yt-mcp-server\r\nuv venv\r\nsource .venv/bin/activate  # On Unix/macOS\r\n# or\r\n.venv\\Scripts\\activate  # On Windows\r\nuv pip install -e .\r\n```\r\n\r\n### 3.配置MCP客户端\r\n\r\n将以下配置添加到MCP客户端设置中：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"yt-mcp-server\": {\r\n            \"command\": \"uvx\",\r\n            \"args\": [\r\n                \"--from\",\r\n                \"git+https://github.com/kdr/yt-mcp-server.git\",\r\n                \"server\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n对于本地开发（方法2），请使用此配置：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"yt-mcp-server\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"/ABSOLUTE/PATH/TO/PARENT/FOLDER/yt-mcp-server/yt_mcp_server\",\r\n                \"run\",\r\n                \"main.py\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\nLLM可以使用以下工具：\r\n\r\n- `get_watch_url`：返回给定视频ID的YouTube观看URL，可以选择从特定时间开始\r\n\r\n  - 参数：\r\n    - `video_id`：YouTube视频ID\r\n    - `start_time`：（可选）开始时间（秒）\r\n\r\n- `get_thumbnail_url`：返回给定YouTube视频ID的缩略图URL\r\n\r\n  - 参数：\r\n    - `video_id`：YouTube视频ID\r\n\r\n- `get_normalized_url`：将各种YouTube URL格式标准化为规范的观看URL，并提取视频ID\r\n\r\n  - 参数：\r\n    - `url`：要标准化的YouTube URL\r\n",
+ "config": {
+  "yt-mcp-server": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/kdr/yt-mcp-server.git",
+    "server"
+   ],
+   "env": {}
+  }
+ }
+}

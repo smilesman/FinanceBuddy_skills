@@ -1,0 +1,21 @@
+{
+ "id": "1501",
+ "kind": "mcp",
+ "name": "inked-2",
+ "fingerprint_md5": "5f8e633f45326cf5c15f34e5443b9ad5",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 墨迹\r\n\r\n强大的MCP服务器，用于使用Claude应用程序进行内存管理。快速、简单，并可选择通过AI驱动的搜索进行增强。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@coldielb/inked\">\r\n  \r\n</a>\r\n\r\n## 特性\r\n\r\n- **快速文本搜索** -默认情况下，内存检索速度极快\r\n- **人工智能驱动的搜索** -可选的基于嵌入的语义搜索 *截至06/25/25，目前无法工作*\r\n- **AI旋转** -实验性重新排序，以获得更好的结果\r\n- **简易贮藏** -SQLite中的纯文本存储（无加密开销）\r\n- **安全** -所有数据都存储在本地 `~/.inked/`\r\n\r\n## 安装\r\n\r\n### 选项1：（推荐）\r\n\r\n```bash\r\nnpm install -g @frgmt/inked\r\n```\r\n\r\n### 方案2：地方发展\r\n\r\n```bash\r\ngit clone https://github.com/frgmt/inked.git\r\ncd inked\r\nnpm install\r\nnpm run build\r\nnode dist/index.js\r\n```\r\n\r\n## 基本用法\r\n\r\n添加到MCP服务器配置中：\r\n\r\n### 标准（快速文本搜索）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"inked\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@frgmt/inked\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n^用这个。剩下的行不通。需要解决一些问题\r\n\r\n=========忽略这个===========\r\n\r\n### 使用AI嵌入（语义搜索）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"inked\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@frgmt/inked\", \"--use-embeddings\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 通过嵌入+AI重新排序（最佳结果）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"inked\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@frgmt/inked\", \"--use-embeddings\", \"--use-reranking\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 实验性功能\r\n\r\n### 人工智能搜索（可选）\r\n\r\nInked支持基于实验性嵌入的搜索，以实现更细微的记忆检索。\r\n\r\n#### 嵌入模型\r\n\r\n|标志|型号|内存使用情况|最适合|\r\n|------|-------|--------------|----------|\r\n| `--use-embeddings` |Qwen3-0.6B |~2GB RAM |短内存，快速响应|\r\n| `--use-embeddings=4b` |Qwen3-4B |~8GB RAM |更长的内存，更好的细微差别|\r\n| `--use-embeddings=8b` |Qwen3-8B | ~ 16GB RAM |复杂存储器、文档|\r\n\r\n#### 重新排列模型（需要嵌入）\r\n\r\n|标志|型号|附加内存|最适合|\r\n|------|-------|-------------------|----------|\r\n| `--use-reranking` |Qwen3-Reranker-0.6B|~1GB内存|相关性提高|\r\n| `--use-reranking=4b` |Qwen3-Reranker-4B |~4GB RAM |最佳结果质量|\r\n\r\n### 如何选择型号\r\n\r\n**对于大多数用户：** 无标志开始（快速文本搜索）\r\n\r\n**为了更好地理解语义：** 添加 `--use-embeddings`\r\n\r\n- 有利于通过意义而不是精确的单词来寻找记忆\r\n- 首次运行下载~2GB型号（一次性）\r\n\r\n**对于细致入微、更长的记忆：** 使用 `--use-embeddings=4b`\r\n\r\n- 更好地理解较长文本中的上下文\r\n- 处理想法之间更复杂的关系\r\n\r\n**为了获得最佳效果：** 添加 `--use-reranking` 有嵌入\r\n\r\n- 人工智能为最佳排名重新评分\r\n- 显著提高搜索质量\r\n\r\n**对于高级用户：** `--use-embeddings=8b --use-reranking=4b`\r\n\r\n- 尽可能高的搜索质量\r\n- 需要20+GB RAM\r\n- 适用于研究、文档编制和复杂项目\r\n\r\n### 内存需求\r\n\r\n|配置|所需RAM |下载大小|首次启动|\r\n|---------------|------------|---------------|--------------|\r\n|默认（文本）|~50MB|0MB|即时|\r\n|基本嵌入|~2GB|~1.2GB|2-5分钟|\r\n|4B嵌入|~8GB|~4GB|5-10分钟|\r\n|8B嵌入|~16GB|~8GB|10-20分钟|\r\n|+重新排序|+1-4GB|+0.5-2GB |+1-3分钟|\r\n\r\n*模型在本地缓存，只下载一次*\r\n\r\n=========结束忽略===========\r\n\r\n## 使用指南\r\n\r\n### 自动内存设置\r\n\r\n将此添加到您的Claude设置/首选项中：\r\n\r\n> “在新对话开始时，使用带有‘全部’的墨迹阅读工具加载我的记忆。只在与我们的对话直接相关的时候才提及记忆。使用写作工具保存重要的偏好、事实或见解，以便在未来的对话中记住。”\r\n\r\n### 运作原理\r\n\r\n- **每次对话阅读一次**：记忆在初始加载后保持在上下文中\r\n- **无声操作**：克劳德使用记忆，除非相关，否则不会提及\r\n- **智能写作**：自动保存重要信息以供将来会话使用\r\n\r\n### 何时书写回忆\r\n\r\n- 用户偏好和沟通风格\r\n- 重要项目信息和背景\r\n- 反复出现的话题或主题\r\n- 在对话中应该坚持的事实\r\n- 值得记住的见解或模式\r\n\r\n## 工具\r\n\r\n### `read`\r\n\r\n搜索和检索记忆。\r\n\r\n**参数：**\r\n\r\n- `search` （必填）：查询所有内容的字符串或“ALL”\r\n- `topr` （可选）：结果数量（1-5，默认值：3）\r\n\r\n### `write`\r\n\r\n添加或删除记忆。\r\n\r\n**参数：**\r\n\r\n- `content` （必填）：内存文本（新建）或搜索查询（删除）\r\n- `sTool` （必填）：“新建”或“删除”\r\n- `id` （可选）：要删除的特定ID\r\n\r\n## 许可证\r\n\r\nAGPL v3-个人使用的开源软件。商业使用需要开源您的应用程序或商业许可证。\r\n",
+ "config": {
+  "inked": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@frgmt/inked"
+   ],
+   "env": {}
+  }
+ }
+}

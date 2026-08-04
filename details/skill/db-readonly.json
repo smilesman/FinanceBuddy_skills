@@ -1,0 +1,12 @@
+{
+ "id": "db-readonly",
+ "kind": "skill",
+ "name": "db-readonly",
+ "fingerprint_md5": "2ea01cf1da8529ee4a9a1e71a913dda8",
+ "download_count": 0,
+ "category": "SkyWalking",
+ "tags": "",
+ "version": "",
+ "readme": "# db-readonly\r\n\r\n本 skill 仅用于数据库读取任务。\r\n\r\n## 本 skill 能做什么\r\n\r\n- 使用 connection env vars 连接 **PostgreSQL** 或 **MySQL**\r\n- 仅执行 **SELECT / WITH / EXPLAIN** 查询\r\n- 可选将输出保存为 CSV/TSV/JSON\r\n- 阻止 risky SQL（`INSERT`、`UPDATE`、`DELETE`、`DROP`、`ALTER` 等）\r\n\r\n## Connection env vars\r\n\r\n### PostgreSQL\r\n\r\n- `PGHOST`\r\n- `PGPORT`（可选，默认 5432）\r\n- `PGDATABASE`\r\n- `PGUSER`\r\n- `PGPASSWORD`\r\n\r\n### MySQL\r\n\r\n- `MYSQL_HOST`\r\n- `MYSQL_PORT`（可选，默认 3306）\r\n- `MYSQL_DATABASE`\r\n- `MYSQL_USER`\r\n- `MYSQL_PASSWORD`\r\n\r\n## 运行\r\n\r\n使用脚本：\r\n\r\n- `scripts/db_readonly.sh postgres \"SELECT now();\"`\r\n- `scripts/db_readonly.sh mysql \"SELECT NOW();\"`\r\n\r\n导出示例：\r\n\r\n- `scripts/db_readonly.sh postgres \"SELECT * FROM users LIMIT 100\" --format csv --out /tmp/users.csv`\r\n\r\n## 安全规则\r\n\r\n1. 拒绝非 read SQL。\r\n2. 对探索性查询优先使用 `LIMIT`。\r\n3. 当用户要求 updates/deletes/schema changes 时，询问明确确认，不要通过本 skill 运行。\r\n4. 避免从 env vars 打印 secrets。\r\n\r\n## Reference\r\n\r\n- Query cookbook: `references/query-cookbook.md`",
+ "config": {}
+}

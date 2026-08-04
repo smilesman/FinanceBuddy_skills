@@ -1,0 +1,22 @@
+{
+ "id": "1498",
+ "kind": "mcp",
+ "name": "image-process-mcp",
+ "fingerprint_md5": "a1ab1fc90cd7e00f522477733fa8ff3f",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 图像处理MCP服务器\r\n\r\n用于图像处理的MCP服务器，使用Sharp库提供图像处理功能。\r\n\r\n这是一个用于处理图片的MCP Server，使用 sharp 库提供图片处理功能。\r\n\r\n## Features / 功能\r\n\r\n服务器提供以下图像处理工具：\r\n\r\n1. **调整图像大小** (`resizeImage`)：调整图像的宽度和高度\r\n1. **转换格式** (`convertFormat`)：将图像转换为不同格式（jpeg、png、webp、avif、tiff、gif）\r\n1. **裁剪图像** (`cropImage`)：裁剪图像的特定区域\r\n1. **旋转图像** (`rotateImage`)：旋转图像\r\n1. **获取图像信息** (`getImageInfo`)：获取图像的基本信息（尺寸、格式等）\r\n\r\n提供以下图片处理工具：\r\n\r\n1. **调整图片尺寸** (`resizeImage`)：调整图片的宽度和高度\r\n1. **转换图片格式** (`convertFormat`)：将图片转换为不同的格式（jpeg、png、webp、avif、tiff、gif）\r\n1. **裁剪图片** (`cropImage`)：裁剪图片的指定区域\r\n1. **旋转图片** (`rotateImage`)：旋转图片\r\n1. **获取图片信息** (`getImageInfo`)：获取图片的基本信息（尺寸、格式等）\r\n\r\n## Usage / 使用\r\n\r\n### MacOS/Linux\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Image Process MCP\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"image-process-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 视窗\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Image Process MCP\": {\r\n      \"command\": \"cmd\",\r\n      \"args\": [\"/c\", \"npx\", \"-y\", \"image-process-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Tool Parameters / 工具参数\r\n\r\n#### Resize Image (resizeImage) / 调整图片尺寸\r\n\r\n```json\r\n{\r\n  \"input_path\": \"Path to the input image\",\r\n  \"output_path\": \"Path to the output image\",\r\n  \"width\": Width in pixels (optional),\r\n  \"height\": Height in pixels (optional),\r\n  \"fit\": \"Resizing method, options: cover, contain, fill, inside, outside, default is cover\"\r\n}\r\n```\r\n\r\n```json\r\n{\r\n  \"input_path\": \"输入图片的路径\",\r\n  \"output_path\": \"输出图片的路径\",\r\n  \"width\": 宽度（像素），可选,\r\n  \"height\": 高度（像素），可选,\r\n  \"fit\": \"调整尺寸的方式，可选值：cover, contain, fill, inside, outside，默认为cover\"\r\n}\r\n```\r\n\r\n#### Convert Format (convertFormat) / 转换图片格式\r\n\r\n```json\r\n{\r\n  \"input_path\": \"Path to the input image\",\r\n  \"output_path\": \"Path to the output image\",\r\n  \"format\": \"Target format, options: jpeg, png, webp, avif, tiff, gif\",\r\n  \"quality\": Image quality (1-100), only for formats supporting compression, default is 80\r\n}\r\n```\r\n\r\n```json\r\n{\r\n  \"input_path\": \"输入图片的路径\",\r\n  \"output_path\": \"输出图片的路径\",\r\n  \"format\": \"目标格式，可选值：jpeg, png, webp, avif, tiff, gif\",\r\n  \"quality\": 图片质量（1-100），仅用于支持压缩的格式，默认为80\r\n}\r\n```\r\n\r\n#### Crop Image (cropImage) / 裁剪图片\r\n\r\n```json\r\n{\r\n  \"input_path\": \"Path to the input image\",\r\n  \"output_path\": \"Path to the output image\",\r\n  \"left\": Left edge offset (pixels),\r\n  \"top\": Top edge offset (pixels),\r\n  \"width\": Crop width (pixels),\r\n  \"height\": Crop height (pixels)\r\n}\r\n```\r\n\r\n```json\r\n{\r\n  \"input_path\": \"输入图片的路径\",\r\n  \"output_path\": \"输出图片的路径\",\r\n  \"left\": 左边缘的偏移量（像素）,\r\n  \"top\": 顶部边缘的偏移量（像素）,\r\n  \"width\": 裁剪宽度（像素）,\r\n  \"height\": 裁剪高度（像素）\r\n}\r\n```\r\n\r\n#### Rotate Image (rotateImage) / 旋转图片\r\n\r\n```json\r\n{\r\n  \"input_path\": \"Path to the input image\",\r\n  \"output_path\": \"Path to the output image\",\r\n  \"angle\": Rotation angle in degrees\r\n}\r\n```\r\n\r\n```json\r\n{\r\n  \"input_path\": \"输入图片的路径\",\r\n  \"output_path\": \"输出图片的路径\",\r\n  \"angle\": 旋转角度（度）\r\n}\r\n```\r\n\r\n#### Get Image Info (getImageInfo) / 获取图片信息\r\n\r\n```json\r\n{\r\n  \"input_path\": \"Path to the image\"\r\n}\r\n```\r\n\r\n```json\r\n{\r\n  \"input_path\": \"图片的路径\"\r\n}\r\n```\r\n\r\n## 示例/示例\r\n\r\n在Claude中，您可以使用以下格式调用工具：\r\n\r\n```\r\nPlease help me resize an image to 500 pixels wide\r\nInput path: /path/to/input.jpg\r\nOutput path: /path/to/output.jpg\r\n```\r\n\r\n在 Claude 中，可以使用以下方式调用工具：\r\n\r\n```\r\n请帮我将图片调整为宽度500像素的大小\r\n输入路径：/path/to/input.jpg\r\n输出路径：/path/to/output.jpg\r\n```\r\n\r\n## Dependencies / 依赖\r\n\r\n- Node.js\r\n- 锋利\r\n- @模型上下文协议/sdk\r\n\r\n## License / 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "image-process-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "image-process-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "id": "328",
+ "kind": "mcp",
+ "name": "music-assistant",
+ "fingerprint_md5": "1716a65ad2b916494b1ff526961f4219",
+ "download_count": 0,
+ "category": "移动端自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 音乐助手MCP服务器\r\n\r\n用于控制的MCP（模型上下文协议）服务器 [音乐助手](https://music-assistant.io/) -管理多房间音频、播放队列和跨音乐提供商搜索。\r\n\r\n## 先决条件\r\n\r\n- 跑步 [音乐助手](https://music-assistant.io/) 服务器\r\n- 长期访问令牌（设置>用户>长期访问令牌）\r\n- [紫外线](https://docs.astral.sh/uv/) 安装\r\n\r\n## 安装\r\n\r\n无需本地安装。配置您的MCP客户端，使其直接从GitHub运行 `uvx`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"music-assistant\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"--from\", \"git+https://github.com/davidpadbury/music-assistant-mcp\",\r\n        \"music-assistant-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"MUSIC_ASSISTANT_URL\": \"http://your-server:8095\",\r\n        \"MUSIC_ASSISTANT_TOKEN\": \"your_token_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n将此配置添加到：\r\n\r\n- **克劳德桌面版**: `~/Library/Application Support/Claude/claude_desktop_config.json` （macOS）或 `%APPDATA%\\Claude\\claude_desktop_config.json` （Windows）\r\n- **克劳德代码**: `~/.claude.json`\r\n- **光标**：设置>MCP\r\n\r\n## 快速开始\r\n\r\n1. **列出发言者名单**：使用 `ma_list_players` 查看所有发言者及其当前状态\r\n1. **搜索音乐**：使用 `ma_search` 通过查询查找歌曲、专辑、艺术家或播放列表\r\n1. **播放音乐**：使用 `ma_play_media` 具有来自搜索结果的URI和玩家ID\r\n1. **控制播放**：使用 `ma_playback` 播放、暂停、跳过或查找\r\n\r\n## 可用工具\r\n\r\n### 玩家工具\r\n\r\n|工具|目的|\r\n|------|---------|\r\n| `ma_list_players` |列出所有扬声器的音量、状态和组信息|\r\n| `ma_volume` |设置音量级别（0-100），向上/向下调整，或静音/取消静音|\r\n| `ma_group` |将演讲者分组或取消分组|\r\n\r\n### 播放工具\r\n\r\n|工具|目的|\r\n|------|---------|\r\n| `ma_playback` |控制播放：播放、暂停、停止、切换、下一个、上一个、查找|\r\n| `ma_play_media` |在带有队列选项（播放、替换、下一步、添加）的播放器上播放媒体URI|\r\n\r\n### 队列工具\r\n\r\n|工具|目的|\r\n|------|---------|\r\n| `ma_queue` |获取队列内容、设置shuffle/repeat或清除队列|\r\n| `ma_queue_item` |移动或删除队列中的特定项目|\r\n| `ma_transfer_queue` |将播放从一个播放器转移到另一个播放器|\r\n\r\n### 音乐库工具\r\n\r\n|工具|目的|\r\n|------|---------|\r\n| `ma_search` |搜索艺术家、专辑、曲目、播放列表或广播电台|\r\n| `ma_browse` |按层次浏览音乐提供商内容|\r\n\r\n## 常见工作流\r\n\r\n### 在扬声器上播放音乐\r\n\r\n```\r\n1. ma_list_players()                           → Get player IDs\r\n2. ma_search(query=\"Beatles Abbey Road\")       → Find the album, get URI\r\n3. ma_play_media(queue_id=\"living_room\", media=\"spotify://album/xxx\")\r\n```\r\n\r\n### 多房间音频组扬声器\r\n\r\n```\r\n1. ma_list_players()                           → See available speakers\r\n2. ma_group(action=\"join\", player_ids=[\"kitchen\", \"bedroom\"], target_player_id=\"living_room\")\r\n3. Now all three speakers play in sync\r\n```\r\n\r\n### 添加到当前队列\r\n\r\n```\r\n1. ma_search(query=\"Bohemian Rhapsody\", media_types=[\"track\"])\r\n2. ma_play_media(queue_id=\"living_room\", media=\"spotify://track/xxx\", option=\"add\")\r\n```\r\n\r\n### 控制正在播放的内容\r\n\r\n```\r\n- Pause: ma_playback(queue_id=\"living_room\", command=\"pause\")\r\n- Skip: ma_playback(queue_id=\"living_room\", command=\"next\")\r\n- Volume: ma_volume(player_id=\"living_room\", level=50)\r\n```\r\n\r\n### 将播放转移到另一个房间\r\n\r\n```\r\nma_transfer_queue(source_queue_id=\"living_room\", target_queue_id=\"kitchen\")\r\n→ Music moves to kitchen, continuing from the same position\r\n```\r\n\r\n## 了解ID\r\n\r\n- **player_id**：标识说话者（例如“living_room”）。获取自 `ma_list_players`\r\n- **queue_id**：通常与player_id相同。每个玩家都有自己的队列\r\n- **item_id**：标识队列中的轨迹。获取自 `ma_queue`\r\n- **统一资源标识符**：标识媒体项目（例如，“spotify://track/abc123“） `ma_search` 或 `ma_browse`\r\n\r\n## 提示\r\n\r\n- 总是打电话 `ma_list_players` 首先发现可用的扬声器及其ID\r\n- 使用 `ma_search` 在尝试播放之前先找到媒体\r\n- 在对演讲者进行分组时 `target_player_id` 成为组长\r\n- 队列ID通常与玩家ID相同\r\n- 使用 `option=\"add\"` 随着 `ma_play_media` 在不中断当前播放的情况下添加到队列\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "music-assistant": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "git+https://github.com/davidpadbury/music-assistant-mcp",
+    "music-assistant-mcp"
+   ],
+   "env": {
+    "MUSIC_ASSISTANT_URL": "http://your-server:8095",
+    "MUSIC_ASSISTANT_TOKEN": "your_token_here"
+   }
+  }
+ }
+}

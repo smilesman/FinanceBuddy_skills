@@ -1,0 +1,24 @@
+{
+ "id": "2132",
+ "kind": "mcp",
+ "name": "bigdatacloud",
+ "fingerprint_md5": "429efc6579683cd8d6ce271baeadf943",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 大数据云MCP服务器\r\n\r\n一 [MCP（模型上下文协议）](https://modelcontextprotocol.io) 允许AI助手访问的服务器 [大数据云](https://www.bigdatacloud.com) API——IP地理定位、反向地理编码、网络智能、时区、电话/电子邮件验证等。\r\n\r\n## 为什么？\r\n\r\n让你的人工智能助手对IP地址进行地理定位、对GPS坐标进行反向地理编码或验证电话号码，并获得BigDataCloud提供的真实、准确的结果 [专利IP地理定位技术](https://www.bigdatacloud.com/insights/ip-geolocation-accuracy-report).\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的Claude桌面配置(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bigdatacloud\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@bigdatacloudapi/mcp-server\"],\r\n      \"env\": {\r\n        \"BIGDATACLOUD_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n添加 `.cursor/mcp.json` 在您的项目中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bigdatacloud\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@bigdatacloudapi/mcp-server\"],\r\n      \"env\": {\r\n        \"BIGDATACLOUD_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### VS代码（GitHub副本）\r\n\r\n添加到您的VS代码设置或 `.vscode/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"bigdatacloud\": {\r\n        \"command\": \"npx\",\r\n        \"args\": [\"-y\", \"@bigdatacloudapi/mcp-server\"],\r\n        \"env\": {\r\n          \"BIGDATACLOUD_API_KEY\": \"your-api-key-here\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## API密钥\r\n\r\n**免费套餐可用** -大多数工具都使用免费的API密钥：\r\n\r\n1. 注册地址： [Bigdatacloud.com/login](https://www.bigdatacloud.com/login)\r\n1. 从仪表板获取API密钥\r\n1. 设置 `BIGDATACLOUD_API_KEY` 环境变量\r\n\r\n所有工具都需要一个API密钥。免费层为您提供了访问每个端点的权限，并具有慷慨的容量限制。\r\n\r\n## 可用工具\r\n\r\n### 所有工具（免费API密钥-所有端点，容量限制）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `ip-geolocation` |IP地址→ 城市、地区、国家、坐标、ISP|\r\n| `ip-geolocation-full` |完整的地理位置+置信区+危险报告|\r\n| `ip-geolocation-with-confidence` |地理位置+置信度得分+区域边界|\r\n| `reverse-geocode` |坐标→ 详细地址信息|\r\n| `reverse-geocode-with-timezone` |坐标→ 地址+时区详细信息|\r\n| `asn-info` |AS编号→ 组织、国家、前缀|\r\n| `network-by-ip` | IP → BGP前缀、运营商、网络类型|\r\n| `country-by-ip` | IP → 包含详细国家信息的国家|\r\n| `timezone-by-ip` | IP → 时区、偏移、夏令时、当地时间|\r\n| `timezone-by-location` |坐标→ 时区详细信息|\r\n| `phone-number-validate` |电话号码→ 国家、运营商、线路类型|\r\n| `email-verify` |电子邮件→ 格式检查、域、MX、一次性状态|\r\n| `user-agent-info` |UA字符串→ 浏览器、操作系统、设备、机器人检测|\r\n| `ip-hazard-report` |VPN、代理、Tor、bot、垃圾邮件威胁评估|\r\n| `tor-exit-nodes` |列出具有地理位置的活动Tor退出节点|\r\n\r\n需要更多容量？ [升级您的计划](https://www.bigdatacloud.com/api-packages).\r\n\r\n## 示例提示\r\n\r\n配置后，尝试询问您的AI助手：\r\n\r\n- *“IP地址8.8.8.8位于何处？”*\r\n- *“坐标-34.9285138.6007处的地址是什么？”*\r\n- *“203.0.113.50是哪个时区？”*\r\n- *“验证此电话号码：+61 4 1234 5678”*\r\n- *“此电子邮件地址有效吗：test@example.com?\"*\r\n- *“1.1.1.1属于哪个AS编号？”*\r\n- *“显示当前Tor退出节点”*\r\n\r\n## 关于大数据云\r\n\r\n[大数据云](https://www.bigdatacloud.com) 提供由专利技术支持的下一代IP地理定位。我们的系统不断收集地面实况位置数据，并使用专有算法提供行业领先的精度——每天在我们的 [公共准确性报告](https://www.bigdatacloud.com/insights/ip-geolocation-accuracy-report).\r\n\r\n- 🏆 **专利技术** --美国专利11792110 B2\r\n- 📊 **透明精度** --公共每日基准与竞争对手\r\n- 🌍 **全球覆盖** --IPv4和IPv6\r\n- ⚡ **超快的** --边缘部署的平面文件架构\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "bigdatacloud": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@bigdatacloudapi/mcp-server"
+   ],
+   "env": {
+    "BIGDATACLOUD_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

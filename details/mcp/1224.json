@@ -1,0 +1,34 @@
+{
+ "id": "1224",
+ "kind": "mcp",
+ "name": "postgres-25",
+ "fingerprint_md5": "8e595fc2f005540ccb05e903617f6293",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# PostgreSQL MCP服务器\r\n\r\n连接到本地PostgreSQL数据库的MCP（模型上下文协议）服务器，使AI助手能够查询和管理您的数据库。\r\n\r\n## 提供的工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| **查询** |执行只读SQL（SELECT、SHOW、EXPLAIN）|\r\n| **执行** |执行写SQL（INSERT、UPDATE、DELETE、CREATE、ALTER、DROP）|\r\n| **list_tables** |列出架构中的所有表|\r\n| **describe_table** |显示表的列、类型、键和索引|\r\n| **list_schemas** |列出数据库中的所有用户模式|\r\n\r\n## 资源\r\n\r\n- **模式概述** (`postgres://schema/overview`)——Markdown中的完整数据库模式概述\r\n\r\n## 通过接头进行动态连接\r\n\r\n此服务器支持动态PostgreSQL连接。您可以在初始SSE连接请求中通过HTTP标头提供数据库凭据。这允许服务器的单个部署实例为多个不同的数据库提供服务。\r\n\r\n### 支持的标头\r\n\r\n|标题|描述|默认值|\r\n|--------|-------------|---------|\r\n| `x-pg-host` |PostgreSQL主机| `PG_HOST` 或 `localhost` |\r\n| `x-pg-port` |PostgreSQL端口| `PG_PORT` 或 `5432` |\r\n| `x-pg-user` |PostgreSQL用户| `PG_USER` 或 `postgres` |\r\n| `x-pg-password` |PostgreSQL密码| `PG_PASSWORD` 或 `postgres` |\r\n| `x-pg-database` |PostgreSQL数据库| `PG_DATABASE` 或 `postgres` |\r\n| `x-pg-ssl` |使用SSL(`true`/`false`) | `PG_SSL` 或 `false` |\r\n| `x-pg-ca-cert` |CA证书| `PG_CA_CERT` |\r\n\r\n______________________________________________________________________\r\n\r\n## 反重力/光标配置（VS代码）\r\n\r\n使用此服务器 **反重力** 或 **光标**，将以下内容添加到您的 `mcp_config.json` （通常在 `%APPDATA%\\antigravity\\` 或IDE的MCP设置）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-remote\",\r\n        \"https://postgree-mcp-dfadduf9bsdvdwa9.eastasia-01.azurewebsites.net/sse\",\r\n        \"--header\", \"x-pg-host: pg-168600c0-aeiyankhan2-d42e.g.aivencloud.com\",\r\n        \"--header\", \"x-pg-port: 26768\",\r\n        \"--header\", \"x-pg-user: avnadmin\",\r\n        \"--header\", \"x-pg-password: YOUR_PASSWORD\",\r\n        \"--header\", \"x-pg-database: defaultdb\",\r\n        \"--header\", \"x-pg-ssl: true\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## Claude Code CLI中的配置\r\n\r\n如果你使用 **克劳德代码CLI**，您可以使用以下命令添加此服务器：\r\n\r\n### 1.安装Claude Code（如果尚未安装）\r\n\r\n```bash\r\nnpm install -g @anthropic-ai/claude-code\r\n```\r\n\r\n### 2.添加PostgreSQL MCP服务器\r\n\r\n在终端中运行以下命令：\r\n\r\n```bash\r\nclaude mcp add postgres -- npx mcp-remote https://postgree-mcp-dfadduf9bsdvdwa9.eastasia-01.azurewebsites.net/sse \\\r\n  --header \"x-pg-host: pg-168600c0-aeiyankhan2-d42e.g.aivencloud.com\" \\\r\n  --header \"x-pg-port: 26768\" \\\r\n  --header \"x-pg-user: avnadmin\" \\\r\n  --header \"x-pg-password: YOUR_PASSWORD\" \\\r\n  --header \"x-pg-database: defaultdb\" \\\r\n  --header \"x-pg-ssl: true\"\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## Claude桌面中的配置\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-remote\",\r\n        \"https://postgree-mcp-dfadduf9bsdvdwa9.eastasia-01.azurewebsites.net/sse\",\r\n        \"--header\", \"x-pg-host: pg-168600c0-aeiyankhan2-d42e.g.aivencloud.com\",\r\n        \"--header\", \"x-pg-port: 26768\",\r\n        \"--header\", \"x-pg-user: avnadmin\",\r\n        \"--header\", \"x-pg-password: YOUR_PASSWORD\",\r\n        \"--header\", \"x-pg-database: defaultdb\",\r\n        \"--header\", \"x-pg-ssl: true\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 本地设置（用于开发）\r\n\r\n### 1.安装依赖项\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n### 2.配置默认数据库（可选）\r\n\r\n您仍然可以使用 `.env` 本地开发文件：\r\n\r\n```env\r\nPG_HOST=localhost\r\nPG_PORT=5432\r\nPG_USER=postgres\r\nPG_PASSWORD=your_password_here\r\nPG_DATABASE=your_database_name\r\n```\r\n\r\n### 3.构建和运行\r\n\r\n```bash\r\nnpm run build\r\nnpm start\r\n```\r\n\r\n## 用法示例\r\n\r\n配置后，您可以向AI助手询问以下问题：\r\n\r\n- “列出数据库中的所有表”\r\n- “描述用户表”\r\n- “从创建的订单中选择\\*at>'2025-01-01'”\r\n- “创建一个名为products的新表”\r\n",
+ "config": {
+  "postgres": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://postgree-mcp-dfadduf9bsdvdwa9.eastasia-01.azurewebsites.net/sse",
+    "--header",
+    "x-pg-host: pg-168600c0-aeiyankhan2-d42e.g.aivencloud.com",
+    "--header",
+    "x-pg-port: 26768",
+    "--header",
+    "x-pg-user: avnadmin",
+    "--header",
+    "x-pg-password: YOUR_PASSWORD",
+    "--header",
+    "x-pg-database: defaultdb",
+    "--header",
+    "x-pg-ssl: true"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "id": "501",
+ "kind": "mcp",
+ "name": "ttrpg-gm-tools",
+ "fingerprint_md5": "273338ee40b4bdcf0a88f98a29c17bb7",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# TTRPG GM工具MCP服务器\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io/) 桌面RPG游戏大师的服务器。\r\n\r\n## 🏗️ 建筑\r\n\r\n该项目使用两部分架构：\r\n\r\n1. **GitHub页面** -在以下位置托管静态数据文件（遭遇、名称、宝藏等） `https://ttrpg-mcp.tedt.org/`\r\n1. **Cloudflare工作人员** -在以下位置实现MCP协议并执行工具逻辑 `https://ttrpg-mcp.tedt.org/mcp`\r\n\r\n> **注：** GitHub Pages只能提供静态文件。MCP协议需要一个真正的服务器来处理动态请求，这就是为什么我们需要Cloudflare Worker。\r\n\r\n## 🎲 特性\r\n\r\n此MCP服务器为游戏大师提供工具：\r\n\r\n- **奇遇生成器** -根据难度和环境生成随机遭遇\r\n- **NPC名称生成器** -为各种幻想种族创建角色名称\r\n- **位置名称生成器** -生成酒馆、城市和地牢名称\r\n- **人格特质生成器** -创建NPC个性和怪癖\r\n- **宝藏生成器** -生成战利品和宝藏\r\n- **天气生成器** -创建大气天气描述\r\n- **绘图钩生成器** -生成冒险钩子和任务创意\r\n\r\n## 🔧 设置\r\n\r\n### 先决条件\r\n\r\n1. **部署Cloudflare Worker** （参见 `cloudflare-mcp-server/README.md`)\r\n1. **配置您的MCP客户端**\r\n\r\n### 适用于MCP客户端（克劳德桌面等）\r\n\r\n将此添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ttrpg-gm-tools\": {\r\n      \"url\": \"https://ttrpg-mcp.tedt.org/mcp\",\r\n      \"transport\": {\r\n        \"type\": \"http\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**重要提示：**\r\n\r\n- 链接地址 `https://ttrpg-mcp.tedt.org/mcp` （不是 `mcp.json`)\r\n- 传输是流式HTTP（JSON响应），而不是SSE\r\n- 您必须首先部署Cloudflare Worker（请参阅 `cloudflare-mcp-server/` 文件夹）\r\n\r\n### 本地开发\r\n\r\n1. 克隆此存储库\r\n1. 安装Ruby 3.1+（系统Ruby 2.6/2.7通常太旧了 `github-pages`)\r\n1. 安装Bundler（如果需要）： `gem install bundler`\r\n1. 安装站点依赖关系： `bundle install`\r\n1. 在本地运行（从repo根目录）： `bundle exec jekyll serve`\r\n1. 访问： `http://localhost:4000/`\r\n\r\n## 📁 结构\r\n\r\n```\r\n├── _config.yml              # Jekyll configuration\r\n├── data/                    # JSON data files for generators\r\n│   ├── encounters.json      # Encounter data\r\n│   ├── names.json           # NPC names by race\r\n│   ├── locations.json       # Location names\r\n│   ├── traits.json          # Personality traits\r\n│   ├── treasure.json        # Treasure tables\r\n│   ├── weather.json         # Weather descriptions\r\n│   └── plot_hooks.json      # Adventure hooks\r\n├── cloudflare-mcp-server/   # Cloudflare Worker implementation\r\n│   ├── src/index.ts         # Worker entrypoint (/mcp)\r\n│   ├── src/mcp/server.ts    # MCP SDK server registration (tools/resources/prompts)\r\n│   ├── src/tools/           # Central registry + per-tool modules\r\n│   ├── src/data/fetch.ts    # JSON fetch + Cloudflare caching\r\n│   └── test/                # Vitest smoke tests\r\n├── demo.md                  # Interactive demo page\r\n└── index.md                 # Landing page\r\n```\r\n\r\n## 🚀 用法\r\n\r\n在MCP客户端中配置后，您可以使用自然语言调用工具：\r\n\r\n- “在森林中为5级队伍生成随机遭遇战”\r\n- “给我的NPC取一个侏儒名字”\r\n- “创建酒馆名称”\r\n- “为我的反派创造一些性格特征”\r\n\r\n## 🛠️ 技术栈\r\n\r\n- **杰基尔/液体** -静态站点生成\r\n- **GitHub页面** -托管服务\r\n- **JSON** -数据存储和API响应\r\n- **MCP-SDK** -MCP服务器实现(`@modelcontextprotocol/sdk`)\r\n\r\n## ⚙️ 运行时行为\r\n\r\n- `/mcp` 接受 `POST` 只有； `GET /mcp` 回报 `405`\r\n- CORS受到限制 `ALLOWED_ORIGINS` （失踪 `Origin` 允许非浏览器客户端使用）\r\n- 缓存数据读取（内存+Cloudflare Cache API）\r\n- 服务器支持 `completion/complete` 对于提示参数和中的资源模板变量 `ttrpg://data/{dataset}`\r\n- 工具结果和提示消息可能包括 `resource_link` 指向相关数据集的内容块\r\n- 服务器和数据集资源包括MCP `icons` 元数据（亮/暗SVG）\r\n\r\n## 📝 许可证\r\n\r\nMIT许可证-您可以自由使用和修改您的广告系列！\r\n\r\n## 🤝 贡献\r\n\r\n欢迎投稿！添加更多：\r\n\r\n- 遭遇类型\r\n- 不同文化/种族的名单\r\n- 珍宝\r\n- 绘图挂钩\r\n- 新工具类型\r\n\r\n## 🔗 资源\r\n\r\n- [模型上下文协议文档](https://modelcontextprotocol.io/)\r\n- [Jekyll文档](https://jekyllrb.com/)\r\n- [GitHub页面](https://pages.github.com/)\r\n",
+ "config": {
+  "ttrpg-gm-tools": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://ttrpg-mcp.tedt.org/mcp"
+  }
+ }
+}

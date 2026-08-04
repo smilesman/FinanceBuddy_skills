@@ -1,0 +1,21 @@
+{
+ "id": "201",
+ "kind": "mcp",
+ "name": "espn",
+ "fingerprint_md5": "b433970d563ef54c586242d48b52b3c2",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# ESPN MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，提供对ESPN的公共API的实时体育数据访问。\r\n\r\n## 支持的联赛\r\n\r\n- 美国国家橄榄球联盟\r\n- NHL（国家冰球联盟）\r\n- NBA（美国国家篮球协会）\r\n\r\n## 特性\r\n\r\n- 当前排名和季后赛画面\r\n- 实时比分和比赛时间表\r\n- 团队信息和统计\r\n- 灵活的团队名称解析（城市、昵称或缩写）\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g espn-mcp-server\r\n```\r\n\r\n或者克隆并构建：\r\n\r\n```bash\r\ngit clone https://github.com/Left-Coast-Tech/espn-mcp.git\r\ncd espn-mcp\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n## 使用Claude Desktop\r\n\r\n添加到您的Claude桌面配置(`~/.config/claude/claude_desktop_config.json` 在Mac/Linux或 `%APPDATA%\\Claude\\claude_desktop_config.json` 在Windows上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"espn\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"espn-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者，如果全局安装：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"espn\": {\r\n      \"command\": \"espn-mcp-server\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用Claude代码\r\n\r\n添加到您的项目 `.mcp.json`:\r\n\r\n```json\r\n{\r\n  \"espn\": {\r\n    \"command\": \"npx\",\r\n    \"args\": [\"espn-mcp-server\"]\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### get_standings\r\n\r\n获取联赛的当前排名。\r\n\r\n```\r\nleague: \"nfl\" | \"nhl\" | \"nba\" (required)\r\ngroup: conference or division filter (optional)\r\n```\r\n\r\n示例：“获取AFC East的NFL排名”\r\n\r\n### get_scoreboard\r\n\r\n获取当前或即将到来的带有分数的游戏。\r\n\r\n```\r\nleague: \"nfl\" | \"nhl\" | \"nba\" (required)\r\nweek: NFL week number (optional)\r\ndate: YYYYMMDD format (optional)\r\n```\r\n\r\n示例：“本周有哪些NFL比赛？”\r\n\r\n### get_team\r\n\r\n获取团队信息，包括记录和成绩。\r\n\r\n```\r\nleague: \"nfl\" | \"nhl\" | \"nba\" (required)\r\nteam: team name, city, or abbreviation (required)\r\n```\r\n\r\n示例：“获取爱国者队的信息”\r\n\r\n### get_schedule\r\n\r\n获取一个包含结果的团队日程。\r\n\r\n```\r\nleague: \"nfl\" | \"nhl\" | \"nba\" (required)\r\nteam: team name, city, or abbreviation (required)\r\n```\r\n\r\n示例：“向我展示酋长剩余的日程安排”\r\n\r\n### 获取名称\r\n\r\n获取特定游戏的详细信息。\r\n\r\n```\r\nleague: \"nfl\" | \"nhl\" | \"nba\" (required)\r\ngameId: ESPN game ID (required)\r\n```\r\n\r\n### get_players\r\n\r\n获取季后赛支架或季后赛照片。\r\n\r\n```\r\nleague: \"nfl\" | \"nhl\" | \"nba\" (required)\r\n```\r\n\r\n示例：“给我看看NBA季后赛支架”\r\n\r\n## 例子\r\n\r\n配置后，您可以询问Claude：\r\n\r\n- “目前的NFL排名是多少？”\r\n- “谁在领导亚足联北方？”\r\n- “野马队的记录是什么？”\r\n- “今晚有什么NBA比赛？”\r\n- “给我看NHL季后赛照片”\r\n\r\n## 数据源\r\n\r\n此服务器使用ESPN的公共API。数据是实时获取的，不会被缓存。\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请打开问题或PR。\r\n",
+ "config": {
+  "espn": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "espn-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

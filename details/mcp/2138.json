@@ -1,0 +1,23 @@
+{
+ "id": "2138",
+ "kind": "mcp",
+ "name": "cardog",
+ "fingerprint_md5": "742610032f13a1239ac4a57a4b2f9873",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# Cardog MCP服务器\r\n\r\n通过模型上下文协议将AI应用程序连接到汽车数据。\r\n\r\n**服务器URL:** `https://mcp.cardog.io/sse`\r\n\r\n## 快速开始\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add cardog https://mcp.cardog.io/sse --transport sse\r\n```\r\n\r\n提示时输入API密钥。得到一个在 [cardog.app/account/api](https://cardog.app/account/api).\r\n\r\n### 克劳德桌面版\r\n\r\n添加 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cardog\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-remote\", \"https://mcp.cardog.io/sse?api_key=YOUR_API_KEY\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德网络/移动\r\n\r\n1. **设置** → **集成** → **添加更多**\r\n1. 输入URL: `https://mcp.cardog.io/sse`\r\n1. 提示时添加API密钥\r\n\r\n## 可用工具\r\n\r\n### 清单\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_listings` |使用品牌、型号、年份、价格、里程等过滤器搜索车辆库存|\r\n\r\n### 市场分析\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_vin_analysis` |特定VIN的市场分析|\r\n| `overview` |品牌/型号/年份的市场统计数据|\r\n| `price_distribution` |价格直方图数据|\r\n| `get_odometer_analysis` |里程与价格相关性|\r\n| `get_geographic_analysis` |区域价格变化|\r\n| `get_market_trends` |时间序列定价数据|\r\n| `get_listing_market_position` |个人上市分析|\r\n| `pulse` |总体市场健康指标|\r\n\r\n### 车辆研究\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_lineups` |制造商的可用型号|\r\n| `get_model_year` |车型年款的装饰级别和规格|\r\n| `search_recalls` |安全召回（美国和加拿大）|\r\n\r\n### 能量\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_electric_stations` |电动汽车充电站|\r\n| `search_gas_stations` |加油站价格|\r\n\r\n## 认证\r\n\r\n需要API密钥。通过以下方式提供：\r\n\r\n|方法|格式|\r\n|--------|--------|\r\n|查询参数| `?api_key=YOUR_KEY` |\r\n头球 `Authorization: Bearer YOUR_KEY` |\r\n头球 `x-api-key: YOUR_KEY` |\r\n\r\n获取API密钥： [cardog.app/account/api](https://cardog.app/account/api)\r\n\r\n## 示例\r\n\r\n**查找车辆：**\r\n\r\n> “查找30000美元以下、行驶里程少于50000英里的丰田RAV4s”\r\n\r\n**市场分析：**\r\n\r\n> “2022年本田Civics的市场情况如何？”\r\n\r\n**VIN查找：**\r\n\r\n> “检查此VIN：2T3P1RFV8NC123456”\r\n\r\n**召回检查：**\r\n\r\n> “2020-2023年本田CR V有召回吗？”\r\n\r\n## 文档\r\n\r\n- [完整文档](https://docs.cardog.ai/mcp)\r\n- [API 参考](https://docs.cardog.ai)\r\n- [获取API密钥](https://cardog.app/account/api)\r\n\r\n## 支持\r\n\r\n- 电子邮件：support@cardog.app\r\n- 状态： [status.cardog.ai](https://status.cardog.ai)\r\n",
+ "config": {
+  "cardog": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-remote",
+    "https://mcp.cardog.io/sse?api_key=YOUR_API_KEY"
+   ],
+   "env": {}
+  }
+ }
+}

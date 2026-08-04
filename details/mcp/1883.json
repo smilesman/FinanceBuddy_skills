@@ -1,0 +1,26 @@
+{
+ "id": "1883",
+ "kind": "mcp",
+ "name": "coingecko_api",
+ "fingerprint_md5": "1d6036031ba37f8593cc7f470983a2ac",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# Coingecko TypeScript MCP服务器\r\n\r\n它是通过以下方式生成的 [不锈钢](https://www.stainless.com/).\r\n\r\n## 安装\r\n\r\n### 直接调用\r\n\r\n您可以直接通过以下方式运行MCP服务器 `npx`:\r\n\r\n```sh\r\nexport COINGECKO_PRO_API_KEY=\"My Pro API Key\"\r\nexport COINGECKO_DEMO_API_KEY=\"My Demo API Key\"\r\nexport COINGECKO_ENVIRONMENT=\"pro\"\r\nnpx -y @coingecko/coingecko-mcp@latest\r\n```\r\n\r\n### 通过MCP客户端\r\n\r\n现有客户的部分列表位于 [模型上下文协议.io](https://modelcontextprotocol.io/clients)如果你已经\r\n如果您有客户端，请参阅他们的文档以安装MCP服务器。\r\n\r\n对于配置为JSON的客户端，它可能看起来像这样：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"coingecko_api\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@coingecko/coingecko-mcp\"],\r\n      \"env\": {\r\n        \"COINGECKO_PRO_API_KEY\": \"My Pro API Key\",\r\n        \"COINGECKO_DEMO_API_KEY\": \"My Demo API Key\",\r\n        \"COINGECKO_ENVIRONMENT\": \"pro\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标\r\n\r\n如果使用Cursor，则可以使用下面的按钮安装MCP服务器。您需要设置环境变量\r\n在Cursor的 `mcp.json`，可以在光标设置>工具和MCP>新MCP服务器中找到。\r\n\r\n\r\n### VS Code\r\n\r\n如果您使用MCP，可以通过单击下面的链接安装MCP服务器。您需要设置环境变量\r\n在VS代码中 `mcp.json`，可以通过命令面板>MCP：打开用户配置找到。\r\n\r\n[打开VS代码](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22%40coingecko%2Fcoingecko-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40coingecko%2Fcoingecko-mcp%22%5D%2C%22env%22%3A%7B%22COINGECKO_PRO_API_KEY%22%3A%22My%20Pro%20API%20Key%22%2C%22COINGECKO_DEMO_API_KEY%22%3A%22My%20Demo%20API%20Key%22%7D%7D)\r\n\r\n### 克劳德代码\r\n\r\n如果使用Claude Code，则可以通过在终端中运行以下命令来安装MCP服务器。您需要设置\r\nClaude Code中的环境变量 `.claude.json`，可以在您的主目录中找到。\r\n\r\n```\r\nclaude mcp add coingecko_coingecko_mcp_api --env COINGECKO_PRO_API_KEY=\"My Pro API Key\" COINGECKO_DEMO_API_KEY=\"My Demo API Key\" -- npx -y @coingecko/coingecko-mcp\r\n```\r\n\r\n## 代码模式\r\n\r\n此MCP服务器基于“代码模式”工具方案构建。在该MCP服务器中，\r\n你的代理将针对TypeScript SDK编写代码，然后在\r\n孤立的沙箱。为了实现这一点，服务器将向您的代理公开两个工具：\r\n\r\n- 第一个工具是文档搜索工具，可用于一般查询\r\n  有关API/SDK的文档。\r\n\r\n- 第二个工具是代码工具，代理可以在其中针对TypeScript SDK编写代码。\r\n  代码将在没有web或文件系统访问权限的沙盒环境中执行。然后，\r\n  代码返回或打印的任何内容都将作为\r\n  工具调用。\r\n\r\n使用此方案，代理能够确定性地执行非常复杂的任务\r\n并且可重复。\r\n\r\n## 远程运行\r\n\r\n使用启动客户端 `--transport=http` 使用Streamable HTTP传输将服务器作为远程服务器启动。这 `--port` 设置可以选择它将运行的端口，以及 `--socket` 设置允许它在Unix套接字上运行。\r\n\r\n可以通过以下标头提供授权：\r\n|标题|等效客户端选项|安全方案|\r\n| ------------------- | ------------------------ | --------------- |\r\n| `x-cg-pro-api-key` | `proAPIKey` |proKeyAuth|\r\n| `x-cg-demo-api-key` | `demoAPIKey` |demoKeyAuth|\r\n\r\n假设服务器托管在以下位置，则此服务器的配置JSON可能看起来像这样 `http://localhost:3000`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"coingecko_coingecko_typescript_api\": {\r\n      \"url\": \"http://localhost:3000\",\r\n      \"headers\": {\r\n        \"x-cg-pro-api-key\": \"My Pro API Key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "coingecko_api": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@coingecko/coingecko-mcp"
+   ],
+   "env": {
+    "COINGECKO_PRO_API_KEY": "My Pro API Key",
+    "COINGECKO_DEMO_API_KEY": "My Demo API Key",
+    "COINGECKO_ENVIRONMENT": "pro"
+   }
+  }
+ }
+}

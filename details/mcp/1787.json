@@ -1,0 +1,21 @@
+{
+ "id": "1787",
+ "kind": "mcp",
+ "name": "vscode",
+ "fingerprint_md5": "93393539e60d8d0da45ffe46207b0510",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "# VSCode作为MCP服务器\r\n\r\n[市场](https://marketplace.visualstudio.com/items?itemName=acomagu.vscode-as-mcp-server)\r\n\r\n一个VSCode扩展，将您的VSCode转换为MCP服务器，实现来自Claude Desktop等MCP客户端的高级编码辅助。\r\n\r\n## 主要特点\r\n\r\n### 代码编辑支持\r\n\r\n- 通过差异审查LLM提出的代码更改，允许您接受、拒绝或提供反馈。\r\n- 实时诊断消息（如类型错误）立即发送到LLM进行即时纠正。\r\n\r\n\r\n### 终端操作\r\n\r\n- 在VSCode的集成终端中执行命令（支持后台/前台执行和超时设置）。\r\n\r\n### 预览工具\r\n\r\n- 直接在VSCode的内置浏览器中预览URL（例如，在启动Vite服务器后自动打开浏览器预览）。\r\n\r\n\r\n### 多实例切换\r\n\r\n- 在多个打开的VSCode窗口之间轻松切换MCP服务器。（只需单击状态栏项）\r\n\r\n\r\n### 继电器功能（实验）\r\n\r\n- 从外部中继和公开VSCode 1.99中引入的内置MCP服务器。\r\n- 允许外部访问其他MCP扩展提供的工具，如GitHub Copilot。\r\n\r\n## 可用的内置工具\r\n\r\n- **execute_命令**：在VSCode的集成终端中执行命令\r\n- **代码检查器**：检索代码的当前诊断\r\n- **focus编辑器**：关注文件中的特定位置\r\n- **list_debug_sessions** / **start_debug_session** / **restart_debug_session** / **stop_debug_session**：管理调试会话\r\n- **text_编辑器**：文件操作（查看、替换、创建、插入、撤消）\r\n- **list_directory**：以树格式列出目录内容\r\n- **get_terminal_output**：从指定终端获取输出\r\n- **list_vscode_命令** / **execute_vscode_command**：列出并执行任意VSCode命令\r\n- **preview_url**：在VSCode的集成浏览器中打开URL\r\n\r\n## 安装和设置\r\n\r\n1. 从安装扩展 [VSCode市场](https://marketplace.visualstudio.com/items?itemName=acomagu.vscode-as-mcp-server).\r\n\r\n1. 配置您的MCP客户端：\r\n\r\n   - **使用mcp安装程序**：您可以简单地指示它“将vscode安装为mcp服务器mcp服务器”。\r\n   - **其他客户，如Claude Desktop**：将以下内容添加到配置文件中(`claude_desktop_config.json`):\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"vscode\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\"vscode-as-mcp-server\"]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. 检查右下角VSCode状态栏中的MCP服务器状态：\r\n\r\n   - （服务器图标）：服务器正在运行\r\n   - ∅：点击启动服务器\r\n\r\n\r\n## 动机\r\n\r\n开发此扩展是为了降低与计量编码工具（如Roo Code和Cursor）相关的高成本。这是一种直接内置于VSCode中的经济实惠的自托管替代方案。\r\n\r\n非常欢迎错误报告和反馈！ 🙇\r\n\r\n## 未来路线图\r\n\r\n- 能够选择要公开的内置MCP服务器\r\n- 基于WebView的审批UI（类似于Roo Code）\r\n- 与VSCode的文件历史记录（时间线）集成\r\n- 自动审批和工具激活/停用的即时切换\r\n- 可定制的服务器端口配置\r\n",
+ "config": {
+  "vscode": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "vscode-as-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

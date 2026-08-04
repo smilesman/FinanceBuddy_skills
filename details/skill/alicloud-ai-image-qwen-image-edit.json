@@ -1,0 +1,12 @@
+{
+ "id": "alicloud-ai-image-qwen-image-edit",
+ "kind": "skill",
+ "name": "alicloud-ai-image-qwen-image-edit",
+ "fingerprint_md5": "47e09d7e74bc65fe4d896048ff2ac2ae",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "Category: provider\r\n\r\n# Model Studio Qwen Image Edit\r\n\r\n使用 Qwen Image Edit 模型进行基于指令的图像编辑，而非文生图生成。\r\n\r\n## 关键模型名称\r\n\r\n使用以下精确的模型字符串之一：\r\n- `qwen-image-edit-max`\r\n- `qwen-image-edit-max-2026-01-16`\r\n\r\n## 前置条件\r\n\r\n- 在虚拟环境中安装 SDK：\r\n\r\n```bash\r\npython3 -m venv .venv\r\n. .venv/bin/activate\r\npython -m pip install dashscope\r\n```\r\n- 在环境中设置 `DASHSCOPE_API_KEY`，或将 `dashscope_api_key` 添加到 `~/.alibabacloud/credentials`。\r\n\r\n## 规范化接口 (image.edit)\r\n\r\n### 请求\r\n- `prompt` (string, required)\r\n- `image` (string | bytes, required) 源图像 URL/路径/字节\r\n- `mask` (string | bytes, optional) inpaint 区域遮罩\r\n- `size` (string, optional) 例如 `1024*1024`\r\n- `seed` (int, optional)\r\n\r\n### 响应\r\n- `image_url` (string)\r\n- `seed` (int)\r\n- `request_id` (string)\r\n\r\n## 操作指导\r\n\r\n- 保持 prompt 面向任务：描述要更改的内容和要保留的内容。\r\n- 使用 mask 进行确定性的局部编辑。\r\n- 将输出资源保存到对象存储，仅持久化 URL。\r\n- 对于主体一致性，在 prompt 中提供显式约束。\r\n\r\n## 本地辅助脚本\r\n\r\n准备规范化请求 JSON 并验证响应 schema：\r\n\r\n```bash\r\n.venv/bin/python skills/ai/image/alicloud-ai-image-qwen-image-edit/scripts/prepare_edit_request.py \\\r\n  --prompt \"Replace the sky with sunset, keep buildings unchanged\" \\\r\n  --image \"https://example.com/input.png\"\r\n```\r\n\r\n## 输出位置\r\n\r\n- 默认输出：`output/ai-image-qwen-image-edit/images/`\r\n- 使用 `OUTPUT_DIR` 覆盖基础目录。\r\n\r\n## 参考\r\n\r\n- `references/sources.md`",
+ "config": {}
+}

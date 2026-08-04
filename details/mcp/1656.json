@@ -1,0 +1,25 @@
+{
+ "id": "1656",
+ "kind": "mcp",
+ "name": "openfga",
+ "fingerprint_md5": "fc9793087299f78a8bd41057e05cace3",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "<div align=\"center\">\r\n  <p><a href=\"https://openfga.dev\"></a></p>\r\n\r\n<h1>OpenFGA MCP Server</h1>\r\n\r\n<p>\r\n    <a href=\"https://codecov.io/gh/evansims/openfga-mcp\" target=\"_blank\"></a>\r\n    <a href=\"https://shepherd.dev/github/evansims/openfga-mcp\" target=\"_blank\"></a>\r\n    <a href=\"https://www.bestpractices.dev/projects/10901\"></a>\r\n  </p>\r\n\r\n<p>AI-powered authorization management for OpenFGA</p>\r\n</div>\r\n\r\n<p><br /></p>\r\n\r\n连接 [OpenFGA](https://openfga.dev/) 和 [身份验证0 FGA](https://auth0.com/fine-grained-authorization) 通过模型上下文协议连接到AI代理。\r\n\r\n## 用例\r\n\r\n- **规划与设计** -使用最佳实践模式设计高效的授权模型\r\n- **生成代码** -通过全面的文档上下文生成准确的SDK集成\r\n- **管理实例** -通过AI代理查询和控制实时OpenFGA服务器\r\n\r\n## 快速开始\r\n\r\n### 离线模式（默认）\r\n\r\n无需服务器即可设计模型和生成代码：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"OpenFGA\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"--pull=always\",\r\n        \"evansims/openfga-mcp:latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 联机模式\r\n\r\n连接到OpenFGA以获得完整的管理功能：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"OpenFGA\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"--pull=always\",\r\n        \"-e\",\r\n        \"OPENFGA_MCP_API_URL=http://host.docker.internal:8080\",\r\n        \"evansims/openfga-mcp:latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **安全：** 默认情况下，写入操作被禁用。集 `OPENFGA_MCP_API_WRITEABLE=true` 以启用。\r\n\r\n> **Docker网络：** 为了你 `OPENFGA_MCP_API_URL` 使用 `host.docker.internal` 在本地计算机上运行OpenFGA时，Docker网络的容器名称，或远程实例的完整URL。\r\n\r\n使用 [克劳德桌面](https://claude.ai/download), [克劳德代码](https://www.anthropic.com/claude-code), [光标](https://cursor.sh), [帆板运动](https://windsurf.com), [泽德](https://zed.dev)以及其他MCP客户端。\r\n\r\n## 配置\r\n\r\n### MCP传输\r\n\r\n|变量|默认值|描述|\r\n| --------------------------------- | ----------- | ------------------------------------------------------------------------------- |\r\n| `OPENFGA_MCP_TRANSPORT` | `stdio` |支持 `stdio` 或 `http` （流式HTTP。）|\r\n| `OPENFGA_MCP_TRANSPORT_HOST` | `127.0.0.1` |IP用于监听连接。仅适用于使用 `http` 运输。   |\r\n| `OPENFGA_MCP_TRANSPORT_PORT` | `9090` |用于监听连接的端口。仅适用于使用 `http` 运输。 |\r\n| `OPENFGA_MCP_TRANSPORT_SSE` | `true` |为响应启用服务器发送事件（SSE）流。                         |\r\n| `OPENFGA_MCP_TRANSPORT_STATELESS` | `false` |为无会话客户端启用无状态模式。                                |\r\n\r\n### OpenFGA\r\n\r\n|变量|默认值|描述|\r\n| --------------------------- | ------- | --------------------------------------------------- |\r\n| `OPENFGA_MCP_API_URL` ||OpenFGA服务器URL|\r\n| `OPENFGA_MCP_API_WRITEABLE` | `false` |启用写入操作|\r\n| `OPENFGA_MCP_API_STORE` ||对特定商店ID的默认请求|\r\n| `OPENFGA_MCP_API_MODEL` ||对特定型号ID的默认请求|\r\n| `OPENFGA_MCP_API_RESTRICT` | `false` |将请求限制到配置的默认存储/型号|\r\n\r\n### OpenFGA身份验证\r\n\r\n|身份验证|变量|默认值|描述|\r\n| ------------------ | ------------------------------- | ------- | ------------- |\r\n|预共享密钥| `OPENFGA_MCP_API_TOKEN` || API代币|\r\n|客户端凭据| `OPENFGA_MCP_API_CLIENT_ID` ||客户端ID|\r\n|                    | `OPENFGA_MCP_API_CLIENT_SECRET` ||客户端密码|\r\n|                    | `OPENFGA_MCP_API_ISSUER` ||代币发行人|\r\n|                    | `OPENFGA_MCP_API_AUDIENCE` || API受众|\r\n\r\n看 [`docker-compose.example.yml`](docker-compose.example.yml) 查看完整示例。\r\n\r\n## 特性\r\n\r\n### 管理工具\r\n\r\n- **商店**：创建、列出、获取、删除商店\r\n- **模型**：使用创建模型 [DSL公司](https://openfga.dev/docs/configuration-language)、列出、获取、验证\r\n- **权限**：检查、授予、撤销权限；查询用户和对象\r\n\r\n### SDK文档\r\n\r\n用于准确生成代码的全面文档：\r\n\r\n- 所有OpenFGA SDK（PHP、Go、Python、Java、.NET、JavaScript、Laravel）\r\n- 带有代码示例的类和方法文档\r\n- 具有语言过滤功能的高级搜索\r\n\r\n### AI提示\r\n\r\n**设计与规划**\r\n\r\n- 领域特定模型设计\r\n- RBAC到ReBAC的迁移\r\n- 层次关系\r\n- 性能优化\r\n\r\n**实施**\r\n\r\n- 逐步创建模型\r\n- 关系模式\r\n- 测试生成\r\n- 安全模式\r\n\r\n**故障排除**\r\n\r\n- 权限调试\r\n- 安全审计\r\n- 最小特权实现\r\n\r\n### 资源和URI\r\n\r\n- `openfga://stores` -列出商店\r\n- `openfga://store/{id}/model/{modelId}` -型号详细信息\r\n- `openfga://docs/{sdk}/class/{className}` -SDK文档\r\n- `openfga://docs/search/{query}` -搜索文档\r\n\r\n### 智能完工\r\n\r\n连接时自动完成商店ID、模型ID、关系、用户和对象。\r\n\r\n______________________________________________________________________\r\n\r\n- [贡献](./.github/CONTRIBUTING.md) | [Apache 2.0许可证](./LICENSE)\r\n",
+ "config": {
+  "openfga": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "--pull=always",
+    "evansims/openfga-mcp:latest"
+   ],
+   "env": {}
+  }
+ }
+}

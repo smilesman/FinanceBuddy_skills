@@ -1,0 +1,23 @@
+{
+ "id": "207",
+ "kind": "mcp",
+ "name": "filesystem-2",
+ "fingerprint_md5": "f771da495c258afc90bcfdba11082ba9",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 🎵 支持MCP的音乐助手\r\n\r\n一个全栈应用程序，结合了人工智能聊天、音乐流、金融数据和模型上下文协议（MCP）服务。\r\n\r\n\r\n## 特性\r\n\r\n- **AI聊天界面**：具有意图识别功能的智能对话\r\n- **音乐整合**：通过Spotify API搜索和播放音乐\r\n- **财务数据**：通过人工智能分析实时股票和加密货币价格\r\n- **MCP支持**：可配置的模型上下文协议服务\r\n- **现代用户界面**：React+TailwindCSS响应式界面\r\n\r\n## 建筑\r\n\r\n### 后端（Python+Flask+LangChain）\r\n\r\n- 音乐和财务请求的意图分类\r\n- Spotify API音乐搜索集成\r\n- 雅虎财经+CoinGecko获取市场数据\r\n- OpenAI集成用于LLM响应和财务分析\r\n- MCP服务管理和执行\r\n\r\n### 前端（React+Vite+TailwindCSS）\r\n\r\n- 实时聊天界面\r\n- 带预览功能的音乐播放器卡\r\n- 财务数据可视化\r\n- MCP服务切换界面\r\n- 响应式设计\r\n\r\n## 设置\r\n\r\n### 1.后端设置\r\n\r\n```bash\r\n# Install Python dependencies\r\npip install -r requirements.txt\r\n\r\n# Copy environment file and configure\r\ncp .env.example .env\r\n\r\n# Edit .env with your API keys:\r\n# OPENAI_API_KEY=your_openai_api_key\r\n# SPOTIFY_CLIENT_ID=your_spotify_client_id\r\n# SPOTIFY_CLIENT_SECRET=your_spotify_client_secret\r\n# ALPHA_VANTAGE_API_KEY=your_alpha_vantage_api_key (optional)\r\n```\r\n\r\n### 2.前端设置\r\n\r\n```bash\r\n# Install Node.js dependencies\r\nnpm install\r\n\r\n# Start development server\r\nnpm run dev\r\n```\r\n\r\n### 3.启动应用程序\r\n\r\n```bash\r\n# Terminal 1: Start Flask backend\r\npython app.py\r\n\r\n# Terminal 2: Start React frontend\r\nnpm run dev\r\n```\r\n\r\n该应用程序将在以下网址提供：\r\n\r\n- 前端：http://localhost:3000\r\n- 后端API：http://localhost:5000\r\n\r\n## 需要API密钥\r\n\r\n1. **OpenAI API密钥**：用于LLM回复和财务分析\r\n\r\n   - 来自：https://platform.openai.com/api-keys\r\n\r\n1. **Spotify API密钥**：用于音乐搜索和流媒体\r\n\r\n   - 来自：https://developer.spotify.com/dashboard\r\n   - 创建应用程序并获取客户端ID+客户端密码\r\n\r\n1. **Alpha Vantage API密钥** （可选）：用于增强库存数据\r\n\r\n   - 来自：https://www.alphavantage.co/support/#api-钥匙\r\n\r\n## MCP配置\r\n\r\n编辑 `mcp_setting_data.json` 配置可用的MCP服务：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"filesystem\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"/allowed/path\"],\r\n      \"link\": \"https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用示例\r\n\r\n### 音乐请求\r\n\r\n- “播放一些爵士音乐”\r\n- “查找披头士乐队的歌曲”\r\n- \"播放一些古典音乐\" (Chinese)\r\n\r\n### 财务查询\r\n\r\n- “AAPL的价格是多少？”\r\n- “显示比特币价格”\r\n- “特斯拉股票表现如何？”\r\n\r\n### 普通信息\r\n\r\n- “给我讲个笑话”\r\n- “天气怎么样？”\r\n- “帮我编程”\r\n\r\n## 项目结构\r\n\r\n```\r\nmcp-music/\r\n├── app.py                 # Flask backend entry point\r\n├── services/              # Backend services\r\n│   ├── intent_classifier.py\r\n│   ├── music_service.py\r\n│   ├── llm_service.py\r\n│   └── mcp_service.py\r\n├── src/                   # React frontend\r\n│   ├── components/\r\n│   │   ├── ChatInterface.jsx\r\n│   │   ├── MCPSelector.jsx\r\n│   │   ├── MusicCard.jsx\r\n│   │   └── FinanceCard.jsx\r\n│   └── App.jsx\r\n├── mcp_setting_data.json  # MCP configuration\r\n├── requirements.txt       # Python dependencies\r\n└── package.json          # Node.js dependencies\r\n```\r\n\r\n## 发展\r\n\r\n### 添加新的意图类型\r\n\r\n1. 更新 `intent_classifier.py` 使用新关键字\r\n1. 在中添加处理逻辑 `app.py`\r\n1. 创建相应的UI组件\r\n\r\n### 添加新的MCP服务\r\n\r\n1. 将服务配置添加到 `mcp_setting_data.json`\r\n1. 实施处理 `mcp_service.py`\r\n1. 服务将自动出现在前端\r\n\r\n### 定制\r\n\r\n- 在中修改UI主题 `tailwind.config.js`\r\n- 调整LLM行为 `llm_service.py`\r\n- 在中添加新的API集成 `services/` 目录\r\n\r\n## 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件。\r\n",
+ "config": {
+  "filesystem": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@modelcontextprotocol/server-filesystem",
+    "/allowed/path"
+   ],
+   "env": {}
+  }
+ }
+}

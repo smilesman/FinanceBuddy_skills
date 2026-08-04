@@ -1,0 +1,24 @@
+{
+ "id": "935",
+ "kind": "mcp",
+ "name": "xpatla",
+ "fingerprint_md5": "7ea0c448a4e7051add64631318a4ba13",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# @xpatla/mcp服务器\r\n\r\n连接 [XPatla](https://xpatla.com) 通过以下方式访问Claude Code、Cursor、Windsurf和其他人工智能工具 [模型上下文协议（MCP）](https://modelcontextprotocol.io).\r\n\r\n以真实的写作风格生成推文、帖子、回复和引语——直接从你的AI编码助手那里。\r\n\r\n## 快速设置\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add xpatla -- npx -y @xpatla/mcp-server\r\n```\r\n\r\n设置API密钥：\r\n\r\n```bash\r\nexport XPATLA_API_KEY=\"xp_live_YOUR_KEY\"\r\n```\r\n\r\n### 光标/风帆\r\n\r\n添加到MCP配置(`.cursor/mcp.json` 或 `~/.windsurf/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"xpatla\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@xpatla/mcp-server\"],\r\n      \"env\": {\r\n        \"XPATLA_API_KEY\": \"xp_live_YOUR_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 获取API密钥\r\n\r\n1. 首选 [xpatla.com/仪表板](https://xpatla.com/dashboard)\r\n1. 导航至 **API** 标签\r\n1. 创建新的API密钥\r\n1. 复制并在上面的配置中使用\r\n\r\n## 可用工具（13）\r\n\r\n### 内容生成\r\n\r\n|工具|描述|积分|\r\n|------|-------------|---------|\r\n| `xpatla_generate_tweets` |以您的写作风格生成推文|3-10|\r\n| `xpatla_generate_quotes` |生成报价推文|3-10|\r\n| `xpatla_generate_replies` |生成权威建设回复|3-10|\r\n| `xpatla_generate_thread` |生成多条推特帖子|5-15|\r\n| `xpatla_suggest_topics` |基于AI的主题建议|8|\r\n| `xpatla_analyze_profile` |深度剖面分析|15|\r\n\r\n### 帐户和分析\r\n\r\n|工具|描述|积分|\r\n|------|-------------|---------|\r\n| `xpatla_get_style_profile` |您的写作风格简介|免费|\r\n| `xpatla_list_accounts` |列出已连接的帐户|免费|\r\n| `xpatla_check_credits` |检查信用余额|免费|\r\n| `xpatla_fetch_tweets` |从任何帐户获取推文|0-10|\r\n\r\n### 管理与出版\r\n\r\n|工具|描述|积分|\r\n|------|-------------|---------|\r\n| `xpatla_get_analytics` |账户分析|免费|\r\n| `xpatla_manage_drafts` |创建/编辑/删除草稿|免费|\r\n| `xpatla_post_to_x` |将草稿发布到推特/X|2/推特|\r\n\r\n## 可用提示（4）\r\n\r\n- `compose_tweet` --交互式推文撰写工作流程\r\n- `plan_thread` --线程规划和生成\r\n- `reply_strategy` --战略应对发展\r\n- `content_calendar` --每周内容日历计划\r\n\r\n## 示例用法\r\n\r\n```\r\n> Generate 3 tweets about AI trends for @hrrcnes\r\n> Check my credit balance\r\n> Fetch last 50 tweets from @elonmusk\r\n> Create a 5-tweet thread about startup lessons\r\n> Plan my content calendar for this week\r\n```\r\n\r\n## 需求\r\n\r\n- Node.js 18+\r\n- 具有活动订阅的XPatla帐户\r\n- API密钥来自 [xpatla.com/仪表板](https://xpatla.com/dashboard)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "xpatla": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@xpatla/mcp-server"
+   ],
+   "env": {
+    "XPATLA_API_KEY": "xp_live_YOUR_KEY"
+   }
+  }
+ }
+}

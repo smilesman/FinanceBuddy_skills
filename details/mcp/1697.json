@@ -1,0 +1,21 @@
+{
+ "id": "1697",
+ "kind": "mcp",
+ "name": "rfc-server",
+ "fingerprint_md5": "355c81e5a24013b3e66b57062cc3f1f9",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# RFC MCP服务器\r\n\r\n用于从ietf.org网站获取、解析和读取RFC的MCP服务器。此服务器提供以编程方式与RFC文档交互的工具和资源。\r\n\r\n## 特性\r\n\r\n- 按编号获取RFC文档\r\n- 按关键字搜索RFC\r\n- 从RFC文档中提取特定章节\r\n- 解析HTML和TXT格式的RFC\r\n- 缓存以获得更好的性能\r\n\r\n## 安装\r\n\r\n配置MCP设置文件以使用服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"rfc-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@mjpitz/mcp-rfc\"],\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### get_rfc\r\n\r\n按编号获取RFC文档。\r\n\r\n**参数：**\r\n\r\n- `number` （字符串，必填）：RFC编号（例如“2616”）\r\n- `format` （字符串，可选）：输出格式（完整、元数据、节），默认值：“完整”\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"number\": \"2616\",\r\n  \"format\": \"metadata\"\r\n}\r\n```\r\n\r\n### search_rfcs\r\n\r\n按关键字搜索RFC。\r\n\r\n**参数：**\r\n\r\n- `query` （字符串，必填）：搜索关键字或短语\r\n- `limit` （number，可选）：返回的最大结果数，默认值：10\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"query\": \"http protocol\",\r\n  \"limit\": 5\r\n}\r\n```\r\n\r\n### get_rfc_section\r\n\r\n从RFC中获取特定部分。\r\n\r\n**参数：**\r\n\r\n- `number` （字符串，必填）：RFC编号（例如“2616”）\r\n- `section` （字符串，必填）：要检索的节标题或编号\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"number\": \"2616\",\r\n  \"section\": \"Introduction\"\r\n}\r\n```\r\n\r\n## 可用资源\r\n\r\n### 资源模板\r\n\r\n- `rfc://{number}`：按编号获取RFC文档\r\n- `rfc://search/{query}`：按关键字搜索RFC\r\n\r\n## 发展\r\n\r\n- 在监视模式下运行： `npm run dev`\r\n- 启动服务器： `npm run start`\r\n\r\n## 许可证\r\n\r\n此项目根据Apache许可证2.0获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## 实现细节\r\n\r\n服务器实现了两个主要组件：\r\n\r\n1. **RFC服务**：处理从RFC中获取、解析和提取数据\r\n1. **MCP服务器**：实现MCP协议并公开工具和资源\r\n\r\nRFC服务支持HTML和TXT格式的RFC，尝试先使用HTML以获得更好的结构，然后在需要时回退到TXT格式。\r\n",
+ "config": {
+  "rfc-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@mjpitz/mcp-rfc"
+   ],
+   "env": {}
+  }
+ }
+}

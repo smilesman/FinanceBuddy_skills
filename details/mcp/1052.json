@@ -1,0 +1,27 @@
+{
+ "id": "1052",
+ "kind": "mcp",
+ "name": "filemaker",
+ "fingerprint_md5": "95146fa429f2586fe9234567d3deff17",
+ "download_count": 0,
+ "category": "数据迁移",
+ "tags": "",
+ "version": "",
+ "readme": "# FileMaker OData Monrepo\r\n\r\n通过OData API与FileMaker数据库交互的完整工具包。这个monorepo提供了一个TypeScript客户端库、一个用于AI助手的MCP服务器和一个用于工作流自动化的n8n社区节点。\r\n\r\n## 包裹\r\n\r\n|包|描述|npm|\r\n|---------|-------------|-----|\r\n| [**fmodata**](./packages/fmodata) |FileMaker OData API的TypeScript客户端库|  |\r\n| [**fmodata mcp**](./packages/fmodata-mcp) |用于AI助手（Claude、Cursor等）的MCP服务器|  |\r\n| [**n8n-nodes-filemaker-常规**](./packages/n8n-nodes-filemaker-odata) |用于工作流自动化的n8n社区节点|  |\r\n\r\n## 快速开始\r\n\r\n### TypeScript客户端\r\n\r\n```bash\r\nnpm install fmodata\r\n```\r\n\r\n```typescript\r\nimport { ODataApi, FetchAdapter } from \"fmodata\";\r\n\r\nconst client = ODataApi({\r\n  adapter: new FetchAdapter({\r\n    server: \"https://your-server.example.com\",\r\n    database: \"YourDatabase\",\r\n    auth: { username: \"user\", password: \"pass\" },\r\n  }),\r\n});\r\n\r\nconst records = await client.getRecords(\"Customers\", { $top: 10 });\r\n```\r\n\r\n### MCP服务器（用于AI助手）\r\n\r\n添加到您的Claude/Cursor MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"filemaker\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"fmodata-mcp\"],\r\n      \"env\": {\r\n        \"FM_SERVER\": \"https://your-server.example.com\",\r\n        \"FM_DATABASE\": \"YourDatabase\",\r\n        \"FM_USERNAME\": \"user\",\r\n        \"FM_PASSWORD\": \"pass\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### n8n节点\r\n\r\n在n8n中： **设置** → **社区节点** → **安装** → `n8n-nodes-filemaker-odata`\r\n\r\n## 认证\r\n\r\n所有软件包支持：\r\n\r\n- **基本认证** -FileMaker帐户用户名/密码\r\n- **OttoFMS API密钥** -For [OttoFMS](https://www.ottofms.com/) 用户（推荐）\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\npnpm install\r\n\r\n# Build all packages\r\npnpm build\r\n\r\n# Run tests\r\npnpm test\r\n\r\n# Watch mode\r\npnpm dev\r\n```\r\n\r\n## 出版\r\n\r\n此monorepo使用 [变更集](https://github.com/changesets/changesets) 对于版本管理：\r\n\r\n```bash\r\npnpm changeset      # Create a changeset\r\npnpm version-packages  # Version packages\r\npnpm release        # Publish to npm\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n## 链接\r\n\r\n- [FileMaker OData API文档](https://help.claris.com/en/odata-guide/)\r\n- [OttoFMS](https://www.ottofms.com/)\r\n- [n8n社区节点](https://docs.n8n.io/integrations/community-nodes/)\r\n- [模型上下文协议](https://modelcontextprotocol.io/)\r\n",
+ "config": {
+  "filemaker": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "fmodata-mcp"
+   ],
+   "env": {
+    "FM_SERVER": "https://your-server.example.com",
+    "FM_DATABASE": "YourDatabase",
+    "FM_USERNAME": "user",
+    "FM_PASSWORD": "pass"
+   }
+  }
+ }
+}

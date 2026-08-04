@@ -1,0 +1,18 @@
+{
+ "id": "2214",
+ "kind": "mcp",
+ "name": "home-assistant",
+ "fingerprint_md5": "a511c0d0339e147b27691a96632f6a12",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 家庭助理MCP服务器\r\n\r\n> 📖 **[安装指南](INSTALL.md)** --快速启动、手动设置和故障排除\r\n\r\nFastMCP 3.2.0 MCP服务器和Web应用程序 **家庭助手**.Portmanteau工具、采样、代理工作流程、提示和技能。Webapp遵循SOTA标准（React、Tailwind、深色主题、端口10796/10797）。\r\n\r\n## 特性\r\n\r\n- **MCP工具**: `ha(operation=...)` get_state、get_state、call_service、get_config、get_automations、trigger_automation。 `ha_help(category)`. `ha_agentic_workflow(goal)` 采用SEP-1577采样。\r\n- **提示**: `ha_quick_start`, `ha_diagnostics`.\r\n- **技能**: `skills/ha-operator.md`.\r\n- **REST API**：GET/api/v1/health、/api/v1/states、/api/v1.config、/api/v1/automations；POST/api/v1/服务/{域}/{服务}、/api/v1/自动化/触发器。\r\n- **网络应用程序**：仪表板、状态（按域筛选）、服务（调用服务表单）、自动化（列表+触发器）、设置、帮助、MCP工具。\r\n\r\n## 港口\r\n\r\n- 后端： **10796** （休息+MCP-SSE）\r\n- 仪表板： **10797** （快）\r\n\r\n## 快速开始\r\n\r\n```powershell\r\ngit clone https://github.com/sandraschi/home-assistant-mcp\r\ncd home-assistant-mcp\r\njust\r\n```\r\n\r\n这将打开一个交互式仪表板，显示所有可用命令。跑 `just bootstrap` 要安装依赖项，请执行以下操作 `just serve` 或 `just dev` 开始。\r\n\r\n### 手动设置\r\n\r\n如果你没有 `just` 安装：\r\n\r\n## 设置\r\n\r\n克隆仓库并从安装依赖项 **存储库根目录** （不是 `webapp/`):\r\n\r\n```powershell\r\ngit clone https://github.com/sandraschi/home-assistant-mcp.git\r\nSet-Location home-assistant-mcp\r\nuv sync\r\n```\r\n\r\n从启动Web应用程序 **相同** 克隆：\r\n\r\n```powershell\r\ncd webapp\r\n.\\start.ps1\r\n```\r\n\r\n集 **HA_URL** （例如。http://homeassistant.local:8123)以及 **HA_TOKEN** （HA配置文件中的长效访问令牌）。\r\n\r\n## MCP客户端\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"home-assistant\": {\r\n      \"url\": \"http://localhost:10796/sse\",\r\n      \"transport\": \"sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 舰队\r\n\r\n记录在mcp中央文档中（集成+项目/家庭助理mcp）。\r\n\r\n## 🛡️ 工业级质量堆栈\r\n\r\n该项目坚持 **索塔14.1** 高保真代理编排的工业标准：\r\n\r\n- **Python（核心）**: [拉夫](https://astral.sh/ruff) 用于裁剪和格式化。零容忍 `print` 核心处理程序中的语句(`T201`).\r\n- **Web应用程序（用户界面）**: [生物群系](https://biomejs.dev/) 用于亚毫秒级的起毛。严格 `noConsoleLog` 执行。\r\n- **协议遵从**：硬化 `stdout/stderr` 隔离，以确保防崩溃的JSON-RPC通信。\r\n- **自动化**: [Justfile](./justfile) 所有舰队行动的食谱(`just lint`, `just fix`, `just dev`).\r\n- **安全**：通过以下方式进行自动化审计 `bandit` 和 `safety`.\r\n",
+ "config": {
+  "home-assistant": {
+   "enabled": true,
+   "type": "sse",
+   "url": "http://localhost:10796/sse"
+  }
+ }
+}

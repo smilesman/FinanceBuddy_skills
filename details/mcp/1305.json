@@ -1,0 +1,26 @@
+{
+ "id": "1305",
+ "kind": "mcp",
+ "name": "victoriametrics",
+ "fingerprint_md5": "8139d2bc404b53adfba22ec03c6a667c",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# VictoriaMetrics MCP服务器\r\n\r\n\r\nVictoriaMetrics的MCP服务器。\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装适用于Claude Desktop的VictoriaMetrics服务器 [史密瑟里](https://smithery.ai/server/@yincongcyincong/victoriametrics-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @yincongcyincong/victoriametrics-mcp-server --client claude\r\n```\r\n\r\n## 调试\r\n\r\n```\r\nnpx @modelcontextprotocol/inspector -e VM_URL=http://127.0.0.1:8428  node src/index.js\r\n\r\n```\r\n\r\n### NPX\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"victoriametrics\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\r\n                \"-y\",\r\n                \"@yincongcyincong/victoriametrics-mcp-server\"\r\n            ],\r\n            \"env\": {\r\n                \"VM_URL\": \"\",\r\n                \"VM_SELECT_URL\": \"\",\r\n                \"VM_INSERT_URL\": \"\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n### 📊 维多利亚计量工具API文档\r\n\r\n## 1. `vm_data_write`\r\n\r\n**描述**：将数据写入VictoriaMetrics数据库。\r\n\r\n**输入参数**:\r\n\r\n|参数|类型|说明|必填|\r\n|---------------|-------------|--------------------------------------------|----------|\r\n| `metric` | `object` |指标标签|✅        |\r\n| `values` | `number[]` |度量值数组|✅        |\r\n| `timestamps` | `number[]` |Unix秒时间戳数组|✅        |\r\n\r\n______________________________________________________________________\r\n\r\n## 2. `vm_prometheus_write`\r\n\r\n**描述**：将Prometheus博览会格式数据导入VictoriaMetrics。\r\n\r\n**输入参数**:\r\n\r\n|参数|类型|说明|必填|\r\n|-----------|----------|-------------------------------------------------|----------|\r\n| `data` | `string` |普罗米修斯演示格式的度量|✅        |\r\n\r\n______________________________________________________________________\r\n\r\n## 3. `vm_query_range`\r\n\r\n**描述**：查询特定时间范围内的时间序列数据。\r\n\r\n**输入参数**:\r\n\r\n|参数|类型|说明|必填|\r\n|-----------|----------|-------------------------------------------------|----------|\r\n| `query` | `string` |PromQL表达式|✅        |\r\n| `start` | `number` |开始时间戳（Unix秒）|⛔️        |\r\n| `end` | `number` |结束时间戳（Unix秒）|⛔️        |\r\n| `step` | `string` |查询解析步长（例如。， `10s`, `1m`) | ⛔️        |\r\n\r\n> 仅 `query` 是必需的；其他字段是可选的。\r\n\r\n______________________________________________________________________\r\n\r\n## 4. `vm_query`\r\n\r\n**描述**：查询时间序列的当前值。\r\n\r\n**输入参数**:\r\n\r\n|参数|类型|说明|必填|\r\n|-----------|----------|-----------------------------------------|----------|\r\n| `query` | `string` |要计算的PromQL表达式|✅        |\r\n| `time` | `number` |评估时间戳（Unix秒）|⛔️        |\r\n\r\n______________________________________________________________________\r\n\r\n## 5. `vm_labels`\r\n\r\n**描述**：获取所有唯一的标签名称。\r\n\r\n**输入参数**：无\r\n\r\n______________________________________________________________________\r\n\r\n## 6. `vm_label_values`\r\n\r\n**描述**：获取特定标签的所有唯一值。\r\n\r\n**输入参数**:\r\n\r\n|参数|类型|说明|必填|\r\n|-----------|----------|------------------------------|----------|\r\n| `label` | `string` |获取|值的标签名称✅        |\r\n\r\n______________________________________________________________________\r\n",
+ "config": {
+  "victoriametrics": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@yincongcyincong/victoriametrics-mcp-server"
+   ],
+   "env": {
+    "VM_URL": "",
+    "VM_SELECT_URL": "",
+    "VM_INSERT_URL": ""
+   }
+  }
+ }
+}

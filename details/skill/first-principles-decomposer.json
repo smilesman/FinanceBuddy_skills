@@ -1,0 +1,12 @@
+{
+ "id": "first-principles-decomposer",
+ "kind": "skill",
+ "name": "first-principles-decomposer",
+ "fingerprint_md5": "9bfb741ddfcd2ac0448163825c022948",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# First Principles Decomposer\r\n\r\n## 何时使用\r\n- 设计新产品或功能\r\n- 在复杂问题上感到卡住\r\n- 现有解决方案似乎过于复杂\r\n- 需要挑战假设\r\n- 启动任何新项目或 initiative\r\n\r\n## 流程\r\n\r\n### 阶段 1：识别假设\r\n问：\"我假设了哪些可能并不成立的事情？\"\r\n列出当前方法中嵌入的每一个 assumption。\r\n\r\n### 阶段 2：分解到原子\r\n对每一个 assumption，问：\"这里最基本的真理是什么？\"\r\n不断问 \"why?\" 直到触及 bedrock facts。\r\n\r\n### 阶段 3：从真理重建\r\n仅从已验证的 fundamentals 出发，问：\r\n\"解决核心需求的最简单方案是什么？\"\r\n\r\n## 交互流程\r\n\r\n当用户调用本 skill 时：\r\n\r\n1. **澄清问题**（最多 1-2 个问题）\r\n2. **浮现假设** - 列出被认为理所当然的内容\r\n3. **分解到 fundamentals** - 展示 atomic truths\r\n4. **重建解决方案** - 从 ground up 构建\r\n5. **对比** - 展示这与 conventional approach 有何不同\r\n\r\n## 输出格式\r\n\r\n```\r\nPROBLEM: [陈述的问题]\r\n\r\n识别的假设：\r\n1. [assumption] → 挑战：[为什么这可能是错的]\r\n2. [assumption] → 挑战：[为什么这可能是错的]\r\n\r\n基本真理：\r\n• [bedrock fact 1]\r\n• [bedrock fact 2]\r\n• [bedrock fact 3]\r\n\r\n重建的解决方案：\r\n[仅基于 fundamentals 的新方法]\r\n\r\n与传统方法对比：\r\n[这与显而易见的做法有何不同]\r\n```\r\n\r\n## 示例触发词\r\n- \"Break down our parent communication problem from first principles\"\r\n- \"I want to rethink how we do [X] from the ground up\"\r\n- \"What are we assuming about [problem] that might be wrong?\"\r\n\r\n## 集成\r\n\r\n本 skill 可与以下技能复合：\r\n- **inversion-strategist** - 从 fundamentals 重建后，invert 以找出什么会保证新方法失败\r\n- **second-order-consequences** - 预测实施重建解决方案后的 downstream effects\r\n- **pre-mortem-analyst** - 通过想象其失败来 stress-test 重建的解决方案\r\n- **six-thinking-hats** - 将六种视角应用于验证每一个 identified fundamental truth\r\n\r\n## Skill Metadata\r\n**Created**: 2026-01-06\r\n**Last Updated**: 2026-01-06\r\n**Author**: Artem\r\n**Version**: 1.0\r\n\r\n---\r\n详见 references/framework.md 了解详细方法论\r\n详见 references/examples.md 了解 Artem 专属示例\r\n详见 references/integrated-frameworks.md 了解 Stanford Design Thinking + MIT Systems Engineering 组合",
+ "config": {}
+}

@@ -2,12 +2,12 @@
  "name": "FinanceBuddy Skills Warehouse",
  "repo": "https://github.com/smilesman/FinanceBuddy_skills",
  "site": "https://www.financebuddyskills.com/skills",
- "source": "https://www.openocta.com/skills",
- "generated_at": "2026-08-04T01:40:24Z",
+ "generated_at": "2026-08-04T02:30:45Z",
  "counts": {
   "skill": 755,
   "employee": 29,
   "mcp": 3710
  },
+ "details": 4478,
  "packages": 8
 }

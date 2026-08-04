@@ -1,0 +1,12 @@
+{
+ "id": "kagi",
+ "kind": "skill",
+ "name": "kagi",
+ "fingerprint_md5": "790378147f59b0ab8caf9528d0114a3b",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# Kagi (API)\r\n\r\nUse the bundled Python scripts 迁移到 call Kagi’s API from the OpenClaw host.\r\n\r\n## 快速开始\r\n\r\n1) 创建 a token in https://kagi.com/settings/api\r\n2) 导出 it for your shell/session:\r\n\r\n```bash\r\nexport KAGI_API_TOKEN='…'\r\n```\r\n\r\n3) 运行 a 搜索:\r\n\r\n```bash\r\npython3 scripts/kagi_search.py \"haaps glass\" --limit 10 --json\r\n```\r\n\r\n4) Or ask FastGPT (LLM + web 搜索):\r\n\r\n```bash\r\npython3 scripts/kagi_fastgpt.py \"Summarize the latest Haaps glass mentions\" --json\r\n```\r\n\r\n## Tasks\r\n\r\n### 1) Web 搜索 (Kagi 搜索 API)\r\n\r\nUse when you 需要 a normal ranked 列表 of 结果 (URLs/titles/snippets).\r\n\r\n命令:\r\n\r\n```bash\r\npython3 scripts/kagi_search.py \"<query>\" [--limit N] [--json]\r\n```\r\n\r\n注意:\r\n- Defaults 迁移到 printing a readable digest; use `--json` for raw API 输出.\r\n- The script automatically sets `Authorization: Bot <token>`.\r\n\r\n### 2) Answer/summarize with citations (FastGPT)\r\n\r\nUse when you want a short answer grounded in web 结果, including 参考 URLs.\r\n\r\n命令:\r\n\r\n```bash\r\npython3 scripts/kagi_fastgpt.py \"<question>\" [--cache true|false] [--json]\r\n```\r\n\r\n### 3) Using Kagi as a drop-in for web_search\r\n\r\nIf Brave 搜索 is rate-limited (429) or you want better 结果:\r\n- Use `scripts/kagi_search.py` 迁移到 fetch 结果\r\n- Then use the main agent model 迁移到 synthesize / summarize based on the returned URLs/snippets\r\n\r\n## Files\r\n\r\n- API 参考 snippets: `references/kagi-api.md`\r\n- Python client + CLIs: `scripts/kagi_client.py`, `scripts/kagi_`scripts/kagi_`earch.py`i_fastgpt.py``scri`i_fastgpt.py`pt.p`scripts/kagi_fastgpt.py`",
+ "config": {}
+}

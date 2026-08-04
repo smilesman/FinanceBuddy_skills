@@ -1,0 +1,18 @@
+{
+ "id": "2714",
+ "kind": "mcp",
+ "name": "seo-marketing",
+ "fingerprint_md5": "b69557c3742e093288f98532990f0787",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# SEO和营销分析MCP服务器\r\n\r\n\r\n通过AI驱动的SEO和营销智能工具 [模型上下文协议（MCP）](https://modelcontextprotocol.io)。让你的人工智能助手能够实时研究关键字、分析SERP、检查反向链接和优化搜索引擎的内容。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `keyword_research` |研究关键词机会——搜索量指标、难度、相关术语、内容建议|\r\n| `analyze_serp` |分析搜索引擎结果——排名靠前的页面、内容模式、排名机会评估|\r\n| `check_backlinks` |分析反向链接配置文件——引用域、锚文本、链接质量、链接构建机会|\r\n| `optimize_content` |页面SEO分析——关键词密度、可读性、结构、元标签、改进建议|\r\n\r\n## 快速入门（托管）\r\n\r\n**无需安装。** 使用托管版本：\r\n\r\n1. 在获取免费API密钥 [seo.ezbizservices.com/注册](https://seo.ezbizservices.com/signup)\r\n1. 添加到您的MCP客户端配置（Claude Desktop、Cursor等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"seo-marketing\": {\r\n      \"url\": \"https://seo.ezbizservices.com/mcp\",\r\n      \"headers\": {\r\n        \"x-api-key\": \"YOUR_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. 让你的AI助手分析任何关键字或网站！\r\n\r\n### 示例提示\r\n\r\n- “研究‘人工智能咨询服务’的关键词机会”\r\n- “分析SERP以获得‘2026年最佳CRM软件’”\r\n- “检查反向链接配置文件，例如.com”\r\n- “针对‘业务自动化’优化我的主页的搜索引擎优化”\r\n\r\n## 自我寄宿\r\n\r\n```bash\r\ngit clone https://github.com/ezbiz-services/mcp-seo-marketing.git\r\ncd mcp-seo-marketing\r\nbun install\r\n\r\ncp .env.example .env\r\n# Edit .env with your OpenAI API key and admin secret\r\n\r\nbun run server.ts\r\n```\r\n\r\n### 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `OPENAI_API_KEY` |是|用于AI驱动分析的OpenAI API密钥|\r\n| `ADMIN_SECRET` |是|管理员API端点的机密|\r\n| `MCP_PORT` |否|服务器端口（默认值：4201）|\r\n\r\n## 定价\r\n\r\n|级别|价格|请求/月|\r\n|------|-------|----------------|\r\n| **自由** | $0 | 10 |\r\n|起步价|19美元/月|200|\r\n|专业| 49美元/月|1000|\r\n|商务| 99美元/月|5000|\r\n\r\n免费开始 [网站 seo.ezbizservices.com](https://seo.ezbizservices.com)\r\n\r\n## 建筑\r\n\r\n- **运行时间：** [包子](https://bun.sh)\r\n- **协议：** [MCP-SDK](https://www.npmjs.com/package/@modelcontextprotocol/sdk) （流式HTTP传输）\r\n- **人工智能：** OpenAI GPT-4o用于分析\r\n- **报废：** Cheerio用于网络数据提取\r\n- **认证：** 基于API密钥的分层速率限制\r\n\r\n## 链接\r\n\r\n- **主页：** [网站 seo.ezbizservices.com](https://seo.ezbizservices.com)\r\n- **API文件：** [seo.ezbizservices.com/文档](https://seo.ezbizservices.com/docs)\r\n- **注册：** [seo.ezbizservices.com/注册](https://seo.ezbizservices.com/signup)\r\n- **服务器卡：** [seo.ezbizservices.com/.nearned/mcp/server-cad.json](https://seo.ezbizservices.com/.well-known/mcp/server-card.json)\r\n\r\n## 许可证\r\n\r\nMIT——见 [许可证](LICENSE)\r\n",
+ "config": {
+  "seo-marketing": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://seo.ezbizservices.com/mcp"
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "101",
+ "kind": "mcp",
+ "name": "chess-8",
+ "fingerprint_md5": "9bf50c6f50410cf39787c83d3064249c",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# ♟️ 国际象棋MCP服务器\r\n\r\n[](https://badge.fury.io/py/chess-mcp-server)\r\n\r\n**让你的AI Agent用眼睛看到棋盘，用手做出动作。**\r\n\r\n这不仅仅是一个象棋API。这是一个 **模型上下文协议（MCP）** 设计用于让像Claude这样的大型语言模型（LLM）下棋的服务器 *代理*.\r\n\r\n能够以实时HTML可视化棋盘，通过Markdown理解空间关系，并用混合难度引擎（1-10级）挑战你，或者只是促进你和你的代理之间的游戏。\r\n\r\n## 🚀 特性\r\n\r\n- **MCP-UI支持**：直接嵌入聊天中的交互式HTML板（在支持的情况下）。\r\n- **混合AI引擎**：难度可从“随机模糊器”（1级）调节到“最小最大大师”（10级）。\r\n- **代理人vs.代理人**：让两位人工智能人士进行斗争。\r\n- **Web仪表板**：自动启动本地sidecar仪表板(`http://localhost:8080`)监控所有正在进行的游戏。\r\n\r\n## 🧰 工具API\r\n\r\n|工具|说明|\r\n| :--- | :--- |\r\n| `createGame` |初始化针对计算机或其他代理的新象棋游戏会话。 |\r\n| `joinGame` |使用其游戏ID加入现有游戏|\r\n| `finishTurn` |提交一个动作（代数或UCI），并可选择宣布获胜。 |\r\n| `waitForNextTurn` |等待对手动作的长轮询工具。 |\r\n\r\n> 有关完整规格，请参阅 [docs/spec/tools.md](docs/spec/tools.md).\r\n\r\n## 📦 安装\r\n\r\n### 先决条件\r\n\r\n- Python 3.10+\r\n- MCP客户端（例如。， [克劳德桌面版](https://claude.ai/download), [光标](https://cursor.sh/))\r\n\r\n### 1.安装\r\n\r\n您可以直接从PyPI安装：\r\n\r\n```bash\r\npip install chess-mcp-server\r\n```\r\n\r\n### 2.配置MCP客户端\r\n\r\n将以下内容添加到MCP客户端配置文件中（例如。， `~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chess\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"chess-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n*或者，使用pip安装：*\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chess\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"-m\", \"src.mcp_server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🛠️ 发展\r\n\r\n如果你想修改代码：\r\n\r\n1. **克隆和设置**\r\n   ```bash\r\n   git clone https://github.com/fritzprix/chess-mcp-server.git\r\n   cd chess-mcp-server\r\n\r\n   python -m venv .venv\r\n   source .venv/bin/activate\r\n   pip install -e .\r\n   ```\r\n\r\n## 🎮 如何玩\r\n\r\n服务器连接后，您可以要求您的代理启动游戏。\r\n\r\n### 开始游戏\r\n\r\n问： *“在第5级与计算机开始一场新的国际象棋游戏。”*\r\n\r\n- 代理人打电话来 `createGame`.\r\n- **专业建议**：你也可以问 *“我想和你比赛。创造一个你是白人的游戏。”*\r\n\r\n### 加入现有游戏\r\n\r\n如果您有游戏ID（例如，来自其他代理商），您可以问： *“加入游戏\\[game_ID\\]”*.\r\n\r\n- 代理人打电话来 `joinGame`.\r\n\r\n### 游戏循环\r\n\r\n1. **由你做主**:\r\n   - 与互动 **HTML板** 如果显示。拖动您的作品并单击 **确认**.\r\n   - *或* 告诉代理人： *“将棋子移动到e4。”*\r\n1. **轮到特工了**:\r\n   - 代理人打电话来 `waitForNextTurn`.\r\n   - 它看到板（Markdown或HTML）并考虑移动。\r\n   - 它召唤 `finishTurn` 提交其动议。\r\n1. **将军**:\r\n   - 如果你完成了最后一击，你可以检查 **“索赔核对表”** 用户界面上的框或告诉代理 *“伙计！”*.\r\n\r\n### 仪表盘\r\n\r\n当服务器启动时，它将尝试打开 **http://localhost:8080**。您可以在那里查看所有活动游戏和观众视图的列表。\r\n",
+ "config": {
+  "chess": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "chess-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

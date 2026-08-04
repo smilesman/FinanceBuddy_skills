@@ -1,0 +1,22 @@
+{
+ "id": "335",
+ "kind": "mcp",
+ "name": "mystic-tutor",
+ "fingerprint_md5": "5e8e062c5281924239d7476ff741296e",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Mystic Tutor MCP\r\n\r\n\r\nMagic: The Gathering card data at your AI's fingertips\r\n\r\n\r\nA Model Context Protocol server that gives Claude (or any MCP client) real-time access to Magic: The Gathering card data, prices, rulings, synergies, and more — powered by the Scryfall API.\r\n\r\n\r\n______________________________________________________________________\r\n\r\n## 它能做什么？\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `get_card` |按名字查找任何卡片（模糊匹配）。返回mana成本、oracle文本、价格、合法性等。 |\r\n| `search_cards` |满 [Scryfall搜索语法](https://scryfall.com/docs/syntax) --按类型、颜色、CMC、关键字、集合等查找卡片。 |\r\n| `get_card_rulings` |WotC对任何卡的官方裁决。 |\r\n| `find_synergies` |智能协同查找器——分析卡片的机制，并使用Scryfall的社区标签查找补充卡片。 |\r\n| `find_similar` |按功能、统计数据、类型或整体特征查找类似的卡片。 |\r\n\r\n## 快速开始\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add --transport stdio mystic-tutor -- npx mystic-tutor-mcp\r\n```\r\n\r\n就是这样。重新启动Claude Code并开始询问卡片。\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `~/Library/Application Support/Claude/claude_desktop_config.json` （macOS）或 `%APPDATA%\\Claude\\claude_desktop_config.json` （Windows）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mystic-tutor\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mystic-tutor-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone https://github.com/Abbabon/mystic-tutor-mcp.git\r\ncd mystic-tutor-mcp\r\nnpm install && npm run build && npm link\r\nclaude mcp add --transport stdio mystic-tutor -- npx mystic-tutor-mcp\r\n```\r\n\r\n## 例子\r\n\r\n### 卡片查询\r\n\r\n> **你：** 韵律学是做什么的，它有多少钱？\r\n\r\n```\r\n## Rhystic Study\r\nMana Cost: {2}{U}  |  CMC: 3\r\nType: Enchantment\r\nOracle Text: Whenever an opponent casts a spell, you may draw a card\r\nunless that player pays {1}.\r\nPrices: USD $6.50 | Foil $7.99\r\nLegalities: Commander: legal | Legacy: legal | Modern: not_legal\r\nEDHREC Rank: 3\r\n```\r\n\r\n### Scryfall搜索\r\n\r\n> **你：** 给我找些在现代合法的带闪光灯的廉价绿色生物\r\n\r\n该工具运行： `search_cards` 带查询 `t:creature c:green keyword:flash f:modern` 按价格排序。\r\n\r\n### 协同效应\r\n\r\n> **你：** 苏泰的颜色与加倍季节有什么协同作用？\r\n\r\n工具检测 **令牌** 和 **计数器** 主题，然后搜索：\r\n\r\n- `otag:synergy-tokens ci **你：** 哪些卡片与闪电螺栓相似？\r\n\r\n该工具分解了闪电螺栓的机制(`o:\"deals\" o:\"damage\"`, `t:instant`, `mv=1`)并发现了类似的燃烧法术。\r\n\r\n### 裁决\r\n\r\n> **你：** 对Panharmonicon的裁决是什么？\r\n\r\n返回卡片的甲骨文文本以及所有带有日期的官方WotC裁决。\r\n\r\n### 检查产品价格\r\n\r\n> **你：** \\[这个秘密巢穴\\]里的牌值多少钱？\r\n\r\nClaude获取产品页面，提取卡片名称，然后调用 `get_card` 将每张卡的总价值与产品价格进行比较。\r\n\r\n## 运作原理\r\n\r\n```\r\nClaude ←→ stdio ←→ Mystic Tutor MCP ←→ Scryfall API\r\n```\r\n\r\n- **运输**：stdio（标准MCP协议）\r\n- **数据源**: [API公司](https://scryfall.com/docs/api) （免费，不需要API密钥）\r\n- **速率限制**：Scryfall请求之间的最小间隔为100ms（根据他们的指导方针）\r\n- **协同引擎**：使用Scryfall的 `otag:` 社区协同标签+oracle文本模式分析\r\n- **响应格式**：针对LLM消费优化的结构化文本\r\n\r\n## 需求\r\n\r\n- Node.js 18+\r\n- MCP兼容客户端（Claude Code、Claude Desktop或任何MCP客户端）\r\n\r\n## 路线图\r\n\r\n- \\[\\]甲板解析和分析（mana曲线、颜色分布）\r\n- \\[\\]捆绑式综合规则(`lookup_rule`, `search_rules`)\r\n- \\[\\]EDHREC整合指挥官建议\r\n- \\[\\]不同印刷品的价格比较\r\n- \\[\\]用于重复查找的内存缓存\r\n\r\n## 学分\r\n\r\n- 卡数据由 [Scryfall](https://scryfall.com)\r\n- 与 [模型上下文协议SDK](https://github.com/modelcontextprotocol/typescript-sdk)\r\n- 受...启发 [鸭肉/味精](https://github.com/pato/mtg-mcp) 和 [埃及/mtg-mcp](https://github.com/ericraio/mtg-mcp)\r\n- 标题艺术： [神秘导师](https://scryfall.com/card/ss1/4/mystic-tutor) Lindsey Look\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "mystic-tutor": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mystic-tutor-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

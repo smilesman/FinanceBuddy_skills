@@ -1,0 +1,25 @@
+{
+ "id": "472",
+ "kind": "mcp",
+ "name": "steam-5",
+ "fingerprint_md5": "04f4cf2adcfce7861b924242e18b6570",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Steam MCP服务器\r\n\r\n一个MCP（模型上下文协议）服务器，提供与Steam Web API交互的工具。\r\n\r\n## 设置\r\n\r\n### 1.获取Steam API密钥\r\n\r\n从获取API密钥 [Steam开发者门户](https://steamcommunity.com/dev/apikey).\r\n\r\n### 2.安装依赖项\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n### 3.建造\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n### 4.配置您的MCP客户端\r\n\r\n#### 克劳德代码\r\n\r\n添加到您的Claude Code设置文件(`~/.claude/settings.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"steam\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/steam-mcp-server/dist/index.js\"],\r\n      \"env\": {\r\n        \"STEAM_API_KEY\": \"your-api-key-here\",\r\n        \"STEAM_ID\": \"your-64-bit-steam-id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用npx（无需构建）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"steam\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"steam-mcp-server\"],\r\n      \"env\": {\r\n        \"STEAM_API_KEY\": \"your-api-key-here\",\r\n        \"STEAM_ID\": \"your-64-bit-steam-id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 克劳德桌面版\r\n\r\n添加到您的Claude Desktop配置中：\r\n\r\n- macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"steam\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"steam-mcp-server\"],\r\n      \"env\": {\r\n        \"STEAM_API_KEY\": \"your-api-key-here\",\r\n        \"STEAM_ID\": \"your-64-bit-steam-id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 光标\r\n\r\n添加到Cursor的MCP设置(`.cursor/mcp.json` 在您的项目或全局配置中）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"steam\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"steam-mcp-server\"],\r\n      \"env\": {\r\n        \"STEAM_API_KEY\": \"your-api-key-here\",\r\n        \"STEAM_ID\": \"your-64-bit-steam-id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 帆板运动\r\n\r\n添加到Windsurf的MCP配置(`~/.windsurf/mcp.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"steam\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"steam-mcp-server\"],\r\n      \"env\": {\r\n        \"STEAM_API_KEY\": \"your-api-key-here\",\r\n        \"STEAM_ID\": \"your-64-bit-steam-id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `STEAM_API_KEY` |是|您的Steam Web API密钥|\r\n| `STEAM_ID` |否|未在工具调用中指定时使用的默认Steam ID|\r\n| `STEAM_HTTP_TIMEOUT_MS` |否| Steam API调用的请求超时（以毫秒为单位）（默认值 `10000`) |\r\n\r\n当 `STEAM_ID` 设置好后，您可以调用以下工具 `get_owned_games` 无需传递Steam ID，它将自动使用您的默认配置文件。\r\n\r\n## 可靠性和分页\r\n\r\n- 每个Steam API请求都有一个超时限制(`STEAM_HTTP_TIMEOUT_MS`)并自动重试具有指数回退的瞬态故障（超时、HTTP 429和5xx）。不可重试的错误（401/403/404）会以清晰、可操作的消息快速失败，失败将以 `isError: true`.\r\n- 列表返回工具接受 `limit` 和 `offset` 并返回一个包含预切片总数和 `has_more` 标志，例如。 `{ \"total_games\": 412, \"returned\": 50, \"offset\": 0, \"has_more\": true, \"games\": [...] }`. `get_inventory` 另外返回a `next_cursor` （蒸汽 `start_assetid`)用于深度寻呼。\r\n- `search_apps` 使用Steam的相关性排名店面搜索（没有完整的目录下载），因此它可以快速可靠地返回顶级匹配项。\r\n\r\n## 可用工具\r\n\r\n### 社交与个人资料\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_player_summary` |获取玩家资料信息（姓名、头像、状态、当前游戏）|\r\n| `get_friends_list` |获取玩家的好友列表|\r\n| `get_steam_level` |获取玩家的Steam账号等级|\r\n| `get_badges` |获取玩家徽章、经验值和等级提升|\r\n| `get_badge_progress` |获取交易卡收款进度|\r\n| `get_player_bans` |检查VAC禁令、游戏禁令或交易禁令|\r\n| `get_user_groups` |获取玩家所属的Steam群组|\r\n| `resolve_vanity_url` |将虚荣URL转换为64位Steam ID|\r\n\r\n### 游戏库\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_owned_games` |获取所有游戏的播放时间统计数据（支持分页）|\r\n| `get_recently_played` |获取过去两周内玩过的游戏|\r\n| `get_game_details` |获取详细的游戏信息（描述、价格、要求）|\r\n| `is_playing_shared_game` |检查是否通过Steam家人共享播放|\r\n| `search_apps` |按游戏名称搜索Steam目录|\r\n\r\n### 成就与统计\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_achievements` |获取玩家在游戏中的成就|\r\n| `get_game_stats` |获取游戏的玩家统计数据|\r\n| `get_global_achievement_percentages` |获取全球成就解锁率|\r\n| `get_global_game_stats` |获取游戏的全球汇总统计数据|\r\n| `get_perfect_games` |获得玩家取得100%成就的游戏|\r\n| `get_achievement_summary` |在游戏中获得浓缩的成就进度|\r\n| `get_game_schema` |获取游戏的成就/统计定义|\r\n\r\n### 游戏信息\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_game_news` |获取游戏的最新新闻和补丁说明|\r\n| `get_player_count` |获取游戏中的当前玩家数量|\r\n| `get_servers_at_address` |在特定IP上获取游戏服务器|\r\n| `check_app_update` |检查应用程序版本是否为最新版本|\r\n\r\n### 库存\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_inventory` |获取任何游戏的库存（需要公开个人资料）|\r\n| `get_tf2_inventory` |获取《军团要塞2》库存|\r\n| `get_csgo_inventory` |获取CS2/CSGO库存|\r\n| `get_dota2_inventory` |获取Dota 2库存|\r\n\r\n## 查找您的Steam ID\r\n\r\n使用 `resolve_vanity_url` 使用您的自定义配置文件URL，或在以下网址找到您的64位Steam ID [steamid.io](https://steamid.io/).\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "steam": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "steam-mcp-server"
+   ],
+   "env": {
+    "STEAM_API_KEY": "your-api-key-here",
+    "STEAM_ID": "your-64-bit-steam-id"
+   }
+  }
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "id": "3311",
+ "kind": "mcp",
+ "name": "academic-search",
+ "fingerprint_md5": "d1136c03076d1b5c35794d061d163b51",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# 学术论文搜索MCP服务器\r\n\r\n\r\nA. [模型上下文协议（MCP）](https://www.anthropic.com/news/model-context-protocol) 能够从多个来源搜索和检索学术论文信息的服务器。\r\n\r\n服务器为LLM提供：\r\n\r\n- 实时学术论文搜索功能\r\n- 获取纸质元数据和摘要\r\n- 能够检索可用的全文内容\r\n- 遵循MCP规范的结构化数据响应\r\n\r\n虽然主要设计用于与Anthropic的Claude Desktop客户端集成，但MCP规范允许与其他支持工具/功能调用功能的人工智能模型和客户端（例如OpenAI的API）进行潜在兼容性。\r\n\r\n**备注**：该软件正在积极开发中。特性和功能可能会发生变化。\r\n\r\n[https://glama.ai/mcp/servers/kzsu1zzz9j](https://glama.ai/mcp/servers/kzsu1zzz9j)\r\n\r\n## 特性\r\n\r\n此服务器公开以下工具：\r\n\r\n- `search_papers`：跨多个来源搜索学术论文\r\n\r\n  - 参数：\r\n    - `query` （str）：搜索查询文本\r\n    - `limit` （int，可选）：返回的最大结果数（默认值：10）\r\n  - 返回：包含纸张详细信息的格式化字符串\r\n\r\n- `fetch_paper_details`：检索特定论文的详细信息\r\n\r\n  - 参数：\r\n    - `paper_id` （str）：论文标识符（DOI或语义学者ID）\r\n    - `source` （str，可选）：数据源（“crossref”或“semantic_scholar”，默认值：“crossref“）\r\n  - 返回：包含全面论文元数据的格式化字符串，包括：\r\n    - 标题、作者、年份、DOI\r\n    - 地点、开放访问状态、PDF URL（仅限语义学者）\r\n    - 摘要和TL；DR摘要（可用时）\r\n\r\n- `search_by_topic`：使用可选的日期范围过滤器按主题搜索论文\r\n\r\n  - 参数：\r\n    - `topic` （str）：搜索查询文本（限制为300个字符）\r\n    - `year_start` （int，可选）：日期范围的起始年份\r\n    - `year_end` （int，可选）：日期范围的结束年份\r\n    - `limit` （int，可选）：返回的最大结果数（默认值：10）\r\n  - 返回：包含搜索结果的格式化字符串，包括：\r\n    - 论文标题、作者和年份\r\n    - 摘要和TL；DR摘要（如果可用）\r\n    - 场地和开放获取信息\r\n\r\n## 设置\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面学术论文搜索服务器 [史密瑟里](https://smithery.ai/server/@afrise/academic-search-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @afrise/academic-search-mcp-server --client claude\r\n```\r\n\r\n***笔记*** 这种方法基本上没有经过测试，因为他们的服务器似乎遇到了问题。您可以按照独立的说明进行操作，直到smithery得到修复。\r\n\r\n### 通过uv安装（手动安装）：\r\n\r\n1. 安装依赖项：\r\n\r\n```sh\r\nuv add \"mcp[cli]\" httpx\r\n```\r\n\r\n2. 在您的环境中设置所需的API密钥或 `.env` 文件：\r\n\r\n```sh\r\n#  These are not actually implemented\r\nSEMANTIC_SCHOLAR_API_KEY=your_key_here\r\nCROSSREF_API_KEY=your_key_here  # Optional but recommended\r\n```\r\n\r\n3. 运行服务器：\r\n\r\n```sh\r\nuv run server.py\r\n```\r\n\r\n## 使用Claude Desktop\r\n\r\n1. 将服务器添加到Claude Desktop配置中(`claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"academic-search\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run \", \"/path/to/server/server.py\"],\r\n      \"env\": {\r\n        \"SEMANTIC_SCHOLAR_API_KEY\": \"your_key_here\",\r\n        \"CROSSREF_API_KEY\": \"your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n2. 重新启动克劳德桌面\r\n\r\n## 发展\r\n\r\n此服务器是使用以下方式构建的：\r\n\r\n- Python MCP SDK\r\n- FastMCP简化了服务器实施\r\n- 用于API请求的httpx\r\n\r\n## API来源\r\n\r\n- 语义学者API\r\n- 交叉引用API\r\n\r\n## 许可证\r\n\r\n本项目根据GNU Affero通用公共许可证v3.0（AGPL-3.0）获得许可。此许可证确保：\r\n\r\n- 您可以自由使用、修改和分发此软件\r\n- 任何修改都必须在同一许可证下开源\r\n- 任何使用此软件提供网络服务的人都必须提供源代码\r\n- 允许商业使用，但软件和任何衍生产品必须保持免费和开源\r\n\r\n请参阅 [许可证](LICENSE) 完整许可证文本的文件。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！以下是您可以提供帮助的方式：\r\n\r\n1. 分叉存储库\r\n1. 创建要素分支(`git checkout -b feature/amazing-feature`)\r\n1. 提交您的更改(`git commit -m 'Add amazing feature'`)\r\n1. 推到分支(`git push origin feature/amazing-feature`)\r\n1. 打开拉取请求\r\n\r\n请注意：\r\n\r\n- 遵循现有的代码样式和约定\r\n- 为任何新功能添加测试\r\n- 根据需要更新文档\r\n- 确保您的更改符合AGPL-3.0许可条款\r\n\r\n通过参与此项目，您同意您的贡献将根据AGPL-3.0许可证获得许可。\r\n",
+ "config": {
+  "academic-search": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run ",
+    "/path/to/server/server.py"
+   ],
+   "env": {
+    "SEMANTIC_SCHOLAR_API_KEY": "your_key_here",
+    "CROSSREF_API_KEY": "your_key_here"
+   }
+  }
+ }
+}

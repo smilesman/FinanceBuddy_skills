@@ -1,0 +1,22 @@
+{
+ "id": "842",
+ "kind": "mcp",
+ "name": "rss-intel",
+ "fingerprint_md5": "6746e36b6c19203c0e5275b9ef4843d1",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# RSS智能MCP服务器\r\n\r\n> 阅读RSS/Atom提要、提取完整文章、发现提要、监视关键字和管理OPML——所有这些都是通过模型上下文协议完成的。\r\n\r\n\r\n## 特性\r\n\r\n- **7工具** RSS智能\r\n- **5免费工具** -不需要API密钥\r\n- **全文提取** --从任何URL获取文章文本\r\n- **饲料发现** --从任何网站查找RSS源\r\n- **关键字监控** --跨多个提要跟踪主题（专业版）\r\n- **OPML支持** --导入/导出提要列表\r\n\r\n## 快速开始\r\n\r\n添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"rss-intel\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"rss-intelligence-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n免费层不需要API密钥！\r\n\r\n## 工具\r\n\r\n### 自由层（无API密钥）\r\n\r\n|工具|描述|每日限额|\r\n|------|-------------|-------------|\r\n| `fetch_feed` |解析RSS/Atom提要和返回条目|50/天|\r\n| `fetch_article` |从URL提取整篇文章内容|20/天|\r\n| `discover_feeds` |从网站URL查找RSS源|10/天|\r\n| `import_opml` |解析OPML文件到提要列表|无限制|\r\n| `export_opml` |从订阅源列表生成OPML |无限制|\r\n\r\n### 专业级别（每月4.99美元）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `monitor_keywords` |在多个提要中搜索关键字匹配项|\r\n| `analyze_feed` |分析发布频率和主题|\r\n|+所有免费工具，没有每日限制|\r\n\r\n## 例子\r\n\r\n### 阅读新闻推送\r\n\r\n“从以下位置获取最新条目https://hnrss.org/frontpage\"\r\n\r\n### 摘录一篇文章\r\n\r\n“获取本文全文：https://example.com/article\"\r\n\r\n### 查找订阅源\r\n\r\n“在techcrunch.com上发现RSS订阅源”\r\n\r\n### 监控关键字\r\n\r\n“检查这些提要中是否提到了‘AI’和‘LLM’：\\[提要URL\\]”\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `RSS_INTEL_API_KEY` |无| Pro API密钥，可实现无限访问|\r\n\r\n## 数据源\r\n\r\n所有数据都直接从您指定的RSS/Atom提要和网页中获取。没有中介服务。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "rss-intel": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "rss-intelligence-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

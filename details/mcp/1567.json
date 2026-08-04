@@ -1,0 +1,24 @@
+{
+ "id": "1567",
+ "kind": "mcp",
+ "name": "mcp-gateway",
+ "fingerprint_md5": "0f0c0cf76e062b60011bcc8cfb2a2297",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP网关\r\n\r\n通过单个接口聚合多个MCP资源服务器的MCP网关。\r\n\r\n## 特性\r\n\r\n- **MCP代理**：用于访问多个MCP服务器的单个端点\r\n- **批处理请求工具**：优化了多个工具调用的并行执行\r\n- **配置合并**：适用于Claude桌面配置\r\n\r\n## 配置路径\r\n\r\n网关按以下顺序查找配置文件：\r\n\r\n1. **环境变量：** `MCP_CONFIG_PATH` 如果设置\r\n1. **Claude桌面配置：**\r\n   - macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - 窗户： `%APPDATA%/Claude/claude_desktop_config.json`\r\n   - Linux： `~/.config/Claude/claude_desktop_config.json`\r\n1. **违约：** `config.json` 在当前目录中\r\n\r\n## 与Claude合并配置\r\n\r\n网关可以读取 `proxyBatchMcpServers` Claude桌面配置中的部分：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-gateway\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@thinkware/mcp-gateway\"\r\n      ]\r\n    }\r\n  },\r\n  \"proxyBatchMcpServers\": {\r\n    \"filesystem\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@modelcontextprotocol/server-filesystem\",\r\n        \"/Users/username/Desktop\",\r\n        \"/path/to/other/allowed/dir\"\r\n      ],\r\n      \"toolOverrides\": {\r\n        \"read_file\": {\r\n          \"enabled\": true,\r\n          \"description\": \"Read complete contents of a file\\nInput: path (string)\\nReads complete file contents with UTF-8 encoding\"\r\n        },\r\n        \"read_multiple_files\": {\r\n          \"enabled\": false\r\n        }\r\n      }\r\n    },\r\n    \"server-1\": {\r\n      \"command\": \"/path/to/server1/build/index.js\",\r\n      \"toolOverrides\": {\r\n        \"some_tool\": {\r\n          \"enabled\": true,\r\n          \"description\": \"Custom description\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 服务器配置选项\r\n\r\n|选项|类型|描述|必填|\r\n|--------|------|-------------|----------|\r\n| `command` |string |服务器可执行文件的路径|是（对于命令服务器）|\r\n| `args` |string\\[\\]|命令参数|否|\r\n| `env` |object |环境变量|否|\r\n| `url` |string | SSE端点URL |是（适用于SSE服务器）|\r\n| `toolOverrides` |对象|工具自定义|否|\r\n\r\n### 工具替代选项\r\n\r\n|选项|类型|描述|默认值|\r\n|--------|------|-------------|---------|\r\n| `enabled` |boolean |启用/禁用工具| `true` |\r\n| `description` |string |自定义工具描述|原始描述|\r\n| `disabled` |boolean |禁用整个工具| `false` |\r\n\r\n## 环境变量\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-gateway\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@thinkware/mcp-gateway\"\r\n      ],\r\n      \"env\": {\r\n        \"MCP_GATEWAY_LOG_FILE\": \"/path/to/logs/mcp-gateway.log\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Development with auto-rebuild\r\nnpm run dev\r\n\r\n# Build\r\nnpm run build\r\n```\r\n",
+ "config": {
+  "mcp-gateway": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@thinkware/mcp-gateway"
+   ],
+   "env": {
+    "MCP_GATEWAY_LOG_FILE": "/path/to/logs/mcp-gateway.log"
+   }
+  }
+ }
+}

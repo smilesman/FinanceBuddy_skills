@@ -1,0 +1,24 @@
+{
+ "id": "242",
+ "kind": "mcp",
+ "name": "hyperbrowser",
+ "fingerprint_md5": "d0bbf09e26beb92d48772bcef5ef93cd",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 超级浏览器MCP服务器\r\n\r\n[](https://smithery.ai/server/@hyperbrowserai/mcp)\r\n\r\n\r\n这是Hyperbrowser的模型上下文协议（MCP）服务器。它提供了各种工具来抓取、提取结构化数据和抓取网页。它还提供了对通用浏览器代理的轻松访问，如OpenAI的CUA、Anthropic的Claude Computer Use和browser Use。\r\n\r\n有关Hyperbrowser的更多信息，请参阅 [这里](https://docs.hyperbrowser.ai/).超浏览器API支持mcp服务器中存在的功能的超集。\r\n\r\n可以找到有关模型上下文协议的更多信息 [这里](https://modelcontextprotocol.io/introduction).\r\n\r\n## 目录\r\n\r\n- [安装](#installation)\r\n- [用法](#usage)\r\n- [工具](#tools)\r\n- [配置](#configuration)\r\n- [许可证](#license)\r\n\r\n## 安装\r\n\r\n### 手动安装\r\n\r\n要安装服务器，请运行：\r\n\r\n```bash\r\nnpx hyperbrowser-mcp <YOUR-HYPERBROWSER-API-KEY>\r\n```\r\n\r\n## 在游标上运行\r\n\r\n增添 `~/.cursor/mcp.json` 这样地：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"hyperbrowser\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"hyperbrowser-mcp\"],\r\n      \"env\": {\r\n        \"HYPERBROWSER_API_KEY\": \"YOUR-API-KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 在风帆上跑步\r\n\r\n添加到您的 `./codeium/windsurf/model_config.json` 这样地：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"hyperbrowser\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"hyperbrowser-mcp\"],\r\n      \"env\": {\r\n        \"HYPERBROWSER_API_KEY\": \"YOUR-API-KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 发展\r\n\r\n出于开发目的，您可以直接从源代码运行服务器。\r\n\r\n1. 克隆存储库：\r\n\r\n   ```sh\r\n   git clone git@github.com:hyperbrowserai/mcp.git hyperbrowser-mcp\r\n   cd hyperbrowser-mcp\r\n   ```\r\n\r\n1. 安装依赖项：\r\n\r\n   ```sh\r\n   npm install # or yarn install\r\n   npm run build\r\n   ```\r\n\r\n1. 运行服务器：\r\n\r\n   ```sh\r\n   node dist/server.js\r\n   ```\r\n\r\n## 克劳德桌面应用程序\r\n\r\n这是Claude Desktop客户端的Hyperbrowser MCP服务器的示例配置。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"hyperbrowser\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"--yes\", \"hyperbrowser-mcp\"],\r\n      \"env\": {\r\n        \"HYPERBROWSER_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n- `scrape_webpage` -从任何网页提取格式化（标记、截图等）内容\r\n- `crawl_webpages` -浏览多个链接页面并提取LLM友好的格式化内容\r\n- `extract_structured_data` -将杂乱的HTML转换为结构化的JSON\r\n- `search_with_bing` -使用Bing搜索查询网络并获取结果\r\n- `browser_use_agent` -使用browser Use代理实现快速、轻量级的浏览器自动化\r\n- `openai_computer_use_agent` -使用OpenAI CUA模型的通用自动化\r\n- `claude_computer_use_agent` -使用Claude计算机执行复杂的浏览器任务\r\n- `create_profile` -创建新的持久Hyperbrowser配置文件。\r\n- `delete_profile` -删除现有的持久Hyperbrowser配置文件。\r\n- `list_profiles` -列出现有的持久Hyperbrowser配置文件。\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面版Hyperbrowser MCP服务器 [史密瑟里](https://smithery.ai/server/@hyperbrowserai/mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @hyperbrowserai/mcp --client claude\r\n```\r\n\r\n## 资源\r\n\r\n服务器通过以下方式提供有关hyperbrowser的文档 `resources` 方法。任何可以对资源进行发现的客户端都可以访问它。\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。\r\n",
+ "config": {
+  "hyperbrowser": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "hyperbrowser-mcp"
+   ],
+   "env": {
+    "HYPERBROWSER_API_KEY": "YOUR-API-KEY"
+   }
+  }
+ }
+}

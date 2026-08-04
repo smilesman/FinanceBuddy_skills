@@ -1,0 +1,24 @@
+{
+ "id": "1722",
+ "kind": "mcp",
+ "name": "site-cloner",
+ "fingerprint_md5": "a7ef897c117bfc562ed2b714bc438fa2",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 站点克隆器MCP服务器\r\n\r\n这是一个MCP（模型上下文协议）服务器，旨在通过提供获取、分析和下载网站资产的工具来帮助LLM（如克劳德）克隆网站。\r\n\r\n## 特性\r\n\r\n- 从任何URL获取HTML内容\r\n- 从HTML内容中提取资源（CSS、JavaScript、图像、字体等）\r\n- 将单个资产下载到本地目录\r\n- 解析CSS文件以提取链接资源（字体、图像）\r\n- 创建网站的站点地图\r\n- 分析页面结构和布局\r\n\r\n## 需求\r\n\r\n- Docker已安装在您的系统上\r\n\r\n## 用法\r\n\r\n### 使用Docker运行\r\n\r\n1. 构建Docker镜像：\r\n\r\n   ```bash\r\n   docker build -t site-cloner-mcp .\r\n   ```\r\n\r\n1. 运行容器：\r\n\r\n   ```bash\r\n   docker run -i --rm site-cloner-mcp\r\n   ```\r\n\r\n为了持久存储下载的文件，您可以挂载一个卷：\r\n\r\n```bash\r\ndocker run -i --rm -v $(pwd)/downloaded_sites:/app/downloaded_site site-cloner-mcp\r\n```\r\n\r\n### 连接到游标\r\n\r\n要在Cursor中设置此MCP服务器，您有两个选项：\r\n\r\n#### 1.项目具体配置\r\n\r\n创建一个 `.cursor/mcp.json` 包含以下内容的项目根目录中的文件：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"site-cloner\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"site-cloner-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 2.全局配置\r\n\r\n要使MCP服务器在Cursor中全局可用，请通过转到添加以下配置 `Cursor Settings` → `MCP` → `Add new Global MCP Server`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"site-cloner\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"site-cloner-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 1.餐位\r\n\r\n获取网页的HTML内容。\r\n\r\n```\r\nArgs:\r\n    url: The URL of the webpage to fetch\r\n```\r\n\r\n### 2.提取资产\r\n\r\n从HTML内容中提取指向资源的链接。\r\n\r\n```\r\nArgs:\r\n    url: The URL of the webpage (used for resolving relative URLs)\r\n    html_content: The HTML content to parse\r\n```\r\n\r\n### 3.下载_资产\r\n\r\n从URL下载资源并将其保存到指定目录。\r\n\r\n```\r\nArgs:\r\n    url: The URL of the asset to download\r\n    output_dir: The directory to save the asset to (default: downloaded_site)\r\n```\r\n\r\n### 4.parse_css_for_assets\r\n\r\n解析CSS内容以提取引用资源（如字体和图像）的URL。\r\n\r\n```\r\nArgs:\r\n    css_url: The URL of the CSS file (used for resolving relative URLs)\r\n    css_content: The CSS content to parse (if None, it will be fetched from css_url)\r\n```\r\n\r\n### 5.创建站点地图\r\n\r\n从给定的URL开始创建网站的站点地图。\r\n\r\n```\r\nArgs:\r\n    url: The starting URL to crawl\r\n    max_depth: Maximum depth to crawl (default: 1)\r\n```\r\n\r\n### 6.分析页面结构\r\n\r\n分析HTML页面的结构并提取关键组件。\r\n\r\n```\r\nArgs:\r\n    html_content: The HTML content to analyze\r\n```\r\n\r\n## Claude使用示例\r\n\r\n1. 让克劳德克隆一个网站：“请在example.com上克隆网站”\r\n1. Claude将使用可用工具：\r\n   - 获取HTML内容\r\n   - 提取资产\r\n   - 下载必要的文件\r\n   - 分析结构\r\n   - 创建站点的本地副本\r\n\r\n## 故障排除\r\n\r\n### 服务器未显示在游标中\r\n\r\n1. 重新启动游标\r\n1. 检查配置文件语法\r\n1. 确保Docker已正确安装并运行： `docker --version`\r\n1. 查看Cursor的MCP日志以查找错误：\r\n   - `Output` → 选择 `Cursor MCP` 来自Dropdown\r\n1. 尝试手动运行服务器以查看任何错误：\r\n   ```bash\r\n   docker run -i --rm site-cloner-mcp\r\n   ```\r\n\r\n### 找不到模块错误\r\n\r\n如果遇到“ModuleNotFoundError:没有名为'site_cloner'的模块”错误：\r\n\r\n1. 检查pyproject.toml中的包名称是否正确\r\n1. 确保Python文件中的import语句不包含“src.”前缀\r\n1. 更改后重建Docker镜像：\r\n   ```bash\r\n   docker build --no-cache -t site-cloner-mcp .\r\n   ```\r\n\r\n### 检查Docker日志\r\n\r\n检查Docker日志是否有任何错误：\r\n\r\n```bash\r\ndocker logs $(docker ps -q --filter ancestor=site-cloner-mcp)\r\n```\r\n\r\n## 备注\r\n\r\n- 服务器根据内容类型（html、css、js、图像、字体、视频、其他）自动将下载的资产组织到子目录中\r\n- 克隆网站时，请注意版权和服务条款限制\r\n- 某些网站可能会阻止自动请求，在这种情况下，您可能需要调整代码中的用户代理字符串\r\n",
+ "config": {
+  "site-cloner": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "site-cloner-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

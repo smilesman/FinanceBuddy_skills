@@ -1,0 +1,24 @@
+{
+ "id": "1099",
+ "kind": "mcp",
+ "name": "mcp-memory-libsql",
+ "fingerprint_md5": "e12ee24d3bcb883542171533df1abe82",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP-内存-轻量级SQL库\r\n\r\n一个高性能、持久化的模型上下文内存系统\r\n基于libSQL的协议（MCP），具备针对大语言模型（LLM）优化的文本搜索功能\r\n上下文效率。\r\n\r\n## 特点/功能\r\n\r\n- 🚀 高性能文本搜索，附带相关性排名\r\n- 💾 实体和关系的持久化存储\r\n- 🔍 支持模糊匹配的灵活文本搜索\r\n- 🎯 为大型语言模型（LLM）效率优化上下文\r\n- 🔄 知识图谱管理\r\n- 🌐 兼容本地和远程libSQL数据库\r\n- 🔒 基于令牌的安全远程数据库认证\r\n\r\n## 配置\r\n\r\n这台服务器设计为MCP配置的一部分。\r\n以下是不同环境下的示例：\r\n\r\n### Cline 配置\r\n\r\n将此添加到您的Cline MCP设置中：\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"mcp-memory-libsql\": {\r\n\t\t\t\"command\": \"npx\",\r\n\t\t\t\"args\": [\"-y\", \"mcp-memory-libsql\"],\r\n\t\t\t\"env\": {\r\n\t\t\t\t\"LIBSQL_URL\": \"file:/path/to/your/database.db\"\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\n### 配备WSL配置的Claude Desktop\r\n\r\n关于如何使用Claude Desktop设置此服务器的详细指南，请参阅\r\nWSL，参见\r\n[在Windows Subsystem for Linux（WSL）中使MCP服务器与Claude桌面应用程序协同工作](https://scottspence.com/posts/getting-mcp-server-working-with-claude-desktop-in-wsl)。\r\n\r\n在您的Claude Desktop配置中添加以下内容以支持WSL环境：\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"mcp-memory-libsql\": {\r\n\t\t\t\"command\": \"wsl.exe\",\r\n\t\t\t\"args\": [\r\n\t\t\t\t\"bash\",\r\n\t\t\t\t\"-c\",\r\n\t\t\t\t\"source ~/.nvm/nvm.sh && LIBSQL_URL=file:/path/to/database.db /home/username/.nvm/versions/node/v20.12.1/bin/npx mcp-memory-libsql\"\r\n\t\t\t]\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\n### 数据库配置\r\n\r\n该服务器支持本地SQLite数据库和远程libSQL数据库\r\n通过 LIBSQL_URL 环境变量：\r\n\r\n对于本地SQLite数据库：\r\n\r\n```json\r\n{\r\n\t\"env\": {\r\n\t\t\"LIBSQL_URL\": \"file:/path/to/database.db\"\r\n\t}\r\n}\r\n```\r\n\r\n对于远程 libSQL 数据库（例如，Turso）：\r\n\r\n```json\r\n{\r\n\t\"env\": {\r\n\t\t\"LIBSQL_URL\": \"libsql://your-database.turso.io\",\r\n\t\t\"LIBSQL_AUTH_TOKEN\": \"your-auth-token\"\r\n\t}\r\n}\r\n```\r\n\r\n注：在使用WSL（Windows Subsystem for Linux）时，请确保数据库路径使用Linux格式\r\n文件系统格式（例如。， `/home/username/...`）而不是 Windows\r\n格式。\r\n\r\n默认情况下，如果没有提供URL，它将使用 `file:/memory-tool.db`\r\n在当前目录中。\r\n\r\n## API\r\n\r\n该服务器实现了标准MCP（多媒体控制器平台）内存接口，并进行了优化\r\n文本搜索：\r\n\r\n- 实体管理\r\n  - 创建/更新带有观测值的实体\r\n  - 删除实体\r\n  - 按文本搜索实体并按相关性排序\r\n  - 探索实体关系\r\n- 关系管理\r\n  - 在实体之间建立关系\r\n  - 删除关系\r\n  - 查询相关实体\r\n\r\n## 建筑学\r\n\r\n服务器使用带有以下架构的libSQL数据库：\r\n\r\n- 实体表：存储带有时间戳的实体信息\r\n- 观测表：存储实体观测数据\r\n- 关系表：存储实体之间的关系\r\n- 带相关性排名的文本搜索（名称 > 类型 > 观察）\r\n\r\n## 发展\r\n\r\n### 出版\r\n\r\n由于npm要求启用双重身份验证（2FA），发布操作需手动完成：\r\n\r\n1. 创建一个更改集（记录您的更改）：\r\n\r\n```bash\r\npnpm changeset\r\n```\r\n\r\n2. 更新软件包版本（更新版本号和更改日志）：\r\n\r\n```bash\r\npnpm changeset version\r\n```\r\n\r\n3. 发布到npm（将会提示输入2FA代码）：\r\n\r\n```bash\r\npnpm release\r\n```\r\n\r\n## 做出贡献\r\n\r\n欢迎投稿！请阅读我们的投稿指南\r\n在提交拉取请求之前。\r\n\r\n## 许可证\r\n\r\nMIT 许可证 - 请参阅 [许可证](LICENSE) 文件中有详细信息。\r\n\r\n## 致谢\r\n\r\n- 建立在\r\n  [模型上下文协议](https://github.com/modelcontextprotocol)\r\n- 由……提供支持/驱动 [libSQL](https://github.com/tursodatabase/libsql)\r\n",
+ "config": {
+  "mcp-memory-libsql": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-memory-libsql"
+   ],
+   "env": {
+    "LIBSQL_URL": "file:/path/to/your/database.db"
+   }
+  }
+ }
+}

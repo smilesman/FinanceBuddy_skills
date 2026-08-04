@@ -1,0 +1,23 @@
+{
+ "id": "3289",
+ "kind": "mcp",
+ "name": "weather-9",
+ "fingerprint_md5": "a5bd172293cf143346c27fa488a4d73d",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP气象服务器\r\n\r\n模型上下文协议（MCP）服务器，为Claude和其他MCP客户端提供天气数据工具。该服务器与Open-Meteo API集成，以获取当前天气状况、预报和位置数据。\r\n\r\n## 特性\r\n\r\n- **当前天气**：获取任何位置的实时天气状况\r\n- **天气预报**：提前16天检索天气预报\r\n- **位置搜索**：使用地理编码按名称查找位置坐标\r\n\r\n## 先决条件\r\n\r\n- Python 3.12+\r\n- `uv` 包管理器([安装指南](https://docs.astral.sh/uv/getting-started/installation/))\r\n- Claude Desktop应用程序（用于MCP集成）\r\n\r\n## 快速开始\r\n\r\n1. 导航到项目目录：\r\n\r\n   ```bash\r\n   cd mcp-server-weather\r\n   ```\r\n\r\n1. 运行安装脚本：\r\n\r\n   ```bash\r\n   python setup.py\r\n   ```\r\n\r\n1. 测试服务器：\r\n\r\n   ```bash\r\n   source .venv/bin/activate && python test_server.py\r\n   ```\r\n\r\n## 手动安装\r\n\r\n如果您更喜欢手动设置：\r\n\r\n1. 创建并激活虚拟环境：\r\n\r\n   ```bash\r\n   uv venv\r\n   source .venv/bin/activate\r\n   ```\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   uv sync\r\n   ```\r\n\r\n## MCP检验员测试\r\n\r\n使用内置的MCP检查器测试您的服务器：\r\n\r\n```bash\r\nmcp dev server.py\r\n```\r\n\r\n然后打开http://localhost:5173在浏览器中与工具进行交互。\r\n\r\n## 可用工具\r\n\r\n### get_current天气\r\n\r\n获取特定位置的当前天气状况。\r\n\r\n**参数：**\r\n\r\n- `latitude` （浮动）：纬度坐标\r\n- `longitude` （float）：经度坐标\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"latitude\": 40.7128,\r\n  \"longitude\": -74.0060\r\n}\r\n```\r\n\r\n### 获取预测\r\n\r\n获取某个地点的天气预报。\r\n\r\n**参数：**\r\n\r\n- `latitude` （浮动）：纬度坐标\r\n- `longitude` （float）：经度坐标\r\n- `days` （int，可选）：预测天数（1-16，默认值：7）\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"latitude\": 40.7128,\r\n  \"longitude\": -74.0060,\r\n  \"days\": 5\r\n}\r\n```\r\n\r\n### get_location\r\n\r\n按名称搜索位置以获取其坐标。\r\n\r\n**参数：**\r\n\r\n- `query` （string）：要搜索的位置名称\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"query\": \"New York City\"\r\n}\r\n```\r\n\r\n## 与Claude Desktop集成\r\n\r\n要将此服务器与Claude Desktop一起使用，请将其添加到MCP配置中：\r\n\r\n1. 打开克劳德桌面设置\r\n1. 添加此服务器配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"python\", \"/path/to/mcp-server-weather/server.py\"],\r\n      \"cwd\": \"/path/to/mcp-server-weather\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/path/to/mcp-server-weather` 带有项目目录的实际路径。\r\n\r\n## API数据源\r\n\r\n此服务器使用 [开放气象API](https://open-meteo.com/)，它提供：\r\n\r\n- 无需API密钥的免费天气数据\r\n- 全球覆盖\r\n- 高质量气象数据\r\n- 可靠的地理编码服务\r\n\r\n## 示例用法\r\n\r\n一旦与Claude集成，您可以提出以下问题：\r\n\r\n- “东京现在的天气怎么样？”\r\n- “给我一份伦敦5天的天气预报”\r\n- “找到旧金山的坐标”\r\n\r\n服务器将自动获取数据并提供全面的天气信息。\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "python",
+    "/path/to/mcp-server-weather/server.py"
+   ],
+   "env": {}
+  }
+ }
+}

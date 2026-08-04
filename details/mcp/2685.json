@@ -1,0 +1,22 @@
+{
+ "id": "2685",
+ "kind": "mcp",
+ "name": "ripgrep",
+ "fingerprint_md5": "a65bf82f5e7148ef92793f199b37a041",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP Ripgrep服务器\r\n\r\n一种MCP服务器，为任何MCP客户端（如Claude）提供ripgrep（rg）搜索功能。\r\n\r\n## 概述\r\n\r\n该服务器为功能强大的 [ripgrep](https://github.com/BurntSushi/ripgrep) 搜索工具。它使Claude AI和其他兼容MCP的客户端能够跨系统上的文件执行高性能的文本搜索。\r\n\r\n## 先决条件\r\n\r\n- Node.js（v18或更高版本）\r\n- ripgrep(`rg`)命令已安装并在PATH中可用。用以下方式安装 `brew install ripgrep` 是macOS。\r\n\r\n## 使用Claude for Desktop\r\n\r\n要将此MCP服务器与Claude for Desktop一起使用，请执行以下操作：\r\n\r\n1. 编辑您的Claude for Desktop配置文件：\r\n\r\n   - macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n1. 将以下内容添加到您的配置中：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"ripgrep\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\"-y\", \"mcp-ripgrep@latest\"]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n   替换 `/path/to/mcp-ripgrep` 带有克隆此存储库的绝对路径。\r\n\r\n1. 重新启动桌面版的Claude。\r\n\r\n## 可用工具\r\n\r\n### 搜索\r\n\r\n使用ripgrep进行基本搜索：\r\n\r\n```\r\nPattern: error\r\nPath: ./src\r\n```\r\n\r\n### 高级搜索\r\n\r\n具有其他选项的更高级搜索：\r\n\r\n```\r\nPattern: function\r\nPath: ./src\r\nFixedStrings: true\r\nFileType: ts\r\nIncludeHidden: false\r\n```\r\n\r\n### 计数匹配项\r\n\r\n统计模式的出现次数：\r\n\r\n```\r\nPattern: TODO\r\nPath: ./src\r\nCountLines: true\r\n```\r\n\r\n### 列出文件\r\n\r\n列出将在不实际搜索的情况下搜索的文件：\r\n\r\n```\r\nPath: ./src\r\nFileType: js\r\n```\r\n\r\n### 列出文件类型\r\n\r\n列出ripgrep中支持的所有文件类型。\r\n\r\n## 安全考虑\r\n\r\n此MCP服务器使用ripgrep工具执行shell命令。虽然已经努力安全地避开参数，但在机器上运行命令时提供输入时要小心。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "ripgrep": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-ripgrep@latest"
+   ],
+   "env": {}
+  }
+ }
+}

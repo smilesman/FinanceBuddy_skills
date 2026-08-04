@@ -1,0 +1,22 @@
+{
+ "id": "393",
+ "kind": "mcp",
+ "name": "quizhp",
+ "fingerprint_md5": "894d0a76778a36159e4a9c9e15138748",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# QuizHP MCP服务器\r\n\r\n一个交互式问答MCP服务器，可以将任何主题转换为可玩的迷你游戏。每个问题都呈现为一个独特的画布游戏——射箭、谜题、开关和125多个模板。\r\n\r\n## 特性\r\n\r\n- **125+游戏模板** --MCQ和真/假问题各有一个独特的迷你游戏（钢琴键、宝箱、射箭、拆弹等）\r\n- **多平台** --桌面和移动设备的响应式布局，支持全屏\r\n- **MCP应用程序用户界面** --在Claude或ChatGPT中呈现的丰富交互式小部件\r\n- **三种部署模式** --stdio（克劳德桌面）、HTTP（远程服务器）、Cloudflare Worker\r\n- **成绩报告** --测验结果发回人工智能进行后续讨论\r\n- **无外部依赖关系** -所有模板都捆绑在一起，不需要API调用\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install quizhp\r\n```\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"quizhp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"quizhp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Claude.ai（远程HTTP）\r\n\r\n部署服务器并通过MCP端点连接：\r\n\r\n```bash\r\n# Start the HTTP server\r\nnpx quizhp start\r\n\r\n# Or run directly\r\nnode dist/server/index.js\r\n```\r\n\r\nMCP端点位于 `http://localhost:3001/mcp`.\r\n\r\n### ChatGPT\r\n\r\n部署HTTP服务器，并将ChatGPT的MCP集成指向您的 `/mcp` 终点。CORS已预先配置 `chatgpt.com` 和 `chat.openai.com`.\r\n\r\n### Cloudflare工作人员\r\n\r\n```bash\r\n# Deploy to Cloudflare Workers\r\nnpx wrangler deploy\r\n```\r\n\r\n## 使用示例\r\n\r\n### 基础测验\r\n\r\n问克劳德：\r\n\r\n> “太阳系问答”\r\n\r\n克劳德提出问题并致电 `play-quiz` 工具。每个问题都显示为不同的互动迷你游戏。\r\n\r\n### 基于文档的测验\r\n\r\n> “阅读此PDF并就关键概念对我进行测验”\r\n\r\n克劳德从文档中提取事实，并创建有根据的测验问题。\r\n\r\n### 自定义配置\r\n\r\n> “给我15个关于JavaScript闭包的硬真/假问题”\r\n\r\nAI会根据您的要求调整问题数量、难度和类型组合。\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build everything (server + view)\r\nnpm run build\r\n\r\n# Build only the view widget\r\nnpm run build:view\r\n\r\n# Build only the server\r\nnpm run build:server\r\n\r\n# Dev mode (auto-reload)\r\nnpm run dev\r\n\r\n# Start HTTP server\r\nnpm start\r\n\r\n# Start stdio server\r\nnpm run start:stdio\r\n```\r\n\r\n## 建筑\r\n\r\n```\r\nsrc/\r\n  index.ts          — Express HTTP server (Streamable HTTP transport)\r\n  stdio.ts          — Stdio server (Claude Desktop)\r\n  worker.ts         — Cloudflare Worker entry point\r\n  quiz-server.ts    — MCP server factory (tool + resource registration)\r\n  game-store.ts     — In-memory session store with TTL\r\n  template-store.ts — Loads game templates from bundled files\r\n  types.ts          — Shared TypeScript types\r\n\r\nview/src/\r\n  QuizApp.tsx       — Main MCP App component\r\n  components/       — React UI (QuizContainer, GameRuntime, EndScreen, etc.)\r\n  store/            — Zustand state management\r\n  hooks/            — postMessage communication hook\r\n  lib/              — Template injection utilities\r\n\r\ntemplates/          — 125+ HTML canvas game templates\r\n  web/mcq/          — Desktop multiple-choice games\r\n  web/true-false/   — Desktop true/false games\r\n  mobile/mcq/       — Mobile multiple-choice games\r\n  mobile/true-false/ — Mobile true/false games\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "quizhp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "quizhp"
+   ],
+   "env": {}
+  }
+ }
+}

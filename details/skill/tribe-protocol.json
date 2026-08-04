@@ -1,0 +1,12 @@
+{
+ "id": "tribe-protocol",
+ "kind": "skill",
+ "name": "tribe-protocol",
+ "fingerprint_md5": "76b7ac0b9ac7b7c9ddc8d69ab47cc2b5",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# Tribe Protocol\r\n\r\nOpenClaw bots 的信任查询系统。每次非所有者交互都必须在响应前针对 tribe 数据库进行验证。\r\n\r\n## Quick Start\r\n\r\n```bash\r\n# 初始化（仅限首次）\r\n./scripts/tribe.sh init \\\r\n  --bot-name Cheenu \\\r\n  --bot-discord-id 000000000000000004 \\\r\n  --human-name Nagarjun \\\r\n  --human-discord-id 000000000000000002\r\n\r\n# 在响应前查找实体\r\n./scripts/tribe.sh lookup <discord_id>\r\n\r\n# 添加实体\r\n./scripts/tribe.sh add --name Yajat --type human --discord-id 000000000000000001 --tier 3\r\n\r\n# 管理信任\r\n./scripts/tribe.sh set-tier <discord_id> 3 --reason \"Promoted to tribe\"\r\n./scripts/tribe.sh set-status <discord_id> blocked --reason \"Bad actor\"\r\n```\r\n\r\n## Trust Tiers\r\n\r\n| Tier | Label | Access |\r\n|------|-------|--------|\r\n| 4 | Owner | Full trust, all data |\r\n| 3 | Tribe | Collaborate freely, no private data |\r\n| 2 | Acquaintance | Public info only |\r\n| 1 | Stranger | Minimal engagement |\r\n| 0 | Blocked | Ignore completely |\r\n\r\n## How It Works\r\n\r\n1. 来自非所有者的消息到达\r\n2. Bot 读取 TRIBE.md（在工作区根目录生成）\r\n3. Bot 运行 `tribe lookup <discord_id>`\r\n4. Script 返回实体信息 + 层级规则提醒\r\n5. Bot 应用层级适当的行为\r\n\r\n## Commands\r\n\r\n- `tribe init` — 初始化数据库\r\n- `tribe lookup` — 通过 discord_id、name、tag、server 查询实体\r\n- `tribe add` — 添加新实体\r\n- `tribe set-tier` — 更新信任层级\r\n- `tribe set-status` — 更新状态\r\n- `tribe grant` / `tribe revoke` — 频道访问\r\n- `tribe tag` — 管理标签\r\n- `tribe roster` — 列出所有实体\r\n- `tribe log` — 审计跟踪\r\n- `tribe export` — 导出为 markdown\r\n- `tribe stats` — 快速摘要\r\n\r\n## Environment Variables\r\n\r\n- `TRIBE_DB` — 覆盖数据库路径\r\n- `CLAWD_HOME` — 基础目录（默认：~/clawd）\r\n\r\n## Dependencies\r\n\r\n- `sqlite3`（macOS/大多数 Linux 预装）",
+ "config": {}
+}

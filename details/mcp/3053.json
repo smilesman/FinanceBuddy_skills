@@ -1,0 +1,22 @@
+{
+ "id": "3053",
+ "kind": "mcp",
+ "name": "cloudflare",
+ "fingerprint_md5": "e75256a31f64a75e88ebc960bd24e9bd",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# Cloudflare DNS分析MCP服务器 📡\r\n\r\n这是一个 [模型上下文协议（MCP）](https://modelcontextprotocol.io/introduction) 支持远程MCP的服务器\r\n内置 Cloudflare OAuth 的连接功能。\r\n\r\n它集成了由……驱动的工具 [Cloudflare DNS分析API](https://developers.cloudflare.com/api/resources/dns/) 提供关于DNS分析和优化的见解。\r\n\r\n## 🔨 可用工具\r\n\r\n当前可用工具：\r\n\r\n| **类别** | **工具** | **描述** |\r\n| ----------------------- | --------------------------- | -------------------------------------------------------------- |\r\n| **区域信息** | `zones_list` 列出当前活动账户下的区域。                   |\r\n| **DNS分析** | `dns_report` 获取在指定时间段内给定区域的DNS报告。 |\r\n| **账户DNS设置** | `show_account_dns_settings` 获取当前活动帐户的DNS设置。          |\r\n| **DNS区域设置** | `show_zone_dns_settings` 获取给定区域的DNS设置。                        |\r\n\r\n这个MCP服务器仍在开发中，我们计划未来添加更多工具。\r\n\r\n### 提示示例\r\n\r\n- `List zones under my Cloudflare account.`\r\n- `What are the DNS Settings for my account?`\r\n- `Show me the zones under my account and fetch DNS Report for them.`\r\n- `How can I optimize my DNS Setting based on my DNS Report?`\r\n- `Which of my zones has the highest traffic?`\r\n- `Read Cloudflare's documentation on managing DNS records and tell me how to optimize my DNS settings.`\r\n- `Show me DNS Report for https://example.com in the last X days.`\r\n\r\n## 从任何MCP客户端访问远程MCP服务器\r\n\r\n如果您的MCP客户端对远程MCP服务器提供了一流的支持，那么客户端将提供一种方式来接受服务器URL（`https://dns-analytics.mcp.cloudflare.com`）直接在其界面内（例如在 [Cloudflare AI 试验场](https://playground.ai.cloudflare.com/)）。\r\n\r\n如果您的客户端还不支持远程MCP服务器，您需要使用相应的配置文件来设置它 [mcp-remote 翻译为中文是“远程MCP（可能指某种管理系统或控制平台的缩写）”。不过，具体翻译可能需要根据“MCP”在上下文中的具体含义来调整，但在这里，“MCP-remote”可以理解为“远程的MCP系统”或“用于远程操作的MCP”](https://www.npmjs.com/package/mcp-remote) 指定您的客户端可以访问哪些服务器。\r\n\r\n将内容替换为以下配置：\r\n\r\n```json\r\n{\r\n\t\"mcpServers\": {\r\n\t\t\"cloudflare\": {\r\n\t\t\t\"command\": \"npx\",\r\n\t\t\t\"args\": [\"mcp-remote\", \"https://dns-analytics.mcp.cloudflare.com/mcp\"]\r\n\t\t}\r\n\t}\r\n}\r\n```\r\n\r\n一旦您配置好配置文件，重启MCP客户端后，浏览器窗口将会打开并显示您的OAuth登录页面。请按照认证流程进行操作，以授权客户端访问您的MCP服务器。授权后，您即可使用这些工具。\r\n\r\n有兴趣贡献代码并在本地运行这个服务器吗？请查看 [\\`CONTRIBUTING.md\\` 翻译成中文是：“贡献指南文件（或：如何贡献文档）”。这个文件通常用于说明如何为开源项目做出贡献，包括提交代码、报告问题、参与讨论等指南](CONTRIBUTING.md) 开始吧。\r\n",
+ "config": {
+  "cloudflare": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "https://dns-analytics.mcp.cloudflare.com/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

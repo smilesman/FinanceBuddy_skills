@@ -1,0 +1,21 @@
+{
+ "id": "3315",
+ "kind": "mcp",
+ "name": "agentscan",
+ "fingerprint_md5": "aaeeff3f0226f35177c2fb8bb93ec69b",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Agent扫描MCP服务器\r\n\r\nMCP服务器 [Agent扫描](https://agentscan.info) --搜索、探索和评估 **ERC-8004** 跨21个区块链网络的链上AI代理。\r\n\r\n在Claude Code、Claude Desktop、Cursor、VS Code或任何兼容MCP的客户端中使用它来查询代理元数据、信誉评分、端点健康状况、排行榜、所有者投资组合和生态系统分析。\r\n\r\n## 快速开始\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add agentscan -- npx @aliasai2026/agentscan-mcp-server\r\n```\r\n\r\n### 克劳德桌面\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agentscan\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@aliasai2026/agentscan-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标/VS代码\r\n\r\n添加到MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"agentscan\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@aliasai2026/agentscan-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 环境变量（可选）\r\n\r\n|变量|默认值|描述|\r\n|----------|---------|-------------|\r\n| `AGENTSCAN_API_URL` | `https://agentscan.info` |AgentScan API基本URL|\r\n| `AGENTSCAN_DEFAULT_CHAIN` |--|默认网络筛选器|\r\n\r\n## 可用工具（22）\r\n\r\n### 搜索与发现\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_agents` |具有丰富过滤器（文本、网络、技能、域、所有者、质量、声誉、端点、日期范围）的搜索代理|\r\n| `find_similar_agents` |通过共享技能/领域查找与给定代理相似的代理|\r\n| `get_trending_agents` |获取热门、顶级和特色代理商|\r\n| `get_leaderboard` |综合评分代理商排名（服务、使用情况、新鲜度、个人资料）|\r\n\r\n### 代理详细信息\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_agent` |完整的代理元数据、OASF分类、所有者、端点、链上数据|\r\n| `get_agent_reputation` |声誉总结——反馈计数、平均得分、验证计数|\r\n| `get_agent_feedbacks` |带有分数、标签和tx哈希的个人反馈项|\r\n| `get_agent_activities` |链上事件历史记录（注册、信誉更新、验证）|\r\n| `get_agent_endpoint_health` |带响应时间的实时端点健康检查|\r\n| `get_agent_transactions` |交易明细，包括天然气和费用明细|\r\n\r\n### 所有者投资组合\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_owner_portfolio` |按钱包地址和跨网络摘要列出的所有代理|\r\n\r\n### 平台分析\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_stats` |平台范围的统计数据（总代理、网络、同步状态）|\r\n| `get_registration_trend` |随着时间的推移，每日代理注册计数|\r\n| `get_analytics_overview` |全面分析交易统计数据、趋势和网络故障|\r\n| `get_network_distribution` |具有质量故障的跨网络代理分布|\r\n| `get_skill_ranking` |按代理数量统计的最受欢迎的OASF技能|\r\n| `get_recent_activities` |平台范围内的活动提要|\r\n\r\n### 网络、健康与分类学\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_networks` |所有支持的区块链网络及其配置|\r\n| `get_endpoint_health_stats` |全平台端点运行状况概述|\r\n| `get_taxonomy_distribution` |跨代理的OASF技能/领域分布|\r\n| `list_taxonomy_skills` |全部136个OASF技能类别（使用slug进行搜索筛选）|\r\n| `list_taxonomy_domains` |所有OASF域类别（使用slug进行搜索筛选）|\r\n\r\n## 示例提示\r\n\r\n配置后，询问您的AI助手：\r\n\r\n- “使用DeFi技能在Base网络上搜索AI代理”\r\n- “按声誉向我展示排名靠前的代理商”\r\n- “钱包0x1234…拥有哪些代理？”\r\n- “检查代理X是否有工作端点”\r\n- “这个月注册了多少代理人？”\r\n- “最受欢迎的代理技能是什么？”\r\n\r\n## 什么是ERC-8004？\r\n\r\n[ERC-8004](https://eips.ethereum.org/EIPS/eip-8004) 是人工智能代理的链上身份和声誉标准。它提供：\r\n\r\n- **身份登记处** --ERC-721 NFT处理解析为AgentCard元数据\r\n- **声誉注册** --带x402付款证明的结构化反馈信号（0-100分）\r\n- **验证注册表** --独立验证器挂钩（质押、zkML、TEE认证）\r\n\r\nAgentScan是ERC-8004生态系统的官方浏览器，为多个区块链网络中的代理建立索引。\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/AliasAI/agentscan-mcp-server.git\r\ncd agentscan-mcp-server\r\nnpm install\r\nnpm run build\r\n```\r\n\r\nMCP检验员测试：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector node dist/index.js\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "agentscan": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@aliasai2026/agentscan-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

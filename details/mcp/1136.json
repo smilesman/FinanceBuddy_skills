@@ -1,0 +1,26 @@
+{
+ "id": "1136",
+ "kind": "mcp",
+ "name": "mssql-4",
+ "fingerprint_md5": "3c789e6cfb1a7417252225d426fb430f",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# Microsoft SQL Server MCP服务器\r\n\r\n用于通过Claude Desktop安全访问SQL server数据库的模型上下文协议（MCP）服务器。\r\n\r\n## 特性\r\n\r\n- 🔍 列出数据库表\r\n- 📊 执行SQL查询（SELECT、INSERT、UPDATE、DELETE）\r\n- 🔐 多种身份验证方法（SQL、Windows、Azure AD）\r\n- 🏢 支持本地数据库和Azure SQL\r\n- 🔌 自定义端口配置\r\n\r\n## 快速开始\r\n\r\n### 使用Claude Desktop安装\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mssql\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"microsoft_sql_server_mcp\"],\r\n      \"env\": {\r\n        \"MSSQL_SERVER\": \"localhost\",\r\n        \"MSSQL_DATABASE\": \"your_database\",\r\n        \"MSSQL_USER\": \"your_username\",\r\n        \"MSSQL_PASSWORD\": \"your_password\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 配置\r\n\r\n### 基本SQL身份验证\r\n\r\n```bash\r\nMSSQL_SERVER=localhost          # Required\r\nMSSQL_DATABASE=your_database    # Required\r\nMSSQL_USER=your_username        # Required for SQL auth\r\nMSSQL_PASSWORD=your_password    # Required for SQL auth\r\n```\r\n\r\n### 身份验证\r\n\r\n```bash\r\nMSSQL_SERVER=localhost\r\nMSSQL_DATABASE=your_database\r\nMSSQL_WINDOWS_AUTH=true         # Use Windows credentials\r\n```\r\n\r\n### Azure SQL数据库\r\n\r\n```bash\r\nMSSQL_SERVER=your-server.database.windows.net\r\nMSSQL_DATABASE=your_database\r\nMSSQL_USER=your_username\r\nMSSQL_PASSWORD=your_password\r\n# Encryption is automatic for Azure\r\n```\r\n\r\n### 可选设置\r\n\r\n```bash\r\nMSSQL_PORT=1433                 # Custom port (default: 1433)\r\nMSSQL_ENCRYPT=true              # Force encryption\r\n```\r\n\r\n## 替代安装方法\r\n\r\n### 使用pip\r\n\r\n```bash\r\npip install microsoft_sql_server_mcp\r\n```\r\n\r\n然后在 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mssql\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"-m\", \"mssql_mcp_server\"],\r\n      \"env\": { ... }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 发展\r\n\r\n```bash\r\ngit clone https://github.com/RichardHan/mssql_mcp_server.git\r\ncd mssql_mcp_server\r\npip install -e .\r\n```\r\n\r\n## 安全\r\n\r\n- 创建具有最小权限的专用SQL用户\r\n- 切勿使用admin/sa帐户\r\n- 尽可能使用Windows身份验证\r\n- 为敏感数据启用加密\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "mssql": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "microsoft_sql_server_mcp"
+   ],
+   "env": {
+    "MSSQL_SERVER": "localhost",
+    "MSSQL_DATABASE": "your_database",
+    "MSSQL_USER": "your_username",
+    "MSSQL_PASSWORD": "your_password"
+   }
+  }
+ }
+}

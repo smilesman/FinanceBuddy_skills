@@ -1,0 +1,22 @@
+{
+ "id": "373",
+ "kind": "mcp",
+ "name": "playwright-ui",
+ "fingerprint_md5": "f2ba5296a9f151678fd87982c066871b",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 剧作家ui mcp\r\n\r\n                                                                              \r\n\r\n[](https://www.npmjs.com/package/playwright-ui-mcp) [](https://www.npmjs.com/package/playwright-ui-mcp) [](https://github.com/ailabs-393/playwright-ui-mcp/blob/main/LICENSE) [](https://nodejs.org)\r\n\r\n \r\n\r\n一个轻量级的MCP（模型上下文协议）服务器，用于使用Playwright进行浏览器UI捕获和分析。专为与Claude配合使用而设计，可实现可视化UI检查、屏幕截图和浏览器自动化。\r\n\r\n## 特性\r\n\r\n- **头部浏览器** -始终可见，而非无头，用于真正的UI分析\r\n- **默认情况下为轻量级** -除非明确启用，否则无法录制视频\r\n- **屏幕截图** -返回base64图像供Claude分析\r\n- **视频记录** -可选，仅在需要时启用\r\n- **自动清理** -浏览器关闭时删除所有截图/视频\r\n- **交互元素** -使用选择器获取可点击元素\r\n\r\n## 安装\r\n\r\n### 自动安装（推荐）\r\n\r\n在项目中作为依赖项安装。配置(`.mcp.json`)是自动创建的。\r\n\r\n```bash\r\nnpm install playwright-ui-mcp\r\n```\r\n\r\n### 快速安装（无需安装）\r\n\r\n如果您只想配置当前目录而不添加依赖关系：\r\n\r\n```bash\r\nnpx playwright-ui-mcp-install\r\n```\r\n\r\n### 手动配置\r\n\r\n创建 `.mcp.json` 在项目根目录中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"playwright-ui\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"playwright-ui-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后重新启动Claude Code或运行 `/mcp` 加载服务器。\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `browser_launch` |启动头部浏览器。选项： `width`, `height`, `slowMo`, `recordVideo` |\r\n| `browser_new_page` |创建新选项卡|\r\n| `browser_navigate` |导航到URL|\r\n| `browser_screenshot` |截图（返回base64图像进行分析）|\r\n| `browser_get_visible_elements` |使用选择器获取交互式元素|\r\n| `browser_get_content` |获取页面HTML和文本|\r\n| `browser_click` |单击元素|\r\n| `browser_type` |在输入框中键入|\r\n| `browser_wait_for` |等待元素出现|\r\n| `browser_evaluate` |在页面中运行JavaScript|\r\n| `browser_close_page` |关闭特定选项卡|\r\n| `browser_close` |关闭浏览器并清除所有捕获|\r\n| `browser_status` |获取会话信息|\r\n\r\n## 使用示例\r\n\r\n### 基本UI检查\r\n\r\n问克劳德：\r\n\r\n> “打开浏览器，转到https://example.com，并描述你所看到的”\r\n\r\n克劳德将：\r\n\r\n1. 启动浏览器\r\n1. 导航到URL\r\n1. 截图\r\n1. 直观地分析UI\r\n1. 关闭浏览器（自动清理）\r\n\r\n### 表单交互\r\n\r\n> “转到登录页面，填写用户名”test@example.com'和密码'secret'，然后单击提交“\r\n\r\n### 带视频录制（重模式）\r\n\r\n> “在结账流程中导航时录制视频”\r\n\r\n克劳德将使用 `recordVideo: true` 发射时。\r\n\r\n## 轻量化与重量化模式\r\n\r\n|模式|视频|slowMo|用例|\r\n|------|-------|--------|----------|\r\n| **默认值（灯光）** |关闭|无|快速UI检查|\r\n| **重的** |关于|100-200ms|调试、演示|\r\n\r\n```javascript\r\n// Lightweight (default)\r\nbrowser_launch()\r\n\r\n// Heavy mode for debugging\r\nbrowser_launch({ recordVideo: true, slowMo: 150 })\r\n```\r\n\r\n## 清理\r\n\r\n所有临时文件（截图、视频） **自动删除** 当 `browser_close` 被称为。无需手动清理。\r\n\r\n## 卸载\r\n\r\n从项目中删除：\r\n\r\n```bash\r\nnpx playwright-ui-mcp-install uninstall\r\n```\r\n\r\n## 需求\r\n\r\n- Node.js>=18.0.0\r\n- Chromium浏览器（首次运行时通过Playwright自动安装）\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "playwright-ui": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "playwright-ui-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

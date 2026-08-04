@@ -1,0 +1,12 @@
+{
+ "id": "commits",
+ "kind": "skill",
+ "name": "commits",
+ "fingerprint_md5": "3eccd4e4222d9f1dc3838ca5987931f8",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 提交信息指南\r\n\r\n遵循 **Conventional Commits** 格式：\r\n\r\n```\r\n<type>(<scope>): <subject>\r\n\r\n<body>\r\n\r\n<footer>\r\n```\r\n\r\n## 提交类型\r\n\r\n- `feat` - 新功能\r\n- `fix` - Bug 修复\r\n- `refactor` - 代码重构\r\n- `test` - 添加或更新测试\r\n- `docs` - 文档变更\r\n- `chore` - 维护任务\r\n- `style` - 代码样式变更（格式化）\r\n- `perf` - 性能改进\r\n- `ci` - CI/CD 变更\r\n\r\n## 示例\r\n\r\n```bash\r\nfeat(ui): add user search functionality\r\n\r\nImplements real-time search with debouncing.\r\n\r\nReferences: #RI-123\r\n\r\n---\r\n\r\nfix(api): resolve memory leak in connection pool\r\n\r\nProperly cleanup subscriptions on unmount.\r\n\r\nFixes #456\r\n\r\n---\r\n\r\ntest(ui): add tests for data serialization\r\n\r\nrefactor(api): extract common validation logic\r\n\r\ndocs: update API endpoint documentation\r\n\r\nchore: upgrade React to version 18.2\r\n```\r\n\r\n## 最佳实践\r\n\r\n### 好的提交\r\n\r\n- 清晰、描述性的主题行\r\n- 原子性变更（每次提交一个逻辑变更）\r\n- 在正文中引用问题/工单\r\n- 解释**为什么**，而不仅仅是**什么**\r\n- **保持简洁** - 不要在正文中列出每个文件变更\r\n\r\n```bash\r\nfeat(ui): add user profile editing\r\n\r\nAllows users to update their profile information including\r\nname, email, and avatar. Includes validation and error handling.\r\n\r\nReferences: #RI-123\r\n```\r\n\r\n### 不好的提交\r\n\r\n```bash\r\n# 太模糊\r\nfix stuff\r\nWIP\r\nupdate\r\n\r\n# 太宽泛\r\nadd feature, fix bugs, refactor code, update tests\r\n```\r\n\r\n## 问题引用\r\n\r\n- **JIRA (内部)**：`References: #RI-123` 或 `Fixes #RI-123`\r\n- **GitHub (开源)**：`Fixes #456` 或 `Closes #456`\r\n- 在提交信息中使用 `#` 进行自动链接",
+ "config": {}
+}

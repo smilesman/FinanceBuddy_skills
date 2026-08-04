@@ -1,0 +1,21 @@
+{
+ "id": "1416",
+ "kind": "mcp",
+ "name": "docker-mcp",
+ "fingerprint_md5": "a567c61afbf0ea46d7d2750f54204acc",
+ "download_count": 0,
+ "category": "DevOps 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 🐳 docker mcp\r\n\r\n[](https://www.python.org/downloads/release/python-3120/)\r\n[](https://opensource.org/licenses/MIT)\r\n[](https://github.com/psf/black)\r\n[](https://smithery.ai/protocol/docker-mcp)\r\n\r\n用于Docker操作的强大模型上下文协议（MCP）服务器，通过Claude AI实现无缝容器和组合堆栈管理。\r\n\r\n## ✨ 特性\r\n\r\n- 🚀 容器创建和实例化\r\n- 📦 Docker编写堆栈部署\r\n- 🔍 容器日志检索\r\n- 📊 集装箱清单和状态监控\r\n\r\n### 🎬 德莫斯\r\n\r\n#### 部署Docker Compose堆栈\r\n\r\nhttps://github.com/user-attachments/assets/b5f6e40a-542b-4a39-ba12-7fdf803ee278\r\n\r\n#### 分析容器日志\r\n\r\nhttps://github.com/user-attachments/assets/da386eea-2fab-4835-82ae-896de955d934\r\n\r\n## 🚀 快速启动\r\n\r\n要在Claude Desktop应用程序中尝试此操作，请将其添加到您的Claude配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"docker-mcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"docker-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Docker MCP for Claude Desktop [史密瑟里](https://smithery.ai/protocol/docker-mcp):\r\n\r\n```bash\r\nnpx @smithery/cli install docker-mcp --client claude\r\n```\r\n\r\n### 先决条件\r\n\r\n- UV（包管理器）\r\n- Python 3.12+\r\n- Docker桌面或Docker引擎\r\n- 克劳德桌面\r\n\r\n### 安装\r\n\r\n#### Claude桌面配置\r\n\r\n将服务器配置添加到Claude Desktop配置文件中：\r\n\r\n**MacOS**: `~/Library/Application\\ Support/Claude/claude_desktop_config.json`\\\r\n**视窗**: `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n<details>\r\n  <summary>💻 Development Configuration</summary>\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"docker-mcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"<path-to-docker-mcp>\",\r\n        \"run\",\r\n        \"docker-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n</details>\r\n\r\n<details>\r\n  <summary>🚀 Production Configuration</summary>\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"docker-mcp\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"docker-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n</details>\r\n\r\n## 🛠️ 发展\r\n\r\n### 本地设置\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/QuantGeekDev/docker-mcp.git\r\ncd docker-mcp\r\n```\r\n\r\n2. 创建并激活虚拟环境：\r\n\r\n```bash\r\npython -m venv venv\r\nsource venv/bin/activate  # On Windows: venv\\Scripts\\activate\r\n```\r\n\r\n3. 安装依赖项：\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n### 🔍 调试\r\n\r\n启动MCP检查器进行调试：\r\n\r\n```bash\r\nnpx @modelcontextprotocol/inspector uv --directory <path-to-docker-mcp> run docker-mcp\r\n```\r\n\r\n检查器将提供一个URL来访问调试界面。\r\n\r\n## 📝 可用工具\r\n\r\n服务器提供以下工具：\r\n\r\n### 创建容器\r\n\r\n创建独立的Docker容器\r\n\r\n```json\r\n{\r\n    \"image\": \"image-name\",\r\n    \"name\": \"container-name\",\r\n    \"ports\": {\"80\": \"80\"},\r\n    \"environment\": {\"ENV_VAR\": \"value\"}\r\n}\r\n```\r\n\r\n### 部署组合\r\n\r\n部署Docker Compose堆栈\r\n\r\n```json\r\n{\r\n    \"project_name\": \"example-stack\",\r\n    \"compose_yaml\": \"version: '3.8'\\nservices:\\n  service1:\\n    image: image1:latest\\n    ports:\\n      - '8080:80'\"\r\n}\r\n```\r\n\r\n### 获取日志\r\n\r\n从特定容器检索日志\r\n\r\n```json\r\n{\r\n    \"container_name\": \"my-container\"\r\n}\r\n```\r\n\r\n### 列出容器\r\n\r\n列出所有Docker容器\r\n\r\n```json\r\n{}\r\n```\r\n\r\n## 🚧 当前限制\r\n\r\n- 容器没有内置的环境变量支持\r\n- 无卷管理\r\n- 无网络管理\r\n- 无容器健康检查\r\n- 无容器重启策略\r\n- 没有容器资源限制\r\n\r\n## 🤝 贡献\r\n\r\n1. 从以下位置分叉存储库 [docker mcp](https://github.com/QuantGeekDev/docker-mcp)\r\n1. 创建功能分支\r\n1. 提交您的更改\r\n1. 推到分支\r\n1. 打开拉取请求\r\n\r\n## 📜 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n## ✨ 作者\r\n\r\n- **亚历克斯·安德鲁** - *初步工作|核心贡献者* - [@QuantGeekDev](https://github.com/QuantGeekDev)\r\n- **阿里·萨迪科夫** - *初步工作|核心贡献者* - [@md存档](https://github.com/md-archive)\r\n\r\n______________________________________________________________________\r\n\r\n由以下材料制成❤️\r\n",
+ "config": {
+  "docker-mcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "docker-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

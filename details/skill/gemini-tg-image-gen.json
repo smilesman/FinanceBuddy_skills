@@ -1,0 +1,12 @@
+{
+ "id": "gemini-tg-image-gen",
+ "kind": "skill",
+ "name": "gemini-tg-image-gen",
+ "fingerprint_md5": "9424a357aa05ba5449c572f30862e9cf",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# Gemini TG Image Gen (OpenRouter)\r\n\r\n## 工作流\r\n\r\n1. 立即在 Telegram 中通知用户：`\"⏳ Идёт генерация, подождите немного...\"`\r\n2. 使用 OpenRouter 模型 `google/gemini-2.5-flash-image`。\r\n3. 从环境变量读取 API key：`OPENROUTER_API_KEY`。\r\n4. 运行脚本在本地生成并保存图像。\r\n5. 使用 `message` 工具将图像发送到 Telegram（本地文件路径）。\r\n6. NO_REPLY。\r\n\r\n## 用法\r\n\r\n```bash\r\nOPENROUTER_API_KEY=... python3 scripts/generate_image.py \"<prompt>\"\r\n```\r\n\r\n脚本会打印一个带有 `paths` 的 JSON 对象。\r\n\r\n## Telegram 发送\r\n\r\n```\r\n# step 1: waiting message\r\nmessage action=send channel=telegram text=\"⏳ Идёт генерация, подождите немного...\"\r\n\r\n# step 5: send image\r\nmessage action=send channel=telegram media=\"/root/.openclaw/workspace/tmp/openrouter_image_*.png\" caption=\"Generated: <prompt>\"\r\n```\r\n\r\n发送后，使用 `NO_REPLY`。",
+ "config": {}
+}

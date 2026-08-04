@@ -1,0 +1,24 @@
+{
+ "id": "1955",
+ "kind": "mcp",
+ "name": "ibkr",
+ "fingerprint_md5": "ba37bfd22b0982c8b07457aab7601b87",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# ibkr mcp服务器\r\n\r\nMCP服务器 [盈透证券](https://www.interactivebrokers.com/) --将您的投资组合数据、市场报价、交易和分析暴露给任何兼容MCP的AI客户端。\r\n\r\n专为国际/欧盟投资者打造。支持UCITS/PRIIP感知分析、多货币投资组合和爱沙尼亚/欧盟税收环境。\r\n\r\n## 特性\r\n\r\n### 12工具\r\n\r\n|工具|类型|描述|\r\n|------|------|-------------|\r\n| `get_positions` |read |损益表的当前头寸|\r\n| `get_account_summary` |read |资产净值、购买力、利润率|\r\n| `get_nav` |read |快速资产净值检查|\r\n| `get_open_orders` |read |列出待处理订单|\r\n| `get_quote` |read |任何符号的实时报价|\r\n| `get_historical_bars` |读取| OHLCV条（可配置周期/大小）|\r\n| `search_contracts` |read |按符号/名称查找IBKR合约|\r\n| `portfolio_snapshot` |read |带有重量和浓度警告的完整分析|\r\n| `concentration_check` |read |标记超过权重阈值的位置|\r\n| `transition_plan` |read |计算目标分配的卖出/买入计划|\r\n| `place_order` |写|下限价单（安全门）|\r\n| `cancel_order` |写|取消未结订单（安全门）|\r\n\r\n所有阅读工具均附有注释 `readOnlyHint=True`.书写工具的注释为 `destructiveHint=True` 并要求 `SAFETY_PAPER_ONLY=false`.\r\n\r\n### 4资源\r\n\r\n|URI|描述|\r\n|-----|-------------|\r\n| `ibkr://positions` |实时职位列表|\r\n| `ibkr://account/summary` |账户摘要|\r\n| `ibkr://orders/open` |未结订单|\r\n| `ibkr://portfolio/snapshot` |完整的投资组合分析|\r\n\r\n### 4提示\r\n\r\n|提示|描述|\r\n|--------|-------------|\r\n| `portfolio-review` |分析投资组合的风险和机遇|\r\n| `rebalance-plan` |制定一个朝向目标分配的再平衡计划|\r\n| `risk-check` |检查浓度风险和暴露|\r\n| `tax-analysis` |分析税收影响（欧盟/爱沙尼亚背景）|\r\n\r\n## 先决条件\r\n\r\n- **IB网关** 正在运行（通过Docker或独立运行）\r\n- **Python 3.12+** 随着 [紫外线](https://docs.astral.sh/uv/)\r\n- **IBKR帐户** 启用API访问\r\n\r\n### 通过Docker实现IB网关\r\n\r\n```bash\r\ndocker run -d \\\r\n  --name ib-gateway \\\r\n  -p 4003:4003 \\\r\n  -p 5900:5900 \\\r\n  -e TWS_USERID=your_username \\\r\n  -e TWS_PASSWORD=your_password \\\r\n  -e TRADING_MODE=live \\\r\n  -e TWS_PORT=4003 \\\r\n  ghcr.io/gnzsnz/ib-gateway:stable\r\n```\r\n\r\n启动后，批准IBKR Mobile上的2FA提示。\r\n\r\n## 安装\r\n\r\n```bash\r\ngit clone https://github.com/deividi86/ibkr-mcp-server.git\r\ncd ibkr-mcp-server\r\ncp .env.example .env\r\n# Edit .env with your gateway host/port\r\nuv sync\r\n```\r\n\r\n## 在Claude代码中配置\r\n\r\n添加到您的项目 `.mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ibkr\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/ibkr-mcp-server\", \"ibkr-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 在Claude桌面中配置\r\n\r\n添加 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"ibkr\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/ibkr-mcp-server\", \"ibkr-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n配置后，询问您的AI客户端以下问题：\r\n\r\n- “我目前的职位是什么？”\r\n- “分析我的投资组合风险”\r\n- “制定一个再平衡计划，实现70%的VWCE、20%的AGGG、10%的IBC1”\r\n- “获取VWCE的报价”\r\n- “寻找先锋UCITS ETF”\r\n\r\n## 安全\r\n\r\n默认情况下，交易被禁用。这 `SAFETY_PAPER_ONLY=true` 环境变量块 `place_order` 和 `cancel_order`。所有只读工具都可以正常工作。\r\n\r\n要启用实时交易：\r\n\r\n```bash\r\nSAFETY_PAPER_ONLY=false\r\n```\r\n\r\n即使启用了交易，只有 **限价订单** 支持-没有市价订单。\r\n\r\n## 环境变量\r\n\r\n|变量|默认值|描述|\r\n|----------|---------|-------------|\r\n| `IB_GATEWAY_HOST` | `127.0.0.1` |IB网关主机|\r\n| `IB_GATEWAY_PORT` | `4003` |IB网关端口|\r\n| `IB_ACCOUNT` |（空）|帐户ID（可选，使用第一个托管帐户）|\r\n| `SAFETY_PAPER_ONLY` | `true` |为真时阻止交易工具|\r\n\r\n## 发展\r\n\r\n```bash\r\nuv sync --dev\r\nuv run pytest -v\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "ibkr": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "/path/to/ibkr-mcp-server",
+    "ibkr-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

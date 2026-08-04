@@ -1,0 +1,22 @@
+{
+ "id": "262",
+ "kind": "mcp",
+ "name": "lichess-mcp",
+ "fingerprint_md5": "9f93280ae4e5b9973d4e401a4fdcbbbd",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 李切斯mcp\r\n\r\nA. [模型上下文协议（MCP）](https://modelcontextprotocol.io) 将Claude连接到的服务器 [巫妖](https://lichess.org)下棋、分析位置、解决谜题、管理挑战和探索统计数据——所有这些都来自克劳德。\r\n\r\n## 安装\r\n\r\n### 克劳德桌面\r\n\r\n将以下内容添加到您的Claude Desktop配置中：\r\n\r\n**雨衣：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"lichess-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"lichess-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n保存后重新启动Claude Desktop。\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add lichess-mcp -- npx -y lichess-mcp\r\n```\r\n\r\n## 认证\r\n\r\n安装后，让Claude **“启动Lichess身份验证”**。将打开一个浏览器窗口，让您使用您的Lichess帐户授权该应用程序。您的令牌在本地缓存在 `~/.lichess-mcp-auth/token.json` 并在未来的会话中自动重用。\r\n\r\n## 工具\r\n\r\n### 认证\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `lichess_auth_start` |开始OAuth登录--打开浏览器窗口|\r\n| `lichess_auth_status` |检查您是否已登录|\r\n\r\n### 帐户和用户\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `lichess_get_my_profile` |您的评分和帐户统计信息|\r\n| `lichess_get_user` |任何玩家的公开资料|\r\n| `lichess_get_my_games` |您最近的游戏历史（按颜色过滤，评级/休闲）|\r\n| `lichess_get_rating_history` |任何玩家的评分历史|\r\n| `lichess_get_crosstable` |两名玩家之间的正面交锋记录|\r\n| `lichess_get_leaderboard` |按时间控制（子弹、闪电战、快速等）排名靠前的玩家|\r\n\r\n### 挑战\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `lichess_list_challenges` |列出你即将面临和即将面临的挑战|\r\n| `lichess_accept_challenge` |接受即将到来的挑战|\r\n| `lichess_decline_challenge` |拒绝挑战（有可选原因）|\r\n| `lichess_cancel_challenge` |取消您发送的挑战|\r\n| `lichess_create_challenge` |挑战特定玩家|\r\n| `lichess_challenge_ai` |对战Stockfish AI（1-8级）|\r\n\r\n### 游戏\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `lichess_get_ongoing_games` |列出您的活动游戏|\r\n| `lichess_make_move` |玩一个动作（UCI符号，例如。 `e2e4`) |\r\n| `lichess_stream_game` |获取游戏的实时棋盘状态|\r\n| `lichess_stream_events` |流式传输传入事件（挑战、游戏开始）|\r\n| `lichess_abort` |中止游戏的早期动作|\r\n| `lichess_resign` |退出游戏|\r\n| `lichess_offer_draw` |提供、接受或拒绝抽奖|\r\n| `lichess_takeback` |请求、接受或拒绝收回|\r\n| `lichess_send_chat` |在游戏中发送聊天消息|\r\n\r\n### 谜题与分析\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `lichess_get_daily_puzzle` |今天的巫妖之谜|\r\n| `lichess_get_puzzle` |一个特定的ID谜题|\r\n| `lichess_get_next_puzzle` |你的下一个推荐拼图|\r\n| `lichess_get_puzzle_activity` |您最近的谜题历史和结果|\r\n| `lichess_cloud_eval` |FEN位置的Stockfish云评估|\r\n\r\n## 示例提示\r\n\r\n- *“我目前的闪电战评级是多少？”*\r\n- *“以白色显示我最近的5场比赛”*\r\n- *“挑战@DrNykterstein，获得5+3评级的游戏”*\r\n- *“开始一场与Stockfish 5级的比赛，10分钟后，我将打白色”*\r\n- *“列出我即将面临的挑战”*\r\n- *“接受挑战abc123”*\r\n- *“马格努斯和光之间的正面交锋记录是什么？”*\r\n- *“给我看看十大子弹运动员”*\r\n- *“今天的谜题是什么？”*\r\n- *“获取我的下一个谜题”*\r\n- *“显示我最近50次尝试的拼图活动”*\r\n- *“在这个位置上最好的动作是什么： `rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1`\"*\r\n- *“退出我当前的游戏”*\r\n- *“在游戏xyz中给我的对手送上‘好运’”*\r\n\r\n## 需求\r\n\r\n- Node.js 18+\r\n- A. [巫妖](https://lichess.org) 账户\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "lichess-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "lichess-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

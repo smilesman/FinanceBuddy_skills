@@ -1,0 +1,24 @@
+{
+ "id": "2238",
+ "kind": "mcp",
+ "name": "lufthaven",
+ "fingerprint_md5": "4db913a429d19589214fac0909b198fe",
+ "download_count": 0,
+ "category": "出行交通",
+ "tags": "",
+ "version": "",
+ "readme": "# 机场\r\n\r\nAI代理和开发人员的飞行数据。实时跟踪、天气、交易和TSA等待时间。\r\n\r\n不需要API密钥。\r\n\r\n## 所得\r\n\r\n- `flight_status` --实时航班状态、登机口、延误、实时GPS位置\r\n- `airport_search` --按名称、代码或城市查找机场\r\n- `live_aircraft` --目前在某一地区飞行的飞机\r\n- `airport_weather` --METAR条件和飞行规则\r\n- `airport_delays` --美国联邦航空局地面延误计划\r\n- `flight_deals` --从始发地出发的廉价航班交易\r\n- `tsa_wait_times` --TSA安检等待时间\r\n- `flight_trail` --飞行路径/位置历史\r\n\r\n## 需求\r\n\r\n- **Node.js 18或更高版本**\r\n\r\n## 安装\r\n\r\n### 克劳德代码（插件）\r\n\r\n添加市场：\r\n\r\n```bash\r\n/plugin marketplace add Lufthaven/lufthaven-mcp\r\n```\r\n\r\n安装插件：\r\n\r\n```bash\r\n/plugin install lufthaven@lufthaven\r\n```\r\n\r\n重新加载插件：\r\n\r\n```bash\r\n/reload-plugins\r\n```\r\n\r\n### 克劳德代码（MCP）\r\n\r\n或者直接添加为MCP服务器：\r\n\r\n```bash\r\nclaude mcp add lufthaven -- npx -y -p lufthaven lufthaven-mcp\r\n```\r\n\r\n### 克劳德桌面\r\n\r\n添加 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"lufthaven\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"-p\", \"lufthaven\", \"lufthaven-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 法典\r\n\r\n添加到您的项目 `codex.json` 或全局MCP配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"lufthaven\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"-p\", \"lufthaven\", \"lufthaven-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### ChatGPT\r\n\r\n设置→ 连接器→ 创建，然后粘贴：\r\n\r\n```\r\nhttps://lufthaven-mcp.workers.dev/mcp\r\n```\r\n\r\n然后尝试：\r\n\r\n```\r\nWhat's the status of UA444?\r\nAre there any delays at JFK right now?\r\nFind me cheap flights from SFO to Tokyo.\r\nWhat's the weather at Heathrow?\r\n```\r\n\r\n## 命令行界面\r\n\r\n也可作为独立CLI使用：\r\n\r\n```bash\r\nnpx lufthaven flight UA444\r\nnpx lufthaven weather KJFK\r\nnpx lufthaven deals SFO --to NRT\r\nnpx lufthaven tsa LAX\r\nnpx lufthaven live --airport KLAX\r\nnpx lufthaven delays\r\nnpx lufthaven airport \"san francisco\"\r\n```\r\n\r\n所有命令支持 `--json` 用于原始JSON输出。\r\n\r\n## 数据\r\n\r\n- **直播ADS-B** --来自全球社区接收器的实时飞机位置\r\n- **FAA游泳** --美国联邦航空管理局数据直接提供美国航班状态\r\n- **天气** --来自aviationweather.gov的METAR/TAF\r\n- **延误** --FAA NAS地面延迟计划\r\n- **交易** --谷歌航班价格监控\r\n- **运输安全管理局** --机场安检等待时间\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "lufthaven": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "-p",
+    "lufthaven",
+    "lufthaven-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

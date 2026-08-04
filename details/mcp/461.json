@@ -1,0 +1,25 @@
+{
+ "id": "461",
+ "kind": "mcp",
+ "name": "spotify-4",
+ "fingerprint_md5": "4072201f9de5bc65785f70aba78bf568",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# ArtistLens\r\n\r\n[](https://smithery.ai/server/@superseoworld/artistlens)\r\n[](https://www.npmjs.com/package/@thomaswawra/artistlens)\r\n\r\n功能强大的模型上下文协议（MCP）服务器，提供对Spotify Web API的访问。ArtistLens实现了与Spotify音乐目录的无缝交互，包括搜索曲目、专辑和艺术家，以及访问特定于艺术家的信息，如热门曲目和相关艺术家。\r\n\r\n**当前版本：** 0.4.12\r\n\r\n[](https://glama.ai/mcp/servers/mmrvuig6tp)\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装ArtistLens for Claude Desktop [史密瑟里](https://smithery.ai/server/@superseoworld/artistlens):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @superseoworld/artistlens --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n您可以全局安装该软件包：\r\n\r\n```bash\r\nnpm install -g @thomaswawra/artistlens\r\n```\r\n\r\n或者直接用npx运行它：\r\n\r\n```bash\r\nnpx -y @thomaswawra/artistlens\r\n```\r\n\r\n## 配置\r\n\r\n添加到您的MCP设置文件（例如。， `claude_desktop_config.json` 或 `cline_mcp_settings.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"spotify\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@thomaswawra/artistlens\"],\r\n      \"env\": {\r\n        \"SPOTIFY_CLIENT_ID\": \"your_client_id\",\r\n        \"SPOTIFY_CLIENT_SECRET\": \"your_client_secret\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": []\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您需要提供您的Spotify API证书：\r\n\r\n1. 首选 [Spotify开发者仪表板](https://developer.spotify.com/dashboard)\r\n1. 创建新应用程序\r\n1. 获取您的客户ID和客户密码\r\n1. 将它们添加到配置中，如上所示\r\n\r\n## 特性\r\n\r\n- 搜索曲目、专辑、艺术家和播放列表\r\n- 获取艺术家信息，包括热门曲目和相关艺术家\r\n- 获取专辑信息和曲目\r\n- 访问新版本和建议\r\n- 获取具有特定市场内容和章节的有声读物信息\r\n- 注意：有声读物端点可能需要额外的身份验证或特定市场的访问权限\r\n- 获取和修改播放列表信息（名称、描述、公共/私人状态）\r\n- 使用分页支持访问播放列表曲目和项目\r\n- 同时支持Spotify ID和URI\r\n- 具有客户端凭据流的自动令牌管理\r\n- 针对所有功能的全面测试套件\r\n- 组织良好的代码，关注点分离\r\n\r\n## 可用工具\r\n\r\n- `get_access_token`：获取有效的Spotify访问令牌\r\n- `search`：搜索曲目、专辑、艺术家或播放列表\r\n- `get_artist`：获取艺术家信息\r\n- `get_artist_top_tracks`：获取艺术家的热门曲目\r\n- `get_artist_related_artists`：获得与给定艺术家相似的艺术家\r\n- `get_artist_albums`：获取艺术家的专辑\r\n- `get_album`：获取相册信息\r\n- `get_album_tracks`：获取专辑的曲目\r\n- `get_track`：获取跟踪信息\r\n- `get_available_genres`：获取可用流派列表以供推荐\r\n- `get_new_releases`：获取新专辑发行\r\n- `get_recommendations`：根据种子曲目、艺术家或流派获取曲目推荐\r\n- `get_audiobook`：获取带有可选市场参数的有声读物信息\r\n- `get_multiple_audiobooks`：获取多个有声读物的信息（最多50个）\r\n- `get_audiobook_chapters`：获取支持分页的有声读物章节（每次请求1-50章）\r\n- `get_playlist`：获取Spotify用户拥有的播放列表\r\n- `get_playlist_tracks`：获取播放列表曲目的完整详细信息（每个请求1-100首曲目）\r\n- `get_playlist_items`：获取播放列表中项目的完整详细信息（每个请求1-100个项目）\r\n- `modify_playlist`：更改播放列表详细信息（名称、描述、公共/私人状态、协作状态）\r\n- `add_tracks_to_playlist`：使用可选位置将一首或多首曲目添加到播放列表中\r\n- `remove_tracks_from_playlist`：从播放列表中删除一首或多首带有可选位置和快照ID的曲目\r\n- `get_current_user_playlists`：获取当前Spotify用户拥有或关注的播放列表列表（每次请求1-50个播放列表）\r\n- `get_featured_playlists`：获取具有可选区域设置和分页支持的Spotify特色播放列表列表\r\n- `get_category_playlists`：获取标记有特定类别的Spotify播放列表列表\r\n\r\n## 更新中\r\n\r\n要更新到最新版本：\r\n\r\n```bash\r\n# If installed globally\r\nnpm update -g @thomaswawra/artistlens\r\n\r\n# If using npx, it will automatically use the latest version\r\nnpx -y @thomaswawra/artistlens\r\n```\r\n\r\n## 发展\r\n\r\n这个项目是开源的，可以在GitHub上找到 [https://github.com/superseoworld/artistlens](https://github.com/superseoworld/artistlens).\r\n\r\n### 项目结构\r\n\r\n代码库组织在以下目录中：\r\n\r\n- `src/handlers/`：包含不同Spotify API端点的处理程序类\r\n- `src/types/`：请求和响应对象的TypeScript接口\r\n- `src/utils/`：API通信的实用程序函数和类\r\n- `src/__tests__/`：所有功能的Jest测试文件\r\n\r\n### 测试\r\n\r\n该项目使用Jest进行测试。要运行测试，请执行以下操作：\r\n\r\n```bash\r\nnpm test\r\n```\r\n\r\n在开发过程中以监视模式运行测试：\r\n\r\n```bash\r\nnpm run test:watch\r\n```\r\n\r\n### 贡献\r\n\r\n贡献：\r\n\r\n1. 分叉存储库\r\n1. 创建功能分支(`git checkout -b feature/amazing-feature`)\r\n1. 为您的更改添加测试\r\n1. 提交您的更改(`git commit -m 'Add some amazing feature'`)\r\n1. 推到分支(`git push origin feature/amazing-feature`)\r\n1. 打开拉取请求\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n\r\n[](https://smithery.ai/server/@superseoworld/artistlens)\r\n",
+ "config": {
+  "spotify": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@thomaswawra/artistlens"
+   ],
+   "env": {
+    "SPOTIFY_CLIENT_ID": "your_client_id",
+    "SPOTIFY_CLIENT_SECRET": "your_client_secret"
+   }
+  }
+ }
+}

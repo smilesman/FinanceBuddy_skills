@@ -1,0 +1,24 @@
+{
+ "id": "656",
+ "kind": "mcp",
+ "name": "gaudio",
+ "fingerprint_md5": "a6a48a0bdc2ec5fdf0b8e94a3cfc505c",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# @gaudiolab/mcp开发人员\r\n\r\n\r\nMCP服务器 [Gaudio实验室](https://www.gaudiolab.com) 音频AI API。通过人工智能工具中的自然语言，将人声、乐器、对话、音乐、任何音频/视频的效果分开，或将歌词与时间戳同步。\r\n\r\n适用于Claude、ChatGPT、Cursor、VS Code、GitHub Copilot和任何兼容MCP的客户端。\r\n\r\n## 获取API密钥\r\n\r\n1. 注册地址： [Gaudio开发商](https://developers.gaudiolab.io)\r\n1. 创建一个项目并从仪表板获取API密钥\r\n\r\n## 快速开始\r\n\r\n添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gaudio\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@gaudiolab/mcp-developers\"],\r\n      \"env\": {\r\n        \"GAUDIO_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后用自然语言问：\r\n\r\n- *“将人声与此文件分开”*\r\n- *“从该视频中提取对话”*\r\n- *“将这些歌词同步到此歌曲”*\r\n- *“有哪些型号可供选择？”*\r\n- *“我还剩多少学分？”*\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `gaudio_get_key_info` |获取API关键信息：信用，项目，允许的模型|\r\n| `gaudio_list_models` |按类别列出可用的AI模型|\r\n| `gaudio_upload_file` |上传音频/视频/文本文件（多部分，自动分块）|\r\n| `gaudio_create_job` |创建处理作业|\r\n| `gaudio_get_job` |检查作业状态并获取下载URL|\r\n| `gaudio_separate_audio` |一体式：上传→ 过程→ 下载URL|\r\n| `gaudio_sync_lyrics` |多功能歌词与时间戳同步|\r\n\r\n## 模型\r\n\r\n### 阀杆分离\r\n\r\n|型号|描述|类型选项|\r\n|-------|-------------|-------------|\r\n| `gsep_music_hq_v1` |多乐器分离|声乐、鼓、贝司、电吉他、声学钢琴|\r\n| `gsep_music_shq_v1` |超级HQ声乐+伴奏|声乐|\r\n| `gsep_speech_hq_v1` |语音/噪声去除|语音|\r\n\r\n最大值：每个文件1GB/20分钟。类型可以组合（例如。 `vocal,drum`).\r\n\r\n### DME分离（对话、音乐、效果）\r\n\r\n|型号|描述|\r\n|-------|-------------|\r\n| `gsep_dme_dtrack_v1` |对话提取|\r\n| `gsep_dme_d2track_v1` |对话+人声|\r\n| `gsep_dme_metrack_v1` |音乐+效果|\r\n| `gsep_dme_me2track_v1` |音乐+效果v1|\r\n| `gsep_dme_me2track_v2` |音乐+效果v2（高质量）|\r\n| `gsep_dme_mtrack_v1` |仅限音乐|\r\n| `gsep_dme_etrack_v1` |仅效果|\r\n\r\n最大值：每个文件10GB/200分钟。\r\n\r\n### AI文本同步\r\n\r\n|型号|描述|语言|\r\n|-------|-------------|-----------|\r\n| `gts_lyrics_line_v1` | Lyrics line sync | en， ko， ja， zh-cn |\r\n\r\n最大值：1GB/10分钟。文本： `.txt` （UTF-8），最少2行，最多60个字符/行。\r\n\r\n输出：CSV（时间戳、lyric_text、confidence_score）+JSON报告。\r\n\r\n## 支持格式\r\n\r\n|类型|格式|\r\n|------|---------|\r\n|音频| WAV、FLAC、MP3、M4A|\r\n|视频|MOV、MP4（音频自动提取）|\r\n|文本|TXT（UTF-8）|\r\n\r\n输出：MP3（48kHz/320kbps）+WAV（与输入相同）。下载URL的有效期为48小时。\r\n\r\n## 运作原理\r\n\r\n```\r\nUpload file → Create job → Poll status → Get download URLs\r\n```\r\n\r\n高级工具(`gaudio_separate_audio`, `gaudio_sync_lyrics`)自动处理整个流程。上传ID的有效期为72小时，可以在多个作业中重复使用。\r\n\r\n## 链接\r\n\r\n- [Gaudio开发商](https://developers.gaudiolab.io) -API仪表盘和密钥管理\r\n- [文档](https://www.gaudiolab.com/docs) -API完整参考\r\n- [Gaudio实验室](https://www.gaudiolab.com) --公司主页\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "gaudio": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@gaudiolab/mcp-developers"
+   ],
+   "env": {
+    "GAUDIO_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

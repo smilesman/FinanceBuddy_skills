@@ -1,0 +1,12 @@
+{
+ "id": "agent-skills-tools",
+ "kind": "skill",
+ "name": "agent-skills-tools",
+ "fingerprint_md5": "70275c56af673263733f0d7cc6a6166a",
+ "download_count": 0,
+ "category": "测试与安全",
+ "tags": "",
+ "version": "",
+ "readme": "# Agent Skills Tools 🔒\r\n\r\nAgent Skills 生态系统的安全和验证工具。\r\n\r\n## 概述\r\n\r\n本技能提供工具来审计和验证 Agent Skills 包中的安全漏洞和标准合规性。\r\n\r\n## 工具\r\n\r\n### 1. 安全审计工具 (skill-security-audit.sh)\r\n\r\n扫描技能包中的常见安全问题：\r\n\r\n**检查：**\r\n- 🔐 凭据泄露（硬编码 API 密钥、密码、令牌）\r\n- 📁 危险的文件访问（~/.ssh, ~/.aws, ~/.config）\r\n- 🌐 外部网络请求\r\n- 📋 环境变量使用（推荐做法）\r\n- 🔑 文件权限（credentials.json）\r\n- 📜 Git 历史中的泄露 secrets\r\n\r\n**用法：**\r\n```bash\r\n./skill-security-audit.sh path/to/skill\r\n```\r\n\r\n**示例输出：**\r\n```\r\n🔒 技能安全审计报告：path/to/skill\r\n==========================================\r\n\r\n📋 检查1: 凭据泄露 (API key, password, secret, token)\r\n----------------------------------------\r\n✅ 未发现凭据泄露\r\n\r\n📋 检查2: 危险的文件操作 (~/.ssh, ~/.aws, ~/.config)\r\n----------------------------------------\r\n✅ 未发现危险的文件访问\r\n\r\n[... more checks ...]\r\n\r\n==========================================\r\n🎯 安全审计完成\r\n```\r\n\r\n## 背景\r\n\r\neudaemon_0 在 286 个技能中发现了 1 个凭据窃取器。Agent 被训练为乐于助人且信任他人，这使它们容易受到恶意技能的攻击。\r\n\r\n这些工具有助于在造成损害之前发现此类漏洞。\r\n\r\n## 最佳实践\r\n\r\n1. **永远不要硬编码凭据**\r\n   - ❌ `API_KEY=\"sk_live_abc123...\"`\r\n   - ✅ 从环境变量或配置文件读取\r\n\r\n2. **使用环境变量**\r\n   ```bash\r\n   export MOLTBOOK_API_KEY=\"sk_live_...\"\r\n   ```\r\n   ```python\r\n   import os\r\n   api_key = os.environ.get('MOLTBOOK_API_KEY')\r\n   ```\r\n\r\n3. **检查 Git 历史**\r\n   ```bash\r\n   git log -S 'api_key'\r\n   git-secrets --scan-history\r\n   ```\r\n\r\n4. **将敏感文件添加到 .gitignore**\r\n   ```\r\n   credentials.json\r\n   *.key\r\n   .env\r\n   ```\r\n\r\n## License\r\n\r\nMIT",
+ "config": {}
+}

@@ -1,0 +1,18 @@
+{
+ "id": "233",
+ "kind": "mcp",
+ "name": "gradio-2",
+ "fingerprint_md5": "a549fb7cba4ccccdd511f053d09ba8ec",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 🏁 一级方程式赛车MCP服务器🏎️\r\n\r\n该项目为F1数据定义了一个MCP服务器，为球迷、分析师和开发人员提供了轻松访问大量F1统计数据和信息的途径。它使用Python构建，由Gradio框架提供支持，提供了一个用户友好的web界面，可以探索F1历史和最新数据 [FastF1](https://docs.fastf1.dev/) 图书馆与官员 [OpenF1 API](https://openf1.org/).\r\n\r\n## 视频演示（克劳德桌面）\r\n\r\n[](https://www.loom.com/embed/4ef9cf2e691143db8e5d807a1aef9672?sid=6dabbf2e-71ba-406d-ad86-8b480a29e222)\r\n\r\n## 建筑\r\n\r\nMCP服务器和客户端的架构概述。MCP服务器使用 `Gradio` 后端，可以在本地或远程服务器上运行。\r\n\r\n\r\n### Gradio主要功能\r\n\r\n界面分为几个部分 `Gradio` 选项卡，每个选项卡专用于特定类型的F1数据：\r\n\r\n- **锦标赛排名：** 查看1950年至今任何一个赛季的最终车手和制造商冠军排名。\r\n- **活动信息：** 获取任何大奖赛的详细信息，包括赛程和赛道细节。\r\n- **季节日历：** 显示给定年份的完整比赛日历。\r\n- **轨迹可视化：** 生成并查看最快比赛圈数的图表，可视化速度、换挡和转弯重力。\r\n- **会话结果：** 获取任何比赛环节（练习赛、资格赛或比赛）的详细结果。\r\n- **驾驶员和施工人员信息：** 查找车手和车队的背景信息和统计数据。\r\n- **OpenF1 API工具：** 一个高级工具包，用于开发人员直接查询OpenF1 API、构建自定义请求和查看原始JSON响应。\r\n\r\n### 技术栈\r\n\r\n- **后端：** python\r\n- **Web框架：** 度\r\n- **数据来源：**\r\n  - `fastf1` Python历史数据库。\r\n  - `openf1` 通过其公共API获取实时和最新数据。\r\n- **关键库：** `pandas`, `matplotlib`\r\n\r\n## MCP服务器\r\n\r\nMCP服务器在内部定义 `app.py`.\r\n\r\n## MCP客户端\r\n\r\nMCP客户端和AI代理在内部定义 `mcp_client.py` 并允许通过服务器端事件（SSE）传输与MCP服务器进行交互。\r\n\r\n## MCP配置文件\r\n\r\n对于支持SSE传输的MCP客户端（对于Claude Desktop，请参阅下文），可以使用以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gradio\": {\r\n      \"url\": \"https://agents-mcp-hackathon-f1-mcp-server.hf.space/gradio_api/mcp/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n对于Claude Desktop，可以使用以下配置，但请确保安装了Node.js：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gradio\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-remote\",\r\n        \"https://agents-mcp-hackathon-f1-mcp-server.hf.space/gradio_api/mcp/sse\",\r\n        \"--transport\",\r\n        \"sse-only\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "gradio": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://agents-mcp-hackathon-f1-mcp-server.hf.space/gradio_api/mcp/sse"
+  }
+ }
+}

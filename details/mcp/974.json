@@ -1,0 +1,18 @@
+{
+ "id": "974",
+ "kind": "mcp",
+ "name": "antseer",
+ "fingerprint_md5": "50856224ff1ac0f0fde615a21204e234",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Antseer——面向Agent时代的Web3数据操作系统\r\n\r\n**[网站](https://antseer.ai)** · [中文](README.zh.md) · [日本语](README.ja.md) · [韩语](README.ko.md)\r\n\r\n   \r\n\r\n> 一个MCP端点。100+实时Web3数据工具。需要零个API密钥。\r\n\r\nAntseer通过单一平台将人工智能代理与链上生活和市场情报联系起来 [模型上下文协议（MCP）](https://modelcontextprotocol.io) 终点。任何兼容MCP的客户端自动查找连接上的所有可用工具-无SDK，无配置，无API密钥。\r\n\r\n______________________________________________________________________\r\n\r\n## 快速连接\r\n\r\n**MCP端点：** `https://ant-on-chain-mcp.antseer.ai/mcp`\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add antseer --transport http https://ant-on-chain-mcp.antseer.ai/mcp\r\n```\r\n\r\n### 克劳德桌面版\r\n\r\n添加 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"antseer\": {\r\n      \"url\": \"https://ant-on-chain-mcp.antseer.ai/mcp\",\r\n      \"transport\": \"http\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标/风帆\r\n\r\n添加到MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"antseer\": {\r\n      \"url\": \"https://ant-on-chain-mcp.antseer.ai/mcp\",\r\n      \"transport\": \"http\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 开源代码\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"antseer\": {\r\n        \"url\": \"https://ant-on-chain-mcp.antseer.ai/mcp\",\r\n        \"type\": \"http\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 数据类别\r\n\r\n四个领域的100多种工具，由多个专业Web3数据提供商提供支持。\r\n\r\n### 🔗 OnChain\r\n\r\n- 协议TVL、收益、费用和收入跟踪\r\n- 智能货币和鲸鱼钱包监控\r\n- 跨链过桥资金流\r\n- 稳定币市场动态和供应分析\r\n- Meme代币叙事检测与分析\r\n- 链上代币指标、持有者分布和PnL\r\n- 钱包地址分析和交易对手分析\r\n\r\n### 📊 CeFi\r\n\r\n- 现货市场结构、定价和订单深度\r\n- 期货未平仓利率、融资利率和清算跟踪\r\n- 市场技术指标\r\n- 永久DEX分析和鲸鱼位置跟踪\r\n\r\n### 🏦 交易\r\n\r\n- 比特币和以太坊ETF净流入和资产管理规模\r\n- 代币化美国股票（价格、历史、OHLC）\r\n- 代币化贵金属\r\n\r\n### 🌍 宏观与情绪\r\n\r\n- 美国宏观经济指标——GDP、CPI、联邦基金利率、国债收益率、失业率\r\n- 加密货币市场情绪评分和社会分析\r\n\r\n______________________________________________________________________\r\n\r\n## 查询示例\r\n\r\n连接后，自然地问你的AI代理：\r\n\r\n- *“向我展示TVL排名前10的DeFi协议及其7天的变化”*\r\n- *“目前主要交易所的BTC融资率是多少？”*\r\n- *“本周比特币ETF收到了多少净流入？”*\r\n- *“哪些钱包在过去24小时内积累了ETH？”*\r\n- *“目前的恐惧和贪婪指数和市场情绪是什么？”*\r\n\r\n______________________________________________________________________\r\n\r\n## CLI工具\r\n\r\nAntseer还提供了一个独立的CLI，用于从终端直接查询数据。\r\n\r\n→ See [cli.md](cli.md) 用于安装和使用。\r\n\r\n**快速安装：**\r\n\r\n```bash\r\n# macOS / Linux\r\ncurl -sSfL https://skillhub-api.antseer.ai/files/clis/install.sh | bash\r\n\r\n# Windows (PowerShell)\r\nirm https://skillhub-api.antseer.ai/files/clis/install.ps1 | iex\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 联系\r\n\r\n- 电子邮件： [antseersupport@antseer.ai](mailto:antseersupport@antseer.ai)\r\n- 推特/X： [@安西尔_艾](https://x.com/Antseer_ai)\r\n- 电报： [t.me/关节](https://t.me/antseer)\r\n- 网站： [新闻.ai](https://antseer.ai)\r\n",
+ "config": {
+  "antseer": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://ant-on-chain-mcp.antseer.ai/mcp"
+  }
+ }
+}

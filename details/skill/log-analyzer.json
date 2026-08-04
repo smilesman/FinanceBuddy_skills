@@ -1,0 +1,12 @@
+{
+ "id": "log-analyzer",
+ "kind": "skill",
+ "name": "log-analyzer",
+ "fingerprint_md5": "ccd4a4dd8d03f156cb9ac1ac0e4aedc8",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# 记录 Analyzer Skill\r\n\r\nThis skill analyzes a 记录 file 迁移到 count the occurrences of \"错误\" and \"警告\" and lists the lines where they appear.\r\n\r\n## Capability\r\n\r\nThe skill provides a Python script named `analyze.py` located in this directory. You 可以 use this script 迁移到 分析 any text file.\r\n\r\n## 用法\r\n\r\n迁移到 use this skill, 执行 the `analyze.py` script with the target 记录 file as an argument.\r\n\r\n### 示例\r\n\r\n```bash\r\npython3 {{.BaseDirectory}}/scripts/analyze.py /path/to/logfile.log\r\n```\r\n\r\n**注意**: 替换 `/path/to/logfile.log` with the actual path of the file you want 迁移到 分析.",
+ "config": {}
+}

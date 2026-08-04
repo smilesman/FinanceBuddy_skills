@@ -1,0 +1,22 @@
+{
+ "id": "2004",
+ "kind": "mcp",
+ "name": "mote-registry",
+ "fingerprint_md5": "6ab2a8f284f507ac556ff0eaa13cc734",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# MOTE注册表MCP服务器\r\n\r\n搜索 [微尘](https://mote.network) 人工智能代理注册表——查找机器可读且准备好进行代理商务的企业。\r\n\r\nMOTE在Sui区块链上为企业提供了一个永久的去中心化身份（DID），并将其提交给主要的AI代理注册中心，以便自主的AI代理可以发现并与他们进行交易。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_merchants` |按关键字、类别和位置搜索商家|\r\n| `get_merchant` |获取特定商家的完整资料|\r\n| `list_categories` |列出所有包含商户数量的业务类别|\r\n\r\n## 安装\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mote-registry\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"/path/to/mote/mcp/src/index.ts\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者，如果您已经构建了该项目：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mote-registry\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/mote/mcp/dist/index.js\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add mote-registry -- npx tsx /path/to/mote/mcp/src/index.ts\r\n```\r\n\r\n### 本地开发\r\n\r\n```bash\r\n# From repo root\r\nnpm run mcp          # points to localhost:3000\r\nnpm run mcp:prod     # points to production API\r\n```\r\n\r\n## 查询示例\r\n\r\n安装后，您可以询问您的AI助手：\r\n\r\n- “在奥斯汀给我找一家75美元以下的花店”\r\n- “MOTE登记册上有哪些餐厅？”\r\n- “显示图鲁海滨套房的完整配置文件”\r\n- “有哪些类别的企业可供选择？”\r\n- “搜索纽约的网页设计师”\r\n\r\n## 运作原理\r\n\r\nMCP服务器在调用实时MOTE API `https://mote-api-production.up.railway.app/v1/merchants`.不需要API密钥-商户注册是公开的。\r\n\r\nMOTE的每个商家都有：\r\n\r\n- A. **分散式身份** Sui区块链上的（去中心化标识符）\r\n- 机器可读清单(`llms.txt`MPP，x402）\r\n- 链上结算记录中的声誉得分\r\n- 联系方式和交货信息\r\n\r\n## 分类\r\n\r\n- 旅行\r\n- 专业服务\r\n- 数字服务\r\n- 实物\r\n- 德菲\r\n- 餐饮\r\n- 健康与幸福\r\n- 创意服务\r\n- 本地服务\r\n- 其他\r\n\r\n## 环境变量\r\n\r\n|变量|默认值|描述|\r\n|----------|---------|-------------|\r\n| `MOTE_API_URL` | `https://mote-api-production.up.railway.app` |MOTE API基础URL|\r\n\r\n## 许可证\r\n\r\n国际学生委员会\r\n",
+ "config": {
+  "mote-registry": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "tsx",
+    "/path/to/mote/mcp/src/index.ts"
+   ],
+   "env": {}
+  }
+ }
+}

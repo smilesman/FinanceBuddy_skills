@@ -1,0 +1,24 @@
+{
+ "id": "402",
+ "kind": "mcp",
+ "name": "rendex",
+ "fingerprint_md5": "5cc948574cde413a9b5bffeb3367cd54",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# @铜线/rendex mcp\r\n\r\n[](https://www.npmjs.com/package/@copperline/rendex-mcp)\r\n[](https://www.npmjs.com/package/@copperline/rendex-mcp)\r\n[](https://opensource.org/licenses/MIT)\r\n\r\nMCP服务器 [Rendex](https://rendex.dev) --使用模型上下文协议通过AI代理捕获任何网页的屏幕截图和PDF。\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面/光标/风帆（npx）\r\n\r\n添加到MCP客户端配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"rendex\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@copperline/rendex-mcp\"],\r\n      \"env\": {\r\n        \"RENDEX_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**在何处添加此内容：**\r\n\r\n|客户端|配置位置|\r\n|--------|----------------|\r\n|克劳德桌面| `~/Library/Application Support/Claude/claude_desktop_config.json` （macOS）|\r\n|光标| `.cursor/mcp.json` 在项目根目录中，或“设置”>“MCP”|\r\n|Windsurf |设置>MCP服务器|\r\n\r\n### 克劳德代码（CLI）\r\n\r\n添加a `.mcp.json` 使用上述相同的配置将其添加到您的项目根目录。然后重新启动Claude Code。\r\n\r\n> **重要**：添加 `.mcp.json` 到你的 `.gitignore` -它包含您的API密钥。\r\n\r\n### 远程（零安装）\r\n\r\n直接连接-无需安装（仅限Claude Desktop）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"rendex\": {\r\n      \"url\": \"https://mcp.rendex.dev/mcp\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### `rendex_screenshot`\r\n\r\n捕获任何网页或原始HTML的屏幕截图或PDF。\r\n\r\n```\r\n\"Take a screenshot of https://example.com\"\r\n\"Capture the full page of https://news.ycombinator.com in dark mode\"\r\n\"Generate a PDF of https://github.com with A4 page size\"\r\n\"Capture https://amazon.de as seen from Germany\"\r\n\"Render this HTML invoice as a PDF\"\r\n```\r\n\r\n**参数：**\r\n\r\n|参数|类型|默认值|说明|\r\n|-----------|------|---------|-------------|\r\n| `url` |string |必需\\*|要捕获的网页URL。相互排斥 `html`. |\r\n| `html` |string |--|要呈现的原始HTML。相互排斥 `url`. |\r\n| `format` | `\"png\"` | `\"jpeg\"` | `\"webp\"` | `\"pdf\"` | `\"png\"` |输出格式|\r\n| `fullPage` |布尔值| `false` |捕获完整的可滚动页面|\r\n| `darkMode` |布尔值| `false` |模拟深色方案|\r\n| `width` |编号| `1280` |视口宽度（320-3840）|\r\n| `height` |编号| `800` |视口高度（240-2160）|\r\n| `quality` |编号| `80` |图像质量1-100（仅限JPEG/WebP，默认80）|\r\n| `delay` |编号| `0` |捕获前等待毫秒|\r\n| `blockAds` |布尔值| `true` |屏蔽广告和跟踪器|\r\n| `blockResourceTypes` |string\\[\\]|--|块资源类型： `font`, `image`, `media`, `stylesheet` |\r\n| `deviceScaleFactor` |编号| `2` |设备像素比（1-3）。默认情况下为2×Retina|\r\n| `timeout` |编号| `30` |等待页面加载的最长时间（5-60秒）|\r\n| `waitUntil` |字符串| `\"networkidle2\"` |页面准备就绪： `load`, `domcontentloaded`, `networkidle0`, `networkidle2` |\r\n| `waitForSelector` |string |--|捕获前要等待的CSS选择器|\r\n| `bestAttempt` |布尔值| `true` |超时时返回部分渲染，而不是失败|\r\n| `selector` |string |--|要捕获的元素的CSS选择器，而不是整个页面|\r\n| `css` |string |--|捕获前注入的自定义CSS（最大50KB）|\r\n| `js` |string |--|捕获前要执行的自定义JavaScript（最大50KB）|\r\n| `cookies` |array|--|为经过身份验证的捕获设置的Cookie（最多50个）|\r\n| `headers` |object|--|页面请求的自定义HTTP标头|\r\n| `userAgent` |string |--|覆盖浏览器用户代理字符串|\r\n| `pdfFormat` |string |--|PDF页面大小： `A4`, `Letter`, `Legal`, `Tabloid`, `A3` |\r\n| `pdfLandscape` |boolean |--|PDF横向|\r\n| `pdfPrintBackground` |布尔值| `true` |以PDF格式打印背景|\r\n| `pdfScale` |编号| `1` |PDF比例因子（0.1-2）|\r\n| `pdfMargin` |对象|--|PDF边距： `{top, right, bottom, left}` 作为CSS值|\r\n| `geo` |string |--|地理定位捕获的ISO国家代码（专业版/企业版）|\r\n| `geoCity` |string |--|用于地理定位的城市（需要 `geo`) |\r\n| `geoState` |string |--|地理定位状态（需要 `geo`) |\r\n| `async` |boolean |--|异步处理（返回作业ID）|\r\n| `webhookUrl` |string |--|异步捕获完成时接收回调的URL|\r\n| `cacheTtl` |number |--|缓存结果的秒数（3600-2592000）|\r\n\r\n## 认证\r\n\r\n获取API密钥： [rendex.dev](https://rendex.dev).\r\n\r\n设置 `RENDEX_API_KEY` MCP客户端配置中的环境变量。\r\n\r\n## 定价\r\n\r\n|计划|通话/月|费率|\r\n|------|------------|------|\r\n|免费|500|10/分钟|\r\n|起动机|10000|60/min|\r\n|专业| 100000 | 300/分钟|\r\n|企业|定制|1000/min|\r\n\r\n## 许可证\r\n\r\nMIT-- [Copperline实验室有限责任公司](https://copperlinelabs.com)\r\n",
+ "config": {
+  "rendex": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@copperline/rendex-mcp"
+   ],
+   "env": {
+    "RENDEX_API_KEY": "your-api-key"
+   }
+  }
+ }
+}

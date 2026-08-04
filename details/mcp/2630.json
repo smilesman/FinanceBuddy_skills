@@ -1,0 +1,27 @@
+{
+ "id": "2630",
+ "kind": "mcp",
+ "name": "news-filter",
+ "fingerprint_md5": "3c71cb9baf87b75d9b659ed8110cf536",
+ "download_count": 0,
+ "category": "新闻资讯",
+ "tags": "",
+ "version": "",
+ "readme": "# 新闻筛选器MCP\r\n\r\n使用Newsapi和Serpapi过滤和搜索最近新闻的MCP（Model Context Protocol）服务器。\r\n\r\n## 安装\r\n\r\n1. 克隆存储库。\r\n1. 安装依赖项： `pip install -e .`\r\n1. 配置API密钥 `.env`:\r\n   - 新闻中心_关键字：Tu clave de NEWSAPI.org\r\n   - Serpapi_key：您的Serpapi.com密钥\r\n\r\n## 使用\r\n\r\n运行MCP服务器：\r\n\r\n```bash\r\npython -m src.main\r\n```\r\n\r\n或者使用Docker（首先构建图像）：\r\n\r\n```bash\r\ndocker build -t news-filter-mcp .\r\n```\r\n\r\n### 在克劳德桌面上配置\r\n\r\n1. 阿布雷·克劳德桌面。\r\n1. 设置>开发人员>编辑配置。\r\n1. 将MCP服务器添加到配置文件（例如。， `claude_desktop_config.json`):\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"news-filter\": {\r\n         \"command\": \"docker\",\r\n         \"args\": [\"run\", \"--rm\", \"-i\", \"news-filter-mcp\"],\r\n         \"env\": {\r\n           \"NEWSAPI_KEY\": \"tu_clave_newsapi\",\r\n           \"SERPAPI_KEY\": \"tu_clave_serpapi\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n1. Reinicia Claude桌面版。\r\n\r\n### 在vscode/github copilot中配置\r\n\r\n1. 必要时安装MCP扩展（在Marketplace中搜索“MCP”）。\r\n1. 在vscode的settings.json中添加服务器：\r\n   ```json\r\n   \"mcp.servers\": {\r\n     \"news-filter\": {\r\n       \"command\": \"docker\",\r\n       \"args\": [\"run\", \"--rm\", \"-i\", \"news-filter-mcp\"],\r\n       \"env\": {\r\n         \"NEWSAPI_KEY\": \"tu_clave_newsapi\",\r\n         \"SERPAPI_KEY\": \"tu_clave_serpapi\"\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\nMCP为Claude或VSCode提供使用它们的工具：\r\n\r\n- `search_news(topic)`：与Newsapi一起寻找新闻。\r\n- `search_news_serp(topic)`：与Serpapi一起寻找新闻。\r\n\r\n输出格式：JSON，带有包含标题、描述、摘要、URL、Publishedat、源的对象列表。\r\n\r\n## 例子\r\n\r\n- “给我看看人工智能的五个最新消息。”\r\n- “用西班牙语搜索网络安全新闻。”\r\n",
+ "config": {
+  "news-filter": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "news-filter-mcp"
+   ],
+   "env": {
+    "NEWSAPI_KEY": "tu_clave_newsapi",
+    "SERPAPI_KEY": "tu_clave_serpapi"
+   }
+  }
+ }
+}

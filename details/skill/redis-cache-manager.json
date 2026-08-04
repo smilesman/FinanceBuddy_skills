@@ -1,0 +1,12 @@
+{
+ "id": "redis-cache-manager",
+ "kind": "skill",
+ "name": "redis-cache-manager",
+ "fingerprint_md5": "5c081766ab7e5bbfca2f48b602af067e",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Redis 缓存管理器\r\n\r\n## 概览\r\n\r\n此技能为后端开发领域内的 redis 缓存管理器任务提供自动化帮助。\r\n\r\n## 何时使用\r\n\r\n当你执行以下操作时，此技能会自动激活：\r\n- 在请求中提及 \"redis cache manager\"\r\n- 询问 redis cache manager 模式或最佳实践\r\n- 需要后端技能帮助，涵盖 node.js、python、go、数据库设计、缓存、消息传递和微服务架构。\r\n\r\n## 说明\r\n\r\n1. 为 redis cache manager 提供分步指导\r\n2. 遵循行业最佳实践和模式\r\n3. 生成可用于生产的代码和配置\r\n4. 根据通用标准验证输出\r\n\r\n## 示例\r\n\r\n**示例：基本用法**\r\n请求：\"Help me with redis cache manager\"\r\n结果：提供分步指导并生成适当的配置\r\n\r\n\r\n## 先决条件\r\n\r\n- 相关开发环境已配置\r\n- 访问必要的工具和服务\r\n- 基本了解后端开发概念\r\n\r\n\r\n## 输出\r\n\r\n- 生成的配置和代码\r\n- 最佳实践建议\r\n- 验证结果\r\n\r\n\r\n## 错误处理\r\n\r\n| 错误 | 原因 | 解决方案 |\r\n|-------|-------|----------|\r\n| 配置无效 | 缺少必填字段 | 查看文档了解必需参数 |\r\n| 未找到工具 | 依赖未安装 | 根据先决条件安装必需工具 |\r\n| 权限被拒绝 | 访问权限不足 | 验证凭证和权限 |\r\n\r\n\r\n## 资源\r\n\r\n- 相关工具的官方文档\r\n- 最佳实践指南\r\n- 社区示例和教程\r\n\r\n## 相关技能\r\n\r\n属于**后端开发**技能类别。\r\n标签：nodejs、python、go、microservices、database",
+ "config": {}
+}

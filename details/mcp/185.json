@@ -1,0 +1,22 @@
+{
+ "id": "185",
+ "kind": "mcp",
+ "name": "dice-stats",
+ "fingerprint_md5": "8d47065ac7003cfda3944931f0f07f4b",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "",
+ "version": "",
+ "readme": "# Dice Stats MCP服务器\r\n\r\nMCP（模型上下文协议）服务器，为桌面RPG提供掷骰子和概率计算工具。\r\n\r\n## 特性\r\n\r\n- 使用标准骰子符号掷骰子（例如。， `2d6`, `1d20+5`, `3d6-2d4`)\r\n- 计算骰子表达式的概率分布\r\n- 支持具有数学运算（+、-、\\*、/）的复杂骰子表达式\r\n\r\n## 安装\r\n\r\n### NPX（推荐）\r\n\r\n使用此工具最简单的方法是通过NPX：\r\n\r\n```bash\r\nnpx @jmvilomet/dice-stats-mcp-server\r\n```\r\n\r\n### 全球安装\r\n\r\n您还可以全局安装它：\r\n\r\n```bash\r\nnpm install -g @jmvilomet/dice-stats-mcp-server\r\n```\r\n\r\n然后运行：\r\n\r\n```bash\r\ndice-stats-mcp-server\r\n```\r\n\r\n## 与MCP客户端一起使用\r\n\r\n要将此MCP服务器与您的MCP客户端（如Claude或GPT）集成，请将以下配置添加到客户端的MCP服务器列表中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dice-stats\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@jmvilomet/dice-stats-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\nMCP服务器提供以下工具：\r\n\r\n### 滚动\r\n\r\n根据提供的符号掷骰子。\r\n\r\n- 参数： `notation` （string）-骰子符号滚动（例如。， `2d6`, `1d20+5`, `3d6-2d4`)\r\n- 返回：掷骰子的结果\r\n\r\n例子：\r\n\r\n```\r\nroll(\"3d6+2\")\r\n```\r\n\r\n### 状态\r\n\r\n计算所提供骰子符号的概率分布。\r\n\r\n- 参数： `notation` （string）-要分析的骰子符号（例如。， `2d6`, `1d20+5`, `3d6-2d4`)\r\n- 返回：每个可能结果的概率分布\r\n\r\n例子：\r\n\r\n```\r\nstat(\"2d6\")\r\n```\r\n\r\n## 骰子符号\r\n\r\n服务器支持以下骰子符号：\r\n\r\n- 基本骰子： `NdS` （例如。， `1d6`, `2d10`, `3d4`)\r\n- 修改器： `NdS+M` 或 `NdS-M` （例如。， `1d20+5`, `3d6-2`)\r\n- 多个骰子组： `NdS+MdT` （例如。， `1d6+2d4`)\r\n- 数学运算：+、-、\\*、/（例如。， `2d6*3`, `(1d8+2)/2`)\r\n\r\n## 发展\r\n\r\n### 设置\r\n\r\n```bash\r\ngit clone https://github.com/JMVilomet/dice-stats-mcp-server.git\r\ncd dice-stats-mcp-server\r\nnpm install\r\n```\r\n\r\n### 构建\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n### 在本地运行\r\n\r\n```bash\r\nnpm start\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "dice-stats": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@jmvilomet/dice-stats-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

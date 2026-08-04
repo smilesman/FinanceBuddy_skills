@@ -1,0 +1,12 @@
+{
+ "id": "meow-finder",
+ "kind": "skill",
+ "name": "meow-finder",
+ "fingerprint_md5": "b7238ff5d305fb6826ef1028ff4548f5",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# Meow Finder\r\n\r\nCLI tool 迁移到 discover AI tools. 搜索 40+ curated tools by category.\r\n\r\n## When 迁移到 Use\r\n\r\n- \"查找 AI tools for video editing\"\r\n- \"What free image generators are there?\"\r\n- \"显示 me coding assistants\"\r\n- \"列表 social media tools\"\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g meow-finder\r\n```\r\n\r\nOr clone:\r\n```bash\r\ngit clone https://github.com/abgohel/meow-finder.git\r\ncd meow-finder\r\nnpm link\r\n```\r\n\r\n## 用法\r\n\r\n```bash\r\n# Search for tools\r\nmeow-finder video editing\r\nmeow-finder \"instagram design\"\r\n\r\n# Browse by category\r\nmeow-finder --category video\r\nmeow-finder --category social\r\nmeow-finder -c image\r\n\r\n# Filter options\r\nmeow-finder --free           # Only free tools\r\nmeow-finder --free video     # Free video tools\r\nmeow-finder --all            # List all tools\r\nmeow-finder --list           # Show categories\r\n```\r\n\r\n## Categories\r\n\r\n- `video` - Video editing, generation, reels\r\n- `image` - Image generation, editing, 设计\r\n- `writing` - Copywriting, content, blogs\r\n- `code` - Programming, IDEs, assistants\r\n- `chat` - AI assistants, chatbots\r\n- `audio` - Voice, music, podcasts\r\n- `social` - Social media management\r\n- `productivity` - Workflow, automation\r\n- `research` - 搜索, analysis\r\n- `marketing` - Ads, SEO, growth\r\n\r\n## 示例 输出\r\n\r\n```\r\n🔍 Found 5 tool(s):\r\n\r\n┌─────────────────────────────────────────────\r\n│ Canva AI\r\n├─────────────────────────────────────────────\r\n│ All-in-one design platform with AI features\r\n│ \r\n│ Category: Design\r\n│ Pricing:  ✅ Free\r\n│ URL:      https://canva.com\r\n└─────────────────────────────────────────────\r\n```\r\n\r\n## Data\r\n\r\n40+ curated AI tools in `data/tools.json`. PRs welcome 迁移到 添加 more!\r\n\r\n---\r\n\r\nBuilt by **Meow 😼** for the Moltbook community 🦞",
+ "config": {}
+}

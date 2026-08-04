@@ -1,0 +1,12 @@
+{
+ "id": "alicloud-compute-fc-agentrun",
+ "kind": "skill",
+ "name": "alicloud-compute-fc-agentrun",
+ "fingerprint_md5": "d0d7d9de07c075623e974ea68dd3edab",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "Category: service\r\n\r\n# Function Compute AgentRun (OpenAPI)\r\n\r\n使用 AgentRun OpenAPI (ROA) 管理 runtime、sandbox、model service、memory 和 credentials。\r\n\r\n## 前置条件\r\n\r\n- 通过 RAM 用户获取 AccessKey（最小权限原则）。\r\n- 选择正确的区域端点（见 `references/endpoints.md`）。如果不确定，为任务选择最合理的区域或询问用户。\r\n- 使用 OpenAPI Explorer 或官方 SDK 避免手动签名（ROA 需要 SignatureV1）。\r\n\r\n## 工作流\r\n\r\n1) 选择区域端点 (`agentrun.cn-<region>.aliyuncs.com`)。\r\n2) 创建 runtime → 发布版本 → 创建 runtime endpoint。\r\n3) 如需要，创建 sandbox/template。\r\n4) 根据需要配置 credentials 和 model services。\r\n5) 查询资源以进行故障排查。\r\n\r\n## API 分组\r\n\r\n完整 API 列表和分组见 `references/api_overview.md`。\r\n\r\n## 脚本快速开始\r\n\r\n```bash\r\npython skills/compute/fc/alicloud-compute-fc-agentrun/scripts/quickstart.py\r\n```\r\n\r\n环境变量：\r\n\r\n- `AGENTRUN_ENDPOINT`\r\n- `ALICLOUD_ACCESS_KEY_ID`\r\n- `ALICLOUD_ACCESS_KEY_SECRET`\r\n- `OUTPUT_DIR` (optional)\r\n\r\n## Runtime 流脚本\r\n\r\n```bash\r\nAGENTRUN_RUNTIME_NAME=\"my-runtime\" \\\r\nAGENTRUN_RUNTIME_ENDPOINT_NAME=\"my-runtime-endpoint\" \\\r\npython skills/compute/fc/alicloud-compute-fc-agentrun/scripts/runtime_flow.py\r\n```\r\n\r\n环境变量：\r\n\r\n- `AGENTRUN_ENDPOINT`\r\n- `ALICLOUD_ACCESS_KEY_ID`\r\n- `ALICLOUD_ACCESS_KEY_SECRET`\r\n- `AGENTRUN_RUNTIME_NAME`\r\n- `AGENTRUN_RUNTIME_ENDPOINT_NAME`\r\n- `AGENTRUN_RUNTIME_DESC` (optional)\r\n- `OUTPUT_DIR` (optional)\r\n\r\n## 清理脚本\r\n\r\n```bash\r\nAGENTRUN_RUNTIME_ID=\"runtime-id\" \\\r\nAGENTRUN_RUNTIME_ENDPOINT_ID=\"endpoint-id\" \\\r\npython skills/compute/fc/alicloud-compute-fc-agentrun/scripts/cleanup_runtime.py\r\n```\r\n\r\n环境变量：\r\n\r\n- `AGENTRUN_ENDPOINT`\r\n- `ALICLOUD_ACCESS_KEY_ID`\r\n- `ALICLOUD_ACCESS_KEY_SECRET`\r\n- `AGENTRUN_RUNTIME_ID`\r\n- `AGENTRUN_RUNTIME_ENDPOINT_ID`\r\n- `OUTPUT_DIR` (optional)\r\n\r\n## SDK 说明\r\n\r\nSDK 获取指导见 `references/sdk.md`。\r\n\r\n## 输出策略\r\n\r\n如果存储任何生成的文件或响应，写入：\r\n`output/compute-fc-agentrun/`。\r\n\r\n## 参考\r\n\r\n- API 概览和操作列表：`references/api_overview.md`\r\n- 区域端点：`references/endpoints.md`\r\n- SDK 指导：`references/sdk.md`\r\n\r\n- 来源列表：`references/sources.md`",
+ "config": {}
+}

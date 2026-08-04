@@ -1,0 +1,28 @@
+{
+ "id": "304",
+ "kind": "mcp",
+ "name": "minecraft",
+ "fingerprint_md5": "bb8fda5f3153296d7327e4cab24fa890",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Minecraft MCP服务器\r\n\r\n[](https://github.com/yuniko-software/minecraft-mcp-server/actions)\r\n[](https://github.com/yuniko-software)\r\n[](https://github.com/yuniko-software/minecraft-mcp-server/releases/latest)\r\n\r\n\r\n______________________________________________________________________\r\n\r\n> \\[！重要\\]\r\n> 目前支持Minecraft 1.21.11版本。较新版本可能无法与此MCP服务器配合使用，但我们将尽快添加支持。\r\n\r\nhttps://github.com/user-attachments/assets/6f17f329-3991-4bc7-badd-7cde9aacb92f\r\n\r\n一个由大型语言模型和 [多层API](https://github.com/PrismarineJS/mineflayer)。此机器人使用 [模型上下文协议](https://github.com/modelcontextprotocol) （MCP）使Claude和其他支持的模型能够控制Minecraft角色。\r\n\r\n[](https://glama.ai/mcp/servers/@yuniko-software/minecraft-mcp-server)\r\n\r\n## 先决条件\r\n\r\n- Git\r\n- Node.js（>=20.10.0）\r\n- 正在运行的Minecraft游戏（以下设置已使用Microsoft game Pass中包含的Minecraft 1.21.8 Java版进行了测试）\r\n- MCP兼容客户端。将使用Claude Desktop作为示例，但也支持其他MCP客户端\r\n\r\n## 入门\r\n\r\n该机器人旨在通过模型上下文协议（MCP）与Claude Desktop一起使用。\r\n\r\n### 运行Minecraft\r\n\r\n创建一个单人世界并将其打开到局域网(`ESC -> Open to LAN`).Bot将尝试使用端口连接 `25565` 和主机名 `localhost`这些参数可以在中配置 `claude_desktop_config.json` 下一步。\r\n\r\n### MCP配置\r\n\r\n一定要 [克劳德桌面](https://claude.ai/download) 已安装。打开 `File -> Settings -> Developer -> Edit Config`。它应该打开安装目录。查找具有名称的文件 `claude_desktop_config.json` 并插入以下代码：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"minecraft\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"github:yuniko-software/minecraft-mcp-server\",\r\n        \"--host\",\r\n        \"localhost\",\r\n        \"--port\",\r\n        \"25565\",\r\n        \"--username\",\r\n        \"ClaudeBot\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n仔细检查一下 `--port` 和 `--host` 使用了参数。确保完全重新启动Claude Desktop应用程序（应在操作系统托盘中关闭）。\r\n\r\n## 跑步\r\n\r\n确保Minecraft游戏正在运行，并且世界对局域网开放。然后启动Claude Desktop应用程序，机器人应该加入游戏。\r\n\r\n**Claude Desktop可能需要一些时间来启动MCP服务器**。服务器已成功启动的标记：\r\n\r\n\r\n您可以通过任何活动的Claude Desktop聊天向机器人发出任何命令。您还可以上传建筑物的图像，并要求机器人建造它们😁\r\n\r\n别忘了在提示中提到机器人应该在Minecraft中做点什么。因为说这是运行MCP服务器的触发器。它将请求您的许可。\r\n\r\n使用Claude Sonnet可以给你一些有趣的结果。机器人代理会非常聪明🫡\r\n\r\n示例用法： [共享克劳德聊天](https://claude.ai/share/535d5f69-f102-4cdb-9801-f74ea5709c0b)\r\n\r\n## 可用命令\r\n\r\n连接到Minecraft服务器后，Claude可以使用以下命令：\r\n\r\n### 运动\r\n\r\n- `get-position` -获取机器人的当前位置\r\n- `move-to-position` -移动到特定坐标\r\n- `look-at` -让机器人查看特定的坐标\r\n- `jump` -让机器人跳跃\r\n- `move-in-direction` -在特定方向上移动一段时间\r\n\r\n### 航班\r\n\r\n- `fly-to` -让机器人直接飞到特定坐标\r\n\r\n### 库存\r\n\r\n- `list-inventory` -列出机器人库存中的所有项目\r\n- `find-item` -在库存中查找特定项目\r\n- `equip-item` -装备特定物品\r\n\r\n### 块交互\r\n\r\n- `place-block` -在指定坐标处放置块\r\n- `dig-block` -在指定坐标处挖掘一个块\r\n- `get-block-info` -获取有关块的信息\r\n- `find-blocks` -查找一个或多个特定类型的附近街区\r\n\r\n### 熔炉\r\n\r\n- `smelt-item` -使用炉状块冶炼物品\r\n\r\n### 实体交互\r\n\r\n- `find-entity` -查找特定类型的最近实体\r\n\r\n### 沟通\r\n\r\n- `send-chat` -在游戏中发送聊天消息\r\n- `read-chat` -获取玩家最近的聊天信息\r\n\r\n### 游戏状态\r\n\r\n- `detect-gamemode` -检测游戏中的游戏模式\r\n\r\n## 贡献\r\n\r\n请随时提交拉取请求或开放问题以进行改进。非常感谢所有重构提交、功能和测试贡献、问题和讨论！\r\n\r\n要开始贡献，请参阅 [贡献.md](CONTRIBUTING.md).\r\n\r\n______________________________________________________________________\r\n\r\n⭐ 如果你觉得这个项目有用，请考虑在GitHub上给它一颗星！ ⭐\r\n\r\n您的支持有助于使其他可能从中受益的人更容易看到这个项目。\r\n",
+ "config": {
+  "minecraft": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "github:yuniko-software/minecraft-mcp-server",
+    "--host",
+    "localhost",
+    "--port",
+    "25565",
+    "--username",
+    "ClaudeBot"
+   ],
+   "env": {}
+  }
+ }
+}

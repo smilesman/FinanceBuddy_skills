@@ -1,0 +1,18 @@
+{
+ "id": "1617",
+ "kind": "mcp",
+ "name": "memos",
+ "fingerprint_md5": "1972134f6f0d4d58db888aceed68bde5",
+ "download_count": 0,
+ "category": "API 调试",
+ "tags": "",
+ "version": "",
+ "readme": "# 插件功能说明\r\n\r\nMemOS内存管理是一个功能强大的插件，允许用户访问MemOS内存的添加和搜索功能，实现对话内容的存储和检索。它为用户提供高效的内存管理服务，增强他们与人工智能交互的一致性和个性化。\r\n\r\n# 工具介绍\r\n\r\n- **search_memory**：此工具用于查询用户的内存数据，能够将最相关的代码段返回给输入。它支持在用户AI对话期间进行实时检索，以及在整个内存中进行全局搜索。它可用于创建用户配置文件或支持个性化推荐。进行查询时，需要会话ID、用户ID和查询文本等参数，以及设置要返回的内存项数量的选项。\r\n- **add_message**：此工具允许将一条或多条消息批量导入MemOS内存存储数据库，便于将来检索聊天历史管理、用户行为跟踪和个性化交互。使用此工具时，必须指定对话ID、消息内容、发件人角色、对话时间和用户ID等信息。\r\n- **get_message**：此工具用于获取指定会话中用户和助手之间的历史对话记录，并能够限制返回的结果数量。\r\n\r\n# 使用说明\r\n\r\n访问 [MemOS官方网站](https://memos.openmem.net/cn/)，登录API控制台以获取您的MEMOS_API_KEY。\r\n此外，由于MemOS的Session_id的生成依赖于md5工具，因此您需要根据md5的mcp配置服务，如下所示：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"MemOS\": {\r\n      \"type\": \"streamable_http\",\r\n      \"url\": \"https://mcp.api-inference.modelscope.net/xxxxx/mcp\"\r\n    },\r\n    \"md5-calculator\": {\r\n      \"autoApprove\": [\r\n        \"calculateMD5\"\r\n      ],\r\n      \"disabled\": false,\r\n      \"timeout\": 60,\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"md5-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\nJSON\r\n“url”：“https://mcp.api-inference.modelscope.net/xxxxx/mcp\"\r\n\r\n将URL替换为ModelScope上的服务链接。\r\n如果您不依赖于ModelScope的MCP服务部署，则可以直接对MCP使用以下配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"memos-api-mcp\": {\r\n      \"timeout\": 60,\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@memtensor/memos-api-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"MEMOS_API_KEY\": \"mpg-XH/a+ZV+yp/xxxxxxxxxx/niVjcaE\",\r\n        \"MEMOS_USER_ID\": \"your-user-id\"\r\n      }\r\n    },\r\n    \"md5-calculator\": {\r\n      \"timeout\": 60,\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"md5-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n有关详细的使用说明，请参阅：https://alidocs.dingtalk.com/i/nodes/pGBa2Lm8aGkRjA3ktvbXZm2mVgN7R35y?utm_scene=team_space\r\n",
+ "config": {
+  "memos": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.api-inference.modelscope.net/xxxxx/mcp"
+  }
+ }
+}

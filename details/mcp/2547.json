@@ -1,0 +1,21 @@
+{
+ "id": "2547",
+ "kind": "mcp",
+ "name": "google-ads-transparency",
+ "fingerprint_md5": "4cecd501c40959573e82778e887202f2",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 谷歌广告透明度MCP服务器\r\n\r\n一个MCP服务器，让人工智能助手查找任何广告商的谷歌广告。按域名或公司名称搜索，检索广告创意，并解码文本广告内容——所有这些都来自谷歌 [广告透明度中心](https://adstransparency.google.com/).\r\n\r\n**没有API密钥。没有付费服务。无需浏览器。**\r\n\r\n谷歌的广告透明中心没有官方的API。唯一的开源选择是 [废弃的Python包](https://github.com/faniAhmed/GoogleAdsTransparencyScraper) （最后一次提交是在2023年7月，域名搜索失败，在图片广告上崩溃）。付费替代方案的起价为每月75美元。该项目修复了scraper并将其包装为MCP服务器，因此任何人工智能助手都可以直接查询谷歌的广告数据库。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_advertiser_by_domain` |按网站域名查找广告商（例如。 `nike.com`) |\r\n| `search_advertisers` |按关键字或公司名称搜索广告商|\r\n| `get_ads` |使用解码内容为广告商获取广告|\r\n| `get_ad_detail` |获取特定广告创意的完整细节|\r\n\r\n## 安装\r\n\r\n```bash\r\n# With uvx (recommended)\r\nuvx google-ads-transparency-mcp\r\n\r\n# With pip\r\npip install google-ads-transparency-mcp\r\n```\r\n\r\n## 配置\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add google-ads-transparency -- uvx google-ads-transparency-mcp\r\n```\r\n\r\n### 克劳德桌面\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"google-ads-transparency\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"google-ads-transparency-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标/VS代码\r\n\r\n添加到MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"google-ads-transparency\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"google-ads-transparency-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 示例用法\r\n\r\n连接后，询问您的AI助手以下问题：\r\n\r\n- *“nike.com上有什么广告？”*\r\n- *“在谷歌上搜索加密货币交易所广告商”*\r\n- *“从Coinbase获取最后5个广告”*\r\n- *“查找广告商AR0509902686533578753的广告详细信息”*\r\n\r\n### 示例：域名搜索\r\n\r\n```\r\n> search_advertiser_by_domain(\"nike.com\")\r\n\r\n{\r\n  \"advertiser_id\": \"AR14188379519798214657\",\r\n  \"name\": \"Nike, Inc.\",\r\n  \"ad_count\": 1842\r\n}\r\n```\r\n\r\n### 示例：获取包含解码文本内容的广告\r\n\r\n```\r\n> get_ads(\"Coinbase\", count=1)\r\n\r\n[\r\n  {\r\n    \"advertiser_id\": \"AR09076382774528\",\r\n    \"creative_id\": \"CR10813648716908961793\",\r\n    \"format\": \"text\",\r\n    \"last_shown\": \"2025-01-15\",\r\n    \"advertiser_name\": \"Coinbase\",\r\n    \"content\": {\r\n      \"preview_url\": \"https://ads-rendering-prod.corp.google.com/search?...\",\r\n      \"headline\": \"Most Trusted Crypto Exchange\",\r\n      \"description\": \"Buy, Sell & Trade Bitcoin, Ethereum & More...\",\r\n      \"destination_url\": \"coinbase.com\"\r\n    }\r\n  }\r\n]\r\n```\r\n\r\n## 运作原理\r\n\r\n此服务器对Google的内部RPC端点进行反向工程：\r\n\r\n|终点|目的|\r\n|----------|---------|\r\n| `SearchService/SearchSuggestions` |关键字/域名搜索|\r\n| `SearchService/SearchCreatives` |按广告商获取广告创意ID|\r\n| `LookupService/GetCreativeById` |获取个人广告详细信息|\r\n\r\n文本/搜索广告的内容在iframe预览URL中编码为base64。服务器对这些内容进行解码，以提取标题、描述和目标URL。\r\n\r\n## 用作Python库\r\n\r\n```python\r\nfrom google_ads_transparency_mcp import GoogleAdsTransparency\r\n\r\nclient = GoogleAdsTransparency()\r\n\r\n# Search by domain\r\nadvertiser = client.search_advertiser_by_domain(\"nike.com\")\r\nprint(advertiser)  # {\"advertiser_id\": \"...\", \"name\": \"Nike, Inc.\", \"ad_count\": 1842}\r\n\r\n# Get ads with decoded content\r\nads = client.get_ads(\"Coinbase\", count=5)\r\nfor ad in ads:\r\n    print(ad[\"format\"], ad[\"content\"])\r\n\r\n# Region-specific search\r\nclient_uk = GoogleAdsTransparency(region=\"GB\")\r\n```\r\n\r\n## 支持的地区\r\n\r\n传递一个两个字母的国家代码，按地区进行筛选。使用 `\"anywhere\"` （默认）用于全局结果。全部 [240+个地区](https://adstransparency.google.com/) 支持来自谷歌广告透明度中心的广告。\r\n\r\n## 学分\r\n\r\n基于 [谷歌广告透明度craper](https://github.com/faniAhmed/GoogleAdsTransparencyScraper) Farhan Ahmed。分叉并固定 [山姆镇](https://samuel.town) --域搜索、图像广告解析、文本广告解码、错误处理和MCP服务器。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "google-ads-transparency": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "google-ads-transparency-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

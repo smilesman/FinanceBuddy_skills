@@ -1,0 +1,22 @@
+{
+ "id": "3628",
+ "kind": "mcp",
+ "name": "seoh",
+ "fingerprint_md5": "0789f2250cd80c02eca4e6006edfc6fb",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# SEOh！MCP服务器\r\n\r\n直接从Claude、Cursor或任何兼容MCP的AI客户端分析任何网站的SEO和AI搜索可见性。\r\n\r\n## 工具\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `aeo_score` |AEO（答案引擎优化）得分——你的网站在特色片段、人们也问和语音搜索中的表现如何|\r\n| `geo_score` |GEO（生成引擎优化）得分——你的网站对ChatGPT、困惑、双子座、克劳德的可见性|\r\n| `seo_audit` |完整的SEO审计——标题、元、标题、图像、链接、内容质量|\r\n| `competitor_compare` |两个网站的并排比较|\r\n| `keyword_analysis` |关键字密度、顶级词、填充检测、目标关键字放置|\r\n| `technical_check` |robots.txt、站点地图、重定向、SSL验证|\r\n| `schema_validate` |验证JSON-LD结构化数据和schema.org标记；检查富代码段的资格|\r\n| `serp_preview` |预览页面在谷歌搜索结果和社交分享（OG、推特卡）中的显示方式|\r\n| `site_crawl` |抓取一个网站的50个页面；每页得分、全站问题、断开的链接、站点地图覆盖率|\r\n| `full_report` |全面的GEO审计——5个维度得分：人工智能可引用性、模式就绪性、E-E-A-T、内容结构、平台可见性|\r\n| `check_usage` |查看您的API配额使用情况和计费期间的剩余调用|\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"seoh\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"seoh-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后问克劳德： *“mywebsite.com的地理位置得分是多少？”*\r\n\r\n### 使用您自己的API密钥（更高的限制）\r\n\r\n获取钥匙 [analysis.seoh.ca](https://analysis.seoh.ca)那么：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"seoh\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"seoh-mcp\"],\r\n      \"env\": {\r\n        \"SEOH_API_KEY\": \"seoh_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 自定义API基础URL\r\n\r\n如果您正在运行自托管或暂存后端：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"seoh\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"seoh-mcp\"],\r\n      \"env\": {\r\n        \"SEOH_API_KEY\": \"seoh_your_key_here\",\r\n        \"SEOH_API_BASE\": \"https://your-backend.example.com\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|默认值|描述|\r\n|----------|---------|-------------|\r\n| `SEOH_API_KEY` |内置免费密钥（每月50个）|您的SEOh！API密钥来自 [analysis.seoh.ca](https://analysis.seoh.ca) |\r\n| `SEOH_API_BASE` | `https://analysis.seoh.ca` |API基本URL（替代自托管安装）|\r\n\r\n## 免费vs付费\r\n\r\n||免费（内置）|入门版（每月59.99美元）|专业版（每月109.99美元）|代理版（每月399.99美元）|\r\n|--|--|--|--|--|\r\n|分析/月|50|500|2000|10000|\r\n|AEO评分|否|是|是|有|\r\n|GEO评分|是|是|有|有|\r\n|SEO审计|是|是|有|有|\r\n|完整的GEO报告|是|是|有|有|\r\n|架构验证|是|是|有|有|\r\n|SERP预览|是|是|有|有|\r\n|竞争对手比较|否|是|是||\r\n|关键字分析|否|是|是||\r\n|网站爬网|否|否|是|\r\n|批量分析|否|否|是|是|\r\n|PDF报告|否|是|是|有|是|\r\n\r\n## 示例提示\r\n\r\n- “shopify.com的AEO分数是多少？我怎样才能进入精选片段？”\r\n- “shopify.com的地理位置得分是多少？”\r\n- “在mybusiness.ca上运行SEO审计”\r\n- “比较seoh.ca和semrush.com”\r\n- “分析这篇博客文章的关键词密度：https://example.com/post\"\r\n- “检查mysite.com的技术SEO——robots.txt、站点地图、重定向”\r\n- “验证上的架构标记https://example.com/product\"\r\n- “我的主页在谷歌搜索结果中是什么样子的？”\r\n- “抓取我的整个网站，找到最大的SEO问题：https://example.com\"\r\n- “对以下项目进行全面的GEO审计https://example.com--我想要全部5个维度”\r\n- “这个月我还剩下多少个API调用？”\r\n\r\n## 速率限制\r\n\r\n在每次工具调用之后，如果后端返回rate-limit头，则服务器将显示剩余的API配额。您也可以致电 `check_usage` 直接查看您当前的计费周期使用情况。\r\n\r\n## 关于\r\n\r\n由...建造 [哦！](https://seoh.ca) --温哥华排名第一的GEO机构。我们帮助企业在谷歌和人工智能搜索引擎上找到。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "seoh": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "seoh-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

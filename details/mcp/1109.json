@@ -1,0 +1,23 @@
+{
+ "id": "1109",
+ "kind": "mcp",
+ "name": "mcp-sqlite-server",
+ "fingerprint_md5": "c462a4ce292d7f2b8a113321d0352488",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# 🐇 MCP SQLite服务器\r\n\r\n这是一个模型上下文协议（MCP）服务器，提供全面的SQLite数据库交互功能。\r\n\r\n\r\n#### 由维护\r\n\r\n## 特性\r\n\r\n- 完成CRUD操作（创建、读取、更新、删除）\r\n- 数据库探索与反思\r\n- 执行自定义SQL查询\r\n\r\n## 设置\r\n\r\n在IDE的MCP服务器设置中定义命令：\r\n\r\n例如 `Cursor`:\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"MCP SQLite Server\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\r\n                \"-y\",\r\n                \"mcp-sqlite\",\r\n                \"<path-to-your-sqlite-database.db>\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n例如 `VSCode`:\r\n\r\n```json\r\n{\r\n    \"servers\": {\r\n        \"MCP SQLite Server\": {\r\n            \"type\": \"stdio\",\r\n            \"command\": \"npx\",\r\n            \"args\": [\r\n                \"-y\",\r\n                \"mcp-sqlite\",\r\n                \"<path-to-your-sqlite-database.db>\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n\r\n您的数据库路径必须作为参数提供。\r\n\r\n## 可用工具\r\n\r\n### 数据库信息\r\n\r\n#### db_info\r\n\r\n获取有关连接的数据库的详细信息。\r\n\r\n例子：\r\n\r\n```json\r\n{\r\n  \"method\": \"tools/call\",\r\n  \"params\": {\r\n    \"name\": \"db_info\",\r\n    \"arguments\": {}\r\n  }\r\n}\r\n```\r\n\r\n#### list_tables\r\n\r\n列出数据库中的所有表。\r\n\r\n例子：\r\n\r\n```json\r\n{\r\n  \"method\": \"tools/call\",\r\n  \"params\": {\r\n    \"name\": \"list_tables\",\r\n    \"arguments\": {}\r\n  }\r\n}\r\n```\r\n\r\n#### get_table_schema\r\n\r\n获取有关表架构的详细信息。\r\n\r\n参数：\r\n\r\n- `tableName` （string）：表的名称\r\n\r\n例子：\r\n\r\n```json\r\n{\r\n  \"method\": \"tools/call\",\r\n  \"params\": {\r\n    \"name\": \"get_table_schema\",\r\n    \"arguments\": {\r\n      \"tableName\": \"users\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### CRUD操作\r\n\r\n#### create_record\r\n\r\n将新记录插入表中。\r\n\r\n参数：\r\n\r\n- `table` （string）：表的名称\r\n- `data` （object）：将数据记录为键值对\r\n\r\n例子：\r\n\r\n```json\r\n{\r\n  \"method\": \"tools/call\",\r\n  \"params\": {\r\n    \"name\": \"create_record\",\r\n    \"arguments\": {\r\n      \"table\": \"users\",\r\n      \"data\": {\r\n        \"name\": \"John Doe\",\r\n        \"email\": \"john@example.com\",\r\n        \"age\": 30\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### read_records\r\n\r\n使用可选筛选从表中查询记录。\r\n\r\n参数：\r\n\r\n- `table` （string）：表的名称\r\n- `conditions` （object，可选）：将条件筛选为键值对\r\n- `limit` （number，可选）：要返回的最大记录数\r\n- `offset` （number，可选）：要跳过的记录数\r\n\r\n例子：\r\n\r\n```json\r\n{\r\n  \"method\": \"tools/call\",\r\n  \"params\": {\r\n    \"name\": \"read_records\",\r\n    \"arguments\": {\r\n      \"table\": \"users\",\r\n      \"conditions\": {\r\n        \"age\": 30\r\n      },\r\n      \"limit\": 10,\r\n      \"offset\": 0\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### update_records\r\n\r\n更新表中符合指定条件的记录。\r\n\r\n参数：\r\n\r\n- `table` （string）：表的名称\r\n- `data` （object）：新值作为键值对\r\n- `conditions` （object）：将条件筛选为键值对\r\n\r\n例子：\r\n\r\n```json\r\n{\r\n  \"method\": \"tools/call\",\r\n  \"params\": {\r\n    \"name\": \"update_records\",\r\n    \"arguments\": {\r\n      \"table\": \"users\",\r\n      \"data\": {\r\n        \"email\": \"john.updated@example.com\"\r\n      },\r\n      \"conditions\": {\r\n        \"id\": 1\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 删除记录\r\n\r\n从表中删除符合指定条件的记录。\r\n\r\n参数：\r\n\r\n- `table` （string）：表的名称\r\n- `conditions` （object）：将条件筛选为键值对\r\n\r\n例子：\r\n\r\n```json\r\n{\r\n  \"method\": \"tools/call\",\r\n  \"params\": {\r\n    \"name\": \"delete_records\",\r\n    \"arguments\": {\r\n      \"table\": \"users\",\r\n      \"conditions\": {\r\n        \"id\": 1\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 自定义查询\r\n\r\n#### 怎么翻译\r\n\r\n对连接的SQLite数据库执行自定义SQL查询。\r\n\r\n参数：\r\n\r\n- `sql` （string）：要执行的SQL查询\r\n- `values` （array，可选）：查询中使用的参数值数组\r\n\r\n例子：\r\n\r\n```json\r\n{\r\n  \"method\": \"tools/call\",\r\n  \"params\": {\r\n    \"name\": \"query\",\r\n    \"arguments\": {\r\n      \"sql\": \"SELECT * FROM users WHERE id = ?\",\r\n      \"values\": [1]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 内置于\r\n\r\n- [模型上下文协议SDK](https://github.com/modelcontextprotocol/typescript-sdk)\r\n- [sqlite3](https://github.com/TryGhost/node-sqlite3)\r\n\r\n______________________________________________________________________\r\n\r\n## 欣赏\r\n\r\n如果你喜欢这个图书馆，请考虑给我发一条建议来支持我的工作😀\r\n\r\n### [🍵 给我小费](https://ko-fi.com/jparkerweb)\r\n",
+ "config": {
+  "mcp-sqlite-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-sqlite",
+    "<path-to-your-sqlite-database.db>"
+   ],
+   "env": {}
+  }
+ }
+}

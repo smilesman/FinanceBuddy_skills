@@ -1,0 +1,12 @@
+{
+ "id": "portfolio-watcher",
+ "kind": "skill",
+ "name": "portfolio-watcher",
+ "fingerprint_md5": "a0b13a3cbaa8e51092b3e33310781679",
+ "download_count": 0,
+ "category": "监控与可观测性",
+ "tags": "",
+ "version": "",
+ "readme": "# Portfolio Watcher\r\n\r\n通过自然对话监控你的投资。实时价格、预警和投资组合表现跟踪。\r\n\r\n## 它能做什么\r\n\r\n跟踪你的股票和加密货币持仓，获取实时价格，在达到目标时发送预警，并计算投资组合表现。无需经纪商连接——只需告诉 Clawd 你拥有什么。\r\n\r\n## 用法\r\n\r\n**添加持仓：**\r\n```\r\n\"I own 50 shares of AAPL at $150\"\r\n\"Add 0.5 BTC bought at $40,000\"\r\n\"Track NVDA, bought 20 shares at $280\"\r\n```\r\n\r\n**检查价格：**\r\n```\r\n\"What's TSLA at?\"\r\n\"Bitcoin price\"\r\n\"Check all my stocks\"\r\n```\r\n\r\n**设置预警：**\r\n```\r\n\"Alert me if AAPL hits $200\"\r\n\"Notify when ETH drops below $2000\"\r\n\"Remove MSFT alert\"\r\n```\r\n\r\n**投资组合概览：**\r\n```\r\n\"How's my portfolio doing?\"\r\n\"Total gains/losses\"\r\n\"Best and worst performers\"\r\n```\r\n\r\n## 支持的资产\r\n\r\n- US stocks (NYSE, NASDAQ)\r\n- Major cryptocurrencies\r\n- ETFs\r\n- International stocks (limited)\r\n\r\n## 提示\r\n\r\n- 包含购买价格以实现准确的盈亏跟踪\r\n- 说 \"update [ticker] to [shares] at [price]\" 以修改持仓\r\n- 询问 \"portfolio allocation\" 以获取饼图细分\r\n- 价格每隔几分钟更新一次（非实时流式传输）\r\n- 仅供参考——不是财务建议",
+ "config": {}
+}

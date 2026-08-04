@@ -1,0 +1,22 @@
+{
+ "id": "3675",
+ "kind": "mcp",
+ "name": "web-fetch",
+ "fingerprint_md5": "a8f4aeb15aaf24f690b0b864d378c9c6",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# web-fetch-mcp\r\n\r\n一个 Model Context Protocol (MCP) 服务器，为 AI\r\n助手提供强大的网页抓取和搜索功能。\r\n\r\n## 功能特性\r\n\r\n- **网页抓取**：提取页面摘要、元数据、链接和文本内容\r\n- **动态页面支持**：使用 Puppeteer 自动检测和渲染 SPA（单页应用）\r\n- **SEO 元数据**：提取 Open Graph、Twitter Card 和传统 Meta 标签\r\n- **网页搜索**：内置 Bing 搜索集成\r\n- **智能检测**：自动判断页面是否需要无头浏览器渲染\r\n\r\n## 工具列表\r\n\r\n| 工具                       | 描述                                     |\r\n| -------------------------- | ---------------------------------------- |\r\n| `fetch_page_summary`       | 获取页面标题、链接和图片概览             |\r\n| `fetch_page_metadata`      | 提取 SEO 标签和 Open Graph 元数据        |\r\n| `fetch_links`              | 提取页面所有超链接                       |\r\n| `fetch_links_headless`     | 使用无头浏览器提取链接（适用于动态页面） |\r\n| `fetch_page_text`          | 提取页面主要文本内容                     |\r\n| `fetch_page_text_headless` | 使用无头浏览器提取文本（适用于动态页面） |\r\n| `search_web`               | 使用 Bing 搜索引擎搜索                   |\r\n\r\n## 安装\r\n\r\n### 使用 npm/npx（推荐）\r\n\r\n```bash\r\n# 全局安装\r\nnpm install -g @xiaozhuabcd1234/web-fetch-mcp\r\n\r\n# 运行\r\nnpx web-fetch-mcp\r\n```\r\n\r\n### 使用 Bun\r\n\r\n```bash\r\nbun install @xiaozhuabcd1234/web-fetch-mcp\r\n```\r\n\r\n### 从源码运行\r\n\r\n```bash\r\ngit clone https://github.com/xiaozhuabcd1234/web-fetch-mcp.git\r\ncd web-fetch-mcp\r\nbun install\r\nbun run src/index.ts\r\n```\r\n\r\n## 使用方法\r\n\r\n### Claude Desktop 集成\r\n\r\n添加到 `claude_desktop_config.json`：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"web-fetch\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@xiaozhuabcd1234/web-fetch-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 项目结构\r\n\r\n```text\r\nweb-fetch-mcp/\r\n├── src/\r\n│   ├── index.ts           # MCP 服务器入口\r\n│   ├── browser.ts         # Puppeteer 浏览器管理\r\n│   ├── web-scraper.ts     # 核心抓取工具\r\n│   ├── search.ts          # 网页搜索接口\r\n│   └── search-engines/\r\n│       └── bing.ts        # Bing 搜索实现\r\n```\r\n\r\n### 核心模块\r\n\r\n- **browser.ts**：管理 Puppeteer 浏览器实例，支持隐身模式和可配置选项\r\n- **web-scraper.ts**：使用 Cheerio 进行 HTML 解析，包含 SPA 检测启发式算法\r\n- **search.ts**：统一的搜索接口，支持多搜索引擎\r\n\r\n## 环境要求\r\n\r\n- [Bun](https://bun.sh/) 1.0+\r\n- Node.js 18+（备用方案）\r\n- Chromium/Chrome 浏览器（用于 Puppeteer）\r\n\r\n## 环境变量\r\n\r\n| 变量          | 描述                  | 默认值   |\r\n| ------------- | --------------------- | -------- |\r\n| `CHROME_PATH` | Chrome 可执行文件路径 | 自动检测 |\r\n\r\n## 开源协议\r\n\r\nGPL-3.0-only - 详见 [LICENSE](LICENSE) 文件。\r\n",
+ "config": {
+  "web-fetch": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@xiaozhuabcd1234/web-fetch-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

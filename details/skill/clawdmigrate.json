@@ -1,0 +1,12 @@
+{
+ "id": "clawdmigrate",
+ "kind": "skill",
+ "name": "clawdmigrate",
+ "fingerprint_md5": "47fcca5b7a546e42b09747d14d305326",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# clawd-migrate\r\n\r\n从 **moltbot** or **clawdbot** 迁移到 **openclaw**. Preserves config, 内存, and clawdbook (Moltbook) data safely on any system.\r\n\r\n## 功能\r\n\r\n- **Discovers** existing bot assets (内存 文件, config, clawdbook/Moltbook credentials)\r\n- **Backs up** everything into a timestamped 文件夹 before any changes\r\n- **Migrates** 文件 into the openclaw layout: `memory/`,`.config/openclaw/``, `.config`.config/clawdbook/`\r\n- **Verifies** every source 文件 was copied 迁移到 its destination (existence + size match)\r\n- **Reinstalls openclaw** (`npm i -g openclaw`) and runs `openclaw`openclaw onboard`cally\r\n\r\n## 快速开始\r\n\r\n```bash\r\nnpx clawd-migrate\r\n```\r\n\r\nInteractive menu walks you through: Discover -> 备份 -> Migrate -> 验证 -> Reinstall openclaw.\r\n\r\n## CLI 命令\r\n\r\n```bash\r\nclawd-migrate                     # Interactive menu (default)\r\nclawd-migrate discover [--root PATH]\r\nclawd-migrate backup [--root PATH]\r\nclawd-migrate migrate [--root PATH] [--no-backup] [--output PATH] [--setup-openclaw]\r\n```\r\n\r\n## 环境要求\r\n\r\n- Node.js 14+\r\n- Python 3.x\r\n\r\n## What gets migrated\r\n\r\n- **Memory/identity:** SOUL.md, USER.md, TOOLS.md, IDENTITY.md, AGENTS.md, 内存.md\r\n- **Config:** `.config/moltbook/`, `.config/__CODE_1__\r\n- **Clawdbook/Moltbook:** Kept under `.config/clawdbook/` (credentials, API keys)\r\n- **Extra:** `projects/` (if present)\r\n\r\n## Tags\r\n\r\nmigration, openclaw, moltbot, clawdbot, clawdbook, moltbook, 备份, 验证",
+ "config": {}
+}

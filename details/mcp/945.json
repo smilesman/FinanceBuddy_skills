@@ -1,0 +1,22 @@
+{
+ "id": "945",
+ "kind": "mcp",
+ "name": "youtube-transcript",
+ "fingerprint_md5": "ebeb419b50632895859df43336e598cb",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# YouTube转录服务器\r\n\r\n\r\n一个模型上下文协议服务器，可以从YouTube视频中检索转录本。该服务器通过一个简单的界面提供对视频字幕和字幕的直接访问。\r\n\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面版YouTube转录服务器 [铁匠铺](https://smithery.ai/server/@kimtaeyoon83/mcp-server-youtube-transcript):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @kimtaeyoon83/mcp-server-youtube-transcript --client claude\r\n```\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n- **get_transcript**\r\n  - 从YouTube视频中提取文字记录\r\n  - 输入：\r\n    - `url` （字符串，必填）：YouTube视频URL、短片URL或视频ID\r\n    - `lang` （string，可选，默认值：“en”）：成绩单的语言代码（例如，'ko'，'en'）。如果找不到请求的语言，则自动回退到可用语言。\r\n    - `include_timestamps` （布尔值，可选，默认值：false）：在输出中包含时间戳（例如，“\\[0:05\\]文本”）\r\n    - `strip_ads` （布尔值，可选，默认值：true）：根据章节标记从成绩单中筛选出赞助、广告和促销内容\r\n\r\n## 主要特点\r\n\r\n- 支持多种视频URL格式（包括YouTube短片）\r\n- 具有自动回退功能的特定语言转录检索\r\n- 用于引用特定时刻的可选时间戳\r\n- 内置广告/赞助过滤（默认启用）\r\n- 转录获取无外部依赖\r\n- 响应中的详细元数据\r\n\r\n## 配置\r\n\r\n要与Claude Desktop一起使用，请添加以下服务器配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube-transcript\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@kimtaeyoon83/mcp-server-youtube-transcript\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 通过工具安装\r\n\r\n[mcp获取](https://github.com/michaellatman/mcp-get) 用于安装和管理模型上下文协议（MCP）服务器的命令行工具。\r\n\r\n```shell\r\nnpx @michaellatman/mcp-get@latest install @kimtaeyoon83/mcp-server-youtube-transcript\r\n```\r\n\r\n## 很棒的mcp服务器\r\n\r\n[很棒的mcp服务器](https://github.com/punkpeye/awesome-mcp-servers) 精心策划的出色模型上下文协议（MCP）服务器列表。\r\n\r\n## 发展\r\n\r\n### 先决条件\r\n\r\n- Node.js 18或更高版本\r\n- npm或纱线\r\n\r\n### 设置\r\n\r\n安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n对于自动重建的开发：\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n### 测试\r\n\r\n```bash\r\nnpm test\r\n```\r\n\r\n### 调试\r\n\r\n由于MCP服务器通过stdio进行通信，调试可能具有挑战性。我们建议使用MCP Inspector进行开发：\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n## 运行评估\r\n\r\nevals包加载一个mcp客户端，然后运行index.ts文件，因此不需要在测试之间重建。您可以通过在npx命令前加前缀来加载环境变量。可以找到完整的文档 [这里](https://www.mcpevals.io/docs).\r\n\r\n```bash\r\nOPENAI_API_KEY=your-key  npx mcp-eval src/evals/evals.ts src/index.ts\r\n```\r\n\r\n## 错误处理\r\n\r\n服务器为常见场景实现了强大的错误处理：\r\n\r\n- 视频URL或ID无效\r\n- 不可用的成绩单\r\n- 语言可用性问题\r\n- 网络错误\r\n\r\n## 使用示例\r\n\r\n1. 通过视频URL获取成绩单：\r\n\r\n```typescript\r\nawait server.callTool(\"get_transcript\", {\r\n  url: \"https://www.youtube.com/watch?v=VIDEO_ID\",\r\n  lang: \"en\"\r\n});\r\n```\r\n\r\n2. 通过视频ID获取成绩单：\r\n\r\n```typescript\r\nawait server.callTool(\"get_transcript\", {\r\n  url: \"VIDEO_ID\",\r\n  lang: \"ko\"\r\n});\r\n```\r\n\r\n3. 从YouTube短片中获取文字记录：\r\n\r\n```typescript\r\nawait server.callTool(\"get_transcript\", {\r\n  url: \"https://www.youtube.com/shorts/VIDEO_ID\"\r\n});\r\n```\r\n\r\n4. 获取带有时间戳的成绩单：\r\n\r\n```typescript\r\nawait server.callTool(\"get_transcript\", {\r\n  url: \"VIDEO_ID\",\r\n  include_timestamps: true\r\n});\r\n```\r\n\r\n5. 获取无广告过滤的原始成绩单：\r\n\r\n```typescript\r\nawait server.callTool(\"get_transcript\", {\r\n  url: \"VIDEO_ID\",\r\n  strip_ads: false\r\n});\r\n```\r\n\r\n6. 如何在Claude桌面应用程序中提取YouTube字幕\r\n\r\n```\r\nchat: https://youtu.be/ODaHJzOyVCQ?si=aXkJgso96Deri0aB Extract subtitles\r\n```\r\n\r\n## 安全考虑\r\n\r\n服务器：\r\n\r\n- 验证所有输入参数\r\n- 优雅地处理YouTube API错误\r\n- 实现转录检索超时\r\n- 提供详细的错误消息以进行故障排除\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。有关详细信息，请参阅LICENSE文件。\r\n",
+ "config": {
+  "youtube-transcript": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@kimtaeyoon83/mcp-server-youtube-transcript"
+   ],
+   "env": {}
+  }
+ }
+}

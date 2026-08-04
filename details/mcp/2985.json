@@ -1,0 +1,22 @@
+{
+ "id": "2985",
+ "kind": "mcp",
+ "name": "usaspending",
+ "fingerprint_md5": "98603a953ad234c42a30d2f1dec3d3e7",
+ "download_count": 0,
+ "category": "商业工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 美国消费MCP服务器\r\n\r\n这是一个无状态的可流式传输HTTP MCP服务器，用于与 [USASPENDING.gov](https://www.usaspending.gov/)，政府支出数据的官方来源。\r\n您可以跟踪政府支出随时间的变化，按机构搜索政府支出，探索政府对社区的支出等等。\r\nUSASPENDING.gov提供了这个简洁的 [仪表盘](https://modelcontextprotocol.io/docs/tools/inspector) 它展示了API的一些功能，如果您希望对使用此API可以实现的目标进行高级概述。\r\nAPI文档可在此处查看 [统一资源定位符](https://api.usaspending.gov/docs/).\r\n\r\n## 本地运行\r\n\r\n```sh\r\nuv run src/server.py\r\n```\r\n\r\n## 运行PyPi\r\n\r\n```sh\r\nuvx --from usaspending-mcp-server@latest usaspending-mcp-server\r\n```\r\n\r\n## 从Docker运行\r\n\r\n```sh\r\ndocker build -t usaspending-mcp-server .\r\ndocker run -p 8000:8000 usaspending-mcp-server\r\n```\r\n\r\n## 与Claude Desktop一起使用\r\n\r\n使用以下配置更新claude_desktop_config.json。\r\n使用上述方法之一确保MCP服务器正在运行。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"usaspending\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mcp-remote\",\r\n        \"http://localhost:8000/mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 配置选项\r\n\r\n接受以下env或.env变量来自定义MCP服务器运行的主机和端口。\r\n\r\n```\r\nMCP_SERVER_HOST\r\nMCP_SERVER_PORT\r\n```\r\n\r\n## 工具\r\n\r\n|名称|描述|示例提示|\r\n| :--- | :--- | :--- |\r\n|federal_accounts |使用此工具可以更好地了解各机构如何接收和使用国会资金来执行其计划、项目和活动。|-提供国土安全部如何花钱的具体细节。 |\r\n|list_budget_functions |检索按标题排序的所有预算职能的列表|-政府在社区和区域发展与国际事务上的支出是多少？ |\r\n|major_object_class |这些数据可用于更好地了解特定机构花钱的不同方式|-教育部在员工薪酬和福利上花了多少钱？ |\r\n|收款人|这可用于可视化与特定收款人相关的政府支出。这将返回收件人列表、他们的级别、DUNS、UEI和金额。|-哪些公司获得了美国国家安全局的资助？ |\r\n|支出|这些数据可用于按细节级别深入到特定的数据子集中。此数据表示指定时间段内的所有政府支出，按您选择的数据类型分组。|-按机构提供一般科学、航天和技术方面的支出。 |\r\n|spending_by_award |这允许对支出数据的特定子集进行复杂的过滤。这接受筛选器和字段，并返回已筛选奖励的字段。|2025年最大的奖项是什么？  -哪些公司在林赛·格雷厄姆的选区获得了重大的联邦合同？ |\r\n|spending_over_time |返回按时间段按升序（从早到最近）分组的汇总奖励金额列表。|在过去的5年里，加州的支出发生了怎样的变化？ |\r\n|subwards |这将返回一组经过筛选的子wards |-描述CONT_AWD_FA870221C0001_9700\\_-无-无-并为其提供理由。 |\r\n|total_budgetary_resources |用于提供有关政府联邦预算资源的信息|-2025年和2024年的政府预算是多少？  -联邦政府总共向各政府机构提供了多少资金？ |\r\n|toptier_agency |这些数据可用于更好地了解特定机构花钱的不同方式|-哪个联邦机构收到的钱最多？ |\r\n\r\n### 工具目录说明\r\n\r\n由于每个工具基本上都是API路由的包装器，因此每个工具都类似地映射到usaspending-API的API_conducts目录中的目录结构。\r\n但是，对于工具federal_account、receiver、expanding和subward，它们的API映射是根目录API_contracts/v2中提到的契约。\r\n每个工具都有一个md文件，因此可以方便地参考用于创建工具的文档。\r\n这些合约很少在usaspending api中更新，但仍应进行检查以确保它们是最新的。\r\n目前，所有合同（又称API文档）都是从提交中引用的 [dv551d0](https://github.com/fedspendingtransparency/usaspending-api/commit/db551d0ab224cfde5a22a99cada44b7746c689b1) 美国支出api。\r\n\r\n## 测试\r\n\r\n[MCP检查员](https://modelcontextprotocol.io/docs/tools/inspector) 是在不连接LLM的情况下测试输入和输出模式的好方法。\r\n还有一个样品 [MCP客户端](tests/README.md) 使用OpenAI测试应用程序。\r\n还有各种单元测试，重点是工具处理程序、输入/输出模式和对USASpending API的HTTP调用。\r\n可以使用以下命令运行它们。\r\n\r\n```sh\r\nuv run pytest\r\n```\r\n\r\n## 贡献\r\n\r\n请查看 [测试](#testing) 部分作为提交PR之前测试更改的起点。\r\n如果您要添加新工具，请同时添加相应合同的副本，作为创建 `inputSchema` 和 `outputSchema`.\r\n请将该工具添加到usaspending_api中存在的相同路径中 [联系人](https://github.com/fedspendingtransparency/usaspending-api/tree/master/usaspending_api/api_contracts/contracts) 目录。\r\n关于文件命名约定，请参考合同文件名，并将工具命名为该文件名。\r\n例如，如果您正在为 [v2/灾难/支出_by_geography.md](https://github.com/fedspendingtransparency/usaspending-api/blob/master/usaspending_api/api_contracts/contracts/v2/disaster/spending_by_geography.md) API路由此工具应添加到路径tools/v2/disaster/spending_by_geography.py下，该工具应命名为disaster_pending_by_geography。\r\n如果对此有任何异议，请在PR中解释原因，因为它不是防弹的！\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](https://github.com/thsmale/usaspending-mcp-server/blob/main/LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "usaspending": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-remote",
+    "http://localhost:8000/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

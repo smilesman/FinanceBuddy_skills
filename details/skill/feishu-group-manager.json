@@ -1,0 +1,12 @@
+{
+ "id": "feishu-group-manager",
+ "kind": "skill",
+ "name": "feishu-group-manager",
+ "fingerprint_md5": "e27efeb3be7de5eb205b8bd4530bf8aa",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Feishu Group Manager\r\n\r\n管理飞书群聊（设置、名称、元数据）。\r\n\r\n## 工具\r\n\r\n### 切换忙碌状态\r\n在群名中添加前缀（例如 `[⏳]`）以表示机器人正在处理长任务。\r\n\r\n```bash\r\nnode skills/feishu-group-manager/toggle_busy.js --chat-id <chat_id> --mode <busy|idle>\r\n```\r\n\r\n### 更新设置\r\n更新群名、描述（公告区域）和权限。\r\n\r\n```bash\r\nnode skills/feishu-group-manager/update_settings.js --chat-id <chat_id> [options]\r\n```\r\n\r\n**选项：**\r\n- `-n, --name <text>`: 新群名\r\n- `-d, --description <text>`: 新群描述\r\n- `--edit-permission <all_members|only_owner>`: 谁可以编辑群信息\r\n- `--at-all-permission <all_members|only_owner>`: 谁可以 @All\r\n- `--invite-permission <all_members|only_owner>`: 谁可以邀请其他人\r\n\r\n## 使用协议\r\n参见 `MEMORY.md` -> \"Busy Status Protocol\"。\r\n- 触发器：一对一控制组中的长时运行任务（>30s）。",
+ "config": {}
+}

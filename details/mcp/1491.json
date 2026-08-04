@@ -1,0 +1,22 @@
+{
+ "id": "1491",
+ "kind": "mcp",
+ "name": "hugeicons",
+ "fingerprint_md5": "ffb3d33ee60f8f9d05941465d21f1fd3",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Hugeicons MCP 服务器\r\n\r\n用于Hugeicons集成和文档的MCP服务器\r\n\r\n[](https://smithery.ai/server/@hugeicons/mcp-server)\r\n\r\n这是一个基于TypeScript的MCP（模型上下文协议）服务器，它提供了工具和资源，用于将Hugeicons集成到各种平台中。它实现了一个MCP服务器，帮助AI助手为使用Hugeicons提供准确的指导。\r\n\r\n## 特性/功能\r\n\r\n### 工具\r\n\r\n- `list_icons` - 获取所有可用的Hugeicons图标列表\r\n- `search_icons` - 按名称或标签搜索图标\r\n- `get_platform_usage` - 获取适用于Hugeicons的特定平台使用说明\r\n- `get_icon_glyphs` - 获取特定图标在所有可用样式中的所有字形（Unicode字符）\r\n- `get_icon_glyph_by_style` - 获取具有特定样式的特定图标所对应的字形（Unicode字符）\r\n\r\n### 资源\r\n\r\n平台文档（Markdown 格式）：\r\n\r\n- `hugeicons://docs/platforms/react` - React 集成指南\r\n- `hugeicons://docs/platforms/vue` - Vue 集成指南\r\n- `hugeicons://docs/platforms/angular` - Angular 集成指南\r\n- `hugeicons://docs/platforms/svelte` - Svelte 集成指南\r\n- `hugeicons://docs/platforms/react-native` - React Native 集成指南\r\n- `hugeicons://docs/platforms/flutter` - Flutter 集成指南\r\n- `hugeicons://docs/platforms/html` - HTML集成指南（基于字体）\r\n\r\n图标数据：\r\n\r\n- `hugeicons://icons/index` - 所有Hugeicons的完整索引（JSON格式）\r\n\r\n### 功能\r\n\r\n此服务器提供全面的Hugeicons集成支持，包括：\r\n\r\n- 图标发现与搜索\r\n- 基于字体的实现中的字形和Unicode数据检索\r\n- 针对特定平台的安装指南\r\n- 带有代码片段的使用示例\r\n- 组件属性文档\r\n- 软件包安装说明\r\n- 通过CDN实现基于字体的HTML集成\r\n\r\n## 发展\r\n\r\n安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n对于带自动重建功能的开发：\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n## 安装\r\n\r\n### 通过Smithery进行安装\r\n\r\n通过自动方式为Claude Desktop安装Hugeicons MCP服务器 [“Smithery”可以翻译为“铁匠铺”或“锻造工坊”。这个词通常指的是一个地方，人们在那里进行铁器的锻造、修理或其他相关的工作](https://smithery.ai/server/@hugeicons/mcp-server)：\r\n\r\n```bash\r\nnpx -y @smithery/cli install @hugeicons/mcp-server --client claude\r\n```\r\n\r\n要与Claude Desktop一起使用，请添加服务器配置：\r\n\r\n在MacOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"hugeicons\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@hugeicons/mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\\`args\\` 数组指定：\r\n\r\n1. `-y`自动对 npx 提示回答“是”\r\n1. 包名： `@hugeicons/mcp-server`\r\n\r\n### 快速入门\r\n\r\n你也可以直接使用 npx 运行服务器：\r\n\r\n```bash\r\nnpx @hugeicons/mcp-server\r\n```\r\n\r\n### 调试\r\n\r\n由于MCP服务器通过标准输入输出进行通信，调试可能会具有挑战性。我们建议使用 [MCP 检测器](https://github.com/modelcontextprotocol/inspector)，这可以作为一个包脚本使用：\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n检查员将提供一个URL，以便您在浏览器中访问调试工具。\r\n",
+ "config": {
+  "hugeicons": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@hugeicons/mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

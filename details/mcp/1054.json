@@ -1,0 +1,24 @@
+{
+ "id": "1054",
+ "kind": "mcp",
+ "name": "find-block",
+ "fingerprint_md5": "d2ac1587033eb1868561d895adf4b2a2",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# FindBlock MCP\r\n\r\nMCP服务器，用于按时间戳检索块号，实现快速准确的链上数据查询。\r\n\r\n\r\n## 特性\r\n\r\n- **块时间戳搜索**：使用可选的包容性查找特定时间戳之前/之后的块。\r\n- **链发现**：列出并检索数千个EVM链的详细信息。\r\n- **RPC代理**：将JSON-RPC调用转发到任何链的最佳端点。\r\n\r\n## 需求\r\n\r\n- Python 3.10+\r\n- [紫外线](https://docs.astral.sh/uv/) 用于依赖关系管理（推荐）\r\n\r\n## 安装\r\n\r\n1. **克隆和安装**:\r\n\r\n   ```bash\r\n   git clone https://github.com/kukapay/findblock-mcp.git\r\n   cd findblock-mcp\r\n   uv sync \r\n   ```\r\n\r\n1. 安装到Claude桌面：\r\n\r\n   将服务器安装为Claude Desktop应用程序：\r\n\r\n   ```bash\r\n   uv run mcp install main.py --name \"Find Block\"\r\n   ```\r\n\r\n   配置文件作为参考：\r\n\r\n   ```json\r\n   {\r\n      \"mcpServers\": {\r\n          \"Find Block\": {\r\n              \"command\": \"uv\",\r\n              \"args\": [ \"--directory\", \"/path/to/findblock-mcp\", \"run\", \"main.py\" ]\r\n          }\r\n      }\r\n   }\r\n   ```\r\n\r\n   将/path/to/findblock mcp替换为实际安装路径。\r\n\r\n## 用法\r\n\r\n安装后（例如，在Claude Desktop中），通过自然语言提示与工具进行交互。LLM将自动发现并调用它们。下面是详细的工具描述，包括参数和示例。\r\n\r\n### 工具\r\n\r\n#### 1. `find_block_before(chain_id: int, timestamp: int, inclusive: bool = False)`\r\n\r\n将块定位在紧邻之前（或，如果 `inclusive=True`)给定的UNIX时间戳。返回Markdown格式的块详细信息，包括数字、时间戳、哈希和父哈希。\r\n\r\n**参数**:\r\n\r\n- `chain_id` （int，必填）：EVM链ID。\r\n- `timestamp` （int，必填）：UNIX时间戳（自纪元以来的秒数）。\r\n- `inclusive` （bool，可选，default=False）：如果匹配，则在精确的时间戳处包含块。\r\n\r\n**示例提示**:\r\n\r\n> 查找2024年1月1日之前的最后一个以太坊区块。\r\n\r\n**期望输出**:\r\n\r\n```\r\n### Block Details (Before Timestamp)\r\n- **Number:** 19300000\r\n- **Timestamp:** 1704067199 (UNIX)\r\n- **Hash:** `0xabc123...def456`\r\n- **Parent Hash:** `0xdef789...ghi012`\r\n```\r\n\r\n#### 2. `find_block_after(chain_id: int, timestamp: int, inclusive: bool = False)`\r\n\r\n在以下情况下立即定位块 `inclusive=True`)给定的UNIX时间戳。返回Markdown格式的块详细信息，包括数字、时间戳、哈希和父哈希。\r\n\r\n**参数**:\r\n\r\n- `chain_id` （int，必填）：EVM链ID。\r\n- `timestamp` （int，必填）：UNIX时间戳（自纪元以来的秒数）。\r\n- `inclusive` （bool，可选，default=False）：如果匹配，则在精确的时间戳处包含块。\r\n\r\n**示例提示**:\r\n\r\n> 2023年3月15日12:00 UTC之后的第一个多边形块是什么？\r\n\r\n**期望输出**:\r\n\r\n```\r\n### Block Details (After Timestamp)\r\n- **Number:** 45000000\r\n- **Timestamp:** 1678867201 (UNIX)\r\n- **Hash:** `0x123abc...456def`\r\n- **Parent Hash:** `0x789ghi...012jkl`\r\n```\r\n\r\n#### 3. `list_chains()`\r\n\r\n检索FindBlock支持的所有可用EVM链的列表，格式为带有链名和ID的Markdown项目符号列表。\r\n\r\n**参数**:\r\n\r\n- 无\r\n\r\n**示例提示**:\r\n\r\n> 给我看一个我可以查询的流行EVM链列表。\r\n\r\n**期望输出**:\r\n\r\n```\r\n### Available Chains\r\n\r\n- **Ethereum** (Chain ID: 1)\r\n- **Binance Smart Chain** (Chain ID: 56)\r\n- **Polygon** (Chain ID: 137)\r\n- **Avalanche C-Chain** (Chain ID: 43114)\r\n- ... (truncated for brevity; full list includes 1,000+ chains)\r\n```\r\n\r\n#### 4. `get_chain(chain_id: int)`\r\n\r\n通过链ID获取特定EVM链的详细信息，该链ID以Markdown的形式返回，并带有名称和ID。\r\n\r\n**参数**:\r\n\r\n- `chain_id` （int，必填）：EVM链ID（例如，以太坊主网为1）。\r\n\r\n**示例提示**:\r\n\r\n> 告诉我以太坊主网的情况。\r\n\r\n**期望输出**:\r\n\r\n```\r\n### Chain Details\r\n\r\n- **Name:** Ethereum\r\n- **Chain ID:** 1\r\n```\r\n\r\n#### 5. `rpc_call(chain_id: int, method: str, params: List[Any] = [], request_id: int = 1)`\r\n\r\n将EVM JSON-RPC请求代理到指定链的最佳性能RPC端点。支持任何标准EVM方法（例如。， `eth_blockNumber`, `eth_getBalance`).返回带有成功结果或错误详细信息的Markdown。\r\n\r\n**参数**:\r\n\r\n- `chain_id` （int，必填）：EVM链ID。\r\n- `method` （str，必填）：JSON-RPC方法名称。\r\n- `params` （List\\[Any\\]，可选，默认值=\\[\\]）：方法的参数数组。\r\n- `request_id` （int，可选，默认=1）：请求的唯一ID。\r\n\r\n**示例提示**:\r\n\r\n> 币安智能链上的当前区块号是多少？\r\n\r\n**期望输出** （成功案例）：\r\n\r\n```\r\n### RPC Result\r\n\r\n**ID:** 42\r\n**Result:** \r\n\"0x1a2b3c4d\"\r\n```\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "find-block": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/findblock-mcp",
+    "run",
+    "main.py"
+   ],
+   "env": {}
+  }
+ }
+}

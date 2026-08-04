@@ -1,0 +1,24 @@
+{
+ "id": "2761",
+ "kind": "mcp",
+ "name": "uspto",
+ "fingerprint_md5": "701d5a585136e0b39e5ef37d78beca6f",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp uspto\r\n\r\nUSPTO的MCP服务器——搜索专利、商标、转让、PTAB决定和发明人/受让人数据。\r\n\r\n**13个工具。** 所有这些都需要免费的API密钥（无付费等级）。\r\n\r\n## 快速开始\r\n\r\n1. 在获取免费API密钥 [data.uspto.gov/apis/getting-started](https://data.uspto.gov/apis/getting-started)\r\n1. 添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"uspto\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-uspto\"],\r\n      \"env\": {\r\n        \"USPTO_API_KEY\": \"your-odp-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n这将解锁9个工具。对于所有13个，请在下面添加可选键。\r\n\r\n## 工具\r\n\r\n### 打开数据门户（USPTO_API_KEY）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `uspto_patent_search` |按关键字搜索专利——所有专利研究的切入点|\r\n| `uspto_patent_details` |标题、摘要、发明人、受让人、分类、状态|\r\n| `uspto_patent_documents` |列出文件包装器文档（office操作、响应、声明）|\r\n| `uspto_patent_assignments` |所有权转让、应用程序的担保权益|\r\n| `uspto_patent_status` |从申请到批准/放弃的完整起诉时间表|\r\n| `uspto_patent_continuity` |专利家谱——延续、分割、CIP、临时|\r\n| `uspto_patent_foreign_priority` |外国优先权索赔----相关国际申请|\r\n| `uspto_ptab_decisions` |PTAB审判决定（IPR、PGR、CBM）|\r\n| `uspto_ptab_proceedings` |PTAB审判程序——积极和已结束的专利挑战|\r\n\r\n### 专利视图（USPTO \\_PatentsView_API_KEY）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `uspto_patentsview_search` |使用CPC、日期、受让人过滤器进行丰富搜索|\r\n| `uspto_inventor_search` |查找发明人和专利组合|\r\n| `uspto_assignee_search` |公司IP格局分析|\r\n\r\n免费注册 [patentsview.org](https://patentsview.org/apis/purpose)\r\n\r\n### TSDR（USPTO_TSDR_API_KEY）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `uspto_trademark_status` |商标状态、所有者、商品/服务|\r\n\r\n免费注册 [developer.uspto.gov](https://developer.uspto.gov)\r\n\r\n### 完整配置（所有按键）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"uspto\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-uspto\"],\r\n      \"env\": {\r\n        \"USPTO_API_KEY\": \"your-odp-key\",\r\n        \"USPTO_PATENTSVIEW_API_KEY\": \"your-patentsview-key\",\r\n        \"USPTO_TSDR_API_KEY\": \"your-tsdr-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n当工具的密钥丢失时，工具会返回一条有用的设置消息（而不是错误）。\r\n\r\n## 查询示例\r\n\r\n- “搜索CRISPR基因编辑专利”→ `uspto_patent_search`\r\n- “显示申请16/123456的起诉历史”→ `uspto_patent_status`\r\n- “这个申请的专利家族是什么？”→ `uspto_patent_continuity`\r\n- “这项专利要求外国优先权吗？”→ `uspto_patent_foreign_priority`\r\n- “获取申请16/123456的分配记录”→ `uspto_patent_assignments`\r\n- “查找针对专利10234567的PTAB挑战”→ `uspto_ptab_decisions`\r\n- “哪些正在进行的PTAB程序涉及三星？”→ `uspto_ptab_proceedings`\r\n- “苹果在显示技术方面拥有哪些专利？”→ `uspto_assignee_search`\r\n- “查找商标序列号97123456”→ `uspto_trademark_status`\r\n\r\n## 速率限制\r\n\r\n每个API的内置令牌桶速率限制：\r\n\r\n- 开放数据门户：10个请求/秒\r\n- 专利浏览量：45次/分钟\r\n- TSDR:60要求/分钟\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "uspto": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-uspto"
+   ],
+   "env": {
+    "USPTO_API_KEY": "your-odp-key-here"
+   }
+  }
+ }
+}

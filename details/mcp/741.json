@@ -1,0 +1,24 @@
+{
+ "id": "741",
+ "kind": "mcp",
+ "name": "mealmastery",
+ "fingerprint_md5": "5431feb829c8f6d70720f99cf70aed6a",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# @餐控/mcp服务器\r\n\r\n用于MealMastery AI膳食计划的MCP服务器。与Claude Desktop、VS Code Copilot和其他MCP兼容的AI代理集成。\r\n\r\n## 哲学\r\n\r\nMCP服务器是 **核心能力的镜像**，不是新功能首次亮相的地方。其价值主张是：\r\n\r\n> “你在应用程序中能做的一切，现在都可以通过克劳德的自然对话来完成。”\r\n\r\nMCP层增加了便利性（自然语言）和可组合性（链接工具），但底层功能首先存在于核心产品中。新功能应该作为API端点构建，为网络/移动应用程序提供动力，然后通过MCP公开，而不是相反。\r\n\r\n## 设置\r\n\r\n1. 从获取API密钥 [MealMastery设置](https://www.mealmastery.ai/settings)\r\n1. 添加到您的Claude桌面配置(`claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mealmastery\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@mealmastery/mcp-server\"],\r\n      \"env\": {\r\n        \"MEALMASTERY_API_KEY\": \"mm_live_...\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 特性\r\n\r\n### 24工具\r\n\r\n用于膳食计划、食谱、杂货清单和用户偏好的完整CRUD，以及具有流式进度的AI生成。\r\n\r\n### 3资源（只读上下文）\r\n\r\n|资源URI|描述|\r\n|---|---|\r\n| `mealmastery://meal-plan/current` |包含所有餐点和营养的最新膳食计划|\r\n| `mealmastery://user/preferences` |饮食偏好、过敏、技能水平|\r\n| `mealmastery://grocery-list/current` |当前膳食计划的杂货清单|\r\n\r\n### 4提示模板（指导工作流程）\r\n\r\n|提示|描述|\r\n|---|---|\r\n| `weekly-meal-prep` |全周计划：生成计划、审核、购物清单、结账|\r\n| `swap-meal` |在当前计划中替换一顿饭|\r\n| `order-groceries` |预览并将购物清单发送到Instacart/Kroger|\r\n| `quick-dinner` |有时间限制的单顿快餐想法|\r\n\r\n### 流媒体和进度\r\n\r\n这个 `generate_meal_plan` 该工具支持MCP进度通知。客户端发送 `progressToken` 在AI生成过程中接收实时更新（0-100%的进度和状态消息）。没有进度支持的客户端会优雅地回退到非流式端点。\r\n\r\n### 配额意识\r\n\r\nAPI密钥配额（基于订阅层的每日请求限制）在每个令牌交换上报告。免费等级：1000次请求/天。付费层：10000次请求/天。\r\n\r\n## 可用工具\r\n\r\n### 用户上下文\r\n\r\n- **get_user_context** -加载完整的用户配置文件、首选项、订阅和最新计划\r\n- **get_user_参考信息** -获取饮食偏好和烹饪设置\r\n- **update_user_参考信息** -更新饮食、过敏或烹饪偏好\r\n- **获取订阅状态** -检查订阅级别和使用限制\r\n- **get_checkout_提供者** -查看连接的杂货供应商（Instacart、Kroger）\r\n- **checkout_grocery_list** -将购物清单发送到Instacart或Kroger\r\n\r\n### 膳食计划\r\n\r\n- **generate_mail_plan** -使用AI生成个性化膳食计划（具有流式进度）\r\n- **get_latest_meal计划** -获取当前/最近的用餐计划\r\n- **get_mal_plan** -按ID获取特定的用餐计划\r\n- **list_meal计划** -浏览膳食计划历史记录\r\n- **再生_铝** -用人工智能生成的新餐代替计划中的一餐\r\n- **发电机和发电机** -在特定时段将新的AI餐添加到计划中\r\n- **remove_meal** -从计划中删除一顿饭\r\n\r\n### 食谱\r\n\r\n- **搜索密码** -搜索已保存的食谱\r\n- **获取密码** -获取完整的食谱详细信息\r\n- **save_mail_as_recipe** -将生成的膳食保存为可重复使用的食谱\r\n- **获取美食食谱** -获取喜爱的食谱列表\r\n- **favorite_mal** -将一顿饭标记为最喜欢的\r\n- **get_mal_ratings** -获取计划中膳食的评级\r\n- **获取所有标记** -获得历史食谱评级\r\n\r\n### 杂货\r\n\r\n- **生成器_杂货店_列表** -根据膳食计划创建购物清单\r\n- **获取程序列表** -获取特定的杂货清单\r\n- **list_grocery_lists** -浏览购物清单历史记录\r\n- **update_grocery_items** -检查、排除或调整杂货\r\n\r\n## 环境变量\r\n\r\n|变量|必填|默认|描述|\r\n|----------|----------|---------|-------------|\r\n| `MEALMASTERY_API_KEY` |是|-|您的开发人员API密钥(`mm_live_...`) |\r\n| `MEALMASTERY_API_URL` |没有| `https://api.mealmastery.ai` |API基本URL|\r\n\r\n## 安全\r\n\r\n- API密钥交换为短暂的JWT（15分钟）——从不在数据请求中发送\r\n- 对所有非本地主机连接强制使用HTTPS\r\n- 基于作用域的访问控制（读、写、签出、管理）\r\n- 服务器端强制执行按密钥的每日配额\r\n- 已清除错误消息--没有内部API详细信息泄漏到代理\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\nnpm start\r\n```\r\n",
+ "config": {
+  "mealmastery": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@mealmastery/mcp-server"
+   ],
+   "env": {
+    "MEALMASTERY_API_KEY": "mm_live_..."
+   }
+  }
+ }
+}

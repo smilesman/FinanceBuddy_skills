@@ -1,0 +1,22 @@
+{
+ "id": "1125",
+ "kind": "mcp",
+ "name": "mongodb-3",
+ "fingerprint_md5": "9312aec9118fed2d6359d83066f3abd8",
+ "download_count": 0,
+ "category": "NoSQL 数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# 🗄️ 用于LLMS的MongoDB MCP服务器\r\n\r\n\r\n一种模型上下文协议（MCP）服务器，使LLM能够直接与MongoDB数据库交互。通过自然语言无缝查询集合、检查模式和管理数据。\r\n\r\n## ✨ 特性\r\n\r\n- 🔍 收集模式检查\r\n- 📊 文档查询和过滤\r\n- 📈 指标管理\r\n- 📝 文档操作（插入、更新、删除）\r\n\r\n## 演示视频\r\n\r\nhttps://github.com/user-attachments/assets/2389bf23-a10d-49f9-bca9-2b39a1ebe654\r\n\r\n## 🚀 快速开始\r\n\r\n要开始使用，请找到您的mongodb连接url，并将此配置添加到您的Claude Desktop配置文件中：\r\n\r\n**MacOS**: `~/Library/Application\\ Support/Claude/claude_desktop_config.json`\\\r\n**视窗**: `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mongodb\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"mongo-mcp\",\r\n        \"mongodb://<username>:<password>@<host>:<port>/<database>?authSource=admin\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的MongoDB MCP服务器 [史密瑟里](https://smithery.ai/server/mongo-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install mongo-mcp --client claude\r\n```\r\n\r\n### 先决条件\r\n\r\n- Node.js 18+\r\n- 新巴拿马型船舶\r\n- Docker和Docker Compose（仅用于本地沙盒测试）\r\n- MCP客户端（例如克劳德桌面应用程序）\r\n\r\n### 测试沙盒设置\r\n\r\n如果您没有mongo-db服务器可以连接，并且想创建一个示例沙盒，请按照以下步骤操作\r\n\r\n1. 使用Docker Compose启动MongoDB：\r\n\r\n```bash\r\ndocker-compose up -d\r\n```\r\n\r\n2. 为数据库添加测试数据种子：\r\n\r\n```bash\r\nnpm run seed\r\n```\r\n\r\n### 配置Claude桌面\r\n\r\n将此配置添加到您的Claude Desktop配置文件中：\r\n\r\n**MacOS**: `~/Library/Application\\ Support/Claude/claude_desktop_config.json`\\\r\n**视窗**: `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n#### 地方发展模式：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mongodb\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"dist/index.js\",\r\n        \"mongodb://root:example@localhost:27017/test?authSource=admin\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 测试沙盒数据结构\r\n\r\n种子脚本使用示例数据创建了三个集合：\r\n\r\n#### 用户\r\n\r\n- 个人信息（姓名、电子邮件、年龄）\r\n- 带坐标的嵌套地址\r\n- 兴趣爱好\r\n- 会员日期\r\n\r\n#### 产品\r\n\r\n- 产品详细信息（名称、SKU、类别）\r\n- 嵌套规范\r\n- 价格和库存信息\r\n- 标签和评级\r\n\r\n#### 订单\r\n\r\n- 包含商品的订单详细信息\r\n- 用户参考\r\n- 发货和付款信息\r\n- 状态跟踪\r\n\r\n## 🎯 示例提示\r\n\r\n与Claude一起尝试以下提示以探索功能：\r\n\r\n### 基本操作\r\n\r\n```plaintext\r\n\"What collections are available in the database?\"\r\n\"Show me the schema for the users collection\"\r\n\"Find all users in San Francisco\"\r\n```\r\n\r\n### 高级查询\r\n\r\n```plaintext\r\n\"Find all electronics products that are in stock and cost less than $1000\"\r\n\"Show me all orders from the user john@example.com\"\r\n\"List the products with ratings above 4.5\"\r\n```\r\n\r\n### 索引管理\r\n\r\n```plaintext\r\n\"What indexes exist on the users collection?\"\r\n\"Create an index on the products collection for the 'category' field\"\r\n\"List all indexes across all collections\"\r\n```\r\n\r\n### 文档操作\r\n\r\n```plaintext\r\n\"Insert a new product with name 'Gaming Laptop' in the products collection\"\r\n\"Update the status of order with ID X to 'shipped'\"\r\n\"Find and delete all products that are out of stock\"\r\n```\r\n\r\n## 📝 可用工具\r\n\r\n服务器为数据库交互提供了以下工具：\r\n\r\n### 查询工具\r\n\r\n- `find`：通过过滤和投影查询文档\r\n- `listCollections`：列出可用收藏\r\n- `insertOne`：插入单个文档\r\n- `updateOne`：更新单个文档\r\n- `deleteOne`：删除单个文档\r\n\r\n### 索引工具\r\n\r\n- `createIndex`：创建新索引\r\n- `dropIndex`：删除索引\r\n- `indexes`：列出集合的索引\r\n\r\n## 📜 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "mongodb": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mongo-mcp",
+    "mongodb://<username>:<password>@<host>:<port>/<database>?authSource=admin"
+   ],
+   "env": {}
+  }
+ }
+}

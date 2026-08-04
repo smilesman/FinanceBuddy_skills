@@ -1,0 +1,24 @@
+{
+ "id": "1871",
+ "kind": "mcp",
+ "name": "budgetbakers",
+ "fingerprint_md5": "12fc2a4c1904b9001788a6a98f204622",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# BudgetBakers MCP服务器\r\n\r\n\r\nMCP服务器，用于将Claude与 [BudgetBakers钱包](https://www.budgetbakers.com/) API允许克劳德访问财务数据：账户、交易、类别和支出分析。\r\n\r\n## 快速开始\r\n\r\n增添 `~/.claude/settings.json` （或克劳德桌面配置）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"budgetbakers\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"budgetbakers-mcp\"],\r\n      \"env\": {\r\n        \"BUDGETBAKERS_API_TOKEN\": \"<your-token>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您可以从BudgetBakers钱包设置中获取API令牌。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_accounts` |列出所有有余额的账户。过滤器： `currency`, `accountType` |\r\n| `get_categories` |收入/支出类别。筛选器： `name` |\r\n| `get_labels` |用户定义标签。筛选器： `name` |\r\n| `search_transactions` |搜索交易记录。需要 `accountId`筛选条件：日期、类别、收款人、金额|\r\n| `get_transaction` |单个交易的完整细节 `id` |\r\n| `spending_by_category` |按日期范围的类别分组的支出|\r\n| `cashflow_summary` |日期范围内的收入、支出和净现金流|\r\n| `top_merchants` |按日期范围消费的顶级商家|\r\n\r\n> `accountId` 是交易和分析工具所必需的。呼叫 `get_accounts` 首先得到它。\r\n\r\n## 示例提示\r\n\r\n- “显示我的账户和余额”\r\n- “我二月份花了多少钱？”\r\n- “我花最多的钱在什么上？”\r\n- “本月排名前五的商家”\r\n- “查找星巴克1月份的所有交易”\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/vmrchnk/budgetbakers-mcp.git\r\ncd budgetbakers-mcp\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n要使用本地build而不是npm包：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"budgetbakers\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/budgetbakers-mcp/build/index.js\"],\r\n      \"env\": {\r\n        \"BUDGETBAKERS_API_TOKEN\": \"<your-token>\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 技术细节\r\n\r\n- TypeScript、ES2022、Node16模块\r\n- 依赖关系： `@modelcontextprotocol/sdk`, `zod`\r\n- 支持 `agentHints=true` -API返回有关分页、速率限制等的提示。\r\n- 通过提示提供的URL自动分页\r\n- 分析工具在服务器端聚合数据（API没有分析端点）\r\n",
+ "config": {
+  "budgetbakers": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "budgetbakers-mcp"
+   ],
+   "env": {
+    "BUDGETBAKERS_API_TOKEN": "<your-token>"
+   }
+  }
+ }
+}

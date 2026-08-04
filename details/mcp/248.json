@@ -1,0 +1,21 @@
+{
+ "id": "248",
+ "kind": "mcp",
+ "name": "iracing-mcp-server",
+ "fingerprint_md5": "ea037d3ec40447342f05c54e3cd5af87",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# iRacing MCP服务器\r\n\r\n用于访问iRacing遥测数据和游戏功能的MCP（模型上下文协议）服务器。\r\n\r\n## 概述\r\n\r\n该项目通过MCP协议从iRacing提供实时遥测数据、排行榜信息、摄像头控制、坑命令、回放功能等。它使AI助手和其他应用程序能够轻松访问iRacing数据。\r\n\r\n## 主要特点\r\n\r\n### 📊 遥测数据\r\n\r\n- 检索实时遥测值\r\n- 获取可用遥测变量列表\r\n\r\n### 🏁 竞赛规程\r\n\r\n- 获取排行榜（仅限竞争职位）\r\n- 访问驾驶员信息、会话信息、周末信息和分段时间信息\r\n- 监控当前标志和发动机警告\r\n\r\n### 📹 相机控制\r\n\r\n- 获取可用的相机组\r\n- 切换摄像头（按车号、位置、组规格）\r\n- 检查当前摄像头状态\r\n\r\n### 🔧 矿坑作业\r\n\r\n- 检查矿坑服务状态\r\n- 执行维修站命令（加油、更换轮胎、维修等）\r\n- 管理安全矿坑作业\r\n\r\n### 🎬 重播功能\r\n\r\n- 搜索和导航回放\r\n- 在会话、圈和帧之间移动\r\n- 跳转到事件标记\r\n\r\n## 需求\r\n\r\n- Python 3.13或更高版本\r\n- iRacing（必须正在运行）\r\n- 紫外线\r\n\r\n## 用法\r\n\r\n### 1.配置mcp.json\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"iracing-mcp-server\": {\r\n            \"command\": \"uvx\",\r\n            \"args\":[\"iracing-mcp-server\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### 遥测相关\r\n\r\n- `get_telemetry_names()` -获取可用遥测变量\r\n- `get_telemetry_values(names)` -获取指定的遥测值\r\n\r\n### 竞赛规程\r\n\r\n- `get_leaderboard()` -获取排行榜\r\n- `get_driver_info()` -获取驾驶员信息\r\n- `get_session_info()` -获取会话信息\r\n- `get_qualify_results_info()` -获取资格认证结果信息\r\n- `get_weekend_info()` -获取周末信息\r\n- `get_split_time_info()` -获取分段时间信息\r\n- `get_radio_info()` -获取无线电信息\r\n- `get_current_flags()` -获取当前标志\r\n- `get_current_engine_warnings()` -获取发动机警告\r\n\r\n### 相机控制\r\n\r\n- `get_camera_info()` -获取摄像头信息\r\n- `get_current_camera_status()` -获取当前摄像头状态\r\n- `cam_switch(group_number, car_number_raw, position)` -切换摄像头\r\n\r\n### 矿坑作业\r\n\r\n- `get_current_pit_service_status()` -获取当前维修站服务状态\r\n- `pit_command(commands_and_values)` -执行坑命令\r\n\r\n### 重播功能\r\n\r\n- `replay_search(search_commands)` -搜索和导航回放\r\n\r\n## 发展\r\n\r\n### 依赖项\r\n\r\n- `mcp[cli]>=1.12.2` -MCP协议实现\r\n- `pyirsdk>=1.3.5` -iRacing SDK Python绑定\r\n\r\n### 项目结构\r\n\r\n```\r\niracing-mcp-server/\r\n├── src/iracing_mcp_server/\r\n│   ├── __init__.py          # Main entry point\r\n│   ├── server.py            # MCP server implementation\r\n│   ├── leaderboard.py       # Leaderboard processing\r\n│   └── prompt.py            # Prompt templates\r\n├── pyproject.toml           # Project configuration\r\n└── README.md               # This file\r\n```\r\n\r\n## 许可证\r\n\r\n该项目在MIT许可证下发布。\r\n\r\n## 致谢\r\n\r\n- [皮尔斯克](https://github.com/kutu/pyirsdk) -iRacing SDK的Python绑定\r\n- [主控程序](https://modelcontextprotocol.io/) -模型上下文协议\r\n",
+ "config": {
+  "iracing-mcp-server": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "iracing-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

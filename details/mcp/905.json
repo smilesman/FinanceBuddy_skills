@@ -1,0 +1,28 @@
+{
+ "id": "905",
+ "kind": "mcp",
+ "name": "unsplash",
+ "fingerprint_md5": "c106b6449f4e367a0affacb6cb8c1bc6",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# Unsplash MCP服务器\r\n\r\n英语| [简体中文](README_zh.md)\r\n\r\n> 一个简单的MCP服务器，用于无缝的Unsplash图像集成和搜索功能。\r\n\r\n\r\n## 📋 概述\r\n\r\nUnsplash MCP Server用于搜索丰富、高质量的图像。它非常适合希望将Unsplash功能集成到自己的应用程序中的开发人员。\r\n\r\n## ✨ 特性\r\n\r\n- **高级图像搜索**：使用滤镜在Unsplash的丰富照片库中搜索：\r\n  - 关键词相关性\r\n  - 配色方案\r\n  - 方向选项\r\n  - 自定义排序和分页\r\n\r\n## 🔑 获取Unsplash访问密钥\r\n\r\n在安装此服务器之前，您需要获得Unsplash API访问密钥：\r\n\r\n1. 在以下网址创建开发人员帐户 [Unsplash](https://unsplash.com/developers)\r\n1. 注册新应用程序\r\n1. 从应用程序详细信息页面获取访问密钥\r\n1. 在以下配置步骤中使用此键\r\n\r\n有关更多详细信息，请参阅 [Unsplash API官方文档](https://unsplash.com/documentation).\r\n\r\n## 🚀 安装\r\n\r\n通过以下方式自动安装Unsplash Image Integration Server for Claude Desktop [史密瑟里](https://smithery.ai/server/@hellokaton/unsplash-mcp-server):\r\n\r\n### IDE设置\r\n\r\n**光标IDE**\r\n\r\n```bash\r\nnpx -y @smithery/cli@latest install @hellokaton/unsplash-mcp-server --client cursor --key 7558c683-****-****\r\n```\r\n\r\n**帆板运动**\r\n\r\n```bash\r\nnpx -y @smithery/cli@latest install @hellokaton/unsplash-mcp-server --client windsurf --key 7558c683-****-****\r\n```\r\n\r\n**克莱恩**\r\n\r\n```bash\r\nnpx -y @smithery/cli@latest install @hellokaton/unsplash-mcp-server --client cline --key 7558c683-****-****\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/hellokaton/unsplash-mcp-server.git\r\n\r\n# Navigate to project directory\r\ncd unsplash-mcp-server\r\n\r\n# Create virtual environment\r\nuv venv\r\n\r\n# Install dependencies\r\nuv pip install .\r\n```\r\n\r\n**光标编辑器集成**\r\n\r\n将以下配置添加到游标编辑器中 `settings.json`:\r\n\r\n⚠️ **注：** 请根据您的实际安装情况调整以下配置：\r\n\r\n- 如果 `uv` 如果不在您的系统PATH中，请使用绝对路径（例如。， `/path/to/uv`)\r\n- `./server.py` 应修改为服务器脚本的实际位置（可以使用绝对路径或相对于工作区的路径）\r\n\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"unsplash\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--with\", \"fastmcp\", \"fastmcp\", \"run\", \"./server.py\"],\r\n      \"env\": {\r\n        \"UNSPLASH_ACCESS_KEY\": \"${YOUR_ACCESS_KEY}\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 在游标中使用\r\n\r\n\r\n## 🛠️ 可用工具\r\n\r\n### 搜索照片\r\n\r\n```json\r\n{\r\n  \"tool\": \"search_photos\",\r\n  \"query\": \"mountain\",\r\n  \"per_page\": 5,\r\n  \"orientation\": \"landscape\"\r\n}\r\n```\r\n\r\n## 🔄 其他实施方式\r\n\r\n- 戈朗： [非闪存mcp服务器](https://github.com/douglarek/unsplash-mcp-server)\r\n- Java [非闪存mcp服务器](https://github.com/JavaProgrammerLB/unsplash-mcp-server)\r\n\r\n## 📄 许可证\r\n\r\n[MIT许可证](LICENSE)\r\n\r\n## 📬 联系\r\n\r\n- [推特/X](https://x.com/hellokaton)\r\n- [GitHub 问题](https://github.com/hellokaton/unsplash-mcp-server/issues)\r\n",
+ "config": {
+  "unsplash": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--with",
+    "fastmcp",
+    "fastmcp",
+    "run",
+    "./server.py"
+   ],
+   "env": {
+    "UNSPLASH_ACCESS_KEY": "${YOUR_ACCESS_KEY}"
+   }
+  }
+ }
+}

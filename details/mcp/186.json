@@ -1,0 +1,24 @@
+{
+ "id": "186",
+ "kind": "mcp",
+ "name": "dicloak-local-api-mcp-bridge",
+ "fingerprint_md5": "76d4fc8ee6e1e5f15083eba1f5e9519b",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# DICloak MCP服务器\r\n\r\n欢迎使用Dicloak MCP服务器！该工具使您能够在GPT客户端中通过自然语言直接调用Dicloak客户端的本地API的强大功能。\r\n\r\n## 你能做什么\r\n\r\n使用DICloak MCP服务器，您可以：\r\n\r\n- **管理您的环境** -创建、更新、删除和列出您的环境信息\r\n- **管理您的群** -查询、创建、删除组或创建自己的组\r\n- **管理您的代理服务器** -查询代理列表，最重要的是检测新的代理信息。\r\n- **管理您的成员** -动态管理成员权限，创建新成员\r\n- **社交媒体自动化** -社交媒体流量的丰富自动化，包括TikTok、YouTube、亚马逊等。\r\n\r\n### 示例用例\r\n\r\n- “检查我现在有多少个环境？”\r\n- 打开名为“my-env-1”的环境\r\n- “帮助我检查此代理信息：一些代理信息”\r\n- “使用我的TikTok环境来提高我帐户的活动，并自动帮助我浏览主页上的视频并给他们点赞。”\r\n- “去YouTube，用我的本地视频帮我在那里发布新的更新。”\r\n\r\n## MCP客户端的设置\r\n\r\n### 克劳德桌面版\r\n\r\n**如何将DICloak MCP与Claude Desktop连接：**\r\n\r\n### 步骤1:访问克劳德桌面设置\r\n\r\n打开您的Claude Desktop应用程序。在顶部菜单栏中，单击“Claude”，然后选择“Settings”。..'.\r\n\r\n\r\n### 步骤2：导航到开发人员设置\r\n\r\n在设置中，单击左侧的开发人员，然后单击编辑配置以打开json配置文件。\r\n\r\n\r\n### 步骤3：找到claude_desktop_config json\r\n\r\n您正在此文件中配置MCP服务器。通常，系统会使用默认的文本编辑器打开“claude_desktop_config.json”文件。\r\n\r\n\r\n### 步骤4：添加DICloak MCP配置\r\n\r\n您需要在mcpservers对象中添加DICloak MCP服务器配置详细信息。小心地将以下JSON片段粘贴到claude_desktop_config.JSON文件中。\r\n重要提示：将“DICLOAK_API_KEY”和“DICLOA K_BASE_URL”替换为实际的DICLOAK本地API令牌和请求地址。\r\n\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"dicloak-local-api-mcp-bridge\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"dicloak-local-api-mcp-bridge\"],\r\n      \"env\": {\r\n      \"DICLOAK_API_KEY\": \"PASTE_YOUR_API_KEY_HERE\",\r\n      \"DICLOAK_BASE_URL\": \"PASTE_YOUR_BASE_URL_HERE\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 步骤5：验证连接器中的连接\r\n\r\n保存claude_desktop_config.json文件后，建议重新启动claude desktop以确保加载新配置。\r\n一旦Claude重新启动，请导航回其“设置”。在“连接器”部分（根据您的Claude版本，可能在“通用”或“扩展”下），您现在应该看到“diclak-local-api-mcp-bridge local”作为连接服务列出。这表明集成成功。\r\n\r\n\r\n祝贺您已成功将DICloak MCP与Claude Desktop连接。您的AI助手现在可以利用DICloak配置文件执行各种任务。\r\n\r\n### 光标\r\n\r\n1. **在游标中配置：**\r\n\r\n   添加到光标MCP配置中：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"dicloak-local-api-mcp-bridge\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\"dicloak-local-api-mcp-bridge\"],\r\n         \"env\": {\r\n            \"DICLOAK_API_KEY\": \"PASTE_YOUR_API_KEY_HERE\",\r\n            \"DICLOAK_BASE_URL\": \"PASTE_YOUR_BASE_URL_HERE\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n### 其他MCP客户端\r\n\r\n对于其他兼容MCP的客户端，请使用相同的配置模式，并为您的客户端设置相应的配置文件位置。\r\n\r\n## 获取您的API代币\r\n\r\n1. 登录到您的 [DICloak帐户](https://dicloak.com/)\r\n1. 转到OpenApi设置\r\n1. 生成或复制您的API令牌和API地址\r\n1. 在上述配置中使用此令牌\r\n\r\n重要提示：请在复制的API地址后添加“/openapi”。这是强制性的。\r\n",
+ "config": {
+  "dicloak-local-api-mcp-bridge": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "dicloak-local-api-mcp-bridge"
+   ],
+   "env": {
+    "DICLOAK_API_KEY": "PASTE_YOUR_API_KEY_HERE",
+    "DICLOAK_BASE_URL": "PASTE_YOUR_BASE_URL_HERE"
+   }
+  }
+ }
+}

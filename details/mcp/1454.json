@@ -1,0 +1,24 @@
+{
+ "id": "1454",
+ "kind": "mcp",
+ "name": "framelink-figma-mcp",
+ "fingerprint_md5": "cde83bc5ee620ef120bd9c1bd31f7db9",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "<a href=\"https://www.framelink.ai/?utm_source=github&utm_medium=referral&utm_campaign=readme\" target=\"_blank\" rel=\"noopener\">\r\n  <picture>\r\n    <source media=\"(prefers-color-scheme: dark)\" srcset=\"https://gips0.baidu.com/it/u=3839953372,2043787362&fm=3081&app=3081&f=PNG?w=1292&h=363\" />\r\n    \r\n  </picture>\r\n</a>\r\n\r\n<div align=\"center\">\r\n  <h1>Framelink Figma MCP Server</h1>\r\n  <p>\r\n    🌐 Available in:\r\n    <a href=\"README.ko.md\">한국어 (Korean)</a> |\r\n    <a href=\"README.ja.md\">日本語 (Japanese)</a> |\r\n    <a href=\"README.zh-cn.md\">简体中文 (Simplified Chinese)</a> |\r\n    <a href=\"README.zh-tw.md\">繁體中文 (Traditional Chinese)</a>\r\n  </p>\r\n  <h3>Give your coding agent access to your Figma data.<br/>Implement designs in any framework in one-shot.</h3>\r\n  <a href=\"https://npmcharts.com/compare/figma-developer-mcp?interval=30\">\r\n    \r\n  </a>\r\n  <a href=\"https://github.com/GLips/Figma-Context-MCP/blob/main/LICENSE\">\r\n    \r\n  </a>\r\n  <a href=\"https://framelink.ai/discord\">\r\n    \r\n  </a>\r\n  <br />\r\n  <a href=\"https://twitter.com/glipsman\">\r\n    \r\n  </a>\r\n</div>\r\n\r\n<br/>\r\n\r\n给 [光标](https://cursor.sh/) 和其他AI驱动的编码工具可以通过此访问您的Figma文件 [模型上下文协议](https://modelcontextprotocol.io/introduction) 服务器。\r\n\r\n当Cursor可以访问Figma设计数据时 **方式** 比粘贴屏幕截图等替代方法更准确地进行一次拍摄设计。\r\n\r\n<h3><a href=\"https://www.framelink.ai/docs/quickstart?utm_source=github&utm_medium=referral&utm_campaign=readme\">See quickstart instructions →</a></h3>\r\n\r\n## 演示\r\n\r\n[观看使用Figma设计数据在Cursor中构建UI的演示](https://youtu.be/6G9yb-LrEqg)\r\n\r\n[](https://youtu.be/6G9yb-LrEqg)\r\n\r\n## 运作原理\r\n\r\n1. 打开IDE的聊天（例如Cursor中的代理模式）。\r\n1. 将链接粘贴到Figma文件、框架或组。\r\n1. 让Cursor对Figma文件做一些事情，例如实现设计。\r\n1. Cursor将从Figma获取相关元数据，并使用它来编写代码。\r\n\r\n此MCP服务器是专门为与Cursor一起使用而设计的。在回答上下文之前 [图API](https://www.figma.com/developers/api)，它简化和转换了响应，因此只向模型提供最相关的布局和样式信息。\r\n\r\n减少提供给模型的上下文量有助于使AI更准确，响应更相关。\r\n\r\n## 入门指南\r\n\r\n许多代码编辑器和其他AI客户端使用配置文件来管理MCP服务器。\r\n\r\n这 `figma-developer-mcp` 可以通过将以下内容添加到配置文件中来配置服务器。\r\n\r\n> 注意：您需要创建一个Figma访问令牌才能使用此服务器。可以找到有关如何创建Figma API访问令牌的说明 [这里](https://help.figma.com/hc/en-us/articles/8085703771159-Manage-personal-access-tokens).\r\n\r\n### MacOS/Linux\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Framelink Figma MCP\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"figma-developer-mcp\", \"--figma-api-key=YOUR-KEY\", \"--stdio\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 视窗\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Framelink Figma MCP\": {\r\n      \"command\": \"cmd\",\r\n      \"args\": [\"/c\", \"npx\", \"-y\", \"figma-developer-mcp\", \"--figma-api-key=YOUR-KEY\", \"--stdio\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者您可以设置 `FIGMA_API_KEY` 和 `PORT` 在 `env` 现场。\r\n\r\n如果您需要有关如何配置Framelink Figma MCP服务器的更多信息，请参阅 [Framelink文档](https://www.framelink.ai/docs/quickstart?utm_source=github&utm_medium=referral&utm_campaign=readme).\r\n\r\n## 明星历史\r\n\r\n<a href=\"https://star-history.com/#GLips/Figma-Context-MCP\"></a>\r\n\r\n## 了解更多\r\n\r\nFramelink Figma MCP服务器简单但功能强大。通过在 [Framelink](https://framelink.ai?utm_source=github&utm_medium=referral&utm_campaign=readme) 网站。\r\n",
+ "config": {
+  "framelink-figma-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "figma-developer-mcp",
+    "--figma-api-key=YOUR-KEY",
+    "--stdio"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "1387",
+ "kind": "mcp",
+ "name": "code-reasoning",
+ "fingerprint_md5": "2e69e63d09de01e96dbea6930ce8df31",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "# 代码推理MCP服务器\r\n\r\n一个模型上下文协议（MCP）服务器，通过结构化、分步骤的思考方式增强Claude解决复杂编程任务的能力。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@mettamatt/code-reasoning\">\r\n  \r\n</a>\r\n\r\n[](https://www.npmjs.com/package/@mettamatt/code-reasoning)\r\n[](https://opensource.org/licenses/MIT)\r\n[](https://github.com/mettamatt/code-reasoning/actions/workflows/ci.yml)\r\n\r\n## 快速安装\r\n\r\n1. 通过编辑来配置Claude Desktop：\r\n\r\n   - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - Windows： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n   - Linux： `~/.config/Claude/claude_desktop_config.json`\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"code-reasoning\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\"-y\", \"@mettamatt/code-reasoning\"]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. 配置 VS Code：\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"code-reasoning\": {\r\n        \"command\": \"npx\",\r\n        \"args\": [\"-y\", \"@mettamatt/code-reasoning\"]\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用方法/用途\r\n\r\n1. 要触发这个MCP（多用户聊天程序/模块/插件等，具体含义根据上下文确定），请在你的聊天信息中添加以下内容：\r\n\r\n   ```\r\n   Use sequential thinking to reason about this.\r\n   ```\r\n\r\n1. 使用现成的提示来触发代码推理：\r\n\r\n\r\n- 在Claude桌面聊天窗口中点击“+”图标，或者在Claude Code中输入 `/help` 查看具体命令。\r\n- 从可用工具中选择“通过代码推理添加”\r\n- 选择一个提示模板并填写所需信息\r\n- 提交表单以在聊天消息中添加提示，然后按回车键\r\n\r\n看看这个 [提示指南](./docs/prompts.md) 有关使用提示模板的详细信息。\r\n\r\n## 命令行选项\r\n\r\n- `--debug`启用详细日志记录\r\n- `--help` 或者 `-h`显示帮助信息\r\n\r\n## 关键特性\r\n\r\n- **编程重点**针对编码任务和问题解决进行了优化\r\n- **结构化思维**将复杂问题分解为可管理的步骤\r\n- **思维分支**并行探索多种解决方案路径\r\n- **思维修正**随着理解的加深，完善之前的推理\r\n- **安全界限**在20个思维步骤后自动停止，以防止循环\r\n- **即用提示**为常见开发任务预定义的模板\r\n\r\n## 文档\r\n\r\n详细文档可在 docs 目录中找到：\r\n\r\n- [使用示例](./docs/examples.md)使用MCP服务器进行顺序思维的示例\r\n- [配置指南](./docs/configuration.md)MCP服务器的所有配置选项\r\n- [提示指南](./docs/prompts.md)使用MCP服务器进行提示的调用和自定义\r\n- [测试框架](./docs/testing.md)测试信息\r\n\r\n## 项目结构\r\n\r\n```\r\n├── index.ts                  # Entry point\r\n├── src/                      # Implementation source files\r\n└── test/                     # Placeholder for future test utilities\r\n```\r\n\r\n## 许可证\r\n\r\n此项目采用MIT许可证授权。详情请参见LICENSE文件。\r\n",
+ "config": {
+  "code-reasoning": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@mettamatt/code-reasoning"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "id": "523",
+ "kind": "mcp",
+ "name": "vrmcp",
+ "fingerprint_md5": "2167b18c279ea279bd36bd003b0bcaf5",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# VRMCP服务器\r\n\r\nVRM 楷模AI 可以用自然语言控制MCP 服务器。\r\nClaude Desktop 只是用自然语言指示Web 在浏览器中VRM 模型实时运行。\r\n\r\n## 安装，安装\r\n\r\n该项目支持两种操作模式：\r\n\r\n1. **本地模式**：在本地环境中MCP 启动服务器（传统方法）\r\n\r\n   - [本地安装指南](./documents/LOCAL_SETUP.md)\r\n\r\n1. **远程模式**: Vercel 部署到，随时随地访问（推荐）\r\n\r\n   - [远程安装指南](./documents/REMOTE_SETUP.md)\r\n\r\n     ```json\r\n     {\r\n       \"mcpServers\": {\r\n         \"vrmcp\": {\r\n           \"url\": \"https://vrmcp.up.railway.app/api/mcp/sse\",\r\n           \"headers\": {\r\n             \"x-api-key\": \"your-super-secret-key-12345\"\r\n           }\r\n         }\r\n       }\r\n     }\r\n     ```\r\n\r\n## 使用方法\r\n\r\n总结了可用的工具和使用方法。\r\n\r\n- [工具和用例](./documents/tool-usecases.md)\r\n\r\n## 可用工具\r\n\r\n| Tool                  | 说明|使用例|\r\n| --------------------- | -------------------------------- | ------------------------------ |\r\n| `list_vrm_files` 可以使用VRM/VRMA 文件一览VRM 有吗？」        |\r\n| `load_vrm_model` | VRM 模型导入｜“导入character.vrm”｜\r\n| `set_vrm_expression` 表情设定｜“表情很开心”｜\r\n| `set_vrm_pose` 姿势设置：向右\r\n| `animate_vrm_bone` ｜骨骼操作｜“抬起右手”｜\r\n| `load_vrma_animation` | VRMA 动画加载>导入greeting.vrma\r\n| `play_vrma_animation` 播放动画：打招呼\r\n| `stop_vrma_animation` 停止动画\r\n| `get_vrm_status` ｜状态获取｜“当前状态是？”｜\r\n\r\n## 项目结构\r\n\r\n```sh\r\nvrm-mcp/\r\n├── src/\r\n│   ├── mcp-server.ts          # MCPサーバー実装（stdio + SSE）\r\n│   ├── redis-client.ts\r\n│   └── gateway.ts             # stdio↔SSEゲートウェイ（Claude Desktop用）\r\n├── api/\r\n│   ├── mcp/\r\n│   │   ├── sse.ts             # MCP SSEエンドポイント\r\n│   │   └── messages.ts        # MCP POSTエンドポイント\r\n│   └── viewer/\r\n│       └── sse.ts             # Viewer SSEエンドポイント\r\n├── public/\r\n│   ├── index.html             # VRMビューア（SSE対応）\r\n│   ├── models/                # VRMモデル配置（デフォルト）\r\n│   └── animations/            # VRMAアニメーション配置（デフォルト）\r\n├── package.json\r\n└── README.md\r\n```\r\n",
+ "config": {
+  "vrmcp": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://vrmcp.up.railway.app/api/mcp/sse"
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "browser-automation-stealth",
+ "kind": "skill",
+ "name": "browser-automation-stealth",
+ "fingerprint_md5": "85bfd5d1f5ada0a2f55e6cfe3ffb3628",
+ "download_count": 0,
+ "category": "效率工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 浏览器自动化隐身\r\n\r\n**版本:** 1.0.0  \r\n**作者:** Midas Skills  \r\n**许可证:** MIT\r\n\r\n## 描述\r\n反机器人规避 Playwright 包装器。隐身模式、代理轮换、验证码处理、指纹随机化。\r\n\r\n## 价值主张\r\n反机器人规避 Playwright 包装器。规避检测、管理 cookies、轮换 headers、处理验证码。静默、无头、不可检测。\r\n\r\n## 类别\r\nbrowser-automation\r\n\r\n## 标签\r\nstealth, anti-detection, playwright, scraping, automation\r\n\r\n## 技能类型\r\nautomation\r\n\r\n## 定价\r\n- **免费:** $0\r\n- **专业版:** $49.99\r\n\r\n## 主要功能\r\n- ✅ 带隐身默认设置的 Playwright 包装器\r\n- ✅ 反检测机制（指纹随机化）\r\n- ✅ Header 轮换（100+ user-agents）\r\n- ✅ 代理支持（SOCKS5, HTTP）\r\n- ✅ Cookie jar 管理\r\n- ✅ 验证码绕过（集成就绪）\r\n- ✅ 速率限制感知\r\n- ✅ 截图/PDF 生成\r\n- ✅ 表单自动化\r\n- ✅ Cookie/session 持久化\r\n\r\n## 使用场景\r\n- 大规模网页抓取（未被检测）\r\n- 受保护站点的自动化测试\r\n- 市场研究的数据收集\r\n- 竞争情报收集\r\n- 自动化表单提交（合规）\r\n- 无检测的截图自动化\r\n\r\n## 安装\r\n```bash\r\nnpm install browser-automation-stealth\r\n# 或\r\npip install browser-automation-stealth\r\n```\r\n\r\n## 快速开始\r\n```javascript\r\nconst { StealthBrowser } = require('browser-automation-stealth');\r\n\r\nconst browser = new StealthBrowser({\r\n  headless: true,\r\n  stealth: 'aggressive'  // 规避级别\r\n});\r\n\r\nconst page = await browser.newPage();\r\nawait page.goto('https://example.com');\r\nawait page.screenshot({ path: 'example.png' });\r\nawait browser.close();\r\n```\r\n\r\n## 仓库\r\nhttps://github.com/midas-skills/browser-automation-stealth\r\n\r\n## 支持\r\n📧 support@midas-skills.com  \r\n🔗 文档: https://docs.midas-skills.com/browser-automation-stealth",
+ "config": {}
+}

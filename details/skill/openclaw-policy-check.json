@@ -1,0 +1,12 @@
+{
+ "id": "openclaw-policy-check",
+ "kind": "skill",
+ "name": "openclaw-policy-check",
+ "fingerprint_md5": "bb1100b4e53e5a41b35b279349062912",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "# OpenClaw Policy Check\r\n\r\n运行轻量级策略扫描，以捕获代码和脚本中的常见高风险模式。\r\n\r\n## Inputs\r\n\r\n- `target_path` (required): 要扫描的文件或目录。\r\n- `fail_on` (optional): 非零退出的严重级别阈值。可选值为 `critical`、`high`、`medium`、`low` 之一。\r\n- `json_output` (optional): 打印原始 JSON 输出。\r\n\r\n## Workflow\r\n\r\n1. 在目标路径上运行 `scripts/policy_check.py`。\r\n2. 查看严重级别计数和主要发现。\r\n3. 如果存在发现，优先处理 `critical` 和 `high` 级别项。\r\n4. 为每个标记的模式建议具体修复方案。\r\n\r\n## Commands\r\n\r\n```bash\r\npython3 scripts/policy_check.py \"<target_path>\"\r\npython3 scripts/policy_check.py \"<target_path>\" --json\r\npython3 scripts/policy_check.py \"<target_path>\" --fail-on high\r\n```\r\n\r\n## Response Contract\r\n\r\n- 始终包含发现总数和严重级别细分。\r\n- 包含主要发现，包括 `file:line`、规则 id 和原因。\r\n- 如果没有发现，明确说明未检测到策略违规。\r\n- 修复指导应具体且简洁。",
+ "config": {}
+}

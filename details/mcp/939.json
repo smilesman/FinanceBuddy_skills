@@ -1,0 +1,22 @@
+{
+ "id": "939",
+ "kind": "mcp",
+ "name": "youtube-4",
+ "fingerprint_md5": "a6629f2ebd9f7fb7fcdcb39d781c3d66",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "<div align=\"center\">\r\n\r\n# 人工智能代理的YouTube\r\n\r\n### 克劳德看YouTube，所以你不必\r\n\r\n问 *“什么是最好的视频…？”* 克劳德找到了它，看着它，然后报告了回来。在聊天中加入一个长播客——在几秒钟内获得亮点。剪切剪辑、制作卷轴、提取成绩单——所有这些都不需要打开YouTube标签。\r\n\r\n\r\n[快速开始](#quick-start) · [试试看](#try-it) · [Discord 的中文翻译是“不和谐”或“纷争”。](https://discord.gg/babcVNJBet) · [演示](#demo)\r\n\r\n</div>\r\n\r\n______________________________________________________________________\r\n\r\n## 演示\r\n\r\n\r\n> 单击图像观看1分钟的演练。\r\n\r\n## 快速开始\r\n\r\n**1.安装插件** --在Claude Code中，运行：\r\n\r\n```\r\n/plugin marketplace add JCodesMore/jcodesmore-plugins\r\n/plugin install youtube@jcodesmore-plugins\r\n```\r\n\r\n然后完全 **重新启动克劳德代码** （退出应用程序并重新打开）。\r\n\r\n**2.就是这样。** 没有API密钥，没有注册。开始问吧。\r\n\r\n> *可选：* 跑 `/youtube:setup` 使用您自己的YouTube Cookie登录，以进行个性化搜索和推荐。\r\n\r\n## 试试看\r\n\r\n像朋友一样与克劳德交谈：\r\n\r\n- *“看这个视频，把食谱给我——我不想滚动评论。”*\r\n- *“给我找五个评价很高的罗马历史视频。”*\r\n- *“这个频道最好的上传内容是什么？观看前三名并总结。”*\r\n- *“从这90分钟的采访中提取出可操作的要点。”*\r\n- *“从这段视频的2:15开始剪辑一个30秒的片段。”*\r\n- *“将这三个烹饪视频合并成一个精彩片段。”*\r\n\r\n代理搜索、监视并返回报告——无需擦洗，无需滚动。\r\n\r\n## 里面是什么\r\n\r\n**九种智能工具** 包裹在 **两种技能** 和 **一个代理人** --在不离开聊天的情况下搜索、观看、剪辑和滚动。\r\n\r\n|能力|试着说|\r\n|---|---|\r\n|搜索视频、频道、播放列表| *“在…上为我找到热门视频”* |\r\n|观看并总结| *“看看这个，告诉我什么才是最重要的”* |\r\n|浏览频道或播放列表| *“这个YouTube用户有什么值得一看的？”* |\r\n|提取成绩单| *“在5分钟左右拿到成绩单”* |\r\n|下载视频或音频| *“保存此视频的音频”* |\r\n|剪一个剪辑| *“此视频中的剪辑2:15至2:45”* |\r\n|制作精彩片段| *“将这些剪辑组合成一个卷轴”* |\r\n\r\n## 社区\r\n\r\n[**Discord 的中文翻译是“不和谐”或“纷争”。**](https://discord.gg/babcVNJBet) --聊天、帮助、展示和讲述· [**问题**](https://github.com/JCodesMore/youtube-for-ai-agents/issues) --bug和功能请求· [**贡献**](CONTRIBUTING.md) · [**更多插件**](https://github.com/JCodesMore/jcodesmore-plugins)\r\n\r\n<details>\r\n<summary><b>Personalized results (optional)</b></summary>\r\n\r\n默认情况下，搜索以匿名方式运行，无需登录。如果你想要个性化的推荐和搜索结果，请运行 `/youtube:setup` 并按照cookie提取向导进行操作。Cookie保留在您的计算机上的插件数据目录中；没有任何东西上传到任何地方。\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><b>Use it in Cursor, Codex, OpenCode, or Gemini CLI</b></summary>\r\n\r\nMCP服务器是便携式的。每个平台设置指南：\r\n\r\n- [光标](docs/README.cursor.md)\r\n- [法典](docs/README.codex.md)\r\n- [开源代码](docs/README.opencode.md)\r\n- [Gemini CLI](docs/README.gemini-cli.md)\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><b>Advanced install (without the marketplace)</b></summary>\r\n\r\n克隆并自己构建：\r\n\r\n```bash\r\ngit clone https://github.com/JCodesMore/youtube-for-ai-agents.git\r\ncd youtube-for-ai-agents\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n或者将发布的npm包直接连接到任何兼容MCP的客户端：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@jcodesmore/youtube-for-ai-agents\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**要求：** Node.js≥18。\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><b>Built on</b></summary>\r\n\r\n- [模型上下文协议SDK](https://modelcontextprotocol.io/) --克劳德的工具曝光\r\n- [youtubei.js](https://github.com/LuanRT/YouTube.js) -YouTube InnerTube客户端（不需要API密钥）\r\n- [youtube成绩单+](https://www.npmjs.com/package/youtube-transcript-plus) --成绩单提取\r\n- [ytdlp nodejs](https://www.npmjs.com/package/ytdlp-nodejs) --视频和音频下载\r\n- [佐德](https://zod.dev/) --模式验证\r\n\r\n</details>\r\n\r\n## 许可证\r\n\r\n[Apache许可证2.0](LICENSE) --©2026 JCodes更多\r\n\r\n> 用途 [youtubei.js](https://github.com/LuanRT/YouTube.js)，一个非官方的YouTube客户端。不隶属于、不受YouTube或谷歌支持或与之相关。\r\n\r\n______________________________________________________________________\r\n\r\n*一部份 [jcodesmore插件](https://github.com/JCodesMore/jcodesmore-plugins).*\r\n",
+ "config": {
+  "youtube": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@jcodesmore/youtube-for-ai-agents"
+   ],
+   "env": {}
+  }
+ }
+}

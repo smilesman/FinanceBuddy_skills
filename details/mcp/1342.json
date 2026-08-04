@@ -1,0 +1,25 @@
+{
+ "id": "1342",
+ "kind": "mcp",
+ "name": "automatisch",
+ "fingerprint_md5": "f05d81352401a3a4b5035e5e37dc2951",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://mseep.ai/app/milisp-automatisch-mcp-server)\r\n\r\n# 自动MCP服务器\r\n\r\n[](https://www.npmjs.com/package/automatisch-mcp-server)\r\n[](https://www.npmjs.com/package/automatisch-mcp-server)\r\n[](https://bundlephobia.com/result?p=automatisch-mcp-server)\r\n\r\n一种模型上下文协议（MCP）服务器，为AI助手提供访问 [自动](https://github.com/automatisch/automatisch) 工作流自动化功能。\r\n\r\n## 概述\r\n\r\n此MCP服务器使AI助手能够与Automatisch交互，Automatisch是工作流自动化的开源Zapier替代品。它提供了管理工作流、连接、执行和应用程序集成的工具。\r\n\r\n## 特性\r\n\r\n### 可用工具\r\n\r\n- **工作流管理**：创建、读取、更新、删除和测试工作流\r\n- **连接管理**：管理应用程序连接和凭据\r\n- **执行监控**：查看工作流执行历史和状态\r\n- **应用发现**：浏览可用的应用程序及其功能\r\n- **测试**：使用示例数据的测试工作流\r\n\r\n### 提供的资源\r\n\r\n- 工作流概述及状态摘要\r\n- 应用连接列表\r\n- 可用应用程序目录\r\n- 最近执行日志\r\n\r\n## 先决条件\r\n\r\n- Node.js 18+\r\n- 运行自动实例\r\n- 自动化API访问（建议使用API密钥）\r\n\r\n## 安装\r\n\r\n1. 克隆或下载MCP服务器代码\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   npm install\r\n   ```\r\n\r\n1. 构建项目：\r\n\r\n   ```bash\r\n   npm run build\r\n   ```\r\n\r\n## 配置\r\n\r\n设置环境变量：\r\n\r\n```bash\r\n# Automatisch instance URL (default: http://localhost:3001)\r\nexport AUTOMATISCH_BASE_URL=\"http://your-automatisch-instance:3001\"\r\n\r\n# API key for authentication (optional but recommended)\r\nexport AUTOMATISCH_API_KEY=\"your-api-key\"\r\n```\r\n\r\n## 用法\r\n\r\n### Claude桌面集成\r\n\r\n添加到您的Claude Desktop配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"automatisch\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"automatisch-mcp-server\"],\r\n      \"env\": {\r\n        \"AUTOMATISCH_BASE_URL\": \"http://localhost:3001\",\r\n        \"AUTOMATISCH_API_KEY\": \"your-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 独立使用\r\n\r\n```bash\r\nnpm start\r\n```\r\n\r\n## 可用工具\r\n\r\n### 工作流管理\r\n\r\n- `list_workflows` -列出所有具有可选筛选的工作流\r\n- `get_workflow` -获取详细的工作流信息\r\n- `create_workflow` -创建新工作流\r\n- `update_workflow` -更新现有工作流\r\n- `delete_workflow` -删除工作流\r\n- `test_workflow` -使用样本数据的测试工作流程\r\n\r\n### 连接管理\r\n\r\n- `list_connections` -列出应用程序连接\r\n- `create_connection` -创建新的应用程序连接\r\n\r\n### 监控与发现\r\n\r\n- `list_executions` -查看工作流执行历史记录\r\n- `get_available_apps` -浏览可用的应用程序和集成\r\n\r\n## AI助手使用示例\r\n\r\n```\r\n# List all active workflows\r\n\"Show me all active workflows\"\r\n\r\n# Create a new workflow\r\n\"Create a workflow named 'Email Notifications' that sends emails when new GitHub issues are created\"\r\n\r\n# Check recent executions\r\n\"Show me the recent workflow executions and their status\"\r\n\r\n# Get workflow details\r\n\"Tell me about the workflow with ID 'abc123'\"\r\n\r\n# List available apps\r\n\"What apps are available for integration?\"\r\n```\r\n\r\n## API终点\r\n\r\n服务器与以下Automatisch API端点接口：\r\n\r\n- `GET /api/flows` -列出工作流\r\n- `POST /api/flows` -创建工作流\r\n- `PATCH /api/flows/:id` -更新工作流程\r\n- `DELETE /api/flows/:id` -删除工作流\r\n- `GET /api/connections` -列出连接\r\n- `POST /api/connections` -创建连接\r\n- `GET /api/executions` -列出执行情况\r\n- `GET /api/apps` -列出可用应用程序\r\n\r\n## 发展\r\n\r\n### 以开发模式运行\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n### 建筑\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n### 清理构建文件\r\n\r\n```bash\r\nnpm run clean\r\n```\r\n\r\n## 错误处理\r\n\r\n服务器包括全面的错误处理：\r\n\r\n- Automatisch的网络连接问题\r\n- API响应无效\r\n- 缺少必要参数\r\n- 身份验证失败\r\n\r\n错误会被记录下来，并作为结构化响应返回给AI助手。\r\n\r\n## 安全考虑\r\n\r\n- 使用API密钥进行身份验证（如果可用）\r\n- 确保Automatish实例得到适当保护\r\n- 限制对可信来源的网络访问\r\n- 定期更新依赖关系\r\n\r\n## 故障排除\r\n\r\n### 常见问题\r\n\r\n1. **连接失败**：验证 `AUTOMATISCH_BASE_URL` 正确且可访问\r\n1. **认证错误**：检查 `AUTOMATISCH_API_KEY` 有效\r\n1. **未找到工具**：确保MCP服务器已在Claude Desktop正确注册\r\n1. **API错误**：检查自动日志以获取详细的错误信息\r\n\r\n### 调试模式\r\n\r\n通过设置启用调试日志记录：\r\n\r\n```bash\r\nexport NODE_ENV=development\r\n```\r\n\r\n## 贡献\r\n\r\n1. 分叉存储库\r\n1. 创建要素分支\r\n1. 进行更改\r\n1. 如果适用，添加测试\r\n1. 提交拉取请求\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。\r\n\r\n## 相关项目\r\n\r\n- [自动](https://github.com/automatisch/automatisch) -开源工作流自动化\r\n- [模型上下文协议](https://modelcontextprotocol.io/) -协议规范\r\n- [MCP-SDK](https://github.com/modelcontextprotocol/typescript-sdk) -TypeScript SDK\r\n\r\n## 支持\r\n\r\n关于以下问题：\r\n\r\n- **MCP服务器集成或此存储库特有的问题**: [在此处打开问题](https://github.com/milisp/automatisch-mcp-server/issues)\r\n- **自动**：参观 [自动GitHub问题](https://github.com/automatisch/automatisch/issues)\r\n- **MCP协议**：检查 [MCP文件](https://modelcontextprotocol.io/)\r\n",
+ "config": {
+  "automatisch": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "automatisch-mcp-server"
+   ],
+   "env": {
+    "AUTOMATISCH_BASE_URL": "http://localhost:3001",
+    "AUTOMATISCH_API_KEY": "your-api-key"
+   }
+  }
+ }
+}

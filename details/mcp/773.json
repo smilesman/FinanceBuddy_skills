@@ -1,0 +1,24 @@
+{
+ "id": "773",
+ "kind": "mcp",
+ "name": "newsapi",
+ "fingerprint_md5": "741240ce20b81c7cccf3d1c3388190dd",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# NewsAPI.ai MCP服务器\r\n\r\n\r\n提供实时新闻情报的模型上下文协议（MCP）服务器\r\n使用 [新闻API.ai](https://newsapi.ai/)该服务器使LLM能够搜索文章，\r\n通过自然对话跟踪事件和分析新闻。\r\n\r\n确保遵循 [NewsAPI.ai服务条款](https://newsapi.ai/terms).\r\n\r\n## 需求\r\n\r\n- Node.js 18或更新版本\r\n- Claude Desktop、Claude Code、VS Code、Cursor、Windsurf或任何其他MCP客户端\r\n\r\n## 快速开始\r\n\r\n1. 在获取API密钥 [newsapi.ai/register](https://newsapi.ai/register) （免费等级：一次性2000个代币）\r\n1. 添加到您的MCP客户端（请参阅下面的配置示例）\r\n\r\n## 配置\r\n\r\n在客户端上安装NewsAPI.ai MCP服务器。\r\n\r\n服务器通过运行 `npx -y newsapi-mcp` 中的API密钥 `NEWSAPI_KEY` 环境变量。\r\n\r\n**标准配置** 适用于大多数工具：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"newsapi\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"newsapi-mcp\"],\r\n      \"env\": {\r\n        \"NEWSAPI_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n以下是流行的MCP客户端示例。\r\n\r\n<details>\r\n<summary><strong>Antigravity</strong></summary>\r\n\r\n通过Antigravity设置或更新配置文件添加：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"newsapi\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"newsapi-mcp\"],\r\n      \"env\": {\r\n        \"NEWSAPI_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>Claude Code</strong></summary>\r\n\r\n```bash\r\nclaude mcp add newsapi -e NEWSAPI_KEY=your_api_key_here -- npx -y newsapi-mcp\r\n```\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>Claude Desktop</strong></summary>\r\n\r\n遵循MCP安装 [指南](https://modelcontextprotocol.io/docs/develop/connect-local-servers)，使用上面的标准配置。\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>Gemini CLI</strong></summary>\r\n\r\n遵循MCP安装 [指南](https://github.com/google-gemini/gemini-cli/blob/main/docs/tools/mcp-server.md#configure-the-mcp-server-in-settingsjson)，使用上面的标准配置。\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>Qodo Gen</strong></summary>\r\n\r\n打开 [Qodo Gen](https://docs.qodo.ai/qodo-documentation/qodo-gen) VSCode或IntelliJ中的聊天面板→ 连接更多工具→ + 添加新MCP→ 粘贴上面的标准配置。\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>VS Code</strong></summary>\r\n\r\n遵循MCP安装 [指南](https://code.visualstudio.com/docs/copilot/customization/mcp-servers#_add-an-mcp-server)，使用上面的标准配置。您还可以使用VS Code CLI安装NewsAPI.ai MCP服务器：\r\n\r\n```bash\r\n# For VS Code\r\ncode --add-mcp '{\"name\":\"newsapi\",\"command\":\"npx\",\"args\":[\"-y\",\"newsapi-mcp\"],\"env\":{\"NEWSAPI_KEY\":\"your_api_key_here\"}}'\r\n```\r\n\r\n安装后，NewsAPI.ai MCP服务器将可用于VS Code中的GitHub Copilot代理。\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>Windsurf</strong></summary>\r\n\r\n关注Windsurf MCP [文档](https://docs.windsurf.com/windsurf/cascade/mcp).使用上面的标准配置。\r\n\r\n</details>\r\n\r\n## 使用模式\r\n\r\n### 搜索新闻文章\r\n\r\n按关键字、来源、作者、日期、语言、情感等查找文章。\r\n\r\n- 查找有关《欧盟人工智能法案》的最新文章\r\n- 路透社本周发布了哪些关于气候变化的报道？\r\n- 向我展示过去3天关于特斯拉的负面情绪文章\r\n- 查找巴黎奥运会的法语报道\r\n- 德国媒体对欧盟预算有何报道？\r\n\r\n### 径赛\r\n\r\n事件是关于同一现实世界发生的相关文章的集群。\r\n\r\n- 查找与科技行业并购相关的事件\r\n- 上周斯洛文尼亚发生了哪些更大的事件？\r\n- 本周全球最大的新闻是什么？\r\n\r\n### 使用主题页面\r\n\r\n从已保存的中提取文章或事件 [主题页面](https://newsapi.ai) 在NewsAPI.ai上。\r\n\r\n- 使用URI b220679c-95ff-4e4e-ae-1fa-ad8b3905b7df总结我的网络安全主题页中的最新文章\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `suggest` |按名称查找实体的URI。在使用URI筛选器进行搜索之前需要。 |\r\n| `search_articles` |按概念、来源、类别、日期、语言、情感搜索文章。 |\r\n| `search_events` |搜索事件（关于同一事件的相关文章集群）。 |\r\n| `get_topic_page_articles` |从NewsAPI.ai上预先配置的主题页获取文章|\r\n| `get_topic_page_events` |从NewsAPI.ai上预先配置的主题页获取事件|\r\n| `get_api_usage` |检查当前API密钥的令牌使用情况和计划详细信息。 |\r\n\r\n## 新闻研究技巧\r\n\r\n这 `skill/` 目录包含 `/news` 斜线命令 [克劳德代码](https://code.claude.com/docs/en/skills)\r\n（CLI和桌面），在MCP工具的基础上编排多步骤研究工作流程。\r\n它使建议自动化→ scan → 分诊→ 检索模式并将结果格式化为结构化报告。\r\n\r\n```\r\n/news \"What's happening with AI regulation?\"\r\n```\r\n\r\n要安装，请复制 `skill/` 目录到项目的 `.claude/skills/` 目录。看\r\n[技能文档](https://code.claude.com/docs/en/skills) 了解详情。\r\n\r\n## 链接\r\n\r\n- [npm包](https://www.npmjs.com/package/newsapi-mcp)\r\n- [NewsAPI.ai文档](https://newsapi.ai/documentation)\r\n- [MCP协议规范](https://modelcontextprotocol.io)\r\n",
+ "config": {
+  "newsapi": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "newsapi-mcp"
+   ],
+   "env": {
+    "NEWSAPI_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

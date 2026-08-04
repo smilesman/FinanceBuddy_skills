@@ -1,0 +1,22 @@
+{
+ "id": "1608",
+ "kind": "mcp",
+ "name": "mediaprocessor",
+ "fingerprint_md5": "88c7115d5f22556c4cfa43289c374b95",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP媒体处理服务器\r\n\r\n[](https://smithery.ai/server/@maoxiaoke/mcp-media-processor)\r\n\r\n一个实现用于媒体处理操作的模型上下文协议（MCP）的Node.js服务器，提供强大的视频和图像操作功能。\r\n\r\n## 特性\r\n\r\n- 视频处理和转换\r\n- 图像处理和操纵\r\n- 媒体压缩\r\n- 视频剪辑和编辑\r\n- 图像效果和水印\r\n\r\n## 先决条件\r\n\r\n在使用此服务器之前，请确保您的系统上安装了以下依赖项：\r\n\r\n- **转码**：视频处理操作所需\r\n\r\n  - macOS： `brew install ffmpeg`\r\n  - Ubuntu/Debian： `sudo apt-get install ffmpeg`\r\n  - Windows：从下载 [FFmpeg官方网站](https://ffmpeg.org/download.html)\r\n\r\n- **ImageMagick**：图像处理操作所需\r\n\r\n  - macOS： `brew install imagemagick`\r\n  - Ubuntu/Debian： `sudo apt-get install imagemagick`\r\n  - Windows：从下载 [ImageMagick官方网站](https://imagemagick.org/script/download.php)\r\n\r\n## 如何使用\r\n\r\n将此添加到您的 `claude_desktop_config.json`:\r\n\r\n### NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mediaProcessor\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"mcp-media-processor@latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## API\r\n\r\n### 工具\r\n\r\n#### 视频操作\r\n\r\n- **执行ffmpeg**\r\n\r\n  - 使用自定义选项执行任何FFmpeg命令\r\n  - 输入：\r\n    - `inputPath` （string）：输入视频文件的绝对路径\r\n    - `options` （string\\[\\]）：FFmpeg命令选项数组\r\n    - `outputPath` （字符串，可选）：输出文件的绝对路径\r\n    - `outputFilename` （字符串，可选）：输出文件名\r\n\r\n- **转换视频**\r\n\r\n  - 将视频转换为不同格式\r\n  - 输入：\r\n    - `inputPath` （string）：输入视频文件的绝对路径\r\n    - `outputFormat` （string）：所需的输出格式（例如mp4、mkv、avi）\r\n    - `outputPath` （字符串，可选）：自定义输出路径\r\n    - `outputFilename` （字符串，可选）：自定义输出文件名\r\n\r\n- **压缩视频**\r\n\r\n  - 压缩视频文件\r\n  - 输入：\r\n    - `inputPath` （string）：输入视频文件的绝对路径\r\n    - `quality` （数字，可选）：压缩质量（1-51，质量越低越好）\r\n    - `outputPath` （字符串，可选）：自定义输出路径\r\n    - `outputFilename` （字符串，可选）：自定义输出文件名\r\n\r\n- **修剪视频**\r\n\r\n  - 将视频修剪到指定的持续时间\r\n  - 输入：\r\n    - `inputPath` （string）：输入视频文件的绝对路径\r\n    - `startTime` （字符串）：开始时间，格式为HH:MM:SS\r\n    - `duration` （字符串）：持续时间，格式为HH:MM:SS\r\n    - `outputPath` （字符串，可选）：自定义输出路径\r\n    - `outputFilename` （字符串，可选）：自定义输出文件名\r\n\r\n#### 图像操作\r\n\r\n- **压缩图像**\r\n\r\n  - 使用ImageMagick压缩PNG图像\r\n  - 输入：\r\n    - `inputPath` （string）：输入PNG图像的绝对路径\r\n    - `quality` （数字，可选）：压缩质量（1-100）\r\n    - `outputPath` （字符串，可选）：自定义输出路径\r\n    - `outputFilename` （字符串，可选）：自定义输出文件名\r\n\r\n- **转换图像**\r\n\r\n  - 将图像转换为不同格式\r\n  - 输入：\r\n    - `inputPath` （string）：输入图像文件的绝对路径\r\n    - `outputFormat` （string）：所需的输出格式（例如jpg、png、webp、gif）\r\n    - `outputPath` （字符串，可选）：自定义输出路径\r\n    - `outputFilename` （字符串，可选）：自定义输出文件名\r\n\r\n- **调整图像大小**\r\n\r\n  - 将图像调整到指定尺寸\r\n  - 输入：\r\n    - `inputPath` （string）：输入图像文件的绝对路径\r\n    - `width` （数字，可选）：目标宽度（像素）\r\n    - `height` （数字，可选）：目标高度（像素）\r\n    - `maintainAspectRatio` （布尔值，可选）：是否保持纵横比\r\n    - `outputPath` （字符串，可选）：自定义输出路径\r\n    - `outputFilename` （字符串，可选）：自定义输出文件名\r\n\r\n- **旋转图像**\r\n\r\n  - 按指定度数旋转图像\r\n  - 输入：\r\n    - `inputPath` （string）：输入图像文件的绝对路径\r\n    - `degrees` （数字）：旋转角度（度）\r\n    - `outputPath` （字符串，可选）：自定义输出路径\r\n    - `outputFilename` （字符串，可选）：自定义输出文件名\r\n\r\n- **添加水印**\r\n\r\n  - 为图像添加水印\r\n  - 输入：\r\n    - `inputPath` （string）：输入图像文件的绝对路径\r\n    - `watermarkPath` （string）：水印图像文件的绝对路径\r\n    - `position` （字符串，可选）：水印位置（默认：“东南”）\r\n    - `opacity` （数字，可选）：水印不透明度（0-100）\r\n    - `outputPath` （字符串，可选）：自定义输出路径\r\n    - `outputFilename` （字符串，可选）：自定义输出文件名\r\n\r\n- **应用效果**\r\n\r\n  - 将视觉效果应用于图像\r\n  - 输入：\r\n    - `inputPath` （string）：输入图像文件的绝对路径\r\n    - `effect` （string）：要应用的效果（模糊、锐化、边缘、浮雕、灰度、棕褐色、否定）\r\n    - `intensity` （数字，可选）：效果强度（0-100）\r\n    - `outputPath` （字符串，可选）：自定义输出路径\r\n    - `outputFilename` （字符串，可选）：自定义输出文件名\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "mediaprocessor": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-media-processor@latest"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "id": "2346",
+ "kind": "mcp",
+ "name": "virustotal",
+ "fingerprint_md5": "47e8dcfab585de2430246b6609bb6129",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# VirusTotal MCP服务器\r\n\r\n使用模型上下文协议（MCP）服务器进行全面的安全分析 [病毒API总量](https://www.virustotal.com/)该服务器采用FastMCP和Python构建，为Claude等AI助手提供强大的恶意软件检测和威胁情报功能。\r\n\r\n## 概述\r\n\r\n此MCP服务器集成了VirusTotal广泛的安全数据库，允许AI助手对URL、文件、IP地址和域进行全面的安全分析。服务器自动获取关系数据，以便在单个请求中提供完整的安全上下文。\r\n\r\n## 特性\r\n\r\n- **综合安全分析**：通过自动关系获取完成威胁分析\r\n- **URL分析**：包含联系域、下载文件和威胁行为者的安全报告\r\n- **文件分析**：详细的文件哈希分析，包括行为、丢弃的文件和网络连接\r\n- **IP分析**：地理位置、信誉数据和历史信息\r\n- **领域分析**：DNS记录、WHOIS数据、SSL证书和子域\r\n- **详细关系查询**：分页访问特定关系类型以进行深入调查\r\n- **了解费率限制**：尊重病毒API总限制\r\n- **多种运输支持**：针对不同集成需求的SSE和STDIO传输\r\n\r\n## 快速开始\r\n\r\n### 先决条件\r\n\r\n- Python 3.8+或Docker\r\n- [紫外线](https://astral.sh/uv) 包管理器（用于本地开发）\r\n- VirusTotal API密钥([在这里买一个](https://www.virustotal.com/gui/my-apikey))\r\n\r\n### 安装\r\n\r\n#### 选项1:Docker（推荐）\r\n\r\n1. **克隆和设置：**\r\n\r\n   ```bash\r\n   git clone https://github.com/barvhaim/virustotal-mcp-server.git\r\n   cd virustotal-mcp-server\r\n   ```\r\n\r\n1. **配置API密钥：**\r\n\r\n   ```bash\r\n   echo \"VIRUSTOTAL_API_KEY=your_api_key_here\" > .env\r\n   ```\r\n\r\n1. **使用Docker Compose运行：**\r\n\r\n   ```bash\r\n   docker-compose up -d\r\n   ```\r\n\r\n1. **或者直接使用Docker运行：**\r\n\r\n   ```bash\r\n   docker build -t virustotal-mcp .\r\n   docker run -d --name virustotal-mcp -p 8000:8000 --env-file .env virustotal-mcp\r\n   ```\r\n\r\n#### 方案2：地方发展\r\n\r\n1. **克隆和设置：**\r\n\r\n   ```bash\r\n   git clone https://github.com/barvhaim/virustotal-mcp-server.git\r\n   cd virustotal-mcp-server\r\n   uv sync\r\n   ```\r\n\r\n1. **配置API密钥：**\r\n\r\n   ```bash\r\n   echo \"VIRUSTOTAL_API_KEY=your_api_key_here\" > .env\r\n   ```\r\n\r\n1. **运行服务器：**\r\n\r\n   ```bash\r\n   # SSE transport (web-friendly)\r\n   uv run main.py\r\n\r\n   # STDIO transport (for Claude Desktop)\r\n   MCP_TRANSPORT=stdio uv run main.py\r\n   ```\r\n\r\n## 可用工具\r\n\r\n### 报告工具（带自动关系获取）\r\n\r\n#### 1.URL报告工具\r\n\r\n- **名字**: `get_url_report`\r\n- **描述**：获取全面的URL分析，包括安全扫描结果和密钥关系\r\n- **参数**:\r\n  - `url` （必填）：要分析的URL\r\n- **自动获取的关系**：通信文件、联系的域/IP、下载的文件、重定向、威胁行为者\r\n\r\n#### 2.文件报告工具\r\n\r\n- **名字**: `get_file_report`\r\n- **描述**：使用哈希（MD5/SHA-1/SHA-256）进行全面的文件分析\r\n- **参数**:\r\n  - `hash` （必填）：要分析的文件哈希\r\n- **自动获取的关系**：行为、丢弃的文件、联系的域/IP、嵌入的URL、威胁行为者\r\n\r\n#### 3.IP报告工具\r\n\r\n- **名字**: `get_ip_report`\r\n- **描述**：获得全面的IP地址分析，包括地理位置和信誉\r\n- **参数**:\r\n  - `ip` （必填）：要分析的IP地址\r\n- **自动获取的关系**：通信文件、历史SSL证书、解决方案、威胁行为者\r\n\r\n#### 4.域报告工具\r\n\r\n- **名字**: `get_domain_report`\r\n- **描述**：获得全面的域名分析，包括DNS和WHOIS数据\r\n- **参数**:\r\n  - `domain` （必填）：要分析的域名\r\n  - `relationships` （可选）：要包括的具体关系\r\n- **自动获取的关系**：子域、历史SSL证书、解决方案、威胁行为者\r\n\r\n### 关系工具（用于详细分析）\r\n\r\n#### 1.URL关系工具\r\n\r\n- **名字**: `get_url_relationship`\r\n- **描述**：查询带分页的URL的特定关系类型\r\n- **参数**:\r\n  - `url` （必填）：要分析的URL\r\n  - `relationship` （必填）：关系类型（分析、通信文件、联系人域等）\r\n  - `limit` （可选，1-40，默认值：10）：结果数\r\n  - `cursor` （可选）：分页光标\r\n\r\n#### 2.文件关系工具\r\n\r\n- **名字**: `get_file_relationship`\r\n- **描述**：查询具有分页的文件的特定关系类型\r\n- **参数**:\r\n  - `hash` （必填）：文件哈希\r\n  - `relationship` （必填）：关系类型（行为、丢弃文件、联系域等）\r\n  - `limit` （可选，1-40，默认值：10）：结果数\r\n  - `cursor` （可选）：分页光标\r\n\r\n#### 3.IP关系工具\r\n\r\n- **名字**: `get_ip_relationship`\r\n- **描述**：查询具有分页的IP的特定关系类型\r\n- **参数**:\r\n  - `ip` （必填）：IP地址\r\n  - `relationship` （必填）：关系类型（通信文件、决议等）\r\n  - `limit` （可选，1-40，默认值：10）：结果数\r\n  - `cursor` （可选）：分页光标\r\n\r\n#### 4.领域关系工具\r\n\r\n- **名字**: `get_domain_relationship`\r\n- **描述**：查询具有分页的域的特定关系类型\r\n- **参数**:\r\n  - `domain` （必填）：域名\r\n  - `relationship` （必填）：关系类型（子域、历史ssl证书等）\r\n  - `limit` （可选，1-40，默认值：10）：结果数\r\n  - `cursor` （可选）：分页光标\r\n\r\n## Claude桌面集成\r\n\r\n要将此服务器连接到Claude Desktop，请将以下内容添加到您的 `claude_desktop_config.json`:\r\n\r\n**配置文件位置：**\r\n\r\n- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- **Linux**: `~/.config/claude/claude_desktop_config.json`\r\n- **视窗**: `%APPDATA%\\\\Claude\\\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"virustotal\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/absolute/path/to/virustotal-mcp-server\",\r\n        \"run\",\r\n        \"main.py\"\r\n      ],\r\n      \"env\": {\r\n        \"VIRUSTOTAL_API_KEY\": \"your_api_key_here\",\r\n        \"MCP_TRANSPORT\": \"stdio\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 资源\r\n\r\n- **FastMCP文档**: [github/jlowin/fastmcp](https://github.com/jlowin/fastmcp)\r\n- **MCP规范**: [模型上下文协议.io](https://modelcontextprotocol.io)\r\n- **病毒API总量**: [开发者.virustotal.com](https://developers.virustotal.com)\r\n- **uv包管理器**: [星光sh/uv](https://astral.sh/uv)\r\n- **克劳德桌面**: [claude.ai](https://claude.ai)\r\n\r\n## 版本历史记录\r\n\r\n- **v1.0.0**：首次发布，全面集成VirusTotal\r\n  - 8安全分析工具\r\n  - 自动获取关系\r\n  - SSE和STDIO传输支持\r\n  - 限速意识\r\n  - 完整的错误处理\r\n",
+ "config": {
+  "virustotal": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/absolute/path/to/virustotal-mcp-server",
+    "run",
+    "main.py"
+   ],
+   "env": {
+    "VIRUSTOTAL_API_KEY": "your_api_key_here",
+    "MCP_TRANSPORT": "stdio"
+   }
+  }
+ }
+}

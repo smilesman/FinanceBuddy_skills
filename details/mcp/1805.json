@@ -1,0 +1,21 @@
+{
+ "id": "1805",
+ "kind": "mcp",
+ "name": "xcode-mcp-server",
+ "fingerprint_md5": "f28daab278e00ac4599e564187f1bf12",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "# Xcode MCP服务器\r\n\r\n[](https://pypi.org/project/xcode-mcp-server/)\r\n[](https://pypi.org/project/xcode-mcp-server/)\r\n[](https://pepy.tech/project/xcode-mcp-server)\r\n[](https://modelcontextprotocol.io)\r\n[](https://www.apple.com/macos/)\r\n[](https://developer.apple.com/xcode/)\r\n[](https://opensource.org/licenses/MIT)\r\n\r\n[](https://github.com/drewster99/xcode-mcp-server/commits)\r\n\r\nMCP（模型上下文协议）服务器，使AI助手能够控制Xcode并与之交互，以进行Apple平台开发。\r\n\r\n## 它的作用\r\n\r\n此服务器允许AI助手（如Claude、Cursor或其他MCP客户端）：\r\n\r\n- **发现和导航** Xcode项目和源文件\r\n- **构建并运行** iOS、macOS、tvOS和watchOS应用程序\r\n- **执行和监控测试** 详细结果\r\n- **调试构建失败** 通过检索错误和警告\r\n- **捕获控制台输出** 从运行的应用程序\r\n- **截图** Xcode窗口和iOS模拟器\r\n- **管理模拟器** 并查看其状态\r\n\r\nAI可以执行完整的开发工作流程——从查找项目到构建项目、运行测试、调试失败和捕获结果。\r\n\r\n## 需求\r\n\r\n- **macOS** -此服务器仅适用于macOS\r\n- **Xcode** -必须安装Xcode\r\n- **Python 3.10+** -用于运行服务器（如果您的系统Python较旧，uvx将自动获取兼容的Python）\r\n\r\n## 安全\r\n\r\n服务器实现了基于路径的安全性，以控制哪些目录是可访问的：\r\n\r\n- **有限制：** 集 `XCODEMCP_ALLOWED_FOLDERS=/path1:/path2:/path3` 限制对特定目录的访问\r\n- **违约：** 如果未指定，则允许访问您的主目录(`$HOME`)\r\n\r\n安全要求：\r\n\r\n- 所有路径必须是绝对的（以 `/`)\r\n- 不 `..` 允许的路径组件\r\n- 所有路径都必须存在并且是目录\r\n\r\n## 设置\r\n\r\n首先，确保 `uv` 已安装（以下所有方法都需要）：\r\n\r\n```bash\r\nwhich uv || brew install uv\r\n```\r\n\r\n### 1.克劳德代码（推荐）\r\n\r\n```bash\r\nclaude mcp add --scope user --transport stdio -- xcode-mcp-server `which uvx` xcode-mcp-server\r\n```\r\n\r\n要运行特定版本，请使用：\r\n\r\n```bash\r\n# Example: How to run v1.3.0b6\r\nclaude mcp add --scope user --transport stdio -- xcode-mcp-server `which uvx` xcode-mcp-server==1.3.0b6\r\n```\r\n\r\n就是这样！Claude Code会自动处理其余部分。\r\n\r\n### 2.克劳德桌面\r\n\r\n编辑您的Claude Desktop配置文件(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"xcode-mcp-server\": {\r\n            \"command\": \"uvx\",\r\n            \"args\": [\r\n                \"xcode-mcp-server\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n如果只允许xcode mcp服务器访问某些项目或文件夹，请添加 `env` 选项，用冒号分隔的绝对文件夹路径列表，如下所示：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"xcode-mcp-server\": {\r\n            \"command\": \"uvx\",\r\n            \"args\": [\r\n                \"xcode-mcp-server\"\r\n            ],\r\n            \"env\": {\r\n                \"XCODEMCP_ALLOWED_FOLDERS\": \"/Users/andrew/my_project:/Users/andrew/Documents/source\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n### 3.光标AI\r\n\r\n在光标中：设置→ 工具和集成→ + 新建MCP服务器\r\n\r\n或编辑 `~/.cursor/mcp.json` 直接：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"xcode-mcp-server\": {\r\n            \"command\": \"uvx\",\r\n            \"args\": [\"xcode-mcp-server\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n**可选：** 使用添加文件夹限制 `env` 部分（格式与上述Claude Desktop相同）。\r\n\r\n## 用法\r\n\r\n配置后，只需让您的AI助手帮助完成Xcode任务：\r\n\r\n- “在我的主目录中查找所有Xcode项目”\r\n- “在/path/to/MyProject.xcodeproj中构建项目”\r\n- “运行此项目的测试，并向我显示任何失败”\r\n- “此项目中的构建错误是什么？”\r\n- “显示此项目的目录结构”\r\n- “截取Xcode窗口的屏幕截图”\r\n\r\n大多数工具都使用路径 `.xcodeproj` 或 `.xcworkspace` 或者具有用于浏览和导航的常规目录路径。\r\n\r\n## 高级配置\r\n\r\n### 命令行参数\r\n\r\n直接运行服务器（用于开发或自定义设置）时，可以使用以下选项：\r\n\r\n**构建输出控制：**\r\n\r\n- `--no-build-warnings` -仅显示错误，排除警告\r\n- `--always-include-build-warnings` -始终显示警告（默认）\r\n\r\n**通知：**\r\n\r\n- `--show-notifications` -启用macOS操作通知\r\n- `--hide-notifications` -禁用通知（默认）\r\n\r\n**访问控制：**\r\n\r\n- `--allowed /path` -添加允许的文件夹（可以重复）\r\n\r\n例子：\r\n\r\n```bash\r\nxcode-mcp-server --no-build-warnings --show-notifications --allowed ~/Projects\r\n```\r\n\r\n**注：** 使用MCP客户端（Claude、Cursor）时，请通过 `env` 请改为客户端配置文件中的部分。\r\n\r\n## 发展\r\n\r\n服务器使用FastMCP构建，并使用AppleScript与Xcode通信。\r\n\r\n### 本地测试\r\n\r\nMCP检验员测试：\r\n\r\n```bash\r\nexport XCODEMCP_ALLOWED_FOLDERS=~/Projects\r\nmcp dev xcode_mcp_server/__main__.py\r\n```\r\n\r\n这将打开一个检查器界面，您可以在其中直接测试工具。以引号字符串形式提供路径： `\"/Users/you/Projects/MyApp.xcodeproj\"`\r\n\r\n## 局限性\r\n\r\n- AppleScript语法可能需要针对特定的Xcode版本进行调整\r\n- 有些操作需要先在Xcode中打开项目\r\n",
+ "config": {
+  "xcode-mcp-server": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "xcode-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

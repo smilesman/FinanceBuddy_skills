@@ -1,0 +1,22 @@
+{
+ "id": "389",
+ "kind": "mcp",
+ "name": "puppeteer-4",
+ "fingerprint_md5": "f32c9df72ca4a256f09b9aa3450ef2e3",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://mseep.ai/app/phialsbasement-mcp-puppeteer-linux)\r\n\r\n# MCP木偶Linux\r\n\r\n[](https://smithery.ai/server/@PhialsBasement/mcp-puppeteer-linux)\r\n使用Puppeteer提供浏览器自动化功能的模型上下文协议服务器，完全支持Linux显示服务器（X11和Wayland）。此服务器使LLM能够在真实的浏览器环境中与网页交互、截图和执行JavaScript。\r\n\r\n## 显示服务器支持\r\n\r\n此分支为Linux显示服务器添加了自动检测和配置功能：\r\n\r\n- 自动X11/地面检测\r\n- 动态环境变量配置\r\n- 支持各种桌面环境（GNOME、KDE等）\r\n- 回退机制和强大的错误处理\r\n- XWayland兼容性\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n- **puppeteer_navigation**\r\n  - 导航到浏览器中的任何URL\r\n  - 输入： `url` （字符串）\r\n- **木偶戏**\r\n  - 捕获整个页面或特定元素的屏幕截图\r\n  - 输入：\r\n    - `name` （string，必填）：屏幕截图的名称\r\n    - `selector` （string，可选）：用于截图元素的CSS选择器\r\n    - `width` （数字，可选，默认值：800）：截图宽度\r\n    - `height` （数字，可选，默认值：600）：截图高度\r\n- **木偶戏**\r\n  - 点击页面上的元素\r\n  - 输入： `selector` （string）：用于单击元素的CSS选择器\r\n- **木偶戏**\r\n  - 将元素悬停在页面上\r\n  - 输入： `selector` （string）：用于悬停元素的CSS选择器\r\n- **木偶戏**\r\n  - 填写输入字段\r\n  - 输入：\r\n    - `selector` （string）：输入字段的CSS选择器\r\n    - `value` （string）：要填充的值\r\n- **木偶师_选择**\r\n  - 选择带有Select标签的元素\r\n  - 输入：\r\n    - `selector` （string）：用于选择元素的CSS选择器\r\n    - `value` （string）：要选择的值\r\n- **木偶师_评价**\r\n  - 在浏览器控制台中执行JavaScript\r\n  - 输入： `script` （string）：要执行的JavaScript代码\r\n\r\n### 资源\r\n\r\n服务器提供对两种资源的访问：\r\n\r\n1. **控制台日志** (`console://logs`)\r\n   - 文本格式的浏览器控制台输出\r\n   - 包括来自浏览器的所有控制台消息\r\n1. **截图** (`screenshot://`)\r\n   - 捕获的屏幕截图的PNG图像\r\n   - 可通过捕获期间指定的屏幕截图名称访问\r\n\r\n## 主要特点\r\n\r\n- 支持Linux显示服务器的浏览器自动化\r\n- 自动X11/地面检测和配置\r\n- 控制台日志监控\r\n- 屏幕截图功能\r\n- JavaScript执行\r\n- 基本的网络交互（导航、点击、表单填写）\r\n\r\n## 配置\r\n\r\n### Claude桌面配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"puppeteer\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"ts-node\", \"/path/to/index.ts\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Puppeteer Linux for Claude Desktop [史密瑟里](https://smithery.ai/server/@PhialsBasement/mcp-puppeteer-linux):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @PhialsBasement/mcp-puppeteer-linux --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/PhialsBasement/MCP-Puppeteer-Linux.git\r\n```\r\n\r\n2. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n3. 启动服务器：\r\n\r\n```bash\r\nts-node index.ts\r\n```\r\n\r\n## 显示服务器详细信息\r\n\r\n服务器自动检测并配置适当的显示环境：\r\n\r\n### Wayland支持\r\n\r\n- 通过以下方式检测Wayland会话 `WAYLAND_DISPLAY`\r\n- 配置必要的环境变量：\r\n  - `WAYLAND_DISPLAY`\r\n  - `QT_QPA_PLATFORM`\r\n  - `GDK_BACKEND`\r\n  - `MOZ_ENABLE_WAYLAND`\r\n  - `XDG_SESSION_TYPE`\r\n\r\n### X11支持\r\n\r\n- 传统X11会话的回退\r\n- 处理X11特定变量：\r\n  - `DISPLAY`\r\n  - `XAUTHORITY`\r\n- 支持各种桌面环境和窗口管理器\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "puppeteer": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "ts-node",
+    "/path/to/index.ts"
+   ],
+   "env": {}
+  }
+ }
+}

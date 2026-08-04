@@ -1,0 +1,25 @@
+{
+ "id": "817",
+ "kind": "mcp",
+ "name": "processing",
+ "fingerprint_md5": "8d7bcef29a8caa1de2d982c4febd1066",
+ "download_count": 0,
+ "category": "翻译与语言",
+ "tags": "",
+ "version": "",
+ "readme": "# 正在处理MCP服务器\r\n\r\n🎨 **用AI创造视觉艺术和游戏** -MCP（模型上下文协议）服务器，使AI助手能够通过自然语言命令直接创建和运行处理草图。\r\n\r\n⭐ **如果你觉得这个有用，给我们一颗星！**\r\n\r\n## 🎥 演示视频\r\n\r\n**[在这里观看演示视频-看看它的实际效果！](https://www.loom.com/share/24a238aadb1c44acbf10fac17cddfe25)**\r\n\r\n## 🚀 快速设置\r\n\r\n1. **克隆此存储库：**\r\n\r\n   ```bash\r\n   git clone https://github.com/twelve2five/processing-mcp-server.git\r\n   cd processing-mcp-server\r\n   ```\r\n\r\n1. **安装依赖项：**\r\n\r\n   ```bash\r\n   uv pip install fastmcp\r\n   # or\r\n   pip install fastmcp\r\n   ```\r\n\r\n1. **配置Claude桌面** （见下面的配置部分）\r\n\r\n1. **重启克劳德，开始创作！**\r\n\r\n## 特性\r\n\r\n- 🚀 从AI对话中创建和运行处理草图\r\n- 💾 自动保存带有时间戳的草图\r\n- ⚙️ 可配置处理可执行路径和保存位置\r\n- 🤖 AI助手的简单工具界面\r\n- 🎮 包括6个现成的演示（粒子、3D艺术、游戏等！）\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Python 3.8+\r\n- [处理](https://processing.org/download) 安装在您的系统上\r\n- `uv` 包管理器（或使用pip）\r\n- 克劳德桌面应用程序\r\n\r\n### 步骤1：克隆存储库\r\n\r\n```bash\r\ngit clone https://github.com/twelve2five/processing-mcp-server.git\r\ncd processing-mcp-server\r\n```\r\n\r\n### 步骤2：安装依赖项\r\n\r\n#### 通过紫外线安装\r\n\r\n```bash\r\nuv pip install fastmcp\r\n```\r\n\r\n#### 通过pip安装\r\n\r\n```bash\r\npip install fastmcp\r\n```\r\n\r\n### 步骤3：配置Claude桌面\r\n\r\n请参阅下面的配置部分，将服务器添加到您的Claude Desktop配置中。\r\n\r\n## 配置\r\n\r\n服务器可以通过两种方式配置：\r\n\r\n### 1.环境变量\r\n\r\n在运行服务器之前设置这些环境变量：\r\n\r\n- `PROCESSING_PATH`：处理可执行文件的路径\r\n- `PROCESSING_SAVE_LOCATION`：保存草图的目录\r\n\r\n### 2.克劳德桌面配置\r\n\r\n将此添加到您的Claude Desktop配置文件中：\r\n\r\n**视窗** (`%APPDATA%\\Claude\\claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"processing\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"C:\\\\path\\\\to\\\\processing-mcp-server\\\\processing_mcp_server.py\"\r\n      ],\r\n      \"env\": {\r\n        \"PROCESSING_PATH\": \"C:\\\\Program Files\\\\Processing\\\\Processing.exe\",\r\n        \"PROCESSING_SAVE_LOCATION\": \"C:\\\\Users\\\\YourUsername\\\\Documents\\\\Processing\\\\sketches\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**macOS** (`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"processing\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"/path/to/processing-mcp-server/processing_mcp_server.py\"\r\n      ],\r\n      \"env\": {\r\n        \"PROCESSING_PATH\": \"/Applications/Processing.app/Contents/MacOS/Processing\",\r\n        \"PROCESSING_SAVE_LOCATION\": \"~/Documents/Processing/sketches\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**Linux** (`~/.config/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"processing\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"/path/to/processing-mcp-server/processing_mcp_server.py\"\r\n      ],\r\n      \"env\": {\r\n        \"PROCESSING_PATH\": \"/usr/bin/processing\",\r\n        \"PROCESSING_SAVE_LOCATION\": \"~/Documents/Processing/sketches\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**注：** 替换 `/path/to/processing-mcp-server/` 使用克隆存储库的实际路径。\r\n\r\n### 3.重新启动克劳德桌面\r\n\r\n更新配置文件后，重新启动Claude Desktop以使更改生效。\r\n\r\n## 使用示例\r\n\r\n配置后，您可以要求您的AI助手：\r\n\r\n### 🎯 简单动画\r\n\r\n- “创建一个绘制弹跳球的加工草图”\r\n- “制作彩色螺旋动画”\r\n- “绘制一个显示当前时间的时钟”\r\n\r\n### ✨ 粒子效果\r\n\r\n- “创建一个跟随鼠标的粒子系统”\r\n- “让烟花在我点击时爆炸”\r\n- “生成星场模拟”\r\n\r\n### 🎮 游戏\r\n\r\n- “构建一个蛇游戏”\r\n- “创建Pong克隆”\r\n- “制作一个简单的迷宫游戏”\r\n\r\n### 🎨 衍生艺术\r\n\r\n- “用流动的波浪创造一件具有生成性的艺术作品”\r\n- “制作3D旋转几何形状”\r\n- “生成Matrix数字雨效果”\r\n\r\n## 包括示例\r\n\r\n看看 `/examples` 用于准备运行演示的文件夹：\r\n\r\n1. **bouncing_ball.pde** -带有轨迹效果的经典动画\r\n1. **颗粒系统.pde** -跟随鼠标的交互式粒子\r\n1. **三维几何零件设计** -彩虹色的迷人3D形状\r\n1. **matrix_rain.pde** -标志性的Matrix数字雨效\r\n1. **wave_art.pde** -美丽的动画波浪图案\r\n1. **蛇名.pde** -完全可玩的蛇游戏\r\n\r\nAI将使用 `run_processing_java_cli` 创建和启动草图的工具。\r\n\r\n## 可用工具\r\n\r\n### `run_processing_java_cli`\r\n\r\n创建并运行加工草图。\r\n\r\n**参数：**\r\n\r\n- `java_code` （必填）：加工草图代码\r\n- `processing_path` （可选）：覆盖默认的Processing可执行路径\r\n- `save_location` （可选）：覆盖默认保存位置\r\n\r\n### `get_processing_config`\r\n\r\n返回当前服务器配置。\r\n\r\n## 默认路径\r\n\r\n如果没有提供配置，服务器将使用以下默认值：\r\n\r\n- **处理路径**: `processing` （假设处理在您的系统PATH中）\r\n- **保存位置**: `~/Documents/Processing/sketches`\r\n\r\n## 故障排除\r\n\r\n### 服务器未在Claude中显示\r\n\r\n请确保在更新配置文件后重新启动Claude Desktop。\r\n\r\n### 未找到处理\r\n\r\n如果您收到“未找到处理可执行文件”错误：\r\n\r\n1. 确保已安装Processing\r\n1. 检查配置中的路径是否正确\r\n1. 在Windows上，使用双反斜杠(`\\\\`)在路上\r\n1. 在macOS上，路径应指向.app捆绑包中的可执行文件\r\n\r\n### 权限错误\r\n\r\n确保保存位置目录存在并且用户可以写入。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件\r\n",
+ "config": {
+  "processing": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "C:\\path\\to\\processing-mcp-server\\processing_mcp_server.py"
+   ],
+   "env": {
+    "PROCESSING_PATH": "C:\\Program Files\\Processing\\Processing.exe",
+    "PROCESSING_SAVE_LOCATION": "C:\\Users\\YourUsername\\Documents\\Processing\\sketches"
+   }
+  }
+ }
+}

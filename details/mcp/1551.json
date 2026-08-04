@@ -1,0 +1,22 @@
+{
+ "id": "1551",
+ "kind": "mcp",
+ "name": "mcp-all-in-one",
+ "fingerprint_md5": "02a9aacf62a89d4f3fd6a96d63843a54",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp一体机\r\n\r\n[](https://badge.fury.io/js/mcp-all-in-one)\r\n[](https://opensource.org/licenses/MIT)\r\n\r\n一个强大的MCP（模型上下文协议）服务聚合器，将多个MCP服务组合成一个具有自配置功能的统一MCP服务。\r\n\r\n一个强大的MCP（Model Context Protocol）服务聚合器，能够将多个MCP服务合并为一个统一的MCP服务，并提供自我配置功能。\r\n中文版请看 [README_zh-CN.md](./README_zh-CN.md).\r\n\r\n## ✨ 核心功能\r\n\r\n### 🔄 多服务聚合\r\n\r\n- **统一接口**：将多个MCP服务合并为一个MCP服务，简化配置和管理\r\n- **多协议支持**：支持两种通信协议：stdio和HTTP\r\n- **透明代理**：客户端不需要知道多个后端服务，所有工具调用都会自动路由到相应的服务\r\n\r\n### 🛠️ 自配置\r\n\r\n- **内置配置工具**：为配置管理提供专用的MCP工具\r\n- **动态配置**：直接通过MCP工具修改配置，无需手动编辑文件\r\n- **配置验证**：实时配置验证，避免配置错误\r\n\r\n### 🌟 其他特征\r\n\r\n- 🪟 **Windows兼容的**：自动处理Windows平台上的命令执行问题\r\n- ⚙️ **配置驱动**：通过JSON配置文件管理MCP服务\r\n- 🛡️ **类型安全**：完全使用TypeScript开发\r\n- 🔄 **自动重新连接**：支持服务失败时的自动重新连接机制\r\n- 📊 **状态监测**：实时监控所有MCP服务的运行状态\r\n\r\n## 🚀 快速开始\r\n\r\n只需三个步骤即可开始：\r\n\r\n1. 在mcp客户端中配置mcp\r\n\r\n克劳德代码：\r\n\r\n```\r\nclaude mcp add mcp-all-in-one -s user -- npx -y mcp-all-in-one@latest stdio\r\n```\r\n\r\n对于Cursor/Trae/Cherry Studio这样的客户：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-all-in-one\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-all-in-one@latest\",\"stdio\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n2. 通过MCP客户端中的对话配置MCP\r\n\r\n```\r\nConfigure Fetch tool in mcp-all-in-one: uvx mcp-server-fetch\r\nConfigure chrome-devtools in mcp-all-in-one: npx chrome-devtools-mcp@latest\r\nView mcp configuration in mcp-all-in-one\r\nRemove chrome-devtools tool from mcp-all-in-one\r\n```\r\n\r\n3. 在MCP客户端中重新启动MCP服务，新工具就可以使用了！\r\n\r\n## 📚 文档\r\n\r\n- [快速入门指南](./docs/QUICK_START_GUIDE.md) -快速开始使用mcp\r\n- [IDE配置指南](./docs/IDE_CONFIGURATION_GUIDE.md) -在Claude Code和Cursor中配置mcp的详细指南\r\n- [自我配置功能指南](./docs/SELF_CONFIGURATION_GUIDE.md) -如何使用mcp-all-in-one的自配置功能\r\n\r\n## 🤝 贡献\r\n\r\n欢迎问题和拉取请求！\r\n\r\n## 📄 许可证\r\n\r\nMIT许可证\r\n\r\n## 🔗 相关链接\r\n\r\n- [模型上下文协议](https://modelcontextprotocol.io/)\r\n",
+ "config": {
+  "mcp-all-in-one": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-all-in-one@latest",
+    "stdio"
+   ],
+   "env": {}
+  }
+ }
+}

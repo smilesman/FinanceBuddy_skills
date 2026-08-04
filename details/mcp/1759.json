@@ -1,0 +1,26 @@
+{
+ "id": "1759",
+ "kind": "mcp",
+ "name": "temposerver",
+ "fingerprint_md5": "72249d16a20f16714a5e29f86137b08b",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 存档！\r\n\r\n此项目已存档。Tempo本身就有 [嵌入式MCP服务器](https://github.com/grafana/tempo/blob/main/docs/sources/tempo/api_docs/mcp-server.md)。请将问题和PR提交至 [Tempo回购](https://github.com/grafana/tempo)\r\n\r\n# Tempo MCP服务器\r\n\r\n基于Go语言的模型上下文协议（MCP）服务器实现，集成了Grafana Tempo。\r\n\r\n## 概述\r\n\r\n此MCP服务器允许AI助手查询和分析来自Grafana Tempo的分布式跟踪数据。它遵循模型上下文协议，提供可供兼容的AI客户端（如Claude Desktop）使用的工具定义。\r\n\r\n## 入门指南\r\n\r\n### 先决条件\r\n\r\n- 达到1.21或更高\r\n- Docker和Docker Compose（用于本地测试）\r\n\r\n### 建立和运行\r\n\r\n构建并运行服务器：\r\n\r\n```bash\r\n# Build the server\r\ngo build -o tempo-mcp-server ./cmd/server\r\n\r\n# Run the server\r\n./tempo-mcp-server\r\n```\r\n\r\n或者直接用Go运行：\r\n\r\n```bash\r\ngo run ./cmd/server\r\n```\r\n\r\n服务器现在支持两种通信模式：\r\n\r\n1. 遵循模型上下文协议（MCP）的标准输入/输出（stdin/stdout）\r\n1. 带有服务器发送事件（SSE）端点的HTTP服务器，用于与n8n等工具集成\r\n\r\nHTTP服务器的默认端口是8080，但可以使用 `SSE_PORT` 环境变量。\r\n\r\n## 服务器端点\r\n\r\n在HTTP模式下运行时，服务器会公开以下端点：\r\n\r\n- SSE端点： `http://localhost:8080/sse` -用于实时事件流\r\n- MCP端点： `http://localhost:8080/mcp` -用于MCP协议消息传递\r\n\r\n## Docker支持\r\n\r\n您可以使用Docker构建和运行MCP服务器：\r\n\r\n```bash\r\n# Build the Docker image\r\ndocker build -t tempo-mcp-server .\r\n\r\n# Run the server\r\ndocker run -p 8080:8080 --rm -i tempo-mcp-server\r\n```\r\n\r\n或者，您可以使用Docker Compose来构建一个完整的测试环境：\r\n\r\n```bash\r\n# Build and run with Docker Compose\r\ndocker-compose up --build\r\n```\r\n\r\n## 项目结构\r\n\r\n```\r\n.\r\n├── cmd/\r\n│   ├── server/       # MCP server implementation\r\n│   └── client/       # Client for testing the MCP server\r\n├── internal/\r\n│   └── handlers/     # Tool handlers\r\n├── pkg/\r\n│   └── utils/        # Utility functions and shared code\r\n└── go.mod            # Go module definition\r\n```\r\n\r\n## MCP服务器\r\n\r\nTempo MCP服务器实现了模型上下文协议（MCP），并提供了以下工具：\r\n\r\n### Tempo查询工具\r\n\r\n这 `tempo_query` 该工具允许您查询Grafana Tempo跟踪数据：\r\n\r\n- 所需参数：\r\n  - `query`：Tempo查询字符串（例如。， `{service.name=\"frontend\"}`, `{duration>1s}`)\r\n- 可选参数：\r\n  - `url`：Tempo服务器URL（默认值：来自Tempo_URL环境变量或http://localhost:3200)\r\n  - `start`：查询的开始时间（默认值：1小时前）\r\n  - `end`：查询的结束时间（默认值：现在）\r\n  - `limit`：要返回的最大跟踪数（默认值：20）\r\n  - `username`：基本身份验证的用户名（可选）\r\n  - `password`：基本身份验证密码（可选）\r\n  - `token`：用于身份验证的承载令牌（可选）\r\n\r\n#### 环境变量\r\n\r\nTempo查询工具支持以下环境变量：\r\n\r\n- `TEMPO_URL`：如果请求中未指定，则使用默认Tempo服务器URL\r\n- `SSE_PORT`：HTTP/SSE服务器的端口（默认值：8080）\r\n\r\n## 测试\r\n\r\n```\r\n./run-client.sh tempo_query \"{resource.service.name=\\\\\\\"example-service\\\\\\\"}\"\r\n```\r\n\r\n## 与Claude Desktop一起使用\r\n\r\n您可以将此MCP服务器与Claude Desktop一起使用，以添加Tempo查询工具。请按照以下步骤操作：\r\n\r\n1. 构建服务器或Docker镜像\r\n1. 通过将服务器添加到Claude Desktop配置文件中，配置Claude Desktop以使用服务器\r\n\r\nClaude桌面配置示例：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"temposerver\": {\r\n      \"command\": \"path/to/tempo-mcp-server\",\r\n      \"args\": [],\r\n      \"env\": {\r\n        \"TEMPO_URL\": \"http://localhost:3200\"\r\n      },\r\n      \"disabled\": false,\r\n      \"autoApprove\": [\"tempo_query\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n对于Docker：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"temposerver\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"--rm\", \"-i\", \"-e\", \"TEMPO_URL=http://host.docker.internal:3200\", \"tempo-mcp-server\"],\r\n      \"disabled\": false,\r\n      \"autoApprove\": [\"tempo_query\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\nClaude Desktop配置文件位于：\r\n\r\n- 在macOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- 在Windows上： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- 在Linux上： `~/.config/Claude/claude_desktop_config.json`\r\n\r\n## 与光标一起使用\r\n\r\n您还可以将Tempo MCP服务器与游标编辑器集成。为此，请将以下配置添加到光标设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tempo-mcp-server\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"--rm\", \"-i\", \"-e\", \"TEMPO_URL=http://host.docker.internal:3200\", \"tempo-mcp-server:latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 与n8n一起使用\r\n\r\n要将Tempo MCP服务器与n8n一起使用，您可以使用MCP客户端工具节点连接到它：\r\n\r\n1. 添加一个 **MCP客户端工具** 节点到n8n工作流\r\n\r\n1. 使用以下参数配置节点：\r\n\r\n   - **SSE端点**: `http://your-server-address:8080/sse` （替换为您的实际服务器地址）\r\n   - **认证**：如果需要，请选择适当的身份验证\r\n   - **要包含的工具**：选择要向AI Agent公开的Tempo工具\r\n\r\n1. 将MCP客户端工具节点连接到将使用Tempo查询功能的AI代理节点\r\n\r\n工作流程示例：\r\n触发→ MCP客户端工具（Tempo服务器）→ 人工智能代理（克劳德）\r\n\r\n## 示例用法\r\n\r\n配置后，您可以使用Claude中的工具进行以下查询：\r\n\r\n- “使用查询在Tempo中查询跟踪信息 `{duration>1s}`\"\r\n- “使用查询从Tempo中的前端服务查找痕迹 `{service.name=\\\"frontend\\\"}`\"\r\n- “给我看看Tempo最近的50条痕迹 `{http.status_code=500}`\"\r\n\r\n\r\n## 许可证\r\n\r\n该项目根据MIT许可证获得许可。\r\n",
+ "config": {
+  "temposerver": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "-e",
+    "TEMPO_URL=http://host.docker.internal:3200",
+    "tempo-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

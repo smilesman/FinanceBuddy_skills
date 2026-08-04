@@ -1,0 +1,32 @@
+{
+ "id": "1071",
+ "kind": "mcp",
+ "name": "iotdb",
+ "fingerprint_md5": "8b37a6a434b364a87d313954fa612226",
+ "download_count": 0,
+ "category": "数据迁移",
+ "tags": "",
+ "version": "",
+ "readme": "# IoTDB MCP服务器\r\n\r\n\r\n英语| [中文](README-zh.md)\r\n\r\n## 概述\r\n\r\n一种模型上下文协议（MCP）服务器实现，通过IoTDB提供数据库交互和商业智能功能。此服务器允许运行SQL查询，并使用不同的SQL方言（树模型和表模型）与IoTDB交互。\r\n\r\n## 组件\r\n\r\n### 资源\r\n\r\n服务器不公开任何资源。\r\n\r\n### 提示\r\n\r\n服务器不提供任何提示。\r\n\r\n### 工具\r\n\r\n服务器为IoTDB树模型和表模型提供了不同的工具。您可以通过将“IOTDB_SQLDIALECT”配置设置为“树”或“表”来在它们之间进行选择。\r\n\r\n#### 树模型\r\n\r\n- `metadata_query`\r\n  - 执行SHOW/COUNT查询以从数据库读取元数据\r\n  - 输入：\r\n    - `query_sql` （string）：要执行的SHOW/COUNT SQL查询\r\n  - 支持的查询类型：\r\n    - 显示数据库\\[路径\\]\r\n    - 显示时间序列\\[路径\\]\r\n    - 显示儿童路径\\[路径\\]\r\n    - 显示儿童节点\\[路径\\]\r\n    - 显示设备\\[路径\\]\r\n    - 计数时间序列\\[路径\\]\r\n    - 计数节点\\[路径\\]\r\n    - 计数设备\\[路径\\]\r\n  - 返回：查询结果为对象数组\r\n- `select_query`\r\n  - 执行SELECT查询以从数据库中读取数据\r\n  - 输入：\r\n    - `query_sql` （string）：要执行的SELECT SQL查询（使用TREE方言，时间使用ISO 8601格式，例如2017-11-01T00:08:00.000）\r\n  - 支持的功能：\r\n    - 求和、计数、最大值、最小值、平均值、方差、最大时间、最小时间等。\r\n  - 返回：查询结果为对象数组\r\n- `export_query`\r\n  - 执行查询并将结果导出到CSV或Excel文件\r\n  - 输入：\r\n    - `query_sql` （string）：要执行的SQL查询（使用TREE方言）\r\n    - `format` （字符串）：导出格式，“csv”或“excel”（默认：“csv”）\r\n    - `filename` （string）：导出文件的可选文件名。如果没有提供，将生成一个唯一的文件名。\r\n  - 返回：有关导出文件的信息和数据预览（最多10行）\r\n\r\n#### 表格模型\r\n\r\n##### 查询工具\r\n\r\n- `read_query`\r\n  - 执行SELECT查询以从数据库中读取数据\r\n  - 输入：\r\n    - `query_sql` （string）：要执行的SELECT SQL查询（使用TABLE方言，时间使用ISO 8601格式，例如2017-11-01T00:08:00.000）\r\n  - 返回：查询结果为对象数组\r\n\r\n##### 架构工具\r\n\r\n- `list_tables`\r\n\r\n  - 获取数据库中所有表的列表\r\n  - 无需输入\r\n  - 返回：表名数组\r\n\r\n- `describe_table`\r\n\r\n  - 查看特定表的架构信息\r\n  - 输入：\r\n    - `table_name` （string）：要描述的表的名称\r\n  - 返回：包含名称和类型的列定义数组\r\n\r\n- `export_table_query`\r\n\r\n  - 执行查询并将结果导出到CSV或Excel文件\r\n  - 输入：\r\n    - `query_sql` （string）：要执行的SQL查询（使用TABLE方言）\r\n    - `format` （字符串）：导出格式，“csv”或“excel”（默认：“csv”）\r\n    - `filename` （string）：导出文件的可选文件名。如果没有提供，将生成一个唯一的文件名。\r\n  - 返回：有关导出文件的信息和数据预览（最多10行）\r\n\r\n## 配置选项\r\n\r\nIoTDB MCP服务器支持以下配置选项，可以通过环境变量或命令行参数进行设置：\r\n\r\n|选项|环境变量|默认值|说明|\r\n| ------------- | -------------------- | ------------- | -------------------------------- |\r\n|--主机|IOTDB_host |127.0.0.1|IOTDB主机地址|\r\n|--端口|IOTDB_port|6667|IOTDB端口|\r\n|--用户|IOTDB_user|根|IOTDB用户名|\r\n|--密码|IOTDB_password| root |IOTDB密码|\r\n|--数据库|IOTDB_database|测试|IOTDB数据库名称|\r\n|--sql方言|IOTDB_SQLDIALECT|表|sql方言：树或表|\r\n|--导出路径|IOTDB_export_path|/tmp|导出查询结果的路径|\r\n\r\n## 性能优化\r\n\r\nIoTDB MCP服务器包括以下性能优化功能：\r\n\r\n1. **会话池管理**：使用优化的会话池配置，最多支持100个并发会话\r\n1. **优化提取大小**：对于查询，设置取大小为1024\r\n1. **连接重试**：配置了连接失败的自动重试机制\r\n1. **超时管理**：会话等待超时设置为5000毫秒，以提高可靠性\r\n1. **导出功能**：支持将查询结果导出为CSV或Excel格式\r\n\r\n## 先决条件\r\n\r\n- Python环境\r\n- `uv` 包管理器\r\n- IoTDB安装\r\n- MCP服务器依赖关系\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/apache/iotdb-mcp-server.git\r\ncd iotdb-mcp-server\r\n\r\n# Create virtual environment\r\nuv venv\r\nsource venv/bin/activate  # or `venv\\Scripts\\activate` on Windows\r\n\r\n# Install development dependencies\r\nuv sync\r\n```\r\n\r\n## Claude桌面集成\r\n\r\n在Claude Desktop的配置文件中配置MCP服务器：\r\n\r\n#### macOS\r\n\r\n地点： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n#### 视窗\r\n\r\n地点： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n**您可能需要在命令字段中输入uv可执行文件的完整路径。你可以通过跑步来获得这个 `which uv` 在MacOS/Linux或 `where uv` 在Windows上。**\r\n\r\n### Claude桌面配置示例\r\n\r\n将以下配置添加到Claude Desktop的配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"iotdb\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/Users/your_username/iotdb-mcp-server/src/iotdb_mcp_server\",\r\n        \"run\",\r\n        \"server.py\"\r\n      ],\r\n      \"env\": {\r\n        \"IOTDB_HOST\": \"127.0.0.1\",\r\n        \"IOTDB_PORT\": \"6667\",\r\n        \"IOTDB_USER\": \"root\",\r\n        \"IOTDB_PASSWORD\": \"root\",\r\n        \"IOTDB_DATABASE\": \"test\",\r\n        \"IOTDB_SQL_DIALECT\": \"table\",\r\n        \"IOTDB_EXPORT_PATH\": \"/path/to/export/folder\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **备注**：确保更换 `--directory` 参数的路径与您的实际存储库克隆路径。\r\n\r\n## 错误处理和日志\r\n\r\nIoTDB MCP服务器包括全面的错误处理和日志记录功能：\r\n\r\n1. **日志级别**：日志记录级别设置为INFO，允许您在控制台中查看服务器状态\r\n1. **异常处理**：所有数据库操作都包括异常处理，以确保在发生错误时进行优雅的处理和有意义的错误消息\r\n1. **会话管理**：自动关闭已使用的会话以防止资源泄漏\r\n1. **参数验证**：对用户输入的SQL查询进行基本验证，以确保只执行允许的查询类型\r\n\r\n## Docker支持\r\n\r\n您可以使用 `Dockerfile` 在项目根目录中：\r\n\r\n```bash\r\n# Build Docker image\r\ndocker build -t iotdb-mcp-server .\r\n\r\n# Run container\r\ndocker run -e IOTDB_HOST=<your-iotdb-host> -e IOTDB_PORT=<your-iotdb-port> -e IOTDB_USER=<your-iotdb-user> -e IOTDB_PASSWORD=<your-iotdb-password> iotdb-mcp-server\r\n```\r\n",
+ "config": {
+  "iotdb": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/Users/your_username/iotdb-mcp-server/src/iotdb_mcp_server",
+    "run",
+    "server.py"
+   ],
+   "env": {
+    "IOTDB_HOST": "127.0.0.1",
+    "IOTDB_PORT": "6667",
+    "IOTDB_USER": "root",
+    "IOTDB_PASSWORD": "root",
+    "IOTDB_DATABASE": "test",
+    "IOTDB_SQL_DIALECT": "table",
+    "IOTDB_EXPORT_PATH": "/path/to/export/folder"
+   }
+  }
+ }
+}

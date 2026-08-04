@@ -1,0 +1,22 @@
+{
+ "id": "2618",
+ "kind": "mcp",
+ "name": "meupc",
+ "fingerprint_md5": "397f2295078508eba443221918599a5a",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp meupc\r\n\r\n### 巴西PC建设和价格比较的MCP服务器\r\n\r\nA. [模型上下文协议（MCP）](https://modelcontextprotocol.io) 允许AI助手搜索PC组件、比较商店价格、查找交易和探索社区的服务器建立在 [meupc.net](https://meupc.net)。不需要API密钥。\r\n\r\n\r\n## 快速开始\r\n\r\n将以下配置添加到MCP客户端：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"meupc\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-meupc\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### MCP客户端配置\r\n\r\n<details open>\r\n<summary><strong>Claude Code</strong></summary>\r\n\r\n```bash\r\nclaude mcp add meupc -- npx -y mcp-meupc\r\n```\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>Cursor</strong></summary>\r\n\r\n[](https://cursor.com/install-mcp?name=meupc&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIm1jcC1tZXVwYyJdfQ%3D%3D)\r\n\r\n或前往 `Cursor Settings` → `MCP` → `New MCP Server` 并使用上面的配置。\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>VS Code / Copilot</strong></summary>\r\n\r\n通过VS Code CLI安装：\r\n\r\n```bash\r\ncode --add-mcp '{\"name\":\"meupc\",\"command\":\"npx\",\"args\":[\"-y\",\"mcp-meupc\"]}'\r\n```\r\n\r\n或者跟随 [MCP安装指南](https://code.visualstudio.com/docs/copilot/chat/mcp-servers#_add-an-mcp-server) 使用上面的配置。\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>Claude Desktop</strong></summary>\r\n\r\n将上面的配置添加到您的 `claude_desktop_config.json`:\r\n\r\n- macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n- 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- Linux： `~/.config/Claude/claude_desktop_config.json`\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>Codex</strong></summary>\r\n\r\n```bash\r\ncodex mcp add meupc -- npx -y mcp-meupc\r\n```\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>Windsurf</strong></summary>\r\n\r\n跟随 [配置MCP指南](https://docs.windsurf.com/windsurf/cascade/mcp#mcp-config-json) 使用上面的配置。\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>Cline</strong></summary>\r\n\r\n跟随 [临床MCP配置指南](https://docs.cline.bot/mcp/configuring-mcp-servers) 并使用上面的配置。\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>Warp</strong></summary>\r\n\r\n首选 `Settings | AI | Manage MCP Servers` → `+ Add` 到 [添加MCP服务器](https://docs.warp.dev/knowledge-and-collaboration/mcp#adding-an-mcp-server).使用上面的配置。\r\n\r\n</details>\r\n\r\n<details>\r\n<summary><strong>JetBrains AI Assistant</strong></summary>\r\n\r\n首选 `Settings | Tools | AI Assistant | Model Context Protocol (MCP)` → `Add`.使用上面的配置。\r\n\r\n</details>\r\n\r\n## 它能做什么？\r\n\r\n让你的AI助手：\r\n\r\n- **“什么是最便宜的视频卡？”** --搜索组件并比较价格\r\n- **“我想以5000美元的价格组装一台PC游戏机”** --按预算探索社区建设\r\n- **“显示 SSD 优惠”** --查找有折扣历史记录的当前交易\r\n- **《Ryzen 7 5800X3D》** --获取各商店的完整规格和价格\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|---|---|\r\n| `search_components` |按文本搜索组件（例如“rtx 4070”、“ryzen 7”）|\r\n| `list_components` |按类别列出组件，并进行分页和排序|\r\n| `get_component_details` |每家店的完整规格和价格（PIX和常规）|\r\n| `get_deals` |当前优惠和90天价格历史|\r\n| `list_community_builds` |社区共享PC版本|\r\n| `get_build_details` |构建细节：组件、价格、兼容性、功耗|\r\n\r\n**支持的类别：** 处理器， 视频卡， 主板， 内存， 存储， 机柜， 来源， 显示器， 冷却器处理器， 水冷却器\r\n\r\n## 从源代码安装\r\n\r\n```bash\r\ngit clone https://github.com/leosebben/mcp-meupc.git\r\ncd mcp-meupc\r\nnpm install\r\nnpm run build\r\nclaude mcp add meupc -- node /path/to/mcp-meupc/build/index.js\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm run dev    # Run with tsx (hot reload)\r\nnpm run build  # Compile TypeScript\r\nnpm start      # Run compiled version\r\n```\r\n\r\n## 堆栈\r\n\r\n- [TypeScript](https://www.typescriptlang.org/)\r\n- [@模型上下文协议/sdk](https://github.com/modelcontextprotocol/typescript-sdk) --官方MCP SDK\r\n- [再见](https://cheerio.js.org/) --HTML解析\r\n- [萨德](https://zod.dev/) --架构验证\r\n\r\n## 许可证\r\n\r\n[MIT](LICENSE)\r\n",
+ "config": {
+  "meupc": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-meupc"
+   ],
+   "env": {}
+  }
+ }
+}

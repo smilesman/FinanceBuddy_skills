@@ -1,0 +1,21 @@
+{
+ "id": "2411",
+ "kind": "mcp",
+ "name": "aigroup-paper-mcp",
+ "fingerprint_md5": "4771fc27cfc8ec83cb801af046b5356e",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# aigroup纸张mcp\r\n\r\n\r\n> 学术论文搜索和检索MCP服务器将多个学术平台集成到一个统一的界面中。\r\n\r\n## 概述\r\n\r\n`aigroup-paper-mcp` 提供了一个统一的MCP接口，用于跨主要学术来源搜索、检索和组织学术论文元数据。\r\n\r\n其设计用于：\r\n\r\n- 跨平台学术论文检索\r\n- 论文元数据检索与浏览\r\n- 文献综述辅助\r\n- 研究差距分析与比较工作流程\r\n- 与Claude Desktop和其他MCP兼容客户端集成\r\n\r\n## 亮点\r\n\r\n- **12+学术平台** 集成在一个MCP接口后面\r\n- **6高级工具** 用于搜索、获取、发现和趋势分析\r\n- **3种资源模式** 用于直接元数据和类别访问\r\n- **3个提示模板** 用于文献综述风格的工作流程\r\n- **结构化响应、缓存和并行搜索支持**\r\n\r\n## 支持的来源\r\n\r\n服务器目前支持以下来源：\r\n\r\n- arXiv\r\n- OpenAlex\r\n- PubMed Central（PMC）\r\n- 欧洲PMC\r\n- 生物预印本\r\n- medRxiv\r\n- 核心\r\n- 语义学者\r\n- Crossref\r\n- PubMed\r\n- 谷歌学术\r\n- 国际协议竞争限制\r\n\r\n## 快速开始\r\n\r\n### 需求\r\n\r\n- Node.js>=18\r\n- npm\r\n\r\n### 在本地安装和构建\r\n\r\n```bash\r\ngit clone https://github.com/jackdark425/aigroup-paper-mcp.git\r\ncd aigroup-paper-mcp\r\nnpm install\r\nnpm run build\r\nnpm start\r\n```\r\n\r\n### 使用npx作为CLI运行\r\n\r\n```bash\r\nnpx aigroup-paper-mcp --help\r\nnpx aigroup-paper-mcp search \"machine learning\"\r\nnpx aigroup-paper-mcp fetch \"2301.00001\" --source arxiv\r\n```\r\n\r\n## MCP客户端配置\r\n\r\n### 克劳德桌面/RooCode/兼容的MCP客户端\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"aigroup-paper-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"aigroup-paper-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### `search_papers`\r\n\r\n跨平台论文搜索，具有智能源选择和查询优化功能。\r\n\r\n### `fetch_paper`\r\n\r\n按来源和标识符获取论文的详细元数据。\r\n\r\n### `fetch_latest`\r\n\r\n获取所选来源/类别的最新论文。\r\n\r\n### `list_categories`\r\n\r\n列出给定平台支持的类别。\r\n\r\n### `advanced_search`\r\n\r\n支持更复杂的布尔风格学术搜索查询。\r\n\r\n### `trend_analysis`\r\n\r\n分析随着时间的推移，主题的演变和出版趋势。\r\n\r\n## 资源\r\n\r\n- `paper://{source}/{id}`\r\n- `category://{source}/{category}`\r\n- `search://{query}`\r\n\r\n## 提示模板\r\n\r\n- `literature_review`\r\n- `research_gap_analysis`\r\n- `paper_comparison`\r\n\r\n## 环境变量\r\n\r\n创建一个 `.env` 文件（如果需要）：\r\n\r\n```env\r\nLOG_LEVEL=info\r\nCACHE_ENABLED=true\r\nCACHE_TTL=3600\r\nMAX_SEARCH_LIMIT=100\r\n```\r\n\r\n## 项目结构\r\n\r\n```text\r\naigroup-paper-mcp/\r\n├── src/\r\n├── docs/\r\n├── scripts/\r\n├── package.json\r\n└── README.md\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm run build\r\nnpm run test\r\nnpm run lint\r\n```\r\n\r\n## 许可和使用\r\n\r\n该项目发布于 **MIT许可证**.\r\n\r\n您可以使用、复制、修改、合并、发布、分发、再许可和销售本软件的副本，包括在学术、内部和商业环境中，前提是保留原始版权声明和许可文本。\r\n\r\n请记住：\r\n\r\n- 软件已提供 **“原样”**，不提供任何形式的保证\r\n- 您必须在软件的副本或大部分中保留相关的版权和许可声明\r\n- 下游使用仍受上游学术数据提供商的条款、速率限制、元数据规则和访问限制的约束\r\n\r\n请参阅全文 [许可证](LICENSE).\r\n\r\n## 致谢\r\n\r\n### 学术数据生态系统\r\n\r\n得益于使联合检索成为可能的学术和开放元数据生态系统，包括arXiv、OpenAlex、PubMed、Crossref、Semantic Scholar和相关服务。\r\n\r\n### MCP生态系统\r\n\r\n- **模型上下文协议SDK**\r\n  - 存储库：https://github.com/modelcontextprotocol/servers\r\n  - 角色：MCP服务器集成和工具/资源/提示模型\r\n\r\n## 支持\r\n\r\n- 问题：https://github.com/jackdark425/aigroup-paper-mcp/issues\r\n- 存储库：https://github.com/jackdark425/aigroup-paper-mcp\r\n- 文件：https://github.com/jackdark425/aigroup-paper-mcp/tree/main/docs\r\n",
+ "config": {
+  "aigroup-paper-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "aigroup-paper-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

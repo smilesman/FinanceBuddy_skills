@@ -1,0 +1,25 @@
+{
+ "id": "528",
+ "kind": "mcp",
+ "name": "web-browser-mcp-server",
+ "fingerprint_md5": "717e7f4ecc3c8a380ecf8ac5123f9896",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://twitter.com/JoeBlazick)\r\n[](https://smithery.ai/server/web-browser-mcp-server)\r\n[](https://www.python.org/downloads/)\r\n[](https://opensource.org/licenses/MIT)\r\n[](https://pypi.org/project/web-browser-mcp-server/)\r\n[](https://pypi.org/project/web-browser-mcp-server/)\r\n\r\n[](https://glama.ai/mcp/servers/3hphahzvql)\r\n\r\n## ✨ 特性\r\n\r\n> 🌐 使AI助手能够通过简单的MCP界面浏览和提取网络内容。\r\n\r\nWeb浏览器MCP服务器为AI模型提供了通过消息控制协议（MCP）浏览网站、提取内容和理解网页的能力。它支持使用CSS选择器和强大的错误处理进行智能内容提取。\r\n\r\n\r\n🤝 **[贡献](https://github.com/blazickjp/web-browser-mcp-server/blob/main/CONTRIBUTING.md)** •\r\n📝 **[报告Bug](https://github.com/blazickjp/web-browser-mcp-server/issues)**\r\n\r\n\r\n## ✨ 核心功能\r\n\r\n- 🎯 **智能内容提取**：使用CSS选择器精确定位所需内容\r\n- ⚡ **迅速的**：内置异步处理以获得最佳性能\r\n- 📊 **元数据**：捕获标题、链接和结构化内容\r\n- 🛡️ **坚固可靠**：内置错误处理和超时管理\r\n- 🌍 **交叉平台的**：适用于Python运行的所有地方\r\n\r\n## 🚀 快速开始\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的Web浏览器服务器 [史密瑟里](https://smithery.ai/server/web-browser-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install web-browser-mcp-server --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n使用紫外线进行安装：\r\n\r\n```bash\r\nuv tool install web-browser-mcp-server\r\n```\r\n\r\n发展：\r\n\r\n```bash\r\n# Clone and set up development environment\r\ngit clone https://github.com/blazickjp/web-browser-mcp-server.git\r\ncd web-browser-mcp-server\r\n\r\n# Create and activate virtual environment\r\nuv venv\r\nsource .venv/bin/activate\r\n\r\n# Install with test dependencies\r\nuv pip install -e \".[test]\"\r\n```\r\n\r\n### 🔌 MCP集成\r\n\r\n将此配置添加到MCP客户端配置文件中：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"web-browser-mcp-server\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"tool\",\r\n                \"run\",\r\n                \"web-browser-mcp-server\"\r\n            ],\r\n            \"env\": {\r\n                \"REQUEST_TIMEOUT\": \"30\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n发展：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"web-browser-mcp-server\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"path/to/cloned/web-browser-mcp-server\",\r\n                \"run\",\r\n                \"web-browser-mcp-server\"\r\n            ],\r\n            \"env\": {\r\n                \"REQUEST_TIMEOUT\": \"30\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 💡 可用工具\r\n\r\n服务器提供了一个强大的网络浏览工具：\r\n\r\n### 浏览网页\r\n\r\n使用可选的CSS选择器浏览和提取网页内容：\r\n\r\n```python\r\n# Basic webpage fetch\r\nresult = await call_tool(\"browse_webpage\", {\r\n    \"url\": \"https://example.com\"\r\n})\r\n\r\n# Target specific content with CSS selectors\r\nresult = await call_tool(\"browse_webpage\", {\r\n    \"url\": \"https://example.com\",\r\n    \"selectors\": {\r\n        \"headlines\": \"h1, h2\",\r\n        \"main_content\": \"article.content\",\r\n        \"navigation\": \"nav a\"\r\n    }\r\n})\r\n```\r\n\r\n## ⚙️ 配置\r\n\r\n通过环境变量进行配置：\r\n\r\n|变量|目的|默认值|\r\n|----------|---------|---------|\r\n| `REQUEST_TIMEOUT` |网页请求超时（秒）|30|\r\n\r\n## 🧪 测试\r\n\r\n运行测试套件：\r\n\r\n```bash\r\npython -m pytest\r\n```\r\n\r\n## 📄 许可证\r\n\r\n根据MIT许可证发布。有关详细信息，请参阅LICENSE文件。\r\n\r\n______________________________________________________________________\r\n\r\n\r\n由以下材料制成❤️ 梨实验室团队\r\n\r\n[](https://glama.ai/mcp/servers/04dtxi5i5n)\r\n",
+ "config": {
+  "web-browser-mcp-server": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "tool",
+    "run",
+    "web-browser-mcp-server"
+   ],
+   "env": {
+    "REQUEST_TIMEOUT": "30"
+   }
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "1234",
+ "kind": "mcp",
+ "name": "postgres-4",
+ "fingerprint_md5": "db87facfe2f01508e1af981961ad0eee",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# PostgreSQL多模式MCP服务器\r\n\r\n一种模型上下文协议服务器，提供对PostgreSQL数据库的只读访问，并支持增强的多模式。此服务器使LLM能够跨多个命名空间检查数据库模式，并在保持模式隔离的同时执行只读查询。\r\n\r\n## 主要特点\r\n\r\n- **多模式支持**：通过命令行配置明确指定要公开的架构\r\n- **架构隔离**：仅对服务器启动期间列出的授权架构进行严格的访问控制\r\n- **跨模式发现**：跨多个模式的表的统一视图，同时保持模式边界\r\n- **元数据安全**：筛选系统目录，仅公开指定架构中的用户定义表\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n- **怎么翻译**\r\n  - 对连接的数据库执行只读SQL查询\r\n  - 输入： `sql` （string）：要执行的SQL查询\r\n  - 所有查询都在只读事务中执行\r\n  - 通过search_path限制维护架构上下文\r\n\r\n### 资源\r\n\r\n服务器跨授权模式为每个表提供模式信息：\r\n\r\n- **持微软签名的表模式** (`postgres://///schema`)\r\n  - 每个表的JSON模式信息\r\n  - 包括列名、数据类型和类型修饰符\r\n  - 从数据库元数据中自动发现\r\n  - 具有显式模式允许列表的多模式支持\r\n\r\n## 用法\r\n\r\n服务器需要一个数据库URL，并接受一个逗号分隔的模式列表来公开：\r\n\r\n```\r\nnpx -y mcp-server-postgres-multi-schema <database-url> [schemas]\r\n```\r\n\r\n- **数据库url**PostgreSQL连接字符串（例如。， `postgresql://localhost/mydb`)\r\n- **模式**：以逗号分隔的要公开的架构列表（如果未指定，则默认为“public”）\r\n\r\n### 例子\r\n\r\n```bash\r\n# Connect with default public schema\r\nnpx -y mcp-server-postgres-multi-schema postgresql://localhost/mydb\r\n\r\n# Connect with multiple schemas\r\nnpx -y mcp-server-postgres-multi-schema postgresql://localhost/mydb public,analytics,staging\r\n```\r\n\r\n## 使用Claude Desktop\r\n\r\n在您的数据库中配置“mcpServers”部分 `claude_desktop_config.json`:\r\n\r\n### NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"mcp-server-postgres-multi-schema\",\r\n        \"postgresql://localhost/mydb\",\r\n        \"public,audit\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\n此多模式MCP服务器根据MIT许可证获得许可。您可以根据许可文件中的条款使用、修改和分发软件。\r\n",
+ "config": {
+  "postgres": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-server-postgres-multi-schema",
+    "postgresql://localhost/mydb",
+    "public,audit"
+   ],
+   "env": {}
+  }
+ }
+}

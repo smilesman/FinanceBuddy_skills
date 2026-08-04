@@ -1,0 +1,12 @@
+{
+ "id": "perry-workspaces",
+ "kind": "skill",
+ "name": "perry-workspaces",
+ "fingerprint_md5": "d84d581890e8a847c1292a6d9809b6f6",
+ "download_count": 0,
+ "category": "数据与人工智能",
+ "tags": "",
+ "version": "",
+ "readme": "# Perry Workspaces\r\n\r\n在 tailnet 上带有预装 coding agents 的隔离 Docker workspaces。\r\n\r\n## 命令\r\n```bash\r\nperry start <name> --clone git@github.com:user/repo.git  # 创建\r\nperry ls                                                  # 列出\r\nperry stop <name>                                         # 停止\r\nperry remove <name>                                       # 删除\r\nperry shell <name>                                        # 交互式 shell\r\n```\r\n\r\n## SSH 访问\r\n```bash\r\nssh workspace@<name>        # 用户始终是 'workspace'\r\nssh workspace@<IP>          # 如果 MagicDNS 失败则使用 IP\r\n```\r\n\r\n## Coding Agents\r\n- **OpenCode**: `http://<workspace>:4096`（web UI）或通过 CLI attach\r\n- **Claude Code**: 在 workspace shell 内运行（`perry shell` 然后 `claude`）\r\n\r\n## 项目位置\r\n项目 clone 到 `~/<name>`，不是 `/workspace`：\r\n```bash\r\ncd ~/my-project  # 正确\r\n```\r\n\r\n## 故障排查\r\n- **无法访问**：检查 `tailscale status`，使用 IP 替代 hostname\r\n- **SSH 失败**：用户必须是 `workspace`，不是你的本地用户\r\n- **启动慢**：检查 web UI 了解进度",
+ "config": {}
+}

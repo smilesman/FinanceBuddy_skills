@@ -1,0 +1,26 @@
+{
+ "id": "1204",
+ "kind": "mcp",
+ "name": "pocketbase-dev",
+ "fingerprint_md5": "e1a90615fab34495c7c885f3e7949f81",
+ "download_count": 0,
+ "category": "缓存",
+ "tags": "",
+ "version": "",
+ "readme": "# 加斯佩查克口袋基地mcp\r\n\r\n模式感知、令牌高效的MCP服务器 [PocketBase](https://pocketbase.io) 例子\r\n\r\n每个MCP进程都连接到一个PocketBase URL。对于开发、同源和生产，在客户端中配置多个MCP服务器，例如 `pocketbase-dev` 和 `pocketbase-prod`，每个都有自己的 `PB_URL`.\r\n\r\n## 快速开始\r\n\r\n```bash\r\nnpx gaspechak-pocketbase-mcp\r\n```\r\n\r\n使用超级用户自动登录：\r\n\r\n```bash\r\nPB_URL=http://127.0.0.1:8090 PB_EMAIL=admin@example.com PB_PASSWORD=yourpassword npx gaspechak-pocketbase-mcp\r\n```\r\n\r\n|变量|描述|默认值|\r\n| --- | --- | --- |\r\n| `PB_URL` |PocketBase实例URL| `http://127.0.0.1:8090` |\r\n| `PB_EMAIL` |用于自动登录的超级用户电子邮件|未设置|\r\n| `PB_PASSWORD` |自动登录超级用户密码|未设置|\r\n| `PB_TOKEN` |预先存在的身份验证令牌|未设置|\r\n| `PB_TIMEOUT_MS` |每个请求的HTTP超时| `15000` |\r\n| `PB_SCHEMA_CACHE_TTL_MS` |内存模式缓存TTL| `60000` |\r\n| `PB_BULK_CONCURRENCY` |批量突变并发| `10` |\r\n\r\n## 多个实例\r\n\r\n有意不支持运行时环境切换。在客户端中为每个PocketBase实例声明一个MCP服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pocketbase-dev\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"gaspechak-pocketbase-mcp\"],\r\n      \"env\": {\r\n        \"PB_URL\": \"http://127.0.0.1:8090\",\r\n        \"PB_EMAIL\": \"dev-admin@example.com\",\r\n        \"PB_PASSWORD\": \"dev-password\"\r\n      }\r\n    },\r\n    \"pocketbase-prod\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"gaspechak-pocketbase-mcp\"],\r\n      \"env\": {\r\n        \"PB_URL\": \"https://pb.example.com\",\r\n        \"PB_TOKEN\": \"prod-token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n服务器公开了16个紧凑型工具：\r\n\r\n|工具|目的|\r\n| --- | --- |\r\n| `pb_health` |检查连接、版本、身份验证状态和配置的URL|\r\n| `pb_auth_superuser` |将此进程作为超级用户进行身份验证|\r\n| `pb_auth_user` |对身份验证用户进行身份验证并返回 `tokenRef` |\r\n| `pb_schema` |阅读紧凑模式摘要或一个集合|\r\n| `pb_collection_create` |创建基集合、身份验证集合或视图集合|\r\n| `pb_collection_patch` |安全地修补字段、规则、索引、名称或视图查询|\r\n| `pb_collection_delete` |明确确认后删除集合|\r\n| `pb_record_list` |列出具有紧凑默认值和自动的记录 `fields` |\r\n| `pb_record_get` |使用可选功能获取一条记录 `fields` 和 `expand` |\r\n| `pb_record_mutate` |创建、更新、删除或批量修改记录|\r\n| `pb_rules_test` |将API规则测试记录为公用或用户令牌|\r\n| `pb_backup` |创建、列出、还原或生成备份下载URL|\r\n| `pb_logs` |默认情况下使用密文查询请求日志|\r\n| `pb_file_url` |构建文件URL并将受保护的令牌存储为引用|\r\n| `pb_settings` |默认情况下，使用密文获取或更新设置|\r\n| `pb_help` |返回一个简短的帮助主题|\r\n\r\n## 令牌有效默认值\r\n\r\n- `pb_schema` 首先返回一个紧凑的模式映射；请求收藏或 `mode=raw` 只有在需要的时候。\r\n- `pb_record_list` 默认为 `perPage=10`, `skipTotal=true`，并导出模式 `fields`.\r\n- 通过以下方式选择大文本/编辑器字段 `:excerpt(200,true)` 当推断字段时。\r\n- 工具结果包括 `structuredContent`；除非工具有意返回help markdown，否则文本内容是紧凑的JSON。\r\n- 用户、文件和备份令牌存储在内存中，并作为 `tokenRef` 默认情况下。\r\n- 默认情况下，设置和日志会被编辑。\r\n\r\n## MCP资源\r\n\r\n大型指南以资源而非工具描述的形式公开：\r\n\r\n|资源|内容|\r\n| --- | --- |\r\n| `pocketbase://help/filters` |筛选运算符、宏、关系和字段选择|\r\n| `pocketbase://help/fields` |字段类型引用和关系目标解析|\r\n| `pocketbase://help/rules` |API规则值和常见模式|\r\n| `pocketbase://help/records` |记录默认值和突变注释|\r\n| `pocketbase://schema/summary` |实时紧凑模式摘要|\r\n| `pocketbase://schema/collections/{name}` |一个集合的实时紧凑模式|\r\n\r\n## 整合\r\n\r\n### 克劳德桌面版\r\n\r\n添加 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"pocketbase\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"gaspechak-pocketbase-mcp\"],\r\n      \"env\": {\r\n        \"PB_URL\": \"http://127.0.0.1:8090\",\r\n        \"PB_EMAIL\": \"admin@example.com\",\r\n        \"PB_PASSWORD\": \"yourpassword\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### VS代码/GitHub副本\r\n\r\n添加 `.vscode/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"pocketbase\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"gaspechak-pocketbase-mcp\"],\r\n      \"env\": {\r\n        \"PB_URL\": \"http://127.0.0.1:8090\",\r\n        \"PB_EMAIL\": \"admin@example.com\",\r\n        \"PB_PASSWORD\": \"yourpassword\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\ngit clone https://github.com/Gaspechak/pocketbase-mcp.git\r\ncd pocketbase-mcp\r\nnpm install\r\nnpm test\r\n```\r\n\r\n在本地运行：\r\n\r\n```bash\r\nPB_URL=http://127.0.0.1:8090 PB_EMAIL=admin@example.com PB_PASSWORD=secret node dist/index.js\r\n```\r\n\r\n## 2.0.0中的重大更改\r\n\r\n- 移除 `PB_ENV`, `PB_ENVIRONMENT`，以及所有 `PB__*` 变量。\r\n- 删除了运行时环境切换工具。\r\n- 将旧工具名称替换为16 `pb_*` 上面列出的工具。\r\n- 用结构紧凑的结果替换了打印精美的JSON文本响应。\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "pocketbase-dev": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "gaspechak-pocketbase-mcp"
+   ],
+   "env": {
+    "PB_URL": "http://127.0.0.1:8090",
+    "PB_EMAIL": "dev-admin@example.com",
+    "PB_PASSWORD": "dev-password"
+   }
+  }
+ }
+}

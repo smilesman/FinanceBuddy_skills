@@ -1,0 +1,27 @@
+{
+ "id": "1152",
+ "kind": "mcp",
+ "name": "mysql-14",
+ "fingerprint_md5": "63d9f4ad688a492a5e275d2c85278616",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# MySQL MCP服务器\r\n\r\nA. [模型上下文协议（MCP）](https://modelcontextprotocol.io) 为AI助手和其他MCP客户端提供安全MySQL数据库操作的服务器。\r\n\r\n## 特性\r\n\r\n### 🛠️ 工具\r\n\r\n- **execute_query** -执行安全的SQL查询（SELECT、INSERT、SHOW、DESCRIBE）\r\n- **get_table_info** -获取详细的表结构信息\r\n- **insert_data** -方便的数据插入和自动参数化\r\n- **list_tables** -列出数据库中的所有表\r\n\r\n### 📊 资源\r\n\r\n- **数据库信息** (`mysql://database/info`)-数据库元数据和表列表\r\n- **表结构** (`mysql://table/{table_name}`)-详细的表架构信息\r\n\r\n### 🔒 安全功能\r\n\r\n- **有限运营**：仅允许安全操作（SELECT、INSERT、SHOW、DESCRIBE）\r\n- **SQL注入保护**：使用参数化查询\r\n- **自动限制**：在SELECT查询中添加LIMIT子句以防止大数据转储\r\n- **连接池**：高效的数据库连接管理\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install mysql-mcp-server\r\n```\r\n\r\n## 配置\r\n\r\n可以使用环境变量配置服务器：\r\n\r\n|变量|默认值|描述|\r\n|----------|---------|-------------|\r\n| `MYSQL_HOST` | `localhost` |MySQL服务器主机名|\r\n| `MYSQL_PORT` | `3306` |MySQL服务器端口|\r\n| `MYSQL_USER` | `root` |MySQL用户名|\r\n| `MYSQL_PASSWORD` | _（空）_ |MySQL密码|\r\n| `MYSQL_DB` | `mysql` |默认数据库名称|\r\n| `MYSQL_TIMEZONE` | `+00:00` |MySQL时区|\r\n\r\n## 与MCP客户端一起使用\r\n\r\n### 克劳德桌面\r\n\r\n添加到您的Claude Desktop配置文件中：\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**视窗**: `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mysql\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mysql-mcp-server\"],\r\n      \"env\": {\r\n        \"MYSQL_HOST\": \"your-mysql-host\",\r\n        \"MYSQL_PORT\": \"3306\",\r\n        \"MYSQL_USER\": \"your-username\",\r\n        \"MYSQL_PASSWORD\": \"your-password\",\r\n        \"MYSQL_DB\": \"your-database\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 其他MCP客户端\r\n\r\n对于其他MCP客户端，请使用具有stdio传输的服务器：\r\n\r\n```bash\r\nnpx mysql-mcp-server\r\n```\r\n\r\n## 发展\r\n\r\n### 先决条件\r\n\r\n- Node.js 18+\r\n- TypeScript\r\n- 访问MySQL数据库\r\n\r\n### 设置\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/your-username/mysql-mcp-server.git\r\ncd mysql-mcp-server\r\n```\r\n\r\n2. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n3. 设置环境变量：\r\n\r\n```bash\r\ncp .env.example .env\r\n# Edit .env with your database configuration\r\n```\r\n\r\n4. 构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n### 开发命令\r\n\r\n```bash\r\n# Build the server\r\nnpm run build\r\n\r\n# Watch mode for development\r\nnpm run watch\r\n\r\n# Debug with MCP Inspector\r\nnpm run inspector\r\n```\r\n\r\n### 测试\r\n\r\n您可以使用MCP检查器测试服务器：\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n这将启动检查器并提供一个URL，以便在浏览器中测试服务器。\r\n\r\n## 示例用法\r\n\r\n通过MCP客户端连接后，您可以：\r\n\r\n1. **列出所有表格**:\r\n\r\n   ```\r\n   Use the list_tables tool\r\n   ```\r\n\r\n1. **获取表结构**:\r\n\r\n   ```\r\n   Use get_table_info with table_name: \"users\"\r\n   ```\r\n\r\n1. **查询数据**:\r\n\r\n   ```\r\n   Use execute_query with sql: \"SELECT * FROM users LIMIT 10\"\r\n   ```\r\n\r\n1. **插入数据**:\r\n\r\n   ```\r\n   Use insert_data with table_name: \"users\" and data: {\"name\": \"John\", \"email\": \"john@example.com\"}\r\n   ```\r\n\r\n## 安全考虑\r\n\r\n此服务器的设计考虑了安全性：\r\n\r\n- **主要阅读操作**：只允许SELECT、INSERT、SHOW和DESCRIBE操作\r\n- **无破坏性操作**：明确禁止更新和删除\r\n- **参数化查询**：所有用户输入都已正确转义\r\n- **连接限制**：使用连接池来防止资源耗尽\r\n- **查询限制**：自动LIMIT子句防止大数据转储\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n## 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件。\r\n\r\n## 相关\r\n\r\n- [模型上下文协议](https://modelcontextprotocol.io)\r\n- [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk)\r\n- [其他MCP服务器](https://github.com/modelcontextprotocol/servers)\r\n",
+ "config": {
+  "mysql": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mysql-mcp-server"
+   ],
+   "env": {
+    "MYSQL_HOST": "your-mysql-host",
+    "MYSQL_PORT": "3306",
+    "MYSQL_USER": "your-username",
+    "MYSQL_PASSWORD": "your-password",
+    "MYSQL_DB": "your-database"
+   }
+  }
+ }
+}

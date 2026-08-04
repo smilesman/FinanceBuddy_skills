@@ -1,0 +1,24 @@
+{
+ "id": "2262",
+ "kind": "mcp",
+ "name": "mta_subway_tracker",
+ "fingerprint_md5": "7cad913bdab271ee8c5cda8ac76a785c",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# MTA MCP服务器\r\n\r\n这是一个简单的模型上下文协议（MCP）服务器，它使用纽约市的MTA地铁系统提供有关下一列列车到达给定车站和方向的信息。\r\n\r\n## 下一步：\r\n\r\n- 整合位置？\r\n- 使用不同的行和拼写问题进行更多测试\r\n\r\n## 如何跑步\r\n\r\n要开始，请按照 [MCP文件](https://github.com/modelcontextprotocol/python-sdk).\r\n\r\n```bash\r\nuv run subway.py\r\n```\r\n\r\n接下来，将以下内容添加到您的.cursor/mcp.json文件中：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"mta_subway_tracker\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\"--directory\", \"\", \"run\", \"subway.py\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n示例问题：\r\n\r\n```\r\nWhen is the next express south train arriving at 14th street?\r\n```\r\n\r\n答案：\r\n\r\n```\r\nOkay, I can help you with that. I'll check for the next southbound train at 14th St-Union Sq using the feed for lines 1, 2, 3, 4, 5, and 6.\r\n\r\nRan tool\r\nThe next express southbound trains arriving at 14th St-Union Sq are:\r\n- 4 train at 15:52:41\r\n- 5 train at 15:56:24\r\n\r\nThere are also local 6 trains arriving, the next one is at 15:46:27.\r\n```\r\n\r\n由...创建 [乔纳森·艾伦](https://github.com/jonathanallen44) 和 [诺亚·卡斯曼诺夫](https://github.com/nkasmanoff)\r\n",
+ "config": {
+  "mta_subway_tracker": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "<path to your project>",
+    "run",
+    "subway.py"
+   ],
+   "env": {}
+  }
+ }
+}

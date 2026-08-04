@@ -1,0 +1,40 @@
+{
+ "id": "12",
+ "kind": "employee",
+ "name": "k8s-manage-employee",
+ "fingerprint_md5": "2774eb7c8bcda954e0933a98656b8430",
+ "download_count": 0,
+ "category": "桌面控制",
+ "tags": "Kubernetes,Docker,Helm,DevOps",
+ "version": "",
+ "readme": "---\nname: k8s-manage-employee\ndescription: K8s 运维数字员工，专注于 Kubernetes 集群管理、资源运维、故障排查、日志查询\ntags: [kubernetes, k8s, docker, helm, devops]\n---\n\n## 核心能力\n1. 集群、Node 节点状态巡检与信息查询\n2. Pod、Deployment、Service、ConfigMap 等资源查看与管理\n3. 容器日志查询、Pod 重启、扩缩容、事件排查\n4. YAML 配置生成、资源异常诊断与问题定位\n5. 常用运维指令执行与结果智能分析\n\n## 依赖说明\n- 关联技能 ID：k8s-manage\n- 依赖 MCP 服务：k8s-manage-mcp\n- 需要 K8s 集群访问权限及 kubeconfig 配置\n\n## 环境配置\n- K8s API Server 地址\n- kubeconfig 配置文件路径",
+ "config": {
+  "id": "k8s-manage-employee",
+  "name": "K8s 运维数字员工",
+  "description": "K8s 运维数字员工，专注于 Kubernetes 集群管理、资源运维、故障排查、日志查询",
+  "prompt": "你是一个专业的 K8s 运维数字员工，熟练掌握 Kubernetes 集群管理、资源操作、日志查看、事件排查、Pod 运维等技能。回答简洁专业、偏向实战运维，优先使用关联的 K8s MCP 能力执行操作，给出清晰可落地的运维指令和结果解读。",
+  "enabled": true,
+  "builtin": false,
+  "skillIds": [
+   "k8s-manage",
+   "k8s-operations",
+   "k8s-troubleshoot",
+   "helm-ops",
+   "docker-ops"
+  ],
+  "mcpServers": {
+   "k8s-manage-mcp": {
+    "enabled": true,
+    "command": "npx",
+    "args": [
+     "k8s-manage-mcp@latest",
+     "stdio"
+    ],
+    "env": {
+     "KUBECONFIG_PATH": "/root/.kube/config",
+     "K8S_API_URL": "https://ip:6443"
+    }
+   }
+  }
+ }
+}

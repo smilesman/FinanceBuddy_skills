@@ -1,0 +1,31 @@
+{
+ "id": "1261",
+ "kind": "mcp",
+ "name": "redshift",
+ "fingerprint_md5": "1758d79754afd8418e7af74162fe31f6",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 通知\r\n\r\n> AWS正式发布了Amazon Redshift MCP服务器。我们建议使用以下网址提供的官方实现：https://github.com/aws-samples/sample-amazon-redshift-MCP-server.git.此存储库将不再更新。\r\n\r\n# Redshift MCP服务器\r\n\r\nAmazon Redshift的模型上下文协议（MCP）服务器，使AI助手能够与Redshift数据库交互。\r\n\r\n## 引言\r\n\r\nRedshift MCP Server是基于Python的 [模型上下文协议](https://github.com/modelcontextprotocol/mcp) 它提供了与Amazon Redshift数据库交互的工具和资源。它允许AI助手：\r\n\r\n- 列出Redshift数据库中的模式和表\r\n- 检索表DDL（数据定义语言）脚本\r\n- 获取表格统计信息\r\n- 执行SQL查询\r\n- 分析表格以收集统计信息\r\n- 获取SQL查询的执行计划\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Python 3.13或更高版本\r\n- 亚马逊Redshift集群\r\n- Redshift凭据（主机、端口、用户名、密码、数据库）\r\n\r\n### 从源代码安装\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/aws-samples/sample-amazon-redshift-MCP-server.git\r\ncd sample-amazon-redshift-MCP-server\r\n\r\n# Install dependencies\r\nuv sync\r\n```\r\n\r\n## 配置\r\n\r\n服务器需要以下环境变量才能连接到Redshift集群：\r\n\r\n```\r\nRS_HOST=your-redshift-cluster.region.redshift.amazonaws.com\r\nRS_PORT=5439\r\nRS_USER=your_username\r\nRS_PASSWORD=your_password\r\nRS_DATABASE=your_database\r\nRS_SCHEMA=your_schema  # Optional, defaults to \"public\"\r\n```\r\n\r\n## 用法\r\n\r\n### 与AI助手集成\r\n\r\n要将此服务器与支持MCP的AI助手一起使用，请将以下配置添加到MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"redshift\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"--directory\", \"src/redshift_mcp_server\", \"run\", \"server.py\"],\r\n      \"env\": {\r\n        \"RS_HOST\": \"your-redshift-cluster.region.redshift.amazonaws.com\",\r\n        \"RS_PORT\": \"5439\",\r\n        \"RS_USER\": \"your_username\",\r\n        \"RS_PASSWORD\": \"your_password\",\r\n        \"RS_DATABASE\": \"your_database\",\r\n        \"RS_SCHEMA\": \"your_schema\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 特性\r\n\r\n### 资源\r\n\r\n服务器提供以下资源：\r\n\r\n- `rs:///schemas` -列出数据库中的所有架构\r\n- `rs:///{schema}/tables` -列出特定架构中的所有表\r\n- `rs:///{schema}/{table}/ddl` -获取特定表的DDL脚本\r\n- `rs:///{schema}/{table}/statistic` -获取特定表的统计信息\r\n\r\n### 工具\r\n\r\n服务器提供以下工具：\r\n\r\n- `execute_sql` -在Redshift集群上执行SQL查询\r\n- `analyze_table` -分析表格以收集统计信息\r\n- `get_execution_plan` -获取包含SQL查询运行时统计信息的执行计划\r\n\r\n## 例子\r\n\r\n### 列出模式\r\n\r\n```\r\naccess_mcp_resource(\"redshift-mcp-server\", \"rs:///schemas\")\r\n```\r\n\r\n### 在模式中列出表\r\n\r\n```\r\naccess_mcp_resource(\"redshift-mcp-server\", \"rs:///public/tables\")\r\n```\r\n\r\n### 获取表DDL\r\n\r\n```\r\naccess_mcp_resource(\"redshift-mcp-server\", \"rs:///public/users/ddl\")\r\n```\r\n\r\n### 正在执行SQL\r\n\r\n```\r\nuse_mcp_tool(\"redshift-mcp-server\", \"execute_sql\", {\"sql\": \"SELECT * FROM public.users LIMIT 10\"})\r\n```\r\n\r\n### 分析表格\r\n\r\n```\r\nuse_mcp_tool(\"redshift-mcp-server\", \"analyze_table\", {\"schema\": \"public\", \"table\": \"users\"})\r\n```\r\n\r\n### 获取执行计划\r\n\r\n```\r\nuse_mcp_tool(\"redshift-mcp-server\", \"get_execution_plan\", {\"sql\": \"SELECT * FROM public.users WHERE user_id = 123\"})\r\n```\r\n\r\n## 发展\r\n\r\n### 项目结构\r\n\r\n```\r\nredshift-mcp-server/\r\n├── src/\r\n│   └── redshift_mcp_server/\r\n│       ├── __init__.py\r\n│       └── server.py\r\n├── pyproject.toml\r\n└── README.md\r\n```\r\n\r\n### 依赖项\r\n\r\n- `mcp[cli]>=1.5.0` -模型上下文协议SDK\r\n- `python-dotenv>=1.1.0` -用于从.env文件加载环境变量\r\n- `redshift-connector>=2.1.5` -Amazon Redshift的Python连接器\r\n",
+ "config": {
+  "redshift": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "src/redshift_mcp_server",
+    "run",
+    "server.py"
+   ],
+   "env": {
+    "RS_HOST": "your-redshift-cluster.region.redshift.amazonaws.com",
+    "RS_PORT": "5439",
+    "RS_USER": "your_username",
+    "RS_PASSWORD": "your_password",
+    "RS_DATABASE": "your_database",
+    "RS_SCHEMA": "your_schema"
+   }
+  }
+ }
+}

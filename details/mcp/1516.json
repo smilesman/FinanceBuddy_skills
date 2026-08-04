@@ -1,0 +1,24 @@
+{
+ "id": "1516",
+ "kind": "mcp",
+ "name": "juliadoc",
+ "fingerprint_md5": "ac46cb1053c69608591c4bc5a8a168f8",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Julia文档MCP服务器\r\n\r\n\r\n一个MCP服务器，有效地向Claude Desktop提供有关Julia文档和源代码的上下文。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/7xy80o4wdp\"></a>\r\n\r\n## 特性\r\n\r\n- 获取Julia包、模块、类型、函数和方法的文档\r\n- 查看Julia函数、类型和方法的源代码\r\n- 内置缓存，TTL为5分钟\r\n- 针对Julia特定错误的正确错误处理\r\n\r\n## 工具\r\n\r\n### `get-doc`\r\n\r\n获取包、模块、类型、函数或方法的Julia文档。\r\n\r\n- 参数： `path` （string）-Julia对象的路径（例如，“Base.sort”、“AbstractArray”）\r\n\r\n### `get-source`\r\n\r\n获取函数、类型或方法的Julia源代码。\r\n\r\n- 参数： `path` （string）-Julia对象的路径（例如，“Base.sort”、“AbstractArray”）\r\n\r\n## 需求\r\n\r\n- Node.js 16或更高版本\r\n- 已安装Julia 1.9或更高版本，可在PATH中访问\r\n- 克劳德桌面\r\n\r\n## 配置\r\n\r\n添加到您的Claude Desktop配置(`~/Library/Application Support/Claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"juliadoc\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@jonathanfischer97/server-juliadoc\"\r\n      ],\r\n      \"env\": {\r\n        \"JULIA_PROJECT\": \"/path/to/your/julia/project\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n服务器将使用：\r\n\r\n- 如果满足以下条件，则指定Julia项目 `JULIA_PROJECT` 在配置中设置\r\n- 如果未指定项目，则默认全局Julia环境\r\n- 系统的默认Julia安装（必须在PATH中可访问）\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/jonathanfischer97/juliadoc-mcp.git\r\ncd juliadoc-mcp\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build\r\nnpm run build\r\n\r\n# Start server locally\r\nnpm start\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n归功于 [乔舒克先生/godoc mcp](https://github.com/mrjoshuak/godoc-mcp) 为了激励这个项目\r\n\r\n## 许可证\r\n\r\nMIT许可证-有关详细信息，请参阅许可证文件\r\n",
+ "config": {
+  "juliadoc": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@jonathanfischer97/server-juliadoc"
+   ],
+   "env": {
+    "JULIA_PROJECT": "/path/to/your/julia/project"
+   }
+  }
+ }
+}

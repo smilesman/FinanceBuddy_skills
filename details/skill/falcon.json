@@ -1,0 +1,12 @@
+{
+ "id": "falcon",
+ "kind": "skill",
+ "name": "falcon",
+ "fingerprint_md5": "18ac1b60707c978097ec95696ba8684d",
+ "download_count": 0,
+ "category": "内容与媒体",
+ "tags": "",
+ "version": "",
+ "readme": "falcon\r\n\r\n使用 falcon 阅读、搜索和与 Twitter/X 互动。\r\n\r\n快速开始\r\n\r\n    falcon check\r\n    falcon user elonmusk\r\n    falcon tweets elonmusk 5\r\n    falcon read <url-or-id>\r\n    falcon search \"bitcoin\" 10\r\n\r\n阅读用户\r\n\r\n    falcon user <username>               单个用户的个人资料信息\r\n    falcon users <u1,u2,...>             查找多个用户（逗号分隔）\r\n    falcon find <keyword> [count]        按关键词搜索用户 (默认: 5)\r\n    falcon followers <username> [count]  列出关注者 (默认: 20)\r\n    falcon following <username> [count]  列出关注 (默认: 20)\r\n\r\n阅读推文\r\n\r\n    falcon tweets <username> [count]     用户的推文和回复 (默认: 20)\r\n    falcon read <id-or-url> [...]        通过 ID 或 URL 阅读一条或多条推文\r\n    falcon replies <id-or-url> [count]   推文的回复 (默认: 20)\r\n    falcon similar <id-or-url>           查找相似推文\r\n    falcon retweeters <id-or-url> [cnt]  谁转推了这条推文 (默认: 20)\r\n\r\n搜索\r\n\r\n    falcon search <query> [count]        高级搜索 (默认: 10)\r\n    falcon hashtag <tag> [count]         按标签搜索 (默认: 20)\r\n    falcon cashtag <tag> [count]         按现金标签搜索 (默认: 20)\r\n    falcon trending [country]            热门话题 (默认: 全球)\r\n\r\n发帖（先与用户确认）\r\n\r\n    falcon tweet \"text\"\r\n    falcon reply <id-or-url> \"text\"\r\n    falcon quote <tweet-url> \"text\"\r\n\r\n互动（先与用户确认）\r\n\r\n    falcon like <id-or-url>\r\n    falcon unlike <id-or-url>\r\n    falcon retweet <id-or-url>\r\n    falcon bookmark <id-or-url>\r\n    falcon follow <username>\r\n    falcon unfollow <username>\r\n\r\n账户\r\n\r\n    falcon check                         验证 API key 和 cookie 是否已设置\r\n    falcon balance                       检查剩余 API 积分\r\n\r\n认证来源\r\n\r\n    TWEXAPI_KEY 环境变量: TwexAPI bearer token (所有命令必需)\r\n    TWITTER_COOKIE 环境变量: Twitter 认证 cookie (写/互动命令必需)\r\n\r\n重要说明\r\n\r\n    - falcon 脚本位于 {baseDir}/falcon.sh\r\n    - 所有命令接受推文 URL (x.com 或 twitter.com) 或裸推文 ID\r\n    - 在执行任何写或互动命令之前始终与用户确认\r\n    - 搜索接受任何 Twitter 高级搜索语法\r\n    - 标签可以带或不带 # 前缀传递\r\n    - 现金标签可以带或不带 $ 前缀传递\r\n    - 趋势的国家使用 slug 格式: united-states, united-kingdom, japan, 等。",
+ "config": {}
+}

@@ -1,0 +1,18 @@
+{
+ "id": "861",
+ "kind": "mcp",
+ "name": "social-media-analytics",
+ "fingerprint_md5": "6e7eeb70cb5e552a1c0c914b182c7027",
+ "download_count": 0,
+ "category": "社交媒体",
+ "tags": "",
+ "version": "",
+ "readme": "# 社交媒体分析MCP服务器\r\n\r\n\r\n通过AI驱动的社交媒体分析工具 [模型上下文协议（MCP）](https://modelcontextprotocol.io)。让你的人工智能助手能够实时分析个人资料、评分参与度、检测趋势和研究主要平台上的标签。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `analyze_profile` |简介和品牌分析——发布模式、内容主题、受众指标、增长建议|\r\n| `score_engagement` |参与度评分——参与率估计、内容有效性、发布时间分析、基准|\r\n| `detect_trends` |趋势检测——病毒式传播的内容模式、新兴话题、情绪变化、机会警报|\r\n| `research_hashtags` |标签研究——流行度估计、相关标签、利基分类、推荐集|\r\n\r\n## 快速入门（托管）\r\n\r\n**无需安装。** 使用托管版本：\r\n\r\n1. 在获取免费API密钥 [social.ezbioservices.com/signup](https://social.ezbizservices.com/signup)\r\n1. 添加到您的MCP客户端配置（Claude Desktop、Cursor等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"social-media-analytics\": {\r\n      \"url\": \"https://social.ezbizservices.com/mcp\",\r\n      \"headers\": {\r\n        \"x-api-key\": \"YOUR_API_KEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. 让你的人工智能助手分析任何社交媒体存在！\r\n\r\n### 示例提示\r\n\r\n- “分析@hubspot在LinkedIn上的社交媒体存在”\r\n- “在Instagram上为Nike的参与度评分”\r\n- “本周人工智能营销的趋势是什么？”\r\n- “研究Instagram上房地产内容的最佳标签”\r\n\r\n## 自我寄宿\r\n\r\n```bash\r\ngit clone https://github.com/ezbiz-services/mcp-social-media.git\r\ncd mcp-social-media\r\nbun install\r\n\r\ncp .env.example .env\r\n# Edit .env with your OpenAI API key and admin secret\r\n\r\nbun run server.ts\r\n```\r\n\r\n### 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `OPENAI_API_KEY` |是|用于AI驱动分析的OpenAI API密钥|\r\n| `ADMIN_SECRET` |是|管理员API端点的机密|\r\n| `MCP_PORT` |否|服务器端口（默认值：4202）|\r\n\r\n## 定价\r\n\r\n|级别|价格|请求/月|\r\n|------|-------|----------------|\r\n| **自由** | $0 | 10 |\r\n|起步价|19美元/月|200|\r\n|专业| 49美元/月|1000|\r\n|商务| 99美元/月|5000|\r\n\r\n免费开始 [social.ezbizservices.com](https://social.ezbizservices.com)\r\n\r\n## 建筑\r\n\r\n- **运行时间：** [包子](https://bun.sh)\r\n- **协议：** [MCP-SDK](https://www.npmjs.com/package/@modelcontextprotocol/sdk) （流式HTTP传输）\r\n- **人工智能：** OpenAI GPT-4o用于分析\r\n- **报废：** Cheerio用于网络数据提取\r\n- **认证：** 基于API密钥的分层速率限制\r\n\r\n## 链接\r\n\r\n- **主页：** [social.ezbizservices.com](https://social.ezbizservices.com)\r\n- **API文件：** [social.ezbizservices.com/docs](https://social.ezbizservices.com/docs)\r\n- **注册：** [social.ezbioservices.com/signup](https://social.ezbizservices.com/signup)\r\n- **服务器卡：** [social.ezbizservices.com/.nearned/mcp/server-cad.json](https://social.ezbizservices.com/.well-known/mcp/server-card.json)\r\n\r\n## 许可证\r\n\r\nMIT——见 [许可证](LICENSE)\r\n",
+ "config": {
+  "social-media-analytics": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://social.ezbizservices.com/mcp"
+  }
+ }
+}

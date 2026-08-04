@@ -1,0 +1,26 @@
+{
+ "id": "2212",
+ "kind": "mcp",
+ "name": "gps-trust",
+ "fingerprint_md5": "aef23555105dd3f2dbd78b878e84975c",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# GPS Trust MCP 代理\r\n\r\n连接Claude Desktop和Claude Code至GPS Trust MCP服务器的Python代理 `https://gt.aussierobots.com.au/mcp`。\r\n\r\n## 快速入门\r\n\r\n### 1. 克隆此仓库\r\n\r\n```bash\r\ngit clone https://github.com/aussierobots/gps-trust-mcp-proxy-user.git\r\ncd gps-trust-mcp-proxy-user\r\n```\r\n\r\n### 2. 安装依赖项\r\n\r\n需要 Python 3.14+ 及以上版本 [紫外线](https://docs.astral.sh/uv/)：\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n这将会：\r\n\r\n- 在（某个地方/系统中）创建一个虚拟环境 `.venv/`\r\n- 安装FastMCP 2.12+及其依赖项\r\n- 生成 `uv.lock` 文件\r\n\r\n### 3. 获取您的API密钥\r\n\r\n请联系您的GPS Trust管理员以获取API密钥。\r\n\r\n### 4. 配置Claude桌面版\r\n\r\n**macOS（苹果电脑操作系统）**编辑 `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n**Windows**编辑 `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n添加此配置（替换路径和API密钥）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gps-trust\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--directory\",\r\n        \"/absolute/path/to/gps-trust-mcp-proxy-user\",\r\n        \"gt-mcp-proxy\"\r\n      ],\r\n      \"env\": {\r\n        \"GPSTRUST_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**macOS 示例**:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gps-trust\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--directory\",\r\n        \"/Users/yourname/gps-trust-mcp-proxy-user\",\r\n        \"gt-mcp-proxy\"\r\n      ],\r\n      \"env\": {\r\n        \"GPSTRUST_API_KEY\": \"your-actual-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**Windows 示例**：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gps-trust\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--directory\",\r\n        \"C:\\\\Users\\\\yourname\\\\gps-trust-mcp-proxy-user\",\r\n        \"gt-mcp-proxy\"\r\n      ],\r\n      \"env\": {\r\n        \"GPSTRUST_API_KEY\": \"your-actual-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 5. 重启Claude桌面版\r\n\r\n保存配置后，重启Claude桌面应用。GPS信任工具应出现在工具栏中。\r\n\r\n## 备选方案：克劳德代码\r\n\r\n创建或编辑 `.claude/config.json` 在你的项目中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"gps-trust\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--directory\",\r\n        \"/absolute/path/to/gps-trust-mcp-proxy-user\",\r\n        \"gt-mcp-proxy\"\r\n      ],\r\n      \"env\": {\r\n        \"GPSTRUST_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后跑 `/mcp reload` 在克劳德代码中。\r\n\r\n## 可用工具\r\n\r\n一旦连接成功，您将能够使用23+个GPS信任MCP工具：\r\n\r\n- **实体信息** (1个工具) - 查找您的API密钥的实体类型和功能\r\n- **设备读数** （5种工具）- 当前设备状态（位置、卫星、轨道、安全、元数据）\r\n- **设备历史** （4种工具）- 历史位置数据、轨迹和精度趋势\r\n- **实体发现** （7个工具）- 在您的账户中发现机器人、站点和设备\r\n- **GPS信任地图** (3种工具) - 通过位置或地理哈希查询GPS可信度等级\r\n- **元数据** (2种工具) - 字段和实体元数据查询\r\n- **坐标转换** （2种工具）- 在LLH坐标系和ECEF坐标系之间进行转换\r\n\r\n## 测试\r\n\r\n测试代理是否正常工作：\r\n\r\n```bash\r\nexport GPSTRUST_API_KEY=\"your-api-key-here\"\r\nuv run gt-mcp-proxy\r\n```\r\n\r\n代理程序应启动并等待在标准输入（stdin）上接收MCP协议消息（按Ctrl+C退出）。\r\n\r\n## 故障排除\r\n\r\n### 工具未出现在Claude桌面版中\r\n\r\n1. **检查绝对路径** 你的配置是正确的\r\n1. **重启Claude桌面版** 在做出配置更改后\r\n1. **查看日志**帮助 → 在Claude桌面菜单中查看日志\r\n\r\n### “未提供API密钥”错误\r\n\r\n确保 `GPSTRUST_API_KEY` 环境变量在配置文件中已设置。\r\n\r\n### 连接错误\r\n\r\n测试服务器是否可访问：\r\n\r\n```bash\r\ncurl -H \"x-api-key: your-api-key\" https://gt.aussierobots.com.au/mcp\r\n```\r\n\r\n如果此操作失败，请检查：\r\n\r\n- 您的API密钥是有效的\r\n- 你已连接到互联网\r\n- GPS信任服务器正在运行\r\n\r\n## 它是如何工作的\r\n\r\n```\r\n┌─────────────────┐\r\n│ Claude Desktop  │\r\n│ or Claude Code  │\r\n└────────┬────────┘\r\n         │ stdio\r\n         ▼\r\n┌─────────────────┐\r\n│  GPS Trust MCP  │\r\n│     Proxy       │\r\n│  (This Repo)    │\r\n└────────┬────────┘\r\n         │ HTTP + x-api-key\r\n         ▼\r\n┌─────────────────┐\r\n│  GPS Trust MCP  │\r\n│     Server      │\r\n│  (AWS Lambda)   │\r\n└────────┬────────┘\r\n         │\r\n         ▼\r\n┌─────────────────┐\r\n│    DynamoDB     │\r\n│  (Device Data)  │\r\n└─────────────────┘\r\n```\r\n\r\n代理：\r\n\r\n1. 通过stdio传输连接到Claude Desktop/Code\r\n1. 通过HTTP将MCP请求转发给远程GPS信任服务器\r\n1. 注入您的API密钥以进行身份验证\r\n1. 将响应反馈给克劳德\r\n\r\n## 支持\r\n\r\n如需解决任何问题或咨询任何事项，请联系您的GPS Trust管理员。\r\n\r\n## 许可证\r\n\r\n看 [许可证](LICENSE)\r\n",
+ "config": {
+  "gps-trust": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "/absolute/path/to/gps-trust-mcp-proxy-user",
+    "gt-mcp-proxy"
+   ],
+   "env": {
+    "GPSTRUST_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "2050",
+ "kind": "mcp",
+ "name": "sputnikx",
+ "fingerprint_md5": "0267fb08be4f4a7e86e84167a065d7dd",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp sputnikx市场\r\n\r\n\r\nMCP服务器 **Sputnikx** -欧盟贸易情报、海关分析、工资数据、代理商身份和商务API。通过以下方式将任何人工智能助手连接到6300多万条欧盟统计局记录 [模型上下文协议](https://modelcontextprotocol.io).\r\n\r\n## 数据源\r\n\r\n|来源|记录|覆盖范围|更新|\r\n|--------|---------|----------|--------|\r\n| **欧盟统计局COMEXT** |6300万+|欧盟27国，260个合作伙伴，HS2-CN8，2005-2025年|每月|\r\n| **拉脱维亚海关** |15M+|KN8级，申报，2005-2025年|每月|\r\n| **欧盟工资** |70K+| 44个国家，21个NACE行业，人工智能风险评分|年度|\r\n| **融合引擎** |跨来源|贸易+海关+工资+宏观（ECB/FRED）|实时|\r\n| **SoulLedger** |130K+代理|信任评分、行为DNA、ERC-8004 |实时|\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sputnikx\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-sputnikx-market\"],\r\n      \"env\": {\r\n        \"SPUTNIKX_API_KEY\": \"sk_live_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add sputnikx -- npx -y mcp-sputnikx-market\r\nexport SPUTNIKX_API_KEY=sk_live_your_key_here\r\n```\r\n\r\n### 光标/VS代码/风帆\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"sputnikx\": {\r\n        \"command\": \"npx\",\r\n        \"args\": [\"-y\", \"mcp-sputnikx-market\"],\r\n        \"env\": { \"SPUTNIKX_API_KEY\": \"sk_live_your_key_here\" }\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 22工具\r\n\r\n### 欧盟贸易分析\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `query_trade` |9种查询类型：概述、国家、时间线、顶级合作伙伴、顶级产品、平衡、木材产品、热图、产品详情|\r\n| `query_customs` |拉脱维亚海关：分类、趋势、主要商品、国家分析、关税查询、季节性模式|\r\n| `salary_overview` |欧盟工资数据库元数据和覆盖范围|\r\n| `salary_ai_risk` |人工智能自动化暴露评分（ISCO+NACE，经合组织2023）|\r\n| `salary_lv_wages` |拉脱维亚按年度、NACE部门、地区、性别分列的工资|\r\n\r\n### 融合引擎（跨源智能）\r\n\r\n|工具|描述|x402价格|\r\n|------|-------------|------------|\r\n| `fusion_query` |跨贸易+海关+工资+宏观的通用查询| 0.50美元|\r\n| `fusion_market_intel` |结合所有数据源的市场情报|1.00美元|\r\n| `fusion_country_profile` |国家经济概况（贸易+工资+宏观）|1.00美元|\r\n| `fusion_deep_analysis` |LLM驱动的跨源合成| 5.00美元|\r\n\r\n### 商业\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_products` |产品目录（加热颗粒、木制品）|\r\n| `get_prices` |实时欧元定价，价格为每公斤|\r\n| `check_availability` |按仓库位置分类的库存|\r\n| `calculator` |加热燃料计算器（kW、绝缘、气候）|\r\n| `create_quote` |报价含行项目+21%增值税|\r\n| `place_order` |使用幂等性密钥订购（最高50000欧元）|\r\n| `order_status` |按ID跟踪订单|\r\n\r\n### SoulLedger（代理身份）\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `soul_profile` |代理人信任评分+7D行为DNA|\r\n| `soul_verify` |加密哈希链验证|\r\n| `soul_leaderboard` |代理商信任度排名|\r\n| `soul_bounties` |赏金市场（USDC奖励）|\r\n\r\n### 智能\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `prediction_signals` |预测市场信号（纸面交易）|\r\n| `list_skills` / `run_skill` |CRM代理技能（预言机、蜘蛛、战略家）|\r\n\r\n## 交易查询类型\r\n\r\n```\r\noverview       — High-level stats: total records, countries, date range\r\ncountries      — EU27 countries with data availability\r\ntimeline       — Monthly trade volume time series\r\ntop_partners   — Largest trading partners by EUR value\r\ntop_products   — Largest HS2 categories by EUR value\r\nbalance        — Trade balance (export - import) over years\r\nwood_products  — HS4 wood trade breakdown (chapter 44)\r\nheatmap        — Cross-country comparison for a product\r\nproduct_detail — Deep HS2 chapter analysis\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|必填|默认|描述|\r\n|----------|----------|---------|-------------|\r\n| `SPUTNIKX_API_KEY` |是|-|neneneba API密钥（从管理面板或注册代理获取）|\r\n| `SPUTNIKX_API_URL` |没有| `https://sputnikx.xyz` |API基本URL|\r\n| `SPUTNIKX_TENANT` |没有| `siltums` |租户： `siltums` 或 `woodpoint` |\r\n| `SPUTNIKX_TIMEOUT` |没有| `30000` |请求超时（ms）|\r\n| `MCP_HTTP_PORT` |否|--|启用流式HTTP传输|\r\n\r\n## 付款（x402）\r\n\r\n付费端点支持 [x402小额支付](https://www.x402.org/) --基础链上的USDC。\r\n\r\n|层级|价格范围|示例|\r\n|------|-------------|---------|\r\n|免费| 0美元|健康、产品订阅、OpenAPI、灵魂目录|\r\n|基本|$0.001-$0.01|目录、价格、工资概述|\r\n|标准|$0.05-$0.10|贸易分析、海关、季节性、HHI|\r\n|高级| 0.50-5.00美元|融合查询、深度分析、代理技能|\r\n\r\n## 示例提示\r\n\r\n- *“2024年拉脱维亚木制品前五大贸易伙伴”*\r\n- *“德国HS44进口的赫芬达尔指数是多少？”*\r\n- *“比较欧盟制造业的人工智能自动化风险”*\r\n- *“给我一份波兰的国家概况——贸易、工资、宏观综合”*\r\n- *“计算加热颗粒需求：25kW锅炉，7个月，绝缘良好”*\r\n- *“检查‘米哈伊尔·彼得罗夫’是否出现在欧盟制裁名单上”*\r\n\r\n## 发现\r\n\r\n- [OpenAPI规范](https://sputnikx.xyz/api/openapi.json)\r\n- [代理卡](https://sputnikx.xyz/.well-known/agent-card.json)\r\n- [LLM文件](https://sputnikx.xyz/llms.txt)\r\n- [SoulLedger](https://soul.sputnikx.xyz)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "sputnikx": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-sputnikx-market"
+   ],
+   "env": {
+    "SPUTNIKX_API_KEY": "sk_live_your_key_here"
+   }
+  }
+ }
+}

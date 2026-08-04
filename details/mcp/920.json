@@ -1,0 +1,25 @@
+{
+ "id": "920",
+ "kind": "mcp",
+ "name": "watermark-mcp-server",
+ "fingerprint_md5": "dc0a6717eee552e436bc7e066134f6ed",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# 水印MCP服务器\r\n\r\n一个简单的模型上下文协议（MCP）服务器，为图片添加文本或图像水印。\r\n\r\n## 可用工具\r\n\r\n- add_text_watermark-为图片添加文本水印\r\n\r\n  - input_image_path（str）：输入图像的路径\r\n  - output_image_path（str）：水印图像的输出路径\r\n  - watermark_text（str）：水印文本内容\r\n  - pos_ratio（列表）：水印位置比率\r\n  - font_path（str）：字体文件的路径\r\n  - font_size（int）：字体大小\r\n  - color（列表）：文本颜色的RGB值\r\n  - 透明度（int）：文本透明度\r\n\r\n- add_image_fluemark-将图像水印添加到图片中\r\n\r\n  - input_image_path（str）：输入图像的路径\r\n  - watermark_image_path（str）：水印图像的路径\r\n  - output_image_path（str）：水印图像的输出路径\r\n  - pos_ratio（列表）：水印位置比率\r\n  - 透明度（int）：水印透明度\r\n\r\n## 本地设置\r\n\r\n```\r\ngit clone https://github.com/mang0cola/watermark-mcp-server.git\r\ncd watermark-mcp-server\r\nuv venv\r\nuv pip install -r pyproject.toml\r\n```\r\n\r\n## 添加到MCP客户端\r\n\r\n### 为克劳德\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"watermark-mcp-server\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"<WATERMARK_MCP_SERVER_ABSOLUTE_PATH>\",\r\n                \"run\",\r\n                \"-m\",\r\n                \"server\"\r\n            ],\r\n        },\r\n    }\r\n}\r\n```\r\n\r\n### CherryStudio\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"watermark-mcp-server\": {\r\n      \"name\": \"watermark-mcp-server\",\r\n      \"type\": \"stdio\",\r\n      \"isActive\": true,\r\n      \"registryUrl\": \"\",\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"<WATERMARK_MCP_SERVER_ABSOLUTE_PATH>\",\r\n        \"run\",\r\n        \"-m\",\r\n        \"server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "watermark-mcp-server": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "<WATERMARK_MCP_SERVER_ABSOLUTE_PATH>",
+    "run",
+    "-m",
+    "server"
+   ],
+   "env": {}
+  }
+ }
+}

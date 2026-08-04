@@ -1,0 +1,23 @@
+{
+ "id": "355",
+ "kind": "mcp",
+ "name": "playread",
+ "fingerprint_md5": "bd6845569b0afcdb11b90b8cdb73e904",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 播放阅读（或“播放并阅读”，根据上下文可能有所不同）\r\n\r\n通过Playwright MCP实现Google搜索自动化。可以作为CLI工具或MCP服务器使用。\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g playread\r\n```\r\n\r\n或者直接使用 npx：\r\n\r\n```bash\r\nnpx -y playread@latest google-search\r\n```\r\n\r\n## 使用方法\r\n\r\n### 作为MCP服务器\r\n\r\n作为MCP服务器启动PlayReady，以将所有流作为工具暴露出来：\r\n\r\n```bash\r\nplayread mcp\r\n```\r\n\r\n或者在您的MCP客户端设置中进行配置（例如，Claude桌面版）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"playread\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"playread@latest\", \"mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n可用的MCP工具：\r\n\r\n- `fetch` - 从网页URL获取并提取主要内容\r\n- `google-search` - 进行谷歌搜索并提取结果\r\n\r\n### 作为命令行界面工具\r\n\r\n### 谷歌搜索\r\n\r\n```bash\r\nplayread google-search\r\n```\r\n\r\n输出格式：\r\n\r\n```json\r\n{\r\n  \"query\": \"Playwright automation testing\",\r\n  \"totalResults\": 18,\r\n  \"results\": [\r\n    {\r\n      \"title\": \"Playwright: Fast and reliable end-to-end testing for modern ...\",\r\n      \"url\": \"https://playwright.dev/\",\r\n      \"description\": \"Playwright enables reliable end-to-end testing for modern web apps...\"\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n### 获取URL内容\r\n\r\n从任意URL中提取重要文本内容：\r\n\r\n```bash\r\nplayread fetch https://example.com\r\n```\r\n\r\n输出格式：\r\n\r\n```json\r\n{\r\n  \"url\": \"https://example.com/\",\r\n  \"title\": \"Example Domain\",\r\n  \"contentLength\": 129,\r\n  \"content\": \"# Example Domain\\nThis domain is for use in documentation examples...\"\r\n}\r\n```\r\n\r\n非常适合：\r\n\r\n- 从网站提取文档\r\n- 获取文章内容\r\n- 解析博客文章\r\n- 从GitHub获取README内容\r\n- 任何文本量大的网页\r\n\r\n## 创建自定义流程\r\n\r\nFlows 是 JavaScript 模块，它们导出一个单一的异步函数。该函数接收一个已连接的（或“连接好的”） `PlaywrightMCPClient` 例子\r\n\r\n在（系统/软件中）创建一个新的流程 `flows/` 目录：\r\n\r\n```javascript\r\nmodule.exports = async function(client) {\r\n  await client.navigate('https://example.com');\r\n\r\n  const snapshot = await client.snapshot();\r\n  console.log('Page loaded');\r\n\r\n  await client.close();\r\n};\r\n```\r\n\r\n## 可用的客户端方法\r\n\r\n### 连接\r\n\r\n- `connect()` - 连接到 Playwright MCP 服务器\r\n- `disconnect()` - 断开连接并清理\r\n\r\n### 工具发现\r\n\r\n- `listTools()` - 列出所有可用工具\r\n- `callTool(name, args)` - 直接调用任何工具\r\n\r\n### 浏览器控件\r\n\r\n- `navigate(url)` - 导航到URL\r\n- `navigateBack()` - 返回\r\n- `close()` - 关闭浏览器\r\n- `resize(width, height)` - 调整窗口大小\r\n- `install()` - 安装浏览器\r\n\r\n### 页面交互\r\n\r\n- `snapshot()` - 获取无障碍性快照\r\n- `click(element, ref)` - 点击元素\r\n- `type(element, ref, text, submit, slowly)` - 输入文本\r\n- `pressKey(key)` - 按下键盘键\r\n- `hover(element, ref)` - 将鼠标悬停在元素上\r\n- `drag(startElement, startRef, endElement, endRef)` - 拖放\r\n\r\n### 表单\r\n\r\n- `fillForm(fields)` - 填写多个表单字段\r\n- `selectOption(element, ref, values)` - 选择下拉菜单选项\r\n- `fileUpload(paths)` - 上传文件\r\n\r\n### 页面状态\r\n\r\n- `evaluate(func)` - 执行JavaScript\r\n- `screenshot(filename, type, fullPage, element, ref)` - 截图\r\n- `consoleMessages(onlyErrors)` - 获取控制台日志\r\n- `networkRequests()` - 获取网络活动\r\n\r\n### 对话框\r\n\r\n- `handleDialog(accept, promptText)` - 处理警报/确认\r\n\r\n### 标签页\r\n\r\n- `tabs(action, index)` - 管理浏览器标签页\r\n\r\n### 等一下\r\n\r\n- `waitFor(text, textGone, time)` - 等待条件满足\r\n\r\n## 流量详情\r\n\r\n### 谷歌搜索\r\n\r\n- 导航至谷歌\r\n- 搜索“Playwright自动化测试”\r\n- 等待30秒以加载结果\r\n- 提取所有结果的标题、网址和描述\r\n- 返回包含完整结果元数据的综合JSON输出\r\n\r\n### 获取\r\n\r\n- 接受一个URL作为参数\r\n- 导航至该URL\r\n- 使用启发式方法智能提取主要内容：\r\n  - 优先考虑；置于首要位置 ``， ``以及语义内容领域\r\n  - 提取结构化文本，包括标题、段落、列表和代码块\r\n  - 去除重复内容和导航元素\r\n  - 输出格式为简洁的Markdown\r\n- 返回包含URL、标题、内容长度和提取内容的JSON\r\n- 为简洁起见，限制输出为50,000个字符\r\n- 在文档网站、博客、文章等多种平台上均能广泛适用\r\n\r\n## 要求\r\n\r\n- Node.js 14及以上版本\r\n- Playwright MCP 服务器（通过 npx 自动安装）\r\n\r\n## 注释\r\n\r\n- 在流程完成前请务必关闭浏览器\r\n- 支持 `file://` 本地测试的URL\r\n- 使用 `browser_evaluate` 用于调试窗口全局变量\r\n- 没有硬编码值 - 所有流程均使用快照中的真实数据\r\n- 截图会自动保存到 `/tmp/playwright-mcp-output//`\r\n",
+ "config": {
+  "playread": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "playread@latest",
+    "mcp"
+   ],
+   "env": {}
+  }
+ }
+}

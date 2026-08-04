@@ -1,0 +1,24 @@
+{
+ "id": "725",
+ "kind": "mcp",
+ "name": "mcp-server-box",
+ "fingerprint_md5": "afbd172a94df736f4ced627454a211f3",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Box MCP服务器\r\n\r\n> \\[！警告\\]\r\n> **此存储库已停止使用，不再维护。**\r\n> Box现在提供了一个官方支持的托管MCP服务器，具有最佳体验和完整功能。\r\n> 请迁移到托管的MCP服务器： **[设置Box MCP服务器→](https://developer.box.com/guides/box-mcp/setup)**\r\n\r\n## 快速开始\r\n\r\n### 克隆存储库：\r\n\r\n```sh\r\ngit clone https://github.com/box-community/mcp-server-box.git\r\ncd mcp-server-box\r\n```\r\n\r\n### 可选但推荐 `uv` 虚拟环境和依赖关系管理的安装：\r\n\r\n#### 自制（macOS）\r\n\r\n```sh\r\nbrew install uv\r\n```\r\n\r\n#### WinGet（Windows）\r\n\r\n```sh\r\nwinget install --id=astral-sh.uv  -e\r\n```\r\n\r\n#### 在macOS和Linux上\r\n\r\n```sh\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n#### 在Windows上\r\n\r\n```sh\r\npowershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\r\n```\r\n\r\n### 设置虚拟环境并安装依赖项：\r\n\r\n```sh\r\nuv sync\r\n```\r\n\r\n### 设置环境变量：\r\n\r\n在中为Box身份验证设置以下环境变量 `.env` 文件或您的系统环境。\r\n\r\n有关全面的身份验证配置选项，请参阅 [身份验证指南](docs/authentication.md).\r\n\r\n#### 在Box应用程序中使用OAuth2.0\r\n\r\n```\r\nBOX_CLIENT_ID = YOUR_CLIENT_ID\r\nBOX_CLIENT_SECRET = YOUR_CLIENT_SECRET\r\nBOX_REDIRECT_URL = http://localhost:8000/callback\r\n\r\n# MCP Server Authentication (for HTTP transports)\r\nBOX_MCP_SERVER_AUTH_TOKEN = YOUR_BOX_MCP_SERVER_AUTH_TOKEN\r\nOAUTH_PROTECTED_RESOURCES_CONFIG_FILE = .oauth-protected-resource.json\r\n```\r\n\r\n> **备注**:\r\n>\r\n> - 这 `BOX_MCP_SERVER_AUTH_TOKEN` 用于在使用时向MCP服务器验证MCP客户端 `--mcp-auth-type=token` （独立于Box身份验证）\r\n\r\n### 在STDIO模式下运行MCP服务器：\r\n\r\n```sh\r\nuv run src/mcp_server_box.py\r\n```\r\n\r\n## Box社区MCP服务器工具\r\n\r\n以下是可用工具的摘要：\r\n\r\n|可用工具|说明|\r\n|--------------------------|--------------------------------------------------|\r\n| [box_tools_ai](docs/box_tools_ai.md) |基于AI的文件和中心查询|\r\n| [box_tools协作](docs/box_tools_collaboration.md) |管理文件/文件夹协作|\r\n| [box_tools_docgen](docs/box_tools_docgen.md) |文档生成和模板管理|\r\n| [box_tools文件](docs/box_tools_files.md) |文件操作（读取、上传、下载）|\r\n| [box_tools文件夹](docs/box_tools_folders.md) |文件夹操作（列表、创建、删除、更新）|\r\n| [box_tools_generic](docs/box_tools_generic.md) |通用Box API实用程序|\r\n| [box_tools_groups](docs/box_tools_groups.md) |组管理和查询|\r\n| [box_tools元数据](docs/box_tools_metadata.md) |元数据模板和实例管理|\r\n| [box_tools_search](docs/box_tools_search.md) |搜索文件和文件夹|\r\n| [box_tools_shared_links](docs/box_tools_shared_links.md) |文件/文件夹/网络链接的共享链接管理|\r\n| [box_tools任务](docs/box_tools_tasks.md) |任务和任务分配管理|\r\n| [box_tools_users](docs/box_tools_users.md) |用户管理和查询|\r\n| [box_tools_web_link](docs/box_tools_web_link.md) |Web链接创建和管理|\r\n\r\n## Box社区MCP服务器操作详细信息\r\n\r\n### 命令行界面参数\r\n\r\n要使用特定配置运行MCP服务器，可以使用以下命令行参数：\r\n\r\n```sh\r\nuv run src/mcp_server_box.py --help\r\n```\r\n\r\n```\r\nusage: mcp_server_box.py [-h] [--transport {stdio,sse,http}] [--host HOST] [--port PORT] [--mcp-auth-type {oauth,token,none}] [--box-auth-type {oauth,ccg,jwt,mcp_client}]\r\n\r\nBox Community MCP Server\r\n\r\noptions:\r\n  -h, --help            show this help message and exit\r\n  --transport {stdio,sse,http}\r\n                        Transport type (default: stdio)\r\n  --host HOST           Host for SSE/HTTP transport (default: localhost)\r\n  --port PORT           Port for SSE/HTTP transport (default: 8005)\r\n  --mcp-auth-type {oauth,token,none}\r\n                        Authentication type for MCP server (default: token)\r\n  --box-auth-type {oauth,ccg,jwt,mcp_client}\r\n                        Authentication type for Box API (default: oauth)\r\n```\r\n\r\n有关身份验证类型、配置和用例的详细信息，请参阅 [身份验证指南](docs/authentication.md).\r\n\r\n### Claude桌面配置\r\n\r\n#### STDIO模式\r\n\r\n编辑您的 `claude_desktop_config.json`:\r\n\r\n`code ~/Library/Application\\ Support/Claude/claude_desktop_config.json`\r\n\r\n添加配置：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"mcp-server-box\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"/path/to/mcp-server-box\",\r\n                \"run\",\r\n                \"src/mcp_server_box.py\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n如果Claude正在运行，请重新启动它。\r\n\r\n#### HTTP模式\r\n\r\n假设您的MCP服务器正在运行 `https://mcp.myserver.com/mcp`\r\n\r\n1. 转到克劳德->设置->连接器\r\n1. 选择 `Add custom connector`\r\n1. 配置：\r\n   1. 给它起个名字\r\n   1. 输入URL，例如。 `https://mcp.myserver.com/mcp`\r\n   1. 可选择输入 `client id` 和 `client secret`\r\n1. 点击添加\r\n1. 单击连接。OAuth流应该开始。完成流程\r\n1. 回到Claude，单击配置。你应该看到所有可用的工具。\r\n",
+ "config": {
+  "mcp-server-box": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/path/to/mcp-server-box",
+    "run",
+    "src/mcp_server_box.py"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "321",
+ "kind": "mcp",
+ "name": "mobile-pixel",
+ "fingerprint_md5": "ce68a51f3434bca0e2010670e39f48c7",
+ "download_count": 0,
+ "category": "移动端自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 移动像素MCP\r\n\r\n一种用于移动设备自动化的轻量级、视觉优先的模型上下文协议（MCP）服务器。使AI模型能够通过屏幕截图和基于坐标的交互来控制移动设备并与之交互。\r\n\r\n## 快速开始\r\n\r\n将此添加到您的MCP客户端配置中（例如，Claude Desktop、Cursor）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mobile-pixel\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"mobile-pixel-mcp@latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您可以选择传递参数来指定平台或设备：\r\n\r\n```json\r\n\"args\": [\"-y\", \"mobile-pixel-mcp@latest\", \"--platform\", \"ios\"]\r\n```\r\n\r\n## 先决条件\r\n\r\n启动服务器 *之后* 确保您的环境准备就绪：\r\n\r\n### 安卓\r\n\r\n- [安卓调试桥（ADB）](https://developer.android.com/tools/adb) 已安装并位于PATH中\r\n- 设备上启用了USB调试，或模拟器正在运行\r\n- 设备已连接并授权(`adb devices` 显示您的设备）\r\n\r\n### iOS\r\n\r\n- [IDB（iOS开发桥）](https://fbidb.io/) 已安装并位于PATH中\r\n- Xcode和Xcode命令行工具(`xcrun simctl` 支持）\r\n- 模拟器正在运行或物理设备已连接\r\n\r\n## 特性\r\n\r\n- **视觉优先：** 使用屏幕截图+坐标（OCR/计算机视觉就绪）\r\n- **自动OCR：** `find_text` 和 `tap_text` 工具包括\r\n- **遥测桥：** 通过MCP读取应用程序日志\r\n- **智能启动：** 上下文感知应用程序启动（如果运行则恢复，如果不运行则冷启动）\r\n- 跨平台支持（安卓和iOS）\r\n\r\n## 可用工具\r\n\r\n|工具|说明|参数|\r\n|------|-------------|------------|\r\n| `get_screen` |捕获当前设备屏幕|无|\r\n| `tap` |点击坐标| `x`, `y` |\r\n| `swipe` |滑动手势| `x1`, `y1`, `x2`, `y2`, `duration_ms` |\r\n| `type_text` |在焦点元素中输入文本| `text` |\r\n| `home` |按下主页按钮|无|\r\n| `launch_app` |启动/恢复应用程序| `app_id` |\r\n| `check_app_status` |检查应用程序是否正在运行| `app_id` |\r\n| `find_text` |查找文本坐标（OCR）| `text` |\r\n| `tap_text` |查找文本并点击中心（OCR）| `text` |\r\n| `check_app_log` |跟踪最近的应用程序日志| `tag`, `filter_text` |\r\n| `configure_device` |动态切换设备/平台| `platform`, `device_id`, `app_id` |\r\n| `install_app` |从本地路径安装应用程序| `path` |\r\n| `uninstall_app` |卸载应用程序| `app_id` |\r\n| `reset_app` |重置应用程序数据/状态| `app_id` |\r\n\r\n## 配置\r\n\r\n服务器支持持久配置，以避免在每次重新启动时指定参数。它寻找 `mobile-pixel.config.json` 在当前工作目录中。服务器将 **自动创建此文件** 如果不存在，则使用默认设置。\r\n\r\n### 动态切换\r\n\r\n您可以使用 `configure_device` 该工具用于在不重新启动MCP服务器的情况下切换平台（例如从Android到iOS）或目标设备。这将更新 `mobile-pixel.config.json` 文件自动。\r\n\r\n### 手动配置（mobile pixel.config.json）\r\n\r\n```json\r\n{\r\n  \"platform\": \"android\",\r\n  \"deviceId\": \"emulator-5554\",\r\n  \"appId\": \"com.example.app\",\r\n  \"mainActivity\": \".MainActivity\"\r\n}\r\n```\r\n\r\n## 本地开发与安装\r\n\r\n如果你想从源代码运行或贡献：\r\n\r\n1. **克隆**: `git clone `\r\n1. **安装**: `npm install`\r\n1. **构建**: `npm run build`\r\n1. **跑**:\r\n   ```bash\r\n   # Android\r\n   npm start\r\n   # iOS\r\n   npm start -- --platform=ios\r\n   ```\r\n1. **测试**: `npm test`\r\n\r\n## 故障排除\r\n\r\n### “ADB/IDB不可用”\r\n\r\n确保各自的工具(`adb` 对于Android， `idb`/`xcrun` 适用于iOS）已安装并位于您的系统PATH中。\r\n\r\n## 许可证\r\n\r\n阿帕奇-2.0\r\n",
+ "config": {
+  "mobile-pixel": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mobile-pixel-mcp@latest"
+   ],
+   "env": {}
+  }
+ }
+}

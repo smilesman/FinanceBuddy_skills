@@ -1,0 +1,21 @@
+{
+ "id": "96",
+ "kind": "mcp",
+ "name": "chess-3",
+ "fingerprint_md5": "72b5822958123d4c083175a4089f5521",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 克劳德的国际象棋分析助理\r\n\r\n[](https://smithery.ai/server/chess-mcp)\r\n这个工具可以帮助你分析国际象棋的位置，并在克劳德内部使用Stockfish获得专业评估！你可以：\r\n\r\n- 获取职位评估\r\n- 参见视觉板表示\r\n- 分析不同的动作和变化\r\n- 在大师数据库中查找位置（2200多名玩家玩过的游戏）\r\n\r\n## 需求\r\n\r\n- [克劳德桌面](https://claude.ai/desktop) 已安装在您的计算机上\r\n- Git已安装在您的系统上\r\n\r\n## 快速安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面国际象棋分析助手 [史密瑟里](https://smithery.ai/server/chess-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install chess-mcp --client claude\r\n```\r\n\r\n### Mac和Linux用户\r\n\r\n打开终端并运行以下命令：\r\n\r\n```bash\r\ncurl -fsSL https://raw.githubusercontent.com/turlockmike/chess-mcp/master/install.sh | bash\r\n```\r\n\r\n就是这样！脚本将：\r\n\r\n1. 安装所需的依赖项（Node.js 20+、Stockfish、Cairo）\r\n1. 配置Claude桌面\r\n1. 设置国际象棋助手\r\n\r\n## 手动安装（Windows或高级用户）\r\n\r\n如果您更喜欢手动安装或使用Windows，请按照以下步骤操作：\r\n\r\n### 需求\r\n\r\n- [克劳德桌面](https://claude.ai/desktop)\r\n- [Node.js](https://nodejs.org/) 版本20或更高\r\n- [长筒鱼](https://stockfishchess.org/) 象棋引擎\r\n- [开罗](https://github.com/Automattic/node-canvas/wiki/Installation:-Windows) 图形库（用于电路板可视化）\r\n\r\n### 分步安装\r\n\r\n#### 步骤1：安装依赖项\r\n\r\n**Mac用户：**\r\n\r\n```bash\r\n# Install Homebrew if you haven't already\r\n/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"\r\n\r\n# Install required packages\r\nbrew install stockfish cairo pkg-config jq\r\n```\r\n\r\n**Windows用户：**\r\n\r\n1. 安装 [Node.js](https://nodejs.org/) （LTS版本）\r\n1. 下载 [长筒鱼](https://stockfishchess.org/download/) 并将其添加到您的PATH中\r\n1. 安装 [开罗](https://github.com/Automattic/node-canvas/wiki/Installation:-Windows)\r\n\r\n#### 第二步：安装象棋助手\r\n\r\n```bash\r\nnpm install -g chess-mcp\r\n```\r\n\r\n#### 步骤3：配置Claude桌面\r\n\r\n1. 打开克劳德桌面\r\n1. 导航到配置文件：\r\n   - 雨衣： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - 窗户： `%APPDATA%/Claude/claude_desktop_config.json`\r\n1. 添加此配置：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"chess\": {\r\n            \"command\": \"npx\",\r\n            \"args\": [\"chess-mcp\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n4. 保存并重新启动Claude Desktop\r\n\r\n## 使用国际象棋助手\r\n\r\n1. 打开克劳德桌面\r\n1. 查找工具图标(🔧) - 它应该显示国际象棋分析工具\r\n1. 尝试以下示例提示：\r\n   - “分析此位置：rnbqkbnr/ppppppp/8/8/8/PPPPPP/rnbqkbnr w KQkq-0 1”\r\n   - “显示当前位置”\r\n   - “在这个位置上最好的动作是什么？”\r\n   - “在master数据库中查找此位置”\r\n   - “显示2000年后此位置的大师赛”\r\n   - “大师们在这个位置上最常见的动作是什么？”\r\n\r\n## 特性\r\n\r\n### 职位分析\r\n\r\n- 使用Stockfish进行发动机评估\r\n- 视觉板表示\r\n- 最佳移动建议\r\n- 移动验证\r\n\r\n### 硕士数据库\r\n\r\n- 搜索2200+评分玩家玩过的游戏中的位置\r\n- 按日期范围筛选游戏\r\n- 查看获胜/平局统计数据\r\n- 查看最常见的动作及其成功率\r\n- 浏览最近的大师赛和玩家评分\r\n\r\n## 需要帮助？\r\n\r\n如果您遇到任何问题：\r\n\r\n1. 确保所有要求都安装正确\r\n1. 验证Stockfish是否可以从命令行访问\r\n1. 检查Claude Desktop配置中的所有路径是否正确\r\n1. 进行任何更改后重新启动Claude Desktop\r\n\r\n## 常见问题\r\n\r\n- **“工具未显示在Claude中”**：确保您已正确配置Claude Desktop\r\n- **“未找到Stockfish”**：验证Stockfish是否已安装并可从命令行访问\r\n- **“节点版本错误”**：确保您安装了Node.js版本20或更高版本\r\n- **“画布安装失败”**：确保Cairo已针对您的操作系统正确安装\r\n",
+ "config": {
+  "chess": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "chess-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

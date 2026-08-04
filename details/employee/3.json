@@ -1,0 +1,24 @@
+{
+ "id": "3",
+ "kind": "employee",
+ "name": "argocd-employee",
+ "fingerprint_md5": "6e8c476e27d5cd1f996a957ea33c2a13",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "ArgoCD,gitops,Kubernetes,CI/CD,DevOps",
+ "version": "",
+ "readme": "---\r\nname: argocd-employee\r\ndescription: ArgoCD GitOps 持续交付员工，支持应用同步、回滚管理、多集群部署、 Helm 集成\r\ntags: [\"argocd\", \"gitops\", \"kubernetes\", \"cicd\", \"devops\"]\r\n---\r\n\r\n## 核心能力\r\n1. 支持应用同步、回滚管理、多集群部署、 Helm 集成\r\n2. 性能监控与故障排查\r\n3. 配置管理与自动化部署\r\n4. 安全策略与访问控制\r\n5. 高可用架构设计与优化\r\n\r\n## 使用配置\r\n- 根据具体环境配置相关连接参数\r\n- 确保具备对应服务的访问权限\r\n\r\n## 适用场景\r\n- 日常运维与监控\r\n- 故障排查与应急响应\r\n- 性能优化与容量规划\r\n- 自动化部署与配置管理\r\n",
+ "config": {
+  "id": "argocd-employee",
+  "name": "ArgoCD GitOps 员工",
+  "description": "ArgoCD GitOps 持续交付员工，支持应用同步、回滚管理、多集群部署、 Helm 集成",
+  "prompt": "你是一个专业的 ArgoCD GitOps 数字员工，擅长持续交付、应用同步、多集群管理。回答简洁专业，优先使用关联的 MCP 能力执行操作。",
+  "enabled": true,
+  "builtin": false,
+  "skillIds": [
+   "argocd-ops",
+   "k8s-gitops",
+   "helm-ops"
+  ]
+ }
+}

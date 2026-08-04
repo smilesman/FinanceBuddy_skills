@@ -1,0 +1,24 @@
+{
+ "id": "1260",
+ "kind": "mcp",
+ "name": "redis-diagnostics",
+ "fingerprint_md5": "552e6ce3d736459b2506c5795450143a",
+ "download_count": 0,
+ "category": "缓存",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP Redis诊断\r\n\r\n用于Redis诊断的MCP服务器——使用AI支持的建议分析内存使用情况、慢日志、客户端连接和密钥空间健康状况。\r\n\r\n## 为什么是这个工具？\r\n\r\n大多数Redis MCP服务器都是CRUD包装器（获取/设置密钥）。RedisNexus提供诊断，但针对企业（K8s、多租户SaaS）。这个工具是唯一的 **轻量级npm包** 用于深度Redis诊断——7个工具，涵盖内存碎片、慢日志模式、客户端连接健康状况、密钥空间分布、延迟分析和配置审计。安装时使用 `npx`不需要Docker或SaaS。\r\n\r\n## 专业级别\r\n\r\n**生成可导出的诊断报告（HTML+PDF）** 使用Pro许可证密钥。\r\n\r\n- 完整的JVM线程转储分析报告，其中包含可操作的建议\r\n- PDF导出以与您的团队共享\r\n- 优先支持\r\n\r\n<!-- TODO: replace placeholder Stripe Payment Link once STRIPE_SECRET_KEY is configured -->\r\n\r\n**9.00美元/月** — [获取专业版许可证](https://buy.stripe.com/PLACEHOLDER)\r\n\r\nPro许可证密钥激活 `generate_report` MCP-jvm诊断中的MCP工具。\r\n\r\n## 工具（7）\r\n\r\n### `analyze_memory`\r\n\r\n分析Redis内存使用情况和碎片。\r\n\r\n**检测：**\r\n\r\n- 高内存碎片（>1.5倍RSS/使用率）\r\n- 掉期风险（碎片化\\<1.0）\r\n- 最大存储压力（接近极限）\r\n- 驱逐模式\r\n- 缺少最大内存配置\r\n- 不安全不胜利政策\r\n\r\n### `analyze_slowlog`\r\n\r\n分析Redis SLOWLOG的慢速命令。\r\n\r\n**参数：**\r\n\r\n- `count` （number，默认值：128）--要检索的慢日志条目数\r\n\r\n**检测：**\r\n\r\n- 危险O（N）命令：钥匙、SMEMBERS、HGETALL、SORT\r\n- 高延迟命令（阈值>10ms，>100ms）\r\n- 指挥集中模式\r\n- 慢速日志缓冲区已满（缺少历史记录）\r\n\r\n### `analyze_clients`\r\n\r\n分析Redis客户端连接。\r\n\r\n**检测：**\r\n\r\n- 被阻止的客户端（BLPOP/BRPOP）\r\n- 连接池饱和（最大客户端数>80%）\r\n- 空闲连接（>5分钟）\r\n- 大输出缓冲存储器\r\n- 发布/订阅模式\r\n\r\n### `analyze_keyspace`\r\n\r\n分析Redis密钥空间分布和缓存有效性。\r\n\r\n**检测：**\r\n\r\n- TTL覆盖率低（\\<20%的按键）\r\n- 缓存命中率低（\\<80%）\r\n- 数据库分布不平衡\r\n- 过期/驱逐率高\r\n- 多数据库反模式\r\n\r\n### `analyze_latency`\r\n\r\n从latency子系统分析Redis延迟事件。\r\n\r\n**检测：**\r\n\r\n- 分叉延迟峰值（RDB/AOF后台保存阻塞操作）\r\n- AOF fsync延迟和写入延迟\r\n- 命令处理速度慢（O（1）个命令出乎意料地慢）\r\n- 驱逐和密钥到期周期延迟\r\n- 主动碎片整理影响\r\n- 随着时间的推移，延迟趋势逐渐增加\r\n\r\n> 需要 `latency-monitor-threshold` 在redis.conf中设置（例如。， `CONFIG SET latency-monitor-threshold 100`).\r\n\r\n### `analyze_config`\r\n\r\n分析Redis配置的安全性和可靠性风险。\r\n\r\n**检测：**\r\n\r\n- 没有最大内存限制（无限内存增长，OOM风险）\r\n- 不安全的驱逐策略（noeviction导致内存限制错误）\r\n- 网络暴露（绑定0.0.0.0，无保护模式）\r\n- 缺少身份验证（无需密码）\r\n- 禁用持久性（AOF和RDB都关闭——重启时数据丢失）\r\n- 空闲连接累积（超时0）\r\n- 禁用TCP保活（未检测到死连接）\r\n- 服务器频率低（hz\\<10减慢后台任务）\r\n\r\n### `analyze_performance`\r\n\r\n全面的健康评估——运行所有分析器并生成统一的报告。\r\n\r\n**参数：**\r\n\r\n- `slowlog_count` （number，默认值：128）--慢日志条目数\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g mcp-redis-diagnostics\r\n```\r\n\r\n或者直接运行：\r\n\r\n```bash\r\nnpx mcp-redis-diagnostics\r\n```\r\n\r\n## 配置\r\n\r\n### 环境变量\r\n\r\n|变量|描述|默认值|\r\n|----------|-------------|---------|\r\n| `REDIS_URL` |Redis连接字符串| `redis://localhost:6379` |\r\n\r\n### 克劳德桌面版\r\n\r\n添加 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"redis-diagnostics\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-redis-diagnostics\"],\r\n      \"env\": {\r\n        \"REDIS_URL\": \"redis://localhost:6379\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 带密码的Redis：\r\n\r\n```json\r\n{\r\n  \"env\": {\r\n    \"REDIS_URL\": \"redis://:yourpassword@localhost:6379\"\r\n  }\r\n}\r\n```\r\n\r\n## 快速演示\r\n\r\n配置后，在Claude中尝试以下提示：\r\n\r\n1. **“分析我的Redis内存使用情况——是否存在碎片化？”** --显示已用内存与最大内存、碎片率、驱逐策略和内存压力问题\r\n1. **“检查Redis慢日志中的危险命令”** --识别O（N）命令，如KEYS/SMEMBERS、高延迟模式和优化建议\r\n1. **“运行完整的Redis健康检查”** --结合内存、慢日志、客户端、密钥空间和延迟分析的统一报告\r\n\r\n> “我的缓存命中率是多少？我的TTL配置正确吗？”\r\n\r\n> “给我一个完整的Redis健康检查”\r\n\r\n## MCP Java后端套件的一部分\r\n\r\n此工具是面向后端开发人员的MCP服务器套件的一部分：\r\n\r\n- **mcp-db分析仪** --PostgreSQL/MySQL/SQLite模式分析\r\n- **mcp-jvm诊断** --线程转储和GC日志分析\r\n- **mcp迁移顾问** --Flyway/Liquibase迁移风险分析\r\n- **mcp弹簧防尘套执行器** --Spring Boot健康状况和指标分析\r\n- **mcp-redis诊断** --Redis内存、慢日志和客户端诊断\r\n\r\n## 限制和已知问题\r\n\r\n- **单个Redis实例**：一次分析一个Redis实例。不支持Redis集群拓扑发现或Sentinel故障转移分析。\r\n- **ACL限制**：一些工具需要特定的Redis命令（SLOWLOG、CLIENT LIST、LATENCY）。Redis ACL可能会阻止这些。这 `analyze_performance` 统一工具能够优雅地处理部分故障。\r\n- **延迟监控**：The `analyze_latency` 工具需要 `latency-monitor-threshold` 在redis.conf中设置。没有它，就不会捕获延迟事件。\r\n- **关键级别分析**：键空间分析使用 `INFO keyspace` 骨料。个人钥匙检查（例如，找到最大的钥匙）需要 `MEMORY USAGE` 每个密钥，不执行此操作以避免影响生产。\r\n- **Redis 集群**：没有特定于集群的分析（插槽分布、再平衡、跨节点延迟）。仅适用于单个节点。\r\n- **Redis模块**：不分析特定于模块的命令和数据类型（RedisJSON、RediSearch、RedithSeries）。\r\n- **内存顾问**：内存建议基于 `INFO memory` 统计数据。有关按密钥类型细分的详细内存，请使用 `redis-cli --bigkeys` 外部。\r\n- **碎片率**：内存碎片使用RSS与已用内存的比率，这可能会被jemalloc扭曲。值\\<1.0可能并不总是表示交换。\r\n- **只读**：所有命令都是只读的（INFO、SLOWLOG GET、CLIENT LIST、LATENCY）。未修改任何数据或配置。\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n______________________________________________________________________\r\n\r\n**生命终结：2026-05-10。**\r\n\r\n此MCP服务器不再维护或分发。公司\r\n已经转向Apify市场参与者。看\r\n[`irrationalways` 关于Apify](https://apify.com/irrationalways) 和\r\n`irrcorp/bzp-poland-tenders` 对于当前的公司工作。\r\n\r\nnpm包尚未发布。存储库已存档\r\n仅供历史参考。\r\n",
+ "config": {
+  "redis-diagnostics": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-redis-diagnostics"
+   ],
+   "env": {
+    "REDIS_URL": "redis://localhost:6379"
+   }
+  }
+ }
+}

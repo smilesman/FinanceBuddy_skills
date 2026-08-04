@@ -1,0 +1,25 @@
+{
+ "id": "2423",
+ "kind": "mcp",
+ "name": "arxiv-mcp-server-2",
+ "fingerprint_md5": "df608fa91e18545c88fb44f6bb2d4235",
+ "download_count": 0,
+ "category": "学术检索",
+ "tags": "",
+ "version": "",
+ "readme": "# ArXiv MCP服务器\r\n\r\n> 🔍 使AI助手能够通过简单的MCP界面搜索和访问arXiv论文。\r\n\r\nArXiv MCP服务器通过模型上下文协议（MCP）在人工智能助手和ArXiv的研究库之间提供了一座桥梁。它允许人工智能模型以程序化的方式搜索论文并访问其内容。\r\n\r\n\r\n🤝 **[贡献](https://github.com/blazickjp/arxiv-mcp-server/blob/main/CONTRIBUTING.md)** •\r\n📝 **[报告Bug](https://github.com/blazickjp/arxiv-mcp-server/issues)**\r\n\r\n[https://www.pulsemcp.com/servers/blazickjp-arxiv-mcp-server](https://www.pulsemcp.com/servers/blazickjp-arxiv-mcp-server)\r\n\r\n\r\n## ✨ 核心功能\r\n\r\n- 🔎 **论文搜索**：使用日期范围和类别过滤器查询arXiv论文\r\n- 📄 **纸张存取**：下载并阅读论文内容\r\n- 📋 **论文列表**：查看所有下载的论文\r\n- 🗃️ **本地存储**：论文保存在本地，以便更快地访问\r\n- 📝 **鼓励**：一组研究提示\r\n\r\n## 🚀 快速开始\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装适用于Claude Desktop的ArXiv服务器 [史密瑟里](https://smithery.ai/server/arxiv-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install arxiv-mcp-server --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n使用紫外线进行安装：\r\n\r\n```bash\r\nuv tool install arxiv-mcp-server\r\n```\r\n\r\n发展：\r\n\r\n```bash\r\n# Clone and set up development environment\r\ngit clone https://github.com/blazickjp/arxiv-mcp-server.git\r\ncd arxiv-mcp-server\r\n\r\n# Create and activate virtual environment\r\nuv venv\r\nsource .venv/bin/activate\r\n\r\n# Install with test dependencies\r\nuv pip install -e \".[test]\"\r\n```\r\n\r\n### 🔌 MCP集成\r\n\r\n将此配置添加到MCP客户端配置文件中：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"arxiv-mcp-server\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"tool\",\r\n                \"run\",\r\n                \"arxiv-mcp-server\",\r\n                \"--storage-path\", \"/path/to/paper/storage\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n发展：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"arxiv-mcp-server\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"path/to/cloned/arxiv-mcp-server\",\r\n                \"run\",\r\n                \"arxiv-mcp-server\",\r\n                \"--storage-path\", \"/path/to/paper/storage\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 💡 可用工具\r\n\r\n服务器提供四个主要工具：\r\n\r\n### 1.论文检索\r\n\r\n使用可选过滤器搜索论文：\r\n\r\n```python\r\nresult = await call_tool(\"search_papers\", {\r\n    \"query\": \"transformer architecture\",\r\n    \"max_results\": 10,\r\n    \"date_from\": \"2023-01-01\",\r\n    \"categories\": [\"cs.AI\", \"cs.LG\"]\r\n})\r\n```\r\n\r\n### 2.论文下载\r\n\r\n通过arXiv ID下载论文：\r\n\r\n```python\r\nresult = await call_tool(\"download_paper\", {\r\n    \"paper_id\": \"2401.12345\"\r\n})\r\n```\r\n\r\n### 3.列出论文\r\n\r\n查看所有下载的论文：\r\n\r\n```python\r\nresult = await call_tool(\"list_papers\", {})\r\n```\r\n\r\n### 4.阅读论文\r\n\r\n访问下载的论文内容：\r\n\r\n```python\r\nresult = await call_tool(\"read_paper\", {\r\n    \"paper_id\": \"2401.12345\"\r\n})\r\n```\r\n\r\n## 📝 研究提示\r\n\r\n服务器提供专门的提示来帮助分析学术论文：\r\n\r\n### 论文分析提示\r\n\r\n分析学术论文的综合工作流程，只需要论文ID：\r\n\r\n```python\r\nresult = await call_prompt(\"deep-paper-analysis\", {\r\n    \"paper_id\": \"2401.12345\"\r\n})\r\n```\r\n\r\n该提示包括：\r\n\r\n- 使用可用工具（list_paper、download_paper、read_paper、search_paper）的详细说明\r\n- 论文分析的系统工作流程\r\n- 综合分析结构包括：\r\n  - 执行摘要\r\n  - 研究背景\r\n  - 方法论分析\r\n  - 结果评价\r\n  - 实践和理论意义\r\n  - 未来研究方向\r\n  - 广泛的影响\r\n\r\n## ⚙️ 配置\r\n\r\n通过环境变量进行配置：\r\n\r\n|变量|目的|默认值|\r\n|----------|---------|---------|\r\n| `ARXIV_STORAGE_PATH` |纸张存储位置|~/.arxiv mcp服务器/纸张|\r\n\r\n## 🧪 测试\r\n\r\n运行测试套件：\r\n\r\n```bash\r\npython -m pytest\r\n```\r\n\r\n## 📄 许可证\r\n\r\n根据MIT许可证发布。有关详细信息，请参阅LICENSE文件。\r\n\r\n______________________________________________________________________\r\n\r\n\r\n由以下材料制成❤️ 珍珠实验室团队\r\n\r\n[https://glama.ai/mcp/servers/04dtxi5i5n](https://glama.ai/mcp/servers/04dtxi5i5n)\r\n",
+ "config": {
+  "arxiv-mcp-server": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "tool",
+    "run",
+    "arxiv-mcp-server",
+    "--storage-path",
+    "/path/to/paper/storage"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "id": "1511",
+ "kind": "mcp",
+ "name": "jij",
+ "fingerprint_md5": "3ec01bab9e9c508fb653d27c76107fb6",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP 服务器\r\n\r\n提供工具以支持JijModeling和量子计算的数学优化的服务器。\r\n\r\n## 概述\r\n\r\nJij MCP服务器包含各种工具和实用程序，旨在帮助使用JijModeling实现数学优化模型，并使用Qiskit执行量子计算任务。该平台集成了这两个领域，为计算优化和量子编程提供了全面的支持。\r\n\r\n## 安装\r\n\r\n1. 克隆此存储库\r\n1. 安装所需的依赖项\r\n1. 按如下所述配置服务器\r\n\r\n## 特性\r\n\r\n### JijModeling 支持\r\n\r\n- 关于JijModeling语法和用法的参考信息\r\n- 用于检测JijModeling代码中常见问题的代码检查\r\n- 模型创建协助和最佳实践指导\r\n- 实施优化模型的分步工作流程\r\n\r\n### 量子计算支持\r\n\r\n- Qiskit从v0.x到v1/v2的迁移指南\r\n- API参考文件访问\r\n- 与IBM Quantum Learning Hub教程集成\r\n- 量子电路设计和执行的结构化工作流程\r\n\r\n## 配置\r\n\r\nMCP服务器可以在您的设置文件中配置，如下所示：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"jij\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"<YOUR PATH>/jij-mcp-server\",\r\n                \"run\",\r\n                \"jij_mcp/server.py\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n此配置指定：\r\n\r\n- 服务器名称： `jij`\r\n- 运行命令： `uv`\r\n- 论据：\r\n  - `--directory`：指定服务器位置\r\n  - 服务器目录的路径\r\n  - `run`：执行服务器的命令\r\n  - `jij_mcp/server.py`：要运行的服务器脚本\r\n\r\n### Docker版本\r\n\r\n[](https://insiders.vscode.dev/redirect/mcp/install?name=jij&inputs=%5B%5D&config=%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22--rm%22%2C%22--platform%22%2C%22linux%2Famd64%22%2C%22ghcr.io%2Fjij-inc%2Fjij-mcp-server%3Alatest%22%5D%7D)\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"jij\": {\r\n            \"command\": \"docker\",\r\n            \"args\": [\r\n                \"run\",\r\n                \"-i\",\r\n                \"--rm\",\r\n                \"--platform\",\r\n                \"linux/amd64\",\r\n                \"ghcr.io/jij-inc/jij-mcp-server:latest\"\r\n            ],\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n### JijModeling 工具\r\n\r\n- `learn_jijmodeling`：JijModeling语法和用法指南\r\n- `jm_check`：JijModeling代码的验证工具\r\n\r\n### Qiskit工具\r\n\r\n- `qiskit_v0tov1v2_migration_guide`：Qiskit版本转换指南\r\n- `qiskit_v1_api_reference_toc` 和 `qiskit_v2_api_reference_toc`：API文档访问\r\n- `qiskit_tutorial`：访问IBM Quantum Learning Hub教程\r\n\r\n## 许可证\r\n\r\nApache许可证2.0\r\n",
+ "config": {
+  "jij": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "<YOUR PATH>/jij-mcp-server",
+    "run",
+    "jij_mcp/server.py"
+   ],
+   "env": {}
+  }
+ }
+}

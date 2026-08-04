@@ -1,0 +1,24 @@
+{
+ "id": "768",
+ "kind": "mcp",
+ "name": "nanobanana-2",
+ "fingerprint_md5": "c6ca588939a03c213cbcbd756f9971ac",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# KOF纳米香蕉MCP服务器🍌\r\n\r\n用于Gemini本地映像生成的MCP服务器（Nano Banana）。部分 [KeepOnFirst代理工作流](https://github.com/keeponfirst/keeponfirst-agentic-workflow-starter).\r\n\r\n英语| [繁体中文](README_zh-TW.md)\r\n\r\n## ⚠️ 重要提示：需要账单\r\n\r\n**注：Gemini API免费层不支持图像生成模型。**\r\n若要使用此MCP服务器，您必须从启用了计费的Google Cloud项目中提供API密钥。\r\n\r\n## 特性\r\n\r\n- **生成图像** 使用Gemini 2.5 Flash图像或Gemini 3 Pro图像\r\n- **进程队列** 具有验证和模拟运行支持的提示文件\r\n- **YAML前体** 支持快速配置\r\n- **跨IDE兼容** -适用于任何启用MCP的客户端\r\n\r\n## ☕ 支持这个项目\r\n\r\n如果这个项目对你有帮助，你可以在这里支持开发：\r\n\r\n<a href=\"https://www.buymeacoffee.com/keeponfirst\" target=\"_blank\">\r\n</a>\r\n\r\n## 安装\r\n\r\n### 选项1：通过npx使用（推荐）\r\n\r\n如果您已发布此包或在本地使用它：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"nanobanana\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@keeponfirst/kof-nanobanana-mcp\"],\r\n      \"env\": {\r\n        \"GEMINI_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 方案2：地方发展\r\n\r\n```bash\r\ncd kof-nanobanana-mcp\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n然后在MCP配置中配置绝对路径（请参阅配置部分）。\r\n\r\n## 配置\r\n\r\n### 1.获取Gemini API密钥\r\n\r\n1. 首选 [谷歌AI工作室](https://aistudio.google.com/apikey)\r\n1. 创建API密钥\r\n1. **重要**：确保您的项目已启用计费。这些型号只收费。\r\n\r\n### 2.添加到MCP配置\r\n\r\n添加到您的MCP配置文件中（例如。， `~/.gemini/antigravity/mcp_config.json`):\r\n\r\n```json\r\n{\r\n  \"servers\": {\r\n    \"nanobanana\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/path/to/kof-nanobanana-mcp/dist/index.js\"],\r\n      \"env\": {\r\n        \"GEMINI_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### `nanobanana_generate_image`\r\n\r\n生成单个图像。\r\n\r\n**参数：**\r\n|名称|类型|必填|描述|\r\n|------|------|----------|-------------|\r\n| `prompt` |string |✅ | 图像描述（10-5000个字符）|\r\n| `output_path` |string |✅ | 保存图像的路径|\r\n| `model` |string |❌ | `gemini-2.5-flash-image` （默认）或 `gemini-3-pro-image-preview` |\r\n| `aspect_ratio` |string |❌ | `1:1`, `16:9`, `9:16`, `4:3`, `3:4` |\r\n| `overwrite` |boolean |❌ | 覆盖现有文件（默认值：false）|\r\n\r\n**例子：**\r\n\r\n```json\r\n{\r\n  \"prompt\": \"A modern flat illustration of three AI robots working together on code\",\r\n  \"output_path\": \"assets/generated/workflow-hero.png\",\r\n  \"model\": \"gemini-2.5-flash-image\",\r\n  \"aspect_ratio\": \"16:9\"\r\n}\r\n```\r\n\r\n### `nanobanana_list_queue`\r\n\r\n列出并验证队列中的提示文件。\r\n\r\n**参数：**\r\n|名称|类型|必填|描述|\r\n|------|------|----------|-------------|\r\n| `queue_dir` |string |❌ | 队列目录（默认： `nanobanana/queue`) |\r\n| `validate` |boolean |❌ | 验证文件（默认值：true）|\r\n| `check_conflicts` |boolean |❌ | 检查输出是否存在（默认值：true）|\r\n\r\n### `nanobanana_process_queue`\r\n\r\n批量处理所有提示文件。\r\n\r\n**参数：**\r\n|名称|类型|必填|描述|\r\n|------|------|----------|-------------|\r\n| `queue_dir` |string |❌ | 队列目录（默认： `nanobanana/queue`) |\r\n| `validate_only` |boolean |❌ | 仅验证，不生成|\r\n| `dry_run` |boolean |❌ | 在没有API调用的情况下预览|\r\n| `overwrite` |string |❌ | `skip`, `overwrite`，或 `rename` |\r\n\r\n## 提示文件格式\r\n\r\n创建 `.md` 文件位于 `nanobanana/queue/` 使用YAML frontmatter：\r\n\r\n```markdown\r\n---\r\noutput_path: assets/generated/workflow-hero.png\r\nmodel: gemini-2.5-flash-image\r\naspect_ratio: 16:9\r\noverwrite: false\r\n---\r\n\r\n# Workflow Hero Image\r\n\r\nCreate a modern, sleek hero illustration showing three AI agents\r\nworking together in a software development workflow.\r\n\r\n## Style Guidelines\r\n- Style: Flat illustration with gradients\r\n- Color palette: Deep purple (#6B46C1) to blue (#3B82F6)\r\n- Background: Subtle gradient\r\n```\r\n\r\n## 定价参考\r\n\r\n|型号|每张图片的价格|\r\n|-------|-----------------|\r\n|双子座2.5闪光图像|~0.039美元（1024x1024）|\r\n|双子座3专业版图像（2K）|~0.134美元|\r\n|Gemini 3 Pro图像（4K）|~0.24美元|\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "nanobanana": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@keeponfirst/kof-nanobanana-mcp"
+   ],
+   "env": {
+    "GEMINI_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

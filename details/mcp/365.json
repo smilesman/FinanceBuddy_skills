@@ -1,0 +1,22 @@
+{
+ "id": "365",
+ "kind": "mcp",
+ "name": "playwright-3",
+ "fingerprint_md5": "30e56c8b8ad33207807f7bc03a61653d",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 剧作家MCP服务器🎭\r\n\r\n[](https://smithery.ai/server/@executeautomation/playwright-mcp-server)\r\n\r\n使用Playwright提供浏览器自动化功能的模型上下文协议服务器。该服务器使LLM能够在真实的浏览器环境中与网页交互、截图、生成测试代码、抓取网页并执行JavaScript。\r\n\r\n[](https://glama.ai/mcp/servers/yh4lgtwgbe)\r\n\r\n## 截图\r\n\r\n\r\n## [文档](https://executeautomation.github.io/mcp-playwright/) | [api参考](https://executeautomation.github.io/mcp-playwright/docs/playwright-web/Supported-Tools)\r\n\r\n## 安装\r\n\r\n您可以使用npm、mcp-get或Smithery安装该包：\r\n\r\n使用npm：\r\n\r\n```bash\r\nnpm install -g @executeautomation/playwright-mcp-server\r\n```\r\n\r\n使用mcp get：\r\n\r\n```bash\r\nnpx @michaellatman/mcp-get@latest install @executeautomation/playwright-mcp-server\r\n```\r\n\r\n使用Smithery\r\n\r\n通过以下方式自动安装Playwright MCP for Claude Desktop [史密瑟里](https://smithery.ai/server/@executeautomation/playwright-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @executeautomation/playwright-mcp-server --client claude\r\n```\r\n\r\n#### 在VS代码中安装\r\n\r\n使用以下按钮之一在VS Code中安装Playwright MCP服务器：\r\n\r\n\r\n[](https://insiders.vscode.dev/redirect?url=vscode-insiders%3Amcp%2Finstall%3F%257B%2522name%2522%253A%2522playwright%2522%252C%2522command%2522%253A%2522npx%2522%252C%2522args%2522%253A%255B%2522-y%2522%252C%2522%2540executeautomation%252Fplaywright-mcp-server%2522%255D%257D)\r\n\r\n或者，您可以使用VS Code CLI安装Playwright MCP服务器：\r\n\r\n```bash\r\n# For VS Code\r\ncode --add-mcp '{\"name\":\"playwright\",\"command\":\"npx\",\"args\":[\"@executeautomation/playwright-mcp-server\"]}'\r\n```\r\n\r\n```bash\r\n# For VS Code Insiders\r\ncode-insiders --add-mcp '{\"name\":\"playwright\",\"command\":\"npx\",\"args\":[\"@executeautomation/playwright-mcp-server\"]}'\r\n```\r\n\r\n安装后，ExecuteAutomation Playwright MCP服务器将可用于VS Code中的GitHub Copilot代理。\r\n\r\n## 使用Playwright服务器的配置\r\n\r\n以下是使用Playwright服务器的Claude Desktop配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"playwright\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@executeautomation/playwright-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 测试\r\n\r\n此项目使用Jest进行测试。测试位于 `src/__tests__` 目录。\r\n\r\n### 运行测试\r\n\r\n您可以使用以下命令之一运行测试：\r\n\r\n```bash\r\n# Run tests using the custom script (with coverage)\r\nnode run-tests.cjs\r\n\r\n# Run tests using npm scripts\r\nnpm test           # Run tests without coverage\r\nnpm run test:coverage  # Run tests with coverage\r\nnpm run test:custom    # Run tests with custom script (same as node run-tests.cjs)\r\n```\r\n\r\n测试覆盖率报告将在 `coverage` 目录。\r\n\r\n## 明星历史\r\n\r\n[](https://star-history.com/#executeautomation/mcp-playwright&Date)\r\n",
+ "config": {
+  "playwright": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@executeautomation/playwright-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

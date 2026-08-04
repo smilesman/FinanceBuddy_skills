@@ -1,0 +1,12 @@
+{
+ "id": "feishu-robot-registry",
+ "kind": "skill",
+ "name": "feishu-robot-registry",
+ "fingerprint_md5": "3603a32a98921f66ebbe84d9f1afaf1d",
+ "download_count": 0,
+ "category": "效率工具",
+ "tags": "",
+ "version": "",
+ "readme": "# feishu-robot-registry\r\n\r\n飞书机器人注册技能。",
+ "config": {}
+}

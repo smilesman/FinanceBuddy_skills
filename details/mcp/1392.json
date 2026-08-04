@@ -1,0 +1,21 @@
+{
+ "id": "1392",
+ "kind": "mcp",
+ "name": "composer-ai",
+ "fingerprint_md5": "678a3b4968ff99492f1bc15a54fcb915",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 🎼 Composer MCP服务器（非官方）\r\n\r\n<p align=\"center\">\r\n  \r\n</p>\r\n\r\n<p align=\"center\">\r\n  <b>Supercharge your PHP development workflow with AI-powered Composer package installation</b>\r\n</p>\r\n\r\n<p align=\"center\">\r\n  <a href=\"#features\">Features</a> •\r\n  <a href=\"#setup\">Setup</a> •\r\n  <a href=\"#usage\">Usage</a> •\r\n  <a href=\"#how-it-works\">How It Works</a> •\r\n  <a href=\"#contributing\">Contributing</a>\r\n</p>\r\n\r\n______________________________________________________________________\r\n\r\n## ✨ 特性\r\n\r\n- **一个命令包安装**：使用单个命令安装任何Composer包\r\n- **智能设置说明**：自动从包README中提取设置步骤\r\n- **全面的软件包支持**：内置流行的Laravel和Symfony包的知识\r\n- **省时指南**：再也不会错过关键的安装后步骤\r\n\r\n## 🚀 设置\r\n\r\n开始使用Composer MCP服务器很简单。只需将其添加到您的MCP客户端配置中（Claude Desktop、Windsurf、Cursor等）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"composer-ai\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"composer-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n就是这样！NPX命令将在需要时自动下载并运行Composer MCP服务器，无需手动安装。\r\n\r\n## 🔧 用法\r\n\r\n配置后，您可以以自然的方式与AI助手交互以安装Composer包：\r\n\r\n```\r\nYou: Composer AI install laravel/sanctum\r\n\r\nAI: [Analyzes the package and provides installation instructions]\r\nTo install laravel/sanctum, run the following command:\r\n\r\n`composer require laravel/sanctum`\r\n\r\nAfter installation, complete these additional setup steps:\r\n- Run `php artisan vendor:publish --provider=\"Laravel\\Sanctum\\SanctumServiceProvider\"` to publish configuration\r\n- Run `php artisan migrate` to create the required tables\r\n```\r\n\r\n在幕后，AI助手正在使用 `install_package` 工具：\r\n\r\n```\r\ninstall_package(package=\"laravel/sanctum\", version=\"^3.0\")\r\n```\r\n\r\n该工具将：\r\n\r\n1. 生成正确的Composer命令以安装软件包\r\n1. 分析软件包的README以提取安装说明\r\n1. 为您提供完成安装的全面指南\r\n\r\n## 🧠 运作原理\r\n\r\nComposer MCP服务器利用模型上下文协议（MCP）来扩展具有PHP Composer功能的AI助手。当您要求您的AI助手安装软件包时，会发生以下情况：\r\n\r\n1. 您的请求（“Composer AI install｛package_name｝”）已被AI识别\r\n1. AI称 `install_package` MCP服务器提供的工具\r\n1. MCP服务器检查Packagist的包信息\r\n1. 它从GitHub或GitLab获取包的README\r\n1. 它智能地解析README以识别安装和设置说明\r\n1. 如果README中没有明确的说明，它就会退回到常见包的内置知识中\r\n1. 格式化的安装和设置说明将返回给AI\r\n1. 人工智能以一种有用的对话形式向您呈现这些信息\r\n\r\n整个过程在几秒钟内完成，使您无需搜索文档并自行找出安装后的步骤。\r\n\r\n## 🤝 贡献\r\n\r\n欢迎投稿！如果你想为这个项目做出贡献：\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/jordandalton/composer-mcp-server.git\r\n\r\n# Navigate to the project directory\r\ncd composer-mcp-server\r\n\r\n# Install dependencies and build\r\nyarn install && yarn build\r\n```\r\n\r\n以下是您可以提供帮助的方式：\r\n\r\n- 在回退系统中添加对更多PHP包的支持\r\n- 改进README解析算法\r\n- 加强错误处理和用户反馈\r\n- 扩展工具的功能\r\n\r\n## 📄 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。\r\n\r\n## 📱 连接\r\n\r\n如果您觉得此工具有用，请随时与创建者联系：\r\n\r\n- 推特/X： [@约丹克达尔顿](https://twitter.com/jordankdalton)\r\n- Reddit： [食肉动物](https://www.reddit.com/user/jdcarnivore)\r\n\r\n______________________________________________________________________\r\n\r\n<p align=\"center\">\r\n  Made with ❤️ for PHP developers\r\n</p>\r\n",
+ "config": {
+  "composer-ai": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "composer-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

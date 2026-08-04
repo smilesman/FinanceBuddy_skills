@@ -1,0 +1,27 @@
+{
+ "id": "377",
+ "kind": "mcp",
+ "name": "plex-3",
+ "fingerprint_md5": "196d61b2b1594256f45416c431388831",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Plex MCP服务器\r\n\r\n[](https://smithery.ai/server/@djbriane/plex-mcp)\r\n\r\n这是一个基于Python的MCP服务器，它与Plex Media server API集成，用于搜索电影和管理播放列表。它使用PlexAPI库与您的Plex服务器进行无缝交互。\r\n\r\n## 截图\r\n\r\n以下是Plex MCP服务器工作原理的一些示例：\r\n\r\n### 1.按导演在Plex库中查找电影\r\n\r\n通过指定导演的姓名在Plex库中搜索电影。例如，搜索“阿尔弗雷德·希区柯克”会返回他在你的库中的电影列表。\r\n\r\n\r\n______________________________________________________________________\r\n\r\n### 2.为导演寻找缺失的电影\r\n\r\n识别Plex库中缺少的特定导演的电影。这有助于您发现收藏中的空白。\r\n\r\n\r\n______________________________________________________________________\r\n\r\n### 3.在Plex库中创建播放列表\r\n\r\n使用搜索中找到的电影在Plex库中创建新的播放列表。这使您能够高效地组织您的库。\r\n\r\n\r\n## 设置\r\n\r\n### 先决条件\r\n\r\n- Python 3.8或更高版本\r\n- `uv` 包管理器\r\n- 具有API访问权限的Plex媒体服务器\r\n\r\n### 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装用于Claude Desktop的Plex媒体服务器集成 [史密瑟里](https://smithery.ai/server/@djbriane/plex-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @djbriane/plex-mcp --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n1. 克隆此存储库：\r\n\r\n   ```\r\n   git clone <repository-url>\r\n   cd plex-mcp\r\n   ```\r\n\r\n1. 安装依赖项 `uv`:\r\n\r\n   ```\r\n   uv venv\r\n   source .venv/bin/activate\r\n   uv sync\r\n   ```\r\n\r\n1. 为您的Plex服务器配置环境变量：\r\n\r\n   - `PLEX_TOKEN`：您的Plex身份验证令牌\r\n   - `PLEX_SERVER_URL`：您的Plex服务器URL（例如。，http://192.168.1.100:32400)\r\n\r\n### 查找您的Plex令牌\r\n\r\n您可以通过以下方式找到您的Plex令牌：\r\n\r\n- 登录Plex Web应用程序\r\n- 打开开发人员工具\r\n- 在Console选项卡中，粘贴并运行：\r\n  ```javascript\r\n  window.localStorage.getItem('myPlexAccessToken')\r\n  ```\r\n\r\n## 与Claude一起使用\r\n\r\n将以下配置添加到您的Claude应用程序中：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"plex\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"FULL_PATH_TO_PROJECT\",\r\n                \"run\",\r\n                \"src/plex_mcp/plex_mcp.py\"\r\n            ],\r\n            \"env\": {\r\n                \"PLEX_TOKEN\": \"YOUR_PLEX_TOKEN\",\r\n                \"PLEX_SERVER_URL\": \"YOUR_PLEX_SERVER_URL\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 可用命令\r\n\r\nPlex MCP服务器公开以下命令：\r\n|命令|描述|OpenAPI参考|\r\n|----------------------|-----------------------------------------------------------------------------|---------------------------------------|\r\n| `search_movies` |通过各种过滤器（如标题、导演、流派）在库中搜索电影，并支持 `limit` 控制结果数量的参数。 | `/library/sections/{sectionKey}/search` |\r\n| `get_movie_details` |获取特定电影的详细信息。                           | `/library/metadata/{ratingKey}` |\r\n| `get_movie_genres` |获取特定电影的流派。                                       | `/library/sections/{sectionKey}/genre` |\r\n| `list_playlists` |列出Plex服务器上的所有播放列表。                                    | `/playlists` |\r\n| `get_playlist_items` |获取特定播放列表中的项目。                                      | `/playlists/{playlistID}/items` |\r\n| `create_playlist` |使用指定的电影创建新的播放列表。                              | `/playlists` |\r\n| `delete_playlist` |从Plex服务器中删除播放列表。                                  | `/playlists/{playlistID}` |\r\n| `add_to_playlist` |将电影添加到现有播放列表中。                                       | `/playlists/{playlistID}/items` |\r\n| `recent_movies` |从您的库中获取最近添加的电影。                              | `/library/recentlyAdded` |\r\n\r\n## 运行测试\r\n\r\n该项目包括单元测试和集成测试。使用以下说明运行每种类型的测试：\r\n\r\n### 单元测试\r\n\r\n单元测试使用虚拟数据来验证每个模块的功能，而不需要实时Plex服务器。\r\n\r\n要运行所有单元测试，请执行以下操作：\r\n\r\n```bash\r\nuv run pytest\r\n```\r\n\r\n### 集成测试\r\n\r\n使用.env文件中定义的环境变量对实时Plex服务器运行集成测试。首先，使用Plex配置在项目根目录中创建.env文件：\r\n\r\n```env\r\nPLEX_SERVER_URL=https://your-plex-server-url:32400\r\nPLEX_TOKEN=yourPlexTokenHere\r\n```\r\n\r\n集成测试用集成标记。要仅运行集成测试，请执行以下操作：\r\n\r\n```bash\r\nuv run pytest -m integration\r\n```\r\n\r\n如果您遇到与Plex服务器的连接问题，请尝试运行集成测试以帮助排除故障。\r\n\r\n## 代码风格和惯例\r\n\r\n- **模块结构：**\\\r\n  为导入、日志设置、实用函数、类定义、全局帮助程序、工具方法和主执行使用清晰的节标题（由保护 `if __name__ == \"__main__\":`).\r\n\r\n- **命名：**\\\r\n  类使用CamelCase，函数、变量和夹具使用lower_snake_case。在测试中，列出内置夹具（例如。 `monkeypatch`)在定制之前。\r\n\r\n- **文件和评论：**\\\r\n  为每个模块、类和函数提供一个简洁的文档字符串，并为复杂的逻辑提供内联注释。\r\n\r\n- **错误处理和日志记录：**\\\r\n  使用Python `logging` 具有一致错误消息（前缀“error:”）和显式异常处理的模块。\r\n\r\n- **异步模式：**\\\r\n  将I/O绑定函数定义为异步并使用 `asyncio.to_thread()` 以处理阻塞操作。\r\n",
+ "config": {
+  "plex": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "FULL_PATH_TO_PROJECT",
+    "run",
+    "src/plex_mcp/plex_mcp.py"
+   ],
+   "env": {
+    "PLEX_TOKEN": "YOUR_PLEX_TOKEN",
+    "PLEX_SERVER_URL": "YOUR_PLEX_SERVER_URL"
+   }
+  }
+ }
+}

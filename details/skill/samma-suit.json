@@ -1,0 +1,12 @@
+{
+ "id": "samma-suit",
+ "kind": "skill",
+ "name": "samma-suit",
+ "fingerprint_md5": "bbb1b530aaa67e07a5fbcfe2d181c44d",
+ "download_count": 0,
+ "category": "API 网关",
+ "tags": "",
+ "version": "",
+ "readme": "# Sammā Suit — OpenClaw 的安全治理\r\n\r\n你正在帮助用户安装和配置 Sammā Suit，这是一个开源安全框架，它作为生命周期钩子为 OpenClaw 添加 8 层强制治理。\r\n\r\n## 功能说明\r\n\r\nSammā Suit 拦截 OpenClaw 的插件钩子以强制执行：\r\n- **NIRVANA** — 终止开关。如果 agent 被终止，则阻止所有活动。\r\n- **DHARMA** — 权限。根据允许的权限集检查工具。\r\n- **SANGHA** — 技能审查。通过白名单 + AST 扫描阻止未经批准的技能。\r\n- **KARMA** — 预算控制。每个 agent 的月度支出上限，带有硬性上限。\r\n- **BODHI** — 隔离。为每个 agent 注入超时、token 和资源限制。\r\n- **METTA** — 身份。对出站消息进行 Ed25519 加密签名。\r\n- **SILA** — 审计追踪。记录每个工具调用、消息和会话事件。\r\n\r\n## 安装\r\n\r\n运行：",
+ "config": {}
+}

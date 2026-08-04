@@ -1,0 +1,18 @@
+{
+ "id": "944",
+ "kind": "mcp",
+ "name": "youtube-transcriber",
+ "fingerprint_md5": "b4e50c59f102ce325568f0f47be25cbf",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# 🎬 YouTube转录器MCP服务器\r\n\r\n一个强大的模型上下文协议（MCP）服务器，可以从YouTube视频中获取转录本。非常适合需要快速访问视频成绩单的学生、研究人员和内容创作者！\r\n\r\n## ✨ 特性\r\n\r\n- 📝 从任何带有字幕的YouTube视频中提取文字记录\r\n- 🌍 支持多种语言（英语、德语、印地语、乌尔都语）\r\n- 🔄 主提取失败时的自动回退方法\r\n- 🧹 清除时间戳的干净格式\r\n- ☁️ 托管在FastMCP Cloud上-无需设置！\r\n\r\n## 🚀 快速入门（3个简单步骤！）\r\n\r\n### 步骤1:安装克劳德桌面\r\n\r\n如果您还没有，请从以下网址下载并安装Claude Desktop [claude.ai](https://claude.ai/download)\r\n\r\n### 步骤2：配置MCP服务器\r\n\r\n1. **查找您的Claude配置文件：**\r\n\r\n   - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n1. **打开文件** 在任何文本编辑器（记事本、文本编辑、VS代码等）中\r\n\r\n1. **添加此配置：**\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube-transcriber\": {\r\n      \"url\": \"https://youtubetranscriber.fastmcp.app/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**备注**：如果您已经配置了其他MCP服务器，只需添加 `\"youtube-transcriber\"` 现有部分内 `\"mcpServers\"` 对象。\r\n\r\n### 步骤3：重新启动克劳德桌面\r\n\r\n完全关闭Claude Desktop并重新打开。完成！ 🎉\r\n\r\n## 🎯 如何使用\r\n\r\n配置后，只需与Claude聊天，让它转录YouTube视频。以下是一些示例：\r\n\r\n### 示例1：获取成绩单\r\n\r\n```\r\nCan you get the transcript of this YouTube video?\r\nhttps://www.youtube.com/watch?v=dQw4w9WgXcQ\r\n```\r\n\r\n### 示例2：总结视频\r\n\r\n```\r\nPlease transcribe this video and give me a summary:\r\nhttps://www.youtube.com/watch?v=VIDEO_ID\r\n```\r\n\r\n### 示例3：提取关键点\r\n\r\n```\r\nGet the transcript from this tutorial and list the main steps:\r\nhttps://www.youtube.com/watch?v=VIDEO_ID\r\n```\r\n\r\n### 示例4：干净的成绩单\r\n\r\n```\r\nFetch the transcript and remove all timestamps:\r\nhttps://www.youtube.com/watch?v=VIDEO_ID\r\n```\r\n\r\n## 🛠️ 可用工具\r\n\r\n服务器提供了Claude可以自动使用的三个强大工具：\r\n\r\n### 1. `get_api_transcript`\r\n\r\n- **主要方法** 用于获取成绩单\r\n- 快速可靠\r\n- 适用于带有官方字幕的视频\r\n\r\n### 2. `get_tactiq_transcript`\r\n\r\n- **后退方法** 当API出现故障时\r\n- 从Tactiq.io中删除记录\r\n- 速度较慢但更全面\r\n\r\n### 3. `clean_transcript`\r\n\r\n- 从原始转录文本中删除时间戳\r\n- 使输出更清晰易读\r\n\r\n## 📋 需求\r\n\r\n**对于用户**:\r\n\r\n- 克劳德桌面应用程序（就是这样！）\r\n\r\n**面向开发者** （如果在本地运行）：\r\n\r\n- Python 3.8+\r\n- 依赖关系： `fastmcp`, `selenium`, `youtube-transcript-api`, `beautifulsoup4`, `webdriver-manager`\r\n\r\n## ❓ 故障排除\r\n\r\n### 服务器不工作？\r\n\r\n1. **检查配置**：确保你的 `claude_desktop_config.json` 格式正确（有效的JSON）\r\n1. **重新启动克劳德**：更改配置后始终重新启动Claude Desktop\r\n1. **使用热门视频进行测试**：先尝试一个带有确认字幕的知名视频\r\n1. **检查视频是否有字幕**：并非所有视频都有文字记录\r\n\r\n### 常见问题\r\n\r\n**“没有可用的字幕”**\r\n\r\n- 视频未启用字幕\r\n- 尝试另一个视频或要求创作者启用字幕\r\n\r\n**服务器似乎已断开连接**\r\n\r\n- 检查您的互联网连接\r\n- 验证URL是否准确： `https://youtubetranscriber.fastmcp.app/mcp`\r\n- 重新启动克劳德桌面\r\n\r\n**成绩单看起来很乱**\r\n\r\n- 让克劳德“清理成绩单并删除时间戳”\r\n- 这 `clean_transcript` 该工具将很好地格式化它\r\n\r\n## 🎓 用例\r\n\r\n非常适合：\r\n\r\n- 📚 **学生**：转录讲座和学习视频\r\n- 🔬 **研究人员**：从视频内容中提取信息\r\n- ✍️ **内容创作者**：获取字幕或博客文章的文字记录\r\n- 🌐 **翻译员**：使用多种语言的视频内容\r\n- ♿ **无障碍**：以文本形式提供视频内容\r\n\r\n## 🔒 隐私和限制\r\n\r\n- 此服务器不存储任何成绩单\r\n- 所有处理都是实时进行的\r\n- 尊重YouTube的服务条款\r\n- 仅适用于有字幕的公开视频\r\n\r\n## 💡 专业提示\r\n\r\n1. **具体**：准确地告诉克劳德你想要什么（总结、要点、完整的成绩单等）\r\n1. **多种语言**：服务器支持英语、德语、印地语和乌尔都语——随便问！\r\n1. **结合分析**：拿到成绩单后，让克劳德分析、总结或回答有关它的问题\r\n1. **批处理**：您可以让Claude在一次对话中转录多个视频\r\n\r\n## 🤝 贡献\r\n\r\n发现错误或有建议？欢迎在存储库上打开问题！\r\n\r\n## 📄 许可证\r\n\r\n本项目按原样提供，供教育和个人使用。\r\n\r\n## 🌟 支持\r\n\r\n如果你觉得这个有用，就给它一颗星⭐ 并与可能受益的人分享！\r\n\r\n______________________________________________________________________\r\n\r\n**快乐转录！ 🎉**\r\n\r\n需要帮助？问问克劳德吧——它知道如何使用这个服务器！\r\n",
+ "config": {
+  "youtube-transcriber": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://youtubetranscriber.fastmcp.app/mcp"
+  }
+ }
+}

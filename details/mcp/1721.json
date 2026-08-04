@@ -1,0 +1,24 @@
+{
+ "id": "1721",
+ "kind": "mcp",
+ "name": "siri-shortcuts",
+ "fingerprint_md5": "256287e3c54fa0a03a7b40d86dc23be0",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Siri快捷方式MCP服务器\r\n\r\n此MCP服务器通过模型上下文协议（MCP）提供对Siri快捷方式功能的访问。它允许从macOS shortcuts应用程序中列出、打开和运行快捷方式。\r\n\r\n\r\n## 特性\r\n\r\n- 暴露 _全部_ 快捷方式，这意味着LLM可以调用shortcuts应用程序中可用的任何内容。\r\n- 列出所有可用快捷方式\r\n- 在快捷方式应用程序中打开快捷方式\r\n- 使用可选输入参数运行快捷方式\r\n- 为每个可用快捷方式动态生成的工具\r\n\r\n## 工具\r\n\r\n### 基础工具\r\n\r\n1. `list_shortcuts`\r\n\r\n   - 列出系统上所有可用的Siri快捷键\r\n   - 无需输入\r\n   - 返回：快捷方式名称数组\r\n\r\n   ```json\r\n   {\r\n     \"shortcuts\": [{ \"name\": \"My Shortcut 1\" }, { \"name\": \"My Shortcut 2\" }]\r\n   }\r\n   ```\r\n\r\n1. `open_shortcut`\r\n\r\n   - 在“快捷方式”应用程序中打开快捷方式\r\n   - 输入：\r\n     - `name` （string）：要打开的快捷方式的名称\r\n\r\n1. `run_shortcut`\r\n\r\n   - 运行带有可选输入的快捷方式\r\n   - 输入：\r\n     - `name` （string）：要运行的快捷方式的名称或标识符（UUID）\r\n     - `input` （字符串，可选）：要传递给快捷方式的文本输入或文件路径\r\n\r\n### 动态工具\r\n\r\n服务器会自动为每个可用快捷方式生成以下格式的附加工具：\r\n\r\n- 工具名称： `run_shortcut_[sanitized_shortcut_name]`\r\n- 说明：运行特定快捷方式\r\n- 输入：\r\n  - `input` （字符串，可选）：要传递给快捷方式的文本输入或文件路径\r\n\r\n## 配置\r\n\r\n服务器支持以下环境变量：\r\n\r\n- `GENERATE_SHORTCUT_TOOLS` （默认值： `true`)：设置为时 `false`，禁用动态快捷方式工具的生成。只有基础工具(`list_shortcuts`, `open_shortcut`, `run_shortcut`)将可用。\r\n- `INJECT_SHORTCUT_LIST` （默认值： `false`)：设置为时 `true`，将可用快捷方式列表注入到 `run_shortcut` 工具描述，以帮助LLM了解可用的快捷方式。\r\n\r\n## 与Claude一起使用\r\n\r\n添加到您的Claude配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"siri-shortcuts\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-server-siri-shortcuts\"],\r\n      \"env\": {\r\n        \"GENERATE_SHORTCUT_TOOLS\": \"true\",\r\n        \"INJECT_SHORTCUT_LIST\": \"false\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 实现细节\r\n\r\n- 使用macOS `shortcuts` 幕后的CLI命令\r\n- 对快捷方式名称进行消毒，以实现工具命名兼容性\r\n- 支持直接文本输入和基于文件的输入\r\n- 返回快捷方式输出（如果可用）\r\n- 实施标准MCP错误处理\r\n",
+ "config": {
+  "siri-shortcuts": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-server-siri-shortcuts"
+   ],
+   "env": {
+    "GENERATE_SHORTCUT_TOOLS": "true",
+    "INJECT_SHORTCUT_LIST": "false"
+   }
+  }
+ }
+}

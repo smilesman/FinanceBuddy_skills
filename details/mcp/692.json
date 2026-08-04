@@ -1,0 +1,25 @@
+{
+ "id": "692",
+ "kind": "mcp",
+ "name": "image-mcp",
+ "fingerprint_md5": "53bbd5c7ab0d4deb84226a50428d2a47",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# 图像MCP服务器\r\n\r\nMCP（模型上下文协议）服务器，使用 [ai图像](https://www.npmjs.com/package/ai-image) npm模块，它围绕OpenAI和Replicate图像推理API。\r\n\r\n## 特性\r\n\r\n- **生成ai_图像**：生成具有可自定义提示、尺寸、型号和样式的AI图像\r\n- **square_image**：生成方形图像（1024x1024）-快捷命令\r\n- **景观图片**：生成风景图像（1536x1024）-快捷命令\r\n- **肖像图片**：生成肖像图像（1024x1536）-快捷命令\r\n- 基于ai图像模块构建，可与OpenAI和Replicate API无缝集成\r\n- 简单的设置和配置\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g image-mcp\r\n```\r\n\r\n## 设置\r\n\r\n### Claude桌面配置\r\n\r\n将以下内容添加到您的Claude Desktop配置文件中：\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\\\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"image-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"image-mcp@latest\"],\r\n      \"env\": {\r\n        \"OPENAI_API_KEY\": \"your-openai-api-key\",\r\n        \"REPLICATE_API_TOKEN\": \"your-replicate-api-token\",\r\n        \"MCP_TIMEOUT\": \"1200000\"\r\n      },\r\n      \"resetTimeoutOnProgress\": true\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 环境变量\r\n\r\n服务器需要API密钥用于基础映像生成服务：\r\n\r\n- `OPENAI_API_KEY`：基于GPT的模型的OpenAI API密钥（我们将不支持Dall-e模型，因为它们可能很快就会被删除）\r\n- `REPLICATE_API_TOKEN`：您为其他人工智能模型复制API令牌\r\n\r\n## 用法\r\n\r\n配置后，您可以通过Claude使用图像生成功能：\r\n\r\n### 生成ai_图像\r\n\r\n生成具有各种参数的AI图像：\r\n\r\n- **提示** （必填）：要生成的图像的文本描述\r\n- **尺寸** （可选）：WIDTHxHEIGHT格式的图像尺寸（默认值：“1024x1024”）\r\n- **模型** （可选）：要使用的特定AI模型\r\n- **输出** （可选）：自定义输出文件路径\r\n\r\n### 快捷方式命令\r\n\r\n为方便起见，请使用以下预设大小命令：\r\n\r\n- **square_image**：生成1024x1024方形图像\r\n- **景观图片**：生成1536x1024幅景观图像\r\n- **肖像图片**：生成1024x1536幅肖像图像\r\n\r\n所有快捷命令都接受与相同的参数 `generate_ai_image` 除了 `size` （这是预设的）。\r\n\r\n示例提示：\r\n\r\n- “毕加索风格的红猫”\r\n- “山上的日落，逼真”\r\n- “蓝色和金色抽象几何图案”\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/iplanwebsites/image-mcp.git\r\ncd image-mcp\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Run in development mode\r\nnpm run dev\r\n\r\n# Start the server\r\nnpm start\r\n```\r\n\r\n## 需求\r\n\r\n- Node.js>=18.0.0\r\n- OpenAI和/或Replicate的有效API密钥\r\n\r\n## 全部\r\n\r\n### 紧急\r\n\r\n- \\[ \\] **修复npm模块问题**：它只在本地工作。..\r\n\r\n### 改进\r\n\r\n- \\[ \\] **更好的指南**：添加更详细的设置指南，包括故障排除步骤、添加到光标按钮等\r\n\r\n- \\[x\\] **直接使用ai图像库**：将子流程CLI调用替换为直接库导入\r\n\r\n- \\[ \\] **返回文件路径**：返回创建的图像文件路径作为响应\r\n\r\n- \\[ \\] **本地推理支持**：添加对Flux等本地模型的支持\r\n\r\n- \\[ \\] **图像优化**：添加轻量级图像大小调整和优化选项\r\n\r\n- \\[ \\] **图像字幕工具**：为基本用例添加字幕模型（对没有视觉的模型有用）\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "image-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "image-mcp@latest"
+   ],
+   "env": {
+    "OPENAI_API_KEY": "your-openai-api-key",
+    "REPLICATE_API_TOKEN": "your-replicate-api-token",
+    "MCP_TIMEOUT": "1200000"
+   }
+  }
+ }
+}

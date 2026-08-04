@@ -1,0 +1,36 @@
+{
+ "id": "1719",
+ "kind": "mcp",
+ "name": "signoz",
+ "fingerprint_md5": "327e0181ffdb2081c16186e06b4bb570",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# Signoz MCP服务器\r\n\r\n在Cursor上观看工作演示📽️ https://youtube.com/shorts/jxjmGyXXz7A\r\n\r\n## 可用工具\r\n\r\n以下工具可通过MCP服务器获得：\r\n\r\n- **test_连接**：验证与Signoz实例和配置的连接。\r\n- **fetch_dashboards**：列出Signoz的所有可用仪表板。\r\n- **fetch_dashboard_details**：按ID检索特定仪表板的详细信息。此信息包含仪表板的元数据，而不是实时面板数据。\r\n- **fetch_dashboard_data**：按名称和时间范围获取给定仪表板的所有面板数据。\r\n- **fetch_apm_metrics**：检索给定服务和时间范围的标准APM指标（请求率、错误率、延迟、apdex等）。\r\n- **fetch_services**：使用可选的时间范围过滤从Signoz获取所有插入指令的服务。\r\n- **execute_clickhouse_query**：通过支持时间范围的Signoz API执行自定义Clickhouse SQL查询。\r\n- **execute_builder_query**：执行Signoz构建器查询，以获取具有时间范围支持的自定义指标和聚合。\r\n- **fetch_traces_or_logs**：使用ClickHouse SQL从SigNoz获取跟踪或日志。指定 `data_type` （“跟踪”或“日志”）、时间范围、服务名称和限制。返回跟踪或日志的表格结果。\r\n\r\n## 🚀 使用和要求\r\n\r\n### 1.获取Signoz API端点和（可选）API密钥\r\n\r\n1. 确保您有一个正在运行的Signoz实例（自托管或云）。\r\n1. （可选）如果您的Signoz实例需要健康终结点的API密钥，请从Signoz UI生成或获取该密钥。\r\n\r\n______________________________________________________________________\r\n\r\n## 2.安装和运行选项\r\n\r\n### 2A。安装并运行uv（建议用于本地开发）\r\n\r\n#### 2A.1。使用uv安装依赖项\r\n\r\n```bash\r\nuv venv .venv\r\nsource .venv/bin/activate\r\nuv sync\r\n```\r\n\r\n#### 2A.2。使用uv运行服务器\r\n\r\n```bash\r\nuv run -m src.signoz_mcp_server.mcp_server\r\n```\r\n\r\n- 您还可以使用 `uv` 根据需要运行任何其他入口点脚本。\r\n- 确保你的 `config.yaml` 与位于同一目录中 `mcp_server.py` 或设置所需的环境变量（请参阅配置部分）。\r\n\r\n______________________________________________________________________\r\n\r\n### 2B。使用Docker Compose运行（推荐用于生产/容器化环境）\r\n\r\n1. 编辑 `src/signoz_mcp_server/config.yaml` 与您的Signoz详细信息（主机，API密钥，如果需要）。\r\n1. 启动服务器：\r\n   ```bash\r\n   docker-compose up -d\r\n   ```\r\n   - 默认情况下，服务器将在端口8000上以HTTP（SSE）模式运行。\r\n   - 您可以使用环境变量覆盖配置（见下文）。\r\n\r\n______________________________________________________________________\r\n\r\n## 3.配置\r\n\r\n服务器按照以下优先级顺序加载配置：\r\n\r\n1. **环境变量** （推荐用于Docker/CI）：\r\n   - `SIGNOZ_HOST`：Signoz实例URL（例如。 `https://your-signoz-instance.com`)\r\n   - `SIGNOZ_API_KEY`：Signoz API密钥（可选）\r\n   - `SIGNOZ_SSL_VERIFY`: `true` 或 `false` （默认值： `true`)\r\n   - `MCP_SERVER_PORT`：运行服务器的端口（默认值： `8000`)\r\n   - `MCP_SERVER_DEBUG`: `true` 或 `false` （默认值： `true`)\r\n1. **YAML文件回退** (`config.yaml`):\r\n   ```yaml\r\n   signoz:\r\n     host: \"https://your-signoz-instance.com\"\r\n     api_key: \"your-signoz-api-key-here\" # Optional\r\n     ssl_verify: \"true\"\r\n   server:\r\n     port: 8000\r\n     debug: true\r\n   ```\r\n\r\n______________________________________________________________________\r\n\r\n## 4.与人工智能助手（如Claude Desktop、Cursor）集成\r\n\r\n您可以将此MCP服务器与支持MCP协议的任何工具集成。以下是主要选项：\r\n\r\n### 4A。使用Docker Compose或Docker（带有环境变量，mcp-grafana风格）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"signoz\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"-e\",\r\n        \"SIGNOZ_HOST\",\r\n        \"-e\",\r\n        \"SIGNOZ_API_KEY\",\r\n        \"-e\",\r\n        \"SIGNOZ_SSL_VERIFY\",\r\n        \"drdroidlab/signoz-mcp-server\",\r\n        \"-t\",\r\n        \"stdio\"\r\n      ],\r\n      \"env\": {\r\n        \"SIGNOZ_HOST\": \"https://your-signoz-instance.com\",\r\n        \"SIGNOZ_API_KEY\": \"your-signoz-api-key-here\",\r\n        \"SIGNOZ_SSL_VERIFY\": \"true\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n- 这 `-t stdio` 为了与Docker MCP客户端兼容，支持该参数（强制stdio握手模式）。\r\n- 根据部署需要调整卷路径或环境变量。\r\n\r\n### 4C。连接到已运行的MCP服务器（HTTP/SSE）\r\n\r\n如果你已经有一个MCP服务器在运行（例如，在远程主机、云VM或Kubernetes上），你可以将你的AI助手或工具直接连接到它的HTTP端点。\r\n\r\n#### 示例：Claude Desktop或类似工具\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"signoz\": {\r\n      \"url\": \"http://your-server-host:8000/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n- 替换 `your-server-host` 使用您的MCP服务器运行的实际主机。\r\n- **对于本地设置，请使用 `localhost` 作为服务器主机（即。， `http://localhost:8000/mcp`).**\r\n- **使用 `http` 用于本地或不安全的部署，以及 `https` 用于生产或安全部署。**\r\n- 确保服务器可以从您的客户端计算机访问（检查防火墙、安全组等）。\r\n\r\n#### 示例：MCP配置YAML\r\n\r\n```yaml\r\nmcp:\r\n  endpoint: \"http://your-server-host:8000/mcp\"\r\n  protocolVersion: \"2025-06-18\"\r\n```\r\n\r\n- 替换 `your-server-host` 使用您的MCP服务器运行的实际主机。\r\n- **对于本地设置，请使用 `localhost` 作为服务器主机（即。， `http://localhost:8000/mcp`).**\r\n- **使用 `http` 或 `https` 根据您部署MCP服务器的方式，在URL模式中。**\r\n- 无需指定 `command` 或 `args`--只需指向HTTP端点。\r\n- 这适用于支持HTTP MCP的任何工具或助手。\r\n- 服务器必须在HTTP（SSE）模式下运行（此实现的默认模式）。\r\n\r\n______________________________________________________________________\r\n\r\n## 健康检查\r\n\r\n```bash\r\ncurl http://localhost:8000/health\r\n```\r\n\r\n默认情况下，服务器在端口8000上运行。\r\n\r\n______________________________________________________________________\r\n\r\n## 5.其他：\r\n\r\n1. 需要帮忙吗？加入我们 [不和谐社区](https://discord.gg/AQ3tusPtZn) 并在#mcp频道提问。\r\n1. 想不设置就尝试吗？跟随这个 [文档](https://docs.drdroid.io/getting-started/quickstart) DrDroid云平台的快速入门。\r\n",
+ "config": {
+  "signoz": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "-e",
+    "SIGNOZ_HOST",
+    "-e",
+    "SIGNOZ_API_KEY",
+    "-e",
+    "SIGNOZ_SSL_VERIFY",
+    "drdroidlab/signoz-mcp-server",
+    "-t",
+    "stdio"
+   ],
+   "env": {
+    "SIGNOZ_HOST": "https://your-signoz-instance.com",
+    "SIGNOZ_API_KEY": "your-signoz-api-key-here",
+    "SIGNOZ_SSL_VERIFY": "true"
+   }
+  }
+ }
+}

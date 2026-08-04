@@ -1,0 +1,12 @@
+{
+ "id": "rust-docs-guidelines",
+ "kind": "skill",
+ "name": "rust-docs-guidelines",
+ "fingerprint_md5": "f40b806f04ef24e312604e5be0ea451c",
+ "download_count": 0,
+ "category": "",
+ "tags": "",
+ "version": "",
+ "readme": "# Rust Docs Guidelines\r\n\r\nStandards 迁移到 follow when writing Rust documentation.\r\n\r\n## Guidelines\r\n\r\n- Key concepts 应该 be explained only once. All other documentation 应该 use an intra-documentation link 迁移到 the first explanation.\r\n- Always use an intra-documentation link when mentioning a Rust symbol (type, function, constant, etc.).\r\n- Avoid referring 迁移到 specific lines or line ranges, as they 可以 更改 over time.\r\n  Use line comments if the documentation needs 迁移到 be attached 迁移到 a specific code section inside\r\n  a function/method body.\r\n- Focus on why, not how.\r\n  In particular, avoid explaining trivial implementation 详情 in line comments.\r\n- Refer 迁移到 constants using intra-documentation links. Don't hard-code their values in the documentation of other items.\r\n- Intra-documentation links 迁移到 private items are preferable 迁移到 duplication. 添加 `#[allow(rustdoc::private_intra_doc_links)]` where relevant.",
+ "config": {}
+}

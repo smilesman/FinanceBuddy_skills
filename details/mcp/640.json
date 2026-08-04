@@ -1,0 +1,29 @@
+{
+ "id": "640",
+ "kind": "mcp",
+ "name": "elevenlabs",
+ "fingerprint_md5": "b3bc5927c5be851f4e4fb8d3ce3ff467",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# ElevenLabs MCP服务器\r\n\r\n\r\n模型上下文协议（MCP）服务器，与ElevenLabs文本到速度API集成，具有服务器组件和用于管理语音生成任务的基于web的示例MCP客户端（SvelteKit）。\r\n\r\n\r\n## 特性\r\n\r\n- 使用ElevenLabs API从文本生成音频\r\n- 支持多种语音和脚本部分\r\n- 用于持久历史存储的SQLite数据库\r\n- SvelteKit MCP客户端示例：\r\n  - 简单的文本到语音转换\r\n  - 多部分脚本管理\r\n  - 语音历史跟踪和回放\r\n  - 音频文件下载\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装ElevenLabs MCP Server for Claude Desktop [史密瑟里](https://smithery.ai/server/elevenlabs-mcp-server):\r\n\r\n```bash\r\nnpx -y @smithery/cli install elevenlabs-mcp-server --client claude\r\n```\r\n\r\n### 使用uvx（推荐）\r\n\r\n使用时 [`uvx`](https://docs.astral.sh/uv/guides/tools/)，不需要特定的安装。\r\n\r\n将以下配置添加到MCP设置文件中（例如。， `cline_mcp_settings.json` 克劳德桌面版）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"elevenlabs\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"elevenlabs-mcp-server\"],\r\n      \"env\": {\r\n        \"ELEVENLABS_API_KEY\": \"your-api-key\",\r\n        \"ELEVENLABS_VOICE_ID\": \"your-voice-id\",\r\n        \"ELEVENLABS_MODEL_ID\": \"eleven_flash_v2\",\r\n        \"ELEVENLABS_STABILITY\": \"0.5\",\r\n        \"ELEVENLABS_SIMILARITY_BOOST\": \"0.75\",\r\n        \"ELEVENLABS_STYLE\": \"0.1\",\r\n        \"ELEVENLABS_OUTPUT_DIR\": \"output\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 开发安装\r\n\r\n1. 克隆此存储库\r\n1. 安装依赖项：\r\n   ```bash\r\n   uv venv\r\n   ```\r\n1. 复制 `.env.example` 向 `.env` 并填写您的ElevenLabs凭据\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"elevenlabs\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"path/to/elevenlabs-mcp-server\",\r\n        \"run\",\r\n        \"elevenlabs-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"ELEVENLABS_API_KEY\": \"your-api-key\",\r\n        \"ELEVENLABS_VOICE_ID\": \"your-voice-id\",\r\n        \"ELEVENLABS_MODEL_ID\": \"eleven_flash_v2\",\r\n        \"ELEVENLABS_STABILITY\": \"0.5\",\r\n        \"ELEVENLABS_SIMILARITY_BOOST\": \"0.75\",\r\n        \"ELEVENLABS_STYLE\": \"0.1\",\r\n        \"ELEVENLABS_OUTPUT_DIR\": \"output\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用示例SvelteKit MCP客户端\r\n\r\n1. 导航到web UI目录：\r\n   ```bash\r\n   cd clients/web-ui\r\n   ```\r\n1. 安装依赖项：\r\n   ```bash\r\n   pnpm install\r\n   ```\r\n1. 复制 `.env.example` 向 `.env` 并根据需要进行配置\r\n1. 运行web UI：\r\n   ```bash\r\n   pnpm dev\r\n   ```\r\n1. 打开http://localhost:5174在您的浏览器中\r\n\r\n### 可用工具\r\n\r\n- `generate_audio_simple`：使用默认语音设置从纯文本生成音频\r\n- `generate_audio_script`：从具有多个声音和演员的结构化脚本中生成音频\r\n- `delete_job`：按作业ID删除作业\r\n- `get_audio_file`：通过ID获取音频文件\r\n- `list_voices`：列出所有可用的声音\r\n- `get_voiceover_history`：获取配音工作历史。为特定作业指定作业ID（可选）。\r\n\r\n### 可用资源\r\n\r\n- `voiceover://history/{job_id}`：通过ID获取音频文件\r\n- `voiceover://voices`：列出所有可用的声音\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "elevenlabs": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "elevenlabs-mcp-server"
+   ],
+   "env": {
+    "ELEVENLABS_API_KEY": "your-api-key",
+    "ELEVENLABS_VOICE_ID": "your-voice-id",
+    "ELEVENLABS_MODEL_ID": "eleven_flash_v2",
+    "ELEVENLABS_STABILITY": "0.5",
+    "ELEVENLABS_SIMILARITY_BOOST": "0.75",
+    "ELEVENLABS_STYLE": "0.1",
+    "ELEVENLABS_OUTPUT_DIR": "output"
+   }
+  }
+ }
+}

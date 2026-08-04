@@ -1,0 +1,22 @@
+{
+ "id": "103",
+ "kind": "mcp",
+ "name": "chess-game",
+ "fingerprint_md5": "9c300b2d08e7f9fd288c8c5580707d14",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 国际象棋MCP服务器\r\n\r\n一种模型上下文协议（MCP）服务器，使AI助手能够与用户下棋。服务器提供用于管理国际象棋游戏、移动、评估位置和可视化棋盘的工具。\r\n\r\n## 特性\r\n\r\n- **游戏管理**：创建新游戏，获取棋盘状态，可视化位置\r\n- **移动验证**：在移动之前验证移动\r\n- **AI对手**：与Stockfish国际象棋引擎对弈\r\n- **岗位评估**：获取发动机位置评估\r\n- **移动历史记录**：使用撤消功能跟踪移动\r\n- **电路板可视化**：ASCII艺术板表示法\r\n\r\n## 需求\r\n\r\n- Python 3.11或更高版本\r\n- [紫外线](https://github.com/astral-sh/uv) 包管理器\r\n- Stockfish象棋引擎（包含在 `server/bin/stockfish/`)\r\n\r\n## 安装\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone <repository-url>\r\ncd chess-mcp\r\n```\r\n\r\n2. 安装依赖项和软件包：\r\n\r\n```bash\r\nuv sync\r\n```\r\n\r\n这将：\r\n\r\n- 创建虚拟环境\r\n- 安装所有依赖项（包括 `mcp` 和 `chess`)\r\n- 以可编辑模式安装软件包\r\n\r\n## 运行服务器\r\n\r\n### 使用入口点\r\n\r\n安装后，您可以使用以下命令运行服务器：\r\n\r\n```bash\r\nuv run chess-mcp\r\n```\r\n\r\n### 作为模块运行\r\n\r\n或者，您可以将其作为Python模块运行：\r\n\r\n```bash\r\nuv run -m server.main\r\n```\r\n\r\n服务器运行在 `stdio` 传输，这意味着它通过标准输入/输出进行通信。这是MCP服务器与客户端交互的标准方式。\r\n\r\n## MCP客户端的配置\r\n\r\n### 克劳德桌面版\r\n\r\n要将此服务器与Claude Desktop一起使用，请将以下内容添加到您的Claude Desktop配置文件中：\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\\\r\n**视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chess-game\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"chess-mcp\"\r\n      ],\r\n      \"cwd\": \"/path/to/chess-mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/path/to/chess-mcp` 带有此项目目录的绝对路径。\r\n\r\n### 其他MCP客户端\r\n\r\n对于其他MCP客户端，将其配置为运行：\r\n\r\n```bash\r\nuv run chess-mcp\r\n```\r\n\r\n确保工作目录设置为项目根目录。\r\n\r\n## 可用工具\r\n\r\n服务器提供以下MCP工具：\r\n\r\n### 游戏状态\r\n\r\n- **`new_game_tool`**：创建新的国际象棋游戏\r\n- **`get_state_tool`**：以FEN格式返回当前电路板状态\r\n- **`visualize_board_tool`**：返回电路板的ASCII艺术可视化\r\n\r\n### 动作\r\n\r\n- **`make_move_tool(move: str)`**：以UCI格式采取行动（例如“e2e4”）\r\n- **`ai_make_move_tool`**：使用AI对手进行移动\r\n- **`undo_move_tool`**：撤消上次移动\r\n\r\n### 验证\r\n\r\n- **`validate_move_tool(move: str)`**：验证移动是否合法\r\n\r\n### 分析\r\n\r\n- **`evaluate_board_tool`**：返回引擎对位置的评估，单位为厘泊\r\n\r\n## 项目结构\r\n\r\n```\r\nappli/\r\n├── server/\r\n│   ├── main.py              # MCP server entry point\r\n│   ├── config.py            # Configuration (paths, etc.)\r\n│   ├── engine/              # Stockfish engine wrapper\r\n│   ├── storage/             # File I/O and serialization\r\n│   └── tools/               # MCP tool implementations\r\n├── storage/                 # Game state storage\r\n│   ├── current_game.fen     # Current board position\r\n│   └── move_history.json    # Move history for undo\r\n├── tests/                   # Test files for tools\r\n├── pyproject.toml           # Project configuration\r\n└── README.md                # This file\r\n```\r\n\r\n## 存储\r\n\r\n服务器将游戏状态存储在 `storage/` 目录：\r\n\r\n- `current_game.fen`：FEN符号中的当前董事会职位\r\n- `move_history.json`：移动列表（用于撤消功能）\r\n\r\n## 发展\r\n\r\n### 运行测试\r\n\r\n安装测试依赖项：\r\n\r\n```bash\r\nuv sync --extra dev\r\n```\r\n\r\n运行测试：\r\n\r\n```bash\r\nuv run pytest\r\n```\r\n\r\n运行覆盖率测试：\r\n\r\n```bash\r\nuv run pytest --cov=server --cov-report=html\r\n```\r\n\r\n### 添加新工具\r\n\r\n1. 在适当的位置创建一个函数 `server/tools/` 模块\r\n1. 在中注册 `server/tools/registry.py`\r\n1. 将其添加到 `register_tools()` 函数\r\n\r\n## 故障排除\r\n\r\n### 未找到Stockfish\r\n\r\n如果你收到一个关于找不到Stockfish的错误：\r\n\r\n- 检查一下 `server/bin/stockfish/` 包含适合您平台的二进制文件\r\n- 服务器会自动检测您的平台并选择正确的二进制文件\r\n- 支持：macOS（英特尔/苹果硅）、Linux、Windows\r\n\r\n### 导入错误\r\n\r\n如果遇到导入错误：\r\n\r\n- 确保你已经跑过了 `uv sync` 安装软件包\r\n- 验证您是否在项目根目录中\r\n- 检查虚拟环境是否已激活\r\n\r\n## 致谢\r\n\r\n- 用途 [python象棋](https://github.com/niklasf/python-chess) 国际象棋逻辑\r\n- 用途 [长筒鱼](https://stockfishchess.org/) 象棋引擎\r\n- 内置于 [FastMCP](https://github.com/jlowin/fastmcp) 用于MCP服务器功能\r\n",
+ "config": {
+  "chess-game": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "chess-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

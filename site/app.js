@@ -1,4 +1,4 @@
-/* FinanceBuddy Skills Warehouse —— 复刻 OpenOcta 技能库交互 */
+/* FinanceBuddy Skills Warehouse —— 资源市场站点交互 */
 "use strict";
 
 const KIND_META = {
@@ -113,20 +113,21 @@ function render() {
     .join("");
 }
 
-function openDetail(idx) {
+async function openDetail(idx) {
   const it = state.filtered[idx];
   if (!it) return;
   $("modalIcon").textContent = it.icon || "📦";
   $("modalName").textContent = it.name;
-  $("modalStatus").textContent = it.status === "paid" ? "付费" : it.status === "private" ? "私有" : "开放";
-  $("modalMeta").innerHTML = [
-    `<span>分类：<b>${esc(it.category || "未分类")}</b></span>`,
-    `<span>来源：<b>${esc(it.source)}</b></span>`,
-    it.version ? `<span>版本：<b>${esc(it.version)}</b></span>` : "",
-    it.tags ? `<span>标签：<b>${esc(it.tags)}</b></span>` : "",
-    it.source_url ? `<span><a href="${esc(it.source_url)}" target="_blank">原始页面 ↗</a></span>` : "",
-  ].filter(Boolean).join("");
-  $("modalReadme").textContent = it.readme || `# ${it.name}\n\n${it.description || "暂无详细说明。"}`;
+  // 标签：分类 + tags（逗号分隔）
+  const tagList = [];
+  if (it.category) tagList.push(it.category);
+  for (const t of (it.tags || "").split(/[,，]/)) {
+    const v = t.trim();
+    if (v && !tagList.includes(v)) tagList.push(v);
+  }
+  $("modalTags").innerHTML = tagList.map((t) => `<span class="tag">${esc(t)}</span>`).join("");
+  $("modalMd5").textContent = it.md5 ? `MD5 指纹：${it.md5}` : "";
+  $("modalReadme").textContent = "加载中…";
   const dl = $("modalDownload");
   if (it.package_url) {
     dl.href = it.package_url.replace(/^\//, "../");
@@ -134,9 +135,45 @@ function openDetail(idx) {
   } else {
     dl.classList.add("hidden");
   }
-  $("modalMd5").textContent = it.md5 ? `MD5: ${it.md5}` : "";
   $("modalMask").classList.remove("hidden");
+
+  // 拉取完整详情（readme/config 均存于仓库本地，不依赖外部站点）
+  let detail = null;
+  if (it.details_url) {
+    try {
+      const resp = await fetch(it.details_url.replace(/^\//, "../"));
+      if (resp.ok) detail = await resp.json();
+    } catch {
+      detail = null;
+    }
+  }
+  const readme =
+    (detail && detail.readme) ||
+    it.readme ||
+    `# ${it.name}\n\n${it.description || "暂无详细说明。"}`;
+  $("modalReadme").textContent = readme;
+  if (detail && detail.fingerprint_md5 && !$("modalMd5").textContent) {
+    $("modalMd5").textContent = `MD5 指纹：${detail.fingerprint_md5}`;
+  }
 }
+
+// 复制内容到剪贴板
+$("modalCopy").addEventListener("click", async () => {
+  const text = $("modalReadme").textContent || "";
+  try {
+    await navigator.clipboard.writeText(text);
+    $("modalCopy").textContent = "已复制 ✓";
+  } catch {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+    $("modalCopy").textContent = "已复制 ✓";
+  }
+  setTimeout(() => { $("modalCopy").textContent = "复制内容"; }, 1600);
+});
 
 // ── 事件绑定 ──
 $("kindTabs").addEventListener("click", (e) => {
@@ -167,7 +204,7 @@ $("cardGrid").addEventListener("click", (e) => {
   if (card) openDetail(Number(card.dataset.idx));
 });
 
-$("modalClose").addEventListener("click", () => $("modalMask").classList.add("hidden"));
+$("modalBack").addEventListener("click", () => $("modalMask").classList.add("hidden"));
 $("modalMask").addEventListener("click", (e) => {
   if (e.target === $("modalMask")) $("modalMask").classList.add("hidden");
 });

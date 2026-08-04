@@ -1,0 +1,24 @@
+{
+ "id": "3268",
+ "kind": "mcp",
+ "name": "weather-2",
+ "fingerprint_md5": "bc44c3c9ebda51780b769687996368eb",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 气象MCP服务器🌤️\r\n\r\n模型上下文协议（MCP）服务器，从OpenWeather API提供天气数据。支持两者 **工作室** 和 **上海证券交易所** 运输方式。\r\n\r\n[英语](#english) | [中文](#%E4%B8%AD%E6%96%87)\r\n\r\n______________________________________________________________________\r\n\r\n## 英语\r\n\r\n### 特性\r\n\r\n- 🌡️ **实时天气** -获取任何城市的当前天气\r\n- 📅 **5天预测** -获取长达5天的天气预报\r\n- 🌍 **双语支持** -适用于中英文城市名称\r\n- 🔌 **双重运输** -支持STDIO和SSE模式\r\n- 🔑 **灵活的身份验证** -通过URL、Header或环境变量的API密钥\r\n\r\n### 安装\r\n\r\n#### 选项1:NPX（建议用于STDIO）\r\n\r\n无需安装！只需配置您的MCP客户端：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"weather-mcp-server\"],\r\n      \"env\": {\r\n        \"OPENWEATHER_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 选项2：全局安装\r\n\r\n```bash\r\nnpm install -g weather-mcp-server\r\n```\r\n\r\n然后配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"command\": \"weather-mcp\",\r\n      \"env\": {\r\n        \"OPENWEATHER_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 选项3:SSE模式（远程服务器）\r\n\r\n如果部署到服务器（例如Render、Railway）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"transport\": \"sse\",\r\n      \"url\": \"https://your-server.com/sse?key=your_api_key\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get-weather` |获取城市的实时天气|\r\n| `get-forecast` |获取5天天气预报|\r\n\r\n### 例子\r\n\r\n问你的AI助手：\r\n\r\n- “东京的天气怎么样？”\r\n- “给我纽约的5天天气预报”\r\n- \"北京今天天气怎么样？\"\r\n- \"上海未来三天天气预报\"\r\n\r\n### 自托管（SSE模式）\r\n\r\n```bash\r\n# Clone the repo\r\ngit clone https://github.com/your-username/weather-mcp-server\r\ncd weather-mcp-server\r\nnpm install\r\n\r\n# Start SSE server\r\nnpm run start:sse\r\n\r\n# Or with custom port\r\nPORT=8080 npm run start:sse\r\n```\r\n\r\n### API密钥\r\n\r\n从获取您的免费API密钥 [开放天气](https://openweathermap.org/api).\r\n\r\n______________________________________________________________________\r\n\r\n## 中文\r\n\r\n### 功能特点\r\n\r\n- 🌡️ **实时天气** - 获取任意城市的当前天气\r\n- 📅 **5天预报** - 获取最多5天的天气预报\r\n- 🌍 **双语支持** - 支持中英文城市名\r\n- 🔌 **双传输模式** - 同时支持 STDIO 和 SSE 模式\r\n- 🔑 **灵活认证** - 支持 URL、Header 或环境变量传递 API Key\r\n\r\n### 安装使用\r\n\r\n#### 方式1: NPX 直接运行（推荐）\r\n\r\n无需安装，直接配置 MCP 客户端：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"weather-mcp-server\"],\r\n      \"env\": {\r\n        \"OPENWEATHER_API_KEY\": \"你的API密钥\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 方式2: 全局安装\r\n\r\n```bash\r\nnpm install -g weather-mcp-server\r\n```\r\n\r\n然后配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"command\": \"weather-mcp\",\r\n      \"env\": {\r\n        \"OPENWEATHER_API_KEY\": \"你的API密钥\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 方式3: SSE 远程服务\r\n\r\n如果已部署到服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"weather\": {\r\n      \"transport\": \"sse\",\r\n      \"url\": \"https://your-server.com/sse?key=你的API密钥\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 可用工具\r\n\r\n| 工具 | 描述 |\r\n|------|------|\r\n| `get-weather` | 获取城市实时天气 |\r\n| `get-forecast` | 获取5天天气预报 |\r\n\r\n### 使用示例\r\n\r\n向 AI 助手提问：\r\n\r\n- \"东京现在天气怎么样？\"\r\n- \"帮我查一下纽约未来5天的天气\"\r\n- \"北京今天热不热？\"\r\n- \"深圳明天会下雨吗？\"\r\n\r\n### 获取 API Key\r\n\r\n前往 [开放天气](https://openweathermap.org/api) 免费注册获取。\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\n麻省 理工© 巨大350\r\n",
+ "config": {
+  "weather": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "weather-mcp-server"
+   ],
+   "env": {
+    "OPENWEATHER_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

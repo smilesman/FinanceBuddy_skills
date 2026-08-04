@@ -1,0 +1,26 @@
+{
+ "id": "1409",
+ "kind": "mcp",
+ "name": "desktop-commander-4",
+ "fingerprint_md5": "91162318642fde2784551d9685d6be3f",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 使用NodeJS创建MCP服务器（ai-agent-with-mcp）\r\n\r\n该项目实现了一个AI代理，该代理使用模型上下文协议（MCP）与外部资源进行交互。\r\n\r\n### 仓库包括：\r\n\r\n功能强大的 MCP 服务器，具有用户和消息的 REST 功能。\r\n\r\n通过协议消耗这些资源的 MCP 客户端。\r\n\r\n如何通过终端、REST API 或直接在 Cursor 中访问资源的实际示例。\r\n\r\n## 可用资源\r\n\r\nMCP 服务器提供以下功能：\r\n\r\n### 用户资源\r\n\r\n- **api://users**列出系统中所有注册的用户\r\n  - 返回 ID、姓名、电话号码和线程 ID 等信息\r\n  - 格式：JSON\r\n  - 答案示例 ：\r\n    ```json\r\n    {\r\n      \"content\": [\r\n        {\r\n          \"id\": 1,\r\n          \"phoneNumber\": \"553496341404\",\r\n          \"name\": \"Moisés Paschoalick\",\r\n          \"threadId\": \"thread_bZEPVYVBvHxY9Ok6WqR63M2D\"\r\n        },\r\n        {\r\n          \"id\": 2,\r\n          \"phoneNumber\": \"553496338888\",\r\n          \"name\": \"José Silva\",\r\n          \"threadId\": \"1thread_t8SFjKio6yN9pppqypilwGoR__\"\r\n        },\r\n        {\r\n          \"id\": 3,\r\n          \"phoneNumber\": \"553496338889\",\r\n          \"name\": \"Maria Antonia\",\r\n          \"threadId\": \"1thread_t8SFjKio6yN9pppqypilwGoR__\"\r\n        }\r\n      ],\r\n      \"pageable\": {\r\n        \"pageNumber\": 0,\r\n        \"pageSize\": 12,\r\n        \"sort\": {\r\n          \"empty\": false,\r\n          \"sorted\": true,\r\n          \"unsorted\": false\r\n        },\r\n        \"offset\": 0,\r\n        \"paged\": true,\r\n        \"unpaged\": false\r\n      },\r\n      \"last\": true,\r\n      \"totalPages\": 1,\r\n      \"totalElements\": 3,\r\n      \"first\": true,\r\n      \"size\": 12,\r\n      \"number\": 0,\r\n      \"sort\": {\r\n        \"empty\": false,\r\n        \"sorted\": true,\r\n        \"unsorted\": false\r\n      },\r\n      \"numberOfElements\": 3,\r\n      \"empty\": false\r\n    }\r\n    ```\r\n\r\n### 消息资源\r\n\r\n- **hello://world**返回简单的问候消息\r\n  - 格式：texto plano（文本/纯文本）\r\n  - Exemplo de resposta：“你好，世界！这是我的第一个MCP资源。”\r\n\r\n## Cursor 安装\r\n\r\n首先，请确保您在系统上安装了光标并配置了npm。\r\n\r\n### 选项1：通过终端安装\r\n\r\n在终端中运行以下命令 ：\r\n\r\n```bash\r\nnpx -y @smithery/cli@latest install @wonderwhy-er/desktop-commander --client cursor --key dda23bec-caa6-4487-a1e9-eb74e22e33eb\r\n```\r\n\r\n注意：上面提到的关键只是为了示例，您需要添加自己的。\r\n\r\n如果游标正在运行， 请重新启动 。\r\n\r\n### 选项2：手动安装\r\n\r\n将相应条目添加到您的 mcp.json 文件：\r\n\r\n#### Mac/Linux：\r\n\r\n没有Linux： `~/.config/cursor.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"desktop-commander\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@smithery/cli@latest\",\r\n        \"run\",\r\n        \"@wonderwhy-er/desktop-commander\",\r\n        \"--key\",\r\n        \"dda23bec-caa6-4487-a1e9-eb74e22e33eb\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 窗户旁：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"desktop-commander\": {\r\n      \"command\": \"cmd\",\r\n      \"args\": [\r\n        \"/c\",\r\n        \"npx\",\r\n        \"-y\",\r\n        \"@smithery/cli@latest\",\r\n        \"run\",\r\n        \"@wonderwhy-er/desktop-commander\",\r\n        \"--key\",\r\n        \"dda23bec-caa6-4487-a1e9-eb74e22e33eb\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n如果游标正在运行， 请重新启动 。\r\n\r\n### 选项 3：本地克隆\r\n\r\n克隆和构建：\r\n\r\n```bash\r\ngit clone https://github.com/moises-paschoalick/ai-agent-with-mcp.git\r\ncd ai-agent-with-mcp\r\nnpm run setup\r\n```\r\n\r\n如果游标正在运行， 请重新启动 。\r\n\r\n配置命令将 ：\r\n\r\n- 安装依赖关系\r\n- 构建服务器\r\n- 配置光标\r\n- 必要时将 MCP 服务器添加到光标配置\r\n\r\n## 如何使用\r\n\r\n### MCP 客户端\r\n\r\n该项目包括一个MCP客户端，可用于访问可用资源：\r\n\r\n```typescript\r\nimport { Client } from \"@modelcontextprotocol/sdk/client/index.js\";\r\nimport { StdioClientTransport } from \"@modelcontextprotocol/sdk/client/stdio.js\";\r\n\r\nasync function main() {\r\n  const client = new Client({\r\n    name: \"hello-mcp-client\",\r\n    version: \"1.0.0\"\r\n  });\r\n  const transport = new StdioClientTransport({\r\n    command: \"node\",\r\n    args: [\"build/index.js\"]\r\n  });\r\n  \r\n  try {\r\n    await client.connect(transport);\r\n    \r\n    // Listar recursos disponíveis\r\n    const resources = await client.listResources();\r\n    console.log(\"Recursos disponíveis:\", resources);\r\n    \r\n    // Ler o recurso de usuários\r\n    const content = await client.readResource({ uri: \"api://users\" });\r\n    console.log(\"\\nLista de Usuários:\", content);\r\n  } catch (error) {\r\n    console.error(\"Erro ao executar o cliente:\", error);\r\n  }\r\n}\r\n\r\nmain().catch(console.error);\r\n```\r\n\r\n### API REST Direta\r\n\r\n您也可以直接通过 REST API 访问资源：\r\n\r\n```bash\r\n# Listar todos os usuários\r\ncurl http://3.238.149.189:8080/users\r\n```\r\n\r\n## 安装和运行\r\n\r\n```bash\r\n# Instalar dependências\r\nnpm install\r\n\r\n# Compilar o projeto\r\nnpm run build\r\n\r\n# Executar o servidor\r\nnpm start\r\n\r\n# Executar em modo de desenvolvimento\r\nnpm run dev\r\n```\r\n\r\n## 要求\r\n\r\n- Node.js（与 AbortController 兼容的版本）\r\n- TypeScript\r\n- @模型上下文协议/sdk\r\n",
+ "config": {
+  "desktop-commander": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@smithery/cli@latest",
+    "run",
+    "@wonderwhy-er/desktop-commander",
+    "--key",
+    "dda23bec-caa6-4487-a1e9-eb74e22e33eb"
+   ],
+   "env": {}
+  }
+ }
+}

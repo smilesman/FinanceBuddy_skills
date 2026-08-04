@@ -1,0 +1,26 @@
+{
+ "id": "3225",
+ "kind": "mcp",
+ "name": "strava-2",
+ "fingerprint_md5": "34ede8b5e1a89f1e67cda855ab8f3caa",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# Strava MCP服务器\r\n\r\nMCP（模型上下文协议）服务器，将Claude连接到Strava API，让Claude直接访问您的训练数据。\r\n\r\n## 特性\r\n\r\n- **运动员简介** --获取您的Strava个人资料信息\r\n- **运动员统计** --一生和最近的总数（跑步、骑行、游泳）\r\n- **活动** --列出最近的活动或按日期范围筛选\r\n- **活动详情** --深入任何一项活动\r\n- **活动流** --时间序列数据：GPS、心率、功率、节奏、高度\r\n- **片段** --星级细分市场和细分市场详细信息\r\n\r\n## 设置\r\n\r\n### 1.创建Strava API应用程序\r\n\r\n1. 首选 [strava.com/settings/api](https://www.strava.com/settings/api)\r\n1. 创建应用程序--设置 **授权回调域** 到 `localhost`\r\n1. 注意你的 **客户端ID** 和 **客户端密钥**\r\n\r\n### 2.安装并授权\r\n\r\n```bash\r\nnpm install\r\nnpm run setup\r\n```\r\n\r\n安装向导将：\r\n\r\n- 询问您的客户ID和客户密码\r\n- 打开浏览器，使用Strava进行授权\r\n- 自动捕获回调并交换令牌\r\n- 写你的 `.env` 文件\r\n\r\n### 3.建造\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\nManual setup (alternative)\r\n\r\n在浏览器中打开此URL（替换 `CLIENT_ID`):\r\n\r\n```\r\nhttps://www.strava.com/oauth/authorize?client_id=CLIENT_ID&response_type=code&redirect_uri=http://localhost&scope=read_all,activity:read_all\r\n```\r\n\r\n授权后，您将被重定向到 `http://localhost?code=AUTHORIZATION_CODE`.复制代码并交换：\r\n\r\n```bash\r\ncurl -s -X POST 'https://www.strava.com/oauth/token' \\\r\n  -F 'client_id=CLIENT_ID' \\\r\n  -F 'client_secret=CLIENT_SECRET' \\\r\n  -F 'code=AUTHORIZATION_CODE' \\\r\n  -F 'grant_type=authorization_code'\r\n```\r\n\r\n保存 `refresh_token` 从响应中创建 `.env` 文件：\r\n\r\n```\r\nSTRAVA_CLIENT_ID=your_client_id\r\nSTRAVA_CLIENT_SECRET=your_client_secret\r\nSTRAVA_REFRESH_TOKEN=your_refresh_token\r\n```\r\n\r\n### 4.配置克劳德桌面\r\n\r\n#### 选项A:Docker（推荐）\r\n\r\n构建Docker镜像：\r\n\r\n```bash\r\ndocker build -t strava-mcp-server .\r\n```\r\n\r\n编辑 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"strava\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\", \"-i\", \"--rm\",\r\n        \"--env-file\", \"/absolute/path/to/your/.env\",\r\n        \"strava-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/absolute/path/to/your/.env` 与您的完整路径 `.env` 文件。\r\n\r\n#### 选项B：Node.js（本地）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"strava\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/Users/USERNAME/Apps/StravaMCP/dist/index.js\"],\r\n      \"env\": {\r\n        \"STRAVA_CLIENT_ID\": \"your_client_id\",\r\n        \"STRAVA_CLIENT_SECRET\": \"your_client_secret\",\r\n        \"STRAVA_REFRESH_TOKEN\": \"your_refresh_token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动克劳德桌面。您应该在工具菜单（锤子图标）中看到可用的Strava工具。\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_athlete` |获取您的Strava个人资料|\r\n| `get_athlete_stats` |获取生命周期和最近的统计数据|\r\n| `get_activities` |列出最近的活动（分页）|\r\n| `get_activities_between` |获取日期范围内的所有活动（自动分页）|\r\n| `get_activity` |获取一项活动的详细信息|\r\n| `get_activity_laps` |获取活动的圈速/分段数据|\r\n| `get_activity_zones` |获取人力资源和权力区域分布|\r\n| `get_activity_streams` |获取时间序列数据（GPS、HR、功率等）|\r\n| `get_starred_segments` |获取您的星级片段|\r\n| `get_segment` |获取特定细分市场的详细信息|\r\n| `get_segment_efforts` |在细分市场上获得你的努力（使用可选的日期过滤器）|\r\n\r\n## 示例提示\r\n\r\n连接后，试着问克劳德：\r\n\r\n- “我这周的活动是什么？”\r\n- “分析我过去一个月的跑步表现”\r\n- “比较我一月和二月的骑行时间”\r\n- “显示我上次跑步的心率数据”\r\n- “我的历史数据是什么？”\r\n\r\n## 发展\r\n\r\n```bash\r\n# Run in dev mode (no build step)\r\nnpm run dev\r\n\r\n# Build for production\r\nnpm run build\r\nnpm start\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "strava": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "--env-file",
+    "/absolute/path/to/your/.env",
+    "strava-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "id": "1139",
+ "kind": "mcp",
+ "name": "mssql-7",
+ "fingerprint_md5": "16b71cc18235e7a3f9b7e55e0e26e0d1",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# MSSQL MCP编写器\r\n\r\n\r\n**用于Microsoft SQL server的模型上下文协议服务器，具有读取和数据操作。**\r\n\r\n具有预览/确认保护的完整数据操作功能（INSERT、UPDATE、DELETE），但没有DDL操作。非常适合需要修改数据但希望防止模式更改的数据工程师和ETL工作流。\r\n\r\n## 建筑\r\n\r\n这个包裹很薄 [`@connorbritain/mssql-mcp-core`](https://github.com/ConnorBritain/mssql-mcp-core)，其中包含所有共享逻辑、工具和治理功能。包装器选择 `\"writer\"` 层次和委托给核心 `startMcpServer()` 功能。这种设计能够：\r\n\r\n- **硬分离** 在包级别，受监管的企业可以保证某些构建在物理上不能执行破坏性操作\r\n- **独立版本控制** --每一层都可以单独发布，并有自己的发布周期\r\n- **清晰的审计跟踪** — `\"we only allow mssql-mcp-writer in staging\"` 是编译时保证\r\n\r\n核心库处理所有SQL Server连接、工具调度、审计日志记录和治理实施。\r\n\r\n______________________________________________________________________\r\n\r\n## 包装层\r\n\r\n|包| npm |工具|用例|\r\n|---------|-----|-------|----------|\r\n| **[mssql-mcp阅读器](https://github.com/ConnorBritain/mssql-mcp-reader)** | `@connorbritain/mssql-mcp-reader` |14只读|分析师、审计师、安全探索|\r\n| **mssql mcp编写器** （这个）| `@connorbritain/mssql-mcp-writer` |17（阅读器+数据操作）|数据工程师、ETL开发人员|\r\n| **[mssql-mcp服务器](https://github.com/ConnorBritain/mssql-mcp-server)** | `@connorbritain/mssql-mcp-server` |20（所有工具）|DBA，完全管理员权限|\r\n\r\n______________________________________________________________________\r\n\r\n**[配置生成器](https://connorbritain.github.io/mssql-mcp-config-builder/)** --可视化向导生成您的 `mcp_config.json` 和 `environments.json` 文件夹。\r\n\r\n______________________________________________________________________\r\n\r\n## 包含的工具\r\n\r\n|类别|工具|\r\n|----------|-------|\r\n| **发现** | `search_schema`, `describe_table`, `list_table`, `list_databases`, `list_environments` |\r\n| **分析** | `profile_table`, `inspect_relationships`, `inspect_dependencies`, `explain_query` |\r\n| **数据读取** | `read_data` （仅限选择）|\r\n| **数据写入** | `insert_data`, `update_data`, `delete_data` （带预览/确认）|\r\n| **脚本** | `list_scripts`, `run_script` |\r\n| **运营** | `test_connection`, `validate_environment_config` |\r\n\r\n**不包括：** `create_table`, `create_index`, `drop_table` （DDL操作）\r\n\r\n______________________________________________________________________\r\n\r\n## 快速开始\r\n\r\n### 安装\r\n\r\n```bash\r\nnpm install -g @connorbritain/mssql-mcp-writer@latest\r\n```\r\n\r\n### MCP客户端配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mssql\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@connorbritain/mssql-mcp-writer@latest\"],\r\n      \"env\": {\r\n        \"SERVER_NAME\": \"127.0.0.1\",\r\n        \"DATABASE_NAME\": \"mydb\",\r\n        \"SQL_AUTH_MODE\": \"sql\",\r\n        \"SQL_USERNAME\": \"app_user\",\r\n        \"SQL_PASSWORD\": \"YourPassword123\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 配置\r\n\r\n|变量|必填|备注|\r\n|----------|----------|-------|\r\n| `SERVER_NAME` |是| SQL Server主机名/IP|\r\n| `DATABASE_NAME` |是|目标数据库|\r\n| `SQL_AUTH_MODE` | | `sql`, `windows`，或 `aad` （默认值： `aad`) |\r\n| `SQL_USERNAME` / `SQL_PASSWORD` ||需要 `sql`/`windows` 模式|\r\n| `READONLY` | | `true` 禁用写入工具|\r\n| `ENVIRONMENTS_CONFIG_PATH` ||多环境JSON配置路径|\r\n| `SCRIPTS_PATH` ||命名SQL脚本目录的路径|\r\n| `AUDIT_LOG_PATH` ||自定义审核日志路径|\r\n\r\n______________________________________________________________________\r\n\r\n## 特性\r\n\r\nMSSQL MCP系列中的所有软件包共享：\r\n\r\n- **多环境支持** -具有每个环境策略的命名数据库环境（prod、staging、dev）\r\n- **治理控制** - `allowedTools`, `deniedTools`, `allowedSchemas`, `deniedSchemas`, `requireApproval`\r\n- **审核日志记录** -带有会话ID和自动编校的JSON行日志\r\n- **秘密管理** - `${secret:NAME}` 用于安全凭证处理的占位符\r\n- **命名SQL脚本** -具有治理控制的预先批准的参数化查询\r\n- **预览/确认突变** - `update_data` 和 `delete_data` 执行前显示受影响的行\r\n\r\n______________________________________________________________________\r\n\r\n## 文档\r\n\r\n完整的文档、配置示例和治理详细信息可在主存储库中获得：\r\n\r\n**[MSSQL MCP服务器文档](https://github.com/ConnorBritain/mssql-mcp-server#readme)**\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\nMIT许可证。看 [许可证](./LICENSE) 了解详情。\r\n\r\n______________________________________________________________________\r\n\r\n**存储库：** https://github.com/ConnorBritain/mssql-mcp-writer\r\n**问题：** https://github.com/ConnorBritain/mssql-mcp-writer/issues\r\n**npm：** https://www.npmjs.com/package/@connorbritain/mssql-mcp作者\r\n",
+ "config": {
+  "mssql": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@connorbritain/mssql-mcp-writer@latest"
+   ],
+   "env": {
+    "SERVER_NAME": "127.0.0.1",
+    "DATABASE_NAME": "mydb",
+    "SQL_AUTH_MODE": "sql",
+    "SQL_USERNAME": "app_user",
+    "SQL_PASSWORD": "YourPassword123"
+   }
+  }
+ }
+}

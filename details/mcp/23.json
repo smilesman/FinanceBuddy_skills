@@ -1,0 +1,24 @@
+{
+ "id": "23",
+ "kind": "mcp",
+ "name": "ai-scraper",
+ "fingerprint_md5": "c76bbe38a627600934076df5b1ee2720",
+ "download_count": 0,
+ "category": "网页抓取",
+ "tags": "",
+ "version": "",
+ "readme": "# @constellix/ai刮板mcp\r\n\r\n从网页中提取结构化数据的模型上下文协议（MCP）服务器。该工具通过提供抓取网站的智能界面，弥合了LLM和网络数据提取之间的差距。\r\n\r\n## 直播\r\n\r\n尝试游乐场→ https://constellix.vercel.app/\r\n\r\n## 特性\r\n\r\n- **人工智能驱动的数据提取**：使用自然语言查询从网页中提取结构化数据\r\n- **CSS选择器生成**：根据自然语言描述为web元素生成CSS选择器\r\n- **XPath生成**：基于自然语言描述为web元素生成XPath表达式\r\n- **支持多种查询类型**：使用自然语言或类似GraphQL的结构化查询\r\n\r\n## 安装\r\n\r\n```bash\r\n# Install and run\r\nnpm i @constellix/ai-scraper-mcp\r\n\r\n# Set your API key as an environment variable\r\nGEMINI_API_KEY=\"your-api-key-here\"\r\n```\r\n\r\nMCP配置：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"ai-scraper\":{\r\n            \"command\": \"npx\",\r\n            \"args\": [\r\n                \"-y\",\r\n                \"@constellix/ai-scraper-mcp\"\r\n            ],\r\n            \"env\": {\r\n                \"GEMINI_API_KEY\" : \"YOUR_API_KEY\"\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n然后，在您的MCP兼容客户端（Claude、Cursor等）中，您可以使用ai scraper工具从网站中提取数据。\r\n\r\n## 可用工具\r\n\r\n### 1.通过查询获取数据\r\n\r\n使用自然语言或结构化查询语言从网页中提取结构化数据。\r\n\r\n**输入架构：**\r\n\r\n```\r\n{\r\n  \"url\": \"string\", // The webpage URL to extract data from\r\n  \"query\": \"string\" // Natural language query or structured query\r\n}\r\n```\r\n\r\n### 2.获取css选择器\r\n\r\n使用自然语言或结构化查询语言为网页元素生成CSS选择器。\r\n\r\n**输入架构：**\r\n\r\n```\r\n{\r\n  \"url\": \"string\", // The webpage URL to analyze\r\n  \"query\": \"string\" // Natural language query or structured query\r\n}\r\n```\r\n\r\n### 3.获取xpath\r\n\r\n使用自然语言或结构化查询语言为网页元素生成XPath表达式。\r\n\r\n**输入架构：**\r\n\r\n```\r\n{\r\n  \"url\": \"string\", // The webpage URL to analyze\r\n  \"query\": \"string\" // Natural language query or structured query\r\n}\r\n```\r\n\r\n## 查询类型\r\n\r\n### 自然语言查询\r\n\r\n示例：\r\n\r\n- “列出页面上的所有产品”\r\n- “查找主导航菜单”\r\n- “提取所有博客文章标题及其发布日期”\r\n\r\n### 结构化查询（类似GraphQL）\r\n\r\n```\r\n{\r\n  products_list[]{\r\n    product_name,\r\n    product_price,\r\n    product_image\r\n  }\r\n}\r\n```\r\n\r\n您还可以指定数据类型或添加自然语言描述：\r\n\r\n```\r\n{\r\n  products_list[]{\r\n    product_name (string),\r\n    product_price (number),\r\n    product_image (string)\r\n  }\r\n}\r\n```\r\n\r\n或描述：\r\n\r\n```\r\n{\r\n  products_list (products made out of cotton)[]{\r\n    product_name,\r\n    product_price,\r\n    product_image\r\n  }\r\n}\r\n```\r\n\r\n## 依赖项\r\n\r\n此包依赖于 `@constellix/ai-scraper` 该软件包提供了通过AI功能增强Playwright功能的功能。\r\n",
+ "config": {
+  "ai-scraper": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@constellix/ai-scraper-mcp"
+   ],
+   "env": {
+    "GEMINI_API_KEY": "YOUR_API_KEY"
+   }
+  }
+ }
+}

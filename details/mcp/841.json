@@ -1,0 +1,23 @@
+{
+ "id": "841",
+ "kind": "mcp",
+ "name": "rss-feed",
+ "fingerprint_md5": "ff5cae85f963485fb67b0268448704fa",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# RSS MCP服务器\r\n\r\n用于RSS源管理和分析的模型上下文协议（MCP）服务器。此服务器提供用于发现、解析、过滤和分析RSS提要的工具。\r\n\r\n我一直很喜欢了解科学技术的最新消息和发展，我很好奇用法学硕士来探索这些信息会是什么样子。与其让模型进行广泛的、自定义的网络搜索，我想让它访问我已经关注的经过精心策划、值得信赖的RSS源。\r\n\r\n这个项目是我尝试这个想法的方式：使用结构化、高质量的输入来帮助法学硕士总结、分析和突出可靠来源的新兴趋势。\r\n\r\n## 我如何使用它\r\n\r\n以下是配置MCP服务器后，您可以在Claude Desktop中使用的一些示例提示（如下所述）：\r\n\r\n```\r\nFind the top RSS feeds that publish technology / scientific papers using the web and then use those feeds to get me the top 5 emerging technology breakthroughs in the last week. Give me a short summary and cite your sources.\r\n```\r\n\r\n```\r\nWhat are the top trending technology topics this week from various feeds? Cite your sources.\r\n```\r\n\r\n```\r\nGet top stories from Google News in the last hour. Cite your sources.\r\n```\r\n\r\n通过将精心策划的RSS数据与LLM相结合，这种设置可以生成更透明、更有针对性的摘要——这是一种更清晰的方式，可以在保持对信息来源的控制的同时保持知情。\r\n\r\n## 特性\r\n\r\n- **饲料发现**：浏览来自不同来源的预定义RSS源\r\n- **提要解析**：解析任何RSS提要URL并提取内容\r\n- **内容过滤**：按关键字、发布日期或类别筛选文章\r\n- **饲料验证**：检查RSS URL是否可访问且有效\r\n- **元数据访问**：获取可用的出版物和类别\r\n\r\n## 安装\r\n\r\n1. **克隆存储库**:\r\n\r\n   ```bash\r\n   git clone <repository-url>\r\n   cd rss-mcp\r\n   ```\r\n\r\n1. **安装依赖项**:\r\n\r\n   ```bash\r\n   # Using uv (recommended)\r\n   uv sync\r\n\r\n   # Or using pip\r\n   pip install -r requirements.txt\r\n   ```\r\n\r\n1. **测试服务器**:\r\n\r\n   ```bash\r\n   # Using uv\r\n   uv run python -m src.server\r\n\r\n   # Or using python directly\r\n   python -m src/server.py\r\n   ```\r\n\r\n## 使用Claude Desktop进行设置\r\n\r\n### 1.配置克劳德桌面\r\n\r\n将RSS MCP服务器添加到您的Claude Desktop配置中：\r\n\r\n**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n**视窗**: `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"rss-feed\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"python\", \"/absolute/path/to/rss-mcp/src/server.py\"],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> **备注**：替换 `/absolute/path/to/rss-mcp` 带有项目目录的实际路径。\r\n\r\n### 2.替代设置（无紫外线）\r\n\r\n如果你不使用 `uv`，你可以直接用Python运行：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"rss-feed\": {\r\n      \"command\": \"python\",\r\n      \"args\": [\"/absolute/path/to/rss-mcp/src/server.py\"],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.重新启动克劳德桌面\r\n\r\n更新配置后，重新启动Claude Desktop以加载MCP服务器。\r\n\r\n## 可用工具\r\n\r\nRSS MCP服务器提供7个工具：\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_feeds` |通过可选的类别筛选获取所有可用的RSS源|\r\n| `parse_feed` |解析任何RSS源URL并返回结构化内容|\r\n| `validate_feed_url` |检查RSS源URL是否有效且可访问|\r\n| `get_feed_categories` |从预定义提要中获取所有可用类别|\r\n| `get_publications` |获取所有可用的出版物名称|\r\n| `get_recent_entries` |按发布时间（过去N小时）筛选提要条目|\r\n| `filter_entries_by_keywords` |按关键字筛选条目（包括/排除）|\r\n\r\n## 发展\r\n\r\n### 项目结构\r\n\r\n```\r\nrss-mcp/\r\n├── src/\r\n│   ├── feed/\r\n│   │   ├── base.py          # Core Feed class and parsing logic\r\n│   │   ├── constants.py     # Predefined RSS feeds\r\n│   │   ├── models.py        # Pydantic data models\r\n│   │   └── google.py        # Google News specific implementation\r\n│   ├── tools.py             # MCP business logic functions\r\n│   └── server.py            # MCP server and tool definitions\r\n├── pyproject.toml           # Project dependencies\r\n└── README.md\r\n```\r\n\r\n### 添加新订阅源\r\n\r\n要添加新的RSS源，请编辑 `src/feed/constants.py`:\r\n\r\n```python\r\nFeed(\r\n    publication=\"New Source\",\r\n    category=\"Technology\",\r\n    url=\"https://newsource.com/rss.xml\",\r\n),\r\n```\r\n",
+ "config": {
+  "rss-feed": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "python",
+    "/absolute/path/to/rss-mcp/src/server.py"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "id": "rpe-grafana",
+ "kind": "skill",
+ "name": "rpe-grafana",
+ "fingerprint_md5": "e512178017c14c61a063ce97572888e0",
+ "download_count": 0,
+ "category": "数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# Grafana 技能\r\n\r\n无需编写查询即可从任何 Grafana 仪表板读取当前值。该插件通过仪表板和面板名称导航，提取面板的现有查询配置，并返回简洁摘要——无需 PromQL、SQL 或数据源知识。\r\n\r\n适用于任何 Grafana 数据源（Prometheus、InfluxDB、MySQL 等）。\r\n\r\n## 使用场景\r\n\r\n✅ **使用此技能的场景：**\r\n\r\n- 询问 Grafana 仪表板中可见的值\r\n- 列出可用的仪表板或面板\r\n- 通过面板名称检索指标的当前值或最近值\r\n\r\n## 不使用场景\r\n\r\n❌ **不要使用此技能的场景：**\r\n\r\n- 写入、修改或创建仪表板 → 使用 Grafana UI\r\n- 管理操作（用户、数据源配置、告警）→ 直接使用 Grafana API\r\n- 需要执行不受现有面板支持的任意查询\r\n\r\n## 设置\r\n\r\n添加到您的 `openclaw.json`：\r\n\r\n```json\r\n{\r\n  \"plugins\": {\r\n    \"entries\": {\r\n      \"rpe-grafana\": {\r\n        \"enabled\": true,\r\n        \"config\": {\r\n          \"url\": \"http://your-grafana:3000\",\r\n          \"user\": \"your-username\",\r\n          \"password\": \"your-password\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或设置环境变量：\r\n\r\n- `GRAFANA_URL` - Grafana 基础 URL\r\n- `GRAFANA_USER` - 用户名\r\n- `GRAFANA_PASSWORD` - 密码或 API 密钥\r\n\r\n## 工具\r\n\r\n### grafana_list_dashboards\r\n\r\n列出所有可用仪表板。\r\n\r\n**参数：** 无\r\n\r\n**返回：** `[{ uid, title }]`\r\n\r\n### grafana_list_panels\r\n\r\n列出仪表板中的所有面板。\r\n\r\n**参数：**\r\n- `dashboard_uid`（必需）- 来自 `grafana_list_dashboards` 的仪表板 UID\r\n\r\n**返回：** `[{ id, title }]`\r\n\r\n### grafana_query_panel\r\n\r\n读取特定面板的当前数据。从仪表板获取面板的查询配置并通过 Grafana 的数据源 API 执行——无需查询语言知识。\r\n\r\n**参数：**\r\n- `dashboard_uid`（必需）- 仪表板 UID\r\n- `panel_id`（必需）- 来自 `grafana_list_panels` 的面板 ID\r\n- `from`（可选）- 时间范围开始（默认：`now-1h`）\r\n- `to`（可选）- 时间范围结束（默认：`now`）\r\n\r\n**返回：** `[{ refId, name, lastValue, unit }]`\r\n\r\n## 典型工作流程\r\n\r\n1. `grafana_list_dashboards` → 查找仪表板 UID\r\n2. `grafana_list_panels` → 通过标题查找面板 ID\r\n3. `grafana_query_panel` → 获取当前值\r\n\r\n## 注意事项\r\n\r\n- 需要具有读取权限的 Grafana 用户（Viewer 角色即可）\r\n- 仪表板 UID 是稳定的标识符；面板 ID 在仪表板内唯一\r\n- 行面板会自动扁平化",
+ "config": {}
+}

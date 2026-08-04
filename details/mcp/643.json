@@ -1,0 +1,28 @@
+{
+ "id": "643",
+ "kind": "mcp",
+ "name": "everart",
+ "fingerprint_md5": "6ca945d30a0d8dd17343416994076931",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# EverArt MCP 服务器\r\n\r\n使用EverArt API的Claude桌面版图像生成服务器。\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install\r\nexport EVERART_API_KEY=your_key_here\r\n```\r\n\r\n## 配置\r\n\r\n### 与Claude桌面版的使用\r\n\r\n添加到Claude桌面配置：\r\n\r\n#### Docker\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"everart\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"-e\", \"EVERART_API_KEY\", \"mcp/everart\"],\r\n      \"env\": {\r\n        \"EVERART_API_KEY\": \"your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"everart\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-everart\"],\r\n      \"env\": {\r\n        \"EVERART_API_KEY\": \"your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 在VS Code中的使用方法\r\n\r\n为了快速安装，请使用下面的一键安装按钮。根据上面的信息，执行如下指令：。。\r\n\r\n\r\n对于手动安装，请将以下JSON块添加到VS Code中的用户设置（JSON）文件中。您可以通过按以下步骤完成此操作： `Ctrl + Shift + P` 打字 `Preferences: Open Settings (JSON)`根据您的要求，由于原文内容为空，我无法提供具体的翻译。如果您有需要翻译的中文内容，请提供原文，我将负责将其翻译成中文（注：此句为说明性语句，实际翻译时无需包含）。\r\n\r\n可选地，您可以将其添加到一个名为 `.vscode/mcp.json` 在你的工作区中。这样你就可以与他人共享配置。\r\n\r\n> 请注意 `mcp` 使用时需要密钥 `mcp.json` 文件。\r\n\r\n#### Docker\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"inputs\": [\r\n      {\r\n        \"type\": \"promptString\",\r\n        \"id\": \"everart_api_key\",\r\n        \"description\": \"EverArt API Key\",\r\n        \"password\": true\r\n      }\r\n    ],\r\n    \"servers\": {\r\n      \"everart\": {\r\n        \"command\": \"docker\",\r\n        \"args\": [\"run\", \"-i\", \"--rm\", \"-e\", \"EVERART_API_KEY\", \"mcp/everart\"],\r\n        \"env\": {\r\n          \"EVERART_API_KEY\": \"${input:everart_api_key}\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### NPX\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"inputs\": [\r\n      {\r\n        \"type\": \"promptString\",\r\n        \"id\": \"everart_api_key\",\r\n        \"description\": \"EverArt API Key\",\r\n        \"password\": true\r\n      }\r\n    ],\r\n    \"servers\": {\r\n      \"everart\": {\r\n        \"command\": \"npx\",\r\n        \"args\": [\"-y\", \"@modelcontextprotocol/server-everart\"],\r\n        \"env\": {\r\n          \"EVERART_API_KEY\": \"${input:everart_api_key}\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### 根据上面的信息，执行如下指令：\r\n\r\n生成具有多种模型选项的图像。在浏览器中打开结果并返回URL。\r\n\r\n参数：\r\n\r\n```typescript\r\n{\r\n  prompt: string,       // Image description\r\n  model?: string,       // Model ID (default: \"207910310772879360\")\r\n  image_count?: number  // Number of images (default: 1)\r\n}\r\n```\r\n\r\n模型：\r\n\r\n- 5000: FLUX1.1（标准版）\r\n- 9000: FLUX1.1-ultra\r\n- 6000: SD3.5\r\n- 7000：Recraft-Real\r\n- 8000: Recraft-Vector\r\n\r\n所有图像均以1024x1024分辨率生成。\r\n\r\n示例用法：\r\n\r\n```javascript\r\nconst result = await client.callTool({\r\n  name: \"generate_image\",\r\n  arguments: {\r\n    prompt: \"A cat sitting elegantly\",\r\n    model: \"7000\",\r\n    image_count: 1\r\n  }\r\n});\r\n```\r\n\r\n响应格式：\r\n\r\n```\r\nImage generated successfully!\r\nThe image has been opened in your default browser.\r\n\r\nGeneration details:\r\n- Model: 7000\r\n- Prompt: \"A cat sitting elegantly\"\r\n- Image URL: https://storage.googleapis.com/...\r\n\r\nYou can also click the URL above to view the image again.\r\n```\r\n\r\n## 使用Docker构建\r\n\r\n```sh\r\ndocker build -t mcp/everart -f src/everart/Dockerfile .\r\n```\r\n",
+ "config": {
+  "everart": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e",
+    "EVERART_API_KEY",
+    "mcp/everart"
+   ],
+   "env": {
+    "EVERART_API_KEY": "your_key_here"
+   }
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "412",
+ "kind": "mcp",
+ "name": "roulette",
+ "fingerprint_md5": "d291997a8e7e90c1b6b29dbaa199fdf1",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# 🎲 轮盘赌MCP\r\n\r\n这个MCP服务器提供轮盘赌功能Model Context Protocol服务器。\r\n\r\n## 🌟 特徴\r\n\r\n- 🎯 简单易用的轮盘赌功能\r\n- 🔄 可自定义选项\r\n- ⚡ 快速响应\r\n- 🎨 美丽的动画效果\r\n\r\n## 🚀 安装\r\n\r\n```bash\r\nnpm install roulette-mcp\r\n```\r\n\r\n## 💻 使用方法\r\n\r\nMCP用作服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"roulette\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"roulette-mcp\"],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 🛠️ 可用工具\r\n\r\n### spin_roulette\r\n\r\n旋转轮盘赌以获取结果。\r\n\r\n输入架构：\r\n\r\n```json\r\n{\r\n  \"type\": \"object\",\r\n  \"properties\": {\r\n    \"options\": {\r\n      \"type\": \"array\",\r\n      \"items\": {\r\n        \"type\": \"string\"\r\n      },\r\n      \"description\": \"ルーレットの選択肢（オプション）\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 👥 分发\r\n\r\n1. 分叉此存储库\r\n1. 创建新分支（`git checkout -b feature/amazing-feature`)\r\n1. 提交更改（`git commit -m '✨ feat: 素晴らしい機能を追加'`)\r\n1. 推到分支（`git push origin feature/amazing-feature`)\r\n1. 创建拉式请求\r\n\r\n## 📝 许可证\r\n\r\nMIT在许可证下公开。了解更多信息[许可证](LICENSE)请参见文件。\r\n\r\n## 🙏 谢辞\r\n\r\n- 这个项目[模型上下文协议](https://github.com/roovet/model-context-protocol)中所述修改相应参数的值。\r\n- 感谢所有的供应商和用户。\r\n",
+ "config": {
+  "roulette": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "roulette-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

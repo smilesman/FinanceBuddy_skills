@@ -1,0 +1,24 @@
+{
+ "id": "3235",
+ "kind": "mcp",
+ "name": "tfnsw-realtime-alerts",
+ "fingerprint_md5": "c2e5a0379f32b43a0f486df6f0ff65b9",
+ "download_count": 0,
+ "category": "出行交通",
+ "tags": "",
+ "version": "",
+ "readme": "# 新南威尔士州交通局实时警报MCP服务器\r\n\r\n用于新南威尔士州交通局（TfNSW）实时警报API的模型上下文协议服务器。该服务器提供了通过大型语言模型访问实时交通警报和信息并与之交互的工具。\r\n\r\n## 概述\r\n\r\n这个基于TypeScript的MCP服务器实现了与新南威尔士州交通部实时警报系统的集成。它使人工智能助手能够访问新南威尔士州交通网络中有关交通中断、计划工程和其他重要警报的最新信息。\r\n\r\n## 特性\r\n\r\n### 资源\r\n\r\n- 通过以下方式列出和访问运输警报 `nsw-transport://` URI\r\n- 按交通方式（公共汽车、火车、渡轮等）过滤警报\r\n- 纯文本格式，便于人工智能助手使用\r\n\r\n### 工具\r\n\r\n- `get-transport-alerts` -检索当前运输警报\r\n  - 按运输方式筛选\r\n  - 返回格式化的警报信息，包括受影响的路线、时间段和影响详细信息\r\n\r\n### 鼓励\r\n\r\n- `transport-disruption-summary` -生成当前运输警报的摘要\r\n  - 包括相关警报详细信息作为嵌入式资源\r\n  - LLM重大中断总结的结构化提示\r\n\r\n## 运输方式\r\n\r\n支持以下运输方式：\r\n\r\n- `all` -所有运输方式\r\n- `buses` -悉尼地铁和外地铁巴士服务\r\n- `ferries` -悉尼渡轮和纽卡斯尔运输渡轮\r\n- `lightrail` -轻轨服务\r\n- `metro` -悉尼地铁\r\n- `nswtrains` -新南威尔士州火车区域列车和长途汽车\r\n- `regionbuses` -区域巴士服务\r\n- `sydneytrains` -悉尼火车郊区和城际网络\r\n\r\n## 认证\r\n\r\n此服务器需要使用TfNSW Open Data API进行身份验证。您需要在上注册API密钥 [新南威尔士州交通局开放数据中心](https://opendata.transport.nsw.gov.au/).\r\n\r\n## 安装\r\n\r\n要与Claude Desktop一起使用，请添加服务器配置：\r\n\r\n在MacOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tfnsw-realtime-alerts\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"tfnsw-realtime-alerts-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"NSW_TRANSPORT_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `\"your_api_key_here\"` 使用您的新南威尔士州交通局API密钥 [新南威尔士州交通局开放数据中心](https://opendata.transport.nsw.gov.au/).\r\n\r\n## 发展\r\n\r\n将API密钥配置为 `.env` 文件：\r\n\r\n```\r\nNSW_TRANSPORT_API_KEY=\"your_api_key_here\"\r\n```\r\n\r\n安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n对于自动重建的开发：\r\n\r\n```bash\r\nnpm run watch\r\n```\r\n\r\n### 调试\r\n\r\n您可以使用 [MCP检查员](https://github.com/modelcontextprotocol/inspector) 用于调试，它作为包脚本提供：\r\n\r\n```bash\r\nnpm run inspector\r\n```\r\n\r\n检查器将提供一个URL，用于访问浏览器中的调试工具。\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。\r\n",
+ "config": {
+  "tfnsw-realtime-alerts": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "tfnsw-realtime-alerts-mcp-server"
+   ],
+   "env": {
+    "NSW_TRANSPORT_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

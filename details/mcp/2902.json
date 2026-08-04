@@ -1,0 +1,25 @@
+{
+ "id": "2902",
+ "kind": "mcp",
+ "name": "meta-ads",
+ "fingerprint_md5": "06a5ee0b210519fa7b8a102f43f71f9a",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# 元广告经理mcp\r\n\r\nMCP服务器，用于直接从Claude创建和管理Meta（Facebook/Instagram）广告活动。告诉克劳德你想要什么。它部署。\r\n\r\n建造于 [成就实验室](https://www.attainmentlabs.com).\r\n\r\n______________________________________________________________________\r\n\r\n## 它做什么\r\n\r\n将此服务器添加到您的Claude配置中。您将获得5个工具：\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `create_meta_campaign` |创建完整的活动：活动、广告集、创意和广告|\r\n| `get_campaign_status` |检查活动的状态、广告集和广告|\r\n| `pause_campaign` |暂停直播活动|\r\n| `activate_campaign` |激活暂停的活动|\r\n| `delete_campaign` |永久删除活动|\r\n\r\n所有活动都创建为 **已暂停** 默认情况下。你在消费前要进行审查。\r\n\r\n______________________________________________________________________\r\n\r\n## 安装\r\n\r\n### 选项1：让克劳德为你设置（最简单）\r\n\r\n如果你使用 [克劳德代码](https://claude.ai/download)，粘贴此提示：\r\n\r\n> “为我设置元广告mcp：https://github.com/attainmentlabs/meta-ads-mcp\"\r\n\r\nClaude将检查您的环境，逐步指导您获取Meta凭据，编辑您的 `~/.mcp.json`，并确认何时完成。没有要阅读的文档。\r\n\r\n______________________________________________________________________\r\n\r\n### 选项2:uvx（推荐，无需安装）\r\n\r\n```bash\r\n# No setup required — uvx runs it directly\r\n```\r\n\r\n增添 `~/.mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"meta-ads\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"meta-ads-manager-mcp\"],\r\n      \"env\": {\r\n        \"META_ACCESS_TOKEN\": \"your-token-here\",\r\n        \"META_AD_ACCOUNT_ID\": \"your-account-id\",\r\n        \"META_PAGE_ID\": \"your-page-id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 选项2:pip安装\r\n\r\n```bash\r\npip install meta-ads-manager-mcp\r\n```\r\n\r\n然后在 `~/.mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"meta-ads\": {\r\n      \"command\": \"meta-ads-manager-mcp\",\r\n      \"env\": {\r\n        \"META_ACCESS_TOKEN\": \"your-token-here\",\r\n        \"META_AD_ACCOUNT_ID\": \"your-account-id\",\r\n        \"META_PAGE_ID\": \"your-page-id\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 凭证\r\n\r\n你需要Meta中的三个值。完整的分步演练： **[设置.md](SETUP.md)**\r\n\r\n|变量|在哪里可以找到它|\r\n|----------|-----------------|\r\n| `META_ACCESS_TOKEN` |图形API资源管理器-具有的长期令牌 `ads_management` 许可|\r\n| `META_AD_ACCOUNT_ID` |业务经理：广告账户——只有数字，没有 `act_` 前缀|\r\n| `META_PAGE_ID` |Facebook页面：关于→ 页面透明度→ 页面ID|\r\n\r\n访问令牌将在60天后过期。看 [设置.md](SETUP.md) 对于交换流。\r\n\r\n______________________________________________________________________\r\n\r\n## 使用示例\r\n\r\n服务器连接后，只需描述您想要什么：\r\n\r\n**创建活动：**\r\n\r\n> “针对25-40岁的美国健身爱好者创建一个Meta活动。每日预算30美元。请使用/Users/me/ads/hero.jpg上的图片。复制：“追踪每一个重复。击中每一个目标。标题：“FitCommit AI”。CTA：了解更多。链接到fitcommit.ai。”\r\n\r\n**检查状态：**\r\n\r\n> “120243616427570285活动的状态如何？”\r\n\r\n**暂停：**\r\n\r\n> “暂停活动120243616427570285。”\r\n\r\n**激活**\r\n\r\n> “启用活动120243616427570285。”\r\n\r\n**删除：**\r\n\r\n> “删除活动120243616427570285。”\r\n\r\n______________________________________________________________________\r\n\r\n## dry_run模式\r\n\r\n`create_meta_campaign` 默认为 `dry_run=True`。这模拟了所有API调用并返回伪造的ID，而无需进行任何请求或花钱。集 `dry_run=False` 当您准备部署时。\r\n\r\n______________________________________________________________________\r\n\r\n## YAML工作流\r\n\r\n更喜欢将活动编写为配置文件？使用 [元广告cli](https://github.com/attainmentlabs/meta-ads-cli) --配套的CLI工具。\r\n\r\n______________________________________________________________________\r\n\r\n## 需求\r\n\r\n- Python 3.9+\r\n- `uv` 对于uvx安装路径\r\n- 具有广告帐户和Facebook页面的Meta Business Manager帐户\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "meta-ads": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "meta-ads-manager-mcp"
+   ],
+   "env": {
+    "META_ACCESS_TOKEN": "your-token-here",
+    "META_AD_ACCOUNT_ID": "your-account-id",
+    "META_PAGE_ID": "your-page-id"
+   }
+  }
+ }
+}

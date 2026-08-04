@@ -1,0 +1,25 @@
+{
+ "id": "2029",
+ "kind": "mcp",
+ "name": "portfolio-mcp",
+ "fingerprint_md5": "6935060eca121232b15854159d7f93a7",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# 投资组合mcp\r\n\r\n由以下组件驱动的投资组合分析MCP服务器 [mcp参考缓存](https://github.com/l4b4r4b4b4/mcp-refcache) 用于构建高效处理财务数据的AI代理工具。\r\n\r\n\r\n## 特性\r\n\r\n- **投资组合管理**：使用持久存储创建、读取、更新、删除投资组合\r\n- **数据源**：雅虎财经（股票/ETF）、CoinGecko（加密货币）、合成（GBM模拟）\r\n- **分析工具**：回报率、波动率、夏普比率、索蒂诺比率、风险价值、提款、相关性\r\n- **优化**：高效前沿、蒙特卡洛模拟、权重优化\r\n- **基于引用的缓存**：通过mcp-refcache缓存大型数据集，以避免上下文膨胀\r\n\r\n## 安装\r\n\r\n### 使用紫外线（推荐）\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/l4b4r4b4b4/portfolio-mcp\r\ncd portfolio-mcp\r\n\r\n# Install dependencies\r\nuv sync\r\n\r\n# Run the server\r\nuv run portfolio-mcp stdio\r\n```\r\n\r\n### 使用pip\r\n\r\n```bash\r\npip install portfolio-mcp\r\nportfolio-mcp stdio\r\n```\r\n\r\n## 快速开始\r\n\r\n### 连接到克劳德桌面\r\n\r\n添加到您的Claude Desktop配置(`~/.config/claude/claude_desktop_config.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"portfolio-mcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/portfolio-mcp\", \"portfolio-mcp\", \"stdio\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 基本用法\r\n\r\n连接后，您可以使用自然语言：\r\n\r\n```\r\n\"Create a portfolio called 'tech_stocks' with AAPL, GOOG, and MSFT\"\r\n\"Analyze the returns and volatility of my tech_stocks portfolio\"\r\n\"Optimize my portfolio for maximum Sharpe ratio\"\r\n\"Show me the efficient frontier with 20 points\"\r\n\"Compare my portfolios by Sharpe ratio\"\r\n```\r\n\r\n## 可用工具\r\n\r\n### 投资组合管理（6个工具）\r\n\r\n- `create_portfolio` -使用符号和权重创建新的投资组合\r\n- `get_portfolio` -检索投资组合详细信息和指标\r\n- `list_portfolios` -列出所有存储的投资组合\r\n- `delete_portfolio` -删除投资组合\r\n- `update_portfolio_weights` -修改投资组合权重\r\n- `clone_portfolio` -使用可选的新权重创建副本\r\n\r\n### 分析工具（8个工具）\r\n\r\n- `get_portfolio_metrics` -综合指标（回报率、波动率、夏普指数、索蒂诺指数、风险价值）\r\n- `get_returns` -每日、日志或累计回报\r\n- `get_correlation_matrix` -资产相关性分析\r\n- `get_covariance_matrix` -方差-协方差结构\r\n- `get_individual_stock_metrics` -按资产统计\r\n- `get_drawdown_analysis` -最大缩编和恢复分析\r\n- `compare_portfolios` -并排投资组合比较\r\n\r\n### 优化工具（4个工具）\r\n\r\n- `optimize_portfolio` -优化权重（最大夏普、最小波动率、目标回报率/vol）\r\n- `get_efficient_frontier` -生成高效的边界曲线\r\n- `run_monte_carlo` -投资组合分析的蒙特卡罗模拟\r\n- `apply_optimization` -应用优化并更新存储的投资组合\r\n\r\n### 数据工具（8个工具）\r\n\r\n- `generate_price_series` -生成合成的GBM价格数据\r\n- `generate_portfolio_scenarios` -创建多个场景数据集\r\n- `get_sample_portfolio_data` -获取测试样本数据\r\n- `get_trending_coins` -CoinGecko的加密货币趋势\r\n- `search_crypto_coins` -搜索加密资产\r\n- `get_crypto_info` -详细的加密货币信息\r\n- `list_crypto_symbols` -可用的加密符号映射\r\n- `get_cached_result` -按引用ID检索缓存的大型结果\r\n\r\n## 建筑\r\n\r\n```\r\nportfolio-mcp/\r\n├── app/\r\n│   ├── __init__.py\r\n│   ├── __main__.py      # Typer CLI entry point\r\n│   ├── config.py        # Pydantic settings\r\n│   ├── server.py        # FastMCP server setup\r\n│   ├── storage.py       # RefCache-based portfolio storage\r\n│   ├── models.py        # Pydantic models for I/O\r\n│   ├── data_sources.py  # Yahoo Finance + CoinGecko APIs\r\n│   └── tools/           # MCP tool implementations\r\n│       ├── portfolio.py\r\n│       ├── analysis.py\r\n│       ├── optimization.py\r\n│       └── data.py\r\n└── tests/               # 163 tests, 81% coverage\r\n```\r\n\r\n## 基于引用的缓存\r\n\r\n此服务器使用 [mcp参考缓存](https://github.com/l4b4r4b4b4/mcp-refcache) 为了高效地处理大型结果：\r\n\r\n1. **大结果被缓存** -当工具返回的数据超过预览大小时，它将存储在缓存中\r\n1. **返回引用** -工具返回a `ref_id` 以及数据的预览/示例\r\n1. **按需提供完整数据** -使用 `get_cached_result(ref_id=...)` 检索完整数据\r\n\r\n这可以防止在处理价格历史或蒙特卡洛模拟等大型数据集时上下文窗口膨胀。\r\n\r\n## 发展\r\n\r\n### 先决条件\r\n\r\n- Python 3.12+\r\n- [紫外线](https://docs.astral.sh/uv/) （推荐）或pip\r\n\r\n### 设置\r\n\r\n```bash\r\n# Clone and install\r\ngit clone https://github.com/l4b4r4b4b4/portfolio-mcp\r\ncd portfolio-mcp\r\nuv sync\r\n\r\n# Run tests\r\nuv run pytest --cov\r\n\r\n# Lint and format\r\nuv run ruff check .\r\nuv run ruff format .\r\n```\r\n\r\n### 本地运行\r\n\r\n```bash\r\n# stdio mode (for MCP clients)\r\nuv run portfolio-mcp stdio\r\n\r\n# SSE mode (for web clients)\r\nuv run portfolio-mcp sse --port 8080\r\n\r\n# Streamable HTTP mode\r\nuv run portfolio-mcp streamable-http --port 8080\r\n```\r\n\r\n## 配置\r\n\r\n环境变量：\r\n\r\n|变量|描述|默认值|\r\n|----------|-------------|---------|\r\n| `LOG_LEVEL` |日志记录级别| `INFO` |\r\n| `CACHE_TTL` |默认缓存TTL（秒）| `3600` |\r\n\r\n## 许可证\r\n\r\nMIT许可证-请参阅 [许可证](LICENSE) 了解详情。\r\n\r\n## 相关项目\r\n\r\n- [mcp参考缓存](https://github.com/l4b4r4b4b4/mcp-refcache) -MCP服务器的基于参考的缓存\r\n- [fastmcp模板](https://github.com/l4b4r4b4b4/fastmcp-template) -此项目的构建模板\r\n- [FinQuant](https://github.com/fmilthaler/FinQuant) -金融投资组合分析库\r\n",
+ "config": {
+  "portfolio-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "/path/to/portfolio-mcp",
+    "portfolio-mcp",
+    "stdio"
+   ],
+   "env": {}
+  }
+ }
+}

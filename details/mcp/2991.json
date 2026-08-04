@@ -1,0 +1,23 @@
+{
+ "id": "2991",
+ "kind": "mcp",
+ "name": "xbtfx-trading",
+ "fingerprint_md5": "3723da4a325c63c7458cd5a56952e1cd",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# XBTFX MCP交易服务器\r\n\r\nMCP服务器 [XBTFX交易API](https://docs.xbtfx.com/trading-api/) --通过XBTFX MetaTrader 5账户，从任何支持 [模型上下文协议](https://modelcontextprotocol.io).\r\n\r\n适用于Claude Code、Claude Desktop、OpenAI Codex、Cursor、Windsurf和任何其他兼容MCP的客户端。\r\n\r\n> **注：** 此API仅适用于XBTFX交易账户。在以下网址创建帐户 [my.xbtfx.com](https://my.xbtfx.com) 并在管理API密钥 [console.xbtfx.com](https://console.xbtfx.com).\r\n\r\n## 设置\r\n\r\n1. 从获取API密钥 [console.xbtfx.com](https://console.xbtfx.com)\r\n\r\n1. 添加到您的AI工具：\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add xbtfx-trading -e XBTFX_API_KEY=xbtfx_live_your_key_here -- npx @xbtfx/mcp-trading\r\n```\r\n\r\n### 克劳德桌面版\r\n\r\n添加 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"xbtfx-trading\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@xbtfx/mcp-trading\"],\r\n      \"env\": {\r\n        \"XBTFX_API_KEY\": \"xbtfx_live_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### OpenAI Codex\r\n\r\n```bash\r\ncodex mcp add xbtfx-trading -- npx @xbtfx/mcp-trading\r\n```\r\n\r\n然后在运行Codex之前在您的环境中设置API密钥：\r\n\r\n```bash\r\nexport XBTFX_API_KEY=\"xbtfx_live_your_key_here\"\r\n```\r\n\r\n### 光标\r\n\r\n添加 `.cursor/mcp.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"xbtfx-trading\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@xbtfx/mcp-trading\"],\r\n      \"env\": {\r\n        \"XBTFX_API_KEY\": \"xbtfx_live_your_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 工具\r\n\r\n### 账户和市场数据\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_auth_status` |检查API密钥状态、登录、保证金模式、权限|\r\n| `get_account` |余额、股权、利润、损益、杠杆|\r\n| `get_positions` |P&L的所有未结头寸|\r\n| `get_orders` |待处理的限价/止损订单|\r\n| `get_history` |按期间或日期范围列出的交易历史|\r\n| `get_symbols` |所有400+可交易工具|\r\n| `get_symbol` |一个交易品种的详细规格（数字、交易量限制、点差、掉期、保证金、交易时段）|\r\n| `get_quote` |一个或多个交易品种的实时买卖价格（最多20个）|\r\n\r\n### 交易\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `trade` |用可选的SL/TP开仓（买入/卖出）|\r\n| `close_position` |关闭头寸（全部或部分）|\r\n| `modify_position` |在现有职位上更改SL/TP|\r\n| `close_by` |反向平仓（对冲模式）|\r\n| `reverse_position` |反转位置方向|\r\n| `close_all` |关闭所有未结头寸|\r\n| `close_symbol` |关闭一个符号的所有位置|\r\n\r\n## 对话示例\r\n\r\n> **你：** 我的账户余额是多少？\r\n>\r\n> **人工智能：** *调用get_count* --您的余额为988.00美元，还有888.00美元的可用保证金。杠杆比率为1:1000。没有空缺职位。\r\n\r\n> **你：** 购买0.01手欧元兑美元，止损50点\r\n>\r\n> **人工智能：** *调用欧元兑美元的get_symbol，然后调用交易* --开盘买入0.01欧元兑美元，报1.15350点。将SL设置为1.14850（50点）。票号23015470。\r\n\r\n> **你：** 那个位置怎么样？\r\n>\r\n> **人工智能：** *调用get_positions* --欧元兑美元买入0.01手：开盘价1.15350，当前价格1.15380，损益：+0.30美元。\r\n\r\n## API 文档\r\n\r\n- [XBTFX控制台](https://console.xbtfx.com) -API密钥管理\r\n- [XBTFX技能中心](https://github.com/XBTFX/xbtfx-skills-hub) -API详细参考\r\n- [API示例](https://github.com/XBTFX/xbtfx-api-examples) --Python、JavaScript、Go、curl\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "xbtfx-trading": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@xbtfx/mcp-trading"
+   ],
+   "env": {
+    "XBTFX_API_KEY": "xbtfx_live_your_key_here"
+   }
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "1838",
+ "kind": "mcp",
+ "name": "asset-price-mcp",
+ "fingerprint_md5": "6350632d2c4a56dcfaca36793d784bd3",
+ "download_count": 0,
+ "category": "加密资产",
+ "tags": "",
+ "version": "",
+ "readme": "# 资产价格MCP服务器（资产价格MCP）\r\n\r\n[英语](#asset-price-mcp-server-asset-price-mcp) | [中文](./README.zh.md) | [日本语](./README.ja.md)\r\n\r\n## 概述\r\n\r\n用于检索和显示当前资产价格信息的模型上下文协议服务器。该服务器提供工具来获取各种资产（包括贵金属和加密货币）的实时价格信息，使大型语言模型能够轻松访问和显示这些数据。\r\n\r\n### 特性\r\n\r\n- 通过黄金API获取贵金属（黄金、白银等）的价格\r\n- 通过CoinGecko和Gold API检索加密货币的价格\r\n- 智能路由到可用数据源\r\n- 自动缓存以实现更好的性能和速率限制合规性\r\n\r\n请注意，资产价格mcp目前正在开发中。\r\n\r\n## 工具\r\n\r\n### `get_asset_price`\r\n\r\n检索特定资产的当前定价信息。\r\n\r\n**论据：**\r\n\r\n- `symbol` （可选）：要查询的资产符号（例如，“XAU”、“BTC”、“ETH”）。如果省略，则返回主要资产的默认列表。\r\n- `currency` （可选）：表示价格的货币（默认值：“USD”）。\r\n\r\n### `list_assets`\r\n\r\n列出可用于价格查询的所有支持资产。\r\n\r\n## 入门指南\r\n\r\n许多代码编辑器和其他AI客户端使用配置文件来管理MCP服务器。\r\n\r\n您可以配置 `asset-price-mcp` 通过将以下内容添加到您的配置文件中。\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Claude Desktop的资产价格mcp [铁匠铺](https://smithery.ai/server/@mk965/asset-price-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @mk965/asset-price-mcp --client claude\r\n```\r\n\r\n### MacOS/Linux\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Asset Price MCP\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"asset-price-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 视窗\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Asset Price MCP\": {\r\n      \"command\": \"cmd\",\r\n      \"args\": [\"/c\", \"npx\", \"-y\", \"asset-price-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 建筑\r\n\r\n```bash\r\nnpm run build\r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "asset-price-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "asset-price-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

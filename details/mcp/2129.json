@@ -1,0 +1,22 @@
+{
+ "id": "2129",
+ "kind": "mcp",
+ "name": "balizas-v16",
+ "fingerprint_md5": "eb359bb3882f86a8da3a2728050bf9f2",
+ "download_count": 0,
+ "category": "位置数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 巴厘岛16mcp\r\n\r\n**官方MCP服务器 [网站 balizame.com](https://balizame.com) 用于西班牙活动的V16信标的实时数据。**\r\n\r\n它将Claude和其他LLM与V16信标数据连接起来，获得通过连接的V16信标传输其位置的停止/故障车辆的位置。\r\n\r\n______________________________________________________________________\r\n\r\n## 特征\r\n\r\n- **实时数据**每分钟更新\r\n- **智能过滤**：仅显示事件类型 `vehicleObstruction` （V16信标激活）\r\n- **全国覆盖**：所有连接在西班牙的V16信标\r\n- **完整信息**：GPS坐标，道路，公里，市，省，严重程度\r\n- **智能缓存**：最大限度地减少对服务器的调用，同时尊重更新频率\r\n\r\n## 瞬间。\r\n\r\n### 选择1：NPX（推荐）\r\n\r\n您不需要安装任何东西，直接使用：\r\n\r\n```bash\r\nnpx baliza16mcp\r\n```\r\n\r\n### 观点2：全球安装\r\n\r\n```bash\r\nnpm install -g baliza16mcp\r\n```\r\n\r\n### 选择3：从源代码\r\n\r\n```bash\r\ngit clone https://github.com/granerodev/baliza16mcp.git\r\ncd baliza16mcp\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n## 克劳德桌面上的设置\r\n\r\n分析您的配置文件 `claude_desktop_config.json`:\r\n\r\n### macOS\r\n\r\n```\r\n~/Library/Application Support/Claude/claude_desktop_config.json\r\n```\r\n\r\n### 视窗\r\n\r\n```\r\n%APPDATA%\\Claude\\claude_desktop_config.json\r\n```\r\n\r\n### 配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"balizas-v16\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"baliza16mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n全球最新情况：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"balizas-v16\": {\r\n      \"command\": \"baliza16mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**Reinicia Claude桌面** 修改设置后。\r\n\r\n## 可用的工具\r\n\r\n### `obtener_balizas_activas`\r\n\r\n获取当前在西班牙活动的V16信标。\r\n\r\n**Wi-Fi设置** （所有可选）：\r\n\r\n|参数|类型|描述|\r\n|-----------|------|-------------|\r\n| `provincia` |字符串|按省份过滤（例如：“马德里”、“巴塞罗那”）|\r\n| `carretera` |字符串|道路过滤（例如：“A-1”，“AP-7”）|\r\n| `severidad` |字符串|按严重程度筛选：“低”、“中”、“高”、“批评”|\r\n| `limite` | number | 结果的最大数量 |\r\n\r\n**克劳德的使用示例：**\r\n\r\n> “马德里现在有多少V16信标活跃？”\r\n\r\n**回答：**\r\n\r\n```json\r\n{\r\n  \"fuente\": \"balizame.com\",\r\n  \"actualizadoEn\": \"2026-01-16T17:00:00.000Z\",\r\n  \"totalEncontradas\": 33,\r\n  \"totalEspana\": 322,\r\n  \"balizas\": [\r\n    {\r\n      \"id\": \"v16-8355636\",\r\n      \"coordenadas\": { \"lat\": 40.416775, \"lon\": -3.703790 },\r\n      \"ubicacion\": {\r\n        \"nombreCarretera\": \"A-6\",\r\n        \"km\": 15.2,\r\n        \"municipio\": \"Las Rozas\",\r\n        \"provincia\": \"Madrid\",\r\n        \"comunidadAutonoma\": \"Madrid\"\r\n      },\r\n      \"incidente\": {\r\n        \"tipo\": \"vehiculo_detenido\",\r\n        \"severidad\": \"baja\",\r\n        \"horaInicio\": \"2026-01-16T16:45:00.000+01:00\"\r\n      }\r\n    }\r\n  ]\r\n}\r\n```\r\n\r\n### `estadisticas_balizas`\r\n\r\n获取活动V16信标的汇总统计信息。\r\n\r\n**克劳德的使用示例：**\r\n\r\n> “给我西班牙活跃的V16信标的统计数据”\r\n\r\n**回答：**\r\n\r\n```json\r\n{\r\n  \"estadisticas\": {\r\n    \"totalBalizasActivas\": 322,\r\n    \"porProvincia\": {\r\n      \"Madrid\": 33,\r\n      \"Valencia\": 22,\r\n      \"Alicante\": 22,\r\n      \"A Coruna\": 20\r\n    },\r\n    \"porSeveridad\": {\r\n      \"baja\": 317,\r\n      \"critica\": 3,\r\n      \"alta\": 1,\r\n      \"media\": 1\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## MCP 资源\r\n\r\n服务器还公开了MCP资源：\r\n\r\n- **统一资源标识符**: `balizas://activas`\r\n- **描述**：以JSON格式完整列出活动的V16信标\r\n\r\n## 什么是V16信标？\r\n\r\n拉斯 **V16信标** 它们是紧急照明信号装置，取代了西班牙的紧急三角形。V16信标 **连接的** （物联网）在激活时自动传输其GPS位置，允许：\r\n\r\n- 通过导航系统警告其他司机\r\n- 改善应急服务响应\r\n- 降低道路交通事故的风险\r\n\r\n> 更多信息： [网站 balizame.com](https://balizame.com)\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clonar repositorio\r\ngit clone https://github.com/granerodev/baliza16mcp.git\r\ncd baliza16mcp\r\n\r\n# Instalar dependencias\r\nnpm install\r\n\r\n# Desarrollo con hot-reload\r\nnpm run dev\r\n\r\n# Compilar\r\nnpm run build\r\n\r\n# Probar con MCP Inspector\r\nnpx @modelcontextprotocol/inspector node dist/index.js\r\n```\r\n\r\n## 许可证\r\n\r\n[MIT](LICENSE) -个人和商业用途免费。\r\n\r\n______________________________________________________________________\r\n\r\n**问题或建议？** [Abre un issue](https://github.com/granerodev/baliza16mcp/issues)\r\n",
+ "config": {
+  "balizas-v16": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "baliza16mcp"
+   ],
+   "env": {}
+  }
+ }
+}

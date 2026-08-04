@@ -1,0 +1,26 @@
+{
+ "id": "1189",
+ "kind": "mcp",
+ "name": "odbc",
+ "fingerprint_md5": "a221c281d4186f5048770ae0f40de4e2",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# ODBC MCP服务器\r\n\r\nMCP（模型上下文协议）服务器，使Claude Desktop等LLM工具能够通过ODBC连接查询数据库。此服务器允许Claude和其他MCP客户端访问、分析数据库数据并从中生成见解，同时保持安全性和只读保护。\r\n\r\n## 特性\r\n\r\n- 连接到任何ODBC兼容数据库\r\n- 支持多个数据库连接\r\n- 通过配置文件或Claude Desktop设置进行灵活配置\r\n- 只读保护措施，防止数据修改\r\n- 使用UV包管理器轻松安装\r\n- 详细的错误报告和日志记录\r\n\r\n## 先决条件\r\n\r\n- Python 3.10或更高版本\r\n- UV包管理器\r\n- 系统上安装的数据库的ODBC驱动程序\r\n- Sage 100高级版：ProvideX ODBC驱动程序\r\n\r\n## 安装\r\n\r\n```bash\r\ngit clone https://github.com/tylerstoltz/mcp-odbc.git\r\ncd mcp-odbc\r\nuv venv\r\n.venv\\Scripts\\activate # On Mac / Linux: source .venv/bin/activate (untested)\r\nuv pip install -e .\r\n```\r\n\r\n## 配置\r\n\r\n服务器可以通过以下方式配置：\r\n\r\n1. 专用配置文件\r\n1. 环境变量\r\n1. Claude桌面配置\r\n\r\n### 常规配置设置\r\n\r\n创建配置文件(`.ini`)使用您的数据库连接详细信息：\r\n\r\n```ini\r\n[SERVER]\r\ndefault_connection = my_database\r\nmax_rows = 1000\r\ntimeout = 30\r\n\r\n[my_database]\r\ndsn = MyDatabaseDSN\r\nusername = your_username\r\npassword = your_password\r\nreadonly = true\r\n```\r\n\r\n### SQLite配置\r\n\r\n对于带ODBC的SQLite数据库：\r\n\r\n```ini\r\n[SERVER]\r\ndefault_connection = sqlite_db\r\nmax_rows = 1000\r\ntimeout = 30\r\n\r\n[sqlite_db]\r\ndsn = SQLite_DSN_Name\r\nreadonly = true\r\n```\r\n\r\n### Sage 100 ProvideX配置\r\n\r\nProvideX需要特殊配置才能兼容。使用此最小配置可获得最佳结果：\r\n\r\n```ini\r\n[SERVER]\r\ndefault_connection = sage100\r\nmax_rows = 1000\r\ntimeout = 60\r\n\r\n[sage100]\r\ndsn = YOUR_PROVIDEX_DSN\r\nusername = your_username\r\npassword = your_password\r\ncompany = YOUR_COMPANY_CODE\r\nreadonly = true\r\n```\r\n\r\n**ProvideX的重要提示：**\r\n\r\n- 使用最小配置-添加额外参数可能会导致连接问题\r\n- 始终设置 `readonly = true` 为了安全\r\n- 这 `company` Sage 100连接需要参数\r\n- 避免在建立连接后更改连接属性\r\n\r\n### Claude桌面集成\r\n\r\n要在Claude Desktop中配置服务器，请执行以下操作：\r\n\r\n1. 打开或创建 `claude_desktop_config.json`:\r\n\r\n   - 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n   - macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n1. 添加MCP服务器配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"odbc\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"C:\\\\path\\\\to\\\\mcp-odbc\",\r\n        \"run\",\r\n        \"odbc-mcp-server\",\r\n        \"--config\", \r\n        \"C:\\\\path\\\\to\\\\mcp-odbc\\\\config\\\\your_config.ini\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 用法\r\n\r\n### 手动启动服务器\r\n\r\n```bash\r\n# Start with default configuration\r\nodbc-mcp-server\r\n\r\n# Start with a specific config file\r\nodbc-mcp-server --config path/to/config.ini\r\n```\r\n\r\n### 与Claude Desktop一起使用\r\n\r\n1. 在Claude Desktop的配置文件中配置服务器，如上所示\r\n1. 重新启动克劳德桌面\r\n1. ODBC工具将自动出现在MCP工具列表中\r\n\r\n### 可用的MCP工具\r\n\r\nODBC MCP服务器提供以下工具：\r\n\r\n1. **列出连接**：列出所有已配置的数据库连接\r\n1. **列出可用dsn**：列出系统上所有可用的DSN\r\n1. **测试连接**：测试数据库连接并返回信息\r\n1. **列表表格**：列出数据库中的所有表\r\n1. **获取表模式**：获取表的架构信息\r\n1. **执行查询**：执行SQL查询并返回结果\r\n\r\n## 查询示例\r\n\r\n连接服务器后，在Claude Desktop中尝试以下提示：\r\n\r\n- “显示数据库中的所有表”\r\n- “Customer表的架构是什么？”\r\n- “运行查询以获取前10个客户”\r\n- “查找过去30天内的所有订单”\r\n- “按地区分析销售数据并提供见解”\r\n\r\n## 故障排除\r\n\r\n### 连接问题\r\n\r\n如果您遇到连接问题：\r\n\r\n1. 验证您的ODBC驱动程序是否安装正确\r\n1. 使用ODBC数据源管理器测试DSN\r\n1. 检查配置文件中的连接参数\r\n1. 在Claude Desktop日志中查找详细的错误消息\r\n\r\n### ProvideX特定问题\r\n\r\n对于Sage 100/ProvideX：\r\n\r\n1. 使用最少的连接配置（DSN、用户名、密码、公司）\r\n1. 确保Company参数正确\r\n1. 使用特殊的ProvideX配置模板\r\n1. 如果你遇到 `Driver not capable` 错误，请检查连接时是否设置了自动提交\r\n\r\n### 缺少表\r\n\r\n如果表未显示：\r\n\r\n1. 验证数据库帐户的用户权限\r\n1. 检查公司代码是否正确（适用于Sage 100）\r\n1. 尝试使用完全限定的表名（schema.table）\r\n\r\n## 许可证\r\n\r\nMIT许可证-版权所有（c）2024\r\n",
+ "config": {
+  "odbc": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "C:\\path\\to\\mcp-odbc",
+    "run",
+    "odbc-mcp-server",
+    "--config",
+    "C:\\path\\to\\mcp-odbc\\config\\your_config.ini"
+   ],
+   "env": {}
+  }
+ }
+}

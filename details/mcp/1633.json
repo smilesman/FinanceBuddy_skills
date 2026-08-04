@@ -1,0 +1,22 @@
+{
+ "id": "1633",
+ "kind": "mcp",
+ "name": "music-analysis",
+ "fingerprint_md5": "5f52d480746b55701fb95b3864ac6b33",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://mseep.ai/app/hugohow-mcp-music-analysis)\r\n\r\n# MCP音乐分析\r\n\r\n[](https://smithery.ai/server/@hugohow/mcp-music-analysis)\r\n\r\n此存储库包含 **模型上下文提供程序（MCP）** 使用MCP和 [libros](https://librosa.org/) 用于对本地、youtube链接或音频链接中的音频进行音频分析。\r\n\r\n## 使用Claude Desktop\r\n\r\n<div style=\"display: flex; gap: 1rem;\">\r\n  \r\n  \r\n</div>\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面音乐分析 [史密瑟里](https://smithery.ai/server/@hugohow/mcp-music-analysis):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @hugohow/mcp-music-analysis --client claude\r\n```\r\n\r\n### 手动安装\r\n\r\n```bash\r\n# Clone repository\r\ngit clone git@github.com:hugohow/mcp-music-analysis.git\r\ncd mcp-music-analysis\r\n\r\n# Create virtual environment and install\r\nuv venv\r\nsource .venv/bin/activate  # On Windows: .venv\\Scripts\\activate\r\nuv pip install -e .\r\n```\r\n\r\n### 使用Claude Desktop\r\n\r\n#### 查找配置文件\r\n\r\n配置文件的位置取决于您的操作系统：\r\n\r\n- **macOS**:\r\n\r\n  ```\r\n  ~/Library/Application\\ Support/Claude/claude_desktop_config.json\r\n  ```\r\n\r\n- **视窗**:\r\n\r\n  ```\r\n  %APPDATA%\\Claude\\claude_desktop_config.json\r\n  ```\r\n\r\n- **Linux**:\r\n\r\n  ```\r\n  ~/.config/Claude/claude_desktop_config.json\r\n  ```\r\n\r\n将以下内容添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"music-analysis\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"-n\", \"mcp-music-analysis\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 示例提示\r\n\r\n以下是服务器运行后，您可能会在会话或基于聊天的上下文中使用的一些示例提示。MCP将理解这些请求并执行相关工具：\r\n\r\n```\r\nCan you analyze the beat of /Users/hugohow-choong/Desktop/sample-6s.mp3?\r\nCould you give me the duration of https://download.samplelib.com/mp3/sample-15s.mp3 ?\r\nPlease compute the MFCC for this file: /path/to/another_audio.mp3\r\nWhat are the spectral centroid values for /path/to/music.wav?\r\nI'd like to know the onset times for https://www.youtube.com/watch?v=8HFiFd9vx1c\r\n```\r\n\r\n## 待办事项列表\r\n\r\n- \\[x\\] 将URL添加到音频文件下载\r\n- \\[x\\] 将YouTube添加到音频文件转换中\r\n- \\[\\]尝试多个Python环境（测试）\r\n- \\[\\]改进安装指南\r\n- \\[\\]将Whisper整合为歌词\r\n- \\[\\]实施Docker解决方案\r\n\r\n## 作者\r\n\r\n雨果How Choong\r\n",
+ "config": {
+  "music-analysis": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "-n",
+    "mcp-music-analysis"
+   ],
+   "env": {}
+  }
+ }
+}

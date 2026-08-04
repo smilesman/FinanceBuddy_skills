@@ -1,0 +1,25 @@
+{
+ "id": "2772",
+ "kind": "mcp",
+ "name": "web-search-4",
+ "fingerprint_md5": "51614ad4c94f44dc8405b2a94c40848f",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Web搜索MCP分步设置指南\r\n\r\n本指南列出了设置Web搜索MCP服务器并将其集成到开发环境或MCP客户端（如Claude Desktop）的具体步骤。\r\n\r\n## 先决条件\r\n\r\n开始之前，请确保已安装以下内容：\r\n\r\n1. **Docker&Docker编写**：用于运行本地SearxNG实例。\r\n1. **紫外线**：一个非常快的Python包安装程序和解析器。\r\n   - 安装说明： [星光sh/uv](https://github.com/astral-sh/uv)\r\n\r\n## 第一步：准备当地SearxNG\r\n\r\n您需要此存储库中的配置文件来运行MCP服务器将连接到的本地搜索引擎实例。\r\n\r\n1. **克隆存储库**\r\n   ```bash\r\n   git clone https://github.com/ViktoriaKutseva/web-search-mcp.git\r\n   cd web-search-mcp\r\n   ```\r\n\r\n## 步骤2：启动搜索引擎\r\n\r\nMCP服务器依赖于SearxNG的本地实例。\r\n\r\n1. **配置SearxNG**\r\n   复制示例设置文件以创建实际配置。\r\n\r\n   ```bash\r\n   cp searxng/settings.yml.example searxng/settings.yml\r\n   ```\r\n\r\n   *注： `settings.yml` 文件被git忽略。您应该生成一个新的 `secret_key` 里面。*\r\n\r\n1. **启动服务**\r\n   从存储库根运行：\r\n\r\n   ```bash\r\n   docker compose up -d\r\n   ```\r\n\r\n1. **验证SearxNG**\r\n   打开浏览器并导航到 `http://localhost:8080`。您应该看到SearxNG搜索界面。\r\n\r\n## 步骤3：配置MCP客户端\r\n\r\n要在其他特定项目或全局编辑器中使用此工具，您需要向MCP客户端注册它（例如，Claude Desktop、VS Code扩展）。\r\n\r\n### 选项A：与Claude Desktop集成\r\n\r\n1. **查找配置文件**\r\n   查找或创建 `claude_desktop_config.json` 文件：\r\n\r\n   - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - **视窗**: `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n1. **编辑配置**\r\n   添加 `web-search` 进入 `mcpServers` 对象。\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"web-search\": {\r\n           \"command\": \"uvx\",\r\n           \"args\": [\r\n               \"--from\", \"web-search-searxng-mcp\", \"web-search-mcp\"\r\n           ],\r\n           \"env\": {\r\n               \"SEARXNG_BASE_URL\": \"http://localhost:8080\"\r\n           }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. **重新启动克劳德桌面**\r\n   完全退出并重新启动应用程序以使更改生效。\r\n\r\n## 步骤4：验证\r\n\r\n1. 打开您的MCP客户端（例如，Claude Desktop）。\r\n1. 寻找🔌 要验证的图标或已安装工具列表 `web-search` 已连接。\r\n1. 问一个需要搜索网络的问题：\r\n   > “搜索Python的最新版本，并告诉我日期。”\r\n\r\n## 故障排除\r\n\r\n- **无法联系到SearxNG**：确保Docker容器正在运行(`docker ps`)端口8080是空闲的。\r\n- **MCP错误**：检查客户端中的日志或运行 `uvx web-search-mcp` 在终端中手动查看它是否在不崩溃的情况下启动（它将等待stdio输入）。\r\n\r\n## 配置\r\n\r\n设置是通过环境变量（或\\`.env\\`文件）管理的：\r\n\r\n- \\`SEARXNG_BASE_URL：SEARXNG实例的URL（默认值：\\`http://localhost:8080\\`)\r\n- \\`SEARXNG_TIMEOUT：请求超时时间（秒）（默认值：'10'）\r\n- \\`LOGLEVEL \\`：日志记录级别（默认值：\\`INFO \\`）\r\n\r\n## 发展\r\n\r\n- **建筑**：遵循简化的DDD指南。\r\n  - \\`domains/\\`：业务逻辑\r\n  - \\`基础设施/\\`：外部实现（SearxNG客户端）\r\n  - \\`entry_points/\\`：MCP服务器和主执行\r\n  - \\`config/\\`：设置\r\n",
+ "config": {
+  "web-search": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "--from",
+    "web-search-searxng-mcp",
+    "web-search-mcp"
+   ],
+   "env": {
+    "SEARXNG_BASE_URL": "http://localhost:8080"
+   }
+  }
+ }
+}

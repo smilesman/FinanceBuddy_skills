@@ -1,0 +1,22 @@
+{
+ "id": "1555",
+ "kind": "mcp",
+ "name": "mcp-cli-exec",
+ "fingerprint_md5": "cf01a16880d98e71036afb8b47681961",
+ "download_count": 0,
+ "category": "代码开发",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp-cli-exec mcp服务器\r\n\r\n一个功能强大的CLI命令执行MCP服务器，支持运行具有结构化输出的shell命令。此软件包专门关注命令执行功能，将其与其他MCP CLI工具区分开来。\r\n\r\n## 特性\r\n\r\n### 工具\r\n\r\n#### cli执行原始\r\n\r\n执行原始CLI命令并返回结构化输出\r\n\r\n- 接受命令字符串和可选超时（默认值：5分钟）\r\n- 返回详细的执行结果，包括stdout、stderr、退出代码\r\n- 通过结构化错误响应优雅地处理错误\r\n\r\n#### cli执行\r\n\r\n在特定工作目录中执行一个或多个CLI命令\r\n\r\n- 支持单个命令、&&链式命令或命令数组\r\n- 所有命令都在指定的工作目录中执行\r\n- 返回每个命令的详细结果：\r\n  - 成功/失败状态\r\n  - 退出代码\r\n  - stdout和stderr（去除ANSI代码）\r\n  - 执行持续时间\r\n  - 工作目录\r\n- 第一次命令失败时停止\r\n- 每个命令的可选超时（默认值：5分钟）\r\n\r\n注意：由于执行上下文的限制，每个命令都独立运行。命令中的目录更改（cd）不会影响后续命令。所有命令都在最初指定的工作目录中执行。\r\n\r\n### 输出格式\r\n\r\n命令返回结构化结果，包括：\r\n\r\n- 成功/失败状态\r\n- 退出代码\r\n- stdout和stderr（去掉ANSI代码）\r\n- 执行持续时间\r\n- 工作目录\r\n- 详细的错误信息（如适用）\r\n\r\n### 示例用法\r\n\r\n#### cli执行原始\r\n\r\n简单命令执行：\r\n\r\n```json\r\n{\r\n  \"command\": \"echo Hello World\"\r\n}\r\n```\r\n\r\n超时：\r\n\r\n```json\r\n{\r\n  \"command\": \"long-running-script.sh\",\r\n  \"timeout\": 300000\r\n}\r\n```\r\n\r\n#### cli执行\r\n\r\n特定目录中的单个命令：\r\n\r\n```json\r\n{\r\n  \"workingDirectory\": \"/path/to/project\",\r\n  \"commands\": \"npm install\"\r\n}\r\n```\r\n\r\n多个命令（均在同一工作目录中运行）：\r\n\r\n```json\r\n{\r\n  \"workingDirectory\": \"C:\\\\project\",\r\n  \"commands\": [\r\n    \"dir /b\",\r\n    \"npm run build\"\r\n  ]\r\n}\r\n```\r\n\r\n## 安装\r\n\r\n可选从npm安装：\r\n\r\n```bash\r\nnpm install -g mcp-cli-exec\r\n# or with pnpm\r\npnpm add -g mcp-cli-exec\r\n```\r\n\r\n或者在配置中使用npx\r\n\r\n### 用于临床VSCode扩展\r\n\r\n增添 `%APPDATA%/Code - Insiders/User/globalStorage/rooveterinaryinc.roo-cline/settings/cline_mcp_settings.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-cli-exec\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-cli-exec\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 适用于克劳德桌面\r\n\r\n添加到相应的配置文件中：\r\n\r\n窗户： `%APPDATA%/Claude/claude_desktop_config.json`\r\nMacOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-cli-exec\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-cli-exec\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 特殊Windows配置\r\n\r\n如果在Windows上遇到ENOENT spawn npx问题，请使用指定完整路径的替代配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-cli-exec\": {\r\n      \"command\": \"C:\\\\Users\\\\jim\\\\AppData\\\\Roaming\\\\nvm\\\\v22.1.0\\\\node.exe\",\r\n      \"args\": [\r\n        \"C:\\\\Users\\\\jim\\\\AppData\\\\Roaming\\\\npm\\\\node_modules\\\\npm\\\\bin\\\\npx-cli.js\",\r\n        \"-y\",\r\n        \"mcp-cli-exec\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 发展\r\n\r\n安装依赖项：\r\n\r\n```bash\r\npnpm install\r\n```\r\n\r\n构建服务器：\r\n\r\n```bash\r\npnpm run build\r\n```\r\n\r\n对于自动重建的开发：\r\n\r\n```bash\r\npnpm run watch\r\n```\r\n\r\n### 调试\r\n\r\n由于MCP服务器通过stdio进行通信，调试可能具有挑战性。MCP检查器提供有用的调试工具：\r\n\r\n```bash\r\npnpm run inspector\r\n```\r\n\r\n这将提供一个URL，用于在浏览器中访问检查器，您可以在其中：\r\n\r\n- 查看所有MCP消息\r\n- 检查请求/响应有效载荷\r\n- 交互式测试工具\r\n- 监控服务器状态\r\n\r\n## 错误处理\r\n\r\n服务器包括全面的错误处理：\r\n\r\n- 所有工具参数的输入验证\r\n- 结构化错误响应\r\n- 命令超时处理\r\n- 工作目录验证\r\n- ANSI代码剥离，输出干净\r\n\r\n## 技术细节\r\n\r\n- 使用TypeScript和MCP SDK构建\r\n- 使用execa实现可靠的命令执行\r\n- 默认命令超时：5分钟\r\n- 支持Windows和类Unix系统（使用适合您操作系统的命令，例如“dir”vs“ls”）\r\n- 按顺序执行命令，在第一次失败时停止\r\n- 每个命令在指定的工作目录中独立运行\r\n",
+ "config": {
+  "mcp-cli-exec": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-cli-exec"
+   ],
+   "env": {}
+  }
+ }
+}

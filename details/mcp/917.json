@@ -1,0 +1,25 @@
+{
+ "id": "917",
+ "kind": "mcp",
+ "name": "vision",
+ "fingerprint_md5": "674ada5503a3ba56b9d7adb08af16702",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp-vision（这个词汇本身可能是一个特定领域或项目中的专有名词，没有直接的中文对应翻译，但可以理解为“MCP视觉”或根据上下文具体翻译为相关领域的术语，如“机器控制协议视觉系统”等，具体需根据实际应用场景确定。）\r\n\r\n使用Google Gemini Flash-Lite的极简MCP服务器，用于视觉分析。\r\n\r\n## 它的功能/作用是什么\r\n\r\n提供了一个单一的MCP工具，该工具直接将您的图像和一条指令字符串发送到Google Gemini Flash-Lite，并返回模型的原始文本回答。\r\n\r\n- **一个工具，一项工作**： `vision.analyze`\r\n- **后端**Google AI Studio 或 Vertex AI（任选其一）\r\n- **默认模型**： `models/gemini-flash-lite-latest`\r\n- **模式**文本 + 图片（v1版本中无音频/视频）\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n## 配置\r\n\r\n复制 `.env.example` 到；向；朝 `.env` 并进行配置：\r\n\r\n### 选项1：AI Studio（推荐使用，简洁明了）\r\n\r\n```bash\r\nGEMINI_PROVIDER=ais\r\nGEMINI_API_KEY=your_api_key_here\r\n```\r\n\r\n获取您的API密钥，请访问：https://aistudio.google.com/app/apikey\r\n\r\n### 选项2：Vertex AI\r\n\r\n```bash\r\nGEMINI_PROVIDER=vertex\r\nGOOGLE_CLOUD_PROJECT=your-project-id\r\nGEMINI_LOCATION=us-central1\r\n```\r\n\r\n认证选项（任选其一即可）：\r\n\r\n- 应用程序默认凭据（推荐）：设置 `G​OOGLE_APPLICATION_CREDENTIALS=/path/to/key.json` 或者逃跑 `gcloud auth application-default login`\r\n- 用户凭据：运行 `gcloud auth login`\r\n\r\n服务器使用的令牌解析顺序：\r\n\r\n1. 如果已安装，请使用 `google-auth-library` 获取ADC令牌（无需gcloud）\r\n1. `gcloud auth application-default print-access-token`\r\n1. `gcloud auth print-access-token`\r\n\r\n### 可选设置\r\n\r\n```bash\r\n# Use a different model\r\nGEMINI_MODEL=models/gemini-flash-lite-latest\r\n\r\n# Auto-resize images - DEFAULT is 2048px (set to 0 to disable)\r\nVISION_MAX_LONG_EDGE=2048\r\n```\r\n\r\n## Claude 桌面设置\r\n\r\n添加到您的 `claude_desktop_config.json`：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"vision\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\"/absolute/path/to/mcp-vision/dist/index.js\"],\r\n      \"env\": {\r\n        \"GEMINI_PROVIDER\": \"ais\",\r\n        \"GEMINI_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用 npx：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"vision\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"mcp-gemini-vision\"],\r\n      \"env\": {\r\n        \"GEMINI_PROVIDER\": \"ais\",\r\n        \"GEMINI_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 使用\r\n\r\n该工具接受：\r\n\r\n**输入：**\r\n\r\n```typescript\r\n{\r\n  \"images\": \"https://example.com/screenshot.png\" | [\"/path/to/img1.png\", \"data:image/png;base64,...\"],\r\n  \"instruction\": \"Natural language task for the screenshot(s).\"\r\n}\r\n```\r\n\r\n**输出：**\r\n\r\n```typescript\r\n{\r\n  \"text\": \"<Gemini raw text reply>\"\r\n}\r\n```\r\n\r\n### 支持的图像格式\r\n\r\n- HTTP(S) URL（网址）： `https://example.com/image.png`\r\n- 文件URL： `file:///absolute/path/to/image.png`\r\n- 绝对路径： `/absolute/path/to/image.png`\r\n- 数据URI： `data:image/png;base64,iVBORw0KG...`\r\n\r\n### 示例说明\r\n\r\n**重叠检查：**\r\n\r\n```\r\n\"Return JSON {overlap:boolean, examples:[{text,bbox,reason}]} — do any borders overlap any text?\"\r\n```\r\n\r\n**美学分析：**\r\n\r\n```\r\n\"In one sentence: does the hero feel cramped? If so, suggest one fix.\"\r\n```\r\n\r\n**OCR（光学字符识别）：**\r\n\r\n```\r\n\"What does the toast say? Quote exactly.\"\r\n```\r\n\r\n**提取UI元素：**\r\n\r\n```\r\n\"Extract all visible button labels as a JSON array.\"\r\n```\r\n\r\n**空白评分：**\r\n\r\n```\r\n\"Rate hero whitespace 0–1; if <0.6, give exactly one fix.\"\r\n```\r\n\r\n## 它是如何工作的\r\n\r\n1. **对图像进行归一化处理**接受URL、文件路径、file:// URL或数据URI\r\n   - HTTP(S) URL 会带超时设置进行获取并验证\r\n   - 所有图像均经过验证，确认为真实图像 `sharp` （防止信息外泄）\r\n   - MIME类型来源于实际的图像格式，而非文件扩展名\r\n1. **自动调整大小**大于2048像素（可配置）的图片会自动缩小尺寸\r\n1. **调用Gemini一次**构建包含图像和指令文本的部件数组，设置60秒超时\r\n1. **返回原始数据**返回 Gemini 返回的确切内容（不进行模式强制转换）\r\n1. **错误处理**在JSON解析时使用try/catch，并回退到文本以获取更好的诊断信息\r\n\r\n## 安全与限制\r\n\r\n- **图像验证**所有图像均已验证通过 `sharp.metadata()` 上传前（防止任意文件泄露）\r\n- **尺寸限制**每张图片最大18MB，每次请求最多10张图片\r\n- **超时**60秒用于HTTP获取和API调用\r\n- **自动调整大小**默认开启，设置为2048px `VISION_MAX_LONG_EDGE=0` （禁用，但验证仍然运行）\r\n- **仅图片+文字** （v1版本中无音频/视频）\r\n\r\n对于较大或经常重复使用的资源，请考虑使用Gemini文件API（未来将进行增强）。\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm run dev    # Watch mode\r\nnpm run build  # Compile TypeScript\r\nnpm start      # Run compiled server\r\n```\r\n\r\n## 许可证\r\n\r\nMIT（MIT）\r\n",
+ "config": {
+  "vision": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-gemini-vision"
+   ],
+   "env": {
+    "GEMINI_PROVIDER": "ais",
+    "GEMINI_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

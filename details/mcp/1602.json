@@ -1,0 +1,25 @@
+{
+ "id": "1602",
+ "kind": "mcp",
+ "name": "mcp4gql",
+ "fingerprint_md5": "5eacf055c219410c3b21870889acf728",
+ "download_count": 0,
+ "category": "API 调试",
+ "tags": "",
+ "version": "",
+ "readme": "# mcp4gql-GraphQL MCP服务器\r\n\r\n[](https://smithery.ai/server/@jorgeraad/mcp4gql)\r\n\r\n\r\n这个项目是一个Node.js/TypeScript服务器，它实现了模型上下文协议（MCP）。它充当一个桥梁，允许MCP客户端（如Cursor）与目标GraphQL API交互。\r\n\r\n## 特性\r\n\r\n- **MCP服务器：** 实施MCP `Server` 类从 `@modelcontextprotocol/sdk`.\r\n- **标准运输：** 通过标准输入/输出与客户沟通。\r\n- **GraphQL客户端：** 用途 `axios` 向配置的GraphQL端点发送请求。\r\n- **通用GraphQL工具：** 向MCP客户端公开以下工具：\r\n  - `introspectGraphQLSchema`：使用内省获取目标GraphQL API架构。\r\n  - `executeGraphQLOperation`：针对目标API执行任意GraphQL查询或突变 `query`，可选 `variables`，可选 `operationName` 作为输入。\r\n\r\n## 配置\r\n\r\n服务器需要以下环境变量：\r\n\r\n- `GRAPHQL_ENDPOINT`：目标GraphQL API的URL。\r\n- `AUTH_TOKEN`：可选的不记名代币 `Authorization: Bearer <token>` 用于使用GraphQL API进行身份验证的头。\r\n\r\n## 客户端配置\r\n\r\n要允许Cursor或Claude Desktop等客户端使用此服务器提供的工具，您需要将其配置为运行 `npx` 命令。\r\n\r\n### 光标\r\n\r\n1. 转到光标MCP设置（光标>设置>光标设置>MCP）\r\n\r\n1. 转到+添加新的全局MCP服务器\r\n\r\n1. 将以下内容添加到您的Cursor MCP配置中：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"mcp4gql\": {\r\n         \"command\": \"npx\",\r\n         \"type\": \"stdio\",\r\n         \"args\": [\"-y\", \"mcp4gql\"],\r\n         \"env\": {\r\n           \"GRAPHQL_ENDPOINT\": \"YOUR_GRAPHQL_ENDPOINT_URL\",\r\n           \"AUTH_TOKEN\": \"YOUR_OPTIONAL_AUTH_TOKEN\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n### 克劳德桌面\r\n\r\n1. 打开克劳德桌面设置（克劳德>设置）。\r\n\r\n1. 转到开发人员>编辑配置。\r\n\r\n1. 添加到配置中：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"mcp4gql\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\"-y\", \"mcp4gql\"],\r\n         \"env\": {\r\n           \"GRAPHQL_ENDPOINT\": \"YOUR_GRAPHQL_ENDPOINT_URL\",\r\n           \"AUTH_TOKEN\": \"YOUR_OPTIONAL_AUTH_TOKEN\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n配置后，MCP客户端应该能够列出并调用 `introspectGraphQLSchema` 和 `executeGraphQLOperation` 此服务器在相关时提供的工具。记住设置所需的环境变量(`GRAPHQL_ENDPOINT` 并且可选 `AUTH_TOKEN`)在配置中，以便服务器可以连接到您的API。\r\n",
+ "config": {
+  "mcp4gql": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp4gql"
+   ],
+   "env": {
+    "GRAPHQL_ENDPOINT": "YOUR_GRAPHQL_ENDPOINT_URL",
+    "AUTH_TOKEN": "YOUR_OPTIONAL_AUTH_TOKEN"
+   }
+  }
+ }
+}

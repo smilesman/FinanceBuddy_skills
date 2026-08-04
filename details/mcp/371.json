@@ -1,0 +1,23 @@
+{
+ "id": "371",
+ "kind": "mcp",
+ "name": "playwright-9",
+ "fingerprint_md5": "d3e290b6dad9862cf9b279dcb409d031",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 1c网络会话——Claude代码技巧\r\n\r\n技能 [克劳德代码](https://claude.ai/code)自动处理 **1C：Web客户端中的企业** 通过 [剧作家MCP](https://github.com/microsoft/playwright-mcp).\r\n\r\n## 干得好\r\n\r\n- 启动，重新启动和结束会话1C\r\n- 导航接口分区（ID缓存）\r\n- 创建和编辑目录项\r\n- 填表\r\n- 通过UI生成测试数据\r\n- 处理对话框，许可证警告，错误面板\r\n\r\n## 如何工作\r\n\r\n技能包含特定于1C Web客户端的模式：\r\n\r\n- **剪贴板粘贴** 代替 `fill()`/`type()` -标准PlayWright在1C中不起作用\r\n- **`_DLB`-后缀选择器** 用于选择按钮（目录和枚举）\r\n- **导航缓存** 在 `.claude/1c-nav.json` -分区和菜单项ID是每个数据库特有的\r\n- **`browser_run_code`** 在一个调用中具有最大操作链\r\n\r\n## 示范\r\n\r\n视频演示了MCP Playwright与1C相关的功能：企业试图通过AI代理通过Web客户端播放场景测试。\r\n\r\nhttps://github.com/user-attachments/assets/dfe8f3f2-6d27-494a-a0a5-e5ea6b69c2d4\r\n\r\n## 要求\r\n\r\n- [克劳德代码](https://claude.ai/code)\r\n- [剧作家MCP](https://github.com/microsoft/playwright-mcp) 在 `.mcp.json`\r\n- 1C：已发布网络数据库的企业\r\n\r\n### 例子 `.mcp.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"playwright\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@playwright/mcp@latest\", \"--timeout\", \"500\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 安装\r\n\r\n复制内容 `.claude/` 在项目的核心：\r\n\r\n```\r\nyour-project/\r\n  .claude/\r\n    skills/\r\n      1c-web-session/\r\n        SKILL.md\r\n        references/\r\n          scan-nav.js\r\n          optimization.md\r\n  CLAUDE.md          ← укажи URL своей базы\r\n```\r\n\r\n例子 `CLAUDE.md` 页：1 [`CLAUDE.md`](./CLAUDE.md) 在这个存储库里。\r\n\r\n## 使用\r\n\r\n安装后，请在Claude Code聊天室中留言：\r\n\r\n```\r\n/1c-web-session\r\n```\r\n\r\n或者直接问：\r\n\r\n```\r\nзапусти базу\r\nсоздай справочник Номенклатура \"Билет семейный\"\r\nсоздай документ ПродажаБилета для клиента Петрова\r\n```\r\n\r\nClaude将自动获得技能并开始使用浏览器。\r\n\r\n## 结构\r\n\r\n```\r\n.claude/skills/1c-web-session/\r\n  SKILL.md                  — инструкции для Claude (паттерны, примеры кода)\r\n  references/\r\n    scan-nav.js             — JS-скрипт сканирования навигационного меню\r\n    optimization.md         — руководство по оптимизации browser_run_code\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "playwright": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@playwright/mcp@latest",
+    "--timeout",
+    "500"
+   ],
+   "env": {}
+  }
+ }
+}

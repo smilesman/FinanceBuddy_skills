@@ -1,0 +1,18 @@
+{
+ "id": "2010",
+ "kind": "mcp",
+ "name": "nerq",
+ "fingerprint_md5": "bf31c0b5cff04a1c9a5f43616f24f6f7",
+ "download_count": 0,
+ "category": "金融与商业",
+ "tags": "",
+ "version": "",
+ "readme": "# Nerq MCP服务器\r\n\r\n**搜索490万+人工智能代理。检查全球52个司法管辖区的合规性。**\r\n\r\nNerq是世界上最大的AI代理合规和发现数据库。此MCP服务器使任何AI助手都可以即时访问合规情报、代理发现和安全建议。\r\n\r\n## 🔧 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_agents` |按名称、能力或类型搜索490多万AI代理|\r\n| `recommend_agent` |通过安装说明获取安全过滤建议|\r\n| `check_compliance` |检查52个司法管辖区（欧盟AI法案、科罗拉多州AI法案、英国AI法规等）的任何代理人的合规性|\r\n| `compare_agents` |并排比较代理的合规性、安全性和受欢迎程度|\r\n| `nerq_stats` |获取生态系统统计数据（总代理、风险分布、来源）|\r\n\r\n## 🚀 快速开始\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"nerq\": {\r\n      \"url\": \"https://mcp.nerq.ai/sse\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 光标/VS代码\r\n\r\n添加到MCP设置：\r\n\r\n```json\r\n{\r\n  \"nerq\": {\r\n    \"url\": \"https://mcp.nerq.ai/sse\"\r\n  }\r\n}\r\n```\r\n\r\n### 帆板运动\r\n\r\n添加到MCP配置中：\r\n\r\n```json\r\n{\r\n  \"nerq\": {\r\n    \"serverUrl\": \"https://mcp.nerq.ai/sse\"\r\n  }\r\n}\r\n```\r\n\r\n## 📊 你能做什么\r\n\r\n**查找代理：**\r\n\r\n> “为PostgreSQL找一个安全的MCP服务器”\r\n\r\n**检查合规性：**\r\n\r\n> “LangChain是否符合欧盟人工智能法案？”\r\n\r\n**比较代理：**\r\n\r\n> “比较LangChain与CrewAI的合规性和安全性”\r\n\r\n**获取统计数据：**\r\n\r\n> “存在多少AI代理，风险分布如何？”\r\n\r\n## 🌍 管辖范围\r\n\r\n52个全球司法管辖区，包括：\r\n\r\n- 🇪🇺 欧盟人工智能法案（+DE、FR、IT、ES、NL、IE、PL、SE实施）\r\n- 🇺🇸 美国：加利福尼亚州SB53、科罗拉多州SB205、纽约州RAISE法案和10多个州的法律\r\n- 🇬🇧 英国人工智能法规\r\n- 🇨🇦 加拿大AIDA\r\n- 🇰🇷 韩国人工智能基本法\r\n- 🇧🇷 巴西人工智能法案\r\n- 🇨🇳 中国人工智能标签与网络安全\r\n- 🇯🇵 日本人工智能法案\r\n- 🇦🇺 澳大利亚AI护栏\r\n- 30+以上\r\n\r\n## 📈 数据库\r\n\r\n- **4.9米+** 索引AI代理\r\n- **17,000+** MCP服务器\r\n- **52** 司法管辖区\r\n- **253米+** 个人合规性评估\r\n- 来源：GitHub、npm、PyPI、HuggingFace、Docker Hub、Smithery、Glama\r\n\r\n## 🔗 链接\r\n\r\n- **网站：** [能源](https://nerq.ai)\r\n- **API文件：** [nerq.ai/docs](https://nerq.ai/docs)\r\n- **统计数据：** [nerq.ai/status](https://nerq.ai/stats)\r\n- **MCP目录：** [nerq.ai/mcp服务器](https://nerq.ai/mcp-servers)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "nerq": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://mcp.nerq.ai/sse"
+  }
+ }
+}

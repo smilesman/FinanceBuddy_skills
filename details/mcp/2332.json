@@ -1,0 +1,22 @@
+{
+ "id": "2332",
+ "kind": "mcp",
+ "name": "tongchenglvxing-mcp-server",
+ "fingerprint_md5": "6bd020a84013bd2cacd54a162ff1bf38",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# 非官方的同程旅行 MCP Server\r\n\r\n## 概述\r\n\r\n目前支持对接同程旅行网站上的的火车票的接口，获取指定火车票的车次列表信息。\r\n\r\n依赖`MCP Typescript SDK`开发，目前提供Node方式的对接，Java方式后续提供。\r\n\r\n## 功能\r\n\r\n目前支持2个工具方法：\r\n\r\n工具方法1：火车票车次列表查询功能\r\n\r\n工具方法2：当前时间查询功能\r\n\r\n具体查看：https://github.com/wuchubuzai2018/tongchenglvxing-mcp-server/tree/main/typescript-mcp\r\n\r\n## 开始\r\n\r\n使用MCP Server主要通过两种形式，计划分别是`java`和`Typescript`，目前已支持TypeScript方式。\r\n\r\n### Typescript接入\r\n\r\n详细信息可以参考typescript-mcp文件夹下的说明。\r\n\r\n#### nodejs安装\r\n通过Typescript接入，你只需要安装[node.js](https://nodejs.org/en/download)。\r\n\r\n当你在终端可以运行\r\n\r\n```bash\r\nnode -v\r\n```\r\n\r\n则说明你的`node.js`已经安装成功。\r\n\r\n### NPX本地开发环境接入\r\n\r\n下载项目后，执行npm install进行项目构建，然后再MCP Client中进行配置。\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tongchenglvxing-mcp-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"/Users/tongchenglvxing-mcp-server/dist/index.js\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### NPX已发布环境/支持MCP的客户端接入\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"tongchenglvxing-mcp-server\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@wuchubuzai/tongchenglvxing-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 更新\r\n\r\n| 版本 | 功能说明                       | 更新日期      |\r\n| ---- | ------------------------------ | ------------- |\r\n| V0.0.1 | MCP Server初始版本，简单支持下火车票车次查询 | 2025-04-29 |\r\n| V0.0.2 | 代码优化，增加UserAgent处理 | 2025-04-29 |\r\n\r\n## 反馈\r\n\r\n在使用MCP Server时遇到的任何问题，欢迎通过`issue`或是反馈给我，非常感谢各位的支持与贡献❤️\r\n",
+ "config": {
+  "tongchenglvxing-mcp-server": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "/Users/tongchenglvxing-mcp-server/dist/index.js"
+   ],
+   "env": {}
+  }
+ }
+}

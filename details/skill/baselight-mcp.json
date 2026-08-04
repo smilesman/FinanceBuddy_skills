@@ -1,0 +1,12 @@
+{
+ "id": "baselight-mcp",
+ "kind": "skill",
+ "name": "baselight-mcp",
+ "fingerprint_md5": "ece120129603dcca1d19f3a422914976",
+ "download_count": 0,
+ "category": "数据迁移与同步",
+ "tags": "",
+ "version": "",
+ "readme": "# Baselight MCP\r\n\r\n使用 Baselight 通过 MCP 直接从你的 AI 工具或 IDE 浏览、发现和查询 Baselight datasets。\r\n\r\nMCP Server URL: https://api.baselight.app/mcp\r\n\r\n## 何时使用本 Skill\r\n\r\n- 用户想要某个 topic 的 datasets\r\n- 用户想要结构化 tables\r\n- 用户想要 SQL 分析\r\n- 用户想要可验证的结果\r\n\r\n## 快速开始\r\n\r\n根据 client 不同，使用 OAuth 或 API key 连接。\r\n\r\n### OAuth Clients\r\n\r\n- ChatGPT connectors\r\n- Claude Web/Desktop\r\n\r\n### API Key Clients\r\n\r\n- VS Code\r\n- Gemini CLI\r\n- LibreChat\r\n\r\n------------------------------------------------------------------------\r\n\r\n## 工作流\r\n\r\n1. 理解问题\r\n2. 发现 datasets\r\n3. 检查 schema\r\n4. 查询数据\r\n5. 返回结果 + SQL\r\n\r\n------------------------------------------------------------------------\r\n\r\n## 查询格式\r\n\r\nTables 使用：\r\n\r\n@username.dataset.table\r\n\r\n示例：\r\n\r\nSELECT * FROM @user.soccer.matches LIMIT 10;\r\n\r\n------------------------------------------------------------------------\r\n\r\n## 最佳实践\r\n\r\n- 先发现\r\n- 检查 schema\r\n- 迭代查询\r\n- 包含 SQL\r\n- 解释假设\r\n\r\n------------------------------------------------------------------------\r\n\r\n## 限制\r\n\r\n- 需要 Baselight account 或 API key\r\n- 可能适用查询限制\r\n- Dataset 新鲜度各不相同\r\n\r\n------------------------------------------------------------------------\r\n\r\n## 故障排查\r\n\r\n连接失败：- 验证 MCP URL - 重新认证或重新生成 key\r\n\r\n未授权：- 无效的 key 或已过期的 OAuth\r\n\r\n查询慢：- 缩小范围 - 添加 LIMIT\r\n\r\n------------------------------------------------------------------------\r\n\r\n## 支持\r\n\r\nDocs: https://baselight.ai/docs/connecting-to-the-baselight-mcp-server/\r\n\r\nApp: https://baselight.app",
+ "config": {}
+}

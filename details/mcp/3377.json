@@ -1,0 +1,26 @@
+{
+ "id": "3377",
+ "kind": "mcp",
+ "name": "china-mcp",
+ "fingerprint_md5": "0f88c3e07171aeab679a166857c4356f",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 中国MCP\r\n\r\n> 给人工智能代理看中国互联网。\r\n\r\n**[英语](README.md)** | **[中文](README_CN.md)**\r\n\r\n一台MCP服务器。五个平台。需要零个API密钥。\r\n\r\n搜索、阅读和分析以下内容 **买**, **知乎**, **微博**, **小红书** （红色注释），以及 **抖音** --直接从您的AI代理。\r\n\r\n## 它能做什么？\r\n\r\n- **搜索** 只需一个查询，即可跨所有中文平台\r\n- **阅读** 干净的Markdown中的完整帖子、文章和视频描述\r\n- **获取评论** 以及嵌套回复的讨论\r\n- **追踪趋势** 中国互联网上的话题\r\n- **查找用户** --个人资料、关注者数量、个人简介\r\n\r\n所有输出都是LLM优化的Markdown，而不是原始JSON，因此您的代理将令牌用于推理，而不是解析。\r\n\r\n## 快速开始\r\n\r\n### 克劳德桌面\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"china-mcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/china-mcp\", \"python\", \"-m\", \"china_mcp.server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add china-mcp -- uv run --directory /path/to/china-mcp python -m china_mcp.server\r\n```\r\n\r\n### 光标\r\n\r\n添加 `.cursor/mcp.json` 在项目根目录中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"china-mcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"--directory\", \"/path/to/china-mcp\", \"python\", \"-m\", \"china_mcp.server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> 替换 `/path/to/china-mcp` 使用克隆存储库的实际路径。\r\n\r\n## 支持平台\r\n\r\n|平台|搜索|阅读帖子|评论|趋势|用户资料|\r\n|----------|--------|-----------|----------|----------|--------------|\r\n|商品|✅ | ✅ | ✅ | ✅ | ✅ |\r\n|知乎|✅ | ✅ | ✅ | ✅ | ✅ |\r\n|微博|✅ | ✅ | ✅ | ✅ | ✅ |\r\n|小红书（RedNote）|🚧 | ✅ | 🚧 | 🚧 | ✅ |\r\n抖音🚧 | ✅ | 🚧 | ✅ | 🚧 |\r\n\r\n✅ 已执行🚧 尚不可用（反机器人程序或没有公共API）\r\n\r\n## 安装\r\n\r\n**先决条件**：Python 3.12+， [紫外线](https://docs.astral.sh/uv/)\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/butstill3/china-mcp.git\r\ncd china-mcp\r\n\r\n# Install dependencies\r\nuv sync\r\n\r\n# Install browser for Playwright (needed for Zhihu, Douyin)\r\nuv run playwright install chromium\r\n```\r\n\r\n验证安装：\r\n\r\n```bash\r\nuv run python -m china_mcp.server\r\n```\r\n\r\n您应该看到FastMCP横幅 `Starting MCP server 'ChinaMCP'`.\r\n\r\n## 可用工具\r\n\r\n### `search(query, platform?, limit?)`\r\n\r\n在中国平台上搜索内容。如果未指定平台，则搜索所有可用平台。\r\n\r\n### `get_post(url)`\r\n\r\n通过URL获取帖子、文章或视频的完整内容。自动检测平台。\r\n\r\n### `get_comments(url, limit?)`\r\n\r\n获取嵌套回复的帖子评论。\r\n\r\n### `trending(platform?, limit?)`\r\n\r\n获取热门话题。如果未指定平台，则返回所有平台的组合趋势。\r\n\r\n### `get_user(url_or_username, platform?)`\r\n\r\n获取用户资料信息——个人简介、关注者数量、帖子数量。\r\n\r\n### `hot_topics(category?)`\r\n\r\n按主题分组的跨平台趋势概述。 *（即将推出）*\r\n\r\n## 用法示例\r\n\r\n连接到MCP客户端后，请尝试以下提示：\r\n\r\n```\r\nSearch Bilibili for \"AI Agent\" tutorials\r\n```\r\n\r\n```\r\nWhat's trending on Zhihu right now?\r\n```\r\n\r\n```\r\nGet the full content of this post: https://www.zhihu.com/question/123456/answer/789012\r\n```\r\n\r\n```\r\nShow me the comments on this Bilibili video: https://www.bilibili.com/video/BV1xx411c7mD\r\n```\r\n\r\n```\r\nLook up this Bilibili user: https://space.bilibili.com/12345\r\n```\r\n\r\n## 建筑\r\n\r\n```\r\nMCP Client (Claude / Cursor / custom)\r\n        │\r\n        ▼  MCP Protocol (stdio)\r\n┌──────────────────────────┐\r\n│     ChinaMCP Server      │\r\n│                          │\r\n│  Tools → Registry → Adapters → Formatter → Markdown\r\n│                          │\r\n│  bilibili.py  (httpx)    │\r\n│  zhihu.py     (httpx +   │\r\n│                Playwright)│\r\n│  weibo.py     (httpx)    │\r\n│  xiaohongshu.py (httpx)  │\r\n│  douyin.py  (Playwright) │\r\n└──────────────────────────┘\r\n```\r\n\r\n每个平台都有自己的 **适配器** 它实现了统一的接口。所有适配器返回 **Pydantic模型**，它们被格式化为 **LLM优化Markdown** 在发送回客户端之前。\r\n\r\n## 发展\r\n\r\n```bash\r\n# Run tests\r\nuv run pytest tests/ -x -v\r\n\r\n# Lint\r\nuv run ruff check src/ tests/\r\n\r\n# Format\r\nuv run ruff format src/ tests/\r\n\r\n# Type check\r\nuv run pyright src/\r\n```\r\n\r\n### 添加新平台\r\n\r\n1. 创建 `src/china_mcp/adapters/your_platform.py`\r\n1. 实施 `BaseAdapter` （5种方法： `search`, `get_post`, `get_comments`, `get_trending`, `get_user`)\r\n1. 注册于 `src/china_mcp/adapters/registry.py`\r\n1. 添加URL模式以进行自动检测\r\n1. 在中编写测试 `tests/test_your_platform.py`\r\n\r\n## 贡献\r\n\r\n欢迎投稿！无论是新的平台适配器、错误修复还是文档改进。\r\n\r\n1. 分叉存储库\r\n1. 创建您的分支(`git checkout -b feat/add-weibo-adapter`)\r\n1. 为您的更改编写测试\r\n1. 确保所有检查均已通过(`uv run pytest && uv run ruff check src/ tests/ && uv run pyright src/`)\r\n1. 打开拉取请求\r\n\r\n## 许可证\r\n\r\n[MIT](LICENSE) --建造于 [但还是3](https://github.com/butstill3)\r\n",
+ "config": {
+  "china-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "--directory",
+    "/path/to/china-mcp",
+    "python",
+    "-m",
+    "china_mcp.server"
+   ],
+   "env": {}
+  }
+ }
+}

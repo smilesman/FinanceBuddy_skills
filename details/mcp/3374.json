@@ -1,0 +1,21 @@
+{
+ "id": "3374",
+ "kind": "mcp",
+ "name": "cc-recall",
+ "fingerprint_md5": "9f36f1cd2d902798d9df902e343962ba",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# cc召回\r\n\r\n**cc召回** 是一个开源的npm monorepo+MCP服务器，RAG在本地索引您的Claude Code会话记录，并通过语义搜索使其可搜索。\r\n\r\n问克劳德这样的问题：\r\n\r\n- *“我们上周是如何解决黑暗模式问题的？”*\r\n- *“我们对数据库模式做出了什么决定？”*\r\n- *“显示我们进行身份验证的所有会话”*\r\n\r\n一切都在本地运行。没有数据离开你的机器。\r\n\r\n______________________________________________________________________\r\n\r\n## 快速开始\r\n\r\n**选项A——安装脚本（建议用于新机器）**\r\n\r\n```bash\r\ngit clone https://github.com/cbroberg/cc-recall.git\r\ncd cc-recall\r\nbash scripts/setup.sh\r\n```\r\n\r\n脚本将：\r\n\r\n1. 检查先决条件（节点>=20，pnpm）\r\n1. 检测您的Claude Code会话路径\r\n1. 添加 `cc-recall` 到 `~/.claude/settings.json` （保留现有的MCP服务器）\r\n1. 构建所有包\r\n1. 对所有会话进行初始索引\r\n1. 打印重启说明\r\n\r\n**选项B--npx（无git克隆）**\r\n\r\n```bash\r\n# Start MCP server\r\nnpx @cc-recall/mcp\r\n\r\n# Index sessions manually\r\nnpx @cc-recall/core index\r\n```\r\n\r\n**选项C——Docker**\r\n\r\n```bash\r\ndocker compose up -d\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 手动克劳德代码集成\r\n\r\n增添 `~/.claude/settings.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"cc-recall\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@cc-recall/mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n重新启动克劳德代码。MCP服务器通过stdio自动启动。\r\n\r\n______________________________________________________________________\r\n\r\n## MCP工具\r\n\r\n|工具|说明|参数|\r\n|------|-------------|------------|\r\n| `search_sessions` |跨所有会话的语义搜索| `query` （必填）， `project`, `chunkType`, `limit` |\r\n| `get_session_context` |特定会议的完整背景| `sessionId` |\r\n| `list_decisions` |全部 `decision` 跨会话的块| `project`, `limit` |\r\n| `get_session_summary` |特定会议总结| `sessionId` |\r\n\r\n______________________________________________________________________\r\n\r\n## 命令行界面\r\n\r\n```bash\r\n# Index all sessions\r\nnode packages/core/dist/cli.js index\r\n\r\n# Show indexing status\r\nnode packages/core/dist/cli.js status\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 配置\r\n\r\n|变量|默认值|描述|\r\n|----------|---------|-------------|\r\n| `SESSIONS_PATH` | `~/.claude/projects/` |Claude代码会话目录|\r\n| `DB_PATH` | `~/.cc-recall/recall.db` |cc召回数据库|\r\n| `EMBEDDING_MODEL` | `all-MiniLM-L6-v2` |嵌入模型(`all-MiniLM-L6-v2` 或 `nomic-embed-text`) |\r\n| `OLLAMA_URL` | `http://localhost:11434` |Ollama URL（仅需要 `nomic-embed-text`) |\r\n| `WATCH_MODE` | `true` |自动索引新会话|\r\n| `LOG_LEVEL` | `info` |日志冗长|\r\n\r\n______________________________________________________________________\r\n\r\n## 运作原理\r\n\r\n1. **解析** --从以下位置读取Claude Code JSONL会话文件 `~/.claude/projects/`\r\n1. **块** --将会话拆分为语义块： `decision`, `code-change`, `error-fix`, `architecture`, `conversation`\r\n1. **嵌入** --使用以下命令在本地生成384个暗嵌入 `Xenova/all-MiniLM-L6-v2` （不需要API密钥）\r\n1. **商店** --使用以下命令将所有内容保存到本地SQLite数据库 `sqlite-vec` 用于矢量搜索\r\n1. **搜索** --通过MCP工具进行余弦相似性搜索\r\n\r\n更改检测使用SHA-256哈希——只有新的或更改的会话才会被重新索引。\r\n\r\n______________________________________________________________________\r\n\r\n## 技术栈\r\n\r\n- **运行时间：** Node.js 20，TypeScript（严格）\r\n- **包管理器：** pnpm工作区\r\n- **嵌入模型：** `Xenova/all-MiniLM-L6-v2` （384昏暗，通过本地运行 `@huggingface/transformers`)\r\n- **矢量存储：** SQLite+ `sqlite-vec`\r\n- **MCP-SDK：** `@modelcontextprotocol/sdk`\r\n- **文件监视器：** `chokidar`\r\n- **构建：** `tsup`\r\n\r\n______________________________________________________________________\r\n\r\n## 隐私\r\n\r\n秘密被编辑 **之前** 索引。原始JSONL文件永远不会被修改。\r\n\r\n经过编辑的模式：Anthropic API键(`sk-ant-...`)，OpenAI密钥(`sk-...`)，GitHub代币(`ghp_`, `ghu_`)，AWS密钥(`AKIA...`)，通用密码/秘密/令牌模式。\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "cc-recall": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@cc-recall/mcp"
+   ],
+   "env": {}
+  }
+ }
+}

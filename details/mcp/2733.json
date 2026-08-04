@@ -1,0 +1,22 @@
+{
+ "id": "2733",
+ "kind": "mcp",
+ "name": "siteone",
+ "fingerprint_md5": "e1f9bfb3758d9cad70f5868dff236bdc",
+ "download_count": 0,
+ "category": "数据抓取",
+ "tags": "",
+ "version": "",
+ "readme": "# siteone mcp服务器\r\n\r\n包装MCP服务器 [SiteOne爬虫](https://crawler.siteone.io) 用于SEO审计和网站分析的CLI。与Claude Code、Claude Desktop或任何兼容MCP的客户端一起使用。\r\n\r\n## 安装SiteOne爬网程序\r\n\r\n自动安装程序会为您的平台下载正确的SiteOne Crawler二进制文件：\r\n\r\n```bash\r\nnpx -y siteone-mcp-server --install\r\n```\r\n\r\n这将安装到 `~/.siteone-crawler/` MCP服务器将自动检测到它，无需进一步配置。\r\n\r\n支持macOS（arm64、x64）和Linux（arm64，x64）。Windows用户应该 [手动下载](https://github.com/janreges/siteone-crawler/releases).\r\n\r\n## 快速开始\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add siteone -- npx -y siteone-mcp-server\r\n```\r\n\r\n### 克劳德桌面版\r\n\r\n添加到MCP设置(`~/.claude/mcp_settings.json`):\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"siteone\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"siteone-mcp-server\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `crawl_site` |完整网站抓取——返回JSON，其中包含所有URL的SEO、性能和安全指标|\r\n| `crawl_single_page` |单页分析——快速、轻量级地审核一个URL|\r\n| `generate_sitemap` |抓取网站并生成XML站点地图文件|\r\n| `export_markdown` |抓取网站并将所有页面导出为markdown文件|\r\n| `get_crawl_summary` |快速浅层爬行用于健康检查统计|\r\n\r\n## 配置\r\n\r\n服务器按以下顺序解析SiteOne二进制文件：\r\n\r\n1. `--siteone-bin` CLI参数（最高优先级）\r\n1. `SITEONE_BIN` 环境变量\r\n1. `~/.siteone-crawler/crawler` （自动安装位置）\r\n1. `crawler` 在PATH中（回退）\r\n\r\n### CLI参数\r\n\r\n```bash\r\nclaude mcp add siteone -- npx -y siteone-mcp-server --siteone-bin=/path/to/crawler\r\n```\r\n\r\n或者在Claude Desktop配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"siteone\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"siteone-mcp-server\", \"--siteone-bin=/path/to/crawler\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 环境变量\r\n\r\n|变量|目的|默认值|\r\n|----------|---------|---------|\r\n| `SITEONE_BIN` |SiteOne爬虫二进制文件的路径|自动检测到（见上文）|\r\n| `SITEONE_OUTPUT_DIR` |爬网输出的工作目录|当前工作目录|\r\n\r\n## 例子\r\n\r\n配置后，询问Claude：\r\n\r\n- “爬行https://example.com并总结SEO问题”\r\n- “检查https://example.com有任何断开的链接”\r\n- “为生成站点地图https://example.com\"\r\n- “出口https://example.com作为降价”\r\n- “给我一个快速的健康检查https://example.com\"\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build\r\nnpm run build\r\n\r\n# Watch mode\r\nnpm run dev\r\n\r\n# Test with MCP Inspector\r\nnpm run inspect\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "siteone": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "siteone-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

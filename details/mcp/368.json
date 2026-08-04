@@ -1,0 +1,22 @@
+{
+ "id": "368",
+ "kind": "mcp",
+ "name": "playwright-6",
+ "fingerprint_md5": "be529e3d4b4991b305561d88cb075639",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP服务器编剧\r\n\r\n## 目录\r\n\r\n- [特性](#features)\r\n- [安装](#installation)\r\n- [配置](#configuration)\r\n- [组件](#components)\r\n- [工具](#tools)\r\n- [资源](#resources)\r\n- [许可证](#license)\r\n\r\n## 特性\r\n\r\n- 🌐 完全的浏览器自动化功能\r\n- 📸 整个页面或特定元素的截图\r\n- 🖱️ 全面的网络交互（导航、点击、表单填写）\r\n- 📊 控制台日志监控\r\n- 🔧 浏览器上下文中的JavaScript执行\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n要通过Smithery自动安装MCP Server Playwright for Claude Desktop，请执行以下操作：\r\n\r\n```bash\r\nnpx -y @smithery/cli install @automatalabs/mcp-server-playwright --client claude\r\n```\r\n\r\n您可以使用npx或mcp-get安装该软件包：\r\n\r\n#### 使用npx：\r\n\r\n```bash\r\nnpx @automatalabs/mcp-server-playwright install\r\n```\r\n\r\n此命令将：\r\n\r\n- 检查您的操作系统兼容性（Windows/macOS）\r\n- 创建或更新Claude配置文件\r\n- 配置Playwright服务器集成\r\n\r\n配置文件将在以下时间自动创建/更新：\r\n\r\n- 窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- macOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n#### 使用mcp get：\r\n\r\n```bash\r\nnpx @michaellatman/mcp-get@latest install @automatalabs/mcp-server-playwright\r\n```\r\n\r\n## 配置\r\n\r\n安装过程会自动将以下配置添加到您的Claude配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"playwright\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@automatalabs/mcp-server-playwright\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 组件\r\n\r\n## 工具\r\n\r\n### 浏览器导航\r\n\r\n导航到浏览器中的任何URL\r\n\r\n```json\r\n{\r\n  \"url\": \"https://stealthbrowser.cloud\"\r\n}\r\n```\r\n\r\n### 浏览器_屏幕截图\r\n\r\n捕获整个页面或特定元素的屏幕截图\r\n\r\n```json\r\n{\r\n  \"name\": \"screenshot-name\",     // required\r\n  \"selector\": \"#element-id\",     // optional\r\n  \"fullPage\": true              // optional, default: false\r\n}\r\n```\r\n\r\n### 浏览器点击\r\n\r\n使用CSS选择器单击页面上的元素\r\n\r\n```json\r\n{\r\n  \"selector\": \"#button-id\"\r\n}\r\n```\r\n\r\n### 浏览器链接文本\r\n\r\n按文本内容单击页面上的元素\r\n\r\n```json\r\n{\r\n  \"text\": \"Click me\"\r\n}\r\n```\r\n\r\n### 浏览器切换\r\n\r\n使用CSS选择器将鼠标悬停在页面上的元素上\r\n\r\n```json\r\n{\r\n  \"selector\": \"#menu-item\"\r\n}\r\n```\r\n\r\n### 浏览器覆盖文本\r\n\r\n按文本内容将鼠标悬停在页面上的元素上\r\n\r\n```json\r\n{\r\n  \"text\": \"Hover me\"\r\n}\r\n```\r\n\r\n### 浏览器填充\r\n\r\n填写输入字段\r\n\r\n```json\r\n{\r\n  \"selector\": \"#input-field\",\r\n  \"value\": \"Hello World\"\r\n}\r\n```\r\n\r\n### 浏览器选择\r\n\r\n使用CSS选择器在Select元素中选择一个选项\r\n\r\n```json\r\n{\r\n  \"selector\": \"#dropdown\",\r\n  \"value\": \"option-value\"\r\n}\r\n```\r\n\r\n### 浏览器选择文本\r\n\r\n按文本内容选择Select元素中的选项\r\n\r\n```json\r\n{\r\n  \"text\": \"Choose me\",\r\n  \"value\": \"option-value\"\r\n}\r\n```\r\n\r\n### 浏览器_评估\r\n\r\n在浏览器控制台中执行JavaScript\r\n\r\n```json\r\n{\r\n  \"script\": \"document.title\"\r\n}\r\n```\r\n\r\n## 资源\r\n\r\n### 控制台日志(console://logs)\r\n\r\n- 以文本格式访问浏览器控制台输出\r\n- 包括来自浏览器的所有控制台消息\r\n\r\n### 屏幕截图（屏幕截图：//)\r\n\r\n- 访问捕获的屏幕截图的PNG图像\r\n- 由捕获过程中指定的名称引用\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n",
+ "config": {
+  "playwright": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@automatalabs/mcp-server-playwright"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "id": "81",
+ "kind": "mcp",
+ "name": "browser-control",
+ "fingerprint_md5": "d7320467d3c437072ec4d6339ebf5528",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# 浏览器控制MCP\r\n\r\n[](https://addons.mozilla.org/en-US/firefox/addon/browser-control-mcp/)\r\n\r\nMCP服务器与Firefox浏览器扩展配对，为AI助手提供对标签管理、浏览历史和网页文本内容的访问。\r\n\r\n## 特性\r\n\r\nMCP服务器支持以下工具：\r\n\r\n- 打开或关闭选项卡\r\n- 获取已打开选项卡的列表\r\n- 创建具有名称和颜色的选项卡组\r\n- 重新排序打开的选项卡\r\n- 读取并搜索浏览器的历史记录\r\n- 阅读网页的文本内容和链接（需要用户同意）\r\n- 在浏览器选项卡中查找并突出显示文本（需要用户同意）\r\n\r\n## 示例用例：\r\n\r\n### 选项卡管理\r\n\r\n- *“关闭浏览器中所有与工作无关的选项卡。”*\r\n- *“将浏览器中所有与开发相关的选项卡分组到一个名为“开发”的新组中。”*\r\n- *“按照有意义的顺序重新排列浏览器中的选项卡。”*\r\n- *“关闭浏览器中过去24小时内未访问过的所有选项卡”*\r\n\r\n### 浏览器历史记录搜索\r\n\r\n- *“帮我在浏览器历史记录中找到一篇关于新西兰米尔福德赛道的文章。”*\r\n- *“打开我上周访问过的所有关于人工智能的文章，最多10篇，避免重复。”*\r\n\r\n### 浏览和研究\r\n\r\n- *“在我的浏览器中打开hackernews，然后打开头条新闻，阅读它，还阅读评论。评论与故事一致吗？”*\r\n- *“在我的浏览器中，使用谷歌学术搜索过去3年中关于L-茶氨酸的论文。打开3篇被引用最多的论文。阅读并为我总结。”*\r\n- *“在我的浏览器中使用谷歌搜索来查找花店。打开10个最相关的结果。向我显示每家花店的位置和营业时间。”*\r\n\r\n## 与web自动化MCP服务器的比较\r\n\r\nMCP服务器和Firefox扩展组合的设计比web自动化MCP服务器更安全，使用户的个人浏览器更安全。\r\n\r\n- 它不支持网页修改、页面交互或任意脚本。\r\n- 阅读网页内容需要用户在浏览器中明确同意每个域。这是在扩展的清单级别强制执行的。\r\n- 它使用MCP服务器和扩展之间具有共享密钥的仅本地连接。\r\n- 没有远程数据收集或跟踪。\r\n- 它为工具调用和工具启用/禁用配置提供扩展端审计日志。\r\n- 该扩展不包含运行时第三方依赖关系。\r\n\r\n**重要提示**：浏览器控制MCP仍处于试验阶段。使用风险自负。您应该像对待任何其他MCP服务器一样谨慎行事，并仔细授权/监控工具调用。\r\n\r\n## 安装\r\n\r\n### 选项1：安装Firefox和Claude Desktop扩展\r\n\r\nFirefox扩展/插件是 [可在addons.mozilla.org上找到](https://addons.mozilla.org/en-US/firefox/addon/browser-control-mcp/)。您还可以从GitHub存储库下载并打开最新的预构建版本： [浏览器控制mcp-1.5.0.xpi](https://github.com/eyalzh/browser-control-mcp/releases/download/v1.5.0/browser-control-1.5.0.xpi).根据“管理扩展”页面中的说明完成安装，该页面将在安装后自动打开。\r\n\r\n该插件的“管理扩展”页面将包含一个指向Claude Desktop DXT文件的链接。您也可以在此处下载： [mcp-server v1.5.1.dxt](https://github.com/eyalzh/browser-control-mcp/releases/download/v1.5.1/mcp-server-v1.5.1.dxt)下载文件后，打开它或将其拖动到Claude Desktop的设置窗口中。请确保在安装DXT扩展后启用它。这仅适用于最新版本的Claude Desktop。如果要在本地安装MCP服务器，请参阅下面的MCP配置。\r\n\r\n### 选项2：从代码构建\r\n\r\n要从代码构建，请克隆此存储库，然后在主存储库目录中运行以下命令以构建MCP服务器和浏览器扩展。\r\n\r\n```\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n#### 安装Firefox临时加载项\r\n\r\n要在Firefox上安装扩展程序作为临时附加组件，请执行以下操作：\r\n\r\n1. 类型 `about:debugging` 在Firefox URL栏中\r\n1. 点击“此Firefox”\r\n1. 点击“加载临时加载项…”\r\n1. 选择 `manifest.json` 文件下 `firefox-extension` 此项目中的文件夹\r\n1. 扩展程序的首选项页面将打开。将密钥复制到剪贴板。它将用于配置MCP服务器。\r\n\r\n或者，要安装永久插件，您可以安装 [插件.mozilla.org上的浏览器控制MCP](https://addons.mozilla.org/en-US/firefox/addon/browser-control-mcp/) 然后按照下面的详细说明配置MCP服务器。\r\n\r\n如果您不想在个人Firefox浏览器上运行该扩展，另一种方法是下载单独的Firefox实例（如Firefox Developer Edition，可在https://www.mozilla.org/en-US/firefox/developer/).\r\n\r\n#### MCP服务器配置\r\n\r\n安装浏览器扩展后，将以下配置添加到mcpServers配置中（例如。 `claude_desktop_config.json` 克劳德桌面版）：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"browser-control\": {\r\n            \"command\": \"node\",\r\n            \"args\": [\r\n                \"/path/to/repo/mcp-server/dist/server.js\"\r\n            ],\r\n            \"env\": {\r\n                \"EXTENSION_SECRET\": \"<secret_on_firefox_extension_options_page>\",\r\n                \"EXTENSION_PORT\": \"8089\" \r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n替换 `/path/to/repo` 正确的路径。\r\n\r\n将EXTENSION_SECRET设置为Firefox中扩展首选项页面上显示的值（您可以在 `about:addons`).您还可以设置EXTENSION_PORT环境变量，以指定MCP服务器将用于与扩展通信的端口（默认为8089）。\r\n\r\nMCP服务器可能需要几秒钟才能连接到扩展。\r\n\r\n##### 使用Docker配置MCP服务器\r\n\r\n或者，您可以使用基于Docker的配置。为此，构建mcp服务器Docker镜像：\r\n\r\n```\r\ndocker build -t browser-control-mcp .\r\n```\r\n\r\n并使用以下mcpServers配置：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"browser-control\": {\r\n            \"command\": \"docker\",\r\n            \"args\": [\r\n                \"run\",\r\n                \"--rm\",\r\n                \"-i\",\r\n                \"-p\", \"127.0.0.1:8089:8089\",\r\n                \"-e\", \"EXTENSION_SECRET=<secret_from_extension>\",\r\n                \"-e\", \"CONTAINERIZED=true\",\r\n                \"browser-control-mcp\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n",
+ "config": {
+  "browser-control": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "-p",
+    "127.0.0.1:8089:8089",
+    "-e",
+    "EXTENSION_SECRET=<secret_from_extension>",
+    "-e",
+    "CONTAINERIZED=true",
+    "browser-control-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

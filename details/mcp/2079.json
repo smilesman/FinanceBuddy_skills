@@ -1,0 +1,24 @@
+{
+ "id": "2079",
+ "kind": "mcp",
+ "name": "weatherandstock",
+ "fingerprint_md5": "7e0a32f75ab3991c3706625562a77bc2",
+ "download_count": 0,
+ "category": "投资分析",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP服务器-天气和股票信息服务\r\n\r\n此MCP（模型控制协议）服务器通过各种API集成提供实时天气警报、预报、股市数据和新闻信息。\r\n\r\n## 特性\r\n\r\n- 天气警报：获取美国各州的活跃天气警报\r\n- 天气预报：获取特定地点的详细天气预报\r\n- 股市数据：了解美国股市的最大赢家和输家\r\n- 股票新闻和情绪：获取特定股票的新闻和情绪分析\r\n- 一般新闻：按关键字和日期搜索新闻文章\r\n\r\n## 先决条件\r\n\r\n- Python 3.x\r\n- `uv` 包管理器\r\n- API密钥用于：\r\n  - Alpha Vantage（用于股票数据）\r\n  - 新闻API（用于新闻数据）\r\n\r\n## 设置\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone https://github.com/suraj2906/mcpServer\r\ncd mcpServer\r\n```\r\n\r\n2. 创建虚拟环境并安装依赖项：\r\n\r\n```bash\r\nuv venv\r\nuv pip install -r requirements.txt\r\n```\r\n\r\n3. 创建一个 `.env` 使用API密钥在项目根目录中创建文件：\r\n\r\n```\r\nALPHA_VANTAGE_API_KEY=your_alpha_vantage_key\r\nNEWS_API_KEY=your_news_api_key\r\n```\r\n\r\n## 配置\r\n\r\n要将此MCP服务器与Claude一起使用，您需要将以下配置添加到Claude的配置文件中：\r\n\r\n1. 打开Claude的设置\r\n1. 转到“文件”>“设置”>“开发人员”>“编辑配置”\r\n1. 添加以下配置：\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"weatherAndStock\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\r\n                \"--directory\",\r\n                \"YOUR\\\\REPOSITORY\\\\PATH\",\r\n                \"run\",\r\n                \"mcp-server.py\"\r\n            ]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n注意：确保调整路径(`C:\\\\Users\\\\asus\\\\code\\\\mcpServer`)以匹配您的实际项目位置。\r\n\r\n## 可用工具\r\n\r\n### 天气工具\r\n\r\n- `get_weather_alerts(state)`：获取美国某个州的活跃天气警报\r\n  - 例子： `get_weather_alerts(\"CA\")`\r\n- `get_forecast(latitude, longitude)`：获取某个地点的天气预报\r\n  - 例子： `get_forecast(37.7749, -122.4194)`\r\n\r\n### 股票市场工具\r\n\r\n- `get_top_gainers_losers()`：了解美国股市的最大赢家和输家\r\n- `get_news_and_sentiments(ticker)`：获取股票的新闻和情绪分析\r\n  - 例子： `get_news_and_sentiments(\"AAPL\")`\r\n\r\n### 新闻工具\r\n\r\n- `get_news_today(keyword, date)`：获取关键字和日期的新闻文章\r\n  - 例子： `get_news_today(\"technology\", \"2024-03-20\")`\r\n\r\n## 错误处理\r\n\r\n服务器为API请求提供了强大的错误处理功能，并将在以下情况下返回适当的错误消息：\r\n\r\n- 缺少API密钥\r\n- API请求失败\r\n- 提供的参数无效\r\n- 未找到符合给定标准的数据\r\n\r\n## 贡献\r\n\r\n请随时提交问题和增强请求！\r\n",
+ "config": {
+  "weatherandstock": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "YOUR\\REPOSITORY\\PATH",
+    "run",
+    "mcp-server.py"
+   ],
+   "env": {}
+  }
+ }
+}

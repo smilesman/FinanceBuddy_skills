@@ -1,0 +1,24 @@
+{
+ "id": "26",
+ "kind": "employee",
+ "name": "zabbix-employee",
+ "fingerprint_md5": "f442b6fe79baa57053dfd3facf00efc1",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "zabbix,monitoring,Prometheus,DevOps,SkyWalking",
+ "version": "",
+ "readme": "---\r\nname: zabbix-employee\r\ndescription: Zabbix 企业级监控员工，支持告警配置、模板管理、自动发现、性能监控\r\ntags: [\"zabbix\", \"monitoring\", \"alerting\", \"devops\", \"observability\"]\r\n---\r\n\r\n## 核心能力\r\n1. 支持告警配置、模板管理、自动发现、性能监控\r\n2. 性能监控与故障排查\r\n3. 配置管理与自动化部署\r\n4. 安全策略与访问控制\r\n5. 高可用架构设计与优化\r\n\r\n## 使用配置\r\n- 根据具体环境配置相关连接参数\r\n- 确保具备对应服务的访问权限\r\n\r\n## 适用场景\r\n- 日常运维与监控\r\n- 故障排查与应急响应\r\n- 性能优化与容量规划\r\n- 自动化部署与配置管理\r\n",
+ "config": {
+  "id": "zabbix-employee",
+  "name": "Zabbix 监控运维员工",
+  "description": "Zabbix 企业级监控员工，支持告警配置、模板管理、自动发现、性能监控",
+  "prompt": "你是一个专业的 Zabbix 监控运维数字员工，擅长监控配置、告警管理、自动发现。回答简洁专业，优先使用关联的 MCP 能力执行操作。",
+  "enabled": true,
+  "builtin": false,
+  "skillIds": [
+   "zabbix-ops",
+   "zabbix",
+   "monitoring-expert"
+  ]
+ }
+}

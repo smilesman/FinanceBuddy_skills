@@ -1,0 +1,25 @@
+{
+ "id": "1183",
+ "kind": "mcp",
+ "name": "neurelo-connect",
+ "fingerprint_md5": "0029e5b462bf23ba2d586fcf04752fd0",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# Neurelo Connect MCP服务器\r\n\r\n\r\n模型上下文协议（MCP）是一种 [新的标准化协议](https://modelcontextprotocol.io/introduction) 用于管理大型语言模型（LLM）和外部系统之间的上下文。在这个存储库中，我们提供了一个MCP服务器 [Neurelo连接](https://neurelo.com/connect).\r\n\r\n这使您可以使用Claude Desktop或任何MCP客户端使用自然语言来完成数据库的操作，例如：\r\n\r\n```\r\n- \"Show me the schema for my PostgreSQL database\"\r\n- \"How many users do I have?\"\r\n- \"Tell me how my databases are related to each other\"\r\n```\r\n\r\n# 克劳德设置\r\n\r\n## 手动设置\r\n\r\n1. 打开位于以下位置的Claude Desktop配置文件：\r\n\r\n   - 在macOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - 在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n1. 添加以下内容：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"neurelo-connect\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@neurelo/connect-mcp@latest\", \"start\"],\r\n      \"env\": {\r\n        \"ENGINE_API_KEY\": \"YOUR_ENGINE_API_KEY\",\r\n        \"ENGINE_BASE_PATH\": \"YOUR_ENGINE_BASE_PATH\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 需求\r\n\r\n- Node.js>=v18.0.0\r\n- 克劳德桌面\r\n- 正在运行的Neurelo Connect实例\r\n- Neurelo Connect API密钥-您可以通过Neurelo Connection控制台生成一个密钥。\r\n\r\n# 特性\r\n\r\n## 支持的工具\r\n\r\n- `system_list_databases` -列出所有可用目标\r\n- `system_get_database_status` -检查是否所有数据库目标都在运行\r\n- `system_get_database_schema` -获取给定数据库目标的架构\r\n  - 输入：\r\n    - `target` （string）：目标数据库的名称\r\n- `raw_readonly_query` -在数据库上执行只读SQL查询\r\n  - 查询以只读访问方式运行\r\n  - 输入：\r\n    - `target` （string）：目标数据库名称\r\n    - `query` （string）：要执行的SQL查询\r\n- `raw_query` -在数据库上执行读/写SQL查询\r\n  - 允许查询修改数据\r\n  - 输入：\r\n    - `target` （string）：目标数据库名称\r\n    - `query` （string）：要执行的SQL查询\r\n- 动态端点工具-根据端点元数据自动生成其他工具\r\n\r\n## 配置选项\r\n\r\n- `--disable-tools ` -以逗号分隔的要禁用的工具名称列表。例如： `--disable-tools raw_query,system_list_databases` 将禁用原始查询和数据库列表工具。您还可以通过将工具名称包含在此列表中来禁用任何已定义的查询。\r\n\r\n# 发展\r\n\r\n## 与MCP检查员共同开发\r\n\r\n最简单的入门方法是使用MCP检查器在开发模式下运行服务器：\r\n\r\n```bash\r\nnpm run inspect\r\n```\r\n\r\n## 使用Claude Desktop进行开发\r\n\r\n安装依赖项：\r\n\r\n```\r\nnpm install\r\n```\r\n\r\n将以下内容添加到您的Claude Desktop配置文件中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"neurelo-connect\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"tsx\", \"REPOSITORY_ROOT/src/main.ts\", \"start\"],\r\n      \"cwd\": \"REPOSITORY_ROOT\",\r\n      \"env\": {\r\n        \"ENGINE_API_KEY\": \"YOUR_ENGINE_API_KEY\",\r\n        \"ENGINE_BASE_PATH\": \"YOUR_ENGINE_BASE_PATH\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n然后， **重启克劳德** 每次你想测试更改时。\r\n\r\n# 贡献\r\n\r\n我们欢迎捐款！请随时提交拉取请求。\r\n",
+ "config": {
+  "neurelo-connect": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@neurelo/connect-mcp@latest",
+    "start"
+   ],
+   "env": {
+    "ENGINE_API_KEY": "YOUR_ENGINE_API_KEY",
+    "ENGINE_BASE_PATH": "YOUR_ENGINE_BASE_PATH"
+   }
+  }
+ }
+}

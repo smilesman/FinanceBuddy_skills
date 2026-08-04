@@ -1,0 +1,23 @@
+{
+ "id": "1038",
+ "kind": "mcp",
+ "name": "elasticsearch-2",
+ "fingerprint_md5": "809dc2c3ed87be4bcd0323754bfb0262",
+ "download_count": 0,
+ "category": "NoSQL 数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# 弹性搜索\r\n\r\nElasticsearch集群的模型上下文协议服务器。使LLM能够管理索引和执行查询。\r\n\r\n重要提示：这主要是通过从postgres-mcp服务器向claude提供示例来构建的。\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n- **搜索**\r\n\r\n  - 根据索引执行搜索查询\r\n  - 输入：\r\n    - `index` （string）：目标索引名称\r\n    - `query` （对象）：Elasticsearch查询DSL\r\n  - 返回搜索结果\r\n\r\n- **create_index**\r\n\r\n  - 创建新的Elasticsearch索引\r\n  - 输入：\r\n    - `index` （string）：索引名称\r\n    - `mappings` （对象，可选）：索引映射配置\r\n    - `settings` （对象，可选）：索引设置配置\r\n\r\n- **list_indices**\r\n\r\n  - 列出所有可用索引\r\n  - 无需输入\r\n  - 返回索引信息数组\r\n\r\n- **索引文档**\r\n\r\n  - 为文档建立索引\r\n  - 输入：\r\n    - `index` （string）：目标索引名称\r\n    - `id` （字符串，可选）：文档ID\r\n    - `document` （object）：文档内容\r\n  - 返回索引操作结果\r\n\r\n### 资源\r\n\r\n服务器为每个索引提供映射信息：\r\n\r\n- **索引映射** (`elasticsearch:////schema`)\r\n  - JSON映射信息\r\n  - 字段名称、类型和配置\r\n  - 从元数据中自动发现\r\n\r\n## 使用Claude Desktop\r\n\r\n添加到您的“mcpServers”部分 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"elasticsearch\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@modelcontextprotocol/server-elasticsearch\",\r\n        \"http://localhost:9200\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## Docker一行程序运行容器：\r\n\r\n```sh\r\ndocker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 -e \"discovery.type=single-node\" -e \"xpack.security.enabled=false\" docker.elastic.co/elasticsearch/elasticsearch:8.11.3\r\n```\r\n\r\n将URL替换为Elasticsearch端点。\r\n\r\n## 许可证\r\n\r\n根据MIT许可证获得许可。免费使用、修改和分发。有关详细信息，请参阅LICENSE文件。\r\n",
+ "config": {
+  "elasticsearch": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@modelcontextprotocol/server-elasticsearch",
+    "http://localhost:9200"
+   ],
+   "env": {}
+  }
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "id": "3361",
+ "kind": "mcp",
+ "name": "bing-search-3",
+ "fingerprint_md5": "a5dde31e1ac23dbea7be543a230a144a",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Bing搜索MCP服务器\r\n\r\n用于Microsoft Bing搜索API集成的模型上下文协议（MCP）服务器，允许人工智能助手执行网络、新闻和图像搜索。\r\n\r\n\r\n## 特性\r\n\r\n- 网络搜索一般信息\r\n- 新闻搜索最近的事件和及时的信息\r\n- 视觉内容的图像搜索\r\n- 限制价格以防止API滥用\r\n- 全面的错误处理\r\n\r\n## 需求\r\n\r\n- Python 3.10或更高版本\r\n- Microsoft必应搜索API密钥\r\n- MCP兼容客户端（例如，Claude Desktop、Cursor）\r\n\r\n## 安装\r\n\r\n1. 克隆此存储库\r\n1. 安装依赖项：\r\n   ```\r\n   uv venv\r\n   source .venv/bin/activate  # On Windows: .venv\\Scripts\\activate\r\n   uv pip install -e .\r\n   ```\r\n\r\n## 配置\r\n\r\n设置所需的环境变量：\r\n\r\n```bash\r\nexport BING_API_KEY=\"your-bing-api-key\"\r\nexport BING_API_URL=\"https://api.bing.microsoft.com/\"  # Optional\r\n```\r\n\r\n对于Windows：\r\n\r\n```cmd\r\nset BING_API_KEY=your-bing-api-key\r\nset BING_API_URL=https://api.bing.microsoft.com/\r\n```\r\n\r\n## 用法\r\n\r\n### 运行服务器\r\n\r\n```\r\nuvx bing-search-mcp\r\n```\r\n\r\n### 使用Claude for Desktop进行配置\r\n\r\n将以下内容添加到您的Claude Desktop配置文件中(`~/Library/Application Support/Claude/claude_desktop_config.json` 在macOS或 `%APPDATA%\\Claude\\claude_desktop_config.json` 在Windows上）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bing-search\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"/path/to/your/bing-search-mcp\"\r\n      ],\r\n      \"env\": {\r\n        \"BING_API_KEY\": \"your-bing-api-key\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\n## 可用工具\r\n\r\n### 1.bing_web_search\r\n\r\n信息、网站和内容的一般网络搜索。\r\n\r\n```python\r\nbing_web_search(query: str, count: int = 10, offset: int = 0, market: str = \"en-US\")\r\n```\r\n\r\n### 2.bing_news_search\r\n\r\n搜索新闻文章和时事。\r\n\r\n```python\r\nbing_news_search(query: str, count: int = 10, market: str = \"en-US\", freshness: str = \"Day\")\r\n```\r\n\r\n### 3.bing_image_search\r\n\r\n搜索图像。\r\n\r\n```python\r\nbing_image_search(query: str, count: int = 10, market: str = \"en-US\")\r\n```\r\n\r\n## 获取必应API密钥\r\n\r\n1. 访问 [微软Azure门户](https://portal.azure.com/)\r\n1. 创建或登录您的Azure帐户\r\n1. 创建新的Bing搜索资源\r\n1. 转到资源并在“密钥和端点”部分找到您的API密钥\r\n\r\n## 许可证\r\n\r\n[MIT许可证](LICENSE)\r\n",
+ "config": {
+  "bing-search": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "/path/to/your/bing-search-mcp"
+   ],
+   "env": {
+    "BING_API_KEY": "your-bing-api-key"
+   }
+  }
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "id": "943",
+ "kind": "mcp",
+ "name": "youtube-subtitles",
+ "fingerprint_md5": "b7db42d336ac445a62adafe5840ae929",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# YouTube字幕MCP服务器\r\n\r\n一个模型上下文协议（MCP）服务器，允许像克劳德这样的人工智能助手下载和分析YouTube视频字幕。\r\n\r\n\r\n## 特性\r\n\r\n- **下载YouTube字幕**：从任何YouTube视频中获取字幕\r\n- **语言支持**：下载任何可用语言的字幕\r\n- **视频信息**：检索视频元数据（标题、持续时间、上传日期等）\r\n- **多语言检测**：列出视频的所有可用字幕语言\r\n- **无缝AI集成**：与Claude和其他兼容MCP的助手配合使用\r\n- **Docker支持**：使用Docker轻松部署\r\n\r\n## 需求\r\n\r\n- Python 3.10+\r\n- yt-dlp\r\n- FFmpeg\r\n- MCP兼容客户端（如克劳德桌面）\r\n- Docker（可选，用于容器化部署）\r\n\r\n## 安装\r\n\r\n### 使用Docker（推荐）\r\n\r\n1. 克隆此存储库：\r\n\r\n   ```bash\r\n   git clone https://github.com/setkyar/youtube-subtitles-mcp.git\r\n   cd youtube-subtitles-mcp\r\n   ```\r\n\r\n1. 使用Docker构建和运行：\r\n\r\n   ```bash\r\n   docker build -t mcp/youtube-subtitles .\r\n   ```\r\n\r\n### 手动安装\r\n\r\n1. 克隆此存储库：\r\n\r\n   ```bash\r\n   git clone https://github.com/setkyar/youtube-subtitles-mcp.git\r\n   cd youtube-subtitles-mcp\r\n   ```\r\n\r\n1. 安装依赖项：\r\n\r\n   ```bash\r\n   pip install \"mcp[cli]>=1.2.0\" yt-dlp\r\n   ```\r\n\r\n1. 安装ffmpeg：\r\n\r\n   - 在Ubuntu/Debian上： `sudo apt-get install ffmpeg`\r\n   - 在macOS（Homebrew）上： `brew install ffmpeg`\r\n   - 在Windows上：从下载 [ffmpeg.org](https://ffmpeg.org/download.html)\r\n\r\n1. 运行服务器：\r\n\r\n   ```bash\r\n   python youtube_subtitles_server.py\r\n   ```\r\n\r\n## 与Claude Desktop集成\r\n\r\n1. 打开克劳德桌面\r\n1. 点击克劳德菜单，选择“设置”\r\n1. 点击左侧边栏中的“开发人员”\r\n1. 点击“编辑配置”\r\n1. 更新配置以包括您的MCP服务器：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"youtube-subtitles\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"mcp/youtube-subtitles\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n6. 保存文件并重新启动Claude Desktop\r\n\r\n## 使用示例\r\n\r\n一旦与Claude Desktop等MCP客户端集成，您就可以：\r\n\r\n1. **获取视频信息**:\r\n\r\n   ```\r\n   What's the title and upload date of this YouTube video: https://www.youtube.com/watch?v=dQw4w9WgXcQ\r\n   ```\r\n\r\n1. **列出可用的字幕语言**:\r\n\r\n   ```\r\n   What subtitle languages are available for this video: https://www.youtube.com/watch?v=dQw4w9WgXcQ\r\n   ```\r\n\r\n1. **下载并分析字幕**:\r\n\r\n   ```\r\n   Can you get the English subtitles for this video and summarize what it's about? https://www.youtube.com/watch?v=dQw4w9WgXcQ\r\n   ```\r\n\r\n1. **翻译字幕**:\r\n\r\n   ```\r\n   Get the Spanish subtitles for this video and translate them to English: https://www.youtube.com/watch?v=dQw4w9WgXcQ\r\n   ```\r\n\r\n## 运作原理\r\n\r\n服务器向MCP客户端公开了三个主要工具：\r\n\r\n1. `get_video_info`：检索有关YouTube视频的基本元数据\r\n1. `list_subtitle_languages`：显示视频的可用字幕语言\r\n1. `download_subtitles`：下载并格式化特定语言的字幕\r\n\r\n所有操作都是使用yt-dlp执行的，yt-dlp是一个功能强大的YouTube dl分支，对字幕和格式有更好的支持。\r\n\r\n## Docker配置\r\n\r\n包含的Dockerfile：\r\n\r\n- 使用Python 3.10作为基础映像\r\n- 安装ffmpeg进行字幕处理\r\n- 安装所需的Python依赖项\r\n- 将MCP服务器设置为通过stdio传输运行\r\n\r\n对于自定义Docker设置，您可以根据需要修改Dockerfile或Docker-compose.yml文件。\r\n\r\n## 故障排除\r\n\r\n### 常见问题及解决方法\r\n\r\n1. **字幕不可用**并非所有YouTube视频都有字幕。尝试另一个视频。\r\n1. **缺失的语言**：有些视频只有原始语言的自动生成字幕。\r\n1. **Docker连接问题**：确保容器正在运行，并且Claude Desktop配置正确。\r\n\r\n### 日志\r\n\r\nDocker日志可以通过以下方式查看：\r\n\r\n```bash\r\ndocker logs youtube-subtitles-mcp\r\n```\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-有关详细信息，请参阅许可证文件。\r\n\r\n## 贡献\r\n\r\n欢迎投稿！请随时提交拉取请求。\r\n\r\n1. 分叉存储库\r\n1. 创建功能分支(`git checkout -b feature/amazing-feature`)\r\n1. 提交您的更改(`git commit -m 'Add some amazing feature'`)\r\n1. 推到分支(`git push origin feature/amazing-feature`)\r\n1. 打开拉取请求\r\n\r\n## 致谢\r\n\r\n- 感谢the [yt-dlp](https://github.com/yt-dlp/yt-dlp) 团队为他们的神奇工具\r\n- 感谢the [模型上下文协议](https://modelcontextprotocol.io/) 用于实现AI助手集成\r\n",
+ "config": {
+  "youtube-subtitles": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "mcp/youtube-subtitles"
+   ],
+   "env": {}
+  }
+ }
+}

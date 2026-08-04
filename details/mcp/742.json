@@ -1,0 +1,24 @@
+{
+ "id": "742",
+ "kind": "mcp",
+ "name": "measure",
+ "fingerprint_md5": "4d4c8599c26c7ea2222bfb28e4fcc124",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Measure.events MCP服务器\r\n\r\n\r\nA. [模型上下文协议](https://modelcontextprotocol.io) （MCP）服务器 [测量事件](https://measure.events) --AI代理可以原生使用的隐私优先的网络分析。\r\n\r\n将您的AI编码助手（Claude Desktop、Cursor、Windsurf等）连接到您的网络分析。问诸如“我本周的流量怎么样？”或“我的主页是什么？”之类的问题，并从真实数据中获得真实答案。\r\n\r\n## 为什么？\r\n\r\n每个分析平台都有一个仪表板。它们都不会与你的人工智能工具对话。\r\n\r\nMeasure.events是第一个具有原生MCP服务器的分析平台。你的人工智能助手可以检查流量、查找热门内容、识别推荐人和跟踪事件——所有这些都不需要你打开浏览器。\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `list_sites` |列出您帐户中的所有跟踪网站|\r\n| `get_pageviews` |每日时间序列的页面浏览量|\r\n| `get_top_pages` |网站上浏览次数最多的页面|\r\n| `get_referrers` |流量来源和引用域|\r\n| `get_site_summary` |人工智能友好的自然语言分析摘要|\r\n| `track_event` |跟踪自定义事件（注册、购买等）|\r\n\r\n## 设置\r\n\r\n### 1.获取API密钥\r\n\r\n注册地址： [lets.measure.events](https://lets.measure.events) 从设置中获取API密钥。\r\n\r\n### 2.安装\r\n\r\n```bash\r\nnpm install @turbo-puffin/measure-mcp-server\r\n```\r\n\r\n或者直接使用npx运行：\r\n\r\n```bash\r\nnpx @turbo-puffin/measure-mcp-server\r\n```\r\n\r\n### 3.配置您的MCP客户端\r\n\r\n#### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"measure\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@turbo-puffin/measure-mcp-server\"],\r\n      \"env\": {\r\n        \"MEASURE_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 光标\r\n\r\n添加到光标MCP设置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"measure\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@turbo-puffin/measure-mcp-server\"],\r\n      \"env\": {\r\n        \"MEASURE_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n#### 帆板运动\r\n\r\n添加到您的Windsurf MCP配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"measure\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@turbo-puffin/measure-mcp-server\"],\r\n      \"env\": {\r\n        \"MEASURE_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n| `MEASURE_API_KEY` |是|您的Measure.events API密钥|\r\n| `MEASURE_API_URL` |否|自定义API基础URL（默认值： `https://lets.measure.events/api/v1`) |\r\n\r\n## 示例用法\r\n\r\n配置后，询问您的AI助手：\r\n\r\n- “我这周的交通状况如何？”\r\n- “哪些页面在propfirmdack.com上的浏览量最大？”\r\n- “我的交通从哪里来？”\r\n- “给我一份分析摘要”\r\n- “跟踪我网站的注册事件”\r\n\r\n## 托管MCP端点\r\n\r\nMeasure.events还为服务器到服务器集成提供了一个托管的MCP端点：\r\n\r\n```\r\nPOST https://lets.measure.events/mcp\r\nAuthorization: Bearer YOUR_API_KEY\r\nContent-Type: application/json\r\n\r\n{\"jsonrpc\": \"2.0\", \"method\": \"initialize\", \"id\": 1, \"params\": {\"protocolVersion\": \"2024-11-05\", \"capabilities\": {}, \"clientInfo\": {\"name\": \"test\", \"version\": \"1.0\"}}}\r\n```\r\n\r\n## 关于Measure.events\r\n\r\n[测量事件](https://measure.events) 是为人工智能时代构建的隐私优先的网络分析。无Cookie，无个人数据，开箱即用符合GDPR/CCPA标准。唯一一个AI代理是一流公民的分析平台。\r\n\r\n- 🔒 隐私第一——没有Cookie，没有指纹\r\n- 🤖 本机代理-MCP服务器+REST API\r\n- ⚡ 轻量级--单脚本标记，\\<1KB\r\n- 📊 实时——实时查看交通情况\r\n\r\n## 许可证\r\n\r\nMIT——见 [许可证](LICENSE) 了解详情。\r\n",
+ "config": {
+  "measure": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@turbo-puffin/measure-mcp-server"
+   ],
+   "env": {
+    "MEASURE_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

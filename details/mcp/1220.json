@@ -1,0 +1,25 @@
+{
+ "id": "1220",
+ "kind": "mcp",
+ "name": "postgres-21",
+ "fingerprint_md5": "3d5a573cd7eab0e7d904c81cdde800a6",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# PostgreSQL\r\n\r\n一个模型上下文协议服务器，提供对PostgreSQL数据库的只读访问。此服务器使LLM能够检查数据库模式并执行只读查询。\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n- **怎么翻译**\r\n  - 对连接的数据库执行只读SQL查询\r\n  - 输入： `sql` （string）：要执行的SQL查询\r\n  - 所有查询都在只读事务中执行\r\n\r\n### 资源\r\n\r\n服务器为数据库中的每个表提供架构信息：\r\n\r\n- **持微软签名的表模式** (`postgres:////schema`)\r\n  - 每个表的JSON模式信息\r\n  - 包括列名和数据类型\r\n  - 从数据库元数据中自动发现\r\n\r\n## 使用Claude Desktop\r\n\r\n要将此服务器与Claude Desktop应用程序一起使用，请将以下配置添加到您的“mcpServers”部分 `claude_desktop_config.json`:\r\n\r\n### 码头工人\r\n\r\n- 在macos上运行docker时，如果服务器在主机网络上运行（例如localhost），请使用host.docker.internal\r\n- 用户名/密码可以添加到postgresql url中 `postgresql://user:password@host:port/db-name`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\", \r\n        \"-i\", \r\n        \"--rm\", \r\n        \"mcp/postgres\", \r\n        \"postgresql://host.docker.internal:5432/mydb\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### NPX\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@modelcontextprotocol/server-postgres\",\r\n        \"postgresql://localhost/mydb\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `/mydb` 使用您的数据库名称。\r\n\r\n## 建筑\r\n\r\nDocker：\r\n\r\n```sh\r\ndocker build -t mcp/postgres -f src/postgres/Dockerfile . \r\n```\r\n\r\n## 许可证\r\n\r\n此MCP服务器根据MIT许可证获得许可。这意味着您可以根据MIT许可证的条款和条件自由使用、修改和分发软件。有关更多详细信息，请参阅项目存储库中的LICENSE文件。\r\n",
+ "config": {
+  "postgres": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "mcp/postgres",
+    "postgresql://host.docker.internal:5432/mydb"
+   ],
+   "env": {}
+  }
+ }
+}

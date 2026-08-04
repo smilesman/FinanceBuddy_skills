@@ -1,0 +1,25 @@
+{
+ "id": "1238",
+ "kind": "mcp",
+ "name": "postgres-8",
+ "fingerprint_md5": "0f620279d8b1a396682e34fa98cf2986",
+ "download_count": 0,
+ "category": "关系型数据库",
+ "tags": "",
+ "version": "",
+ "readme": "# 通用数据库MCP服务器\r\n\r\nPostgreSQL和MySQL数据库的模型上下文协议服务器。使Claude能够查询和管理您的数据库。\r\n\r\n## 安装\r\n\r\n```bash\r\nnpm install -g @johnroshan/universal-db-mcp\r\n```\r\n\r\n## 配置\r\n\r\n编辑Claude Desktop配置文件：\r\n\r\nmacOS： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n窗户： `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n\r\n### PostgreSQL\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@johnroshan/universal-db-mcp\"],\r\n      \"env\": {\r\n        \"DB_TYPE\": \"postgres\",\r\n        \"DATABASE_URL\": \"postgresql://user:password@localhost:5432/mydb\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n或者使用单个参数：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"postgres\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@johnroshan/universal-db-mcp\"],\r\n      \"env\": {\r\n        \"DB_TYPE\": \"postgres\",\r\n        \"DB_HOST\": \"localhost\",\r\n        \"DB_PORT\": \"5432\",\r\n        \"DB_NAME\": \"mydb\",\r\n        \"DB_USER\": \"postgres\",\r\n        \"DB_PASSWORD\": \"your_password\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### MySQL\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mysql\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"@johnroshan/universal-db-mcp\"],\r\n      \"env\": {\r\n        \"DB_TYPE\": \"mysql\",\r\n        \"DATABASE_URL\": \"mysql://user:password@localhost:3306/mydb\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n- `query` -执行SQL查询\r\n- `list_tables` -列出所有表格\r\n- `describe_table` -获取表架构\r\n- `list_databases` -列出数据库\r\n- `table_row_count` -统计表中的行数\r\n- `search_table` -使用模式匹配搜索记录\r\n\r\n## 使用示例\r\n\r\n配置完成后，询问Claude：\r\n\r\n- “显示数据库中的所有表”\r\n- “用户表的架构是什么”\r\n- “订单表中有多少行”\r\n- “查找所有具有gmail地址的用户”\r\n- “显示最近10个订单”\r\n\r\n## 环境变量\r\n\r\n|变量|必填|描述|\r\n|----------|----------|-------------|\r\n|DB_TYPE|是| postgres或mysql|\r\n|DATABASE_URL |否|完整连接字符串|\r\n|DB_HOST |否|数据库主机|\r\n|DB_PORT|否|数据库端口|\r\n|DB_NAME|否|数据库名称|\r\n|DB_USER |否|数据库用户|\r\n|DB_PASSWORD |否|数据库密码|\r\n\r\n需要DATABASE_URL或DB_NAME+DB_USER。\r\n\r\n## 安全\r\n\r\n此服务器在您的计算机上本地运行。数据库凭据仍保留在您的设备上。\r\n\r\n考虑创建只读数据库用户：\r\n\r\nPostgreSQL：\r\n\r\n```sql\r\nCREATE USER claude_readonly WITH PASSWORD 'password';\r\nGRANT CONNECT ON DATABASE mydb TO claude_readonly;\r\nGRANT USAGE ON SCHEMA public TO claude_readonly;\r\nGRANT SELECT ON ALL TABLES IN SCHEMA public TO claude_readonly;\r\n```\r\n\r\nMySQL：\r\n\r\n```sql\r\nCREATE USER 'claude_readonly'@'localhost' IDENTIFIED BY 'password';\r\nGRANT SELECT ON mydb.* TO 'claude_readonly'@'localhost';\r\nFLUSH PRIVILEGES;\r\n```\r\n\r\n## 故障排除\r\n\r\n连接被拒绝：\r\n\r\n- 验证数据库是否正在运行\r\n- 检查主机和端口\r\n- 检查防火墙设置\r\n\r\n身份验证失败：\r\n\r\n- 验证凭据\r\n- 检查用户权限\r\n- 对于PostgreSQL，请查看pg_hba.conf\r\n\r\nClaude看不到服务器：\r\n\r\n- 重新启动克劳德桌面\r\n- 检查配置文件语法\r\n- 检查~/Library/logs/Claude/mcp\\*.log中的日志\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "postgres": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@johnroshan/universal-db-mcp"
+   ],
+   "env": {
+    "DB_TYPE": "postgres",
+    "DATABASE_URL": "postgresql://user:password@localhost:5432/mydb"
+   }
+  }
+ }
+}

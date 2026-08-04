@@ -1,0 +1,22 @@
+{
+ "id": "1624",
+ "kind": "mcp",
+ "name": "micromanage",
+ "fingerprint_md5": "6c194f28f268fac3a75e74bee8952e04",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://www.npmjs.com/package/@yodakeisuke/mcp-micromanage)\r\n\r\n# mcp微观管理\r\n\r\n控制你的编码代理同事，他们往往会偏离轨道。\r\n\r\n如果 [顺序思维](https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking) 是思维工作流的动态表述和外化，该工具是开发任务流的动态表述与外化。\r\n\r\n\r\n## 动机\r\n\r\n### 编码代理的挑战\r\n\r\n- 编码代理经常进行超出要求范围的修改\r\n  - 假设光标+克劳德\r\n- 在实施过程中，他们很难在关键决策点请求用户反馈\r\n- 工作计划和进度跟踪很难可视化和监控\r\n\r\n### 解决方案\r\n\r\n- **基于承诺和公关的工作计划**：将票分解为PR并承诺作为最低工作单位的强制实施计划\r\n- **强制频繁反馈**：在提交级别强制用户审查，为反馈创建自然检查点\r\n- **可视化**：通过本地React应用程序立即了解当前的工作计划和实施状态\r\n\r\n## 工具\r\n\r\n1. **计划**：用PR和承诺定义您的实施计划\r\n1. **轨道**：监控所有工作项的进度和当前状态\r\n1. **更新**：随着工作的进展更改状态，并强制进行用户审核\r\n\r\n## 可视化仪表板\r\n\r\n该项目包括一个基于React的可视化工具，该工具提供：\r\n\r\n- PR和提交的层次视图\r\n- 具有自动刷新功能的实时更新\r\n- 基于状态的颜色编码\r\n- 缩放和平移功能\r\n\r\n## 入门指南\r\n\r\n### 无头（仅限mcp工具）\r\n\r\n1. 添加到您的mcp json\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"micromanage\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"@yodakeisuke/mcp-micromanage\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n2. （强烈推荐）添加以下内容 `.mdc`s到你的项目\r\n\r\n[推荐规则](https://github.com/yodakeisuke/mcp-micromanage-your-agent/tree/main/.cursor/rules)\r\n\r\n（可根据您的喜好进行调整）\r\n\r\n### 可视化\r\n\r\n1. 克隆此存储库\r\n\r\n1. 添加到您的mcp json\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"micromanage\": {\r\n      \"command\": \"node\",\r\n      \"args\": [\r\n        \"[CLONE_DESTINATION_PATH]/sequentialdeveloping/dist/index.js\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n3. 构建服务器\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n4. 运行前端\r\n\r\n```bash\r\ncd visualization/ \r\nnpm install\r\nnpm run dev\r\n```\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n\r\n### 第三方软件\r\n\r\n本项目使用以下第三方软件：\r\n\r\n- **MCP TypeScript SDK**：根据MIT许可证获得许可。版权所有©2023-2025中国人民银行Anthropic。\r\n\r\n## 致谢\r\n\r\n- 内置于 [MCP（模型上下文协议）](https://github.com/modelcontextprotocol/typescript-sdk)\r\n- 由维护 [yodakeisuke](https://github.com/yodakeisuke)\r\n",
+ "config": {
+  "micromanage": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "@yodakeisuke/mcp-micromanage"
+   ],
+   "env": {}
+  }
+ }
+}

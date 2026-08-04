@@ -1,0 +1,27 @@
+{
+ "id": "702",
+ "kind": "mcp",
+ "name": "jianying-mcp",
+ "fingerprint_md5": "3a87f3008daa4d6b7c4cb3157da5fcc6",
+ "download_count": 0,
+ "category": "音频视频",
+ "tags": "",
+ "version": "",
+ "readme": "# JianYing MCP - 剪映视频制作 MCP 服务器\r\n\r\n\r\n一个基于 Model Context Protocol (MCP) 的剪映视频制作自动化工具，让 AI 助手能够通过自然语言创建专业的视频内容。\r\n\r\n## 🎯 项目简介\r\n\r\njianying mcp是一个强大的视频制作自动化工具，通过mcp协议让AI能够：\r\n\r\n- 🎬 **自动创建剪映草稿项目**\r\n- 🎵 **智能添加音频、视频、文本素材**\r\n- ✨ **应用各种特效、滤镜、动画**\r\n- 🎨 **自动化视频编辑流程**\r\n- 📤 **导出为剪映可编辑的项目文件**\r\n\r\n## 🚀 核心功能\r\n\r\n### 📋 草稿管理\r\n- `rules` - 制作视频规范\r\n- `create_draft` - 创建新的视频草稿项目\r\n- `export_draft` - 导出为剪映项目文件\r\n\r\n### 🛤️ 轨道管理\r\n- `create_track` - 创建视频/音频/文本轨道\r\n\r\n### 🎥 视频处理\r\n- `add_video_segment` - 添加视频片段(可以是本地文件，也可以是url)\r\n- `add_video_animation` - 添加入场/出场动画\r\n- `add_video_transition` - 添加转场效果\r\n- `add_video_filter` - 应用滤镜效果\r\n- `add_video_mask` - 添加蒙版效果\r\n- `add_video_background_filling` - 背景填充\r\n- `add_video_keyframe` - 关键帧动画\r\n\r\n### 🎵 音频处理\r\n- `add_audio_segment` - 添加音频片段(可以是本地文件，也可以是url)\r\n- `add_audio_effect` - 音频特效（电音、混响等）\r\n- `add_audio_fade` - 淡入淡出效果\r\n- `add_audio_keyframe` - 音频关键帧\r\n\r\n### 📝 文本处理\r\n- `add_text_segment` - 添加文本片段\r\n- `add_text_animation` - 文字动画效果\r\n- `add_text_bubble` - 文字气泡效果\r\n- `add_text_effect` - 文字花字特效\r\n\r\n### 🔧 实用工具\r\n- `parse_media_info` - 解析媒体文件信息\r\n- `find_effects_by_type` - 查找可用特效资源\r\n\r\n## 📦 快速开始\r\n\r\n### 1. 安装 uv\r\n\r\n**Windows:**\r\n```bash\r\npowershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\r\n```\r\n\r\n**macOS/Linux:**\r\n```bash\r\ncurl -LsSf https://astral.sh/uv/install.sh | sh\r\n```\r\n\r\n### 2. 克隆项目并安装依赖\r\n\r\n```bash\r\ngit clone https://github.com/your-username/jianying-mcp.git\r\ncd jianying-mcp\r\nuv sync\r\n```\r\n\r\n### 3. 配置 MCP 客户端\r\n\r\n以 Augment Code 为例，在 MCP 客户端中添加服务器配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"jianying-mcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\r\n        \"--directory\",\r\n        \"/your-path/jianying-mcp/jianyingdraft\",\r\n        \"run\",\r\n        \"server.py\"\r\n      ],\r\n      \"env\": {\r\n        \"SAVE_PATH\": \"/your-path/draft\",\r\n        \"OUTPUT_PATH\": \"/your-path/output\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n- SAVE_PATH:数据存储路径 - 存储草稿的操作数据\r\n- OUTPUT_PATH:导出路径 - 生成的剪映草稿文件存放位置\r\n\r\n## 🎥 演示视频\r\n\r\n🎬 [点击观看完整演示视频](https://www.bilibili.com/video/BV1rhe4z1Eu1)\r\n\r\n\r\n## 🔧 开发指南\r\n\r\n### 调试模式\r\n\r\n使用 MCP Inspector 进行调试：\r\n\r\n```bash\r\nuv run mcp dev jianyingdraft/server.py\r\n```\r\n\r\n\r\n## 🙏 致谢\r\n\r\n- [Model Context Protocol](https://modelcontextprotocol.io) - 提供了强大的 AI 集成协议\r\n- [pyJianYingDraft](https://github.com/GuanYixuan/pyJianYingDraft) - 剪映项目文件处理库\r\n---\r\n\r\n⭐ 如果这个项目对你有帮助，请给个 Star 支持一下！\r\n",
+ "config": {
+  "jianying-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "--directory",
+    "/your-path/jianying-mcp/jianyingdraft",
+    "run",
+    "server.py"
+   ],
+   "env": {
+    "SAVE_PATH": "/your-path/draft",
+    "OUTPUT_PATH": "/your-path/output"
+   }
+  }
+ }
+}

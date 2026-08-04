@@ -1,0 +1,21 @@
+{
+ "id": "3339",
+ "kind": "mcp",
+ "name": "atproto",
+ "fingerprint_md5": "584ef899328e72030cb9c59ca6cfe77c",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# atproto-mcp\r\n\r\n\r\nMCP服务器为 [AT协议](https://atproto.com/) 生态系统-协议文档、词典模式、Bluesky开发者API文档和食谱示例-由 [txtai](https://github.com/neuml/txtai) 语义搜索。\r\n\r\n## 数据源\r\n\r\n|来源|存储库|描述|\r\n| -------- | ----------- | ------------- |\r\n| **AT协议网站** | [bluesky社交网站/atproto](https://github.com/bluesky-social/atproto-website) |来自atproto.com的协议规范、指南和博客文章|\r\n| **蓝天API文档** | [bluesky social/bsky docs](https://github.com/bluesky-social/bsky-docs) |docs.bsky.app中的开发人员文档--教程、指南、高级主题|\r\n| **AT协议词典** | [bluesky social/atproto](https://github.com/bluesky-social/atproto/tree/main/lexicons) |定义所有AT协议端点和记录类型的JSON模式|\r\n| **烹饪书** | [bluesky社交/烹饪书](https://github.com/bluesky-social/cookbook) |Python、Go、TypeScript和JavaScript中的示例项目|\r\n\r\n## 工具\r\n\r\n|工具|说明|\r\n| ------ | ------------- |\r\n| `search_atproto_docs` |跨所有文档源的语义搜索|\r\n| `get_lexicon` |通过NSID检索特定词典（例如。 `app.bsky.feed.post`) |\r\n| `list_lexicons` |列出所有词典，可选择按命名空间筛选|\r\n| `search_lexicons` |词典模式中的语义搜索|\r\n| `get_cookbook_example` |按项目名称获取特定的烹饪书示例|\r\n| `list_cookbook_examples` |列出所有烹饪书示例，可选择按语言列出|\r\n| `search_bsky_api` |Bluesky API文档中的语义搜索|\r\n| `refresh_sources` |强制重新获取存储库并重建索引|\r\n\r\n## 提示\r\n\r\n|提示|描述|\r\n| -------- | ------------- |\r\n| `explain_lexicon` |获取词典的全面解释|\r\n| `implement_feature` |通过代码示例获取实施指南|\r\n| `debug_atproto` |帮助调试AT协议/Bluesky API问题|\r\n| `explore_namespace` |探索命名空间中的所有词典|\r\n\r\n## 安装\r\n\r\n### 先决条件\r\n\r\n- Python 3.10+\r\n- [紫外线](https://docs.astral.sh/uv/) （推荐）或pip\r\n- Git（用于克隆源代码仓库）\r\n\r\n### 从源代码安装\r\n\r\n```bash\r\ngit clone https://github.com/ashex/atproto-mcp.git\r\ncd atproto-mcp\r\nuv sync\r\n```\r\n\r\n### 用uvx跑步\r\n\r\n```bash\r\nuvx atproto-mcp\r\n```\r\n\r\n## 配置\r\n\r\n### VS代码/副本\r\n\r\n\r\n增添 `.vscode/mcp.json` 在您的工作空间中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"atproto\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"atproto-mcp\"\r\n        ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 基洛电力\r\n\r\n1. 打开 **Kiro → 权力**\r\n1. 选择 **从GitHub导入电源**\r\n1. 进入 `https://github.com/ashex/atproto-mcp`\r\n\r\n### 克劳德桌面\r\n\r\n增添 `~/Library/Application Support/Claude/claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"atproto\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n         \"atproto-mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### MCPHub\r\n\r\n增添 `~/.config/mcphub/servers.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"atproto\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"atproto-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 开源代码\r\n\r\n添加到您的 `opencode.json`:\r\n\r\n```json\r\n{\r\n  \"$schema\": \"https://opencode.ai/config.json\",\r\n  \"mcp\": {\r\n    \"atproto\": {\r\n      \"type\": \"local\",\r\n      \"command\": [\"uvx\", \"atproto-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 环境变量\r\n\r\n|变量|默认值|描述|\r\n| ---------- | --------- | ------------- |\r\n| `ATPROTO_MCP_CACHE_DIR` | `~/.cache/atproto-mcp` |存储仓库和搜索索引的位置|\r\n| `ATPROTO_MCP_REFRESH_HOURS` | `24` |重新获取存储库前几个小时|\r\n| `ATPROTO_MCP_EMBEDDING_MODEL` | `sentence-transformers/all-MiniLM-L6-v2` |嵌入语句变换器模型|\r\n\r\n## 运作原理\r\n\r\n首次启动时，服务器：\r\n\r\n1. 浅层克隆repos `~/.cache/atproto-mcp/repos/`\r\n1. 将MDX文档、词典模式和烹饪书示例解析为文本块\r\n1. 使用txtai对块进行索引 `all-MiniLM-L6-v2` 句子转换器模型（~80MB，本地运行）\r\n1. 索引被持久化 `~/.cache/atproto-mcp/index/` 用于后续启动\r\n\r\n在随后的启动中，缓存的索引会在几秒钟内加载。超过24小时的存储库将自动刷新 `git pull`.\r\n\r\n## 发展\r\n\r\n```bash\r\n# Install in development mode\r\nuv sync\r\n\r\n# Run the server locally (stdio)\r\nuv run atproto-mcp\r\n\r\n# Test with the MCP Inspector\r\nuv run mcp dev src/atproto_mcp/server.py\r\n\r\n# Run with debug logging\r\nATPROTO_MCP_CACHE_DIR=/tmp/atproto-mcp uv run atproto-mcp\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "atproto": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "atproto-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

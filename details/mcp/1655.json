@@ -1,0 +1,24 @@
+{
+ "id": "1655",
+ "kind": "mcp",
+ "name": "open-docs-mcp",
+ "fingerprint_md5": "b0c17e250b7dfe4832cfe0f8bb961e30",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# 打开文档mcp mcp服务器\r\n\r\n[](https://smithery.ai/server/@askme765cs/open-docs-mcp)\r\n[](LICENSE)\r\n[](package.json)\r\n[](package.json)\r\n\r\n提供文档管理功能的开源MCP实现。\r\n[中文文档](README.zh-CN.md)\r\n\r\n## 特性\r\n\r\n### 文档管理\r\n\r\n- 从各种来源抓取和索引文档\r\n- 支持多种文档格式\r\n- 全文搜索功能\r\n\r\n### MCP服务器API\r\n\r\n- 基于资源的文档访问\r\n- 基于工具的文档管理\r\n\r\n### 可用工具\r\n\r\n1. **enable_doc** -为特定文档启用爬网\r\n1. **disable_doc** -禁用特定文档的爬网\r\n1. **crawl_docs** -开始抓取已启用的文档\r\n1. **build_index** -为文档构建搜索索引\r\n1. **search_docs** -搜索文档\r\n1. **list_enabled.docs** -列出已启用的文档\r\n1. **list_all_docs** -列出所有可用文档\r\n\r\n### Cursor@Docs兼容性\r\n\r\n该项目旨在通过提供以下功能来复制Cursor的@Docs功能：\r\n\r\n1. **文献检索**:\r\n\r\n   - 从各种来源抓取和索引文档\r\n   - 支持多种文档格式（HTML、Markdown等）\r\n   - 自动重新索引以保持文档最新\r\n\r\n1. **文档访问**:\r\n\r\n   - 在所有索引文档中搜索\r\n   - 与MCP协议集成用于AI环境\r\n\r\n1. **自定义文档管理**:\r\n\r\n   - 通过添加新的文档源 `enable_doc` 工具\r\n   - 通过以下方式管理已启用的文档 `list_enabled_docs` 工具\r\n   - 强制重新爬行 `crawl_docs` 工具\r\n\r\n### 建筑\r\n\r\n```\r\n┌───────────────────────────────────────────────────────┐\r\n│                    open-docs-mcp Server                    │\r\n├───────────────────┬───────────────────┬───────────────┤\r\n│   Crawler Module  │  Search Engine    │  MCP Server   │\r\n├───────────────────┼───────────────────┼───────────────┤\r\n│ - Web crawling    │ - Full-text index │ - Resources   │\r\n│ - Doc conversion  │ - Relevance score │ - Tools       │\r\n│ - Storage         │ - Query parsing   │ - Prompts     │\r\n└───────────────────┴───────────────────┴───────────────┘\r\n```\r\n\r\n## 用法\r\n\r\n```bash\r\nnpx -y open-docs-mcp --docsDir ./docs\r\n```\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装克劳德桌面文档管理服务器 [史密瑟里](https://smithery.ai/server/@askme765cs/open-docs-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @askme765cs/open-docs-mcp --client claude\r\n```\r\n\r\n### 配置\r\n\r\n要与Claude Desktop一起使用，请添加服务器配置：\r\n\r\n在MacOS上： `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"open-docs-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"open-docs-mcp\",\r\n        \"--docsDir\",\r\n        \"/path/to/docs\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**配置选项：**\r\n\r\n- `command`：Node.js可执行文件\r\n- `args`：要传递给脚本的参数数组\r\n  - `--docsDir`：必填，指定文档目录路径\r\n- `disabled`：设置为true可临时禁用服务器\r\n- `alwaysAllow`：无需确认即可使用的工具名称数组\r\n\r\n## 发展\r\n\r\n```bash\r\nnpm run watch  # Auto-rebuild on changes\r\nnpm run inspector  # Debug with MCP Inspector\r\n```\r\n\r\n## 贡献\r\n\r\n欢迎拉取请求。对于重大更改，请先打开一个问题来讨论您想要更改的内容。\r\n\r\n## 许可证\r\n\r\n[MIT](LICENSE)\r\n",
+ "config": {
+  "open-docs-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "open-docs-mcp",
+    "--docsDir",
+    "/path/to/docs"
+   ],
+   "env": {}
+  }
+ }
+}

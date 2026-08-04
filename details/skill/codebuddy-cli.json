@@ -1,0 +1,12 @@
+{
+ "id": "codebuddy-cli",
+ "kind": "skill",
+ "name": "codebuddy-cli",
+ "fingerprint_md5": "c96bfd7ffbfd837abe86c8c7f5af91c4",
+ "download_count": 0,
+ "category": "开发工具",
+ "tags": "",
+ "version": "",
+ "readme": "# CodeBuddy CLI Skill\r\n\r\n来自腾讯的 AI 驱动终端编程助手。\r\n\r\n## 安装\r\n\r\n```bash\r\n# 检查先决条件\r\nnode -v  # 需要 Node.js 18+\r\nnpm -v\r\n\r\n# 全局安装\r\nnpm install -g @tencent-ai/codebuddy-code\r\n\r\n# 验证\r\ncodebuddy --version\r\n```\r\n\r\n## 快速开始\r\n\r\n1. 导航到项目目录\r\n2. 运行 `codebuddy` 启动交互式会话\r\n3. 选择登录方式：\r\n   - **Google/GitHub**：国际版（Gemini、GPT 模型）\r\n   - **微信**：中国版（DeepSeek 模型）\r\n\r\n## CLI 参数\r\n\r\n| 参数 | 描述 |\r\n|----------|-------------|\r\n| `codebuddy \"<prompt>\"` | 执行单个任务 |\r\n| `-y` / `--dangerously-skip-permissions` | 跳过权限确认（仅限沙盒） |\r\n| `-p` / `--print` | 单次执行模式（文件操作需要 `-y`） |\r\n| `--permission-mode <mode>` | `acceptEdits`, `bypassPermissions`, `default`, `plan` |\r\n| `--version` | 显示版本 |\r\n\r\n### 示例\r\n\r\n```bash\r\n# 交互模式\r\ncodebuddy\r\n\r\n# 单个任务\r\ncodebuddy \"帮我优化这个函数的性能\"\r\ncodebuddy \"生成这个 API 的单元测试\"\r\ncodebuddy \"检查这次提交的代码质量\"\r\n\r\n# 跳过权限（仅限沙盒）\r\ncodebuddy -p \"Review code quality\" -y\r\n```\r\n\r\n## 斜杠命令\r\n\r\n| 命令 | 描述 |\r\n|---------|-------------|\r\n| `/help` | 显示可用命令 |\r\n| `/status` | 显示账户信息和当前模型 |\r\n| `/login` | 切换账户 |\r\n| `/logout` | 登出 |\r\n| `/clear` | 重置对话历史 |\r\n| `/exit` | 结束会话 |\r\n| `/config` | 打开配置 |\r\n| `/doctor` | 诊断问题 |\r\n| `/cost` | Token 使用统计 |\r\n| `/init` | 生成 CODEBUDDY.md 项目指南 |\r\n| `/memory` | 编辑项目记忆文件 |\r\n\r\n在会话期间键入 `?` 以获取键盘快捷键。\r\n\r\n## 自定义命令\r\n\r\n在以下位置创建 `.md` 文件：\r\n- **项目**：`.codebuddy/commands/`\r\n- **全局**：`~/.codebuddy/commands/`\r\n\r\n## 更新\r\n\r\n```bash\r\nnpm install -g @tencent-ai/codebuddy-code\r\n```\r\n\r\n## 安全说明\r\n\r\n`--dangerously-skip-permissions` 风险：文件删除、范围蔓延、数据丢失。**切勿在生产环境中使用。**",
+ "config": {}
+}

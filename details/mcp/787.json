@@ -1,0 +1,24 @@
+{
+ "id": "787",
+ "kind": "mcp",
+ "name": "openrouter-image-mcp",
+ "fingerprint_md5": "378fc3e89794f62aa4c1b09f55cafa25",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# openrouter映像mcp\r\n\r\n让你的AI助手能够生成和编辑图像。一次安装，多种型号，无供应商锁定。\r\n\r\n适用于Claude Code、Claude Desktop、Cursor、VS Code、Windsurf和任何MCP客户端。\r\n\r\n## 为什么这样\r\n\r\n- **一个API密钥，每个图像模型。** Gemini、GPT-5等 [OpenRouter](https://openrouter.ai).用单词切换模型，而不是更改代码。\r\n- **生成、编辑和批处理。** 文本到图像、带参考的图像编辑和批处理操作（最多20个并行任务）。\r\n- **样式预设。** 说“水彩风格”或“像素艺术”，并得到一致的结果。8种内置样式。\r\n- **变化。** 从一个提示中生成最多4个镜头。挑最好的一个。\r\n- **智能文件输出。** 保存到路径或目录。文件会自动获得描述性名称。\r\n- **为你使用的东西付费。** OpenRouter的按令牌和按图像定价意味着没有订阅。\r\n\r\n## 如何安装\r\n\r\n得到一个 [OpenRouter API密钥](https://openrouter.ai/keys)，然后将服务器添加到客户端。\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\n# macOS / Linux\r\nclaude mcp add openrouter-image-mcp -s user -e OPENROUTER_API_KEY=YOURAPIKEY -- npx -y openrouter-image-mcp@latest\r\n\r\n# Windows\r\nclaude mcp add openrouter-image-mcp -s user -e OPENROUTER_API_KEY=YOURAPIKEY -- cmd /c npx -y openrouter-image-mcp@latest\r\n```\r\n\r\n### 克劳德桌面/光标/VS代码/Windsurf\r\n\r\n添加到MCP配置JSON：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"openrouter-image-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"openrouter-image-mcp@latest\"],\r\n      \"env\": {\r\n        \"OPENROUTER_API_KEY\": \"YOURAPIKEY\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 你能做什么\r\n\r\n只需与您的助手聊天：\r\n\r\n```\r\nGenerate a product photo of a ceramic mug on a wooden table, warm lighting\r\n```\r\n\r\n```\r\nGenerate 3 variations of a logo concept for a coffee brand, pixel-art style\r\n```\r\n\r\n```\r\nEdit /path/to/headshot.png: make the background a gradient, keep the subject\r\n```\r\n\r\n```\r\nBatch generate 5 social media banners: summer sale, back to school, holiday promo,\r\nnew arrivals, free shipping. All in illustration style, 16:9, save to ./banners/\r\n```\r\n\r\n```\r\nList image models. What's cheapest for quick drafts?\r\n```\r\n\r\n## 质量预设\r\n\r\n跳过模型ID。只需说“快速”、“平衡”或“质量”：\r\n\r\n|预设|型号|何时使用|\r\n|--------|-------|-------------|\r\n| `fast` |Gemini 2.5 Flash |草稿、迭代、保持低成本|\r\n| `balanced` |Gemini 3 Pro |日常使用（默认）|\r\n| `quality` |GPT-5图像|最终交付成果，最大保真度|\r\n\r\n或通过任何 [OpenRouter型号ID](https://openrouter.ai/models?modality=image) 直接：\r\n\r\n```\r\nGenerate a cat using model google/gemini-2.5-flash-image\r\n```\r\n\r\n## 风格预设\r\n\r\n关键字修改样式：\r\n\r\n|风格|你得到了什么|\r\n|-------|-------------|\r\n| `photo` |真实感、数码单反、自然光|\r\n| `illustration` |干净的数字艺术，鲜艳的色彩|\r\n| `watercolor` |柔软的洗涤，纸张质感|\r\n| `pixel-art` |复古16位，有限调色板|\r\n| `3d-render` |工作室照明、基于物理的渲染|\r\n| `anime` |Cel着色，日本动画|\r\n| `sketch` |纸上铅笔，单色|\r\n| `oil-painting` |笔触，impasto，古典|\r\n\r\n## 工具参考\r\n\r\n方便的工具：\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `generate_image` |文本到图像，具有质量/风格预设、变体（1-4）、宽高比、文件输出|\r\n| `edit_image` |使用提示转换图像+最多12个参考图像（文件、URL、数据URI）|\r\n| `batch_images` |与并发控制并行运行多达20个生成/编辑任务|\r\n| `list_image_models` |浏览有价格的可用型号|\r\n| `check_balance` |检查您的OpenRouter信用余额|\r\n\r\n支持的输出： `1:1`, `2:3`, `3:2`, `16:9`, `9:16`, `4:3`, `3:4` 宽高比。 `0.5K`, `1K`, `2K`, `4K` 尺寸。PNG、JPEG、WebP、GIF输入。\r\n\r\n## 无头配置\r\n\r\n|标志|环境变量|默认值|\r\n|------|---------|---------|\r\n| `--api-key` | `OPENROUTER_API_KEY` |（必填）|\r\n| `--default-model` | `OPENROUTER_IMG_DEFAULT_MODEL` | `google/gemini-3-pro-image-preview` |\r\n| `--batch-concurrency` | `OPENROUTER_IMG_BATCH_CONCURRENCY` | `3` |\r\n| `--cache-ttl` | `OPENROUTER_IMG_CACHE_TTL` | `300000` （5分钟）|\r\n| `--log-level` | `OPENROUTER_IMG_LOG_LEVEL` | `warn` |\r\n\r\n## 安全\r\n\r\nAPI密钥从不出现在日志或错误消息中。文件路径会阻止目录遍历。图像URL根据SSRF模式进行验证。批处理操作的内存上限为200MB。所有输入都经过模式验证。\r\n\r\n## 对于开发者\r\n\r\n要为开发人员构建：\r\n\r\n```bash\r\npnpm install && pnpm build && pnpm test  # 57 tests\r\n```\r\n\r\n## 许可证\r\n\r\nMIT\r\n\r\n______________________________________________________________________\r\n\r\n在Bitcoin.com上使用\\<3\r\n",
+ "config": {
+  "openrouter-image-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "openrouter-image-mcp@latest"
+   ],
+   "env": {
+    "OPENROUTER_API_KEY": "YOURAPIKEY"
+   }
+  }
+ }
+}

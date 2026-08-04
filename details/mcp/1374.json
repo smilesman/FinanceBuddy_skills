@@ -1,0 +1,28 @@
+{
+ "id": "1374",
+ "kind": "mcp",
+ "name": "clipboard",
+ "fingerprint_md5": "f9eb0cae56be2cadfebe428f36166852",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP剪贴板管理器\r\n\r\n> **给你的AI代理一个记忆** -永远不要再失去背景！ 🚀\r\n\r\n将持久剪贴板功能添加到Claude Desktop、VS Code或任何兼容MCP的AI代理的最简单方法。\r\n\r\n## 🎯 这有什么作用\r\n\r\n**问题**：AI代理在对话之间会忘记一切。那个有用的代码片段或错误消息？跑了。\r\n\r\n**解决方案**：这为您的AI提供了一个持久的、可搜索的剪贴板，可以记住会话中的所有内容。\r\n\r\n## ⚡ 一键安装\r\n\r\n### **选项1:Docker（推荐-无需安装）**\r\n\r\n只需将此添加到MCP客户端配置中并重新启动：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"clipboard\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\", \"--rm\", \"-i\",\r\n        \"-v\", \"mcp-clipboard-data:/app/data\",\r\n        \"-e\", \"DOCKER_CONTAINER=true\",\r\n        \"ghcr.io/erik-balfe/mcp-clipboard:latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### **选项2：直接安装（需要Bun）**\r\n\r\n1. **安装Bun**: `curl -fsSL https://bun.sh/install | bash`\r\n1. **添加到配置**:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"clipboard\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@tyr/mcp-clipboard@latest\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 📁 配置放在哪里\r\n\r\n|客户|位置|\r\n|--------|----------|\r\n| **克劳德桌面** （macOS）| `~/Library/Application Support/Claude/claude_desktop_config.json` |\r\n| **克劳德桌面** （Windows）| `%AppData%\\Claude\\claude_desktop_config.json` |\r\n| **克劳德桌面** （Linux）| `~/.config/claude/claude_desktop_config.json` |\r\n| **VS代码/光标** |MCP扩展设置|\r\n\r\n## ✅ 就是这样！\r\n\r\n重启你的AI客户端，你就完成了。您的AI现在可以：\r\n\r\n- **记住** 代码片段、错误消息和注释\r\n- **搜索** 通过它所拯救的一切\r\n- **视图** 您复制的图像和文件\r\n- **针** 要永远保存的重要物品\r\n\r\n## 🎪 你的AI现在能做什么\r\n\r\n|AI看到了什么|它能做什么|\r\n|--------------|----------------|\r\n| `clipboard_copy` |保存任何文本或内容|\r\n| `clipboard_copy_file` |保存图像、文档、文件|\r\n| `clipboard_paste` |获取最新复制的项目|\r\n| `clipboard_search` |在历史中查找任何内容|\r\n| `clipboard_list` |显示剪贴板历史记录|\r\n| `clipboard_pin` |保留重要物品|\r\n| `clipboard_look_at` |查看已保存的图像/文件|\r\n\r\n## 💬 示例用法\r\n\r\n```\r\nYou: \"Save this error for debugging later\"\r\nAI: I'll save that error message to the clipboard.\r\n\r\n[Later conversation]\r\nYou: \"What was that database error from earlier?\"\r\nAI: Let me search the clipboard... Found it! Here's the error:\r\n```\r\n\r\n## 🔒 隐私和安全\r\n\r\n- **100%本地**：一切都在你的机器上\r\n- **没有网络**：完全离线操作\r\n- **安全**：内置路径验证和速率限制\r\n- **专用模式**：敏感内容自动过期\r\n\r\n## 💡 常见用例\r\n\r\n### 💻 对于开发者\r\n\r\n- 保存错误消息，并要求AI稍后进行调试\r\n- 在对话中保留有用的代码片段\r\n- 固定常用命令和引用\r\n- 借助人工智能帮助构建可搜索的知识库\r\n\r\n### 📚 用于研究\r\n\r\n- 阅读时保存引文和参考文献\r\n- 要求AI综合多个剪辑中的信息\r\n- 跟踪重要来源和数据\r\n- 在不同研究线程之间建立联系\r\n\r\n### ✍️ 用于内容创建\r\n\r\n- 保存草稿版本并获取AI反馈\r\n- 比较你作品的不同版本\r\n- 保持灵感和想法的条理化\r\n- 让AI帮助您完善和改进内容\r\n\r\n## 🔧 设置\r\n\r\n- **存储**：所有内容都保存在Docker卷中 `mcp-clipboard-data` （持续）\r\n- **限制**：最多50个项目（固定项目不计算在内）\r\n- **文件大小**：每个文件高达100MB\r\n- **搜索**：对所有内容进行全文搜索\r\n- **持久性**：数据在容器重启后仍然存在\r\n\r\n## 🚨 需要帮助？\r\n\r\n### 快速修复\r\n\r\n**Docker不工作？**\r\n\r\n- 确保Docker已安装并正在运行\r\n- 请尝试直接安装选项\r\n\r\n**AI看不到剪贴板工具？**\r\n\r\n- 添加配置后重新启动AI客户端\r\n- 检查配置文件是否为有效的JSON\r\n\r\n**权限错误？**\r\n\r\n- 确保配置文件位置可写\r\n- 使用绝对路径（如 `/Users/username`)而不是 `~` 或 `${HOME}`\r\n- 确保装载的目录存在并且可读\r\n\r\n### 还有问题吗？\r\n\r\n1. **检查日志** 在您的AI客户端中显示错误消息\r\n1. **手动测试**: `docker run ghcr.io/erik-balfe/mcp-clipboard:latest`\r\n1. **提交错误报告** 在…上 [GitHub问题](https://github.com/erik-balfe/mcp-clipboard/issues)\r\n\r\n______________________________________________________________________\r\n\r\n## 🎉 就是这样！\r\n\r\n你的AI代理现在有了持久内存。它可以记住对话，随着时间的推移积累知识，并帮助你更有效地前进。\r\n\r\n**问题？** [打开一个问题](https://github.com/erik-balfe/mcp-clipboard/issues) 我们会帮你设置。\r\n\r\n______________________________________________________________________\r\n\r\n<details>\r\n<summary>🔧 Technical Details (for developers)</summary>\r\n\r\n### 建筑\r\n\r\n- **运行时**：带SQLite数据库的Bun\r\n- **协议**：模型上下文协议（MCP）\r\n- **安全**：路径验证、速率限制、输入净化\r\n\r\n### 演出\r\n\r\n- 50个项目限制，自动清理\r\n- 每个项目的最大文件大小为100MB\r\n- 使用FTS5进行全文搜索\r\n- WAL模式用于并发访问\r\n\r\n### 发展\r\n\r\n```bash\r\ngit clone https://github.com/erik-balfe/mcp-clipboard.git\r\ncd mcp-clipboard\r\nbun install\r\nbun run dev\r\n```\r\n\r\n### 贡献\r\n\r\n看 `CONTRIBUTING.md` 用于开发设置和指南。\r\n\r\n</details>\r\n\r\n## 📜 许可证\r\n\r\nMIT许可证-可自由使用！\r\n",
+ "config": {
+  "clipboard": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "-v",
+    "mcp-clipboard-data:/app/data",
+    "-e",
+    "DOCKER_CONTAINER=true",
+    "ghcr.io/erik-balfe/mcp-clipboard:latest"
+   ],
+   "env": {}
+  }
+ }
+}

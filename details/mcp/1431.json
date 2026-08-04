@@ -1,0 +1,21 @@
+{
+ "id": "1431",
+ "kind": "mcp",
+ "name": "excel-to-pdf-mcp",
+ "fingerprint_md5": "3fb8dac5e7339a5ab19cc12073f781f9",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "[](https://mseep.ai/app/kmexnx-excel-to-pdf-mcp)\r\n\r\n# Excel转PDF MCP服务器\r\n\r\n[](https://smithery.ai/server/@kmexnx/excel-to-pdf-mcp)\r\n\r\n一种MCP（模型上下文协议）服务器，可以将Excel（.xls/.xlsx）和Apple Numbers（.Numbers）文件转换为PDF格式。该工具与Claude等人工智能助手集成，可以直接通过对话进行文件转换。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/@kmexnx/excel-to-pdf-mcp\">\r\n  \r\n</a>\r\n\r\n## 特性\r\n\r\n- 将Excel文件（.xls、.xlsx）转换为PDF\r\n- 将Apple Numbers文件（.Numbers）转换为PDF\r\n- 通过模型上下文协议与AI助手集成\r\n- 尊重项目边界的安全文件处理\r\n- 通过npm轻松安装\r\n\r\n## 需求\r\n\r\n- Node.js 16或更高版本\r\n- LibreOffice（用于转换过程）\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装Excel到PDF Converter for Claude Desktop [史密瑟里](https://smithery.ai/server/@kmexnx/excel-to-pdf-mcp):\r\n\r\n```bash\r\nnpx -y @smithery/cli install @kmexnx/excel-to-pdf-mcp --client claude\r\n```\r\n\r\n### 安装LibreOffice\r\n\r\n转换过程需要LibreOffice。根据您的操作系统进行安装：\r\n\r\n#### 在macOS上：\r\n\r\n```bash\r\nbrew install libreoffice\r\n```\r\n\r\n#### 在Ubuntu/Debian上：\r\n\r\n```bash\r\napt-get install libreoffice\r\n```\r\n\r\n#### 在Windows上：\r\n\r\n从下载并安装 [LibreOffice官方网站](https://www.libreoffice.org/download/download/).\r\n\r\n### 安装MCP服务器\r\n\r\n```bash\r\nnpm install -g excel-to-pdf-mcp\r\n```\r\n\r\n## 与Claude Desktop一起使用\r\n\r\n要在Claude桌面上使用此MCP服务器，请执行以下操作：\r\n\r\n1. 通过将此服务器添加到您的 `mcp_settings.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"excel-to-pdf-mcp\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"excel-to-pdf-mcp\"],\r\n      \"name\": \"Excel to PDF Converter\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n2. 确保Excel或Numbers文件位于项目目录中。\r\n\r\n1. 配置后，Claude将能够使用此工具将电子表格文件转换为PDF。\r\n\r\n## 对话示例\r\n\r\n以下是一个使用此MCP服务器时与Claude对话的示例：\r\n\r\n**用户**：“我需要将我的quarterly_report.xlsx转换为PDF，以便与利益相关者共享。”\r\n\r\n**克劳德**：“我可以帮助您将Excel文件转换为PDF。让我使用Excel到PDF转换工具。”\r\n\r\n然后，克劳德会在幕后使用这个工具：\r\n\r\n```\r\nTool: convert_excel_to_pdf\r\nArguments: {\r\n  \"input_path\": \"quarterly_report.xlsx\",\r\n  \"output_format\": \"pdf\"\r\n}\r\n```\r\n\r\n**克劳德**：“我已将您的Excel文件转换为PDF。您可以在项目目录中的：quarterly_report-1628347658-a7b2c9.PDF找到它。”\r\n\r\n## 可用工具\r\n\r\n此MCP服务器提供以下工具：\r\n\r\n### 1.convert_excel_to_pdf\r\n\r\n将Excel文件（.xls/.xlsx）转换为PDF格式。\r\n\r\n**论据：**\r\n\r\n- `input_path`：Excel文件的相对路径（必需）\r\n- `output_format`：输出格式，目前仅支持PDF（默认：“PDF”）\r\n\r\n### 2.convert_numbers_to_pdf\r\n\r\n将Apple Numbers文件（.Numbers）转换为PDF格式。\r\n\r\n**论据：**\r\n\r\n- `input_path`：Numbers文件的相对路径（必需）\r\n- `output_format`：输出格式，目前仅支持PDF（默认：“PDF”）\r\n\r\n## 发展\r\n\r\n如果你想从源代码运行或贡献：\r\n\r\n1. 克隆存储库\r\n1. 安装依赖项： `npm install`\r\n1. 构建项目： `npm run build`\r\n1. 运行服务器： `npm start`\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "excel-to-pdf-mcp": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "excel-to-pdf-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

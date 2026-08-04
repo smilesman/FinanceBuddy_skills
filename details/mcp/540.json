@@ -1,0 +1,27 @@
+{
+ "id": "540",
+ "kind": "mcp",
+ "name": "wordle-mcp-go",
+ "fingerprint_md5": "c0c6d2470ad511ded5597ad574e70829",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Wordle MCP-Go\r\n\r\n[](https://codespaces.new/cr2007/mcp-wordle-go)\r\n[](https://deepwiki.com/cr2007/mcp-wordle-go)\r\n\r\n> \\[！注意\\]\r\n> 要查看此MCP服务器的Python版本， [点击此处](https://github.com/cr2007/mcp-wordle-python)\r\n\r\nGo中实现的MCP服务器，用于通过Wordle API获取Wordle解决方案。\r\n\r\n> \\[！重要\\]\r\n> Wordle解决方案仅在2021年5月19日至未来23天内可用。\r\n\r\n> 调用其他日期的任何其他尝试都将从API返回错误\r\n\r\n\r\n# 索引\r\n\r\n- [开始使用](#get-started)\r\n  - [使用Docker（推荐）](#using-docker-recommended)\r\n  - [本地设置](#local-setup)\r\n    - [设置](#setup)\r\n- [Claude Desktop上的示例](#examples-on-claude-desktop)\r\n- [贡献](#contributing)\r\n\r\n______________________________________________________________________\r\n\r\n# 开始使用\r\n\r\n## 使用Docker（推荐）\r\n\r\n最快、最简单的入门方法。确保你有 [码头工人](https://www.docker.com) 安装。\r\n\r\n将此添加到MCP服务器配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Wordle-MCP-Go\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"--rm\",\r\n        \"-i\",\r\n        \"--init\",\r\n        \"-e\",\r\n        \"DOCKER_CONTAINER=true\",\r\n        \"ghcr.io/cr2007/mcp-wordle-go:latest\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n> \\[！重要\\]\r\n> 如果您第一次在Claude Desktop上遇到错误，请确保在运行之前拉取图像。\r\n\r\n> `docker pull ghcr.io/cr2007/mcp-wordle-go:latest`\r\n\r\n## 本地设置\r\n\r\n对于此设置，您需要确保您拥有 [Go编程语言](https://go.dev/) 安装在您的机器上。\r\n\r\n### 设置\r\n\r\n在将其添加到MCP服务器之前，您需要执行以下操作：\r\n\r\n```bash\r\n# Clone the Git repository\r\ngit clone https://github.com/cr2007/mcp-wordle-go\r\ncd mcp-wordle-go\r\n\r\n# Install the dependencies\r\ngo mod tidy\r\n\r\n# Build the executable\r\ngo build main.go\r\n```\r\n\r\n将此添加到MCP服务器配置中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"Wordle-MCP-Go\":{\r\n        \"command\": \"ABSOLUTE//PATH//TO//main.go\",\r\n      }\r\n  }\r\n}\r\n```\r\n\r\n# Claude Desktop上的示例\r\n\r\n\r\n    \r\n\r\n\r\n# 贡献\r\n\r\n欢迎投稿！你可以 [分叉](https://github.com/cr2007/mcp-wordle-go/fork) repo，在分支中创建更改，然后创建 [拉取请求](https://github.com/cr2007/mcp-wordle-go/compare)\r\n",
+ "config": {
+  "wordle-mcp-go": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "--rm",
+    "-i",
+    "--init",
+    "-e",
+    "DOCKER_CONTAINER=true",
+    "ghcr.io/cr2007/mcp-wordle-go:latest"
+   ],
+   "env": {}
+  }
+ }
+}

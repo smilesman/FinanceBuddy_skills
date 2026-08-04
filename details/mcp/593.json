@@ -1,0 +1,23 @@
+{
+ "id": "593",
+ "kind": "mcp",
+ "name": "brianknows",
+ "fingerprint_md5": "d394ce296e5d4ec113ee96f274c943c0",
+ "download_count": 0,
+ "category": "文档处理",
+ "tags": "",
+ "version": "",
+ "readme": "# BrianKnows MCP服务器\r\n\r\n\r\n一个模型上下文协议（MCP）服务器，将Claude连接到BrianKnows的区块链知识库。\r\n\r\n<a href=\"https://glama.ai/mcp/servers/idfph0fstx\">\r\n</a>\r\n\r\n## 什么是MCP？ 🤔\r\n\r\n模型上下文协议（MCP）允许像Claude Desktop这样的人工智能助手以安全的方式连接到外部工具和数据源，同时让用户保持控制。\r\n\r\n## 这个服务器做什么？ 🚀\r\n\r\nBrianKnows MCP服务器提供三个主要工具：\r\n\r\n1. **Ping工具**：检查BrianKnows API服务器是否响应\r\n1. **搜索工具**：查询BrianKnows的区块链和DeFi信息知识引擎\r\n1. **代理工具**：与BrianKnows代理讨论DeFi协议\r\n\r\n支持的知识库包括：\r\n\r\n- 公共知识框（默认）\r\n- circle_kb、lido_kb、Polygon_kb、taiko_kb\r\n- near_kb、clave_kb、starknet_kb、consensys_kb\r\n\r\n服务器保存了您最近5次搜索的缓存，以供快速参考。\r\n\r\n## 先决条件📋\r\n\r\n- [Node.js](https://nodejs.org/) （v18或更高版本）\r\n- [克劳德桌面](https://claude.ai/download)\r\n- A. [BrianKnows API密钥](https://docs.brianknows.org/)\r\n\r\n## 配置⚙️\r\n\r\n将此添加到您的Claude Desktop配置文件中（可通过开发人员设置访问）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"brianknows\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"mcp-brianknows\"],\r\n      \"env\": {\r\n        \"BRIAN_API_KEY\": \"your-api-key-here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n替换 `your-api-key-here` 使用您的实际BrianKnows API密钥。\r\n\r\n## 示例用法🎯\r\n\r\n```\r\nCan you check if the BrianKnows API is online?\r\n\r\nUse BrianKnows to search for information about Ethereum's Layer 2 solutions.\r\n\r\nAsk the BrianKnows agent to explain how Uniswap V3 works.\r\n```\r\n\r\n## 特性✨\r\n\r\n- **多个知识库**：获取不同区块链协议的专业知识\r\n- **缓存搜索**：快速访问您最近的5次搜索\r\n- **错误处理**：用户友好的错误消息\r\n- **类型安全**：完整的TypeScript实现\r\n\r\n## 致谢🙏\r\n\r\n- [布赖恩知道](https://brianknows.org) 获取他们的区块链知识API\r\n- [模型上下文协议](https://modelcontextprotocol.io)\r\n- [Anthropic](https://anthropic.com) 克劳德桌面\r\n",
+ "config": {
+  "brianknows": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "mcp-brianknows"
+   ],
+   "env": {
+    "BRIAN_API_KEY": "your-api-key-here"
+   }
+  }
+ }
+}

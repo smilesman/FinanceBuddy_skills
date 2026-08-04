@@ -1,0 +1,18 @@
+{
+ "id": "3214",
+ "kind": "mcp",
+ "name": "sg-bus",
+ "fingerprint_md5": "48c36050159c73f3b8038ab3305d8302",
+ "download_count": 0,
+ "category": "路线规划",
+ "tags": "",
+ "version": "",
+ "readme": "# 新加坡巴士MCP服务器\r\n\r\n模型上下文协议（MCP）服务器，使用LTA DataMall API提供实时新加坡公交车信息。\r\n\r\n## 特性\r\n\r\n此MCP服务器公开了4个工具：\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `get_bus_arrivals` |获取特定公交车站的实时公交车到达时间|\r\n| `get_bus_routes` |获取特定公交服务的完整路线信息|\r\n| `search_bus_stops` |按名称、道路名称或地标搜索公交车站|\r\n| `get_bus_stop_info` |获取特定公交车站的详细信息|\r\n\r\n## 部署到Vercel\r\n\r\n### 选项1：通过GitHub部署（推荐）\r\n\r\n1. **推送到GitHub：**\r\n\r\n   ```bash\r\n   git init\r\n   git add .\r\n   git commit -m \"Initial commit\"\r\n   git remote add origin https://github.com/YOUR_USERNAME/sg-bus-mcp-server.git\r\n   git push -u origin main\r\n   ```\r\n\r\n1. **连接到Vercel：**\r\n\r\n   - 首选 [vercel.com](https://vercel.com)\r\n   - 点击“添加新项目”\r\n   - 导入您的GitHub存储库\r\n   - 添加环境变量：\r\n     - 姓名： `LTA_DATAMALL_KEY`\r\n     - 价值：您的LTA DataMall API密钥\r\n   - 点击“部署”\r\n\r\n### 选项2：通过Vercel CLI进行部署\r\n\r\n1. **安装Vercel CLI：**\r\n\r\n   ```bash\r\n   npm i -g vercel\r\n   ```\r\n\r\n1. **部署：**\r\n\r\n   ```bash\r\n   vercel\r\n   ```\r\n\r\n1. **添加环境变量：**\r\n\r\n   ```bash\r\n   vercel env add LTA_DATAMALL_KEY\r\n   ```\r\n\r\n## 本地开发\r\n\r\n1. **安装依赖项：**\r\n\r\n   ```bash\r\n   npm install\r\n   ```\r\n\r\n1. **设置环境变量：**\r\n\r\n   ```bash\r\n   cp .env.example .env.local\r\n   # Edit .env.local with your API key\r\n   ```\r\n\r\n1. **运行开发服务器：**\r\n\r\n   ```bash\r\n   npm run dev\r\n   ```\r\n\r\n1. **MCP检验员测试：**\r\n\r\n   ```bash\r\n   npx @modelcontextprotocol/inspector@latest http://localhost:3000\r\n   ```\r\n\r\n## 连接到您的MCP服务器\r\n\r\n部署后，将此添加到您的MCP客户端配置中（例如，Claude Desktop、Cursor）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"sg-bus\": {\r\n      \"url\": \"https://your-deployment-url.vercel.app/api/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 示例用法\r\n\r\n连接后，您可以向AI助手提出以下问题：\r\n\r\n- “83139公交车站有哪些公交车？”\r\n- “搜索乌节附近的公交车站”\r\n- “15路公交车的路线是什么？”\r\n- “告诉我01012公交车站的情况”\r\n\r\n## 数据源\r\n\r\n总线数据由 [LTA 数据 中心 API](https://datamall.lta.gov.sg/).\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "sg-bus": {
+   "enabled": true,
+   "type": "sse",
+   "url": "https://your-deployment-url.vercel.app/api/mcp"
+  }
+ }
+}

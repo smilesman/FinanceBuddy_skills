@@ -1,0 +1,21 @@
+{
+ "id": "1670",
+ "kind": "mcp",
+ "name": "pinescript-syntax-checker",
+ "fingerprint_md5": "e045faf935dbd8d7af8f5d62dec794ac",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "# PineScript语法检查器MCP服务器\r\n\r\n模型上下文协议（MCP）服务器，用于使用TradingView的API检查PineScript语法。\r\n\r\n## 特性\r\n\r\n- 使用TradingView的官方API检查PineScript语法\r\n- 带httpx的MCP兼容服务器，用于异步HTTP请求\r\n- 包含行和列信息的详细错误报告\r\n\r\n## 快速开始\r\n\r\n### 选项1：使用uvx（推荐）\r\n\r\n```bash\r\n# Run directly (will install automatically if needed)\r\nuvx pinescript-syntax-checker\r\n```\r\n\r\n### 选项2：使用紫外线（显影）\r\n\r\n```bash\r\n# Clone and run\r\ngit clone https://github.com/erevus-cn/pinescript-syntax-checker.git\r\ncd pinescript-syntax-checker\r\nuv sync\r\nuv run python -m pinescript_syntax_checker.server\r\n```\r\n\r\n### 选项3：使用pip\r\n\r\n```bash\r\n# Install from PyPI\r\npip install pinescript-syntax-checker\r\n\r\n# Run directly\r\npinescript-syntax-checker\r\n\r\n# Or as module\r\npython -m pinescript_syntax_checker.server\r\n```\r\n\r\n## MCP集成\r\n\r\n### 在游标中配置\r\n\r\n要在Cursor中使用此MCP服务器：\r\n\r\n1. **打开光标设置**:\r\n\r\n   - 按 `Cmd+,` （macOS）或 `Ctrl+,` （Windows/Linux）\r\n   - 转到“扩展”→ \"MCP\"\r\n\r\n1. **添加服务器配置**:\r\n\r\n   **方法1-使用uvx（推荐）：**\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"pinescript-syntax-checker\": {\r\n         \"command\": \"uvx\",\r\n         \"args\": [\"pinescript-syntax-checker\"]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n   **方法2-使用已安装的软件包：**\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"pinescript-syntax-checker\": {\r\n         \"command\": \"python\",\r\n         \"args\": [\"-m\", \"pinescript_syntax_checker.server\"]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n1. **重新启动游标** 加载MCP服务器\r\n\r\n### 验证安装\r\n\r\n要验证MCP服务器是否正常工作：\r\n\r\n1. **在光标中：** 配置后，尝试询问：\r\n   ```\r\n   Can you check this PineScript code for syntax errors?\r\n\r\n   //@version=5\r\n   indicator(\"Test\", overlay=true)\r\n   plot(close)\r\n   ```\r\n\r\n## API\r\n\r\n### check_语法\r\n\r\n使用TradingView的API检查PineScript语法。\r\n\r\n**参数：**\r\n\r\n- `pine_code` （str）：要检查的PineScript代码\r\n\r\n## 示例\r\n\r\n**输入：**\r\n\r\n```pinescript\r\n//@version=5\r\nstrategy(\"Test\")\r\nplot(close)\r\n```\r\n\r\n**输出：**\r\n\r\n```json\r\n{\r\n  \"success\": true,\r\n  \"result\": {\r\n    \"variables\": [],\r\n    \"functions\": [],\r\n    \"types\": [],\r\n    \"enums\": [],\r\n    \"scopes\": []\r\n  }\r\n}\r\n```\r\n\r\n## 许可证\r\n\r\nMIT许可证\r\n",
+ "config": {
+  "pinescript-syntax-checker": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "pinescript-syntax-checker"
+   ],
+   "env": {}
+  }
+ }
+}

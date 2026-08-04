@@ -1,0 +1,12 @@
+{
+ "id": "gitlab-ci-skills",
+ "kind": "skill",
+ "name": "gitlab-ci-skills",
+ "fingerprint_md5": "8479a7777cfcc3d8db0151e4f91ee203",
+ "download_count": 0,
+ "category": "CD",
+ "tags": "",
+ "version": "",
+ "readme": "# GitLab CLI Skills\r\n\r\n该技能路由到特定的 `glab-*` 子技能以使用 GitLab CLI。\r\n\r\n## 可用技能\r\n\r\n- `glab-auth`\r\n- `glab-alias`\r\n- `glab-api`\r\n- `glab-attestation`\r\n- `glab-changelog`\r\n- `glab-check-update`\r\n- `glab-ci`\r\n- `glab-cluster`\r\n- `glab-completion`\r\n- `glab-config`\r\n- `glab-deploy-key`\r\n- `glab-duo`\r\n- `glab-gpg-key`\r\n- `glab-help`\r\n- `glab-incident`\r\n- `glab-issue`\r\n- `glab-iteration`\r\n- `glab-job`\r\n- `glab-label`\r\n- `glab-mcp`\r\n- `glab-milestone`\r\n- `glab-mr`\r\n- `glab-opentofu`\r\n- `glab-release`\r\n- `glab-repo`\r\n- `glab-schedule`\r\n- `glab-securefile`\r\n- `glab-snippet`\r\n- `glab-ssh-key`\r\n- `glab-stack`\r\n- `glab-token`\r\n- `glab-user`\r\n- `glab-variable`\r\n- `glab-version`",
+ "config": {}
+}

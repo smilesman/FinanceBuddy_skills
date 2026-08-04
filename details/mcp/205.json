@@ -1,0 +1,24 @@
+{
+ "id": "205",
+ "kind": "mcp",
+ "name": "figma",
+ "fingerprint_md5": "da37e6dfc6abb758f89ead7a04845027",
+ "download_count": 0,
+ "category": "浏览器自动化",
+ "tags": "",
+ "version": "",
+ "readme": "# Claude Code MCP 配置指南\r\n\r\n本仓库提供 Claude Code 的 MCP (Model Context Protocol) 服务器配置参考和最佳实践。\r\n\r\n## 📋 目录\r\n\r\n- [包含的 MCP 工具](#包含的-mcp-工具)\r\n- [快速安装](#快速安装)\r\n- [详细配置](#详细配置)\r\n- [使用示例](#使用示例)\r\n\r\n## 🔧 包含的 MCP 工具\r\n\r\n| 工具 | 功能 | 类型 | 说明 |\r\n|------|------|------|------|\r\n| **chrome-devtools** | 浏览器自动化 | stdio | Chrome DevTools 集成 |\r\n| **figma** | 设计工具集成 | stdio | Figma 文件读取和导出 |\r\n| **context7** | 文档查询 | http | 获取编程库文档和示例 |\r\n| **github** | 代码仓库管理 | http | GitHub 操作和协作 |\r\n\r\n## 🚀 快速安装\r\n\r\n### 步骤 1：克隆仓库\r\n\r\n```bash\r\ngit clone https://github.com/13429326514-debug/claude-mcp-public.git\r\ncd claude-mcp-public\r\n```\r\n\r\n### 步骤 2：编辑配置文件\r\n\r\n编辑 `mcp-config.json`，替换以下占位符：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"figma\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"figma-developer-mcp\", \"--figma-api-key=YOUR_FIGMA_API_KEY\", \"--stdio\"],\r\n      \"env\": {}\r\n    },\r\n    \"github\": {\r\n      \"type\": \"http\",\r\n      \"url\": \"https://api.githubcopilot.com/mcp/\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer YOUR_GITHUB_TOKEN\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**获取 API Keys：**\r\n\r\n- **Figma API Key**: https://www.figma.com/developers/api#authentication\r\n- **GitHub Token**: https://github.com/settings/tokens (需要 `repo` 权限)\r\n\r\n### 步骤 3：合并配置\r\n\r\n找到你的 Claude Code 配置文件：\r\n\r\n- **Windows**: `C:\\Users\\你的用户名\\.claude.json`\r\n- **macOS/Linux**: `~/.claude.json`\r\n\r\n将 `mcp-config.json` 的内容合并到 `mcpServers` 部分。\r\n\r\n### 步骤 4：验证安装\r\n\r\n```bash\r\nclaude mcp list\r\n```\r\n\r\n期望输出：\r\n\r\n```\r\nchrome-devtools: npx chrome-devtools-mcp@latest - ✓ Connected\r\nfigma: npx -y figma-developer-mcp ... --stdio - ✓ Connected\r\ncontext7: https://mcp.context7.com/mcp (HTTP) - ✓ Connected\r\ngithub: https://api.githubcopilot.com/mcp/ (HTTP) - ✓ Connected\r\n```\r\n\r\n## 📖 详细配置\r\n\r\n### Chrome DevTools\r\n\r\n**功能：** 浏览器自动化、网页截图、UI 测试\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chrome-devtools\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\"chrome-devtools-mcp@latest\"],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Figma\r\n\r\n**功能：** 设计文件集成、组件导出、设计资源获取\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"figma\": {\r\n      \"type\": \"stdio\",\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"figma-developer-mcp\",\r\n        \"--figma-api-key=figd_你的API密钥\",\r\n        \"--stdio\"\r\n      ],\r\n      \"env\": {}\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### Context7\r\n\r\n**功能：** 获取编程库的实时文档和代码示例\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"context7\": {\r\n      \"type\": \"http\",\r\n      \"url\": \"https://mcp.context7.com/mcp\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### GitHub\r\n\r\n**功能：** 仓库管理、Issue、PR、代码审查\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"github\": {\r\n      \"type\": \"http\",\r\n      \"url\": \"https://api.githubcopilot.com/mcp/\",\r\n      \"headers\": {\r\n        \"Authorization\": \"Bearer ghp_你的Token\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 💡 使用示例\r\n\r\n### 示例 1：查询 React 文档\r\n\r\n```\r\n使用 context7 查询 React useEffect 的最新文档和示例\r\n```\r\n\r\n### 示例 2：获取 Figma 设计\r\n\r\n```\r\n使用 figma 读取我的设计文件并导出组件\r\n```\r\n\r\n### 示例 3：浏览器自动化\r\n\r\n```\r\n使用 chrome-devtools 打开网页并截图\r\n```\r\n\r\n### 示例 4：创建 GitHub Issue\r\n\r\n```\r\n使用 github 在我的仓库中创建一个新 Issue\r\n```\r\n\r\n## 🛠️ 完整配置示例\r\n\r\n参见 `mcp-config.json` 文件获取完整配置模板。\r\n\r\n## 📚 参考资源\r\n\r\n- [MCP 官方文档](https://modelcontextprotocol.io)\r\n- [Claude Code 文档](https://code.anthropic.com)\r\n- [Figma API 文档](https://www.figma.com/developers/api)\r\n\r\n## ❓ 常见问题\r\n\r\n### Q: MCP 显示未连接？\r\n\r\n**A:** 检查以下几点：\r\n1. `.claude.json` 文件格式是否正确\r\n2. API Key 和 Token 是否正确配置\r\n3. 网络连接是否正常\r\n4. 尝试重启 Claude Code\r\n\r\n### Q: 如何添加更多 MCP 工具？\r\n\r\n**A:** 访问 [MCP Servers](https://modelcontextprotocol.io/servers) 查找更多工具。\r\n\r\n### Q: 配置文件在哪里？\r\n\r\n**A:**\r\n- Windows: `C:\\Users\\你的用户名\\.claude.json`\r\n- macOS/Linux: `~/.claude.json`\r\n\r\n## 📝 许可证\r\n\r\nMIT License - 可自由使用和修改\r\n\r\n## 🤝 贡献\r\n\r\n欢迎提交 Issue 和 Pull Request！\r\n\r\n---\r\n\r\n**最后更新：** 2025-01-16\r\n",
+ "config": {
+  "figma": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "figma-developer-mcp",
+    "--figma-api-key=YOUR_FIGMA_API_KEY",
+    "--stdio"
+   ],
+   "env": {}
+  }
+ }
+}

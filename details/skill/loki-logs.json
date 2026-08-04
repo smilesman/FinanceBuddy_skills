@@ -1,0 +1,12 @@
+{
+ "id": "loki-logs",
+ "kind": "skill",
+ "name": "loki-logs",
+ "fingerprint_md5": "e0f58127706807802ed4daa5b43f0bdf",
+ "download_count": 0,
+ "category": "日志分析",
+ "tags": "",
+ "version": "",
+ "readme": "## 功能说明\r\n\r\n使用 LogQL 查询 Loki 日志，支持日志过滤、聚合分析、模式提取，与 Grafana 集成可视化。",
+ "config": {}
+}

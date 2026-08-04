@@ -1,0 +1,27 @@
+{
+ "id": "2579",
+ "kind": "mcp",
+ "name": "job-search-mcp",
+ "fingerprint_md5": "f34e3d26986e85e878c7955a74825663",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 职位搜索MCP服务器\r\n\r\n一个MCP（模型上下文协议）服务器，允许Claude在Greenhouse、Lever和Adzuna中搜索AI/ML工作，以及简历定制和推荐外展。\r\n\r\n______________________________________________________________________\r\n\r\n## 1.克隆存储库\r\n\r\n```bash\r\ngit clone https://github.com/YOUR_USERNAME/apply_jobs.git\r\ncd apply_jobs\r\n```\r\n\r\n替换 `YOUR_USERNAME` 使用实际的GitHub用户名或组织。\r\n\r\n______________________________________________________________________\r\n\r\n## 2.安装依赖项\r\n\r\n此项目使用 `uv` 作为包管理器。\r\n\r\n```bash\r\n# Install uv if you don't have it\r\npip install uv\r\n\r\n# Install project dependencies\r\nuv sync\r\n```\r\n\r\n______________________________________________________________________\r\n\r\n## 3.获取Adzuna API证书（可选但推荐）\r\n\r\nAdzuna为更广泛的求职提供了动力（事实上，Monster等）。免费注册：\r\n\r\n1. 首选 [https://developer.adzuna.com/](https://developer.adzuna.com/)\r\n1. 注册并创建应用程序\r\n1. 复制您的 **应用ID** 和 **API密钥**\r\n\r\n______________________________________________________________________\r\n\r\n## 4.连接到克劳德桌面\r\n\r\n将此MCP服务器添加到您的Claude Desktop配置中。\r\n\r\n**配置文件位置：**\r\n\r\n- **窗户：** `%APPDATA%\\Claude\\claude_desktop_config.json`\r\n- **macOS：** `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n\r\n**添加此块** （与现有 `mcpServers` 如果您已经有其他服务器）：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"job-search-mcp\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"python\", \"-m\", \"mcp_server.server\"],\r\n      \"cwd\": \"C:\\\\path\\\\to\\\\apply_jobs\",\r\n      \"env\": {\r\n        \"ADZUNA_APP_ID\": \"your_app_id_here\",\r\n        \"ADZUNA_API_KEY\": \"your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**重要提示：** 替换 `C:\\\\path\\\\to\\\\apply_jobs` 使用克隆仓库的实际路径（例如。 `C:\\\\Users\\\\YourName\\\\apply_jobs`).在Windows上使用双反斜杠。\r\n\r\n保存配置后重新启动Claude Desktop。\r\n\r\n______________________________________________________________________\r\n\r\n## 5.在Claude中使用它\r\n\r\n连接后，您可以问Claude以下问题：\r\n\r\n**求职**\r\n\r\n- “在Anthropic和Scale搜索人工智能工程师职位”\r\n- “在旧金山找机器学习工作”\r\n- “显示远程数据科学家职位”\r\n- “获取此URL的完整职位描述：\\[粘贴链接\\]”\r\n\r\n**简历定制**\r\n\r\n- “分析这份招聘信息，告诉我如何定制我的简历：\\[URL\\]”\r\n- “对于这个人工智能工程师的角色，我应该强调哪些技能？”\r\n\r\n**转介**\r\n\r\n- “帮我在Anthropic找到人工智能工程师职位的推荐人”\r\n- “为OpenAI的某人生成外展信息”\r\n\r\n______________________________________________________________________\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `search_greenhouse_jobs` |搜索温室板（人物、规模、困惑等）|\r\n| `search_lever_jobs` |搜索杠杆板（Cohere、Together、Runway等）|\r\n| `search_adzuna_jobs` |搜索确实，怪物，和更多（需要API密钥）|\r\n| `get_job_details` |从任何URL获取完整的职位描述|\r\n| `tailor_resume_for_job` |获取工作简历定制建议|\r\n| `find_referrals` |生成推荐外联信息和策略|\r\n\r\n______________________________________________________________________\r\n\r\n## 故障排除\r\n\r\n|问题|修复|\r\n|-------|-----|\r\n|“未配置Adzuna API凭据”|添加 `ADZUNA_APP_ID` 和 `ADZUNA_API_KEY` 转到配置，然后重新启动Claude|\r\n|服务器未在Claude中显示|检查 `cwd` 路径正确，指向您的克隆。完全重新启动Claude（退出并重新打开）|\r\n|没有结果|尝试更广泛的关键字（例如“工程师”而不是“高级工程师”）|\r\n\r\n______________________________________________________________________\r\n\r\n## 许可证\r\n\r\n专有-仅供个人使用\r\n",
+ "config": {
+  "job-search-mcp": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "python",
+    "-m",
+    "mcp_server.server"
+   ],
+   "env": {
+    "ADZUNA_APP_ID": "your_app_id_here",
+    "ADZUNA_API_KEY": "your_api_key_here"
+   }
+  }
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "id": "705",
+ "kind": "mcp",
+ "name": "journalowl",
+ "fingerprint_md5": "229a2d7b48b8e944b2103a13ca1133a1",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# @mindfulabai/记者mcp\r\n\r\nMCP（模型上下文协议）服务器 [日志wl](https://journalowl.com) -Claude Code、Cursor和ChatGPT代理的人工智能日志集成。\r\n\r\n## 特性\r\n\r\n- **创建日记条目** 直接从您的AI助手\r\n- **搜索和浏览** 你的日记条目\r\n- **访问每周评论** 具有情感趋势和洞察力\r\n- **获取个性化建议** 根据你的写作风格\r\n- **安全的API密钥身份验证** 具有范围权限\r\n\r\n## 安装\r\n\r\n```bash\r\nnpx @mindfulabai/journalowl-mcp\r\n```\r\n\r\n或全局安装：\r\n\r\n```bash\r\nnpm install -g @mindfulabai/journalowl-mcp\r\n```\r\n\r\n## 配置\r\n\r\n### 1.获取API密钥\r\n\r\n1. 登录到 [日志wl](https://journalowl.com)\r\n1. 首选 **设置>API密钥**\r\n1. 使用所需的作用域创建一个新的API键：\r\n   - `journal:read` -阅读你的日记条目\r\n   - `journal:write` -创建新条目\r\n   - `review:read` -访问每周评论\r\n   - `profile:read` -访问您的个人资料和写作风格\r\n\r\n### 2.配置克劳德代码\r\n\r\n添加到您的 `~/.claude.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"journalowl\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"@mindfulabai/journalowl-mcp\"],\r\n      \"env\": {\r\n        \"JOURNALOWL_API_KEY\": \"jowl_sk_your_api_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.配置光标\r\n\r\n添加到光标MCP设置中：\r\n\r\n```json\r\n{\r\n  \"journalowl\": {\r\n    \"command\": \"npx\",\r\n    \"args\": [\"@mindfulabai/journalowl-mcp\"],\r\n    \"env\": {\r\n      \"JOURNALOWL_API_KEY\": \"jowl_sk_your_api_key_here\"\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 可用工具\r\n\r\n|工具|说明|\r\n|------|-------------|\r\n| `journal_create_entry` |创建新日记条目|\r\n| `journal_list_entries` |列出带有过滤器的条目|\r\n| `journal_get_entry` |获取条目详细信息和分析|\r\n| `journal_search` |按文本搜索条目|\r\n| `journal_get_weekly_review` |获得每周回顾和见解|\r\n| `journal_get_writing_style` |获取写作风格偏好|\r\n\r\n## 可用资源\r\n\r\n|URI|描述|\r\n|-----|-------------|\r\n| `journalowl://user/profile` |用户配置文件和日志统计信息|\r\n| `journalowl://user/recent-entries` |最近的条目元数据|\r\n\r\n## 示例用法\r\n\r\n配置后，您可以在AI对话中直接使用JournalOwl：\r\n\r\n```\r\n\"Create a journal entry about my productive day at work\"\r\n\r\n\"Show me my journal entries from last week\"\r\n\r\n\"What insights does my weekly review show?\"\r\n\r\n\"Search my journal for entries about anxiety\"\r\n```\r\n\r\n## 发展\r\n\r\n```bash\r\n# Clone the repository\r\ngit clone https://github.com/mindfulabai/journalowl-mcp.git\r\ncd journalowl-mcp\r\n\r\n# Install dependencies\r\nnpm install\r\n\r\n# Build\r\nnpm run build\r\n\r\n# Run in development mode\r\nnpm run dev\r\n\r\n# Test with MCP Inspector\r\nnpm run inspector\r\n```\r\n\r\n## 安全\r\n\r\n- API密钥通过HTTPS安全传输\r\n- 密钥在我们的数据库中被散列（我们从不存储明文密钥）\r\n- 您可以随时从JournalOwl设置中撤销密钥\r\n- 作用域限制了每个键可以访问的内容\r\n\r\n## 支持\r\n\r\n- [文档](https://docs.journalowl.com/mcp)\r\n- [GitHub问题](https://github.com/mindfulabai/journalowl-mcp/issues)\r\n- [JournalOwl支持](https://journalowl.com/support)\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "journalowl": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "@mindfulabai/journalowl-mcp"
+   ],
+   "env": {
+    "JOURNALOWL_API_KEY": "jowl_sk_your_api_key_here"
+   }
+  }
+ }
+}

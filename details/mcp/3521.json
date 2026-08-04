@@ -1,0 +1,23 @@
+{
+ "id": "3521",
+ "kind": "mcp",
+ "name": "mcp-server-bing-search",
+ "fingerprint_md5": "a0d4f353582b0749b576a14576b322f7",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# Bing搜索MCP服务器\r\n\r\n搜索网页并阅读链接\r\n\r\n这是一个 [模型上下文协议](https://github.com/modelcontextprotocol) （MCP）服务器项目。\r\n\r\n## 工具\r\n\r\n### `search(query: str) -> str`\r\n\r\n- 使用提供的查询调用必应搜索API。\r\n- 处理搜索结果中的每个URL：\r\n  - 获取页面的内容\r\n  - 使用Markitdown将其转换为Markdown\r\n  - 分别解析链接。缓存与每个链接关联的唯一哈希值。\r\n  - （可选，默认情况下打开）使用采样选择要返回的最重要链接。\r\n  - （可选，默认打开）将Markdown内容过滤到最重要的部分。\r\n- 以LLM友好字符串的形式返回处理后的内容和链接。\r\n\r\n### `click(hashes: list[str]) -> str`\r\n\r\n- 获取哈希值列表（源自 `search` 工具）。\r\n- 对于每个哈希值，从本地缓存中获取相应的URL。\r\n- 然后执行与以下相同的处理 `search` 对于每个URL，返回一个类似的LLM友好字符串。\r\n\r\n## 设置和安装\r\n\r\n只需运行：\r\n\r\n```bash\r\nmake\r\n```\r\n\r\n创建虚拟环境并安装依赖项。\r\n\r\n### 设置环境变量\r\n\r\n创建一个 `.env` 文件基于 `.env.sample` 并用以下内容填充：\r\n\r\n- `BING_SEARCH_API_KEY`\r\n- `ASSISTANT__AZURE_OPENAI_ENDPOINT` -如果您想对web内容进行后期处理，这是必要的。\r\n\r\n### 运行服务器\r\n\r\n使用VSCode启动配置，或手动运行：\r\n\r\n默认为stdio传输：\r\n\r\n```bash\r\nuv run mcp-server-bing-search\r\n```\r\n\r\n对于SSE运输：\r\n\r\n```bash\r\nuv run mcp-server-bing-search --transport sse --port 6030\r\n```\r\n\r\nSSE URL为：\r\n\r\n```bash\r\nhttp://127.0.0.1:6030/sse\r\n```\r\n\r\n## 客户端配置\r\n\r\n要在设置中使用此MCP服务器，请考虑以下配置：\r\n\r\n### 标准输入输出\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-server-bing-search\": {\r\n      \"command\": \"uv\",\r\n      \"args\": [\"run\", \"-m\", \"mcp_server_bing_search.start\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### SSE\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"mcp-server-bing-search\": {\r\n      \"command\": \"http://127.0.0.1:6030/sse\",\r\n      \"args\": []\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "mcp-server-bing-search": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "run",
+    "-m",
+    "mcp_server_bing_search.start"
+   ],
+   "env": {}
+  }
+ }
+}

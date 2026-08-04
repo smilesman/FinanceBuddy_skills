@@ -1,0 +1,25 @@
+{
+ "id": "476",
+ "kind": "mcp",
+ "name": "stockfish",
+ "fingerprint_md5": "ffba087dffa0c8ce0a397f8f1ad2f17d",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Stockfish MCP服务器\r\n\r\n\r\n用于模型上下文协议的Stockfish服务器。此软件包允许大型语言模型与Stockfish引擎下棋。\r\n\r\n## 安装\r\n\r\n此包是一个纯Python包装器，要求您提供自己的Stockfish二进制文件。\r\n\r\n1. **下载Stockfish：** 从以下位置获取适合您系统的版本 [Stockfish官方网站](https://stockfishchess.org/download/).\r\n\r\n1. **安装MCP服务器：** 我们建议使用 `uv` 安装该软件包。第一， [安装 `uv`](https://github.com/astral-sh/uv)。然后，运行以下命令进行安装 `stockfish-mcp` 作为一个全局可用的命令行工具，它位于自己的隔离环境中：\r\n\r\n   ```bash\r\n   uv tool install stockfish-mcp\r\n   ```\r\n\r\n## 用法\r\n\r\n有两种方法可以运行服务器：\r\n\r\n### 1.命令行\r\n\r\n您可以直接运行服务器，提供下载的Stockfish可执行文件的路径。\r\n\r\n```bash\r\nuv tool run stockfish-mcp --stockfish-path C:\\path\\to\\your\\stockfish.exe\r\n```\r\n\r\n### 2.MCP配置\r\n\r\n或者，您可以将其添加到MCP中 `settings.json` 文件。这对于与MCP VS Code扩展等客户端集成非常有用。\r\n\r\n```json\r\n{\r\n    \"mcpServers\": {\r\n        \"stockfish\": {\r\n            \"command\": \"uv\",\r\n            \"args\": [\"tool\", \"run\", \"stockfish-mcp\", \"--stockfish-path\", \"C:\\\\path\\\\to\\\\your\\\\stockfish.exe\"]\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n## 示例\r\n\r\n与Stockfish引擎对抗的游戏示例可以在 [`exampleGame.md`](./exampleGame.md).\r\n\r\n## 可用工具\r\n\r\n- `get_board_state()`：获取当前板状态。\r\n- `make_move(move_uci: str)`：采取行动（例如，“e2e4”）。\r\n- `is_game_over()`：检查游戏是否已结束。\r\n- `get_game_result()`：如果游戏结束，就得到结果。\r\n- `reset_game(skill_level: int = 10)`：开始一个新游戏。\r\n",
+ "config": {
+  "stockfish": {
+   "enabled": true,
+   "command": "uv",
+   "args": [
+    "tool",
+    "run",
+    "stockfish-mcp",
+    "--stockfish-path",
+    "C:\\path\\to\\your\\stockfish.exe"
+   ],
+   "env": {}
+  }
+ }
+}

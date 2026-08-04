@@ -1,0 +1,28 @@
+{
+ "id": "1000",
+ "kind": "mcp",
+ "name": "chroma",
+ "fingerprint_md5": "c97720e13f3b9bf88d86f7200ff239ae",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# Chroma MCP服务器\r\n\r\n\r\n模型上下文协议（MCP）服务器集成 [色度](https://www.trychroma.com/)，开源嵌入式数据库。\r\n\r\n## 概述\r\n\r\nChroma MCP Server为人工智能辅助开发创建了一个持久的、可搜索的“工作记忆”：\r\n\r\n- **自动上下文回忆：** AI助手可以从过去的会话中查询相关信息\r\n- **开发人员管理的持久性：** 通过MCP将关键决策和见解存储在ChromaDB中\r\n- **第二脑整合：** 与IDE工作流集成，创建统一的知识中心\r\n\r\n主要特点：\r\n\r\n- **自动代码库索引：** 跟踪和索引代码更改\r\n- **自动聊天记录：** 通过增强的上下文捕获记录AI交互（代码差异、工具序列）\r\n- **双向链接：** 将讨论与代码更改联系起来，以跟踪功能演变\r\n- **语义代码分块：** 保留逻辑代码结构，以便进行更有意义的上下文检索\r\n- **工作记忆工具：** 用于捕获和检索开发上下文的MCP命令\r\n- **验证系统：** 基于证据的代码更改和学习推广验证\r\n- **自动化测试驱动学习：** 从测试失败到经过验证的修复和学习推广的全自动工作流程。请参阅 [Pytest插件使用指南](docs/integration/pytest_plugin_usage.md) 将其整合到您的项目中。\r\n\r\n请参阅 [《第二大脑入门指南》](docs/getting_started_second_brain.md) 了解更多详情。\r\n\r\n## 快速开始\r\n\r\n### 安装\r\n\r\n```bash\r\n# Basic installation\r\npip install chroma-mcp-server\r\n\r\n# Full installation with all embedding models\r\npip install \"chroma-mcp-server[full]\"\r\n```\r\n\r\n### 跑步\r\n\r\n```bash\r\n# With in-memory storage (data lost on restart)\r\nchroma-mcp-server --client-type ephemeral\r\n\r\n# With persistent storage\r\nchroma-mcp-server --client-type persistent --data-dir ./my_data\r\n```\r\n\r\n### 光标集成\r\n\r\n添加或修改 `.cursor/mcp.json` 在项目根目录中：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"chroma\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\r\n        \"chroma-mcp-server\"\r\n      ],\r\n      \"env\": {\r\n        \"CHROMA_CLIENT_TYPE\": \"persistent\",\r\n        \"CHROMA_DATA_DIR\": \"/path/to/your/data\",\r\n        \"CHROMA_LOG_DIR\": \"/path/to/your/logs\",\r\n        \"LOG_LEVEL\": \"INFO\",\r\n        \"MCP_LOG_LEVEL\": \"INFO\",\r\n        \"MCP_SERVER_LOG_LEVEL\": \"INFO\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 最近的改进\r\n\r\n- **增强的上下文捕获：** 自动提取代码差异、工具序列并分配置信度分数\r\n- **双向链接：** 在聊天讨论和代码更改之间创建可导航的连接\r\n- **语义代码分块：** 使用逻辑边界（函数、类）而不是固定大小的块\r\n- **服务器端时间戳强制：** 确保所有集合的时间戳一致\r\n- **自动创建集合：** 基本收藏（例如。， `chat_history_v1`, `codebase_v1`)如果它们不存在，则会在服务器启动时自动创建。\r\n- **增强型日志记录系统：** 每次执行日志文件可防止在stdio模式下污染JSON通信\r\n- **嵌入功能管理：** 更改嵌入函数时更新集合元数据的工具\r\n- **收集设置命令：** 通过一致的配置简化多个集合的创建\r\n- **自动升级工作流程：** 简化衍生学习推广，自动处理高置信度条目\r\n- **智能默认值：** 基于上下文的所有字段的智能默认值的交互式推广\r\n- **低置信度警告：** 可能需要更仔细审查的条目的视觉指示器\r\n- **自动化测试工作流程：** 全自动捕获测试失败、监控修复和经过验证的学习推广\r\n\r\n## 文档\r\n\r\n综合文档可在 [文档目录](docs/):\r\n\r\n- [主要文件](docs/README.md) -完整的安装、配置和使用指南\r\n- [入门指南](docs/getting_started.md) -详细的设置说明\r\n- [开发者指南](docs/developer_guide.md) -对于贡献者和开发人员\r\n- [IDE和工具集成指南](docs/integration/README.md) -与IDE和其他工具集成的指南。\r\n- [自动聊天记录](docs/integration/automated_chat_logging.md) -双向链接，丰富聊天记录\r\n- [使用指南](docs/usage/README.md) -关于如何使用特定功能和工作流程的详细指南。\r\n- [增强的上下文捕获](docs/usage/enhanced_context_capture.md) -代码差异提取和工具排序的详细信息\r\n- [语义代码分块](docs/usage/semantic_chunking.md) -用于有意义检索的逻辑保留代码分块\r\n- [自动化测试工作流（Pytest插件使用）](docs/integration/pytest_plugin_usage.md) -具有自动验证功能的测试驱动学习\r\n- [思维工具和实用程序](docs/thinking_tools/README.md) -结构化思维和记忆工具的文档。\r\n- [客户端和开发人员脚本](docs/scripts/README.md) -CLI工具和开发人员脚本指南。\r\n- [日志记录文件](docs/logging/README.md) -日志记录功能和配置概述。\r\n- [服务器日志记录](docs/logging/server_logging.md) -关于改进后的测井系统的详细信息\r\n- [自动化文档](docs/automation/README.md) -自动化开发任务指南。\r\n- [项目规则和指南](docs/rules/README.md) -开发规则、指南和最佳实践。\r\n- [重构计划](docs/refactoring/README.md) -关于各种重构工作和架构计划的文档。\r\n- [api参考](docs/api_reference.md) -可用的MCP工具和参数\r\n\r\n## 许可证\r\n\r\nChroma MCP服务器根据MIT许可证和Commons条款获得许可。这意味着您可以：\r\n\r\n✅ **允许**:\r\n\r\n- 将Chroma MCP服务器用于任何目的（个人、商业、学术）\r\n- 修改代码\r\n- 分发副本\r\n- 创建和销售使用Chroma MCP服务器构建的产品\r\n\r\n❌ **不允许**:\r\n\r\n- 出售Chroma MCP服务器本身\r\n- 提供Chroma MCP服务器作为托管服务\r\n- 基于Chroma MCP服务器创建竞争产品\r\n\r\n请参阅 [许可证.md](LICENSE.md) 文件以获取完整的许可证文本。\r\n",
+ "config": {
+  "chroma": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "chroma-mcp-server"
+   ],
+   "env": {
+    "CHROMA_CLIENT_TYPE": "persistent",
+    "CHROMA_DATA_DIR": "/path/to/your/data",
+    "CHROMA_LOG_DIR": "/path/to/your/logs",
+    "LOG_LEVEL": "INFO",
+    "MCP_LOG_LEVEL": "INFO",
+    "MCP_SERVER_LOG_LEVEL": "INFO"
+   }
+  }
+ }
+}

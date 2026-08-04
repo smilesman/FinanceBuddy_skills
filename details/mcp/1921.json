@@ -1,0 +1,24 @@
+{
+ "id": "1921",
+ "kind": "mcp",
+ "name": "finance-mcp-3",
+ "fingerprint_md5": "c4e5a0db3752aa7e63bc9652272f0560",
+ "download_count": 0,
+ "category": "财务数据",
+ "tags": "",
+ "version": "",
+ "readme": "# 金融MCP服务器\r\n\r\n用Dart编写的模型上下文协议（MCP）服务器，与SEC EDGAR集成，为大型语言模型提供全面的财务数据和分析工具。\r\n\r\n该服务器使LLM能够获取公司元数据、历史财务报表（长达10年）和SEC文件（10-K、10-Q、8-K），用于情绪分析和基础研究。\r\n\r\n## 特性\r\n\r\n- **公司元数据**：将股票代码解析为CIK和公司名称。\r\n- **财务报表**：使用计算指标（ROE、ROIC）检索长达10年的资产负债表、损益表和现金流。\r\n- **行情走势**：访问8-K、10-K和10-Q文件的全文内容进行情绪分析（符合SEC用户代理要求）。\r\n- **分析提示**：内置提示 `comprehensive_analysis` 和 `compare_stocks` 指导法学硕士进行结构化财务报告。\r\n- **灵活运输**：支持 `stdio` （默认）适用于本地客户 `http` （SSE）用于远程部署。\r\n- **Docker支持**：已准备好使用Dockerfile进行容器化部署。\r\n\r\n## 安装\r\n\r\n### 选项1：全局激活（推荐）\r\n\r\n从pub.dev全局安装，以便在任何地方使用CLI：\r\n\r\n```bash\r\ndart pub global activate finance_mcp\r\n```\r\n\r\n### 选项2：来源\r\n\r\n为了发展或贡献：\r\n\r\n```bash\r\ngit clone https://github.com/leehack/finance-mcp.git\r\ncd finance_mcp\r\ndart pub get\r\n```\r\n\r\n## 用法\r\n\r\n### 运行服务器\r\n\r\n**1.标准运输（默认）**\r\n非常适合与Claude Desktop等客户在本地使用。\r\n\r\n```bash\r\n# If installed globally:\r\nfinance_mcp\r\n# OR\r\ndart pub global run finance_mcp\r\n\r\n# If from source:\r\ndart run bin/server.dart\r\n```\r\n\r\n**2.HTTP传输（SSE）**\r\n公开远程连接的SSE端点。\r\n\r\n```bash\r\ndart run bin/server.dart --transport http --port 3000\r\n```\r\n\r\n服务器将监听 `http://0.0.0.0:3000/mcp`.\r\n\r\n## 配置\r\n\r\n与一起使用 [克劳德桌面版](https://claude.ai/download)，将以下内容添加到您的 `mcp.json`:\r\n\r\n### 1.使用全局安装（最简单）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"finance-mcp\": {\r\n      \"command\": \"dart\",\r\n      \"args\": [\"pub\", \"global\", \"run\", \"finance_mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 2.使用Docker\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"finance-mcp\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\"run\", \"-i\", \"--rm\", \"finance-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 3.使用来源（开发）\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"finance-mcp\": {\r\n      \"command\": \"dart\",\r\n      \"args\": [\"run\", \"/ABSOLUTE/PATH/TO/finance-mcp/bin/server.dart\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 高级：自动更新全局安装\r\n\r\n自动更新 `finance_mcp` 每次运行它（增加延迟）：\r\n\r\n\r\n**Click to see configuration**\r\n\r\n**macOS/Linux**:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"finance-mcp\": {\r\n      \"command\": \"/bin/sh\",\r\n      \"args\": [\r\n        \"-c\",\r\n        \"dart pub global activate finance_mcp 1>&2 && $HOME/.pub-cache/bin/finance_mcp\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n**视窗**:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"finance-mcp\": {\r\n      \"command\": \"cmd.exe\",\r\n      \"args\": [\r\n        \"/c\",\r\n        \"dart pub global activate finance_mcp > NUL && %LOCALAPPDATA%\\\\Pub\\\\Cache\\\\bin\\\\finance_mcp.bat\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n\r\n## 可用工具\r\n\r\n- **`get_company_info`**:\r\n\r\n  - `ticker`：股票代码（例如AAPL）。\r\n  - 返回CIK、名称和交换信息。\r\n\r\n- **`get_financial_statements`**:\r\n\r\n  - `ticker`：股票代码。\r\n  - `period`: `annual` 或 `quarterly` （默认值：每年）。\r\n  - `year`：具体年份（可选）。\r\n  - `years`：要获取的年数（默认值：5）。\r\n  - 返回财务报表的结构化JSON。\r\n\r\n- **`get_sec_filings`**:\r\n\r\n  - `ticker`：股票代码。\r\n  - `forms`：要获取的表单列表（例如。， `[\"10-K\", \"8-K\"]`).\r\n  - `limit`：最大文件数。\r\n  - `includeContent`：用于获取全文正文的布尔值（默认值：false）。\r\n\r\n## 发展\r\n\r\n运行测试：\r\n\r\n```bash\r\ndart test\r\n```\r\n\r\n## 许可证\r\n\r\n看 [许可证](LICENSE).\r\n",
+ "config": {
+  "finance-mcp": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "finance-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

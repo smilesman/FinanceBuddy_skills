@@ -1,0 +1,24 @@
+{
+ "id": "283",
+ "kind": "mcp",
+ "name": "mcp-minecraft",
+ "fingerprint_md5": "951917d4c1b661dedd3b7b948cde6db2",
+ "download_count": 0,
+ "category": "HTTP API 工具",
+ "tags": "",
+ "version": "",
+ "readme": "# Minecraft MCP集成\r\n\r\nMinecraft的模型上下文协议（MCP）集成，使AI助手能够与Minecraft服务器进行交互。这种集成允许AI模型通过机器人观察Minecraft世界并与之交互。\r\n\r\n\r\n## 先决条件\r\n\r\n1. Minecraft启动器\r\n1. Node.js 18或更高版本\r\n1. 克劳德桌面应用程序\r\n1. Java 21.0.5（推荐）\r\n\r\n> ⚠️ 注意：目前仅在macOS/Linux上测试。不保证Windows兼容性。\r\n\r\n## 重要提示\r\n\r\n1. **使用F3+P快捷键**:\r\n   同时按下F3+P。这将切换“失焦时暂停”功能。一旦关闭，您可以切换到claude桌面，Minecraft将继续运行而不会暂停。\r\n\r\n\r\n2. **Claude重启时的连接问题**:\r\n   如果在Minecraft服务器运行时重新启动Claude，由于java进程延迟，您可能会在下次启动Claude时遇到MCP连接问题。看 [故障排除：MCP连接失败](#common-issues) 用于解决步骤。\r\n\r\n## 安装步骤\r\n\r\n1. **下载并设置Minecraft服务器**\r\n\r\n   - 下载Minecraft服务器v1.21 [mcversions.net/1.21](https://mcversions.net/download/1.21)\r\n   - 如果尚未安装，请安装Java 21.0.5（其他版本未经测试）\r\n   - 创建专用目录（例如。， `~/minecraft-server/`)\r\n   - 放置下载的 `server.jar` 此目录中的文件\r\n   - 记下你的绝对路径 `server.jar` 文件\r\n\r\n1. **安装和配置MCP集成**\r\n\r\n   快速安装（推荐）：\r\n\r\n   ```bash\r\n   npx -y @smithery/cli install mcp-minecraft --client claude\r\n   ```\r\n\r\n   按照CLI提示完成设置。\r\n\r\n   或手动设置：\r\n\r\n   - 引导到 `~/Library/Application Support/Claude/claude_desktop_config.json`\r\n   - 添加MCP服务器配置：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"mcp-minecraft\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\r\n           \"-y\",\r\n           \"mcp-minecraft@latest\",\r\n           \"--server-jar\",\r\n           \"/absolute/path/to/minecraft-server/server.jar\"\r\n         ]\r\n       }\r\n     }\r\n   }   \r\n   ```\r\n\r\n   > ⚠️ 替换 `/absolute/path/to/minecraft-server/server.jar` 使用实际的server.jar路径\r\n\r\n1. **启动克劳德桌面**\r\n\r\n   - 完成配置后启动Claude Desktop\r\n\r\n1. **连接到服务器**\r\n\r\n   - 打开Minecraft启动器\r\n   - 安装并启动Minecraft Java版 **v1.21**\r\n   - 点击“玩”并选择“多人游戏”\r\n   - 点击“添加服务器”\r\n   - 输入服务器详细信息：\r\n     - 服务器名称： `Minecraft Server`\r\n     - 服务器地址： `localhost:25565`\r\n   - 点击“完成”\r\n\r\n## 特性\r\n\r\n### 资源\r\n\r\n集成暴露了这些MCP资源：\r\n\r\n- `minecraft://bot/location` -当前机器人在世界上的地位\r\n- `minecraft://bot/status` -Bot连接状态\r\n\r\n### 工具\r\n\r\n可用的MCP工具：\r\n\r\n- `chat` -向服务器发送聊天消息\r\n- `jump` -让机器人跳跃\r\n- `moveForward` -让机器人前进\r\n- `moveBack` -使机器人向后移动\r\n- `turnLeft` -让机器人左转\r\n- `turnRight` -让机器人右转\r\n- `placeBlock` -在指定坐标处放置块\r\n- `digBlock` -在指定坐标处打断块\r\n- `getBlockInfo` -获取指定坐标处块的信息\r\n- `selectSlot` -选择一个热条插槽（0-8）\r\n- `getInventory` -获取机器人库存的内容\r\n- `equipItem` -按名称将物品装备到指定目的地\r\n- `getStatus` -获取机器人的当前状态（健康、食物、位置等）\r\n- `getNearbyEntities` -获取范围内附近实体的列表\r\n- `attack` -按名称攻击附近的实体\r\n- `useItem` -使用/激活当前持有的项目\r\n- `stopUsingItem` -停止使用/停用当前项目\r\n- `lookAt` -让机器人查看特定的坐标\r\n- `followPlayer` -关注特定玩家\r\n- `stopFollowing` -停止跟踪当前目标\r\n- `goToPosition` -导航到特定坐标\r\n\r\n## 技术细节\r\n\r\n- 服务器以脱机模式运行以进行本地开发\r\n- 默认内存分配：2GB\r\n- 默认端口：25565\r\n- 机器人用户名：MCPBot\r\n\r\n## 故障排除\r\n\r\n### 常见问题\r\n\r\n1. **MCP连接失败**\r\n\r\n   - 寻找挥之不去的Java进程\r\n   - 手动终止它们：\r\n     - Windows：使用任务管理器（未测试）\r\n     - Mac/Linux：\r\n       - 转到“活动监视器”和“强制退出”java\r\n   - 如果进程终止失败，请重新启动计算机\r\n   - 注意：最新版本应自动解决这些问题\r\n\r\n1. **服务器无法启动**\r\n\r\n   - 验证Java是否已安装\r\n   - 检查server.jar路径是否正确\r\n   - 确保端口25565可用\r\n\r\n1. **无法连接到服务器**\r\n\r\n   - 验证服务器是否正在运行（检查日志）\r\n   - 确认您正在使用“localhost”作为服务器地址\r\n   - 检查防火墙设置\r\n\r\n### 日志位置\r\n\r\n- Minecraft服务器日志：检查Minecraft服务器目录\r\n- 克劳德桌面日志： `~/Library/Logs/Claude/mcp*.log`\r\n\r\n## 贡献\r\n\r\n欢迎捐款，无论大小！\r\n\r\n## 许可证\r\n\r\n此项目根据MIT许可证获得许可-请参阅 [许可证](LICENSE) 文件以获取详细信息。\r\n",
+ "config": {
+  "mcp-minecraft": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "mcp-minecraft@latest",
+    "--server-jar",
+    "/absolute/path/to/minecraft-server/server.jar"
+   ],
+   "env": {}
+  }
+ }
+}

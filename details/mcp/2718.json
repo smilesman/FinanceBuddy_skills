@@ -1,0 +1,24 @@
+{
+ "id": "2718",
+ "kind": "mcp",
+ "name": "seoforgpt",
+ "fingerprint_md5": "9b195d0ba599853868953f70737a221c",
+ "download_count": 0,
+ "category": "搜索与研究",
+ "tags": "",
+ "version": "",
+ "readme": "# SEOforGPT MCP 服务器\r\n\r\n用于SEOforGPT的远程MCP服务器，使用Node.js、TypeScript构建， `@modelcontextprotocol/sdk`，以及Cloudflare Workers使用 `streamable-http` 运输。\r\n\r\n## 特性\r\n\r\n- `list_projects`：列出已配置API密钥的所有SEOforGPT项目\r\n- `check_brand_visibility`：在3到5个提示中为品牌运行自定义AI可见性检查\r\n- `run_project_analysis`：为现有SEOforGPT项目运行已保存的提示\r\n- `get_visibility_report`：获取以前生成的完整报告\r\n\r\n## 快速启动\r\n\r\n```bash\r\nSEOFORGPT_API_KEY=sgpt_xxx\r\n```\r\n\r\n安装依赖项并构建：\r\n\r\n```bash\r\nnpm install\r\nnpm run build\r\n```\r\n\r\n使用Cloudflare Workers在本地运行：\r\n\r\n```bash\r\nnpm run dev\r\n```\r\n\r\n当您的Cloudflare凭据可用时进行部署：\r\n\r\n```bash\r\nnpm run deploy\r\n```\r\n\r\n## 配置\r\n\r\n服务器需要一个环境变量：\r\n\r\n- `SEOFORGPT_API_KEY`：您的SEOforGPT API密钥，作为发送到上游API `Authorization: Bearer <SEOFORGPT_API_KEY>`\r\n\r\n对于本地或部署的Worker环境，您可以在 `wrangler.toml`，通过 `wrangler secret put SEOFORGPT_API_KEY`，或通过您的部署环境。\r\n\r\n## 端点\r\n\r\n- `GET /`：基本服务器元数据\r\n- `GET /health`：健康检查\r\n- `POST /mcp`：MCP可流式传输HTTP端点\r\n\r\n## Claude桌面配置\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"seoforgpt\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"seoforgpt-mcp\"],\r\n      \"env\": { \"SEOFORGPT_API_KEY\": \"sgpt_your_key_here\" }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## Smithery URL\r\n\r\n`https://seoforgpt-mcp.workers.dev`\r\n\r\n## 工具使用示例\r\n\r\n### 1.列出项目\r\n\r\n```json\r\n{\r\n  \"name\": \"list_projects\",\r\n  \"arguments\": {}\r\n}\r\n```\r\n\r\n### 2.检查品牌知名度\r\n\r\n```json\r\n{\r\n  \"name\": \"check_brand_visibility\",\r\n  \"arguments\": {\r\n    \"brand\": \"Acme\",\r\n    \"queries\": [\r\n      \"Best CRM for small businesses\",\r\n      \"Top alternatives to HubSpot for startups\",\r\n      \"Which sales tools are best for B2B teams\"\r\n    ]\r\n  }\r\n}\r\n```\r\n\r\n### 3.运行已保存的项目分析\r\n\r\n```json\r\n{\r\n  \"name\": \"run_project_analysis\",\r\n  \"arguments\": {\r\n    \"projectId\": \"proj_123\"\r\n  }\r\n}\r\n```\r\n\r\n### 4.获取一份报告\r\n\r\n```json\r\n{\r\n  \"name\": \"get_visibility_report\",\r\n  \"arguments\": {\r\n    \"reportId\": \"report_123\"\r\n  }\r\n}\r\n```\r\n\r\n## 开发说明\r\n\r\n- 该实现是无状态的，并为每个请求创建一个新的MCP服务器，非常适合Cloudflare Workers。\r\n- 所有工具故障均归一化为 `{ \"error\": \"...\", \"details\": \"...\" }` 因此Worker不会在上游API故障时崩溃。\r\n- 服务器使用 `process.env.SEOFORGPT_API_KEY` 带着一个 `env` 绑定回退以实现Worker兼容性。\r\n",
+ "config": {
+  "seoforgpt": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "seoforgpt-mcp"
+   ],
+   "env": {
+    "SEOFORGPT_API_KEY": "sgpt_your_key_here"
+   }
+  }
+ }
+}

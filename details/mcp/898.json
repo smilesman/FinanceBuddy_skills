@@ -1,0 +1,21 @@
+{
+ "id": "898",
+ "kind": "mcp",
+ "name": "tripo-mcp",
+ "fingerprint_md5": "37711a5bf499f27750585f720950ad22",
+ "download_count": 0,
+ "category": "内容生成",
+ "tags": "",
+ "version": "",
+ "readme": "# Tripo MCP服务器\r\n\r\nTripo MCP为AI助手和 [Tripo AI](https://www.tripo3d.ai) 通过 [模型上下文协议（MCP）](https://github.com/anthropics/anthropic-cookbook/tree/main/mcp).\r\n\r\n> **注：** 该项目处于alpha阶段。目前，它支持Tripo Blender插件集成。\r\n\r\n## 特点\r\n\r\n- 使用Tripo的API从自然语言生成3D资产并导入到Blender\r\n- 与Claude和其他启用MCP的AI助手兼容\r\n\r\n## 快速开始\r\n\r\n### 先决条件\r\n\r\n- Python 3.10+\r\n- [搅拌机](https://www.blender.org/download/)\r\n- [Tripo AI搅拌机插件](https://www.tripo3d.ai/app/home)\r\n- Claude桌面或光标IDE\r\n\r\n### 安装\r\n\r\n1. 从以下位置安装Tripo AI Blender插件 [Tripo AI网站](https://www.tripo3d.ai/app/home)\r\n\r\n1. 在Claude Desktop或Cursor中配置MCP服务器。\r\n\r\n   - `pip install uv`\r\n   - 在游标中设置mcp\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"tripo-mcp\": {\r\n         \"command\": \"uvx\",\r\n         \"args\": [\r\n           \"tripo-mcp\"\r\n         ]\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n   - 然后你会得到一个像这样的绿点：\r\n\r\n\r\n### 用法\r\n\r\n1. 启用Tripo AI Blender插件并启动Blender mcp服务器。\r\n\r\n1. 使用光标或claude聊天。例如，“生成未来椅子的3D模型”。\r\n\r\n## 致谢\r\n\r\n- **[Tripo AI](https://www.tripo3d.ai)**\r\n- **[搅拌机mcp](https://github.com/ahujasid/blender-mcp)** 靠近 [悉达多Ahuja](https://github.com/ahujasid)\r\n\r\n**特别感谢**\\\r\n特别感谢Siddharth Ahuja的搅拌机mcp项目，该项目为mcp+3D提供了鼓舞人心的想法。\r\n",
+ "config": {
+  "tripo-mcp": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "tripo-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

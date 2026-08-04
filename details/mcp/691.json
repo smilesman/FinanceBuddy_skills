@@ -1,0 +1,22 @@
+{
+ "id": "691",
+ "kind": "mcp",
+ "name": "image-generator",
+ "fingerprint_md5": "f30dc1830e5fff4a4e320fab601802d5",
+ "download_count": 0,
+ "category": "图像处理",
+ "tags": "",
+ "version": "",
+ "readme": "# MCP图像生成器\r\n\r\n使用fal.ai的稳定扩散模型生成和操作图像的模型上下文协议（MCP）服务器。\r\n\r\n## 特性\r\n\r\n- 根据文本提示生成高质量图像\r\n- 支持多种动漫和艺术风格：\r\n  - 吉卜力风格\r\n  - 皮克斯 风格\r\n  - 口袋妖怪风格\r\n  - Genshin冲击风格\r\n  - 赛博朋克风格\r\n  - 一体式风格\r\n  - 攻击泰坦风格\r\n  - 新海诚风格\r\n  - 水手月亮风格\r\n  - 福音派风格\r\n  - 迪士尼公主风格\r\n  - 京都动漫风格\r\n  - 梦工厂动画风格\r\n  - 漫威工作室风格\r\n  - DC漫画风格\r\n  - Kawaii粉彩风格\r\n  - 辛普森风格\r\n  - 龙珠风格\r\n  - 恶魔杀手风格\r\n  - 华纳兄弟动画风格\r\n  - 黑暗幻想风格\r\n  - 还有更多的日本动漫风格\r\n- 多种图像大小选项：\r\n  - 正方形（512x512）\r\n  - 方形高清（1024x1024）\r\n  - 肖像4:3（768x1024）\r\n  - 肖像16:9（576x1024）\r\n  - 风景4:3（1024x768）\r\n  - 风景16:9（1024x576）\r\n- 在一个请求中生成多个图像（最多4个）\r\n- 图像放大（4倍分辨率增强）\r\n- 图像搜索和替换功能\r\n- 内置NSFW内容检测\r\n\r\n## 安装\r\n\r\n1. 克隆存储库：\r\n\r\n```bash\r\ngit clone [repository-url]\r\ncd aiimagemultistyle\r\n```\r\n\r\n2. 安装依赖项：\r\n\r\n```bash\r\nnpm install\r\n```\r\n\r\n3. 配置环境变量：\r\n   创建一个 `.env` 包含以下内容的文件：\r\n\r\n```\r\nFALAI_API_KEY=your_fal_ai_key_here\r\n```\r\n\r\n## 用法\r\n\r\n### MCP服务器配置\r\n\r\n要使用MCP图像生成器服务器，请将其添加到您的 `mcpServers` 配置：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"image-generator\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\"-y\", \"aiimagemultistyle\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n您还可以指定其他配置选项：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"image-generator\": {\r\n      \"command\": \"npx\",\r\n      \"args\": [\r\n        \"-y\",\r\n        \"aiimagemultistyle\",\r\n        \"--mode=rest\",\r\n        \"--port=9593\",\r\n        \"--endpoint=/rest\"\r\n      ],\r\n      \"env\": {\r\n        \"FALAI_API_KEY\": \"your_fal_ai_key_here\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 启动服务器\r\n\r\n服务器可以在两种模式下运行：\r\n\r\n1. STDIO模式（默认）：\r\n\r\n```bash\r\nnpm start\r\n```\r\n\r\n2. REST模式：\r\n\r\n```bash\r\nnpm start -- --mode=rest --port=9593 --endpoint=/rest\r\n```\r\n\r\n### api参考\r\n\r\n#### 生成图像\r\n\r\n**请求格式：**\r\n\r\n```json\r\n{\r\n  \"name\": \"generate_image\",\r\n  \"arguments\": {\r\n    \"prompt\": \"A beautiful sunset over mountains\",\r\n    \"style\": \"ghibli-style\",\r\n    \"num_images\": 1,\r\n    \"size\": \"square_hd\"\r\n  }\r\n}\r\n```\r\n\r\n**参数：**\r\n\r\n- `prompt` （必填）：要生成的图像的文本描述\r\n- `style` （可选）：图像样式（默认：“ghibli样式”）\r\n  - 可用样式：请参阅上面的功能部分以获取完整列表\r\n- `num_images` （可选）：要生成的图像数量（1-4，默认值：1）\r\n- `size` （可选）：图像大小（默认值：“square_hd”）\r\n  - 可用尺寸：“方形”、“方形_高清”、“肖像_4_3”、“人像_16_9”、“景观_4_3“、”景观_16_8“\r\n\r\n#### 高档图像\r\n\r\n**请求格式：**\r\n\r\n```json\r\n{\r\n  \"name\": \"upscale_image\",\r\n  \"arguments\": {\r\n    \"image_url\": \"https://example.com/image.jpg\"\r\n  }\r\n}\r\n```\r\n\r\n**参数：**\r\n\r\n- `image_url` （必填）：图片的URL以进行升级\r\n\r\n#### 搜索和替换\r\n\r\n**请求格式：**\r\n\r\n```json\r\n{\r\n  \"name\": \"search-and-replace\",\r\n  \"arguments\": {\r\n    \"image_url\": \"https://example.com/image.jpg\",\r\n    \"mask_url\": \"https://example.com/mask.jpg\",\r\n    \"prompt\": \"Description of the replacement\"\r\n  }\r\n}\r\n```\r\n\r\n**参数：**\r\n\r\n- `image_url` （必填）：要编辑的图像的URL\r\n- `mask_url` （必填）：掩码图像的URL（保留黑色区域，修复白色区域）\r\n- `prompt` （必填）：替换内容的描述\r\n\r\n## 发展\r\n\r\n- `npm run build`：构建项目\r\n- `npm run watch`：观看模式用于开发\r\n- `npm run inspector`：运行MCP检查器\r\n\r\n## 错误处理\r\n\r\n服务器为常见问题提供详细的错误消息：\r\n\r\n- 缺少API密钥\r\n- 无效提示\r\n- 样式或大小参数无效\r\n- API请求失败\r\n- NSFW内容检测\r\n\r\n## 许可证\r\n\r\nMIT\r\n",
+ "config": {
+  "image-generator": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "aiimagemultistyle"
+   ],
+   "env": {}
+  }
+ }
+}

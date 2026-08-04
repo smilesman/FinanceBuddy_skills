@@ -1,0 +1,24 @@
+{
+ "id": "987",
+ "kind": "mcp",
+ "name": "bigquery-3",
+ "fingerprint_md5": "64ffe5802761f5939d97e2614f3b5d8a",
+ "download_count": 0,
+ "category": "数据分析",
+ "tags": "",
+ "version": "",
+ "readme": "# BigQuery MCP服务器\r\n\r\n\r\n提供对BigQuery访问的模型上下文协议服务器。此服务器使LLM能够检查数据库模式并执行查询。\r\n\r\n## 组件\r\n\r\n### 工具\r\n\r\n服务器实现了一个工具：\r\n\r\n- `execute-query`：使用BigQuery方言执行SQL查询\r\n- `list-tables`：列出BigQuery数据库中的所有表\r\n- `describe-table`：描述特定表的架构\r\n\r\n## 配置\r\n\r\n服务器可以配置命令行参数或环境变量。\r\n\r\n|参数|环境变量|必填|描述|\r\n| ------------ | -------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\r\n| `--project` | `BIGQUERY_PROJECT` |是| GCP项目ID|\r\n| `--location` | `BIGQUERY_LOCATION` |是| GCP位置（例如。 `europe-west9`).                                                                                                                                                                                                                                                                                                                        |\r\n| `--dataset` | `BIGQUERY_DATASETS` |否|仅考虑特定的BigQuery数据集。通过重复参数可以指定多个数据集（例如。 `--dataset my_dataset_1 --dataset my_dataset_2`)或者在环境变量中用逗号将它们连接起来（例如。 `BIGQUERY_DATASETS=my_dataset_1,my_dataset_2`).如果没有提供，将考虑项目中的所有数据集。 |\r\n| `--key-file` | `BIGQUERY_KEY_FILE` |否| BigQuery服务帐户密钥文件的路径。如果没有提供，服务器将使用默认凭据。                                                                                                                                                                                                                                                 |\r\n| `--timeout` | `BIGQUERY_TIMEOUT` |否|等待查询完成的最长时间（秒）。如果没有提供，查询将无限期等待。                                                                                                                                                                                                                                                      |\r\n\r\n## 安装\r\n\r\n### 通过Smithery安装\r\n\r\n通过以下方式自动安装BigQuery Server for Claude Desktop [铁匠铺](https://smithery.ai/server/mcp-server-bigquery):\r\n\r\n```bash\r\nnpx -y @smithery/cli install mcp-server-bigquery --client claude\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add bigquery --scope user --transport stdio -- uvx mcp-server-bigquery --project {PROJECT_ID} --location {{LOCATION}}\r\n```\r\n\r\n### 克劳德桌面版\r\n\r\n在MacOS上： `~/Library/Application\\ Support/Claude/claude_desktop_config.json`\\\r\n在Windows上： `%APPDATA%/Claude/claude_desktop_config.json`\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bigquery\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-server-bigquery\"],\r\n      \"env\": {\r\n        \"BIGQUERY_PROJECT\": \"{{GCP_PROJECT_ID}}\",\r\n        \"BIGQUERY_LOCATION\": \"{{GCP_LOCATION}}\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n## 光标\r\n\r\n1. 打开光标设置→ MCP\r\n1. 单击添加新的全局MCP服务器\r\n1. 按照以下模式为BigQuery MCP添加一个条目：\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bigquery\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"mcp-server-bigquery\"],\r\n      \"env\": {\r\n        \"BIGQUERY_PROJECT\": \"{{GCP_PROJECT_ID}}\",\r\n        \"BIGQUERY_LOCATION\": \"{{GCP_LOCATION}}\"\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n",
+ "config": {
+  "bigquery": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "mcp-server-bigquery"
+   ],
+   "env": {
+    "BIGQUERY_PROJECT": "{{GCP_PROJECT_ID}}",
+    "BIGQUERY_LOCATION": "{{GCP_LOCATION}}"
+   }
+  }
+ }
+}

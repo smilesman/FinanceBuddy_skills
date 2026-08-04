@@ -1,0 +1,27 @@
+{
+ "id": "1490",
+ "kind": "mcp",
+ "name": "hoverfly-mcp",
+ "fingerprint_md5": "9fb98e5c1d612c13477792cac9bbb45b",
+ "download_count": 0,
+ "category": "Git 与代码仓库",
+ "tags": "",
+ "version": "",
+ "readme": "<div align=\"center\">\r\n  \r\n</div>\r\n\r\n# Hoverfly MCP服务器\r\n\r\nA. **Spring Boot**表示“总部设在…的”、“以…为基地的” **模型上下文协议（MCP）** 暴露的服务器 [食蚜蝇](https://hoverfly.io/) 作为AI助手的可编程工具，如 **光标**, **克劳德桌面**, **GitHub Copilot**或支持MCP的任何其他助手。它允许动态模拟第三方API，以便在外部服务不可用时解锁开发和测试。\r\n\r\n______________________________________________________________________\r\n\r\n## 🛠️ 安装\r\n\r\n> **注：** 只有当您想从源代码贡献或构建时，才需要以下先决条件和构建步骤。对于大多数用户来说，使用Docker镜像就足够了。\r\n\r\n### 先决条件\r\n\r\n- Java 17\r\n- Maven 3.6+\r\n\r\n### 构建与运行\r\n\r\n```bash\r\ngit clone <repository-url>\r\ncd hoverfly-mcp-server\r\nmvn clean package\r\njava -jar target/hoverfly-mcp-server-<version>.jar\r\n```\r\n\r\n> 替换 `<version>` 使用您构建的JAR的实际版本。\r\n\r\n______________________________________________________________________\r\n\r\n## ⚙️ 配置为MCP服务器（使用Docker）\r\n\r\n要将此服务器与支持模型上下文协议（MCP）的AI助手一起使用，请将以下内容添加到您的 `.mcp.json` 或 `mcp.config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"hoverfly-mcp\": {\r\n      \"command\": \"docker\",\r\n      \"args\": [\r\n        \"run\",\r\n        \"-i\",\r\n        \"--rm\",\r\n        \"-p 8500:8500\",\r\n        \"-p 8888:8888\",\r\n        \"-v /path/to/your/data:/opt/hoverfly-mcp/simulation-data\",\r\n        \"docker.io/kapish88/hoverfly-mcp-server\"\r\n      ]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n- `8500`：Hoverfly代理端口（模拟服务）\r\n- `8888`：悬停管理端口（模拟控制API）\r\n- `-v /path/to/your/data:/opt/hoverfly-mcp/simulation-data`：装载用于模拟持久性的卷\r\n\r\n> 确保Docker已安装。如果本地不可用，将自动提取图像。\r\n\r\n______________________________________________________________________\r\n\r\n## 🔧 暴露的MCP工具\r\n\r\n|工具名称|描述|\r\n|----------------------------------|------------------------------------------------------------------|\r\n| `get_hoverfly_status` |检查Hoverfly是否正在运行|\r\n| `start_hoverfly_web_server` |以web服务器的身份在模拟模式下启动Hoverfly。默认情况下，它将自动加载来自的最新模拟 `/opt/hoverfly-mcp/simulation-data` 如果可用，除非禁用自动加载。 |\r\n| `stop_hoverfly_server` |停止悬停飞行并清除模拟|\r\n| `fetch_hoverfly_version` |返回Hoverfly版本|\r\n| `list_hoverfly_mocks` |列出所有活动的模拟API（请求-响应对）|\r\n| `add_hoverfly_mock` |使用JSON RequestResponsePair定义添加模拟API|\r\n| `clear_hoverfly_mocks` |删除所有现有的模拟API|\r\n| `show_hoverfly_endpoints_info` |返回关键的Hoverfly端点和示例用法|\r\n| `get_hoverfly_documentation` |返回特定主题的Hoverfly文档|\r\n| `suggest_hoverfly_matchers` |为给定的请求-响应对JSON建议匹配器选项|\r\n| `get_hoverfly_debug_logs` |获取最近的Hoverfly日志进行调试（限制是可选的）|\r\n| `download_hoverfly_simulation` |将当前模拟下载到 `/opt/hoverfly-mcp/simulation-data` （持久仿真目录）|\r\n\r\nAI助手可以通过AI Assistant主机以编程方式调用这些工具。\r\n\r\n______________________________________________________________________\r\n\r\n## 💾 模拟持久性\r\n\r\n服务器通过固定的已挂载卷支持模拟持久性：\r\n\r\n### 启动时自动加载\r\n\r\n当使用启动Hoverfly时 `start_hoverfly_web_server`，默认情况下，服务器将：\r\n\r\n- 从加载最新的仿真文件 `/opt/hoverfly-mcp/simulation-data` （如果可用）\r\n- 如果找不到模拟文件，则从干净状态开始\r\n\r\n您可以通过设置适当的参数来禁用自动加载。\r\n\r\n### 持久数据和卷装载\r\n\r\n要在重启过程中保持模拟数据不变，您需要 **必须** 将主机目录装载到 `/opt/hoverfly-mcp/simulation-data` 在容器内。\\\r\n这是唯一支持持久数据的位置。\r\n\r\n> **注：** 主机目录必须可由容器用户写入。\r\n\r\n只有当您明确调用下载工具时，仿真文件才会保存到此目录。\r\n\r\n## 🤝 贡献\r\n\r\n1. 分叉此回购\r\n1. 创建要素分支\r\n1. 提交拉取请求\r\n\r\n______________________________________________________________________\r\n\r\n## 📜 许可证\r\n\r\n看 [许可证](LICENSE) 许可条款文件。\r\n",
+ "config": {
+  "hoverfly-mcp": {
+   "enabled": true,
+   "command": "docker",
+   "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-p 8500:8500",
+    "-p 8888:8888",
+    "-v /path/to/your/data:/opt/hoverfly-mcp/simulation-data",
+    "docker.io/kapish88/hoverfly-mcp-server"
+   ],
+   "env": {}
+  }
+ }
+}

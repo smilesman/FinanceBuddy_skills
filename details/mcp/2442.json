@@ -1,0 +1,21 @@
+{
+ "id": "2442",
+ "kind": "mcp",
+ "name": "bailii",
+ "fingerprint_md5": "22b6a33ee01056ec00ef79e2387b16e2",
+ "download_count": 0,
+ "category": "网页搜索",
+ "tags": "",
+ "version": "",
+ "readme": "# 百励MCP服务器\r\n\r\n<!-- mcp-name: io.github.paulieb89/bailii-mcp -->\r\n\r\n\r\n搜索英国关于BAILII的判例法。通过自动提取部分（摘要、结论、讨论、背景）检索判断。本地运行——百励拦截云IP。\r\n\r\n## 安装\r\n\r\n### 使用紫外线（推荐）\r\n\r\n无需安装-- [`uvx`](https://docs.astral.sh/uv/) 直接从PyPI运行它：\r\n\r\n```bash\r\nuvx bailii-mcp\r\n```\r\n\r\n### 使用pip\r\n\r\n```bash\r\npip install bailii-mcp\r\nbailii-mcp\r\n```\r\n\r\n需要Python 3.10+。\r\n\r\n## 配置\r\n\r\n### 克劳德桌面版\r\n\r\n添加到您的 `claude_desktop_config.json`:\r\n\r\n```json\r\n{\r\n  \"mcpServers\": {\r\n    \"bailii\": {\r\n      \"command\": \"uvx\",\r\n      \"args\": [\"bailii-mcp\"]\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 克劳德代码\r\n\r\n```bash\r\nclaude mcp add bailii -- uvx bailii-mcp\r\n```\r\n\r\n### VS Code\r\n\r\n添加 `.vscode/settings.json` 或使用MCP面板：\r\n\r\n```json\r\n{\r\n  \"mcp\": {\r\n    \"servers\": {\r\n      \"bailii\": {\r\n        \"command\": \"uvx\",\r\n        \"args\": [\"bailii-mcp\"]\r\n      }\r\n    }\r\n  }\r\n}\r\n```\r\n\r\n### 使用pip代替uvx\r\n\r\n如果您是通过安装的 `pip install bailii-mcp`，使用 `\"command\": \"bailii-mcp\"` 和 `\"args\": []` 相反。\r\n\r\n### 来源\r\n\r\n```bash\r\ngit clone https://github.com/paulieb89/bailii-mcp.git\r\ncd bailii-mcp\r\npip install -e .\r\n```\r\n\r\n## 你可以问什么\r\n\r\n连接后，自然地问克劳德：\r\n\r\n- “在百励搜索有关HMO许可的案例”\r\n- “查找最近举报的就业法庭案件”\r\n- “获取Chinn诉Hoilund Carlsen案的摘要”\r\n- “法院在那起案件中认定了什么？”\r\n- “显示讨论部分”\r\n\r\n## 工具\r\n\r\n|工具|它做什么|\r\n|------|-------------|\r\n| `bailii_search` |在所有百励法院进行全文搜索。返回标题、引用和链接。 |\r\n| `bailii_get_judgment` |检索判决文本。默认为摘要+结论（约5000个字符）。 |\r\n| `bailii_list_courts` |列出可用的英国法院（UKSC、EWCA、EWHC、UKUT、EAT等）。 |\r\n\r\n### 剖面提取\r\n\r\n判断结果很大（30-100KB）。默认情况下，只返回摘要和结论。如果你需要，可以要求更多：\r\n\r\n- **默认**：总结+结论（5000个字符）\r\n- **具体章节**：“显示讨论”→ 只拉那个部分\r\n- **全文**：“获得完整的判断”→ 返回所有内容\r\n\r\n检测到的部分： `summary`, `conclusions`, `held`, `discussion`, `background`\r\n\r\n## 为什么是本地？\r\n\r\nBAILII阻止来自云服务器和数据中心的请求。此服务器在您的计算机上运行，因此请求通过您的住宅IP。\r\n\r\n对于不需要BAILII的判例法， [英国法律mcp](https://github.com/paulieb89/uk-legal-mcp) 通过国家档案馆API提供判例法-托管在Fly.io上，无需本地设置。\r\n\r\n当您需要时，此BAILII服务器非常有用：\r\n\r\n- 就业法庭裁决（BAILII的EAT覆盖范围更强）\r\n- TNA数据库中尚未记录的旧病例\r\n- 具有更好BAILII索引的特定法庭\r\n\r\n## 备注\r\n\r\n- BAILII条款禁止批量下载——仅用于有针对性的研究\r\n- 合理的请求率\r\n- 章节提取取决于判断格式——并非所有判断都有清晰的章节标题\r\n\r\n## 许可证\r\n\r\nApache 2.0\r\n\r\n## 作者\r\n\r\n[保罗·布切拉特](https://bouch.dev) --为英国财产、法律和项目控制构建MCP服务器。\r\n",
+ "config": {
+  "bailii": {
+   "enabled": true,
+   "command": "uvx",
+   "args": [
+    "bailii-mcp"
+   ],
+   "env": {}
+  }
+ }
+}

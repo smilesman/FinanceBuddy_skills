@@ -1,0 +1,24 @@
+{
+ "id": "2281",
+ "kind": "mcp",
+ "name": "opengov",
+ "fingerprint_md5": "145764dd4780447a1a128b1e614bb2e9",
+ "download_count": 0,
+ "category": "地理编码",
+ "tags": "",
+ "version": "",
+ "readme": "# OpenGov MCP服务器\r\n\r\nMCP（模型上下文协议）服务器，使Claude Desktop等MCP客户端能够访问Socrata开放数据API。这种集成允许Claude Desktop从政府数据门户搜索、检索和分析公共数据集。\r\n\r\n## 概述\r\n\r\n此MCP服务器提供从任何由Socrata支持的数据门户访问开放数据的权限，包括来自城市、州和联邦机构的数据门户，例如：\r\n\r\n- [芝加哥](https://data.cityofchicago.org)\r\n- [纽约市](https://data.cityofnewyork.us)\r\n- [旧金山](https://data.sfgov.org)\r\n- [洛杉矶](https://data.lacity.org)\r\n- [和其他政府实体](https://dev.socrata.com/data/)\r\n\r\n基本使用不需要API密钥，因为服务器访问公共数据。\r\n\r\n## 特性\r\n\r\n使用此MCP服务器，客户端可以：\r\n\r\n- 按关键字、类别或标签搜索和发现数据集\r\n- 查看数据集元数据和列信息\r\n- 运行类似SQL的查询以检索和分析数据\r\n- 获取门户使用统计信息\r\n\r\n## Claude Desktop的安装\r\n\r\n### 使用npx快速设置（推荐）\r\n\r\n使用此MCP服务器的最简单方法是使用npx，它不需要任何安装：\r\n\r\n1. **创建或编辑您的Claude Desktop配置**:\r\n\r\n   创建或编辑 `claude_desktop_config.json` 在您的主目录中：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"opengov\": {\r\n         \"command\": \"npx\",\r\n         \"args\": [\"-y\", \"opengov-mcp-server@latest\"],\r\n         \"env\": {\r\n           \"DATA_PORTAL_URL\": \"https://data.cityofchicago.org\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n   您可以用任何由Socrata驱动的数据门户替换DATA_PORTAL_URL。\r\n\r\n1. **重新启动克劳德桌面** （如果它已经在运行）\r\n\r\n1. **开始使用MCP服务器**:\r\n\r\n   在Claude Desktop中，您现在可以提出以下问题：\r\n\r\n   ```\r\n   How many cars were towed in Chicago this month?\r\n   ```\r\n\r\n   您可以进一步提出更详细的问题：\r\n\r\n   ```\r\n   Which make and color were towed the most?\r\n   Also, were there any interesting vanity plates?\r\n   ```\r\n\r\n   第一次运行查询时，npx将自动下载并运行最新版本的服务器。\r\n\r\n### 从源手动安装\r\n\r\n如果您更喜欢从源代码运行（用于开发或自定义）：\r\n\r\n1. **克隆此存储库**:\r\n\r\n   ```bash\r\n   git clone https://github.com/srobbin/opengov-mcp-server.git\r\n   cd opengov-mcp-server\r\n   ```\r\n\r\n1. **安装依赖项并构建**:\r\n\r\n   ```bash\r\n   npm install\r\n   npm run build\r\n   ```\r\n\r\n1. **创建Claude桌面配置**:\r\n\r\n   创建或编辑 `claude_desktop_config.json` 在您的主目录中：\r\n\r\n   ```json\r\n   {\r\n     \"mcpServers\": {\r\n       \"opengov\": {\r\n         \"command\": \"node\",\r\n         \"args\": [\r\n           \"/path/to/your/opengov-mcp-server/dist/index.js\"\r\n         ],\r\n         \"env\": {\r\n           \"DATA_PORTAL_URL\": \"https://data.cityofchicago.org\"\r\n         }\r\n       }\r\n     }\r\n   }\r\n   ```\r\n\r\n   替换 `/path/to/your/opengov-mcp-server` 使用克隆存储库的实际路径。\r\n\r\n1. **重新启动克劳德桌面** （如果它已经在运行）\r\n\r\n## 可用工具：get_data\r\n\r\n此MCP服务器提供统一的 `get_data` Claude Desktop用来访问Socrata数据的工具。\r\n\r\n### 参数\r\n\r\n- `type` （字符串，必填）：操作类型\r\n\r\n  - `catalog`：搜索和列出数据集\r\n  - `categories`：列出数据集类别\r\n  - `tags`：列出数据集标记\r\n  - `dataset-metadata`：获取数据集详细信息\r\n  - `column-info`：获取数据集列信息\r\n  - `data-access`：查询和检索记录\r\n  - `site-metrics`：获取门户统计信息\r\n\r\n- `domain` （字符串，可选）：数据门户主机名（无协议）\r\n\r\n- `query` （字符串，可选）：搜索数据集查询\r\n\r\n- `datasetId` （string）：特定操作的数据集标识符\r\n\r\n- `soqlQuery` （字符串，可选）：用于过滤数据的SoQL查询\r\n\r\n- `limit` （数字，可选）：返回的最大结果数（默认值：10）\r\n\r\n- `offset` （数字，可选）：分页时跳过的结果（默认值：0）\r\n\r\n### 查询示例\r\n\r\n以下是Claude Desktop将如何格式化对MCP服务器的查询的示例：\r\n\r\n```javascript\r\n// Find datasets about budgets\r\n{\r\n  \"type\": \"catalog\",\r\n  \"query\": \"budget\",\r\n  \"limit\": 5\r\n}\r\n\r\n// Get information about a dataset\r\n{\r\n  \"type\": \"dataset-metadata\",\r\n  \"datasetId\": \"6zsd-86xi\"\r\n}\r\n\r\n// Query dataset records with SQL-like syntax\r\n{\r\n  \"type\": \"data-access\",\r\n  \"datasetId\": \"6zsd-86xi\",\r\n  \"soqlQuery\": \"SELECT * WHERE amount > 1000 ORDER BY date DESC\",\r\n  \"limit\": 10\r\n}\r\n```\r\n\r\n## 配置选项\r\n\r\n服务器需要一个环境变量：\r\n\r\n- `DATA_PORTAL_URL`：Socrata数据门户URL（例如。， `https://data.cityofchicago.org`)\r\n\r\n这可以设置：\r\n\r\n- 在Claude Desktop配置中（推荐）\r\n- 在您的环境变量中\r\n- 通过命令行： `DATA_PORTAL_URL=https://data.cityofchicago.org opengov-mcp-server`\r\n",
+ "config": {
+  "opengov": {
+   "enabled": true,
+   "command": "npx",
+   "args": [
+    "-y",
+    "opengov-mcp-server@latest"
+   ],
+   "env": {
+    "DATA_PORTAL_URL": "https://data.cityofchicago.org"
+   }
+  }
+ }
+}
